@@ -187,42 +187,156 @@
             padding: 40px 30px;
         }
 
-        .result-card {
+        /* 수집형 카드 스타일 */
+        .collection-card {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 16px;
-            padding: 40px;
+            border-radius: 20px;
+            padding: 30px;
             margin: 30px auto;
-            max-width: 500px;
-            color: white;
+            max-width: 400px;
             position: relative;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            transform: perspective(1000px) rotateY(0deg);
+            transition: all 0.6s ease;
+            cursor: pointer;
+        }
+
+        .collection-card:hover {
+            transform: perspective(1000px) rotateY(5deg) scale(1.05);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+        }
+
+        /* 홀로그램 반짝이는 효과 */
+        .collection-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, 
+                transparent 30%, 
+                rgba(255,255,255,0.3) 50%, 
+                transparent 70%);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+            pointer-events: none;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            50% { transform: translateX(0%) translateY(0%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        /* 카드 테두리 반짝임 */
+        .collection-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 20px;
+            padding: 3px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96c93d, #ff6b6b);
+            background-size: 400% 400%;
+            animation: gradient-border 4s ease infinite;
+            z-index: -1;
+        }
+
+        @keyframes gradient-border {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .card-inner {
+            background: rgba(255,255,255,0.95);
+            border-radius: 17px;
+            padding: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4em;
+            color: white;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
         }
 
         .result-type {
-            font-size: 2.8em;
+            font-size: 2.5em;
             font-weight: 700;
-            margin-bottom: 16px;
-            letter-spacing: -0.025em;
+            margin-bottom: 15px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradient-text 3s ease infinite;
+            text-shadow: 0 0 20px rgba(255,107,107,0.3);
+        }
+
+        @keyframes gradient-text {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
 
         .result-description {
             font-size: 1.1em;
             line-height: 1.6;
-            opacity: 0.95;
+            color: #333;
             margin-bottom: 20px;
         }
 
-        .result-badge {
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            padding: 6px 16px;
+        .card-rarity {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            color: #333;
+            padding: 8px 16px;
             border-radius: 20px;
             font-size: 0.85em;
-            font-weight: 600;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-top: 10px;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 8px rgba(255,215,0,0.3);
+            z-index: 10;
+        }
+
+        .card-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .stat-item {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 0.8em;
+            color: #666;
+            margin-bottom: 4px;
+        }
+
+        .stat-value {
+            font-weight: bold;
+            color: #333;
         }
 
         .traits-section {
@@ -397,13 +511,36 @@
                 padding: 30px 20px;
             }
 
-            .result-card {
+            .collection-card {
                 margin: 20px 0;
-                padding: 30px 24px;
+                padding: 20px;
+                max-width: 100%;
+            }
+
+            .collection-card:hover {
+                transform: perspective(1000px) rotateY(2deg) scale(1.02);
             }
 
             .result-type {
-                font-size: 2.2em;
+                font-size: 2em;
+            }
+
+            .card-inner {
+                padding: 20px;
+            }
+
+            .card-avatar {
+                width: 80px;
+                height: 80px;
+                font-size: 3em;
+                margin-bottom: 15px;
+            }
+
+            .card-rarity {
+                top: 10px;
+                right: 10px;
+                padding: 4px 8px;
+                font-size: 0.7em;
             }
 
             .footer-links {
@@ -471,10 +608,15 @@
 
             <!-- 결과 화면 -->
             <div id="result-screen" class="result-container hidden">
-                <div class="result-card" id="result-card">
-                    <div class="result-type" id="result-type"></div>
-                    <div class="result-description" id="result-description"></div>
-                    <div class="result-badge" id="result-badge">과학적 분석 완료</div>
+                <!-- 수집형 카드로 변경된 결과 표시 -->
+                <div class="collection-card" id="result-card">
+                    <div class="card-rarity" id="card-rarity">LEGENDARY</div>
+                    <div class="card-inner">
+                        <div class="card-avatar" id="card-avatar">🦋</div>
+                        <div class="result-type" id="result-type"></div>
+                        <div class="result-description" id="result-description"></div>
+                        <div class="card-stats" id="card-stats"></div>
+                    </div>
                 </div>
                 
                 <!-- 결과 중간 광고 -->
@@ -528,13 +670,13 @@
     </footer>
 
     <script>
-        // 테스트 데이터 (검색 결과 기반 정확한 정보)
+        // 테스트 데이터 (순서 섞어서 예측 불가능하게)
         const testQuestions = [
             {
                 question: "사회적 상황에서 나의 일반적인 행동은?",
                 options: [
-                    { text: "주도적으로 대화를 이끌고 중심 역할을 맡는다", type: "teto" },
-                    { text: "조용히 관찰하며 필요할 때 참여한다", type: "egen" }
+                    { text: "조용히 관찰하며 필요할 때 참여한다", type: "egen" },
+                    { text: "주도적으로 대화를 이끌고 중심 역할을 맡는다", type: "teto" }
                 ]
             },
             {
@@ -547,8 +689,8 @@
             {
                 question: "이상적인 인간관계에 대한 나의 관점은?",
                 options: [
-                    { text: "독립적이면서도 서로를 존중하는 관계", type: "teto" },
-                    { text: "깊은 유대감과 상호 의존적인 관계", type: "egen" }
+                    { text: "깊은 유대감과 상호 의존적인 관계", type: "egen" },
+                    { text: "독립적이면서도 서로를 존중하는 관계", type: "teto" }
                 ]
             },
             {
@@ -561,8 +703,8 @@
             {
                 question: "팀 활동에서 나의 자연스러운 역할은?",
                 options: [
-                    { text: "방향을 제시하고 의사결정을 주도한다", type: "teto" },
-                    { text: "팀의 조화를 돕고 분위기를 조성한다", type: "egen" }
+                    { text: "팀의 조화를 돕고 분위기를 조성한다", type: "egen" },
+                    { text: "방향을 제시하고 의사결정을 주도한다", type: "teto" }
                 ]
             },
             {
@@ -575,8 +717,8 @@
             {
                 question: "문제 해결에 대한 나의 접근법은?",
                 options: [
-                    { text: "빠른 결정과 즉각적인 행동을 선호한다", type: "teto" },
-                    { text: "신중한 분석과 단계적 접근을 선호한다", type: "egen" }
+                    { text: "신중한 분석과 단계적 접근을 선호한다", type: "egen" },
+                    { text: "빠른 결정과 즉각적인 행동을 선호한다", type: "teto" }
                 ]
             },
             {
@@ -589,8 +731,8 @@
             {
                 question: "리더십에 대한 나의 관점은?",
                 options: [
-                    { text: "적극적으로 리더 역할을 수행한다", type: "teto" },
-                    { text: "지원하는 역할에서 영향력을 발휘한다", type: "egen" }
+                    { text: "지원하는 역할에서 영향력을 발휘한다", type: "egen" },
+                    { text: "적극적으로 리더 역할을 수행한다", type: "teto" }
                 ]
             },
             {
@@ -602,10 +744,11 @@
             }
         ];
 
-        // 결과 데이터 (검색 결과 기반)
+        // 결과 데이터 (포켓몬 카드 스타일)
         const resultTypes = {
             "teto_male": {
                 type: "테토남",
+                avatar: "💪",
                 description: "주도적이고 결단력 있는 성격으로, 직설적인 소통과 리더십을 발휘하는 유형입니다. 독립성과 자율성을 중시하며, 목표 지향적인 행동 패턴을 보입니다.",
                 traits: [
                     { title: "리더십", desc: "자연스럽게 집단을 이끌고 방향을 제시하는 능력" },
@@ -614,10 +757,18 @@
                     { title: "목표지향", desc: "구체적 목표 설정과 달성에 집중하는 특성" }
                 ],
                 compatibility: "최적 궁합: 에겐녀 - 상호 보완적인 성격으로 균형잡힌 관계를 형성합니다.",
+                rarity: "LEGENDARY",
+                stats: {
+                    "리더십": 95,
+                    "추진력": 88,
+                    "독립성": 92,
+                    "소통력": 85
+                },
                 color: "#667eea"
             },
             "teto_female": {
                 type: "테토녀",
+                avatar: "🔥",
                 description: "자신감 있고 주도적인 성격으로, 감정을 직접적으로 표현하며 갈등 상황을 적극적으로 해결하는 유형입니다. 독립적이면서도 강한 추진력을 가지고 있습니다.",
                 traits: [
                     { title: "자신감", desc: "확고한 자아 정체성과 자기 확신" },
@@ -626,10 +777,18 @@
                     { title: "독립성", desc: "자유로운 사고와 행동을 추구하는 성향" }
                 ],
                 compatibility: "최적 궁합: 에겐남 - 차분함과 역동성이 조화를 이루는 관계입니다.",
+                rarity: "EPIC",
+                stats: {
+                    "자신감": 93,
+                    "추진력": 90,
+                    "창의성": 87,
+                    "표현력": 89
+                },
                 color: "#764ba2"
             },
             "egen_male": {
                 type: "에겐남",
+                avatar: "🌸",
                 description: "섬세하고 배려 깊은 성격으로, 감정적 공감 능력이 뛰어나며 조화로운 관계를 중시하는 유형입니다. 안정적이고 신뢰할 수 있는 성격을 가지고 있습니다.",
                 traits: [
                     { title: "공감능력", desc: "타인의 감정을 이해하고 공감하는 능력" },
@@ -638,10 +797,18 @@
                     { title: "조화추구", desc: "갈등보다는 평화로운 해결을 선호" }
                 ],
                 compatibility: "최적 궁합: 테토녀 - 서로 다른 강점으로 완벽한 팀워크를 형성합니다.",
+                rarity: "RARE",
+                stats: {
+                    "공감력": 96,
+                    "안정성": 91,
+                    "배려심": 94,
+                    "조화력": 88
+                },
                 color: "#38b2ac"
             },
             "egen_female": {
                 type: "에겐녀",
+                avatar: "🦋",
                 description: "감성적이고 직관적인 성격으로, 깊은 감정적 연결과 안정적인 관계를 추구하는 유형입니다. 세심한 관찰력과 뛰어난 적응력을 가지고 있습니다.",
                 traits: [
                     { title: "감성지능", desc: "풍부한 감정 표현과 이해 능력" },
@@ -650,6 +817,13 @@
                     { title: "관계중심", desc: "깊고 의미있는 인간관계를 중시" }
                 ],
                 compatibility: "최적 궁합: 테토남 - 리더십과 감성이 조화를 이루는 이상적 관계입니다.",
+                rarity: "MYTHIC",
+                stats: {
+                    "감성력": 97,
+                    "직관력": 92,
+                    "적응력": 89,
+                    "친화력": 95
+                },
                 color: "#319795"
             }
         };
@@ -789,13 +963,32 @@
             document.getElementById('test-screen').classList.add('hidden');
             document.getElementById('result-screen').classList.remove('hidden');
 
-            // 결과 카드 스타일 적용
-            const resultCard = document.getElementById('result-card');
-            resultCard.style.background = `linear-gradient(135deg, ${result.color} 0%, ${adjustBrightness(result.color, -20)} 100%)`;
-
-            // 결과 표시
+            // 수집형 카드에 결과 표시
             document.getElementById('result-type').textContent = result.type;
             document.getElementById('result-description').textContent = result.description;
+            
+            // 아바타 표시 (확실하게 업데이트)
+            const avatarElement = document.getElementById('card-avatar');
+            avatarElement.textContent = result.avatar;
+            console.log('설정된 아바타:', result.avatar, '타입:', result.type);
+            
+            // 레어도 표시 (확실하게 업데이트) 
+            const rarityElement = document.getElementById('card-rarity');
+            rarityElement.textContent = result.rarity;
+            console.log('설정된 레어도:', result.rarity);
+
+            // 카드 배경색 변경
+            const cardElement = document.querySelector('.collection-card');
+            cardElement.style.background = `linear-gradient(135deg, ${result.color} 0%, #764ba2 100%)`;
+
+            // 스탯 표시
+            const statsHtml = Object.entries(result.stats).map(([key, value]) => 
+                `<div class="stat-item">
+                    <div class="stat-label">${key}</div>
+                    <div class="stat-value">${value}</div>
+                </div>`
+            ).join('');
+            document.getElementById('card-stats').innerHTML = statsHtml;
 
             // 특성 카드 생성
             const traitsHtml = result.traits.map(trait => 
@@ -814,18 +1007,6 @@
 
             // 결과 화면 광고 로드
             setTimeout(loadAds, 500);
-        }
-
-        // 색상 밝기 조절 함수
-        function adjustBrightness(hex, percent) {
-            const num = parseInt(hex.slice(1), 16);
-            const amt = Math.round(2.55 * percent);
-            const R = (num >> 16) + amt;
-            const G = (num >> 8 & 0x00FF) + amt;
-            const B = (num & 0x0000FF) + amt;
-            return "#" + (0x1000000 + (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 +
-                (G < 255 ? G < 1 ? 0 : G : 255) * 0x100 +
-                (B < 255 ? B < 1 ? 0 : B : 255)).toString(16).slice(1);
         }
 
         // 테스트 재시작
