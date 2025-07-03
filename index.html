@@ -1114,13 +1114,16 @@
             const resultDesc = document.getElementById('result-description').textContent;
             const currentUrl = window.location.href;
 
+            // 성격 유형별 이미지 URL 생성
+            const imageUrl = generateShareImage(resultType);
+
             // 카카오톡 공유하기 실행
             Kakao.Share.sendDefault({
                 objectType: 'feed',
                 content: {
-                    title: `나의 성격 유형: ${resultType}`,
-                    description: resultDesc,
-                    imageUrl: 'https://via.placeholder.com/800x400/667eea/ffffff?text=테토-에겐+성격+유형+분석',
+                    title: `✨ 나의 성격 유형: ${resultType} ✨`,
+                    description: `${resultDesc.substring(0, 80)}...`,
+                    imageUrl: imageUrl,
                     link: {
                         mobileWebUrl: currentUrl,
                         webUrl: currentUrl,
@@ -1128,7 +1131,7 @@
                 },
                 buttons: [
                     {
-                        title: '나도 테스트하기',
+                        title: '🔮 나도 테스트하기',
                         link: {
                             mobileWebUrl: currentUrl,
                             webUrl: currentUrl,
@@ -1137,6 +1140,204 @@
                 ],
                 installTalk: true,
             });
+        }
+
+        // 성격 유형별 공유 이미지 생성 (Canvas 사용)
+        function generateShareImage(resultType) {
+            const typeConfig = {
+                '테토남': {
+                    bg: ['#667eea', '#764ba2'],
+                    emoji: '💪',
+                    subtitle: 'LEGENDARY LEADER',
+                    accent: '#ffd700'
+                },
+                '테토녀': {
+                    bg: ['#764ba2', '#667eea'],
+                    emoji: '🔥',
+                    subtitle: 'EPIC CONFIDENT',
+                    accent: '#ff6b6b'
+                },
+                '에겐남': {
+                    bg: ['#38b2ac', '#319795'],
+                    emoji: '🌸',
+                    subtitle: 'RARE GENTLE',
+                    accent: '#4ecdc4'
+                },
+                '에겐녀': {
+                    bg: ['#319795', '#38b2ac'],
+                    emoji: '🦋',
+                    subtitle: 'MYTHIC INTUITIVE',
+                    accent: '#45b7d1'
+                }
+            };
+
+            const config = typeConfig[resultType] || typeConfig['에겐녀'];
+
+            // Canvas로 이미지 생성
+            const canvas = document.createElement('canvas');
+            canvas.width = 800;
+            canvas.height = 400;
+            const ctx = canvas.getContext('2d');
+
+            // 그라데이션 배경
+            const gradient = ctx.createLinearGradient(0, 0, 800, 400);
+            gradient.addColorStop(0, config.bg[0]);
+            gradient.addColorStop(1, config.bg[1]);
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 800, 400);
+
+            // 장식적 요소들
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+            for (let i = 0; i < 20; i++) {
+                const x = Math.random() * 800;
+                const y = Math.random() * 400;
+                const size = Math.random() * 30 + 10;
+                ctx.beginPath();
+                ctx.arc(x, y, size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            // 중앙 원형 배경
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
+            ctx.beginPath();
+            ctx.arc(400, 200, 150, 0, Math.PI * 2);
+            ctx.fill();
+
+            // 이모지 (큰 사이즈)
+            ctx.font = '80px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText(config.emoji, 400, 160);
+
+            // 성격 유형 제목
+            ctx.font = 'bold 48px Arial';
+            ctx.fillStyle = '#ffffff';
+            ctx.strokeStyle = '#000000';
+            ctx.lineWidth = 2;
+            ctx.strokeText(resultType, 400, 220);
+            ctx.fillText(resultType, 400, 220);
+
+            // 부제목
+            ctx.font = 'bold 24px Arial';
+            ctx.fillStyle = config.accent;
+            ctx.strokeStyle = '#000000';
+            ctx.lineWidth = 1;
+            ctx.strokeText(config.subtitle, 400, 260);
+            ctx.fillText(config.subtitle, 400, 260);
+
+            // 하단 텍스트
+            ctx.font = '20px Arial';
+            ctx.fillStyle = '#ffffff';
+            ctx.fillText('테토-에겐 성격 유형 분석', 400, 320);
+
+            // 작은 장식 별들
+            ctx.fillStyle = config.accent;
+            for (let i = 0; i < 10; i++) {
+                const x = 200 + Math.random() * 400;
+                const y = 280 + Math.random() * 80;
+                drawStar(ctx, x, y, 8, 5, 3);
+            }
+
+            // Canvas를 blob으로 변환 후 URL 생성
+            return canvas.toDataURL('image/png', 0.8);
+        }
+
+        // 별 그리기 함수
+        function drawStar(ctx, x, y, r, n, inset) {
+            ctx.save();
+            ctx.beginPath();
+            ctx.translate(x, y);
+            ctx.moveTo(0, 0 - r);
+            for (let i = 0; i < n; i++) {
+                ctx.rotate(Math.PI / n);
+                ctx.lineTo(0, 0 - (r * inset));
+                ctx.rotate(Math.PI / n);
+                ctx.lineTo(0, 0 - r);
+            }
+            ctx.closePath();
+            ctx.fill();
+            ctx.restore();
+        }
+
+        // 카카오톡 공유하기 함수 (개선된 버전)
+        function shareKakao() {
+            if (typeof Kakao === 'undefined') {
+                alert('카카오 SDK가 로드되지 않았습니다.');
+                return;
+            }
+
+            if (!Kakao.isInitialized()) {
+                alert('카카오 SDK가 초기화되지 않았습니다.');
+                return;
+            }
+
+            // 현재 결과 정보 가져오기
+            const resultType = document.getElementById('result-type').textContent;
+            const resultDesc = document.getElementById('result-description').textContent;
+            const currentUrl = window.location.href;
+
+            // Canvas로 생성한 이미지 URL
+            const imageUrl = generateShareImage(resultType);
+
+            // 간단한 fallback 이미지 (Canvas 지원하지 않는 경우)
+            const fallbackImageUrl = generateSimpleShareImage(resultType);
+
+            // 카카오톡 공유하기 실행
+            Kakao.Share.sendDefault({
+                objectType: 'feed',
+                content: {
+                    title: `✨ 나의 성격 유형: ${resultType} ✨`,
+                    description: `${resultDesc.substring(0, 80)}...`,
+                    imageUrl: imageUrl || fallbackImageUrl,
+                    link: {
+                        mobileWebUrl: currentUrl,
+                        webUrl: currentUrl,
+                    },
+                },
+                buttons: [
+                    {
+                        title: '🔮 나도 테스트하기',
+                        link: {
+                            mobileWebUrl: currentUrl,
+                            webUrl: currentUrl,
+                        },
+                    },
+                ],
+                installTalk: true,
+            });
+        }
+
+        // 간단한 fallback 이미지 생성
+        function generateSimpleShareImage(resultType) {
+            const typeConfig = {
+                '테토남': {
+                    bg: '667eea',
+                    text: 'ffffff',
+                    emoji: '💪',
+                    subtitle: 'LEGENDARY+LEADER'
+                },
+                '테토녀': {
+                    bg: '764ba2',
+                    text: 'ffffff',
+                    emoji: '🔥',
+                    subtitle: 'EPIC+CONFIDENT'
+                },
+                '에겐남': {
+                    bg: '38b2ac',
+                    text: 'ffffff',
+                    emoji: '🌸',
+                    subtitle: 'RARE+GENTLE'
+                },
+                '에겐녀': {
+                    bg: '319795',
+                    text: 'ffffff',
+                    emoji: '🦋',
+                    subtitle: 'MYTHIC+INTUITIVE'
+                }
+            };
+
+            const config = typeConfig[resultType] || typeConfig['에겐녀'];
+            
+            return `https://via.placeholder.com/800x400/${config.bg}/${config.text}?text=${encodeURIComponent(config.emoji + ' ' + resultType + ' ' + config.emoji)}%0A${encodeURIComponent(config.subtitle)}%0A${encodeURIComponent('테토-에겐 성격 분석')}`;
         }
 
         // 애드센스 광고 활성화 함수
