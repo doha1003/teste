@@ -1194,18 +1194,22 @@
             }
         }
 
-        // 성격 유형별 안전한 이미지 URL 생성
+// 성격 유형별 안전한 이미지 URL 생성
         function getShareImageUrl(resultType) {
             const typeImages = {
-                '테토남': 'https://picsum.photos/800/400?random=1',
-                '테토녀': 'https://picsum.photos/800/400?random=2', 
-                '에겐남': 'https://picsum.photos/800/400?random=3',
-                '에겐녀': 'https://picsum.photos/800/400?random=4'
+                // 테토남/테토녀 - 운동/피트니스 관련 이미지
+                '테토남': 'https://images.unsplash.com/photo-1594737625785-a6cbdabd333c?w=800&h=400&fit=crop&auto=format',
+                '테토녀': 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=400&fit=crop&auto=format',
+                
+                // 에겐남/에겐녀 - 꽃밭/카페 등 감성적인 이미지  
+                '에겐남': 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=400&fit=crop&auto=format',
+                '에겐녀': 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&h=400&fit=crop&auto=format'
             };
 
             // 기본 안전한 이미지 (카카오톡에서 확실히 지원하는 형식)
             return typeImages[resultType] || 'https://via.placeholder.com/800x400/667eea/ffffff?text=성격+유형+테스트';
         }
+
 
         // 애드센스 광고 활성화 함수
         function loadAds() {
