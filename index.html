@@ -59,11 +59,16 @@
             font-weight: 300;
         }
 
-        /* About 링크 버튼 */
-        .about-link {
+        /* 네비게이션 링크들 */
+        .nav-links {
             position: absolute;
             top: 20px;
             right: 20px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-link {
             background: rgba(255, 255, 255, 0.2);
             color: white;
             text-decoration: none;
@@ -75,7 +80,7 @@
             border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
-        .about-link:hover {
+        .nav-link:hover {
             background: rgba(255, 255, 255, 0.3);
             transform: translateY(-1px);
         }
@@ -677,13 +682,18 @@
                 font-size: 2em;
             }
 
-            .about-link {
+            .nav-links {
                 position: static;
-                display: block;
+                display: flex;
+                justify-content: center;
+                gap: 10px;
                 margin-top: 15px;
-                width: fit-content;
-                margin-left: auto;
-                margin-right: auto;
+                flex-wrap: wrap;
+            }
+
+            .nav-link {
+                font-size: 0.8em;
+                padding: 6px 12px;
             }
             
             .content {
@@ -767,7 +777,11 @@
 <body>
     <div class="container">
         <div class="header">
-            <a href="about.html" class="about-link">사이트 소개</a>
+            <div class="nav-links">
+                <a href="mbti-test.html" class="nav-link">MBTI 테스트</a>
+                <a href="about.html" class="nav-link">사이트 소개</a>
+                <a href="contact.html" class="nav-link">문의하기</a>
+            </div>
             <h1>테토-에겐 성격 유형 분석</h1>
             <p>과학적 접근법으로 알아보는 나의 성격 유형</p>
         </div>
