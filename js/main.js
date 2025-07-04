@@ -3,7 +3,7 @@
 // Component loading function
 async function loadComponent(componentName, targetId) {
     try {
-        const response = await fetch(`/_includes/${componentName}.html`);
+        const response = await fetch(`/includes/${componentName}.html`);
         if (response.ok) {
             const html = await response.text();
             const target = document.getElementById(targetId);
