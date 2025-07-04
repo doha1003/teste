@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>테토-에겐 성격 유형 테스트 - 과학적 성격 분석 | doha.kr</title>
+    <title>테토-에겐 성격 유형 테스트 - 재미있는 성격 분석 | doha.kr</title>
     <meta name="description" content="테토형과 에겐형으로 나뉘는 독특한 성격 분석 테스트. 10가지 질문으로 당신의 진짜 성격을 발견하세요. 무료 성격테스트, 심리테스트">
     <meta name="keywords" content="테토에겐, 테토형, 에겐형, 성격테스트, 심리테스트, 무료테스트, 성격유형, 테토남, 테토녀, 에겐남, 에겐녀">
     
@@ -35,548 +35,707 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" href="/css/styles.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/images/placeholder-favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/images/logo.svg">
+    <link rel="manifest" href="/manifest.json">
+    
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
     
     <style>
+        /* Page-specific styles */
         /* 공통 CSS 변수 및 기본 스타일 (메인 페이지와 동일) */
-        :root {
-            --primary-color: #6366f1;
-            --secondary-color: #8b5cf6;
-            --accent-color: #f59e0b;
-            --success-color: #10b981;
-            --error-color: #ef4444;
-            
-            --gray-50: #f9fafb;
-            --gray-100: #f3f4f6;
-            --gray-200: #e5e7eb;
-            --gray-300: #d1d5db;
-            --gray-400: #9ca3af;
-            --gray-500: #6b7280;
-            --gray-600: #4b5563;
-            --gray-700: #374151;
-            --gray-800: #1f2937;
-            --gray-900: #111827;
-            
-            --gradient-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-            --gradient-warm: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
-            --gradient-cool: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Noto Sans KR', -apple-system, sans-serif;
-            background-color: var(--gray-50);
-            color: var(--gray-900);
-            line-height: 1.6;
-        }
-        
         /* 네비게이션 (간소화) */
-        .navbar {
-            background: white;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-        
-        .navbar-container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 64px;
-        }
-        
-        .logo {
-            font-size: 24px;
-            font-weight: 700;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-decoration: none;
-        }
-        
-        .nav-menu {
-            display: flex;
-            gap: 32px;
-            list-style: none;
-        }
-        
-        .nav-link {
-            color: var(--gray-600);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-        
-        .nav-link:hover {
-            color: var(--primary-color);
-        }
-        
-        /* 헤더 섹션 */
-        .header {
-            background: white;
-            padding: 60px 20px;
+        /* 히어로 섹션 */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 20px;
             text-align: center;
-            border-bottom: 1px solid var(--gray-200);
+            position: relative;
+            overflow: hidden;
         }
-        
-        .header-content {
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.5); opacity: 0; }
+        }
+        .hero-content {
             max-width: 800px;
             margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
-        
-        .header-title {
-            font-size: 40px;
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            backdrop-filter: blur(10px);
+        }
+        .hero-title {
+            font-size: 48px;
             font-weight: 700;
             margin-bottom: 16px;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
         }
-        
-        .header-subtitle {
-            font-size: 18px;
-            color: var(--gray-600);
-            line-height: 1.6;
+        .hero-subtitle {
+            font-size: 20px;
+            opacity: 0.9;
+            margin-bottom: 32px;
+            line-height: 1.5;
         }
-        
-        .start-button {
-            display: inline-block;
-            margin-top: 24px;
+        .test-start-btn {
+            background: white;
             padding: 16px 48px;
-            background: var(--gradient-primary);
-            color: white;
             font-size: 18px;
             font-weight: 600;
             border-radius: 8px;
             text-decoration: none;
+            display: inline-block;
             transition: all 0.3s;
-            box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
         }
-        
-        .start-button:hover {
+        .test-start-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.3);
         }
-        
-        /* 메인 컨테이너 */
-        .main-container {
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-        
-        /* 정보 섹션 */
-        .info-section {
+        /* 소개 섹션 */
+        .intro {
+            padding: 80px 20px;
             background: white;
-            border-radius: 16px;
-            padding: 40px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-            margin-bottom: 40px;
         }
-        
-        .info-title {
-            font-size: 28px;
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+        .content-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .section-title {
+            font-size: 36px;
             font-weight: 700;
             margin-bottom: 24px;
-            color: var(--gray-900);
         }
-        
-        .info-content {
-            color: var(--gray-700);
+        .intro-text {
+            font-size: 18px;
+            line-height: 1.8;
+            margin-bottom: 32px;
+        }
+        .highlight {
+            background: linear-gradient(180deg, transparent 60%, rgba(99, 102, 241, 0.3) 60%);
+            padding: 0 4px;
+        }
+        /* 이론적 배경 섹션 */
+        .theory {
+            padding: 80px 20px;
+        }
+        .theory-box {
+            background: white;
+            border-radius: 16px;
+            padding: 48px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            margin-bottom: 32px;
+        }
+        .theory-title {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        .theory-content {
+            font-size: 16px;
             line-height: 1.8;
         }
-        
-        .info-content h3 {
-            font-size: 20px;
-            font-weight: 600;
-            margin: 32px 0 16px;
-            color: var(--gray-800);
-        }
-        
-        .info-content p {
-            margin-bottom: 16px;
-        }
-        
-        .info-list {
+        .theory-list {
             list-style: none;
             margin: 20px 0;
         }
-        
-        .info-list li {
+        .theory-list li {
             padding: 12px 0;
             padding-left: 32px;
             position: relative;
         }
-        
-        .info-list li::before {
+        .theory-list li::before {
             content: '✓';
             position: absolute;
             left: 0;
-            color: var(--primary-color);
             font-weight: bold;
             font-size: 18px;
         }
-        
-        /* 유형 카드 */
+        /* 유형 설명 섹션 */
+        .types {
+            padding: 80px 20px;
+            background: white;
+        }
         .types-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 24px;
-            margin: 32px 0;
+            gap: 32px;
+            margin-top: 48px;
         }
-        
         .type-card {
-            background: var(--gray-50);
-            border-radius: 12px;
-            padding: 24px;
-            border: 2px solid transparent;
+            border-radius: 16px;
+            padding: 32px;
+            text-align: center;
             transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
         }
-        
+        .type-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+        }
         .type-card:hover {
-            border-color: var(--primary-color);
             transform: translateY(-4px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
         }
-        
-        .type-card h4 {
+        .type-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+        }
+        .type-name {
             font-size: 24px;
             font-weight: 600;
             margin-bottom: 12px;
-            color: var(--primary-color);
         }
-        
-        .type-card p {
-            color: var(--gray-600);
+        .type-description {
+            font-size: 16px;
             line-height: 1.6;
+            margin-bottom: 20px;
         }
-        
-        /* FAQ 섹션 */
-        .faq-section {
-            background: white;
-            border-radius: 16px;
-            padding: 40px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-            margin-bottom: 40px;
+        .type-traits {
+            text-align: left;
+            margin-top: 20px;
         }
-        
-        .faq-title {
-            font-size: 28px;
+        .type-trait {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 0;
+        }
+        .trait-icon {
+            font-size: 16px;
+        }
+        /* 테스트 과정 섹션 */
+        .process {
+            padding: 80px 20px;
+        }
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 32px;
+            margin-top: 48px;
+        }
+        .process-step {
+            text-align: center;
+        }
+        .step-number {
+            width: 64px;
+            height: 64px;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
             font-weight: 700;
-            margin-bottom: 32px;
-            color: var(--gray-900);
+            margin: 0 auto 16px;
         }
-        
+        .step-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .step-desc {
+            line-height: 1.5;
+        }
+        /* FAQ 섹션 */
+        .faq {
+            padding: 80px 20px;
+            background: white;
+        }
+        .faq-list {
+            max-width: 800px;
+            margin: 48px auto 0;
+        }
         .faq-item {
-            border-bottom: 1px solid var(--gray-200);
-            padding: 24px 0;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            overflow: hidden;
         }
-        
-        .faq-item:last-child {
-            border-bottom: none;
-        }
-        
         .faq-question {
+            padding: 24px;
             font-size: 18px;
             font-weight: 600;
-            color: var(--gray-800);
             cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            transition: background 0.2s;
         }
-        
+        .faq-question:hover {
+        }
         .faq-arrow {
+            font-size: 20px;
             transition: transform 0.3s;
-            color: var(--gray-500);
         }
-        
         .faq-item.active .faq-arrow {
             transform: rotate(180deg);
         }
-        
         .faq-answer {
-            margin-top: 16px;
-            color: var(--gray-600);
-            line-height: 1.7;
-            display: none;
+            padding: 0 24px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s, padding 0.3s;
         }
-        
         .faq-item.active .faq-answer {
-            display: block;
+            padding: 0 24px 24px;
+            max-height: 500px;
         }
-        
+        .faq-answer p {
+            line-height: 1.6;
+        }
+        /* CTA 섹션 */
+        .cta {
+            padding: 80px 20px;
+            text-align: center;
+            color: white;
+        }
+        .cta-title {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        .cta-description {
+            font-size: 20px;
+            margin-bottom: 32px;
+            opacity: 0.9;
+        }
+        .cta-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .cta-btn {
+            padding: 16px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            display: inline-block;
+        }
+        .cta-btn-primary {
+            background: white;
+        }
+        .cta-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+        .cta-btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        .cta-btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
         /* 광고 컨테이너 */
         .ad-container {
-            margin: 40px 0;
+            max-width: 800px;
+            margin: 60px auto;
             text-align: center;
         }
-        
         .ad-label {
             font-size: 12px;
-            color: var(--gray-500);
             margin-bottom: 8px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-        
-        /* 푸터 */
-        .footer {
-            background: var(--gray-900);
-            color: white;
-            padding: 48px 20px;
-            text-align: center;
-            margin-top: 80px;
-        }
-        
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 32px;
-            margin-bottom: 24px;
-            flex-wrap: wrap;
-        }
-        
-        .footer-links a {
-            color: var(--gray-400);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-        
-        .footer-links a:hover {
-            color: white;
-        }
-        
+        /* 푸터 (간소화) */
         /* 반응형 */
         @media (max-width: 768px) {
-            .header-title {
-                font-size: 32px;
+            .hero-title {
+                font-size: 36px;
             }
-            
-            .info-section {
-                padding: 24px;
+            .hero-subtitle {
+                font-size: 18px;
             }
-            
+            .section-title {
+                font-size: 28px;
+            }
+            .theory-box {
+                padding: 32px 24px;
+            }
             .types-grid {
                 grid-template-columns: 1fr;
-            }
-            
-            .nav-menu {
-                display: none;
             }
         }
     </style>
 </head>
 <body>
     <!-- 네비게이션 -->
-    <nav class="navbar">
-        <div class="navbar-container">
-            <a href="/" class="logo">doha.kr</a>
-            <ul class="nav-menu">
-                <li><a href="/" class="nav-link">홈</a></li>
-                <li><a href="/tests/" class="nav-link">심리테스트</a></li>
-                <li><a href="/tools/" class="nav-link">실용도구</a></li>
-                <li><a href="/community/" class="nav-link">커뮤니티</a></li>
-                <li><a href="/about/" class="nav-link">소개</a></li>
-            </ul>
-        </div>
-    </nav>
+    <div id="navbar-placeholder"></div>
     
-    <!-- 헤더 -->
-    <header class="header">
-        <div class="header-content">
-            <h1 class="header-title">테토-에겐 성격 유형 테스트</h1>
-            <p class="header-subtitle">
-                당신은 테토형? 에겐형?<br>
-                10가지 질문으로 알아보는 나의 진짜 성격 유형
+    <!-- 히어로 섹션 -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">🔥 50만명이 참여한 인기 테스트</div>
+            <h1 class="hero-title">테토-에겐 성격 유형 테스트</h1>
+            <p class="hero-subtitle">
+                당신은 주도적인 테토형? 아니면 조화로운 에겐형?<br>
+                10가지 질문으로 당신의 진짜 성격을 발견하세요
             </p>
-            <a href="/tests/teto-egen/test.html" class="start-button">테스트 시작하기 →</a>
+            <a href="start.html" class="test-start-btn">지금 테스트 시작하기</a>
         </div>
-    </header>
+    </section>
     
-    <!-- 메인 컨테이너 -->
-    <div class="main-container">
-        <!-- 테스트 소개 -->
-        <div class="info-section">
-            <h2 class="info-title">테토-에겐 테스트란?</h2>
-            <div class="info-content">
-                <p>
-                    테토-에겐 성격 유형 테스트는 인간의 성격을 크게 두 가지 유형으로 분류하는 재미있는 심리 검사입니다. 
-                    간단한 질문들을 통해 당신의 성격 특성을 파악하고, 자신을 더 잘 이해할 수 있도록 도와줍니다.
+    <!-- 소개 섹션 -->
+    <section class="intro">
+        <div class="container">
+            <div class="content-wrapper">
+                <h2 class="section-title">테토-에겐 테스트란?</h2>
+                <p class="intro-text">
+                    테토-에겐 성격 유형 테스트는 <span class="highlight">재미있는 성격 분석 도구</span>로 
+                    개발된 즐거운 심리 테스트입니다. 인간의 성격을 크게 두 가지 축으로 나누어 
+                    분석하는 이 테스트는 복잡한 인간 심리를 간결하면서도 재미있게 파악할 수 있도록 설계되었습니다.
                 </p>
-                
-                <p>
-                    이 테스트는 엔터테인먼트 목적으로 제작되었으며, 친구들과 함께 즐기거나 자기 성찰의 도구로 
-                    활용할 수 있습니다. 결과는 참고용으로만 활용해주세요.
+                <p class="intro-text">
+                    '테토(Teto)'는 그리스어로 '주도하다'를 의미하며, <span class="highlight">적극적이고 외향적인 성향</span>을 
+                    대표합니다. 반면 '에겐(Egen)'은 '조화롭다'는 뜻으로, <span class="highlight">섬세하고 내향적인 성향</span>을 
+                    나타냅니다. 이 두 유형은 단순히 성격의 좋고 나쁨을 구분하는 것이 아니라, 각자의 고유한 
+                    강점과 특성을 지닌 동등한 성격 유형입니다.
                 </p>
-                
-                <h3>테토형과 에겐형의 의미</h3>
-                <p>
-                    '테토'와 '에겐'은 단순하고 기억하기 쉬운 명칭으로 만들어진 성격 유형 분류입니다. 
-                    이 이름들은 각각의 성격 특성을 상징적으로 표현하여 누구나 쉽게 이해하고 기억할 수 있도록 
-                    설계되었습니다.
+                <p class="intro-text">
+                    본 테스트는 일상생활, 대인관계, 문제해결 방식 등 다양한 상황에서의 행동 패턴을 분석하여 
+                    당신이 어느 유형에 더 가까운지 재미있게 진단합니다. 특히 성별에 따른 성격 특성의 
+                    미묘한 차이까지 고려하여, 총 4가지 세부 유형(테토남, 테토녀, 에겐남, 에겐녀)으로 
+                    더욱 정교한 분석 결과를 제공합니다.
                 </p>
-                
-                <div class="types-grid">
-                    <div class="type-card">
-                        <h4>🦋 테토형</h4>
-                        <p>
-                            자유롭고 창의적인 영혼을 가진 테토형은 새로운 경험과 도전을 추구합니다. 
-                            직관적이고 감성적이며, 타인과의 깊은 정서적 교감을 중요시합니다. 
-                            예술적 감각이 뛰어나고 상상력이 풍부합니다.
-                        </p>
-                    </div>
-                    
-                    <div class="type-card">
-                        <h4>🌊 에겐형</h4>
-                        <p>
-                            안정적이고 신중한 성격의 에겐형은 체계와 질서를 선호합니다. 
-                            논리적이고 분석적이며, 장기적인 계획과 목표 달성을 중요시합니다. 
-                            책임감이 강하고 신뢰할 수 있는 사람입니다.
-                        </p>
-                    </div>
-                </div>
-                
-                <h3>테스트 방법</h3>
-                <p>
-                    테토-에겐 테스트는 총 10개의 상황 기반 질문으로 구성되어 있습니다. 각 질문은 일상생활에서 
-                    마주할 수 있는 다양한 상황을 제시하며, 당신이 자연스럽게 선택하게 되는 행동이나 생각을 
-                    파악합니다.
-                </p>
-                
-                <p>
-                    정답은 없으며, 자신의 직감과 평소 성향에 따라 솔직하게 답변하시면 됩니다. 
-                    약 5분 정도의 시간이 소요되며, 결과는 즉시 확인할 수 있습니다.
-                </p>
-                
-                <h3>이런 분들께 추천합니다</h3>
-                <ul class="info-list">
-                    <li>자신의 성격과 행동 패턴을 더 깊이 이해하고 싶은 분</li>
-                    <li>친구들과 재미있는 테스트를 함께 즐기고 싶은 분</li>
-                    <li>가벼운 마음으로 성격 테스트를 해보고 싶은 분</li>
-                    <li>새로운 관점에서 자신을 돌아보고 싶은 분</li>
-                    <li>간단한 자기계발의 시작점을 찾고 있는 분</li>
-                </ul>
             </div>
         </div>
-        
-        <!-- 광고 영역 -->
-        <div class="ad-container">
-            <div class="ad-label">광고</div>
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-7905640648499222"
-                 data-ad-slot="1234567890"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-        </div>
-        
-        <!-- FAQ 섹션 -->
-        <div class="faq-section">
-            <h2 class="faq-title">자주 묻는 질문</h2>
-            
-            <div class="faq-item">
-                <div class="faq-question">
-                    테토형과 에겐형 중 어느 것이 더 좋은가요?
-                    <span class="faq-arrow">▼</span>
+    </section>
+    
+    <!-- 이론적 배경 섹션 -->
+    <section class="theory">
+        <div class="container">
+            <div class="content-wrapper">
+                <h2 class="section-title">재미있는 심리 테스트</h2>
+                
+                <div class="theory-box">
+                    <h3 class="theory-title">엔터테인먼트 목적</h3>
+                    <p class="theory-content">
+                        테토-에겐 테스트는 재미와 즐거움을 목적으로 제작된 엔터테인먼트용 성격 테스트입니다. 
+                        친구들과 함께 즐기거나 자기 성찰의 도구로 활용할 수 있도록 설계되었습니다.
+                        결과는 참고용으로만 활용해주세요.
+                    </p>
+                    <ul class="theory-list">
+                        <li>재미있는 질문들로 구성된 간단한 테스트</li>
+                        <li>친구들과 함께 즐길 수 있는 공유 기능</li>
+                        <li>자기 이해를 돕는 흥미로운 결과 분석</li>
+                        <li>부담 없이 즐길 수 있는 가벼운 심리 테스트</li>
+                    </ul>
                 </div>
-                <div class="faq-answer">
-                    테토형과 에겐형은 우열이 없는 동등한 성격 유형입니다. 각각의 유형은 고유한 장점과 
-                    특성을 가지고 있으며, 상황에 따라 다른 강점을 발휘합니다. 중요한 것은 자신의 유형을 
-                    이해하고 장점을 극대화하는 것입니다.
-                </div>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question">
-                    테스트 결과는 얼마나 정확한가요?
-                    <span class="faq-arrow">▼</span>
-                </div>
-                <div class="faq-answer">
-                    이 테스트는 재미와 자기 이해를 목적으로 제작된 엔터테인먼트용 테스트입니다. 
-                    과학적 근거를 바탕으로 하지 않으므로 참고용으로만 활용해주시고, 
-                    전문적인 심리 상담이 필요한 경우 전문가의 도움을 받으시기 바랍니다.
-                </div>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question">
-                    성격 유형은 바뀔 수 있나요?
-                    <span class="faq-arrow">▼</span>
-                </div>
-                <div class="faq-answer">
-                    물론입니다! 사람의 성격은 경험과 학습을 통해 변화할 수 있습니다. 
-                    이 테스트는 현재 시점의 성향을 반영하는 것이므로, 시간이 지나면서 
-                    다른 결과가 나올 수도 있습니다.
-                </div>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question">
-                    테토형과 에겐형의 궁합은 어떤가요?
-                    <span class="faq-arrow">▼</span>
-                </div>
-                <div class="faq-answer">
-                    테토형과 에겐형은 서로 보완적인 관계를 형성할 수 있습니다. 테토형의 창의성과 
-                    에겐형의 안정성이 조화를 이루면 매우 좋은 시너지를 낼 수 있습니다. 
-                    다만, 서로의 차이를 이해하고 존중하는 것이 중요합니다.
-                </div>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question">
-                    다른 성격 테스트와는 어떤 차이가 있나요?
-                    <span class="faq-arrow">▼</span>
-                </div>
-                <div class="faq-answer">
-                    테토-에겐 테스트는 복잡한 분류보다는 간단하고 직관적인 두 가지 유형으로 
-                    성격을 분류합니다. 부담 없이 즐길 수 있는 가벼운 테스트로, 
-                    자신에 대한 새로운 관점을 제공하는 것이 목적입니다.
+                
+                <div class="theory-box">
+                    <h3 class="theory-title">간단하고 직관적인 분석</h3>
+                    <p class="theory-content">
+                        본 테스트는 복잡한 분석보다는 간단하고 직관적인 결과를 제공합니다. 
+                        10개의 질문으로 빠르게 테스트를 완료할 수 있으며, 
+                        누구나 쉽게 이해할 수 있는 결과를 제공합니다.
+                    </p>
+                    <p class="theory-content">
+                        특히 기존의 복잡한 성격 검사들과는 달리, 
+                        재미있고 이해하기 쉬운 결과를 통해 
+                        자신에 대한 새로운 관점을 발견할 수 있습니다.
+                    </p>
                 </div>
             </div>
         </div>
-        
-        <!-- CTA 섹션 -->
-        <div class="info-section" style="text-align: center; background: var(--gradient-primary); color: white;">
-            <h2 style="color: white; margin-bottom: 16px;">지금 바로 테스트를 시작해보세요!</h2>
-            <p style="color: rgba(255, 255, 255, 0.9); margin-bottom: 24px;">
-                5분 만에 당신의 성격 유형을 발견할 수 있습니다
-            </p>
-            <a href="/tests/teto-egen/test.html" class="start-button" style="background: white; color: var(--primary-color);">무료로 테스트 받기 →</a>
-        </div>
+    </section>
+    
+    <!-- 광고 영역 -->
+    <div class="ad-container">
+        <div class="ad-label">광고</div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-7905640648499222"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
     </div>
     
-    <!-- 푸터 -->
-    <footer class="footer">
-        <div class="footer-links">
-            <a href="/">홈</a>
-            <a href="/about/">소개</a>
-            <a href="/privacy/">개인정보처리방침</a>
-            <a href="/terms/">이용약관</a>
-            <a href="/contact/">문의하기</a>
+    <!-- 유형 설명 섹션 -->
+    <section class="types">
+        <div class="container">
+            <h2 class="section-title" style="text-align: center;">4가지 성격 유형 상세 분석</h2>
+            
+            <div class="types-grid">
+                <div class="type-card">
+                    <div class="type-icon">💪</div>
+                    <h3 class="type-name">테토남 (Teto Male)</h3>
+                    <p class="type-description">
+                        타고난 리더형으로 목표 지향적이고 추진력이 강합니다. 
+                        논리적 사고와 빠른 결단력으로 조직을 이끌어나가는 능력이 뛰어납니다.
+                    </p>
+                    <div class="type-traits">
+                        <div class="type-trait">
+                            <span class="trait-icon">▶</span>
+                            <span>강한 리더십과 카리스마</span>
+                        </div>
+                        <div class="type-trait">
+                            <span class="trait-icon">▶</span>
+                            <span>목표 달성에 대한 집념</span>
+                        </div>
+                        <div class="type-trait">
+                            <span class="trait-icon">▶</span>
+                            <span>직설적이고 효율적인 소통</span>
+                        </div>
+                        <div class="type-trait">
+                            <span class="trait-icon">▶</span>
+                            <span>독립적이고 자율적인 성향</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="type-card">
+                    <div class="type-icon">🔥</div>
+                    <h3 class="type-name">테토녀 (Teto Female)</h3>
+                    <p class="type-description">
+                        자신감과 독립성을 겸비한 현대적 여성상입니다. 
+                        열정적이고 도전적이며, 자신의 의견을 당당하게 표현합니다.
+                    </p>
+                    <div class="type-traits">
+                        <div class="type-trait">
+                            <span class="trait-icon">▶</span>
+                            <span>확고한 자아 정체성</span>
+                        </div>
+                        <div class="type-trait">
+                            <span class="trait-icon">▶</span>
+                            <span>창의적이고 혁신적인 사고</span>
+                        </div>
+                        <div class="type-trait">
+                            <span class="trait-icon">▶</span>
+                            <span>강한 실행력과 추진력</span>
+                        </div>
+                        <div class="type-trait">
+                            <span class="trait-icon">▶</span>
+                            <span>자유로운 영혼과 모험심</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="type-card">
+                    <div class="type-icon">🌸</div>
+                    <h3 class="type-name">에겐남 (Egen Male)</h3>
+                    <p class="type-description">
+                        섬세하고 공감 능력이 뛰어난 신사입니다. 
+                        타인을 배려하고 조화를 중시하며, 안정적이고 신뢰할 수 있는 파트너입니다.
+                    </p>
+                    <div class="type-traits">
+                        <div class="type-trait">
+                            <span class="trait-icon">▶</span>
+                            <span>높은 감성 지능과 공감력</span>
+                        </div>
+                        <div class="type-trait">
+                            <span class="trait-icon">▶</span>
+                            <span>세심한 관찰력과 배려심</span>
+                        </div>
+                        <div class="type-trait">
+                            <span class="trait-icon">▶</span>
+                            <span>안정적이고 일관된 행동</span>
+                        </div>
+                        <div class="type-trait">
+                            <span class="trait-icon">▶</span>
+                            <span>평화로운 문제 해결 추구</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="type-card">
+                    <div class="type-icon">🦋</div>
+                    <h3 class="type-name">에겐녀 (Egen Female)</h3>
+                    <p class="type-description">
+                        따뜻한 감성과 깊은 직관력을 지닌 여성입니다. 
+                        타인과의 정서적 교감을 중시하며, 조화와 평화를 사랑합니다.
+                    </p>
+                    <div class="type-traits">
+                        <div class="type-trait">
+                            <span class="trait-icon">▶</span>
+                            <span>풍부한 감정 표현력</span>
+                        </div>
+                        <div class="type-trait">
+                            <span class="trait-icon">▶</span>
+                            <span>예민한 직관과 통찰력</span>
+                        </div>
+                        <div class="type-trait">
+                            <span class="trait-icon">▶</span>
+                            <span>유연한 적응력과 포용력</span>
+                        </div>
+                        <div class="type-trait">
+                            <span class="trait-icon">▶</span>
+                            <span>깊고 의미있는 관계 추구</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <p style="color: var(--gray-500);">&copy; 2025 doha.kr. All rights reserved.</p>
-    </footer>
+    </section>
     
+    <!-- 테스트 과정 섹션 -->
+    <section class="process">
+        <div class="container">
+            <h2 class="section-title" style="text-align: center;">테스트 진행 과정</h2>
+            
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">성별 선택</h3>
+                    <p class="step-desc">
+                        정확한 분석을 위해 성별을 선택합니다. 
+                        성별에 따른 미묘한 차이를 반영합니다.
+                    </p>
+                </div>
+                
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">10개 질문 답변</h3>
+                    <p class="step-desc">
+                        일상적인 상황에 대한 10가지 질문에 
+                        솔직하게 답변해주세요.
+                    </p>
+                </div>
+                
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">재미있는 분석</h3>
+                    <p class="step-desc">
+                        답변 패턴을 분석하여 당신의 
+                        성격 유형을 재미있게 도출합니다.
+                    </p>
+                </div>
+                
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <h3 class="step-title">상세 결과 제공</h3>
+                    <p class="step-desc">
+                        성격 특성, 장단점, 발전 방향 등 
+                        종합적인 분석 결과를 제공합니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FAQ 섹션 -->
+    <section class="faq">
+        <div class="container">
+            <h2 class="section-title" style="text-align: center;">자주 묻는 질문</h2>
+            
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        테토-에겐 테스트는 MBTI와 어떻게 다른가요?
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>
+                            MBTI가 16가지 유형으로 세분화하는 반면, 테토-에겐은 핵심적인 2가지 축을 기반으로 
+                            4가지 유형으로 구분합니다. 이는 더 직관적이고 이해하기 쉬우면서도, 
+                            성별에 따른 차이를 고려하여 실생활에 더 적용하기 쉬운 결과를 제공합니다.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        테스트 결과는 얼마나 정확한가요?
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>
+                            이 테스트는 재미와 자기 이해를 목적으로 제작된 엔터테인먼트용 테스트입니다. 
+                            참고용으로만 활용해주시고, 
+                            전문적인 심리 상담이 필요한 경우 전문가의 도움을 받으시기 바랍니다.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        테스트는 얼마나 걸리나요?
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>
+                            성별 선택을 포함하여 총 11개의 선택 항목이 있으며, 
+                            보통 3-5분 정도면 완료할 수 있습니다. 충분히 생각하고 
+                            솔직하게 답변하는 것이 정확한 결과를 얻는 데 중요합니다.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        결과를 공유할 수 있나요?
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>
+                            네, 카카오톡 공유 기능을 통해 친구들과 결과를 공유할 수 있습니다. 
+                            또한 결과 페이지의 URL을 복사하여 다른 SNS나 메신저로도 
+                            공유가 가능합니다.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA 섹션 -->
+    <section class="cta">
+        <div class="container">
+            <h2 class="cta-title">지금 바로 당신의 성격 유형을 발견하세요!</h2>
+            <p class="cta-description">
+                50만명이 선택한 테토-에겐 테스트로 진짜 나를 만나보세요
+            </p>
+            <div class="cta-buttons">
+                <a href="start.html" class="cta-btn cta-btn-primary">테스트 시작하기</a>
+                <a href="/tests/" class="cta-btn cta-btn-secondary">다른 테스트 보기</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 푸터 -->
+    <div id="footer-placeholder"></div>
+    
+    <!-- External JavaScript -->
+    <script src="/js/main.js"></script>
+    
+    <!-- AdSense initialization -->
     <script>
-        // FAQ 토글 기능
-        document.querySelectorAll('.faq-question').forEach(question => {
-            question.addEventListener('click', () => {
-                const faqItem = question.parentElement;
-                faqItem.classList.toggle('active');
-            });
-        });
-        
         // 애드센스 광고 로드
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
