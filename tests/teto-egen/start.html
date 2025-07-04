@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>테토-에겐 성격 유형 테스트 - doha.kr</title>
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
+    <meta name="google-adsense-account" content="ca-pub-7905640648499222">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" href="/css/styles.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/images/placeholder-favicon.svg" type="image/svg+xml">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Quiz",
+        "name": "테토-에겐 성격 유형 테스트",
+        "description": "10가지 질문으로 테토형과 에겐형 중 당신의 성격 유형을 분석합니다",
+        "educationalLevel": "All",
+        "numberOfQuestions": 10,
+        "timeRequired": "PT5M",
+        "provider": {
+            "@type": "Organization",
+            "name": "doha.kr",
+            "url": "https://doha.kr"
+        },
+        "isAccessibleForFree": true,
+        "url": "https://doha.kr/tests/teto-egen/"
+    }
+    </script>
+    
+    <style>
+        /* Page-specific styles for test interface */
+        .test-container {
+            max-width: 800px;
+            margin: 40px auto;
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .test-header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        
+        .test-header h1 {
+            font-size: 2.5em;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .test-header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+        
+        .test-content {
+            padding: 40px 30px;
+        }
+        
+        .intro-section {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: var(--gray-50);
+            border-radius: 12px;
+        }
+        
+        .intro-section h2 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+        
+        .intro-section p {
+            margin-bottom: 20px;
+            font-size: 1.05em;
+            line-height: 1.6;
+            color: var(--gray-700);
+        }
+        
+        .intro-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .intro-feature {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 0.9em;
+            font-weight: 500;
+            color: var(--gray-800);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .start-test-btn {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 16px 48px;
+            font-size: 1.2em;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 20px;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .start-test-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .progress-container {
+            margin-bottom: 40px;
+        }
+        
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .progress-text {
+            font-size: 0.9em;
+            font-weight: 500;
+            color: var(--gray-700);
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: var(--gray-200);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background: var(--gradient-primary);
+            transition: width 0.4s ease;
+            border-radius: 3px;
+        }
+        
+        .question-container {
+            margin-bottom: 40px;
+        }
+        
+        .question {
+            font-size: 1.4em;
+            margin-bottom: 30px;
+            font-weight: 600;
+            line-height: 1.4;
+            color: var(--gray-900);
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        
+        .option {
+            border: 2px solid var(--gray-200);
+            border-radius: 8px;
+            padding: 20px 24px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 1.05em;
+            line-height: 1.5;
+            position: relative;
+            background: white;
+        }
+        
+        .option:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .option.selected {
+            border-color: var(--primary-color);
+            background: rgba(99, 102, 241, 0.05);
+        }
+        
+        .option.selected::after {
+            content: '✓';
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+        }
+        
+        .btn {
+            padding: 12px 32px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: var(--gray-700);
+            border: 2px solid var(--gray-200);
+        }
+        
+        .btn-secondary:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        /* Result styles */
+        .result-container {
+            text-align: center;
+            padding: 40px 30px;
+        }
+        
+        .collection-card {
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px auto;
+            max-width: 400px;
+            position: relative;
+            overflow: hidden;
+            background: white;
+            box-shadow: var(--shadow-xl);
+            transform: perspective(1000px) rotateY(0deg);
+            transition: all 0.6s ease;
+            cursor: pointer;
+        }
+        
+        .collection-card:hover {
+            transform: perspective(1000px) rotateY(5deg) scale(1.05);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+        }
+        
+        .card-inner {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .card-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4em;
+            color: white;
+            background: var(--gradient-primary);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .result-type {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .result-description {
+            font-size: 1.1em;
+            line-height: 1.6;
+            color: var(--gray-700);
+            margin-bottom: 20px;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        /* Single ad placement */
+        .ad-container {
+            text-align: center;
+            margin: 40px 0;
+            padding: 20px;
+            background: var(--gray-50);
+            border-radius: 8px;
+        }
+        
+        .ad-label {
+            font-size: 0.8em;
+            color: var(--gray-500);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .test-container {
+                margin: 20px;
+                border-radius: 12px;
+            }
+            
+            .test-header {
+                padding: 30px 20px;
+            }
+            
+            .test-header h1 {
+                font-size: 2em;
+            }
+            
+            .test-content {
+                padding: 30px 20px;
+            }
+            
+            .intro-features {
+                grid-template-columns: 1fr;
+            }
+            
+            .collection-card {
+                margin: 20px 0;
+                padding: 20px;
+                max-width: 100%;
+            }
+            
+            .collection-card:hover {
+                transform: perspective(1000px) rotateY(2deg) scale(1.02);
+            }
+            
+            .result-type {
+                font-size: 2em;
+            }
+            
+            .card-avatar {
+                width: 80px;
+                height: 80px;
+                font-size: 3em;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 네비게이션 -->
+    <div id="navbar-placeholder"></div>
+
+    <div class="test-container">
+        <div class="test-header">
+            <h1>테토-에겐 성격 유형 분석</h1>
+            <p>10가지 질문으로 알아보는 나의 성격 유형</p>
+        </div>
+
+        <div class="test-content">
+            <!-- 테스트 시작 전 안내 -->
+            <div id="intro-screen" class="intro-section">
+                <h2>당신의 성격 유형을 발견하세요!</h2>
+                <p>
+                    10개의 간단한 질문으로 당신만의 고유한 성격 유형을 분석합니다. 
+                    테토(Teto)와 에겐(Egen) 두 가지 성향을 바탕으로 총 4가지 유형으로 분류하여
+                    상세한 분석 결과를 제공합니다.
+                </p>
+                
+                <div class="intro-features">
+                    <div class="intro-feature">🎯 정확한 분석</div>
+                    <div class="intro-feature">⚡ 빠른 테스트</div>
+                    <div class="intro-feature">📊 상세한 결과</div>
+                    <div class="intro-feature">💡 실용적 조언</div>
+                </div>
+                
+                <button class="start-test-btn" onclick="startTest()">테스트 시작하기</button>
+            </div>
+
+            <!-- 테스트 화면 -->
+            <div id="test-screen" class="hidden">
+                <div class="progress-container">
+                    <div class="progress-info">
+                        <span class="progress-text" id="progress-text">질문 0 / 10</span>
+                        <span class="progress-text" id="progress-percent">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress" id="progress"></div>
+                    </div>
+                </div>
+                
+                <div class="question-container">
+                    <div class="question" id="question"></div>
+                    <div class="options" id="options"></div>
+                </div>
+
+                <div class="navigation">
+                    <button class="btn btn-secondary" id="prev-btn" onclick="previousQuestion()">이전</button>
+                    <button class="btn btn-primary" id="next-btn" onclick="nextQuestion()">다음</button>
+                </div>
+            </div>
+
+            <!-- 결과 화면 -->
+            <div id="result-screen" class="result-container hidden">
+                <div class="collection-card" id="result-card">
+                    <div class="card-inner">
+                        <div class="card-avatar" id="card-avatar">🦋</div>
+                        <div class="result-type" id="result-type"></div>
+                        <div class="result-description" id="result-description"></div>
+                    </div>
+                </div>
+                
+                <!-- 단일 광고 위치 -->
+                <div class="ad-container">
+                    <div class="ad-label">광고</div>
+                    <ins class="adsbygoogle"
+                         style="display:block"
+                         data-ad-client="ca-pub-7905640648499222"
+                         data-ad-slot="1234567890"
+                         data-ad-format="auto"
+                         data-full-width-responsive="true"></ins>
+                </div>
+                
+                <div class="navigation">
+                    <a href="/tests/teto-egen/" class="btn btn-secondary">상세 분석 보기</a>
+                    <button class="btn btn-primary" onclick="restartTest()">다시 테스트하기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 푸터 -->
+    <div id="footer-placeholder"></div>
+
+    <!-- External JavaScript -->
+    <script src="/js/main.js"></script>
+    
+    <!-- Test Logic JavaScript -->
+    <script>
+        // 테스트 질문 및 로직
+        const questions = [
+            {
+                question: "주말에 친구들과의 약속이 취소되었을 때 당신의 반응은?",
+                options: [
+                    { text: "좋아! 혼자만의 시간을 가질 수 있겠네", type: "egen" },
+                    { text: "아쉽긴 하지만 다른 친구들에게 연락해서 새로운 계획을 세운다", type: "teto" }
+                ]
+            },
+            {
+                question: "새로운 프로젝트를 시작할 때 당신의 접근 방식은?",
+                options: [
+                    { text: "꼼꼼히 계획을 세우고 단계별로 진행한다", type: "egen" },
+                    { text: "일단 시작하고 진행하면서 조정한다", type: "teto" }
+                ]
+            },
+            {
+                question: "파티에서 당신은 주로?",
+                options: [
+                    { text: "친한 몇 명과 깊은 대화를 나눈다", type: "egen" },
+                    { text: "여러 사람들과 어울리며 분위기를 이끈다", type: "teto" }
+                ]
+            },
+            {
+                question: "문제가 생겼을 때 당신의 첫 번째 반응은?",
+                options: [
+                    { text: "혼자 차근차근 생각해본다", type: "egen" },
+                    { text: "주변 사람들과 의논한다", type: "teto" }
+                ]
+            },
+            {
+                question: "여행을 계획할 때 당신은?",
+                options: [
+                    { text: "세세한 일정을 미리 짜놓는다", type: "egen" },
+                    { text: "대략적인 틀만 정하고 즉흥적으로 진행한다", type: "teto" }
+                ]
+            },
+            {
+                question: "스트레스를 받을 때 당신의 해소법은?",
+                options: [
+                    { text: "혼자만의 공간에서 충분한 휴식을 취한다", type: "egen" },
+                    { text: "친구들과 만나서 이야기하거나 활동한다", type: "teto" }
+                ]
+            },
+            {
+                question: "새로운 사람들과의 만남에서 당신은?",
+                options: [
+                    { text: "상대방이 먼저 말을 걸어주길 기다린다", type: "egen" },
+                    { text: "적극적으로 먼저 대화를 시작한다", type: "teto" }
+                ]
+            },
+            {
+                question: "중요한 결정을 내릴 때 당신은?",
+                options: [
+                    { text: "충분히 생각하고 신중하게 결정한다", type: "egen" },
+                    { text: "직감을 믿고 빠르게 결정한다", type: "teto" }
+                ]
+            },
+            {
+                question: "학습이나 업무 스타일은?",
+                options: [
+                    { text: "조용한 환경에서 혼자 집중하는 것을 선호한다", type: "egen" },
+                    { text: "팀원들과 함께 토론하며 진행하는 것을 선호한다", type: "teto" }
+                ]
+            },
+            {
+                question: "에너지를 충전하는 방법은?",
+                options: [
+                    { text: "혼자만의 시간을 통해 내적 평화를 찾는다", type: "egen" },
+                    { text: "다양한 사람들과의 만남을 통해 활력을 얻는다", type: "teto" }
+                ]
+            }
+        ];
+
+        let currentQuestion = 0;
+        let answers = [];
+        let userGender = '';
+
+        function startTest() {
+            // 성별 선택
+            const gender = prompt("성별을 선택해주세요 (남성: M, 여성: F):");
+            if (gender && (gender.toUpperCase() === 'M' || gender.toUpperCase() === 'F')) {
+                userGender = gender.toUpperCase();
+                document.getElementById('intro-screen').classList.add('hidden');
+                document.getElementById('test-screen').classList.remove('hidden');
+                showQuestion();
+            } else {
+                alert("올바른 성별을 입력해주세요 (M 또는 F)");
+            }
+        }
+
+        function showQuestion() {
+            if (currentQuestion < questions.length) {
+                const q = questions[currentQuestion];
+                document.getElementById('question').textContent = q.question;
+                document.getElementById('progress-text').textContent = `질문 ${currentQuestion + 1} / ${questions.length}`;
+                document.getElementById('progress-percent').textContent = `${Math.round(((currentQuestion + 1) / questions.length) * 100)}%`;
+                document.getElementById('progress').style.width = `${((currentQuestion + 1) / questions.length) * 100}%`;
+
+                const optionsContainer = document.getElementById('options');
+                optionsContainer.innerHTML = '';
+
+                q.options.forEach((option, index) => {
+                    const optionDiv = document.createElement('div');
+                    optionDiv.className = 'option';
+                    optionDiv.textContent = option.text;
+                    optionDiv.onclick = () => selectOption(index);
+                    optionsContainer.appendChild(optionDiv);
+                });
+
+                document.getElementById('prev-btn').style.display = currentQuestion > 0 ? 'block' : 'none';
+                document.getElementById('next-btn').style.display = 'none';
+            }
+        }
+
+        function selectOption(optionIndex) {
+            // 선택된 옵션 표시
+            document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+            document.querySelectorAll('.option')[optionIndex].classList.add('selected');
+
+            // 답변 저장
+            answers[currentQuestion] = questions[currentQuestion].options[optionIndex];
+            
+            // 다음 버튼 활성화
+            document.getElementById('next-btn').style.display = 'block';
+        }
+
+        function nextQuestion() {
+            if (answers[currentQuestion]) {
+                currentQuestion++;
+                if (currentQuestion >= questions.length) {
+                    showResult();
+                } else {
+                    showQuestion();
+                }
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showQuestion();
+                
+                // 이전 답변이 있다면 선택 표시
+                if (answers[currentQuestion]) {
+                    const prevAnswerIndex = questions[currentQuestion].options.indexOf(answers[currentQuestion]);
+                    if (prevAnswerIndex !== -1) {
+                        document.querySelectorAll('.option')[prevAnswerIndex].classList.add('selected');
+                        document.getElementById('next-btn').style.display = 'block';
+                    }
+                }
+            }
+        }
+
+        function showResult() {
+            // 답변 분석
+            let tetoScore = 0;
+            let egenScore = 0;
+
+            answers.forEach(answer => {
+                if (answer.type === 'teto') {
+                    tetoScore++;
+                } else {
+                    egenScore++;
+                }
+            });
+
+            let resultType, resultEmoji, resultDescription;
+
+            if (tetoScore > egenScore) {
+                if (userGender === 'M') {
+                    resultType = "테토남 (Teto Male)";
+                    resultEmoji = "💪";
+                    resultDescription = "타고난 리더형으로 목표 지향적이고 추진력이 강합니다. 논리적 사고와 빠른 결단력으로 조직을 이끌어나가는 능력이 뛰어납니다.";
+                } else {
+                    resultType = "테토녀 (Teto Female)";
+                    resultEmoji = "🔥";
+                    resultDescription = "자신감과 독립성을 겸비한 현대적 여성상입니다. 열정적이고 도전적이며, 자신의 의견을 당당하게 표현합니다.";
+                }
+            } else {
+                if (userGender === 'M') {
+                    resultType = "에겐남 (Egen Male)";
+                    resultEmoji = "🌸";
+                    resultDescription = "섬세하고 공감 능력이 뛰어난 신사입니다. 타인을 배려하고 조화를 중시하며, 안정적이고 신뢰할 수 있는 파트너입니다.";
+                } else {
+                    resultType = "에겐녀 (Egen Female)";
+                    resultEmoji = "🦋";
+                    resultDescription = "따뜻한 감성과 깊은 직관력을 지닌 여성입니다. 타인과의 정서적 교감을 중시하며, 조화와 평화를 사랑합니다.";
+                }
+            }
+
+            // 결과 화면 표시
+            document.getElementById('test-screen').classList.add('hidden');
+            document.getElementById('result-screen').classList.remove('hidden');
+            document.getElementById('card-avatar').textContent = resultEmoji;
+            document.getElementById('result-type').textContent = resultType;
+            document.getElementById('result-description').textContent = resultDescription;
+
+            // 광고 로드
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        }
+
+        function restartTest() {
+            currentQuestion = 0;
+            answers = [];
+            userGender = '';
+            document.getElementById('result-screen').classList.add('hidden');
+            document.getElementById('intro-screen').classList.remove('hidden');
+        }
+    </script>
+    
+    <!-- AdSense initialization -->
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</body>
+</html>
