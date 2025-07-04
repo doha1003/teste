@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>실용도구 - 일상에 필요한 무료 온라인 도구 | doha.kr</title>
+    <meta name="description" content="글자수 세기, 연봉 계산기, BMI 계산기 등 일상생활에 필요한 다양한 실용도구를 무료로 이용하세요.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
+    
+    <style>
+        :root {
+            --primary-color: #3b82f6;
+            --secondary-color: #10b981;
+            --accent-color: #f59e0b;
+            --error-color: #ef4444;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            --gradient-primary: linear-gradient(135deg, #3b82f6 0%, #10b981 100%);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans KR', -apple-system, sans-serif;
+            background-color: var(--gray-50);
+            color: var(--gray-900);
+            line-height: 1.6;
+        }
+        
+        /* 네비게이션 */
+        .navbar {
+            background: white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .navbar-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 64px;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+        
+        .nav-menu {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+        
+        .nav-link {
+            color: var(--gray-600);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--primary-color);
+        }
+        
+        /* 헤더 */
+        .header {
+            background: linear-gradient(135deg, #ebf5ff 0%, #e0f2fe 100%);
+            padding: 60px 20px;
+            text-align: center;
+        }
+        
+        .header-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .header-title {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .header-subtitle {
+            font-size: 20px;
+            color: var(--gray-600);
+            line-height: 1.5;
+        }
+        
+        /* 도구 그리드 */
+        .tools-container {
+            max-width: 1280px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+        
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 32px;
+            margin-bottom: 60px;
+        }
+        
+        .tool-card {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+            transition: all 0.3s;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+        }
+        
+        .tool-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--gradient-primary);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin-bottom: 24px;
+        }
+        
+        .tool-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--gray-900);
+        }
+        
+        .tool-description {
+            color: var(--gray-600);
+            margin-bottom: 24px;
+            flex: 1;
+        }
+        
+        .tool-features {
+            list-style: none;
+            margin-bottom: 24px;
+        }
+        
+        .tool-features li {
+            padding: 8px 0;
+            padding-left: 24px;
+            position: relative;
+            color: var(--gray-700);
+        }
+        
+        .tool-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--secondary-color);
+            font-weight: bold;
+        }
+        
+        .use-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--gradient-primary);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            text-align: center;
+            justify-content: center;
+        }
+        
+        .use-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        }
+        
+        /* 광고 */
+        .ad-container {
+            margin: 40px 0;
+            text-align: center;
+        }
+        
+        .ad-label {
+            font-size: 12px;
+            color: var(--gray-500);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        /* 푸터 */
+        .footer {
+            background: var(--gray-900);
+            color: white;
+            padding: 48px 20px;
+            margin-top: 80px;
+        }
+        
+        .footer-content {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+        
+        .footer-section h3 {
+            font-size: 18px;
+            margin-bottom: 16px;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 8px;
+        }
+        
+        .footer-links a {
+            color: var(--gray-400);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .footer-bottom {
+            max-width: 1280px;
+            margin: 32px auto 0;
+            padding-top: 32px;
+            border-top: 1px solid var(--gray-800);
+            text-align: center;
+            color: var(--gray-500);
+        }
+        
+        /* 준비중 뱃지 */
+        .coming-soon {
+            display: inline-block;
+            background: var(--accent-color);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-left: 8px;
+        }
+        
+        @media (max-width: 768px) {
+            .header-title {
+                font-size: 36px;
+            }
+            
+            .nav-menu {
+                display: none;
+            }
+            
+            .tool-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 네비게이션 -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="/" class="logo">doha.kr</a>
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link">홈</a></li>
+                <li><a href="/tests/" class="nav-link">심리테스트</a></li>
+                <li><a href="/tools/" class="nav-link active">실용도구</a></li>
+                <li><a href="/community/" class="nav-link">커뮤니티</a></li>
+                <li><a href="/about/" class="nav-link">소개</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- 헤더 -->
+    <header class="header">
+        <div class="header-content">
+            <h1 class="header-title">실용도구</h1>
+            <p class="header-subtitle">
+                일상생활에 필요한 다양한 도구들<br>
+                간편하고 빠르게, 무료로 이용하세요
+            </p>
+        </div>
+    </header>
+    
+    <!-- 도구 목록 -->
+    <main class="tools-container">
+        <div class="tool-grid">
+            <!-- 글자수 세기 -->
+            <a href="/tools/text-counter.html" class="tool-card">
+                <div class="tool-icon">📝</div>
+                <h2 class="tool-title">글자수 세기</h2>
+                <p class="tool-description">
+                    자기소개서, 리포트, 논문 작성 시 필수! 
+                    공백 포함/제외, 바이트, 원고지 환산까지 한번에 확인하세요.
+                </p>
+                <ul class="tool-features">
+                    <li>실시간 글자수 계산</li>
+                    <li>공백 포함/제외 옵션</li>
+                    <li>바이트 및 원고지 환산</li>
+                    <li>한글/영문/숫자 구분 집계</li>
+                </ul>
+                <span class="use-button">도구 사용하기 →</span>
+            </a>
+            
+            <!-- 연봉 계산기 -->
+            <div class="tool-card" style="opacity: 0.7;">
+                <div class="tool-icon">💰</div>
+                <h2 class="tool-title">
+                    연봉 계산기
+                    <span class="coming-soon">준비중</span>
+                </h2>
+                <p class="tool-description">
+                    연봉, 월급, 실수령액을 한번에 계산! 
+                    4대보험과 세금을 정확하게 계산해 실수령액을 알려드립니다.
+                </p>
+                <ul class="tool-features">
+                    <li>2025년 최신 세율 적용</li>
+                    <li>4대보험 자동 계산</li>
+                    <li>연봉/월급 상호 변환</li>
+                    <li>부양가족 공제 반영</li>
+                </ul>
+            </div>
+            
+            <!-- BMI 계산기 -->
+            <div class="tool-card" style="opacity: 0.7;">
+                <div class="tool-icon">⚖️</div>
+                <h2 class="tool-title">
+                    BMI 계산기
+                    <span class="coming-soon">준비중</span>
+                </h2>
+                <p class="tool-description">
+                    키와 몸무게로 체질량지수(BMI)를 계산하고 
+                    건강 상태를 확인해보세요.
+                </p>
+                <ul class="tool-features">
+                    <li>BMI 자동 계산</li>
+                    <li>비만도 판정</li>
+                    <li>표준 체중 제시</li>
+                    <li>건강 관리 팁</li>
+                </ul>
+            </div>
+            
+            <!-- 단위 변환기 -->
+            <div class="tool-card" style="opacity: 0.7;">
+                <div class="tool-icon">🔄</div>
+                <h2 class="tool-title">
+                    단위 변환기
+                    <span class="coming-soon">준비중</span>
+                </h2>
+                <p class="tool-description">
+                    길이, 무게, 온도, 면적 등 다양한 단위를 
+                    간편하게 변환하세요.
+                </p>
+                <ul class="tool-features">
+                    <li>다양한 단위 지원</li>
+                    <li>실시간 변환</li>
+                    <li>자주 쓰는 단위 저장</li>
+                    <li>변환 기록 확인</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- 광고 -->
+        <div class="ad-container">
+            <div class="ad-label">광고</div>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-7905640648499222"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </main>
+    
+    <!-- 푸터 -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>서비스</h3>
+                <ul class="footer-links">
+                    <li><a href="/tests/">심리테스트</a></li>
+                    <li><a href="/tools/">실용도구</a></li>
+                    <li><a href="/community/">커뮤니티</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>인기 콘텐츠</h3>
+                <ul class="footer-links">
+                    <li><a href="/tests/teto-egen/test.html">테토-에겐 테스트</a></li>
+                    <li><a href="/tools/text-counter.html">글자수 세기</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>정보</h3>
+                <ul class="footer-links">
+                    <li><a href="/about/">사이트 소개</a></li>
+                    <li><a href="/privacy/">개인정보처리방침</a></li>
+                    <li><a href="/terms/">이용약관</a></li>
+                    <li><a href="/contact/">문의하기</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 doha.kr. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+        // 애드센스 로드
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</body>
+</html>
