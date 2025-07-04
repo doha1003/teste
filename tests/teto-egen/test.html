@@ -672,14 +672,15 @@
             display: none;
         }
 
-        /* 애드센스 광고 스타일 */
+        /* 애드센스 광고 스타일 - 최적화된 배치 */
         .ad-container {
             text-align: center;
-            margin: 30px 0;
+            margin: 40px auto;
             padding: 20px;
             background: #f7fafc;
             border-radius: 8px;
             border: 1px solid #e2e8f0;
+            max-width: 728px;
         }
 
         .ad-label {
@@ -690,13 +691,14 @@
             letter-spacing: 0.5px;
         }
 
-        .header-ad {
-            margin: 20px 0;
+        /* 메인 페이지용 광고 (페이지 로드 시) */
+        .main-ad {
+            margin: 40px auto;
         }
 
+        /* 결과 페이지용 광고 (테스트 완료 시) */
         .result-ad {
-            margin: 30px 0;
-            background: white;
+            margin: 40px auto;
         }
 
         /* Footer 스타일 */
@@ -850,6 +852,11 @@
                 width: 100%;
                 max-width: 280px;
             }
+
+            .ad-container {
+                max-width: 320px;
+                padding: 15px;
+            }
         }
     </style>
 </head>
@@ -880,18 +887,6 @@
         </div>
 
         <div class="content">
-            <!-- 헤더 광고 -->
-            <div class="ad-container header-ad">
-                <div class="ad-label">광고</div>
-                <!-- 배너 광고 (728x90 또는 320x50) -->
-                <ins class="adsbygoogle"
-                     style="display:block"
-                     data-ad-client="ca-pub-7905640648499222"
-                     data-ad-slot="1234567890"
-                     data-ad-format="auto"
-                     data-full-width-responsive="true"></ins>
-            </div>
-
             <!-- 테스트 시작 전 안내 -->
             <div id="intro-screen" class="intro-section">
                 <h2>당신의 성격 유형을 발견하세요!</h2>
@@ -911,7 +906,18 @@
                 <button class="start-test-btn" onclick="startTest()">테스트 시작하기</button>
             </div>
 
-            <!-- 테스트 화면 -->
+            <!-- 메인 광고 (테스트 시작 전에만 표시) -->
+            <div id="main-ad" class="ad-container main-ad">
+                <div class="ad-label">광고</div>
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-7905640648499222"
+                     data-ad-slot="1234567890"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+            </div>
+
+            <!-- 테스트 화면 - 광고 없음 (사용자 경험 최적화) -->
             <div id="test-screen" class="hidden">
                 <div class="progress-container">
                     <div class="progress-info">
@@ -946,18 +952,6 @@
                         <div class="card-stats" id="card-stats"></div>
                     </div>
                 </div>
-                
-                <!-- 결과 중간 광고 -->
-                <div class="ad-container result-ad">
-                    <div class="ad-label">광고</div>
-                    <!-- 정사각형 광고 (300x250) -->
-                    <ins class="adsbygoogle"
-                         style="display:block"
-                         data-ad-client="ca-pub-7905640648499222"
-                         data-ad-slot="2345678901"
-                         data-ad-format="auto"
-                         data-full-width-responsive="true"></ins>
-                </div>
 
                 <div class="traits-section">
                     <h2 class="section-title">주요 성격 특성</h2>
@@ -966,23 +960,22 @@
                 
                 <div class="compatibility" id="compatibility"></div>
 
+                <!-- 결과 중간 광고 (테스트 완료 후에만 표시) -->
+                <div class="ad-container result-ad">
+                    <div class="ad-label">광고</div>
+                    <ins class="adsbygoogle"
+                         style="display:block"
+                         data-ad-client="ca-pub-7905640648499222"
+                         data-ad-slot="2345678901"
+                         data-ad-format="auto"
+                         data-full-width-responsive="true"></ins>
+                </div>
+
                 <!-- 상세 분석 보기 섹션 -->
                 <div class="detail-section">
                     <h3>더 자세한 분석이 궁금하신가요?</h3>
                     <p>당신의 성격 유형에 대한 심층 분석을 확인해보세요. 직업, 연애, 인간관계, 스트레스 대처법 등 다양한 측면에서의 상세한 가이드를 제공합니다.</p>
                     <a href="#" class="btn btn-success" id="detail-btn" onclick="viewDetailedResult()">상세 분석 보기</a>
-                </div>
-                
-                <!-- 하단 광고 -->
-                <div class="ad-container">
-                    <div class="ad-label">광고</div>
-                    <!-- 배너 광고 (728x90 또는 320x50) -->
-                    <ins class="adsbygoogle"
-                         style="display:block"
-                         data-ad-client="ca-pub-7905640648499222"
-                         data-ad-slot="3456789012"
-                         data-ad-format="auto"
-                         data-full-width-responsive="true"></ins>
                 </div>
 
                 <!-- 카카오톡 공유하기 섹션 -->
@@ -1183,6 +1176,8 @@
 
         // 테스트 시작
         function startTest() {
+            // 메인 광고 숨기기
+            document.getElementById('main-ad').style.display = 'none';
             document.getElementById('intro-screen').classList.add('hidden');
             document.getElementById('test-screen').classList.remove('hidden');
             initTest();
@@ -1363,8 +1358,8 @@
                 <p>${result.compatibility}</p>
             `;
 
-            // 결과 화면 광고 로드
-            setTimeout(loadAds, 500);
+            // 결과 화면 광고 로드 (결과 표시 후)
+            setTimeout(loadResultAds, 1000);
         }
 
         // 상세 결과 보기
@@ -1378,6 +1373,7 @@
         function restartTest() {
             document.getElementById('result-screen').classList.add('hidden');
             document.getElementById('intro-screen').classList.remove('hidden');
+            document.getElementById('main-ad').style.display = 'block';
             currentResultType = '';
         }
 
@@ -1449,18 +1445,29 @@
             return typeImages[resultType] || 'https://via.placeholder.com/800x400/667eea/ffffff?text=성격+유형+테스트';
         }
 
-        // 애드센스 광고 활성화 함수
-        function loadAds() {
+        // 메인 광고 로드 (페이지 로드 시)
+        function loadMainAds() {
             try {
-                // 모든 광고 슬롯 활성화
-                const ads = document.querySelectorAll('.adsbygoogle');
-                ads.forEach(ad => {
-                    if (!ad.innerHTML) {
-                        (adsbygoogle = window.adsbygoogle || []).push({});
-                    }
-                });
+                // 메인 광고만 로드
+                const mainAd = document.querySelector('#main-ad .adsbygoogle');
+                if (mainAd && !mainAd.innerHTML) {
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                }
             } catch (e) {
-                console.log('AdSense loading error:', e);
+                console.log('Main AdSense loading error:', e);
+            }
+        }
+
+        // 결과 광고 로드 (결과 표시 시)
+        function loadResultAds() {
+            try {
+                // 결과 광고만 로드
+                const resultAd = document.querySelector('.result-ad .adsbygoogle');
+                if (resultAd && !resultAd.innerHTML) {
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                }
+            } catch (e) {
+                console.log('Result AdSense loading error:', e);
             }
         }
 
@@ -1474,12 +1481,8 @@
                 }
             }
             
-            // 애드센스 광고 로드
-            try {
-                (adsbygoogle = window.adsbygoogle || []).push({});
-            } catch (e) {
-                console.log('AdSense not loaded yet');
-            }
+            // 메인 광고 로드 (페이지 로드 시에만)
+            setTimeout(loadMainAds, 500);
         });
     </script>
 </body>
