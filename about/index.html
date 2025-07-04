@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>doha.kr 소개 - 일상을 더 재미있게 만드는 공간</title>
+    <meta name="description" content="doha.kr은 심리테스트, 실용도구, 커뮤니티를 제공하는 종합 플랫폼입니다. 우리의 미션, 비전, 가치관을 소개합니다.">
+    <meta name="keywords" content="doha.kr, 사이트소개, 심리테스트플랫폼, 온라인도구, 커뮤니티">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="doha.kr - 일상을 더 재미있게">
+    <meta property="og:description" content="심리테스트와 실용도구로 여러분의 일상에 재미와 편리함을 더합니다.">
+    <meta property="og:image" content="https://doha.kr/images/about-og.png">
+    <meta property="og:url" content="https://doha.kr/about/">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
+    
+    <style>
+        /* CSS 변수 */
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #8b5cf6;
+            --accent-color: #f59e0b;
+            --success-color: #10b981;
+            
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            
+            --gradient-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            --gradient-warm: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+            --gradient-cool: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans KR', -apple-system, sans-serif;
+            background-color: var(--gray-50);
+            color: var(--gray-900);
+            line-height: 1.6;
+        }
+        
+        /* 네비게이션 */
+        .navbar {
+            background: white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .navbar-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 64px;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+        
+        .nav-menu {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+        
+        .nav-link {
+            color: var(--gray-600);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        
+        .nav-link:hover {
+            color: var(--primary-color);
+        }
+        
+        /* 헤더 섹션 */
+        .header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+        
+        .header-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .header-title {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        
+        .header-subtitle {
+            font-size: 20px;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+        
+        /* 메인 컨테이너 */
+        .main-container {
+            max-width: 1200px;
+            margin: -40px auto 40px;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        /* 섹션 스타일 */
+        .section {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            margin-bottom: 32px;
+        }
+        
+        .section-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: var(--gray-900);
+        }
+        
+        .section-content {
+            color: var(--gray-700);
+            line-height: 1.8;
+        }
+        
+        .section-content h3 {
+            font-size: 24px;
+            font-weight: 600;
+            margin: 32px 0 16px;
+            color: var(--gray-800);
+        }
+        
+        .section-content p {
+            margin-bottom: 16px;
+        }
+        
+        /* 미션 카드 */
+        .mission-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin: 32px 0;
+        }
+        
+        .mission-card {
+            background: var(--gray-50);
+            border-radius: 12px;
+            padding: 32px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .mission-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+        
+        .mission-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            display: block;
+        }
+        
+        .mission-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--gray-800);
+        }
+        
+        .mission-desc {
+            color: var(--gray-600);
+            line-height: 1.6;
+        }
+        
+        /* 타임라인 */
+        .timeline {
+            position: relative;
+            padding: 32px 0;
+            margin: 32px 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--gray-300);
+            transform: translateX(-50%);
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding: 24px 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            flex-direction: row-reverse;
+        }
+        
+        .timeline-content {
+            background: white;
+            border: 2px solid var(--gray-200);
+            border-radius: 12px;
+            padding: 24px;
+            width: calc(50% - 40px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            border: 4px solid white;
+            box-shadow: 0 0 0 2px var(--gray-200);
+        }
+        
+        .timeline-date {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+        }
+        
+        .timeline-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--gray-800);
+        }
+        
+        .timeline-desc {
+            color: var(--gray-600);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        /* 팀 멤버 그리드 */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 32px;
+            margin: 32px 0;
+        }
+        
+        .team-member {
+            text-align: center;
+        }
+        
+        .member-avatar {
+            width: 120px;
+            height: 120px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: white;
+        }
+        
+        .member-name {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--gray-800);
+        }
+        
+        .member-role {
+            color: var(--primary-color);
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+        
+        .member-desc {
+            color: var(--gray-600);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        /* 통계 박스 */
+        .stats-boxes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            margin: 32px 0;
+        }
+        
+        .stat-box {
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 12px;
+            padding: 32px;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        
+        .stat-label {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        /* 광고 컨테이너 */
+        .ad-container {
+            margin: 40px 0;
+            text-align: center;
+        }
+        
+        .ad-label {
+            font-size: 12px;
+            color: var(--gray-500);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        /* 푸터 */
+        .footer {
+            background: var(--gray-900);
+            color: white;
+            padding: 48px 20px;
+            text-align: center;
+            margin-top: 80px;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: var(--gray-400);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        /* 반응형 */
+        @media (max-width: 768px) {
+            .header-title {
+                font-size: 36px;
+            }
+            
+            .section {
+                padding: 24px;
+            }
+            
+            .timeline::before {
+                left: 20px;
+            }
+            
+            .timeline-item {
+                flex-direction: row !important;
+            }
+            
+            .timeline-content {
+                width: calc(100% - 60px);
+                margin-left: 60px;
+            }
+            
+            .timeline-dot {
+                left: 20px;
+            }
+            
+            .nav-menu {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 네비게이션 -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="/" class="logo">doha.kr</a>
+            <ul class="nav-menu">
+                <li><a href="/home.html" class="nav-link">홈</a></li>
+                <li><a href="/tests/" class="nav-link">심리테스트</a></li>
+                <li><a href="/tools/" class="nav-link">실용도구</a></li>
+                <li><a href="/community/" class="nav-link">커뮤니티</a></li>
+                <li><a href="/about/" class="nav-link">소개</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- 헤더 -->
+    <header class="header">
+        <div class="header-content">
+            <h1 class="header-title">doha.kr을 소개합니다</h1>
+            <p class="header-subtitle">
+                일상을 더 재미있게 만드는 공간, doha.kr은<br>
+                심리테스트와 실용도구로 여러분의 삶에 가치를 더합니다
+            </p>
+        </div>
+    </header>
+    
+    <!-- 메인 컨테이너 -->
+    <div class="main-container">
+        <!-- 우리의 스토리 -->
+        <div class="section">
+            <h2 class="section-title">우리의 스토리</h2>
+            <div class="section-content">
+                <p>
+                    doha.kr은 2023년, "일상에 재미와 편리함을 더한다"라는 단순한 아이디어에서 시작되었습니다. 
+                    테토-에겐 테스트라는 독특한 성격 검사로 주목을 받기 시작한 우리는, 
+                    이제 다양한 심리테스트와 실용도구를 제공하는 종합 플랫폼으로 성장했습니다.
+                </p>
+                
+                <p>
+                    우리는 단순히 트래픽과 수익을 추구하는 사이트가 아닙니다. 
+                    사용자들이 자신을 더 잘 이해하고, 일상에서 필요한 도구들을 쉽게 사용할 수 있도록 
+                    돕는 것이 우리의 목표입니다. 모든 서비스는 무료로 제공되며, 
+                    가입이나 로그인 없이 누구나 자유롭게 이용할 수 있습니다.
+                </p>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">2023년 1월</div>
+                            <div class="timeline-title">사이트 오픈</div>
+                            <div class="timeline-desc">테토-에겐 테스트로 시작</div>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">2023년 6월</div>
+                            <div class="timeline-title">확장 업데이트</div>
+                            <div class="timeline-desc">MBTI 검사 및 실용도구 추가</div>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">2024년 1월</div>
+                            <div class="timeline-title">커뮤니티 오픈</div>
+                            <div class="timeline-desc">사용자간 소통 공간 마련</div>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">2025년 1월</div>
+                            <div class="timeline-title">대규모 리뉴얼</div>
+                            <div class="timeline-desc">UI/UX 전면 개편 및 새로운 기능 추가</div>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 미션과 비전 -->
+        <div class="section">
+            <h2 class="section-title">미션과 비전</h2>
+            <div class="section-content">
+                <h3>우리의 미션</h3>
+                <p>
+                    모든 사람들이 자신을 더 잘 이해하고, 일상에서 필요한 도구들을 
+                    쉽고 편리하게 사용할 수 있도록 돕는 것입니다.
+                </p>
+                
+                <div class="mission-cards">
+                    <div class="mission-card">
+                        <span class="mission-icon">🎯</span>
+                        <h4 class="mission-title">정확성</h4>
+                        <p class="mission-desc">
+                            과학적 근거와 데이터를 바탕으로 
+                            정확한 결과를 제공합니다
+                        </p>
+                    </div>
+                    
+                    <div class="mission-card">
+                        <span class="mission-icon">👥</span>
+                        <h4 class="mission-title">접근성</h4>
+                        <p class="mission-desc">
+                            누구나 무료로 이용할 수 있는 
+                            열린 플랫폼을 지향합니다
+                        </p>
+                    </div>
+                    
+                    <div class="mission-card">
+                        <span class="mission-icon">💡</span>
+                        <h4 class="mission-title">혁신성</h4>
+                        <p class="mission-desc">
+                            새로운 아이디어와 기술로 
+                            더 나은 서비스를 개발합니다
+                        </p>
+                    </div>
+                </div>
+                
+                <h3>우리의 비전</h3>
+                <p>
+                    doha.kr은 단순한 심리테스트 사이트를 넘어, 
+                    사람들의 일상에 실질적인 도움을 주는 종합 플랫폼으로 성장하고자 합니다. 
+                    자기 이해부터 실생활 편의까지, 
+                    삶의 모든 순간에 함께하는 든든한 동반자가 되겠습니다.
+                </p>
+            </div>
+        </div>
+        
+        <!-- 팀 소개 -->
+        <div class="section">
+            <h2 class="section-title">함께하는 사람들</h2>
+            <div class="section-content">
+                <p>
+                    doha.kr은 열정적인 개발자, 디자이너, 콘텐츠 크리에이터들이 모여 
+                    만들어가고 있습니다. 우리는 사용자 경험을 최우선으로 생각하며, 
+                    더 나은 서비스를 제공하기 위해 끊임없이 노력합니다.
+                </p>
+                
+                <div class="team-grid">
+                    <div class="team-member">
+                        <div class="member-avatar">👨‍💻</div>
+                        <h4 class="member-name">개발팀</h4>
+                        <p class="member-role">Development Team</p>
+                        <p class="member-desc">
+                            최신 기술로 안정적이고 
+                            빠른 서비스를 구현합니다
+                        </p>
+                    </div>
+                    
+                    <div class="team-member">
+                        <div class="member-avatar">🎨</div>
+                        <h4 class="member-name">디자인팀</h4>
+                        <p class="member-role">Design Team</p>
+                        <p class="member-desc">
+                            사용자 친화적인 
+                            아름다운 UI/UX를 만듭니다
+                        </p>
+                    </div>
+                    
+                    <div class="team-member">
+                        <div class="member-avatar">✍️</div>
+                        <h4 class="member-name">콘텐츠팀</h4>
+                        <p class="member-role">Content Team</p>
+                        <p class="member-desc">
+                            유익하고 재미있는 
+                            콘텐츠를 기획하고 제작합니다
+                        </p>
+                    </div>
+                    
+                    <div class="team-member">
+                        <div class="member-avatar">💬</div>
+                        <h4 class="member-name">고객지원팀</h4>
+                        <p class="member-role">Support Team</p>
+                        <p class="member-desc">
+                            사용자의 소리를 듣고 
+                            빠르게 대응합니다
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 통계 및 성과 -->
+        <div class="section">
+            <h2 class="section-title">우리의 성과</h2>
+            <div class="section-content">
+                <p>
+                    사용자 여러분의 사랑과 관심 덕분에 doha.kr은 
+                    빠르게 성장하고 있습니다. 앞으로도 더 나은 서비스로 보답하겠습니다.
+                </p>
+                
+                <div class="stats-boxes">
+                    <div class="stat-box">
+                        <div class="stat-number">50만+</div>
+                        <div class="stat-label">누적 테스트 참여</div>
+                    </div>
+                    
+                    <div class="stat-box">
+                        <div class="stat-number">15개</div>
+                        <div class="stat-label">다양한 서비스</div>
+                    </div>
+                    
+                    <div class="stat-box">
+                        <div class="stat-number">98%</div>
+                        <div class="stat-label">사용자 만족도</div>
+                    </div>
+                    
+                    <div class="stat-box">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">언제나 이용가능</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 광고 영역 -->
+        <div class="ad-container">
+            <div class="ad-label">광고</div>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-7905640648499222"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+        
+        <!-- 연락처 -->
+        <div class="section">
+            <h2 class="section-title">함께 만들어가요</h2>
+            <div class="section-content">
+                <p>
+                    doha.kr은 사용자 여러분의 의견을 소중히 생각합니다. 
+                    개선 사항, 새로운 아이디어, 문의사항이 있다면 언제든지 연락해주세요.
+                </p>
+                
+                <h3>문의하기</h3>
+                <ul style="list-style: none; padding: 0; line-height: 2;">
+                    <li>📧 이메일: contact@doha.kr</li>
+                    <li>📱 카카오톡: @doha_kr</li>
+                    <li>🌐 페이스북: facebook.com/dohakr</li>
+                    <li>📦 인스타그램: @doha_kr_official</li>
+                </ul>
+                
+                <h3>협업 제안</h3>
+                <p>
+                    콘텐츠 제휴, 비즈니스 협업, 광고 문의 등 
+                    다양한 형태의 협업을 환영합니다. 
+                    business@doha.kr로 연락주세요.
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 푸터 -->
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="/home.html">홈</a>
+            <a href="/about/">소개</a>
+            <a href="/privacy">개인정보처리방침</a>
+            <a href="/terms">이용약관</a>
+            <a href="/contact">문의하기</a>
+        </div>
+        <p style="color: var(--gray-500);">&copy; 2025 doha.kr. All rights reserved.</p>
+    </footer>
+    
+    <script>
+        // 애드센스 광고 로드
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</body>
+</html>
