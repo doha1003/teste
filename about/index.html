@@ -11,123 +11,21 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
+    <!-- External CSS -->
+    <link rel="stylesheet" href="/css/styles.css">
+    
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
     
     <style>
-        /* CSS 변수 정의 - 메인 페이지와 동일 */
-        :root {
-            --primary-color: #6366f1;
-            --secondary-color: #8b5cf6;
-            --accent-color: #f59e0b;
-            --success-color: #10b981;
-            --error-color: #ef4444;
-            
-            --gray-50: #f9fafb;
-            --gray-100: #f3f4f6;
-            --gray-200: #e5e7eb;
-            --gray-300: #d1d5db;
-            --gray-400: #9ca3af;
-            --gray-500: #6b7280;
-            --gray-600: #4b5563;
-            --gray-700: #374151;
-            --gray-800: #1f2937;
-            --gray-900: #111827;
-            
-            --gradient-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-            --gradient-warm: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
-            --gradient-cool: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
-            
-            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
-            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
-            --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: var(--gray-50);
-            color: var(--gray-900);
-            line-height: 1.6;
-        }
-        
-        /* 네비게이션 바 */
-        .navbar {
-            background: white;
-            box-shadow: var(--shadow-md);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-        
-        .navbar-container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 64px;
-        }
-        
-        .logo {
-            font-size: 24px;
-            font-weight: 700;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-decoration: none;
-        }
-        
-        .nav-menu {
-            display: flex;
-            gap: 32px;
-            list-style: none;
-        }
-        
-        .nav-link {
-            color: var(--gray-600);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-        
-        .nav-link:hover {
-            color: var(--primary-color);
-        }
-        
-        /* 헤더 섹션 */
+        /* Page-specific styles */
         .header {
-            background: white;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
             padding: 80px 20px;
             text-align: center;
             position: relative;
             overflow: hidden;
-        }
-        
-        .header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at 20% 80%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
-            animation: float 20s ease-in-out infinite;
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            33% { transform: translate(30px, -30px) rotate(120deg); }
-            66% { transform: translate(-20px, 20px) rotate(240deg); }
         }
         
         .header-content {
@@ -141,25 +39,21 @@
             font-size: 48px;
             font-weight: 700;
             margin-bottom: 16px;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: white;
         }
         
         .header-subtitle {
             font-size: 20px;
-            color: var(--gray-600);
+            color: rgba(255, 255, 255, 0.9);
             margin-bottom: 32px;
         }
         
-        /* 컨테이너 */
         .container {
             max-width: 1280px;
             margin: 0 auto;
             padding: 80px 20px;
         }
         
-        /* 섹션 */
         .section {
             background: white;
             border-radius: 16px;
@@ -198,7 +92,6 @@
             font-size: 16px;
         }
         
-        /* 특징 그리드 */
         .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -255,7 +148,6 @@
             line-height: 1.6;
         }
         
-        /* 하이라이트 박스 */
         .highlight-box {
             background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
             border-left: 4px solid var(--primary-color);
@@ -270,7 +162,6 @@
             font-weight: 500;
         }
         
-        /* 리스트 스타일 */
         .styled-list {
             list-style: none;
             margin: 20px 0;
@@ -291,7 +182,6 @@
             font-size: 18px;
         }
         
-        /* 광고 컨테이너 */
         .ad-container {
             margin: 40px 0;
             text-align: center;
@@ -305,97 +195,6 @@
             letter-spacing: 0.5px;
         }
         
-        /* 푸터 */
-        .footer {
-            background: var(--gray-900);
-            color: white;
-            padding: 48px 20px 32px;
-        }
-        
-        .footer-content {
-            max-width: 1280px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 48px;
-            margin-bottom: 48px;
-        }
-        
-        .footer-section h3 {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 16px;
-        }
-        
-        .footer-links {
-            list-style: none;
-        }
-        
-        .footer-links li {
-            margin-bottom: 12px;
-        }
-        
-        .footer-links a {
-            color: var(--gray-400);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-        
-        .footer-links a:hover {
-            color: white;
-        }
-        
-        .footer-social {
-            display: flex;
-            gap: 16px;
-            margin-top: 16px;
-        }
-        
-        .social-link {
-            width: 40px;
-            height: 40px;
-            background: var(--gray-800);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--gray-400);
-            text-decoration: none;
-            transition: all 0.2s;
-        }
-        
-        .social-link:hover {
-            background: var(--primary-color);
-            color: white;
-            transform: translateY(-2px);
-        }
-        
-        .footer-bottom {
-            border-top: 1px solid var(--gray-800);
-            padding-top: 32px;
-            text-align: center;
-            color: var(--gray-400);
-        }
-        
-        .footer-legal {
-            display: flex;
-            justify-content: center;
-            gap: 24px;
-            margin-bottom: 16px;
-            flex-wrap: wrap;
-        }
-        
-        .footer-legal a {
-            color: var(--gray-400);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-        
-        .footer-legal a:hover {
-            color: white;
-        }
-        
-        /* 반응형 */
         @media (max-width: 768px) {
             .header-title {
                 font-size: 36px;
@@ -408,36 +207,12 @@
             .features-grid {
                 grid-template-columns: 1fr;
             }
-            
-            .nav-menu {
-                display: none;
-            }
-            
-            .footer-content {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-            
-            .footer-social {
-                justify-content: center;
-            }
         }
     </style>
 </head>
 <body>
-    <!-- 네비게이션 -->
-    <nav class="navbar">
-        <div class="navbar-container">
-            <a href="/" class="logo">doha.kr</a>
-            <ul class="nav-menu">
-                <li><a href="/" class="nav-link">홈</a></li>
-                <li><a href="/tests/" class="nav-link">심리테스트</a></li>
-                <li><a href="/tools/" class="nav-link">실용도구</a></li>
-                <li><a href="/community/" class="nav-link">커뮤니티</a></li>
-                <li><a href="/about/" class="nav-link">소개</a></li>
-            </ul>
-        </div>
-    </nav>
+    <!-- 네비게이션 바 -->
+    <div id="navbar-placeholder"></div>
     
     <!-- 헤더 -->
     <header class="header">
@@ -456,7 +231,7 @@
             <h2 class="section-title">doha.kr이란?</h2>
             <div class="section-content">
                 <p>
-                    doha.kr은 2024년 6월부터 서비스를 시작한 웹사이트로, 
+                    doha.kr은 2025년 7월부터 서비스를 시작한 웹사이트로, 
                     일상 속에서 재미와 유용함을 찾을 수 있는 다양한 콘텐츠를 제공합니다.
                 </p>
                 
@@ -566,7 +341,7 @@
                 <ul class="styled-list">
                     <li><strong>이메일</strong>: youtubdoha@gmail.com</li>
                     <li><strong>운영시간</strong>: 평일 10:00 - 18:00</li>
-                    <li><strong>서비스 시작</strong>: 2024년 6월</li>
+                    <li><strong>서비스 시작</strong>: 2025년 7월</li>
                 </ul>
                 
                 <p>
@@ -577,58 +352,10 @@
     </div>
     
     <!-- 푸터 -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>doha.kr</h3>
-                <p style="color: var(--gray-400); margin-top: 8px;">
-                    일상을 더 재미있게 만드는 공간<br>
-                    2024년 6월부터 서비스 시작
-                </p>
-                <div class="footer-social">
-                    <a href="mailto:youtubdoha@gmail.com" class="social-link">📧</a>
-                </div>
-            </div>
-            
-            <div class="footer-section">
-                <h3>서비스</h3>
-                <ul class="footer-links">
-                    <li><a href="/tests/">심리테스트</a></li>
-                    <li><a href="/tools/">실용도구</a></li>
-                    <li><a href="/community/">커뮤니티</a></li>
-                    <li><a href="/about/">사이트 소개</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-section">
-                <h3>인기 콘텐츠</h3>
-                <ul class="footer-links">
-                    <li><a href="/tests/teto-egen/test.html">테토-에겐 테스트</a></li>
-                    <li><a href="/tests/mbti/">MBTI 검사</a></li>
-                    <li><a href="/tools/text-counter.html">글자수 세기</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-section">
-                <h3>고객지원</h3>
-                <ul class="footer-links">
-                    <li><a href="/about/">사이트 소개</a></li>
-                    <li><a href="/contact/">문의하기</a></li>
-                    <li><a href="/privacy/">개인정보처리방침</a></li>
-                    <li><a href="/terms/">이용약관</a></li>
-                </ul>
-            </div>
-        </div>
-        
-        <div class="footer-bottom">
-            <div class="footer-legal">
-                <a href="/privacy/">개인정보처리방침</a>
-                <a href="/terms/">이용약관</a>
-            </div>
-            <p>© 2024 doha.kr. All rights reserved.</p>
-            <p style="font-size: 14px; margin-top: 8px;">문의: youtubdoha@gmail.com</p>
-        </div>
-    </footer>
+    <div id="footer-placeholder"></div>
+    
+    <!-- External JavaScript -->
+    <script src="/js/main.js"></script>
     
     <script>
         // 애드센스 광고 로드
