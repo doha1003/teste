@@ -35,135 +35,63 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
+    <!-- External CSS -->
+    <link rel="stylesheet" href="/css/styles.css">
+    
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
     
     <style>
-        /* CSS 변수 */
-        :root {
-            --primary-color: #3b82f6;
-            --secondary-color: #10b981;
-            --accent-color: #f59e0b;
-            --error-color: #ef4444;
-            
-            --gray-50: #f9fafb;
-            --gray-100: #f3f4f6;
-            --gray-200: #e5e7eb;
-            --gray-300: #d1d5db;
-            --gray-400: #9ca3af;
-            --gray-500: #6b7280;
-            --gray-600: #4b5563;
-            --gray-700: #374151;
-            --gray-800: #1f2937;
-            --gray-900: #111827;
-            
-            --gradient-primary: linear-gradient(135deg, #3b82f6 0%, #10b981 100%);
-            --gradient-warm: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Noto Sans KR', -apple-system, sans-serif;
-            background-color: var(--gray-50);
-            color: var(--gray-900);
-            line-height: 1.6;
-        }
-        
-        /* 네비게이션 */
-        .navbar {
-            background: white;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-        
-        .navbar-container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 64px;
-        }
-        
-        .logo {
-            font-size: 24px;
-            font-weight: 700;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-decoration: none;
-        }
-        
-        .nav-menu {
-            display: flex;
-            gap: 32px;
-            list-style: none;
-        }
-        
-        .nav-link {
-            color: var(--gray-600);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-        
-        .nav-link:hover {
-            color: var(--primary-color);
-        }
-        
-        /* 헤더 섹션 */
+        /* Page-specific styles */
         .header {
-            background: white;
-            padding: 60px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 20px;
             text-align: center;
-            border-bottom: 1px solid var(--gray-200);
+            position: relative;
+            overflow: hidden;
         }
         
         .header-content {
             max-width: 800px;
             margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
         
         .header-title {
-            font-size: 40px;
+            font-size: 48px;
             font-weight: 700;
-            margin-bottom: 16px;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            color: white;
         }
         
         .header-subtitle {
-            font-size: 18px;
-            color: var(--gray-600);
-            line-height: 1.6;
+            font-size: 20px;
+            margin-bottom: 40px;
+            line-height: 1.5;
+            opacity: 0.9;
         }
         
         .start-button {
             display: inline-block;
             margin-top: 24px;
             padding: 16px 48px;
-            background: var(--gradient-primary);
+            background: rgba(255, 255, 255, 0.2);
             color: white;
             font-size: 18px;
             font-weight: 600;
-            border-radius: 8px;
+            border-radius: 12px;
             text-decoration: none;
             transition: all 0.3s;
-            box-shadow: 0 4px 14px rgba(59, 130, 246, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
         }
         
         .start-button:hover {
+            background: rgba(255, 255, 255, 0.3);
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
         }
         
         /* 메인 컨테이너 */
@@ -339,33 +267,6 @@
             letter-spacing: 0.5px;
         }
         
-        /* 푸터 */
-        .footer {
-            background: var(--gray-900);
-            color: white;
-            padding: 48px 20px;
-            text-align: center;
-            margin-top: 80px;
-        }
-        
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 32px;
-            margin-bottom: 24px;
-            flex-wrap: wrap;
-        }
-        
-        .footer-links a {
-            color: var(--gray-400);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-        
-        .footer-links a:hover {
-            color: white;
-        }
-        
         /* 반응형 */
         @media (max-width: 768px) {
             .header-title {
@@ -380,27 +281,12 @@
                 grid-template-columns: repeat(2, 1fr);
                 gap: 12px;
             }
-            
-            .nav-menu {
-                display: none;
-            }
         }
     </style>
 </head>
 <body>
-    <!-- 네비게이션 -->
-    <nav class="navbar">
-        <div class="navbar-container">
-            <a href="/" class="logo">doha.kr</a>
-            <ul class="nav-menu">
-                <li><a href="/home.html" class="nav-link">홈</a></li>
-                <li><a href="/tests/" class="nav-link">심리테스트</a></li>
-                <li><a href="/tools/" class="nav-link">실용도구</a></li>
-                <li><a href="/community/" class="nav-link">커뮤니티</a></li>
-                <li><a href="/about/" class="nav-link">소개</a></li>
-            </ul>
-        </div>
-    </nav>
+    <!-- 네비게이션 바 -->
+    <div id="navbar-placeholder"></div>
     
     <!-- 헤더 -->
     <header class="header">
@@ -410,7 +296,7 @@
                 Myers-Briggs Type Indicator 기반의 과학적 성격 검사<br>
                 16가지 성격 유형 중 나의 유형을 찾아보세요
             </p>
-            <a href="#" class="start-button">MBTI 검사 시작하기 →</a>
+            <a href="#" class="start-button">MBTI 검사 시작하기 (준비중) →</a>
         </div>
     </header>
     
@@ -684,16 +570,10 @@
     </div>
     
     <!-- 푸터 -->
-    <footer class="footer">
-        <div class="footer-links">
-            <a href="/home.html">홈</a>
-            <a href="/about/">소개</a>
-            <a href="/privacy">개인정보처리방침</a>
-            <a href="/terms">이용약관</a>
-            <a href="/contact">문의하기</a>
-        </div>
-        <p style="color: var(--gray-500);">&copy; 2025 doha.kr. All rights reserved.</p>
-    </footer>
+    <div id="footer-placeholder"></div>
+    
+    <!-- External JavaScript -->
+    <script src="/js/main.js"></script>
     
     <script>
         // FAQ 토글 기능
