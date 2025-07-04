@@ -61,19 +61,17 @@ function createFallbackComponent(componentName, targetId) {
                             심리테스트와 실용도구의 만남
                         </p>
                         <div class="footer-social">
-                            <a href="#" class="social-link">📧</a>
-                            <a href="#" class="social-link">📷</a>
-                            <a href="#" class="social-link">🐦</a>
-                            <a href="#" class="social-link">📱</a>
+                            <a href="mailto:youtubdoha@gmail.com" class="social-link">📧</a>
                         </div>
                     </div>
                     
                     <div class="footer-section">
                         <h3>서비스</h3>
                         <ul class="footer-links">
+                            <li><a href="/">홈</a></li>
                             <li><a href="/tests/">심리테스트</a></li>
                             <li><a href="/tools/">실용도구</a></li>
-                            <li><a href="/contact/">문의하기</a></li>
+                            <li><a href="/about/">사이트 소개</a></li>
                         </ul>
                     </div>
                     
@@ -83,17 +81,14 @@ function createFallbackComponent(componentName, targetId) {
                             <li><a href="/tests/teto-egen/start.html">테토-에겐 테스트</a></li>
                             <li><a href="/tests/mbti/">MBTI 테스트</a></li>
                             <li><a href="/tools/text-counter.html">글자수 세기</a></li>
-                            <li><a href="#" style="color: var(--gray-500);">연봉 계산기 (준비중)</a></li>
                         </ul>
                     </div>
                     
                     <div class="footer-section">
                         <h3>고객지원</h3>
                         <ul class="footer-links">
-                            <li><a href="/about/">사이트 소개</a></li>
                             <li><a href="/contact/">문의하기</a></li>
-                            <li><a href="/privacy/">개인정보처리방침</a></li>
-                            <li><a href="/terms/">이용약관</a></li>
+                            <li><a href="/faq/">자주 묻는 질문</a></li>
                         </ul>
                     </div>
                 </div>
