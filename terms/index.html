@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이용약관 | doha.kr</title>
+    <meta name="description" content="doha.kr의 이용약관입니다. 서비스 이용 전 반드시 확인해주세요.">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="이용약관 | doha.kr">
+    <meta property="og:description" content="doha.kr의 이용약관입니다. 서비스 이용 전 반드시 확인해주세요.">
+    <meta property="og:image" content="https://doha.kr/images/og-image.png">
+    <meta property="og:url" content="https://doha.kr/terms">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
+    
+    <style>
+        /* CSS 변수 정의 */
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #8b5cf6;
+            --accent-color: #f59e0b;
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            
+            --gradient-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            --gradient-warm: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+            --gradient-cool: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+            
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* 초기화 및 기본 스타일 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--gray-50);
+            color: var(--gray-900);
+            line-height: 1.6;
+        }
+        
+        /* 네비게이션 바 */
+        .navbar {
+            background: white;
+            box-shadow: var(--shadow-md);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .navbar-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 64px;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+        }
+        
+        .nav-menu {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+        
+        .nav-link {
+            color: var(--gray-600);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        
+        .nav-link:hover {
+            color: var(--primary-color);
+        }
+        
+        /* 헤더 섹션 */
+        .header {
+            background: white;
+            padding: 80px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 20% 80%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(30px, -30px) rotate(120deg); }
+            66% { transform: translate(-20px, 20px) rotate(240deg); }
+        }
+        
+        .header-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header-title {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .header-subtitle {
+            font-size: 20px;
+            color: var(--gray-600);
+            margin-bottom: 32px;
+        }
+        
+        .header-date {
+            color: var(--gray-500);
+            font-size: 16px;
+            margin-top: 16px;
+        }
+        
+        /* 컨테이너 */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+        
+        /* 섹션 카드 */
+        .section {
+            background: white;
+            border-radius: 16px;
+            padding: 48px;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 32px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient-primary);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+            transform-origin: left;
+        }
+        
+        .section:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .section:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .section-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: var(--gray-900);
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--gray-100);
+        }
+        
+        .section-content {
+            color: var(--gray-700);
+            line-height: 1.8;
+        }
+        
+        .section-content p {
+            margin-bottom: 20px;
+        }
+        
+        .section-content ul {
+            margin: 20px 0;
+            padding-left: 24px;
+        }
+        
+        .section-content li {
+            margin-bottom: 12px;
+        }
+        
+        .section-content h3 {
+            font-size: 20px;
+            margin: 24px 0 16px;
+            color: var(--gray-800);
+            font-weight: 600;
+        }
+        
+        .section-content strong {
+            color: var(--gray-900);
+            font-weight: 600;
+        }
+        
+        .highlight {
+            background: var(--gray-100);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: 500;
+            color: var(--gray-800);
+        }
+        
+        /* 광고 컨테이너 */
+        .ad-container {
+            margin: 40px 0;
+            text-align: center;
+        }
+        
+        .ad-label {
+            font-size: 12px;
+            color: var(--gray-500);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        /* 푸터 */
+        .footer {
+            background: var(--gray-900);
+            color: white;
+            padding: 48px 20px;
+            text-align: center;
+            margin-top: 80px;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: var(--gray-400);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        /* 반응형 디자인 */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            
+            .header-title {
+                font-size: 36px;
+            }
+            
+            .header-subtitle {
+                font-size: 18px;
+            }
+            
+            .section {
+                padding: 32px 24px;
+            }
+            
+            .section-title {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 네비게이션 바 -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="/" class="logo">doha.kr</a>
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link">홈</a></li>
+                <li><a href="/tests/" class="nav-link">심리테스트</a></li>
+                <li><a href="/tools/" class="nav-link">실용도구</a></li>
+                <li><a href="/community/" class="nav-link">커뮤니티</a></li>
+                <li><a href="/about/" class="nav-link">소개</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- 헤더 섹션 -->
+    <header class="header">
+        <div class="header-content">
+            <h1 class="header-title">이용약관</h1>
+            <p class="header-subtitle">
+                doha.kr의 이용약관입니다. 서비스 이용 전 반드시 확인해주세요.
+            </p>
+            <p class="header-date">시행일: 2024년 6월 1일</p>
+        </div>
+    </header>
+    
+    <!-- 메인 컨텐츠 -->
+    <div class="container">
+        <section class="section">
+            <h2 class="section-title">제1조 (목적)</h2>
+            <div class="section-content">
+                <p>이 약관은 <strong>doha.kr</strong>(이하 "사이트")이 제공하는 모든 서비스(이하 "서비스")의 이용조건 및 절차, 회원과 사이트의 권리, 의무, 책임사항과 기타 필요한 사항을 규정함을 목적으로 합니다.</p>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">제2조 (정의)</h2>
+            <div class="section-content">
+                <p>이 약관에서 사용하는 용어의 정의는 다음과 같습니다.</p>
+                <ul>
+                    <li><strong>"사이트"</strong>라 함은 doha.kr을 말합니다.</li>
+                    <li><strong>"서비스"</strong>라 함은 사이트가 제공하는 심리테스트, 실용도구, 커뮤니티 등 모든 서비스를 의미합니다.</li>
+                    <li><strong>"이용자"</strong>라 함은 사이트에 접속하여 이 약관에 따라 사이트가 제공하는 서비스를 받는 자를 말합니다.</li>
+                    <li><strong>"콘텐츠"</strong>라 함은 사이트에서 제공하는 모든 정보, 데이터, 문서, 이미지 등을 의미합니다.</li>
+                </ul>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">제3조 (약관의 효력 및 변경)</h2>
+            <div class="section-content">
+                <p>① 이 약관은 사이트에 게시하여 공시함으로써 효력이 발생합니다.</p>
+                <p>② 사이트는 합리적인 사유가 발생할 경우에는 이 약관을 변경할 수 있으며, 약관이 변경된 경우에는 지체없이 이를 공시합니다.</p>
+                <p>③ 변경된 약관은 사이트에 공시된 날로부터 효력이 발생됩니다.</p>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">제4조 (서비스의 제공)</h2>
+            <div class="section-content">
+                <p>① 사이트는 다음과 같은 서비스를 제공합니다.</p>
+                <ul>
+                    <li>심리테스트 서비스 (테토-에겐 테스트, MBTI 검사 등)</li>
+                    <li>실용도구 서비스 (글자수 세기, 연봉 계산기 등)</li>
+                    <li>커뮤니티 서비스</li>
+                    <li>기타 사이트가 정하는 서비스</li>
+                </ul>
+                <p>② 서비스는 연중무휴, 1일 24시간 제공함을 원칙으로 합니다. 단, 사이트는 시스템 정기점검, 증설 및 교체를 위해 당분간 서비스를 중단할 수 있습니다.</p>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">제5조 (서비스 이용)</h2>
+            <div class="section-content">
+                <p>① 서비스 이용은 사이트의 업무상 또는 기술상 특별한 지장이 없는 한 연중무휴 1일 24시간을 원칙으로 합니다.</p>
+                <p>② 이용자는 서비스를 이용하여 얻은 정보를 사이트의 사전승낙 없이 복사, 복제, 변경, 번역, 출판·방송 기타의 방법으로 사용하거나 이를 타인에게 제공할 수 없습니다.</p>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">제6조 (이용자의 의무)</h2>
+            <div class="section-content">
+                <p>① 이용자는 다음 각 호의 행위를 하여서는 안됩니다.</p>
+                <ul>
+                    <li>타인의 정보 도용</li>
+                    <li>사이트에 게시된 정보의 변경</li>
+                    <li>사이트가 정한 정보 이외의 정보(컴퓨터 프로그램 등) 등의 송신 또는 게시</li>
+                    <li>사이트 기타 제3자의 저작권 등 지적재산권에 대한 침해</li>
+                    <li>사이트 기타 제3자의 명예를 손상시키거나 업무를 방해하는 행위</li>
+                    <li>외설 또는 폭력적인 메시지, 화상, 음성, 기타 공서양속에 반하는 정보를 사이트에 공개 또는 게시하는 행위</li>
+                </ul>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">제7조 (저작권의 귀속 및 이용제한)</h2>
+            <div class="section-content">
+                <p>① 사이트가 작성한 저작물에 대한 저작권 기타 지적재산권은 사이트에 귀속합니다.</p>
+                <p>② 이용자는 사이트를 이용함으로써 얻은 정보 중 사이트에게 지적재산권이 귀속된 정보를 사이트의 사전 승낙없이 복제, 송신, 출판, 배포, 방송 기타 방법에 의하여 영리목적으로 이용하거나 제3자에게 이용하게 하여서는 안됩니다.</p>
+            </div>
+        </section>
+        
+        <!-- 광고 영역 -->
+        <div class="ad-container">
+            <div class="ad-label">광고</div>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-7905640648499222"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+        
+        <section class="section">
+            <h2 class="section-title">제8조 (개인정보보호)</h2>
+            <div class="section-content">
+                <p>① 사이트는 이용자의 개인정보 수집시 서비스제공을 위하여 필요한 범위에서 최소한의 개인정보를 수집합니다.</p>
+                <p>② 사이트는 이용자의 개인정보를 본인의 동의없이 제3자에게 제공하지 않습니다. 단, 법령의 규정에 의해 국가기관의 요구가 있는 경우에는 그러하지 않습니다.</p>
+                <p>③ 개인정보 보호에 관한 자세한 내용은 <a href="/privacy/" style="color: var(--primary-color); text-decoration: underline;">개인정보처리방침</a>을 참고하시기 바랍니다.</p>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">제9조 (사이트의 의무)</h2>
+            <div class="section-content">
+                <p>① 사이트는 법령과 이 약관이 금지하거나 공서양속에 반하는 행위를 하지 않으며, 이 약관이 정하는 바에 따라 지속적이고, 안정적으로 서비스를 제공하기 위하여 노력합니다.</p>
+                <p>② 사이트는 이용자가 안전하게 인터넷 서비스를 이용할 수 있도록 이용자의 개인정보보호를 위한 보안 시스템을 구축합니다.</p>
+                <p>③ 사이트는 이용자로부터 제기되는 의견이나 불만이 정당하다고 객관적으로 인정될 경우에는 적절한 절차를 거쳐 즉시 처리하여야 합니다.</p>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">제10조 (면책조항)</h2>
+            <div class="section-content">
+                <p>① 사이트는 천재지변 또는 이에 준하는 불가항력으로 인하여 서비스를 제공할 수 없는 경우에는 서비스 제공에 관한 책임이 면제됩니다.</p>
+                <p>② 사이트는 이용자의 귀책사유로 인한 서비스 이용의 장애에 대하여는 책임을 지지 않습니다.</p>
+                <p>③ 사이트는 이용자가 서비스를 이용하여 기대하는 수익을 상실한 것에 대하여 책임을 지지 않으며, 그 밖의 서비스를 통하여 얻은 자료로 인한 손해에 관하여 책임을 지지 않습니다.</p>
+                <p>④ 사이트에서 제공하는 심리테스트 결과는 <span class="highlight">오락 및 자기이해 목적</span>으로만 제공되며, 전문적인 심리상담이나 의학적 진단을 대체할 수 없습니다.</p>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">제11조 (분쟁해결)</h2>
+            <div class="section-content">
+                <p>① 사이트는 이용자가 제기하는 정당한 의견이나 불만을 반영하고 그 피해를 보상처리하기 위하여 피해보상처리기구를 설치·운영합니다.</p>
+                <p>② 사이트와 이용자 간에 발생한 전자상거래 분쟁에 관한 소송은 서울중앙지방법원을 관할 법원으로 합니다.</p>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">부칙</h2>
+            <div class="section-content">
+                <p>이 약관은 2024년 6월 1일부터 적용됩니다.</p>
+                <p>기존 약관은 본 약관으로 대체되며, 개정된 약관의 적용일자 이전 가입자도 개정된 약관의 적용을 받습니다.</p>
+            </div>
+        </section>
+    </div>
+    
+    <!-- 푸터 -->
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="/">홈</a>
+            <a href="/about/">소개</a>
+            <a href="/privacy/">개인정보처리방침</a>
+            <a href="/terms/">이용약관</a>
+            <a href="/contact/">문의하기</a>
+        </div>
+        <p style="color: var(--gray-500);">&copy; 2024 doha.kr. All rights reserved.</p>
+        <p style="color: var(--gray-500); font-size: 14px; margin-top: 8px;">
+            문의: youtubdoha@gmail.com
+        </p>
+    </footer>
+    
+    <script>
+        // 애드센스 광고 로드
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</body>
+</html>
