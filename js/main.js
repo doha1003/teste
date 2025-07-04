@@ -80,15 +80,18 @@ function createFallbackComponent(componentName, targetId) {
                     <div class="footer-section">
                         <h3>인기 콘텐츠</h3>
                         <ul class="footer-links">
-                            <li><a href="/tests/teto-egen/">테토-에겐 테스트</a></li>
+                            <li><a href="/tests/teto-egen/start.html">테토-에겐 테스트</a></li>
+                            <li><a href="/tests/mbti/">MBTI 테스트</a></li>
                             <li><a href="/tools/text-counter.html">글자수 세기</a></li>
+                            <li><a href="#" style="color: var(--gray-500);">연봉 계산기 (준비중)</a></li>
                         </ul>
                     </div>
                     
                     <div class="footer-section">
-                        <h3>정보</h3>
+                        <h3>고객지원</h3>
                         <ul class="footer-links">
                             <li><a href="/about/">사이트 소개</a></li>
+                            <li><a href="/contact/">문의하기</a></li>
                             <li><a href="/privacy/">개인정보처리방침</a></li>
                             <li><a href="/terms/">이용약관</a></li>
                         </ul>
