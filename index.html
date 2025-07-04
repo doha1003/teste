@@ -105,38 +105,73 @@
             text-decoration: none;
             font-weight: 500;
             transition: color 0.2s;
+            position: relative;
         }
         
         .nav-link:hover {
             color: var(--primary-color);
         }
         
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: width 0.3s;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
         /* 히어로 섹션 */
         .hero {
-            background: linear-gradient(135deg, #f8fafc 0%, #e5e7eb 100%);
+            background: white;
             padding: 80px 20px;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 20% 80%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(30px, -30px) rotate(120deg); }
+            66% { transform: translate(-20px, 20px) rotate(240deg); }
         }
         
         .hero-content {
             max-width: 800px;
             margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
         
         .hero-title {
             font-size: 48px;
             font-weight: 700;
-            margin-bottom: 20px;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            margin-bottom: 16px;
+            line-height: 1.2;
         }
         
         .hero-subtitle {
             font-size: 20px;
             color: var(--gray-600);
-            margin-bottom: 40px;
+            margin-bottom: 32px;
             line-height: 1.5;
         }
         
@@ -148,77 +183,97 @@
         }
         
         .btn {
-            padding: 14px 28px;
-            border: none;
+            padding: 12px 32px;
             border-radius: 8px;
-            font-size: 16px;
             font-weight: 600;
             text-decoration: none;
-            display: inline-block;
             transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: none;
             cursor: pointer;
+            font-size: 16px;
         }
         
         .btn-primary {
             background: var(--gradient-primary);
             color: white;
+            box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3);
         }
         
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
         }
         
         .btn-secondary {
             background: white;
-            color: var(--primary-color);
-            border: 2px solid var(--primary-color);
+            color: var(--gray-700);
+            border: 2px solid var(--gray-200);
         }
         
         .btn-secondary:hover {
-            background: var(--primary-color);
-            color: white;
+            background: var(--gray-50);
+            border-color: var(--gray-300);
         }
         
-        /* 기능 소개 섹션 */
+        /* 특징 섹션 */
         .features {
             padding: 80px 20px;
+            background: var(--gray-50);
+        }
+        
+        .container {
             max-width: 1280px;
             margin: 0 auto;
         }
         
-        .section-header {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-        
         .section-title {
+            text-align: center;
             font-size: 36px;
             font-weight: 700;
-            color: var(--gray-900);
             margin-bottom: 16px;
+            color: var(--gray-900);
         }
         
         .section-subtitle {
+            text-align: center;
             font-size: 18px;
             color: var(--gray-600);
+            margin-bottom: 48px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
         
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 32px;
         }
         
         .feature-card {
             background: white;
-            padding: 32px;
             border-radius: 16px;
-            box-shadow: var(--shadow-lg);
+            padding: 32px;
+            box-shadow: var(--shadow-md);
             transition: all 0.3s;
-            text-decoration: none;
-            color: inherit;
-            display: block;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient-primary);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+            transform-origin: left;
         }
         
         .feature-card:hover {
@@ -226,16 +281,20 @@
             box-shadow: var(--shadow-xl);
         }
         
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+        
         .feature-icon {
-            width: 60px;
-            height: 60px;
+            width: 64px;
+            height: 64px;
             background: var(--gradient-primary);
-            border-radius: 12px;
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 28px;
-            margin-bottom: 20px;
+            font-size: 32px;
+            margin-bottom: 24px;
         }
         
         .feature-title {
@@ -253,130 +312,104 @@
         
         .feature-link {
             color: var(--primary-color);
-            font-weight: 600;
+            text-decoration: none;
+            font-weight: 500;
             display: inline-flex;
             align-items: center;
+            gap: 4px;
+            transition: gap 0.2s;
+        }
+        
+        .feature-link:hover {
             gap: 8px;
         }
         
-        /* 테스트 섹션 */
-        .tests-section {
-            background: linear-gradient(135deg, #f8fafc 0%, #e5e7eb 100%);
+        /* 인기 서비스 섹션 */
+        .popular-services {
             padding: 80px 20px;
+            background: white;
         }
         
-        .test-grid {
-            max-width: 1280px;
-            margin: 0 auto;
+        .services-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 48px;
+            flex-wrap: wrap;
+        }
+        
+        .tab-button {
+            padding: 12px 24px;
+            background: var(--gray-100);
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            color: var(--gray-600);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .tab-button.active {
+            background: var(--gradient-primary);
+            color: white;
+        }
+        
+        .tab-button:hover:not(.active) {
+            background: var(--gray-200);
+        }
+        
+        .services-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 24px;
         }
         
-        .test-card {
-            background: white;
+        .service-card {
+            background: var(--gray-50);
             border-radius: 12px;
-            overflow: hidden;
-            box-shadow: var(--shadow-md);
+            padding: 24px;
+            text-align: center;
             transition: all 0.3s;
+            cursor: pointer;
             text-decoration: none;
             color: inherit;
+            display: block;
         }
         
-        .test-card:hover {
-            transform: translateY(-2px);
+        .service-card:hover {
+            background: white;
             box-shadow: var(--shadow-lg);
+            transform: translateY(-4px);
         }
         
-        .test-image {
-            height: 180px;
-            background: var(--gradient-primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 60px;
+        .service-emoji {
+            font-size: 48px;
+            margin-bottom: 16px;
+            display: block;
         }
         
-        .test-content {
-            padding: 24px;
-        }
-        
-        .test-title {
+        .service-name {
             font-size: 20px;
             font-weight: 600;
             margin-bottom: 8px;
             color: var(--gray-900);
         }
         
-        .test-description {
+        .service-desc {
             color: var(--gray-600);
             font-size: 14px;
             line-height: 1.5;
-            margin-bottom: 16px;
         }
         
-        .test-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 14px;
-            color: var(--gray-500);
-        }
-        
-        /* 통계 섹션 */
-        .stats-section {
-            padding: 60px 20px;
-            background: var(--gradient-primary);
+        .service-badge {
+            display: inline-block;
+            background: var(--accent-color);
             color: white;
-        }
-        
-        .stats-container {
-            max-width: 1000px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 40px;
-            text-align: center;
-        }
-        
-        .stat-item {
-            padding: 20px;
-        }
-        
-        .stat-number {
-            font-size: 48px;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-        
-        .stat-label {
-            font-size: 18px;
-            opacity: 0.9;
-        }
-        
-        /* CTA 섹션 */
-        .cta-section {
-            padding: 80px 20px;
-            text-align: center;
-            background: white;
-        }
-        
-        .cta-content {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        .cta-title {
-            font-size: 32px;
-            font-weight: 700;
-            margin-bottom: 16px;
-            color: var(--gray-900);
-        }
-        
-        .cta-description {
-            font-size: 18px;
-            color: var(--gray-600);
-            margin-bottom: 32px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 12px;
         }
         
         /* 푸터 */
@@ -391,14 +424,14 @@
             margin: 0 auto;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-bottom: 32px;
+            gap: 48px;
+            margin-bottom: 48px;
         }
         
         .footer-section h3 {
             font-size: 18px;
-            margin-bottom: 16px;
             font-weight: 600;
+            margin-bottom: 16px;
         }
         
         .footer-links {
@@ -406,7 +439,7 @@
         }
         
         .footer-links li {
-            margin-bottom: 8px;
+            margin-bottom: 12px;
         }
         
         .footer-links a {
@@ -419,11 +452,54 @@
             color: white;
         }
         
+        .footer-social {
+            display: flex;
+            gap: 16px;
+            margin-top: 16px;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background: var(--gray-800);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray-400);
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        
+        .social-link:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
         .footer-bottom {
             border-top: 1px solid var(--gray-800);
-            padding-top: 24px;
+            padding-top: 32px;
             text-align: center;
-            color: var(--gray-500);
+            color: var(--gray-400);
+        }
+        
+        .footer-legal {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+        
+        .footer-legal a {
+            color: var(--gray-400);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        
+        .footer-legal a:hover {
+            color: white;
         }
         
         /* 광고 컨테이너 */
@@ -442,8 +518,34 @@
             letter-spacing: 0.5px;
         }
         
+        /* 모바일 메뉴 버튼 */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+        }
+        
+        .mobile-menu-btn span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--gray-700);
+            margin: 4px 0;
+            transition: all 0.3s;
+        }
+        
         /* 반응형 디자인 */
         @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
             .hero-title {
                 font-size: 36px;
             }
@@ -452,98 +554,187 @@
                 font-size: 18px;
             }
             
-            .nav-menu {
-                display: none;
-            }
-            
-            .features-grid {
-                grid-template-columns: 1fr;
-                gap: 24px;
-            }
-            
-            .test-grid {
+            .features-grid,
+            .services-grid {
                 grid-template-columns: 1fr;
             }
             
-            .stats-container {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 20px;
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
             }
             
-            .stat-number {
-                font-size: 36px;
+            .footer-social {
+                justify-content: center;
             }
         }
+        
+        /* 애니메이션 효과 */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.6s forwards;
+        }
+        
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .stagger-1 { animation-delay: 0.1s; }
+        .stagger-2 { animation-delay: 0.2s; }
+        .stagger-3 { animation-delay: 0.3s; }
+        .stagger-4 { animation-delay: 0.4s; }
     </style>
 </head>
 <body>
-    <!-- 네비게이션 -->
+    <!-- 네비게이션 바 -->
     <nav class="navbar">
         <div class="navbar-container">
             <a href="/" class="logo">doha.kr</a>
+            
             <ul class="nav-menu">
                 <li><a href="/" class="nav-link">홈</a></li>
-                <li><a href="/tests/teto-egen/" class="nav-link">심리테스트</a></li>
-                <li><a href="/tools/text-counter.html" class="nav-link">실용도구</a></li>
+                <li><a href="/tests/" class="nav-link">심리테스트</a></li>
+                <li><a href="/tools/" class="nav-link">실용도구</a></li>
                 <li><a href="/community/" class="nav-link">커뮤니티</a></li>
                 <li><a href="/about/" class="nav-link">소개</a></li>
             </ul>
+            
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </nav>
     
     <!-- 히어로 섹션 -->
     <section class="hero">
         <div class="hero-content">
-            <h1 class="hero-title">일상을 더 재미있게!</h1>
-            <p class="hero-subtitle">
-                흥미로운 심리테스트부터 실용적인 도구까지,<br>
-                당신의 일상에 재미와 편리함을 더해드립니다.
+            <h1 class="hero-title fade-in">
+                일상을 더 재미있게 만드는<br>
+                <span style="background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">doha.kr</span>
+            </h1>
+            <p class="hero-subtitle fade-in stagger-1">
+                심리테스트로 나를 발견하고, 실용도구로 일상을 편리하게!<br>
+                무료로 제공되는 다양한 서비스를 지금 바로 경험해보세요.
             </p>
-            <div class="hero-buttons">
-                <a href="/tests/teto-egen/" class="btn btn-primary">인기 테스트 시작하기</a>
-                <a href="/tools/text-counter.html" class="btn btn-secondary">실용 도구 사용하기</a>
+            <div class="hero-buttons fade-in stagger-2">
+                <a href="/tests/teto-egen/test.html" class="btn btn-primary">
+                    <span>🔥</span> 인기 테스트 시작하기
+                </a>
+                <a href="#services" class="btn btn-secondary">
+                    <span>🔍</span> 서비스 둘러보기
+                </a>
             </div>
         </div>
     </section>
     
-    <!-- 기능 소개 -->
+    <!-- 특징 섹션 -->
     <section class="features">
-        <div class="section-header">
-            <h2 class="section-title">다양한 서비스를 만나보세요</h2>
-            <p class="section-subtitle">재미와 실용성을 모두 갖춘 다양한 도구들이 준비되어 있습니다</p>
-        </div>
-        
-        <div class="features-grid">
-            <a href="/tests/teto-egen/" class="feature-card">
-                <div class="feature-icon">🧠</div>
-                <h3 class="feature-title">심리테스트</h3>
-                <p class="feature-description">
-                    테토-에겐, MBTI 등 다양한 성격 유형 테스트로 자신을 더 깊이 이해해보세요.
-                </p>
-                <span class="feature-link">테스트 시작하기 →</span>
-            </a>
+        <div class="container">
+            <h2 class="section-title fade-in">왜 doha.kr인가요?</h2>
+            <p class="section-subtitle fade-in stagger-1">
+                다양한 심리테스트와 실용적인 도구들을 한곳에서 만나보세요.
+            </p>
             
-            <a href="/tools/text-counter.html" class="feature-card">
-                <div class="feature-icon">🛠️</div>
-                <h3 class="feature-title">실용도구</h3>
-                <p class="feature-description">
-                    글자수 세기, 연봉 계산기 등 일상에서 필요한 다양한 도구를 무료로 이용하세요.
-                </p>
-                <span class="feature-link">도구 사용하기 →</span>
-            </a>
-            
-            <a href="/community/" class="feature-card">
-                <div class="feature-icon">👥</div>
-                <h3 class="feature-title">커뮤니티</h3>
-                <p class="feature-description">
-                    같은 관심사를 가진 사람들과 소통하고, 다양한 의견을 나누어보세요.
-                </p>
-                <span class="feature-link">커뮤니티 가기 →</span>
-            </a>
+            <div class="features-grid">
+                <div class="feature-card fade-in stagger-1">
+                    <div class="feature-icon">🧠</div>
+                    <h3 class="feature-title">다양한 심리테스트</h3>
+                    <p class="feature-description">
+                        테토-에겐, MBTI 등 다양한 성격 유형 검사를 통해 
+                        자신을 더 깊이 이해할 수 있습니다.
+                    </p>
+                    <a href="/tests/" class="feature-link">테스트 보러가기 →</a>
+                </div>
+                
+                <div class="feature-card fade-in stagger-2">
+                    <div class="feature-icon">🛠️</div>
+                    <h3 class="feature-title">실용적인 도구모음</h3>
+                    <p class="feature-description">
+                        글자수 세기, 연봉 계산기, BMI 계산기 등 일상에서 필요한 
+                        다양한 도구를 무료로 이용할 수 있습니다.
+                    </p>
+                    <a href="/tools/" class="feature-link">도구 사용하기 →</a>
+                </div>
+                
+                <div class="feature-card fade-in stagger-3">
+                    <div class="feature-icon">💬</div>
+                    <h3 class="feature-title">커뮤니티 (준비중)</h3>
+                    <p class="feature-description">
+                        곧 여러분의 이야기를 나누고 소통할 수 있는 
+                        커뮤니티 공간이 열립니다.
+                    </p>
+                    <a href="/community/" class="feature-link">미리 둘러보기 →</a>
+                </div>
+            </div>
         </div>
     </section>
     
-    <!-- 광고 영역 1 -->
+    <!-- 인기 서비스 섹션 -->
+    <section id="services" class="popular-services">
+        <div class="container">
+            <h2 class="section-title fade-in">제공 서비스</h2>
+            <p class="section-subtitle fade-in stagger-1">
+                현재 이용 가능한 서비스들입니다
+            </p>
+            
+            <div class="services-tabs fade-in stagger-2">
+                <button class="tab-button active" onclick="showServices('all')">전체</button>
+                <button class="tab-button" onclick="showServices('tests')">심리테스트</button>
+                <button class="tab-button" onclick="showServices('tools')">실용도구</button>
+            </div>
+            
+            <div class="services-grid fade-in stagger-3">
+                <a href="/tests/teto-egen/test.html" class="service-card" data-category="tests">
+                    <span class="service-emoji">🦋</span>
+                    <h3 class="service-name">테토-에겐 테스트</h3>
+                    <p class="service-desc">당신의 성격이 테토형인지 에겐형인지 알아보세요</p>
+                    <span class="service-badge">인기</span>
+                </a>
+                
+                <a href="/tests/mbti/" class="service-card" data-category="tests">
+                    <span class="service-emoji">🎭</span>
+                    <h3 class="service-name">MBTI 성격유형 검사</h3>
+                    <p class="service-desc">16가지 성격 유형 중 나는 어떤 유형일까?</p>
+                    <span class="service-badge">준비중</span>
+                </a>
+                
+                <a href="/tools/text-counter.html" class="service-card" data-category="tools">
+                    <span class="service-emoji">📝</span>
+                    <h3 class="service-name">글자수 세기</h3>
+                    <p class="service-desc">자소서, 리포트 작성 시 필수! 글자수를 확인하세요</p>
+                </a>
+                
+                <a href="#" class="service-card" data-category="tools">
+                    <span class="service-emoji">💰</span>
+                    <h3 class="service-name">연봉 실수령액 계산기</h3>
+                    <p class="service-desc">세금 공제 후 실제 받는 금액을 계산해보세요</p>
+                    <span class="service-badge">준비중</span>
+                </a>
+                
+                <a href="#" class="service-card" data-category="tests">
+                    <span class="service-emoji">💕</span>
+                    <h3 class="service-name">연애 스타일 테스트</h3>
+                    <p class="service-desc">나의 연애 성향과 이상형을 알아보는 테스트</p>
+                    <span class="service-badge">준비중</span>
+                </a>
+                
+                <a href="#" class="service-card" data-category="tools">
+                    <span class="service-emoji">🏃</span>
+                    <h3 class="service-name">BMI 계산기</h3>
+                    <p class="service-desc">키와 몸무게로 체질량지수를 확인하세요</p>
+                    <span class="service-badge">준비중</span>
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 광고 영역 -->
     <div class="ad-container">
         <div class="ad-label">광고</div>
         <ins class="adsbygoogle"
@@ -554,151 +745,110 @@
              data-full-width-responsive="true"></ins>
     </div>
     
-    <!-- 인기 테스트 섹션 -->
-    <section class="tests-section">
-        <div class="section-header">
-            <h2 class="section-title">인기 심리테스트</h2>
-            <p class="section-subtitle">가장 많은 사랑을 받고 있는 테스트들을 만나보세요</p>
-        </div>
-        
-        <div class="test-grid">
-            <a href="/tests/teto-egen/test.html" class="test-card">
-                <div class="test-image">🎭</div>
-                <div class="test-content">
-                    <h3 class="test-title">테토-에겐 성격 유형 테스트</h3>
-                    <p class="test-description">
-                        10가지 질문으로 알아보는 나의 성격 유형. 테토형과 에겐형 중 당신은 어떤 유형일까요?
-                    </p>
-                    <div class="test-meta">
-                        <span>⏱️ 5분</span>
-                        <span>👥 152만명 참여</span>
-                    </div>
-                </div>
-            </a>
-            
-            <a href="/tests/mbti/test.html" class="test-card">
-                <div class="test-image">🔮</div>
-                <div class="test-content">
-                    <h3 class="test-title">MBTI 성격유형 검사</h3>
-                    <p class="test-description">
-                        16가지 성격 유형 중 나는 어떤 유형? 60개 문항으로 정확하게 분석해드립니다.
-                    </p>
-                    <div class="test-meta">
-                        <span>⏱️ 15분</span>
-                        <span>👥 98만명 참여</span>
-                    </div>
-                </div>
-            </a>
-            
-            <a href="/tests/love-language/" class="test-card">
-                <div class="test-image">💝</div>
-                <div class="test-content">
-                    <h3 class="test-title">사랑의 언어 테스트</h3>
-                    <p class="test-description">
-                        나와 연인의 사랑 표현 방식을 알아보고, 더 행복한 관계를 만들어보세요.
-                    </p>
-                    <div class="test-meta">
-                        <span>⏱️ 10분</span>
-                        <span>👥 준비중</span>
-                    </div>
-                </div>
-            </a>
-        </div>
-    </section>
-    
-    <!-- 통계 섹션 -->
-    <section class="stats-section">
-        <div class="stats-container">
-            <div class="stat-item">
-                <div class="stat-number">250만+</div>
-                <div class="stat-label">누적 방문자</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">15개</div>
-                <div class="stat-label">제공 서비스</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">98%</div>
-                <div class="stat-label">만족도</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">365일</div>
-                <div class="stat-label">무료 이용</div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- CTA 섹션 -->
-    <section class="cta-section">
-        <div class="cta-content">
-            <h2 class="cta-title">지금 바로 시작하세요!</h2>
-            <p class="cta-description">
-                회원가입 없이 모든 서비스를 무료로 이용할 수 있습니다.<br>
-                당신의 일상에 작은 즐거움을 더해보세요.
-            </p>
-            <a href="/tests/teto-egen/" class="btn btn-primary">테스트 시작하기</a>
-        </div>
-    </section>
-    
-    <!-- 광고 영역 2 -->
-    <div class="ad-container">
-        <div class="ad-label">광고</div>
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-7905640648499222"
-             data-ad-slot="2345678901"
-             data-ad-format="auto"
-             data-full-width-responsive="true"></ins>
-    </div>
-    
     <!-- 푸터 -->
     <footer class="footer">
         <div class="footer-content">
+            <div class="footer-section">
+                <h3>doha.kr</h3>
+                <p style="color: var(--gray-400); margin-top: 8px;">
+                    일상을 더 재미있게 만드는 공간<br>
+                    2024년 6월부터 서비스 시작
+                </p>
+                <div class="footer-social">
+                    <a href="mailto:youtubdoha@gmail.com" class="social-link">📧</a>
+                </div>
+            </div>
+            
             <div class="footer-section">
                 <h3>서비스</h3>
                 <ul class="footer-links">
                     <li><a href="/tests/">심리테스트</a></li>
                     <li><a href="/tools/">실용도구</a></li>
                     <li><a href="/community/">커뮤니티</a></li>
+                    <li><a href="/about/">사이트 소개</a></li>
                 </ul>
             </div>
+            
             <div class="footer-section">
                 <h3>인기 콘텐츠</h3>
                 <ul class="footer-links">
-                    <li><a href="/tests/teto-egen/">테토-에겐 테스트</a></li>
+                    <li><a href="/tests/teto-egen/test.html">테토-에겐 테스트</a></li>
                     <li><a href="/tests/mbti/">MBTI 검사</a></li>
                     <li><a href="/tools/text-counter.html">글자수 세기</a></li>
                 </ul>
             </div>
+            
             <div class="footer-section">
-                <h3>정보</h3>
+                <h3>고객지원</h3>
                 <ul class="footer-links">
                     <li><a href="/about/">사이트 소개</a></li>
+                    <li><a href="/contact/">문의하기</a></li>
                     <li><a href="/privacy/">개인정보처리방침</a></li>
                     <li><a href="/terms/">이용약관</a></li>
-                    <li><a href="/contact/">문의하기</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h3>소셜</h3>
-                <ul class="footer-links">
-                    <li><a href="#">Instagram</a></li>
-                    <li><a href="#">YouTube</a></li>
-                    <li><a href="#">Blog</a></li>
                 </ul>
             </div>
         </div>
+        
         <div class="footer-bottom">
-            <p>&copy; 2025 doha.kr. All rights reserved.</p>
+            <div class="footer-legal">
+                <a href="/privacy/">개인정보처리방침</a>
+                <a href="/terms/">이용약관</a>
+            </div>
+            <p>&copy; 2024 doha.kr. All rights reserved.</p>
+            <p style="font-size: 14px; margin-top: 8px;">문의: youtubdoha@gmail.com</p>
         </div>
     </footer>
     
     <script>
-        // 애드센스 로드
-        window.addEventListener('load', () => {
-            (adsbygoogle = window.adsbygoogle || []).push({});
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        });
+        // 모바일 메뉴 토글
+        function toggleMobileMenu() {
+            const navMenu = document.querySelector('.nav-menu');
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            
+            navMenu.classList.toggle('active');
+            menuBtn.classList.toggle('active');
+        }
+        
+        // 서비스 필터링
+        function showServices(category) {
+            const buttons = document.querySelectorAll('.tab-button');
+            const cards = document.querySelectorAll('.service-card');
+            
+            // 버튼 활성화 상태 변경
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // 카드 필터링
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category.includes(category)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+        
+        // 스크롤 애니메이션
+        function handleScrollAnimation() {
+            const elements = document.querySelectorAll('.fade-in');
+            
+            elements.forEach(element => {
+                const rect = element.getBoundingClientRect();
+                const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+                
+                if (isVisible) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        }
+        
+        // 이벤트 리스너
+        window.addEventListener('scroll', handleScrollAnimation);
+        window.addEventListener('load', handleScrollAnimation);
+        
+        // 애드센스 광고 로드
+        (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </body>
 </html>
