@@ -3,12 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>테토-에겐 성격 유형 테스트</title>
+    <title>테토-에겐 성격 유형 테스트 - doha.kr</title>
     
-    <!-- Google AdSense 헤드 태그 (사용자 게시자 ID 적용) -->
+    <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
-    
-    <!-- 사이트 확인용 메타 태그 -->
     <meta name="google-adsense-account" content="ca-pub-7905640648499222">
     
     <!-- 카카오 JavaScript SDK -->
@@ -19,309 +17,161 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
+    <!-- External CSS -->
+    <link rel="stylesheet" href="/css/styles.css">
+    
     <style>
-        /* CSS 변수 정의 - 전체 사이트 통일 */
-        :root {
-            --primary-color: #6366f1;
-            --secondary-color: #8b5cf6;
-            --accent-color: #f59e0b;
-            --success-color: #10b981;
-            --error-color: #ef4444;
-            
-            --gray-50: #f9fafb;
-            --gray-100: #f3f4f6;
-            --gray-200: #e5e7eb;
-            --gray-300: #d1d5db;
-            --gray-400: #9ca3af;
-            --gray-500: #6b7280;
-            --gray-600: #4b5563;
-            --gray-700: #374151;
-            --gray-800: #1f2937;
-            --gray-900: #111827;
-            
-            --gradient-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-            --gradient-warm: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
-            --gradient-cool: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
-            
-            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
-            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
-            --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--gray-50);
-            color: var(--gray-900);
-            line-height: 1.6;
-        }
-        
-        /* 통일된 네비게이션 바 */
-        .navbar {
-            background: white;
-            box-shadow: var(--shadow-md);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-        
-        .navbar-container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 64px;
-        }
-        
-        .logo {
-            font-size: 24px;
-            font-weight: 700;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-decoration: none;
-        }
-        
-        .nav-menu {
-            display: flex;
-            gap: 32px;
-            list-style: none;
-        }
-        
-        .nav-link {
-            color: var(--gray-600);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-        
-        .nav-link:hover {
-            color: var(--primary-color);
-        }
-
-        .container {
+        /* 테스트 전용 추가 스타일 */
+        .test-container {
             max-width: 800px;
-            margin: 0 auto;
+            margin: 40px auto;
             background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+            border-radius: 16px;
+            box-shadow: var(--shadow-lg);
             overflow: hidden;
         }
-
-        .header {
-            background: linear-gradient(135deg, #2b6cb0 0%, #2c5282 100%);
+        
+        .test-header {
+            background: var(--gradient-primary);
             color: white;
             padding: 40px 30px;
             text-align: center;
             position: relative;
         }
-
-        .header h1 {
+        
+        .test-header h1 {
             font-size: 2.5em;
             margin-bottom: 8px;
             font-weight: 600;
-            letter-spacing: -0.025em;
+            color: white;
         }
-
-        .header p {
+        
+        .test-header p {
             font-size: 1.2em;
             opacity: 0.9;
             font-weight: 300;
-        }
-
-        /* 네비게이션 링크들 */
-        .nav-links {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            display: flex;
-            gap: 15px;
-        }
-
-        .nav-link-old {
-            background: rgba(255, 255, 255, 0.2);
             color: white;
-            text-decoration: none;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.9em;
-            font-weight: 500;
-            transition: all 0.2s ease;
-            border: 1px solid rgba(255, 255, 255, 0.3);
         }
-
-        .nav-link-old:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-1px);
-        }
-
-        .content {
+        
+        .test-content {
             padding: 40px 30px;
         }
-
-        /* 테스트 시작 전 안내 섹션 */
-        .intro-section {
+        
+        /* 성별 선택 화면 */
+        .gender-selection {
             text-align: center;
-            margin-bottom: 40px;
-            padding: 30px;
-            background: #f8fafc;
-            border-radius: 12px;
-            border: 1px solid #e2e8f0;
+            padding: 40px 20px;
         }
-
-        .intro-section h2 {
-            font-size: 1.5em;
-            color: #1a202c;
-            margin-bottom: 15px;
+        
+        .gender-title {
+            font-size: 2em;
+            margin-bottom: 16px;
+            color: var(--gray-900);
             font-weight: 600;
         }
-
-        .intro-section p {
-            color: #4a5568;
-            margin-bottom: 20px;
-            font-size: 1.05em;
+        
+        .gender-subtitle {
+            font-size: 1.1em;
+            color: var(--gray-600);
+            margin-bottom: 40px;
             line-height: 1.6;
         }
-
-        .intro-features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .intro-feature {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            font-size: 0.9em;
-            color: #2d3748;
-            font-weight: 500;
-        }
-
-        .start-test-btn {
-            background: linear-gradient(135deg, #38b2ac 0%, #319795 100%);
-            color: white;
-            padding: 16px 48px;
-            font-size: 1.2em;
-            font-weight: 600;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            margin-top: 20px;
-        }
-
-        .start-test-btn:hover {
-            background: linear-gradient(135deg, #319795 0%, #2c7a7b 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(56, 178, 172, 0.3);
-        }
-
+        
+        /* 테스트 진행 화면 */
         .progress-container {
             margin-bottom: 40px;
         }
-
+        
         .progress-info {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 8px;
         }
-
+        
         .progress-text {
             font-size: 0.9em;
-            color: #718096;
             font-weight: 500;
+            color: var(--gray-700);
         }
-
+        
         .progress-bar {
             width: 100%;
-            height: 6px;
-            background: #e2e8f0;
-            border-radius: 3px;
+            height: 8px;
+            background: var(--gray-200);
+            border-radius: 4px;
             overflow: hidden;
         }
-
+        
         .progress {
             height: 100%;
-            background: #2b6cb0;
+            background: var(--gradient-primary);
             transition: width 0.4s ease;
-            border-radius: 3px;
+            border-radius: 4px;
         }
-
+        
         .question-container {
             margin-bottom: 40px;
         }
-
+        
         .question {
             font-size: 1.4em;
             margin-bottom: 30px;
-            color: #1a202c;
             font-weight: 600;
             line-height: 1.4;
+            color: var(--gray-900);
         }
-
+        
         .options {
             display: flex;
             flex-direction: column;
             gap: 16px;
         }
-
+        
         .option {
-            background: #f7fafc;
-            border: 2px solid #e2e8f0;
-            border-radius: 8px;
+            border: 2px solid var(--gray-200);
+            border-radius: 12px;
             padding: 20px 24px;
             cursor: pointer;
             transition: all 0.2s ease;
             font-size: 1.05em;
             line-height: 1.5;
             position: relative;
+            background: white;
         }
-
+        
         .option:hover {
-            background: #edf2f7;
-            border-color: #cbd5e0;
+            border-color: var(--primary-color);
             transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
         }
-
+        
         .option.selected {
-            background: #ebf8ff;
-            border-color: #2b6cb0;
-            color: #1a365d;
+            border-color: var(--primary-color);
+            background: rgba(99, 102, 241, 0.05);
         }
-
+        
         .option.selected::after {
             content: '✓';
             position: absolute;
             right: 20px;
             top: 50%;
             transform: translateY(-50%);
-            color: #2b6cb0;
+            color: var(--primary-color);
             font-weight: bold;
             font-size: 1.2em;
         }
-
+        
         .navigation {
             display: flex;
             justify-content: space-between;
             margin-top: 40px;
         }
-
+        
         .btn {
-            padding: 12px 32px;
+            padding: 14px 32px;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             font-size: 1em;
             font-weight: 600;
             cursor: pointer;
@@ -329,109 +179,60 @@
             text-decoration: none;
             display: inline-block;
         }
-
+        
         .btn-primary {
-            background: #2b6cb0;
+            background: var(--gradient-primary);
             color: white;
+            box-shadow: var(--shadow-md);
         }
-
+        
         .btn-primary:hover {
-            background: #2c5282;
             transform: translateY(-1px);
+            box-shadow: var(--shadow-lg);
         }
-
+        
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
         .btn-secondary {
-            background: #e2e8f0;
-            color: #4a5568;
+            background: white;
+            color: var(--gray-700);
+            border: 2px solid var(--gray-200);
         }
-
+        
         .btn-secondary:hover {
-            background: #cbd5e0;
+            border-color: var(--primary-color);
+            color: var(--primary-color);
         }
-
-        .btn-success {
-            background: linear-gradient(135deg, #38b2ac 0%, #319795 100%);
-            color: white;
-            padding: 14px 36px;
-            font-size: 1.05em;
-        }
-
-        .btn-success:hover {
-            background: linear-gradient(135deg, #319795 0%, #2c7a7b 100%);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(56, 178, 172, 0.3);
-        }
-
-        /* 결과 화면 스타일 */
+        
+        /* 결과 화면 */
         .result-container {
             text-align: center;
             padding: 40px 30px;
         }
-
-        /* 수집형 카드 스타일 */
+        
         .collection-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             border-radius: 20px;
-            padding: 30px;
+            padding: 40px;
             margin: 30px auto;
-            max-width: 400px;
+            max-width: 500px;
+            background: var(--gradient-primary);
+            box-shadow: var(--shadow-xl);
+            border: 1px solid var(--gray-200);
             position: relative;
             overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-            transform: perspective(1000px) rotateY(0deg);
-            transition: all 0.6s ease;
             cursor: pointer;
+            transition: all 0.6s ease;
         }
-
+        
         .collection-card:hover {
-            transform: perspective(1000px) rotateY(5deg) scale(1.05);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.2);
         }
-
-        /* 홀로그램 반짝이는 효과 */
-        .collection-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, 
-                transparent 30%, 
-                rgba(255,255,255,0.3) 50%, 
-                transparent 70%);
-            transform: rotate(45deg);
-            animation: shine 3s infinite;
-            pointer-events: none;
-        }
-
-        @keyframes shine {
-            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-            50% { transform: translateX(0%) translateY(0%) rotate(45deg); }
-            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-        }
-
-        /* 카드 테두리 반짝임 */
-        .collection-card::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            border-radius: 20px;
-            padding: 3px;
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96c93d, #ff6b6b);
-            background-size: 400% 400%;
-            animation: gradient-border 4s ease infinite;
-            z-index: -1;
-        }
-
-        @keyframes gradient-border {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-
+        
         .card-inner {
             background: rgba(255,255,255,0.95);
             border-radius: 17px;
@@ -439,46 +240,38 @@
             position: relative;
             z-index: 1;
         }
-
+        
         .card-avatar {
             width: 120px;
             height: 120px;
             border-radius: 50%;
             margin: 0 auto 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 4em;
             color: white;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            background: var(--gradient-primary);
+            box-shadow: var(--shadow-lg);
         }
-
+        
         .result-type {
-            font-size: 2.5em;
+            font-size: 2.2em;
             font-weight: 700;
             margin-bottom: 15px;
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
-            background-size: 200% 200%;
+            background: var(--gradient-primary);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            animation: gradient-text 3s ease infinite;
-            text-shadow: 0 0 20px rgba(255,107,107,0.3);
         }
-
-        @keyframes gradient-text {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-
+        
         .result-description {
             font-size: 1.1em;
             line-height: 1.6;
-            color: #333;
-            margin-bottom: 20px;
+            color: var(--gray-700);
+            margin-bottom: 30px;
         }
-
+        
         .card-rarity {
             position: absolute;
             top: 20px;
@@ -494,138 +287,118 @@
             box-shadow: 0 4px 8px rgba(255,215,0,0.3);
             z-index: 10;
         }
-
+        
         .card-stats {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 10px;
             margin-top: 20px;
         }
-
+        
         .stat-item {
-            background: #f8f9fa;
+            background: var(--gray-50);
             padding: 10px;
             border-radius: 8px;
             text-align: center;
         }
-
+        
         .stat-label {
             font-size: 0.8em;
-            color: #666;
+            color: var(--gray-600);
             margin-bottom: 4px;
         }
-
+        
         .stat-value {
             font-weight: bold;
-            color: #333;
+            color: var(--gray-900);
         }
-
+        
         .traits-section {
             margin: 50px 0;
         }
-
+        
         .section-title {
             font-size: 1.8em;
-            color: #1a202c;
             margin-bottom: 30px;
             font-weight: 600;
             text-align: center;
+            color: var(--gray-900);
         }
-
+        
         .result-traits {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
             margin: 30px 0;
         }
-
+        
         .trait-card {
             background: white;
             padding: 24px;
             border-radius: 12px;
-            border-left: 4px solid #2b6cb0;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid var(--primary-color);
+            box-shadow: var(--shadow-md);
             transition: transform 0.2s ease;
         }
-
+        
         .trait-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow-lg);
         }
-
+        
         .trait-title {
             font-weight: 600;
-            color: #1a202c;
+            color: var(--gray-900);
             margin-bottom: 8px;
             font-size: 1.1em;
         }
-
+        
         .trait-desc {
-            color: #4a5568;
+            color: var(--gray-600);
             font-size: 0.95em;
             line-height: 1.5;
         }
-
+        
         .compatibility {
-            background: linear-gradient(135deg, #38b2ac 0%, #319795 100%);
+            background: var(--gradient-primary);
             color: white;
             padding: 30px;
             border-radius: 12px;
             margin: 40px 0;
             text-align: center;
         }
-
+        
         .compatibility h3 {
             font-size: 1.4em;
             margin-bottom: 12px;
             font-weight: 600;
+            color: white;
         }
-
+        
         .compatibility p {
             font-size: 1.05em;
             line-height: 1.6;
             opacity: 0.95;
+            color: white;
         }
-
-        /* 상세 분석 버튼 섹션 */
-        .detail-section {
-            margin: 40px 0;
-            text-align: center;
-            padding: 30px;
-            background: #f0f4f8;
-            border-radius: 12px;
-        }
-
-        .detail-section h3 {
-            font-size: 1.3em;
-            color: #1a202c;
-            margin-bottom: 15px;
-            font-weight: 600;
-        }
-
-        .detail-section p {
-            color: #4a5568;
-            margin-bottom: 20px;
-            font-size: 1.05em;
-        }
-
-        /* 카카오톡 공유 버튼 스타일 */
+        
+        /* 카카오톡 공유 버튼 */
         .share-section {
             text-align: center;
             margin: 30px 0;
             padding: 20px;
-            background: #f8fafc;
+            background: var(--gray-50);
             border-radius: 12px;
-            border: 1px solid #e2e8f0;
+            border: 1px solid var(--gray-200);
         }
-
+        
         .share-title {
             font-size: 1.2em;
             font-weight: 600;
-            color: #1a202c;
+            color: var(--gray-900);
             margin-bottom: 15px;
         }
-
+        
         .kakao-share-btn {
             background: #FEE500;
             color: #000000;
@@ -640,284 +413,133 @@
             align-items: center;
             gap: 8px;
             text-decoration: none;
-            margin: 0 10px;
         }
-
+        
         .kakao-share-btn:hover {
             background: #F5DC00;
             transform: translateY(-1px);
             box-shadow: 0 4px 12px rgba(254, 229, 0, 0.4);
         }
-
-        .kakao-share-btn:active {
-            transform: translateY(0px);
-        }
-
+        
         .kakao-icon {
             width: 20px;
             height: 20px;
-            background: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%23000" d="M12 2C6.48 2 2 5.58 2 10c0 3.17 2.11 5.95 5.35 7.36l-.89 3.26c-.06.22.2.4.39.27L11.65 18c.12 0 .23.01.35.01 5.52 0 10-3.58 10-8s-4.48-8-10-8z"/></svg>') no-repeat center;
-            background-size: contain;
         }
-
-        .restart-btn {
-            margin-top: 40px;
-            background: #2b6cb0;
-            color: white;
-            padding: 14px 40px;
-            font-size: 1.1em;
-        }
-
+        
         .hidden {
             display: none;
         }
-
-        /* 애드센스 광고 스타일 - 최적화된 배치 */
+        
+        /* 광고 */
         .ad-container {
             text-align: center;
             margin: 40px auto;
             padding: 20px;
-            background: #f7fafc;
+            background: var(--gray-50);
             border-radius: 8px;
-            border: 1px solid #e2e8f0;
-            max-width: 728px;
+            border: 1px solid var(--gray-200);
         }
-
+        
         .ad-label {
             font-size: 0.8em;
-            color: #718096;
+            color: var(--gray-500);
             margin-bottom: 10px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-
-        /* 메인 페이지용 광고 (페이지 로드 시) */
-        .main-ad {
-            margin: 40px auto;
-        }
-
-        /* 결과 페이지용 광고 (테스트 완료 시) */
-        .result-ad {
-            margin: 40px auto;
-        }
-
-        /* Footer 스타일 */
-        .footer {
-            background: #2d3748;
-            margin-top: 60px;
-            padding: 30px 20px;
-            color: white;
-        }
-
-        .footer-container {
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .footer-links {
-            margin-bottom: 20px;
-        }
-
-        .footer-link {
-            color: #a0aec0;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.2s ease;
-            padding: 8px 16px;
-            border-radius: 6px;
-            display: inline-block;
-        }
-
-        .footer-link:hover {
-            color: white;
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .footer-divider {
-            color: #4a5568;
-            margin: 0 8px;
-        }
-
-        .footer-copyright {
-            color: #718096;
-            font-size: 0.9em;
-            margin: 0;
-            line-height: 1.5;
-        }
-
+        
+        /* 반응형 */
         @media (max-width: 768px) {
-            body {
-                padding: 10px;
+            .test-container {
+                margin: 20px;
+                border-radius: 12px;
             }
             
-            .container {
-                border-radius: 8px;
-            }
-            
-            .header {
+            .test-header {
                 padding: 30px 20px;
             }
             
-            .header h1 {
+            .test-header h1 {
                 font-size: 2em;
             }
-
-            .nav-links {
-                position: static;
-                display: flex;
-                justify-content: center;
-                gap: 10px;
-                margin-top: 15px;
-                flex-wrap: wrap;
-            }
-
-            .nav-link-old {
-                font-size: 0.8em;
-                padding: 6px 12px;
-            }
             
-            .content {
+            .test-content {
                 padding: 30px 20px;
             }
-
-            .intro-features {
-                grid-template-columns: 1fr;
+            
+            .gender-options {
+                flex-direction: column;
+                align-items: center;
             }
-
+            
+            .gender-option {
+                width: 100%;
+                max-width: 300px;
+            }
+            
             .collection-card {
+                padding: 30px 20px;
                 margin: 20px 0;
-                padding: 20px;
-                max-width: 100%;
             }
-
-            .collection-card:hover {
-                transform: perspective(1000px) rotateY(2deg) scale(1.02);
-            }
-
+            
             .result-type {
-                font-size: 2em;
+                font-size: 1.8em;
             }
-
-            .card-inner {
-                padding: 20px;
-            }
-
+            
             .card-avatar {
-                width: 80px;
-                height: 80px;
+                width: 100px;
+                height: 100px;
                 font-size: 3em;
-                margin-bottom: 15px;
             }
-
+            
             .card-rarity {
                 top: 10px;
                 right: 10px;
                 padding: 4px 8px;
                 font-size: 0.7em;
             }
-
-            .footer-links {
-                display: flex;
-                flex-direction: column;
-                gap: 8px;
-                align-items: center;
-            }
-
-            .footer-divider {
-                display: none;
-            }
-
-            .footer-link {
-                padding: 12px 24px;
-                background: rgba(255, 255, 255, 0.1);
-                border-radius: 8px;
-                margin: 4px 0;
-            }
-
-            /* 모바일에서 카카오톡 공유 버튼 스타일 */
-            .share-section {
-                margin: 20px 0;
-                padding: 15px;
-            }
-
-            .share-title {
-                font-size: 1.1em;
-                margin-bottom: 12px;
-            }
-
-            .kakao-share-btn {
-                padding: 10px 20px;
-                font-size: 0.9em;
-                width: 100%;
-                max-width: 280px;
-            }
-
-            .ad-container {
-                max-width: 320px;
-                padding: 15px;
-            }
         }
     </style>
 </head>
 <body>
     <!-- 네비게이션 -->
-    <nav class="navbar">
-        <div class="navbar-container">
-            <a href="/" class="logo">doha.kr</a>
-            <ul class="nav-menu">
-                <li><a href="/" class="nav-link">홈</a></li>
-                <li><a href="/tests/" class="nav-link">심리테스트</a></li>
-                <li><a href="/tools/" class="nav-link">실용도구</a></li>
-                <li><a href="/community/" class="nav-link">커뮤니티</a></li>
-                <li><a href="/about/" class="nav-link">소개</a></li>
-            </ul>
-        </div>
-    </nav>
+    <div id="navbar-placeholder"></div>
 
-    <div class="container">
-        <div class="header">
-            <div class="nav-links">
-                <a href="/tests/mbti/" class="nav-link-old">MBTI 테스트</a>
-                <a href="/about/" class="nav-link-old">사이트 소개</a>
-                <a href="/contact/" class="nav-link-old">문의하기</a>
-            </div>
+    <div class="test-container">
+        <div class="test-header">
             <h1>테토-에겐 성격 유형 분석</h1>
-            <p>과학적 접근법으로 알아보는 나의 성격 유형</p>
+            <p>10가지 질문으로 알아보는 나의 성격 유형</p>
         </div>
 
-        <div class="content">
-            <!-- 테스트 시작 전 안내 -->
-            <div id="intro-screen" class="intro-section">
-                <h2>당신의 성격 유형을 발견하세요!</h2>
-                <p>
-                    10개의 간단한 질문으로 당신만의 고유한 성격 유형을 분석합니다. 
-                    테토(Teto)와 에겐(Egen) 두 가지 성향을 바탕으로 총 4가지 유형으로 분류하여
-                    상세한 분석 결과를 제공합니다.
+        <div class="test-content">
+            <!-- 성별 선택 화면 -->
+            <div id="gender-screen" class="gender-selection">
+                <h2 class="gender-title">성별을 선택해주세요</h2>
+                <p class="gender-subtitle">
+                    정확한 분석을 위해 성별을 선택해주세요.<br>
+                    성별에 따른 미묘한 차이를 반영하여 더욱 정교한 결과를 제공합니다.
                 </p>
                 
-                <div class="intro-features">
-                    <div class="intro-feature">🎯 정확한 분석</div>
-                    <div class="intro-feature">⚡ 빠른 테스트</div>
-                    <div class="intro-feature">📊 상세한 결과</div>
-                    <div class="intro-feature">💡 실용적 조언</div>
+                <div class="gender-options">
+                    <div class="gender-option" onclick="selectGender('male')">
+                        <span class="gender-icon">👨</span>
+                        <div class="gender-label">남성</div>
+                        <div class="gender-desc">Male</div>
+                    </div>
+                    
+                    <div class="gender-option" onclick="selectGender('female')">
+                        <span class="gender-icon">👩</span>
+                        <div class="gender-label">여성</div>
+                        <div class="gender-desc">Female</div>
+                    </div>
                 </div>
                 
-                <button class="start-test-btn" onclick="startTest()">테스트 시작하기</button>
+                <button class="btn btn-primary" id="start-test-btn" onclick="startTestAfterGender()" disabled>
+                    테스트 시작하기
+                </button>
             </div>
 
-            <!-- 메인 광고 (테스트 시작 전에만 표시) -->
-            <div id="main-ad" class="ad-container main-ad">
-                <div class="ad-label">광고</div>
-                <ins class="adsbygoogle"
-                     style="display:block"
-                     data-ad-client="ca-pub-7905640648499222"
-                     data-ad-slot="1234567890"
-                     data-ad-format="auto"
-                     data-full-width-responsive="true"></ins>
-            </div>
-
-            <!-- 테스트 화면 - 광고 없음 (사용자 경험 최적화) -->
+            <!-- 테스트 화면 -->
             <div id="test-screen" class="hidden">
                 <div class="progress-container">
                     <div class="progress-info">
@@ -942,8 +564,7 @@
 
             <!-- 결과 화면 -->
             <div id="result-screen" class="result-container hidden">
-                <!-- 수집형 카드로 변경된 결과 표시 -->
-                <div class="collection-card" id="result-card">
+                <div class="collection-card">
                     <div class="card-rarity" id="card-rarity">LEGENDARY</div>
                     <div class="card-inner">
                         <div class="card-avatar" id="card-avatar">🦋</div>
@@ -952,64 +573,56 @@
                         <div class="card-stats" id="card-stats"></div>
                     </div>
                 </div>
-
+                
                 <div class="traits-section">
                     <h2 class="section-title">주요 성격 특성</h2>
                     <div class="result-traits" id="result-traits"></div>
                 </div>
                 
                 <div class="compatibility" id="compatibility"></div>
-
-                <!-- 결과 중간 광고 (테스트 완료 후에만 표시) -->
-                <div class="ad-container result-ad">
+                
+                <!-- 광고 -->
+                <div class="ad-container">
                     <div class="ad-label">광고</div>
                     <ins class="adsbygoogle"
                          style="display:block"
                          data-ad-client="ca-pub-7905640648499222"
-                         data-ad-slot="2345678901"
+                         data-ad-slot="1234567890"
                          data-ad-format="auto"
                          data-full-width-responsive="true"></ins>
                 </div>
-
-                <!-- 상세 분석 보기 섹션 -->
-                <div class="detail-section">
-                    <h3>더 자세한 분석이 궁금하신가요?</h3>
-                    <p>당신의 성격 유형에 대한 심층 분석을 확인해보세요. 직업, 연애, 인간관계, 스트레스 대처법 등 다양한 측면에서의 상세한 가이드를 제공합니다.</p>
-                    <a href="#" class="btn btn-success" id="detail-btn" onclick="viewDetailedResult()">상세 분석 보기</a>
-                </div>
-
+                
                 <!-- 카카오톡 공유하기 섹션 -->
                 <div class="share-section">
                     <div class="share-title">내 성격 유형을 친구들과 공유해보세요!</div>
                     <button class="kakao-share-btn" onclick="shareKakao()">
-                        <span class="kakao-icon"></span>
+                        <span class="kakao-icon">💬</span>
                         카카오톡으로 공유하기
                     </button>
                 </div>
                 
-                <button class="btn btn-primary restart-btn" onclick="restartTest()">새로운 테스트 시작</button>
+                <div class="navigation">
+                    <a href="/tests/teto-egen/" class="btn btn-secondary">상세 분석 보기</a>
+                    <button class="btn btn-primary" onclick="restartTest()">다시 테스트하기</button>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-links">
-                <a href="/about/" class="footer-link">소개</a>
-                <span class="footer-divider">|</span>
-                <a href="/privacy/" class="footer-link">개인정보처리방침</a>
-                <span class="footer-divider">|</span>
-                <a href="/terms/" class="footer-link">이용약관</a>
-                <span class="footer-divider">|</span>
-                <a href="/contact/" class="footer-link">문의하기</a>
-            </div>
-            <p class="footer-copyright">© 2024 doha.kr. 과학적 근거를 바탕으로 한 성격 분석 도구입니다.</p>
-        </div>
-    </footer>
+    <!-- 푸터 -->
+    <div id="footer-placeholder"></div>
 
+    <!-- External JavaScript -->
+    <script src="/js/main.js"></script>
+    
+    <!-- 테스트 로직 -->
     <script>
-        // 테스트 데이터 (순서 섞어서 예측 불가능하게)
+        // 테스트 변수
+        let selectedGender = '';
+        let currentQuestion = 0;
+        let answers = [];
+
+        // 테스트 질문
         const testQuestions = [
             {
                 question: "사회적 상황에서 나의 일반적인 행동은?",
@@ -1083,198 +696,157 @@
             }
         ];
 
-        // 결과 데이터 (포켓몬 카드 스타일) - 확장된 설명
+        // 결과 데이터
         const resultTypes = {
             "teto_male": {
                 type: "테토남",
                 avatar: "💪",
-                description: "테토남은 타고난 리더형으로, 목표를 향해 직진하는 강한 추진력을 가지고 있습니다. 논리적이고 분석적인 사고를 바탕으로 문제를 해결하며, 독립적이고 자율적인 성향이 강합니다. 감정보다는 이성을 중시하며, 효율성과 성과를 추구합니다.",
+                description: "테토남은 타고난 리더형으로, 목표를 향해 직진하는 강한 추진력을 가지고 있습니다. 논리적이고 분석적인 사고를 바탕으로 문제를 해결하며, 독립적이고 자율적인 성향이 강합니다.",
                 traits: [
                     { title: "리더십", desc: "자연스럽게 집단을 이끌고 방향을 제시하는 능력" },
                     { title: "직설성", desc: "명확하고 솔직한 의사표현 방식" },
                     { title: "독립성", desc: "자율적 판단과 행동을 선호하는 성향" },
                     { title: "목표지향", desc: "구체적 목표 설정과 달성에 집중하는 특성" }
                 ],
-                compatibility: "최적 궁합: 에겐녀 - 상호 보완적인 성격으로 균형잡힌 관계를 형성합니다. 테토남의 추진력과 에겐녀의 감성이 조화를 이루어 서로의 부족한 부분을 채워줍니다.",
+                compatibility: "최적 궁합: 에겐녀 - 상호 보완적인 성격으로 균형잡힌 관계를 형성합니다.",
                 rarity: "LEGENDARY",
                 stats: {
                     "리더십": 95,
                     "추진력": 88,
                     "독립성": 92,
                     "소통력": 85
-                },
-                color: "#667eea"
+                }
             },
             "teto_female": {
                 type: "테토녀",
                 avatar: "🔥",
-                description: "테토녀는 자신감과 독립성을 겸비한 현대적인 여성상입니다. 목표 달성에 대한 열정이 강하고, 어려운 상황에서도 굴복하지 않는 강인한 정신력을 가지고 있습니다. 솔직하고 직설적이며, 자신의 의견을 당당하게 표현합니다.",
+                description: "테토녀는 자신감과 독립성을 겸비한 현대적인 여성상입니다. 목표 달성에 대한 열정이 강하고, 어려운 상황에서도 굴복하지 않는 강인한 정신력을 가지고 있습니다.",
                 traits: [
                     { title: "자신감", desc: "확고한 자아 정체성과 자기 확신" },
                     { title: "추진력", desc: "목표 달성을 위한 강한 실행 능력" },
                     { title: "직접성", desc: "갈등을 회피하지 않는 정면 대응 방식" },
                     { title: "독립성", desc: "자유로운 사고와 행동을 추구하는 성향" }
                 ],
-                compatibility: "최적 궁합: 에겐남 - 차분함과 역동성이 조화를 이루는 관계입니다. 테토녀의 열정을 에겐남이 안정적으로 받쳐주며, 서로 성장할 수 있는 파트너십을 형성합니다.",
+                compatibility: "최적 궁합: 에겐남 - 차분함과 역동성이 조화를 이루는 관계입니다.",
                 rarity: "EPIC",
                 stats: {
                     "자신감": 93,
                     "추진력": 90,
                     "창의성": 87,
                     "표현력": 89
-                },
-                color: "#764ba2"
+                }
             },
             "egen_male": {
                 type: "에겐남",
                 avatar: "🌸",
-                description: "에겐남은 섬세하고 공감 능력이 뛰어난 현대적 신사입니다. 타인의 감정을 잘 이해하고 배려하며, 조화로운 관계를 중시합니다. 갈등보다는 평화로운 해결을 추구하며, 안정적이고 신뢰할 수 있는 파트너입니다.",
+                description: "에겐남은 섬세하고 공감 능력이 뛰어난 현대적 신사입니다. 타인의 감정을 잘 이해하고 배려하며, 조화로운 관계를 중시합니다.",
                 traits: [
                     { title: "공감능력", desc: "타인의 감정을 이해하고 공감하는 능력" },
                     { title: "섬세함", desc: "세밀한 관찰력과 배려심" },
                     { title: "안정성", desc: "일관되고 신뢰할 수 있는 행동 패턴" },
                     { title: "조화추구", desc: "갈등보다는 평화로운 해결을 선호" }
                 ],
-                compatibility: "최적 궁합: 테토녀 - 서로 다른 강점으로 완벽한 팀워크를 형성합니다. 에겐남의 섬세함이 테토녀의 직설적 성향을 부드럽게 만들어주며, 균형잡힌 관계를 만들어갑니다.",
+                compatibility: "최적 궁합: 테토녀 - 서로 다른 강점으로 완벽한 팀워크를 형성합니다.",
                 rarity: "RARE",
                 stats: {
                     "공감력": 96,
                     "안정성": 91,
                     "배려심": 94,
                     "조화력": 88
-                },
-                color: "#38b2ac"
+                }
             },
             "egen_female": {
                 type: "에겐녀",
                 avatar: "🦋",
-                description: "에겐녀는 따뜻한 감성과 깊은 직관력을 가진 여성입니다. 타인과의 정서적 교감을 중시하며, 섬세한 배려와 공감으로 주변을 편안하게 만듭니다. 안정적인 관계를 추구하며, 조화와 평화를 사랑합니다.",
+                description: "에겐녀는 따뜻한 감성과 깊은 직관력을 가진 여성입니다. 타인과의 정서적 교감을 중시하며, 섬세한 배려와 공감으로 주변을 편안하게 만듭니다.",
                 traits: [
                     { title: "감성지능", desc: "풍부한 감정 표현과 이해 능력" },
                     { title: "직관력", desc: "상황과 사람에 대한 예민한 감지 능력" },
                     { title: "적응력", desc: "환경 변화에 유연하게 대응하는 능력" },
                     { title: "관계중심", desc: "깊고 의미있는 인간관계를 중시" }
                 ],
-                compatibility: "최적 궁합: 테토남 - 리더십과 감성이 조화를 이루는 이상적 관계입니다. 에겐녀의 따뜻함이 테토남의 차가운 논리를 보완하며, 서로를 성장시키는 관계를 형성합니다.",
+                compatibility: "최적 궁합: 테토남 - 리더십과 감성이 조화를 이루는 이상적 관계입니다.",
                 rarity: "MYTHIC",
                 stats: {
                     "감성력": 97,
                     "직관력": 92,
                     "적응력": 89,
                     "친화력": 95
-                },
-                color: "#319795"
+                }
             }
         };
 
-        // 테스트 상태 관리
-        let currentQuestion = 0;
-        let answers = [];
-        let genderSelected = false;
-        let userGender = '';
-        let currentResultType = '';
-
-        // 테스트 시작
-        function startTest() {
-            // 메인 광고 숨기기
-            document.getElementById('main-ad').style.display = 'none';
-            document.getElementById('intro-screen').classList.add('hidden');
-            document.getElementById('test-screen').classList.remove('hidden');
-            initTest();
-        }
-
-        // 초기화
-        function initTest() {
-            currentQuestion = 0;
-            answers = [];
-            genderSelected = false;
-            userGender = '';
-            currentResultType = '';
-            showGenderSelection();
-        }
-
-        // 성별 선택 화면
-        function showGenderSelection() {
-            document.getElementById('question').innerHTML = '분석을 위해 성별을 선택해주세요';
-            document.getElementById('options').innerHTML = `
-                <div class="option" onclick="selectGender('male')">남성</div>
-                <div class="option" onclick="selectGender('female')">여성</div>
-            `;
-            document.getElementById('prev-btn').style.display = 'none';
-            document.getElementById('next-btn').style.display = 'none';
-            updateProgress();
-        }
-
         // 성별 선택
         function selectGender(gender) {
-            userGender = gender;
-            genderSelected = true;
-            document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
-            event.target.classList.add('selected');
+            selectedGender = gender;
             
-            setTimeout(() => {
-                showQuestion();
-            }, 800);
+            // 모든 옵션에서 selected 클래스 제거
+            document.querySelectorAll('.gender-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // 선택된 옵션에 selected 클래스 추가
+            event.target.closest('.gender-option').classList.add('selected');
+            
+            // 시작 버튼 활성화
+            document.getElementById('start-test-btn').disabled = false;
+        }
+
+        // 성별 선택 후 테스트 시작
+        function startTestAfterGender() {
+            if (!selectedGender) {
+                alert('성별을 선택해주세요.');
+                return;
+            }
+            
+            document.getElementById('gender-screen').classList.add('hidden');
+            document.getElementById('test-screen').classList.remove('hidden');
+            showQuestion();
         }
 
         // 질문 표시
         function showQuestion() {
-            if (!genderSelected) return;
+            if (currentQuestion < testQuestions.length) {
+                const q = testQuestions[currentQuestion];
+                document.getElementById('question').textContent = q.question;
+                document.getElementById('progress-text').textContent = `질문 ${currentQuestion + 1} / ${testQuestions.length}`;
+                document.getElementById('progress-percent').textContent = `${Math.round(((currentQuestion + 1) / testQuestions.length) * 100)}%`;
+                document.getElementById('progress').style.width = `${((currentQuestion + 1) / testQuestions.length) * 100}%`;
 
-            const question = testQuestions[currentQuestion];
-            document.getElementById('question').innerHTML = question.question;
-            
-            const optionsHtml = question.options.map((option, index) => 
-                `<div class="option" onclick="selectAnswer(${index})">${option.text}</div>`
-            ).join('');
-            
-            document.getElementById('options').innerHTML = optionsHtml;
-            
-            // 이전 답변이 있다면 선택 상태 복원
-            if (answers[currentQuestion] !== undefined) {
-                document.querySelectorAll('.option')[answers[currentQuestion]].classList.add('selected');
+                const optionsContainer = document.getElementById('options');
+                optionsContainer.innerHTML = '';
+
+                q.options.forEach((option, index) => {
+                    const optionDiv = document.createElement('div');
+                    optionDiv.className = 'option';
+                    optionDiv.textContent = option.text;
+                    optionDiv.onclick = () => selectOption(index);
+                    optionsContainer.appendChild(optionDiv);
+                });
+
+                document.getElementById('prev-btn').style.display = currentQuestion > 0 ? 'block' : 'none';
+                document.getElementById('next-btn').style.display = 'none';
             }
-            
-            document.getElementById('prev-btn').style.display = currentQuestion > 0 ? 'block' : 'none';
-            document.getElementById('next-btn').style.display = 'block';
-            
-            updateProgress();
         }
 
-        // 답변 선택
-        function selectAnswer(optionIndex) {
-            answers[currentQuestion] = optionIndex;
+        // 옵션 선택
+        function selectOption(optionIndex) {
             document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
-            event.target.classList.add('selected');
-            
-            // 자동으로 다음 질문으로 이동 (0.8초 후)
-            setTimeout(() => {
-                if (currentQuestion < testQuestions.length - 1) {
-                    currentQuestion++;
-                    showQuestion();
-                } else {
-                    showResult();
-                }
-            }, 800);
+            document.querySelectorAll('.option')[optionIndex].classList.add('selected');
+
+            answers[currentQuestion] = testQuestions[currentQuestion].options[optionIndex];
+            document.getElementById('next-btn').style.display = 'block';
         }
 
         // 다음 질문
         function nextQuestion() {
-            if (!genderSelected && userGender === '') {
-                alert('성별을 선택해주세요!');
-                return;
-            }
-
-            if (answers[currentQuestion] === undefined) {
-                alert('답변을 선택해주세요!');
-                return;
-            }
-
-            if (currentQuestion < testQuestions.length - 1) {
+            if (answers[currentQuestion]) {
                 currentQuestion++;
-                showQuestion();
-            } else {
-                showResult();
+                if (currentQuestion >= testQuestions.length) {
+                    showResult();
+                } else {
+                    showQuestion();
+                }
             }
         }
 
@@ -1283,56 +855,41 @@
             if (currentQuestion > 0) {
                 currentQuestion--;
                 showQuestion();
+                
+                if (answers[currentQuestion]) {
+                    const prevAnswerIndex = testQuestions[currentQuestion].options.indexOf(answers[currentQuestion]);
+                    if (prevAnswerIndex !== -1) {
+                        document.querySelectorAll('.option')[prevAnswerIndex].classList.add('selected');
+                        document.getElementById('next-btn').style.display = 'block';
+                    }
+                }
             }
         }
 
-        // 진행률 업데이트
-        function updateProgress() {
-            const totalSteps = testQuestions.length + 1; // 성별 선택 포함
-            const currentStep = genderSelected ? currentQuestion + 2 : 1;
-            const progress = (currentStep / totalSteps) * 100;
-            const questionNum = genderSelected ? currentQuestion + 1 : 0;
-            
-            document.getElementById('progress').style.width = `${progress}%`;
-            document.getElementById('progress-text').textContent = `질문 ${questionNum} / ${testQuestions.length}`;
-            document.getElementById('progress-percent').textContent = `${Math.round(progress)}%`;
-        }
-
-        // 결과 계산 및 표시
+        // 결과 표시
         function showResult() {
-            const tetoCount = answers.reduce((count, answerIndex, questionIndex) => {
-                return testQuestions[questionIndex].options[answerIndex].type === 'teto' ? count + 1 : count;
-            }, 0);
+            let tetoScore = 0;
+            let egenScore = 0;
 
-            const egenCount = answers.length - tetoCount;
-            const dominantType = tetoCount > egenCount ? 'teto' : 'egen';
-            const resultKey = `${dominantType}_${userGender}`;
+            answers.forEach(answer => {
+                if (answer.type === 'teto') {
+                    tetoScore++;
+                } else {
+                    egenScore++;
+                }
+            });
+
+            const dominantType = tetoScore > egenScore ? 'teto' : 'egen';
+            const resultKey = `${dominantType}_${selectedGender}`;
             const result = resultTypes[resultKey];
-            
-            // 현재 결과 타입 저장
-            currentResultType = result.type;
 
-            // 화면 전환
             document.getElementById('test-screen').classList.add('hidden');
             document.getElementById('result-screen').classList.remove('hidden');
-
-            // 수집형 카드에 결과 표시
+            
+            document.getElementById('card-avatar').textContent = result.avatar;
             document.getElementById('result-type').textContent = result.type;
             document.getElementById('result-description').textContent = result.description;
-            
-            // 아바타 표시 (확실하게 업데이트)
-            const avatarElement = document.getElementById('card-avatar');
-            avatarElement.textContent = result.avatar;
-            console.log('설정된 아바타:', result.avatar, '타입:', result.type);
-            
-            // 레어도 표시 (확실하게 업데이트) 
-            const rarityElement = document.getElementById('card-rarity');
-            rarityElement.textContent = result.rarity;
-            console.log('설정된 레어도:', result.rarity);
-
-            // 카드 배경색 변경
-            const cardElement = document.querySelector('.collection-card');
-            cardElement.style.background = `linear-gradient(135deg, ${result.color} 0%, #764ba2 100%)`;
+            document.getElementById('card-rarity').textContent = result.rarity;
 
             // 스탯 표시
             const statsHtml = Object.entries(result.stats).map(([key, value]) => 
@@ -1358,132 +915,71 @@
                 <p>${result.compatibility}</p>
             `;
 
-            // 결과 화면 광고 로드 (결과 표시 후)
-            setTimeout(loadResultAds, 1000);
+            // 광고 로드
+            (adsbygoogle = window.adsbygoogle || []).push({});
         }
 
-        // 상세 결과 보기
-        function viewDetailedResult() {
-            if (currentResultType) {
-                window.location.href = `result-detail.html?type=${encodeURIComponent(currentResultType)}`;
-            }
-        }
-
-        // 테스트 재시작
-        function restartTest() {
-            document.getElementById('result-screen').classList.add('hidden');
-            document.getElementById('intro-screen').classList.remove('hidden');
-            document.getElementById('main-ad').style.display = 'block';
-            currentResultType = '';
-        }
-
-        // 카카오톡 공유하기 함수 (간소화된 안정 버전)
+        // 카카오톡 공유하기
         function shareKakao() {
-            if (typeof Kakao === 'undefined') {
-                alert('카카오 SDK가 로드되지 않았습니다.');
-                return;
-            }
-
-            if (!Kakao.isInitialized()) {
+            if (typeof Kakao === 'undefined' || !Kakao.isInitialized()) {
                 alert('카카오 SDK가 초기화되지 않았습니다.');
                 return;
             }
 
-            try {
-                // 현재 결과 정보 가져오기
-                const resultType = document.getElementById('result-type').textContent;
-                const resultDesc = document.getElementById('result-description').textContent;
-                const currentUrl = window.location.href;
+            const resultType = document.getElementById('result-type').textContent;
+            const resultDesc = document.getElementById('result-description').textContent;
+            const currentUrl = window.location.href;
 
-                // 성격 유형별 이미지 URL (외부 서비스 사용)
-                const imageUrl = getShareImageUrl(resultType);
-
-                console.log('공유 정보:', { resultType, imageUrl, currentUrl });
-
-                // 카카오톡 공유하기 실행
-                Kakao.Share.sendDefault({
-                    objectType: 'feed',
-                    content: {
-                        title: `✨ 나의 성격 유형: ${resultType}`,
-                        description: `${resultDesc.substring(0, 60)}...`,
-                        imageUrl: imageUrl,
+            Kakao.Share.sendDefault({
+                objectType: 'feed',
+                content: {
+                    title: `✨ 나의 성격 유형: ${resultType}`,
+                    description: `${resultDesc.substring(0, 60)}...`,
+                    imageUrl: 'https://via.placeholder.com/800x400/667eea/ffffff?text=성격+유형+테스트',
+                    link: {
+                        mobileWebUrl: currentUrl,
+                        webUrl: currentUrl,
+                    },
+                },
+                buttons: [
+                    {
+                        title: '나도 테스트하기',
                         link: {
                             mobileWebUrl: currentUrl,
                             webUrl: currentUrl,
                         },
                     },
-                    buttons: [
-                        {
-                            title: '나도 테스트하기',
-                            link: {
-                                mobileWebUrl: currentUrl,
-                                webUrl: currentUrl,
-                            },
-                        },
-                    ],
-                    installTalk: true,
-                });
-            } catch (error) {
-                console.error('카카오톡 공유 오류:', error);
-                alert('공유 중 오류가 발생했습니다. 다시 시도해주세요.');
-            }
+                ],
+            });
         }
 
-        // 성격 유형별 안전한 이미지 URL 생성
-        function getShareImageUrl(resultType) {
-            const typeImages = {
-                // 테토남/테토녀 - 운동/피트니스 관련 이미지
-                '테토남': 'https://images.unsplash.com/photo-1594737625785-a6cbdabd333c?w=800&h=400&fit=crop&auto=format',
-                '테토녀': 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=400&fit=crop&auto=format',
-                
-                // 에겐남/에겐녀 - 꽃밭/카페 등 감성적인 이미지  
-                '에겐남': 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=400&fit=crop&auto=format',
-                '에겐녀': 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&h=400&fit=crop&auto=format'
-            };
-
-            // 기본 안전한 이미지 (카카오톡에서 확실히 지원하는 형식)
-            return typeImages[resultType] || 'https://via.placeholder.com/800x400/667eea/ffffff?text=성격+유형+테스트';
-        }
-
-        // 메인 광고 로드 (페이지 로드 시)
-        function loadMainAds() {
-            try {
-                // 메인 광고만 로드
-                const mainAd = document.querySelector('#main-ad .adsbygoogle');
-                if (mainAd && !mainAd.innerHTML) {
-                    (adsbygoogle = window.adsbygoogle || []).push({});
-                }
-            } catch (e) {
-                console.log('Main AdSense loading error:', e);
-            }
-        }
-
-        // 결과 광고 로드 (결과 표시 시)
-        function loadResultAds() {
-            try {
-                // 결과 광고만 로드
-                const resultAd = document.querySelector('.result-ad .adsbygoogle');
-                if (resultAd && !resultAd.innerHTML) {
-                    (adsbygoogle = window.adsbygoogle || []).push({});
-                }
-            } catch (e) {
-                console.log('Result AdSense loading error:', e);
-            }
-        }
-
-        // 페이지 로드 시 초기화
-        document.addEventListener('DOMContentLoaded', function() {
-            // 카카오 SDK 초기화
-            if (typeof Kakao !== 'undefined') {
-                if (!Kakao.isInitialized()) {
-                    Kakao.init('19d8ba832f94d513957adc17883c1282');
-                    console.log('카카오 SDK 초기화:', Kakao.isInitialized());
-                }
-            }
+        // 테스트 재시작
+        function restartTest() {
+            selectedGender = '';
+            currentQuestion = 0;
+            answers = [];
             
-            // 메인 광고 로드 (페이지 로드 시에만)
-            setTimeout(loadMainAds, 500);
+            document.getElementById('result-screen').classList.add('hidden');
+            document.getElementById('gender-screen').classList.remove('hidden');
+            
+            // 성별 선택 초기화
+            document.querySelectorAll('.gender-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            document.getElementById('start-test-btn').disabled = true;
+        }
+
+        // 카카오 SDK 초기화
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof Kakao !== 'undefined' && !Kakao.isInitialized()) {
+                Kakao.init('19d8ba832f94d513957adc17883c1282');
+            }
         });
+    </script>
+    
+    <!-- AdSense initialization -->
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </body>
 </html>
