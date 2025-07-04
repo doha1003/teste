@@ -445,6 +445,63 @@ async function loadComponent(componentName, targetId) {
                 `;
             }
         }
+        // Fallback for footer (same as above)
+        if (componentName === 'footer') {
+            const target = document.getElementById(targetId);
+            if (target) {
+                target.innerHTML = `
+                    <footer class="footer">
+                        <div class="footer-content">
+                            <div class="footer-section">
+                                <h3>doha.kr</h3>
+                                <p style="color: var(--gray-400); margin-top: 8px;">
+                                    일상을 더 재미있게 만드는 공간<br>
+                                    심리테스트와 실용도구의 만남
+                                </p>
+                                <div class="footer-social">
+                                    <a href="mailto:youtubdoha@gmail.com" class="social-link">📧</a>
+                                </div>
+                            </div>
+                            
+                            <div class="footer-section">
+                                <h3>서비스</h3>
+                                <ul class="footer-links">
+                                    <li><a href="/">홈</a></li>
+                                    <li><a href="/tests/">심리테스트</a></li>
+                                    <li><a href="/tools/">실용도구</a></li>
+                                    <li><a href="/about/">사이트 소개</a></li>
+                                </ul>
+                            </div>
+                            
+                            <div class="footer-section">
+                                <h3>인기 콘텐츠</h3>
+                                <ul class="footer-links">
+                                    <li><a href="/tests/teto-egen/start.html">테토-에겐 테스트</a></li>
+                                    <li><a href="/tests/mbti/">MBTI 테스트</a></li>
+                                    <li><a href="/tools/text-counter.html">글자수 세기</a></li>
+                                </ul>
+                            </div>
+                            
+                            <div class="footer-section">
+                                <h3>고객지원</h3>
+                                <ul class="footer-links">
+                                    <li><a href="/contact/">문의하기</a></li>
+                                    <li><a href="/faq/">자주 묻는 질문</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="footer-bottom">
+                            <div class="footer-legal">
+                                <a href="/privacy/">개인정보처리방침</a>
+                                <a href="/terms/">이용약관</a>
+                            </div>
+                            <p>&copy; 2025 doha.kr. All rights reserved.</p>
+                        </div>
+                    </footer>
+                `;
+            }
+        }
     }
 }
 
