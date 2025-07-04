@@ -177,9 +177,10 @@ a:hover {
     transition: all 0.3s;
 }
 
-/* 히어로 섹션 */
+/* 히어로 섹션 - 보라색 그라디언트 배경으로 수정 */
 .hero {
-    background: linear-gradient(135deg, #ffffff 0%, #f3f4f6 100%);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
     padding: 80px 20px;
     text-align: center;
     position: relative;
@@ -190,12 +191,16 @@ a:hover {
     content: '';
     position: absolute;
     top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle at 20% 80%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.08) 0%, transparent 50%);
-    animation: float 20s ease-in-out infinite;
+    right: -50%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    animation: pulse 4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.5); opacity: 0; }
 }
 
 @keyframes float {
@@ -211,20 +216,33 @@ a:hover {
     z-index: 1;
 }
 
+.hero-badge {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    backdrop-filter: blur(10px);
+    color: white;
+}
+
+.hero-title, .test-start-btn {
+    color: white !important;
+}
+
 .hero-title {
     font-size: 56px;
     font-weight: 700;
     margin-bottom: 16px;
-    background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
     line-height: 1.2;
+    color: white !important;
 }
 
 .hero-subtitle {
     font-size: 24px;
-    color: var(--gray-600);
+    color: rgba(255, 255, 255, 0.9);
     margin-bottom: 48px;
 }
 
@@ -233,6 +251,25 @@ a:hover {
     gap: 20px;
     justify-content: center;
     flex-wrap: wrap;
+}
+
+.test-start-btn {
+    background: white;
+    color: var(--primary-color) !important;
+    padding: 16px 48px;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 8px;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.test-start-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.3);
+    color: var(--primary-color) !important;
 }
 
 /* 버튼 스타일 */
@@ -379,6 +416,89 @@ a:hover {
 .tool-link.disabled {
     color: var(--gray-400);
     cursor: not-allowed;
+}
+
+/* 소개 섹션 스타일 추가 */
+.intro {
+    padding: 80px 20px;
+    background: white;
+}
+
+.content-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.intro-text {
+    font-size: 18px;
+    line-height: 1.8;
+    margin-bottom: 32px;
+    color: var(--gray-700);
+}
+
+.highlight {
+    background: linear-gradient(180deg, transparent 60%, rgba(99, 102, 241, 0.3) 60%);
+    padding: 0 4px;
+}
+
+/* 성별 선택 UI 스타일 추가 */
+.gender-selection {
+    text-align: center;
+    margin: 40px 0;
+}
+
+.gender-selection h3 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 24px;
+    color: var(--gray-900);
+}
+
+.gender-options {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.gender-option {
+    background: white;
+    border: 2px solid var(--gray-200);
+    border-radius: 16px;
+    padding: 32px 24px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+    min-width: 160px;
+}
+
+.gender-option:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.gender-option.selected {
+    border-color: var(--primary-color);
+    background: var(--primary-color);
+    color: white;
+}
+
+.gender-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    display: block;
+}
+
+.gender-label {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.gender-desc {
+    font-size: 14px;
+    opacity: 0.8;
 }
 
 /* 푸터 */
@@ -597,5 +717,15 @@ a:hover {
     
     .container {
         padding: 0 16px;
+    }
+    
+    .gender-options {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .gender-option {
+        width: 100%;
+        max-width: 300px;
     }
 }
