@@ -412,177 +412,6 @@
             margin-top: 12px;
         }
         
-        /* 통계 섹션 */
-        .stats {
-            padding: 80px 20px;
-            background: var(--gradient-primary);
-            color: white;
-            text-align: center;
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 48px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .stat-item {
-            text-align: center;
-        }
-        
-        .stat-number {
-            font-size: 48px;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-        
-        .stat-label {
-            font-size: 18px;
-            opacity: 0.9;
-        }
-        
-        /* 블로그/뉴스 섹션 */
-        .blog {
-            padding: 80px 20px;
-            background: var(--gray-50);
-        }
-        
-        .blog-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 32px;
-        }
-        
-        .blog-card {
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: var(--shadow-md);
-            transition: all 0.3s;
-            text-decoration: none;
-            color: inherit;
-            display: block;
-        }
-        
-        .blog-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-xl);
-        }
-        
-        .blog-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-        
-        .blog-content {
-            padding: 24px;
-        }
-        
-        .blog-category {
-            display: inline-block;
-            background: var(--primary-color);
-            color: white;
-            padding: 4px 12px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: 600;
-            margin-bottom: 12px;
-        }
-        
-        .blog-title {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: var(--gray-900);
-            line-height: 1.4;
-        }
-        
-        .blog-excerpt {
-            color: var(--gray-600);
-            line-height: 1.6;
-            margin-bottom: 16px;
-        }
-        
-        .blog-meta {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            font-size: 14px;
-            color: var(--gray-500);
-        }
-        
-        /* CTA 섹션 */
-        .cta {
-            padding: 80px 20px;
-            background: white;
-            text-align: center;
-        }
-        
-        .cta-box {
-            background: var(--gradient-primary);
-            border-radius: 24px;
-            padding: 64px 32px;
-            max-width: 800px;
-            margin: 0 auto;
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .cta-box::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            animation: pulse 4s ease-in-out infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.5; }
-            50% { transform: scale(1.5); opacity: 0; }
-        }
-        
-        .cta-title {
-            font-size: 36px;
-            font-weight: 700;
-            margin-bottom: 16px;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .cta-description {
-            font-size: 18px;
-            margin-bottom: 32px;
-            opacity: 0.9;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .cta-button {
-            background: white;
-            color: var(--primary-color);
-            padding: 16px 48px;
-            font-size: 18px;
-            font-weight: 600;
-            border-radius: 8px;
-            text-decoration: none;
-            display: inline-block;
-            transition: all 0.3s;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .cta-button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-        }
-        
         /* 푸터 */
         .footer {
             background: var(--gray-900);
@@ -726,14 +555,8 @@
             }
             
             .features-grid,
-            .services-grid,
-            .blog-grid {
+            .services-grid {
                 grid-template-columns: 1fr;
-            }
-            
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 32px;
             }
             
             .footer-content {
@@ -770,13 +593,13 @@
     <!-- 네비게이션 바 -->
     <nav class="navbar">
         <div class="navbar-container">
-            <a href="/home.html" class="logo">doha.kr</a>
+            <a href="/" class="logo">doha.kr</a>
             
             <ul class="nav-menu">
-                <li><a href="/home.html" class="nav-link">홈</a></li>
-                <li><a href="/tests/teto-egen/" class="nav-link">심리테스트</a></li>
-                <li><a href="/tools/text-counter.html" class="nav-link">실용도구</a></li>
-                <li><a href="#" class="nav-link">커뮤니티</a></li>
+                <li><a href="/" class="nav-link">홈</a></li>
+                <li><a href="/tests/" class="nav-link">심리테스트</a></li>
+                <li><a href="/tools/" class="nav-link">실용도구</a></li>
+                <li><a href="/community/" class="nav-link">커뮤니티</a></li>
                 <li><a href="/about/" class="nav-link">소개</a></li>
             </ul>
             
@@ -800,7 +623,7 @@
                 무료로 제공되는 다양한 서비스를 지금 바로 경험해보세요.
             </p>
             <div class="hero-buttons fade-in stagger-2">
-                <a href="/index.html" class="btn btn-primary">
+                <a href="/tests/teto-egen/test.html" class="btn btn-primary">
                     <span>🔥</span> 인기 테스트 시작하기
                 </a>
                 <a href="#services" class="btn btn-secondary">
@@ -815,38 +638,38 @@
         <div class="container">
             <h2 class="section-title fade-in">왜 doha.kr인가요?</h2>
             <p class="section-subtitle fade-in stagger-1">
-                단순한 테스트 사이트가 아닙니다. 여러분의 일상에 가치를 더하는 종합 플랫폼입니다.
+                다양한 심리테스트와 실용적인 도구들을 한곳에서 만나보세요.
             </p>
             
             <div class="features-grid">
                 <div class="feature-card fade-in stagger-1">
                     <div class="feature-icon">🧠</div>
-                    <h3 class="feature-title">과학적인 심리테스트</h3>
+                    <h3 class="feature-title">다양한 심리테스트</h3>
                     <p class="feature-description">
-                        심리학 이론에 기반한 정확한 분석으로 자신을 더 깊이 이해할 수 있습니다. 
-                        테토-에겐, MBTI 등 다양한 성격 유형 검사를 제공합니다.
+                        테토-에겐, MBTI 등 다양한 성격 유형 검사를 통해 
+                        자신을 더 깊이 이해할 수 있습니다.
                     </p>
-                    <a href="/tests/teto-egen/" class="feature-link">테스트 보러가기 →</a>
+                    <a href="/tests/" class="feature-link">테스트 보러가기 →</a>
                 </div>
                 
                 <div class="feature-card fade-in stagger-2">
                     <div class="feature-icon">🛠️</div>
                     <h3 class="feature-title">실용적인 도구모음</h3>
                     <p class="feature-description">
-                        글자수 세기, 연봉 계산기, BMI 계산기 등 일상에서 필요한 다양한 도구를 
-                        한 곳에서 무료로 이용할 수 있습니다.
+                        글자수 세기, 연봉 계산기, BMI 계산기 등 일상에서 필요한 
+                        다양한 도구를 무료로 이용할 수 있습니다.
                     </p>
-                    <a href="/tools/text-counter.html" class="feature-link">도구 사용하기 →</a>
+                    <a href="/tools/" class="feature-link">도구 사용하기 →</a>
                 </div>
                 
                 <div class="feature-card fade-in stagger-3">
                     <div class="feature-icon">💬</div>
-                    <h3 class="feature-title">활발한 커뮤니티</h3>
+                    <h3 class="feature-title">커뮤니티 (준비중)</h3>
                     <p class="feature-description">
-                        테스트 결과를 공유하고, 다른 사용자들과 소통하며 새로운 인사이트를 
-                        얻을 수 있는 공간을 제공합니다.
+                        곧 여러분의 이야기를 나누고 소통할 수 있는 
+                        커뮤니티 공간이 열립니다.
                     </p>
-                    <a href="#" class="feature-link">커뮤니티 참여하기 →</a>
+                    <a href="/community/" class="feature-link">미리 둘러보기 →</a>
                 </div>
             </div>
         </div>
@@ -855,31 +678,30 @@
     <!-- 인기 서비스 섹션 -->
     <section id="services" class="popular-services">
         <div class="container">
-            <h2 class="section-title fade-in">인기 서비스</h2>
+            <h2 class="section-title fade-in">제공 서비스</h2>
             <p class="section-subtitle fade-in stagger-1">
-                가장 많이 이용하는 서비스들을 만나보세요
+                현재 이용 가능한 서비스들입니다
             </p>
             
             <div class="services-tabs fade-in stagger-2">
                 <button class="tab-button active" onclick="showServices('all')">전체</button>
                 <button class="tab-button" onclick="showServices('tests')">심리테스트</button>
                 <button class="tab-button" onclick="showServices('tools')">실용도구</button>
-                <button class="tab-button" onclick="showServices('new')">최신</button>
             </div>
             
             <div class="services-grid fade-in stagger-3">
-                <a href="/index.html" class="service-card" data-category="tests">
+                <a href="/tests/teto-egen/test.html" class="service-card" data-category="tests">
                     <span class="service-emoji">🦋</span>
                     <h3 class="service-name">테토-에겐 테스트</h3>
                     <p class="service-desc">당신의 성격이 테토형인지 에겐형인지 알아보세요</p>
-                    <span class="service-badge">HOT</span>
+                    <span class="service-badge">인기</span>
                 </a>
                 
                 <a href="/tests/mbti/" class="service-card" data-category="tests">
                     <span class="service-emoji">🎭</span>
                     <h3 class="service-name">MBTI 성격유형 검사</h3>
                     <p class="service-desc">16가지 성격 유형 중 나는 어떤 유형일까?</p>
-                    <span class="service-badge">인기</span>
+                    <span class="service-badge">준비중</span>
                 </a>
                 
                 <a href="/tools/text-counter.html" class="service-card" data-category="tools">
@@ -892,44 +714,22 @@
                     <span class="service-emoji">💰</span>
                     <h3 class="service-name">연봉 실수령액 계산기</h3>
                     <p class="service-desc">세금 공제 후 실제 받는 금액을 계산해보세요</p>
+                    <span class="service-badge">준비중</span>
                 </a>
                 
-                <a href="#" class="service-card" data-category="tests new">
+                <a href="#" class="service-card" data-category="tests">
                     <span class="service-emoji">💕</span>
                     <h3 class="service-name">연애 스타일 테스트</h3>
                     <p class="service-desc">나의 연애 성향과 이상형을 알아보는 테스트</p>
-                    <span class="service-badge">NEW</span>
+                    <span class="service-badge">준비중</span>
                 </a>
                 
                 <a href="#" class="service-card" data-category="tools">
                     <span class="service-emoji">🏃</span>
                     <h3 class="service-name">BMI 계산기</h3>
                     <p class="service-desc">키와 몸무게로 체질량지수를 확인하세요</p>
+                    <span class="service-badge">준비중</span>
                 </a>
-            </div>
-        </div>
-    </section>
-    
-    <!-- 통계 섹션 -->
-    <section class="stats">
-        <div class="container">
-            <div class="stats-grid">
-                <div class="stat-item fade-in stagger-1">
-                    <div class="stat-number">50만+</div>
-                    <div class="stat-label">누적 테스트 참여</div>
-                </div>
-                <div class="stat-item fade-in stagger-2">
-                    <div class="stat-number">15개</div>
-                    <div class="stat-label">다양한 서비스</div>
-                </div>
-                <div class="stat-item fade-in stagger-3">
-                    <div class="stat-number">98%</div>
-                    <div class="stat-label">사용자 만족도</div>
-                </div>
-                <div class="stat-item fade-in stagger-4">
-                    <div class="stat-number">24/7</div>
-                    <div class="stat-label">언제나 이용가능</div>
-                </div>
             </div>
         </div>
     </section>
@@ -945,80 +745,6 @@
              data-full-width-responsive="true"></ins>
     </div>
     
-    <!-- 블로그/뉴스 섹션 -->
-    <section class="blog">
-        <div class="container">
-            <h2 class="section-title fade-in">최신 소식 & 가이드</h2>
-            <p class="section-subtitle fade-in stagger-1">
-                심리학 정보와 사이트 업데이트 소식을 확인하세요
-            </p>
-            
-            <div class="blog-grid">
-                <a href="#" class="blog-card fade-in stagger-1">
-                    <img src="https://via.placeholder.com/400x200/6366f1/ffffff?text=테토-에겐+가이드" alt="테토-에겐 가이드" class="blog-image">
-                    <div class="blog-content">
-                        <span class="blog-category">가이드</span>
-                        <h3 class="blog-title">테토-에겐 테스트 완벽 가이드</h3>
-                        <p class="blog-excerpt">
-                            테토형과 에겐형의 특징을 자세히 알아보고, 각 유형별 장단점과 
-                            발전 방향을 제시합니다.
-                        </p>
-                        <div class="blog-meta">
-                            <span>📅 2025년 1월 3일</span>
-                            <span>⏱️ 5분 읽기</span>
-                        </div>
-                    </div>
-                </a>
-                
-                <a href="#" class="blog-card fade-in stagger-2">
-                    <img src="https://via.placeholder.com/400x200/8b5cf6/ffffff?text=심리학+팩트" alt="심리학 팩트" class="blog-image">
-                    <div class="blog-content">
-                        <span class="blog-category">심리학</span>
-                        <h3 class="blog-title">알아두면 유용한 심리학 상식 10가지</h3>
-                        <p class="blog-excerpt">
-                            일상생활에서 활용할 수 있는 흥미로운 심리학 지식을 소개합니다. 
-                            인간관계 개선에 도움이 됩니다.
-                        </p>
-                        <div class="blog-meta">
-                            <span>📅 2025년 1월 2일</span>
-                            <span>⏱️ 8분 읽기</span>
-                        </div>
-                    </div>
-                </a>
-                
-                <a href="#" class="blog-card fade-in stagger-3">
-                    <img src="https://via.placeholder.com/400x200/f59e0b/ffffff?text=새로운+기능" alt="새로운 기능" class="blog-image">
-                    <div class="blog-content">
-                        <span class="blog-category">업데이트</span>
-                        <h3 class="blog-title">2025년 새해 맞이 대규모 업데이트</h3>
-                        <p class="blog-excerpt">
-                            새로운 테스트 5종 추가, UI/UX 개선, 모바일 최적화 등 
-                            다양한 업데이트 소식을 전합니다.
-                        </p>
-                        <div class="blog-meta">
-                            <span>📅 2025년 1월 1일</span>
-                            <span>⏱️ 3분 읽기</span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </section>
-    
-    <!-- CTA 섹션 -->
-    <section class="cta">
-        <div class="container">
-            <div class="cta-box">
-                <h2 class="cta-title">지금 바로 시작하세요!</h2>
-                <p class="cta-description">
-                    가입 없이 무료로 모든 서비스를 이용할 수 있습니다.<br>
-                    당신을 기다리는 흥미로운 발견이 있을 거예요.
-                </p>
-                <a href="/index.html" class="cta-button">테스트 시작하기</a>
-            </div>
-        </div>
-    </section>
-    
     <!-- 푸터 -->
     <footer class="footer">
         <div class="footer-content">
@@ -1029,30 +755,26 @@
                     심리테스트와 실용도구의 만남
                 </p>
                 <div class="footer-social">
-                    <a href="#" class="social-link">📧</a>
-                    <a href="#" class="social-link">📷</a>
-                    <a href="#" class="social-link">🐦</a>
-                    <a href="#" class="social-link">📱</a>
+                    <a href="mailto:youtubdoha@gmail.com" class="social-link">📧</a>
                 </div>
             </div>
             
             <div class="footer-section">
                 <h3>서비스</h3>
                 <ul class="footer-links">
-                    <li><a href="/tests/teto-egen/">심리테스트</a></li>
-                    <li><a href="/tools/text-counter.html">실용도구</a></li>
-                    <li><a href="#">커뮤니티</a></li>
-                    <li><a href="#">블로그</a></li>
+                    <li><a href="/tests/">심리테스트</a></li>
+                    <li><a href="/tools/">실용도구</a></li>
+                    <li><a href="/community/">커뮤니티</a></li>
+                    <li><a href="/about/">사이트 소개</a></li>
                 </ul>
             </div>
             
             <div class="footer-section">
                 <h3>인기 콘텐츠</h3>
                 <ul class="footer-links">
-                    <li><a href="/index.html">테토-에겐 테스트</a></li>
+                    <li><a href="/tests/teto-egen/test.html">테토-에겐 테스트</a></li>
                     <li><a href="/tests/mbti/">MBTI 검사</a></li>
                     <li><a href="/tools/text-counter.html">글자수 세기</a></li>
-                    <li><a href="#">연봉 계산기</a></li>
                 </ul>
             </div>
             
@@ -1060,20 +782,20 @@
                 <h3>고객지원</h3>
                 <ul class="footer-links">
                     <li><a href="/about/">사이트 소개</a></li>
-                    <li><a href="#">자주 묻는 질문</a></li>
-                    <li><a href="/contact">문의하기</a></li>
-                    <li><a href="#">사이트맵</a></li>
+                    <li><a href="/contact/">문의하기</a></li>
+                    <li><a href="/privacy/">개인정보처리방침</a></li>
+                    <li><a href="/terms/">이용약관</a></li>
                 </ul>
             </div>
         </div>
         
         <div class="footer-bottom">
             <div class="footer-legal">
-                <a href="/privacy">개인정보처리방침</a>
-                <a href="/terms">이용약관</a>
-                <a href="#">면책조항</a>
+                <a href="/privacy/">개인정보처리방침</a>
+                <a href="/terms/">이용약관</a>
             </div>
-            <p>&copy; 2025 doha.kr. All rights reserved. Made with ❤️ in Korea</p>
+            <p>&copy; 2024 doha.kr. All rights reserved.</p>
+            <p style="font-size: 14px; margin-top: 8px;">문의: youtubdoha@gmail.com</p>
         </div>
     </footer>
     
