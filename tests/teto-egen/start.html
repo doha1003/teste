@@ -20,28 +20,8 @@
     <!-- Favicon -->
     <link rel="icon" href="/images/placeholder-favicon.svg" type="image/svg+xml">
     
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Quiz",
-        "name": "테토-에겐 성격 유형 테스트",
-        "description": "10가지 질문으로 테토형과 에겐형 중 당신의 성격 유형을 분석합니다",
-        "educationalLevel": "All",
-        "numberOfQuestions": 10,
-        "timeRequired": "PT5M",
-        "provider": {
-            "@type": "Organization",
-            "name": "doha.kr",
-            "url": "https://doha.kr"
-        },
-        "isAccessibleForFree": true,
-        "url": "https://doha.kr/tests/teto-egen/"
-    }
-    </script>
-    
     <style>
-        /* Page-specific styles for test interface */
+        /* 테스트 전용 스타일 */
         .test-container {
             max-width: 800px;
             margin: 40px auto;
@@ -62,76 +42,88 @@
             font-size: 2.5em;
             margin-bottom: 8px;
             font-weight: 600;
+            color: white;
         }
         
         .test-header p {
             font-size: 1.2em;
             opacity: 0.9;
             font-weight: 300;
+            color: white;
         }
         
         .test-content {
             padding: 40px 30px;
         }
         
-        .intro-section {
+        /* 성별 선택 화면 */
+        .gender-selection {
             text-align: center;
-            margin-bottom: 40px;
-            padding: 30px;
-            background: var(--gray-50);
-            border-radius: 12px;
+            padding: 40px 20px;
         }
         
-        .intro-section h2 {
-            font-size: 1.5em;
-            margin-bottom: 15px;
+        .gender-title {
+            font-size: 2em;
+            margin-bottom: 16px;
+            color: var(--gray-900);
+            font-weight: 600;
+        }
+        
+        .gender-subtitle {
+            font-size: 1.1em;
+            color: var(--gray-600);
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+        
+        .gender-options {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+        
+        .gender-option {
+            background: white;
+            border: 2px solid var(--gray-200);
+            border-radius: 16px;
+            padding: 32px 24px;
+            cursor: pointer;
+            transition: all 0.3s;
+            min-width: 180px;
+            text-align: center;
+        }
+        
+        .gender-option:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .gender-option.selected {
+            border-color: var(--primary-color);
+            background: rgba(99, 102, 241, 0.05);
+        }
+        
+        .gender-icon {
+            font-size: 4em;
+            margin-bottom: 16px;
+            display: block;
+        }
+        
+        .gender-label {
+            font-size: 1.3em;
             font-weight: 600;
             color: var(--gray-900);
+            margin-bottom: 8px;
         }
         
-        .intro-section p {
-            margin-bottom: 20px;
-            font-size: 1.05em;
-            line-height: 1.6;
-            color: var(--gray-700);
-        }
-        
-        .intro-features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
-        }
-        
-        .intro-feature {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
+        .gender-desc {
             font-size: 0.9em;
-            font-weight: 500;
-            color: var(--gray-800);
-            box-shadow: var(--shadow-sm);
+            color: var(--gray-600);
         }
         
-        .start-test-btn {
-            background: var(--gradient-primary);
-            color: white;
-            padding: 16px 48px;
-            font-size: 1.2em;
-            font-weight: 600;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            margin-top: 20px;
-            box-shadow: var(--shadow-md);
-        }
-        
-        .start-test-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-xl);
-        }
-        
+        /* 테스트 진행 화면 */
         .progress-container {
             margin-bottom: 40px;
         }
@@ -151,9 +143,9 @@
         
         .progress-bar {
             width: 100%;
-            height: 6px;
+            height: 8px;
             background: var(--gray-200);
-            border-radius: 3px;
+            border-radius: 4px;
             overflow: hidden;
         }
         
@@ -161,7 +153,7 @@
             height: 100%;
             background: var(--gradient-primary);
             transition: width 0.4s ease;
-            border-radius: 3px;
+            border-radius: 4px;
         }
         
         .question-container {
@@ -184,7 +176,7 @@
         
         .option {
             border: 2px solid var(--gray-200);
-            border-radius: 8px;
+            border-radius: 12px;
             padding: 20px 24px;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -223,7 +215,7 @@
         }
         
         .btn {
-            padding: 12px 32px;
+            padding: 14px 32px;
             border: none;
             border-radius: 8px;
             font-size: 1em;
@@ -245,6 +237,12 @@
             box-shadow: var(--shadow-lg);
         }
         
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
         .btn-secondary {
             background: white;
             color: var(--gray-700);
@@ -256,37 +254,23 @@
             color: var(--primary-color);
         }
         
-        /* Result styles */
+        /* 결과 화면 */
         .result-container {
             text-align: center;
             padding: 40px 30px;
         }
         
-        .collection-card {
+        .result-card {
             border-radius: 20px;
-            padding: 30px;
+            padding: 40px;
             margin: 30px auto;
-            max-width: 400px;
-            position: relative;
-            overflow: hidden;
+            max-width: 500px;
             background: white;
             box-shadow: var(--shadow-xl);
-            transform: perspective(1000px) rotateY(0deg);
-            transition: all 0.6s ease;
-            cursor: pointer;
+            border: 1px solid var(--gray-200);
         }
         
-        .collection-card:hover {
-            transform: perspective(1000px) rotateY(5deg) scale(1.05);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
-        }
-        
-        .card-inner {
-            position: relative;
-            z-index: 1;
-        }
-        
-        .card-avatar {
+        .result-avatar {
             width: 120px;
             height: 120px;
             border-radius: 50%;
@@ -301,7 +285,7 @@
         }
         
         .result-type {
-            font-size: 2.5em;
+            font-size: 2.2em;
             font-weight: 700;
             margin-bottom: 15px;
             background: var(--gradient-primary);
@@ -314,14 +298,14 @@
             font-size: 1.1em;
             line-height: 1.6;
             color: var(--gray-700);
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
         
         .hidden {
             display: none;
         }
         
-        /* Single ad placement */
+        /* 광고 */
         .ad-container {
             text-align: center;
             margin: 40px 0;
@@ -338,7 +322,7 @@
             letter-spacing: 0.5px;
         }
         
-        /* Responsive design */
+        /* 반응형 */
         @media (max-width: 768px) {
             .test-container {
                 margin: 20px;
@@ -357,29 +341,29 @@
                 padding: 30px 20px;
             }
             
-            .intro-features {
-                grid-template-columns: 1fr;
+            .gender-options {
+                flex-direction: column;
+                align-items: center;
             }
             
-            .collection-card {
+            .gender-option {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .result-card {
+                padding: 30px 20px;
                 margin: 20px 0;
-                padding: 20px;
-                max-width: 100%;
-            }
-            
-            .collection-card:hover {
-                transform: perspective(1000px) rotateY(2deg) scale(1.02);
             }
             
             .result-type {
-                font-size: 2em;
+                font-size: 1.8em;
             }
             
-            .card-avatar {
-                width: 80px;
-                height: 80px;
+            .result-avatar {
+                width: 100px;
+                height: 100px;
                 font-size: 3em;
-                margin-bottom: 15px;
             }
         }
     </style>
@@ -395,23 +379,31 @@
         </div>
 
         <div class="test-content">
-            <!-- 테스트 시작 전 안내 -->
-            <div id="intro-screen" class="intro-section">
-                <h2>당신의 성격 유형을 발견하세요!</h2>
-                <p>
-                    10개의 간단한 질문으로 당신만의 고유한 성격 유형을 분석합니다. 
-                    테토(Teto)와 에겐(Egen) 두 가지 성향을 바탕으로 총 4가지 유형으로 분류하여
-                    상세한 분석 결과를 제공합니다.
+            <!-- 성별 선택 화면 -->
+            <div id="gender-screen" class="gender-selection">
+                <h2 class="gender-title">성별을 선택해주세요</h2>
+                <p class="gender-subtitle">
+                    정확한 분석을 위해 성별을 선택해주세요.<br>
+                    성별에 따른 미묘한 차이를 반영하여 더욱 정교한 결과를 제공합니다.
                 </p>
                 
-                <div class="intro-features">
-                    <div class="intro-feature">🎯 정확한 분석</div>
-                    <div class="intro-feature">⚡ 빠른 테스트</div>
-                    <div class="intro-feature">📊 상세한 결과</div>
-                    <div class="intro-feature">💡 실용적 조언</div>
+                <div class="gender-options">
+                    <div class="gender-option" onclick="selectGender('M')">
+                        <span class="gender-icon">👨</span>
+                        <div class="gender-label">남성</div>
+                        <div class="gender-desc">Male</div>
+                    </div>
+                    
+                    <div class="gender-option" onclick="selectGender('F')">
+                        <span class="gender-icon">👩</span>
+                        <div class="gender-label">여성</div>
+                        <div class="gender-desc">Female</div>
+                    </div>
                 </div>
                 
-                <button class="start-test-btn" onclick="startTest()">테스트 시작하기</button>
+                <button class="btn btn-primary" id="start-test-btn" onclick="startTest()" disabled>
+                    테스트 시작하기
+                </button>
             </div>
 
             <!-- 테스트 화면 -->
@@ -439,15 +431,13 @@
 
             <!-- 결과 화면 -->
             <div id="result-screen" class="result-container hidden">
-                <div class="collection-card" id="result-card">
-                    <div class="card-inner">
-                        <div class="card-avatar" id="card-avatar">🦋</div>
-                        <div class="result-type" id="result-type"></div>
-                        <div class="result-description" id="result-description"></div>
-                    </div>
+                <div class="result-card">
+                    <div class="result-avatar" id="result-avatar">🦋</div>
+                    <div class="result-type" id="result-type"></div>
+                    <div class="result-description" id="result-description"></div>
                 </div>
                 
-                <!-- 단일 광고 위치 -->
+                <!-- 광고 -->
                 <div class="ad-container">
                     <div class="ad-label">광고</div>
                     <ins class="adsbygoogle"
@@ -472,9 +462,14 @@
     <!-- External JavaScript -->
     <script src="/js/main.js"></script>
     
-    <!-- Test Logic JavaScript -->
+    <!-- 테스트 로직 -->
     <script>
-        // 테스트 질문 및 로직
+        // 테스트 변수
+        let selectedGender = '';
+        let currentQuestion = 0;
+        let answers = [];
+
+        // 테스트 질문
         const questions = [
             {
                 question: "주말에 친구들과의 약속이 취소되었을 때 당신의 반응은?",
@@ -548,23 +543,35 @@
             }
         ];
 
-        let currentQuestion = 0;
-        let answers = [];
-        let userGender = '';
-
-        function startTest() {
-            // 성별 선택
-            const gender = prompt("성별을 선택해주세요 (남성: M, 여성: F):");
-            if (gender && (gender.toUpperCase() === 'M' || gender.toUpperCase() === 'F')) {
-                userGender = gender.toUpperCase();
-                document.getElementById('intro-screen').classList.add('hidden');
-                document.getElementById('test-screen').classList.remove('hidden');
-                showQuestion();
-            } else {
-                alert("올바른 성별을 입력해주세요 (M 또는 F)");
-            }
+        // 성별 선택
+        function selectGender(gender) {
+            selectedGender = gender;
+            
+            // 모든 옵션에서 selected 클래스 제거
+            document.querySelectorAll('.gender-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // 선택된 옵션에 selected 클래스 추가
+            event.target.closest('.gender-option').classList.add('selected');
+            
+            // 시작 버튼 활성화
+            document.getElementById('start-test-btn').disabled = false;
         }
 
+        // 테스트 시작
+        function startTest() {
+            if (!selectedGender) {
+                alert('성별을 선택해주세요.');
+                return;
+            }
+            
+            document.getElementById('gender-screen').classList.add('hidden');
+            document.getElementById('test-screen').classList.remove('hidden');
+            showQuestion();
+        }
+
+        // 질문 표시
         function showQuestion() {
             if (currentQuestion < questions.length) {
                 const q = questions[currentQuestion];
@@ -589,18 +596,16 @@
             }
         }
 
+        // 옵션 선택
         function selectOption(optionIndex) {
-            // 선택된 옵션 표시
             document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
             document.querySelectorAll('.option')[optionIndex].classList.add('selected');
 
-            // 답변 저장
             answers[currentQuestion] = questions[currentQuestion].options[optionIndex];
-            
-            // 다음 버튼 활성화
             document.getElementById('next-btn').style.display = 'block';
         }
 
+        // 다음 질문
         function nextQuestion() {
             if (answers[currentQuestion]) {
                 currentQuestion++;
@@ -612,12 +617,12 @@
             }
         }
 
+        // 이전 질문
         function previousQuestion() {
             if (currentQuestion > 0) {
                 currentQuestion--;
                 showQuestion();
                 
-                // 이전 답변이 있다면 선택 표시
                 if (answers[currentQuestion]) {
                     const prevAnswerIndex = questions[currentQuestion].options.indexOf(answers[currentQuestion]);
                     if (prevAnswerIndex !== -1) {
@@ -628,8 +633,8 @@
             }
         }
 
+        // 결과 표시
         function showResult() {
-            // 답변 분석
             let tetoScore = 0;
             let egenScore = 0;
 
@@ -644,7 +649,7 @@
             let resultType, resultEmoji, resultDescription;
 
             if (tetoScore > egenScore) {
-                if (userGender === 'M') {
+                if (selectedGender === 'M') {
                     resultType = "테토남 (Teto Male)";
                     resultEmoji = "💪";
                     resultDescription = "타고난 리더형으로 목표 지향적이고 추진력이 강합니다. 논리적 사고와 빠른 결단력으로 조직을 이끌어나가는 능력이 뛰어납니다.";
@@ -654,7 +659,7 @@
                     resultDescription = "자신감과 독립성을 겸비한 현대적 여성상입니다. 열정적이고 도전적이며, 자신의 의견을 당당하게 표현합니다.";
                 }
             } else {
-                if (userGender === 'M') {
+                if (selectedGender === 'M') {
                     resultType = "에겐남 (Egen Male)";
                     resultEmoji = "🌸";
                     resultDescription = "섬세하고 공감 능력이 뛰어난 신사입니다. 타인을 배려하고 조화를 중시하며, 안정적이고 신뢰할 수 있는 파트너입니다.";
@@ -665,10 +670,9 @@
                 }
             }
 
-            // 결과 화면 표시
             document.getElementById('test-screen').classList.add('hidden');
             document.getElementById('result-screen').classList.remove('hidden');
-            document.getElementById('card-avatar').textContent = resultEmoji;
+            document.getElementById('result-avatar').textContent = resultEmoji;
             document.getElementById('result-type').textContent = resultType;
             document.getElementById('result-description').textContent = resultDescription;
 
@@ -676,12 +680,20 @@
             (adsbygoogle = window.adsbygoogle || []).push({});
         }
 
+        // 테스트 재시작
         function restartTest() {
+            selectedGender = '';
             currentQuestion = 0;
             answers = [];
-            userGender = '';
+            
             document.getElementById('result-screen').classList.add('hidden');
-            document.getElementById('intro-screen').classList.remove('hidden');
+            document.getElementById('gender-screen').classList.remove('hidden');
+            
+            // 성별 선택 초기화
+            document.querySelectorAll('.gender-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            document.getElementById('start-test-btn').disabled = true;
         }
     </script>
     
