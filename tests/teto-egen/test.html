@@ -77,6 +77,56 @@
             line-height: 1.6;
         }
         
+        .gender-options {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .gender-option {
+            background: white;
+            border: 2px solid var(--gray-200);
+            border-radius: 16px;
+            padding: 32px 24px;
+            cursor: pointer;
+            transition: all 0.3s;
+            min-width: 180px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .gender-option:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .gender-option.selected {
+            border-color: var(--primary-color);
+            background: rgba(99, 102, 241, 0.05);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .gender-icon {
+            font-size: 4em;
+            margin-bottom: 16px;
+            display: block;
+        }
+        
+        .gender-label {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 8px;
+        }
+        
+        .gender-desc {
+            font-size: 0.9em;
+            color: var(--gray-600);
+        }
+        
         /* 테스트 진행 화면 */
         .progress-container {
             margin-bottom: 40px;
