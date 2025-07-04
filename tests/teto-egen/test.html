@@ -14,7 +14,41 @@
     <!-- 카카오 JavaScript SDK -->
     <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js" integrity="sha384-DKYJZ8NLiK8MN4/C5P2dtSmLQ4KwPaoqAfyA/DfmEc1VDxu4yyC7wy6K1Hs90nka" crossorigin="anonymous"></script>
     
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
+        /* CSS 변수 정의 - 전체 사이트 통일 */
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #8b5cf6;
+            --accent-color: #f59e0b;
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            
+            --gradient-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            --gradient-warm: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+            --gradient-cool: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+            
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -22,28 +56,72 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: #f8fafc;
-            color: #2d3748;
+            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--gray-50);
+            color: var(--gray-900);
             line-height: 1.6;
-            padding: 20px;
+        }
+        
+        /* 통일된 네비게이션 바 */
+        .navbar {
+            background: white;
+            box-shadow: var(--shadow-md);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .navbar-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 64px;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+        }
+        
+        .nav-menu {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+        
+        .nav-link {
+            color: var(--gray-600);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        
+        .nav-link:hover {
+            color: var(--primary-color);
         }
 
         .container {
             max-width: 800px;
-            margin: 0 auto;
+            margin: 40px auto;
             background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+            border-radius: 16px;
+            box-shadow: var(--shadow-lg);
             overflow: hidden;
         }
 
         .header {
-            background: linear-gradient(135deg, #2b6cb0 0%, #2c5282 100%);
+            background: var(--gradient-primary);
             color: white;
             padding: 40px 30px;
             text-align: center;
-            position: relative;
         }
 
         .header h1 {
@@ -59,32 +137,6 @@
             font-weight: 300;
         }
 
-        /* 네비게이션 링크들 */
-        .nav-links {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            display: flex;
-            gap: 15px;
-        }
-
-        .nav-link {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            text-decoration: none;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.9em;
-            font-weight: 500;
-            transition: all 0.2s ease;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .nav-link:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-1px);
-        }
-
         .content {
             padding: 40px 30px;
         }
@@ -94,20 +146,20 @@
             text-align: center;
             margin-bottom: 40px;
             padding: 30px;
-            background: #f8fafc;
+            background: var(--gray-50);
             border-radius: 12px;
-            border: 1px solid #e2e8f0;
+            border: 1px solid var(--gray-200);
         }
 
         .intro-section h2 {
             font-size: 1.5em;
-            color: #1a202c;
+            color: var(--gray-900);
             margin-bottom: 15px;
             font-weight: 600;
         }
 
         .intro-section p {
-            color: #4a5568;
+            color: var(--gray-600);
             margin-bottom: 20px;
             font-size: 1.05em;
             line-height: 1.6;
@@ -125,12 +177,13 @@
             padding: 15px;
             border-radius: 8px;
             font-size: 0.9em;
-            color: #2d3748;
+            color: var(--gray-700);
             font-weight: 500;
+            box-shadow: var(--shadow-sm);
         }
 
         .start-test-btn {
-            background: linear-gradient(135deg, #38b2ac 0%, #319795 100%);
+            background: var(--gradient-primary);
             color: white;
             padding: 16px 48px;
             font-size: 1.2em;
@@ -143,9 +196,8 @@
         }
 
         .start-test-btn:hover {
-            background: linear-gradient(135deg, #319795 0%, #2c7a7b 100%);
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(56, 178, 172, 0.3);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.3);
         }
 
         .progress-container {
@@ -161,21 +213,21 @@
 
         .progress-text {
             font-size: 0.9em;
-            color: #718096;
+            color: var(--gray-500);
             font-weight: 500;
         }
 
         .progress-bar {
             width: 100%;
             height: 6px;
-            background: #e2e8f0;
+            background: var(--gray-200);
             border-radius: 3px;
             overflow: hidden;
         }
 
         .progress {
             height: 100%;
-            background: #2b6cb0;
+            background: var(--gradient-primary);
             transition: width 0.4s ease;
             border-radius: 3px;
         }
@@ -187,7 +239,7 @@
         .question {
             font-size: 1.4em;
             margin-bottom: 30px;
-            color: #1a202c;
+            color: var(--gray-900);
             font-weight: 600;
             line-height: 1.4;
         }
@@ -199,8 +251,8 @@
         }
 
         .option {
-            background: #f7fafc;
-            border: 2px solid #e2e8f0;
+            background: var(--gray-50);
+            border: 2px solid var(--gray-200);
             border-radius: 8px;
             padding: 20px 24px;
             cursor: pointer;
@@ -211,15 +263,15 @@
         }
 
         .option:hover {
-            background: #edf2f7;
-            border-color: #cbd5e0;
+            background: var(--gray-100);
+            border-color: var(--gray-300);
             transform: translateY(-1px);
         }
 
         .option.selected {
             background: #ebf8ff;
-            border-color: #2b6cb0;
-            color: #1a365d;
+            border-color: var(--primary-color);
+            color: var(--gray-900);
         }
 
         .option.selected::after {
@@ -228,7 +280,7 @@
             right: 20px;
             top: 50%;
             transform: translateY(-50%);
-            color: #2b6cb0;
+            color: var(--primary-color);
             font-weight: bold;
             font-size: 1.2em;
         }
@@ -252,35 +304,34 @@
         }
 
         .btn-primary {
-            background: #2b6cb0;
+            background: var(--gradient-primary);
             color: white;
         }
 
         .btn-primary:hover {
-            background: #2c5282;
             transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
         }
 
         .btn-secondary {
-            background: #e2e8f0;
-            color: #4a5568;
+            background: var(--gray-200);
+            color: var(--gray-600);
         }
 
         .btn-secondary:hover {
-            background: #cbd5e0;
+            background: var(--gray-300);
         }
 
         .btn-success {
-            background: linear-gradient(135deg, #38b2ac 0%, #319795 100%);
+            background: var(--gradient-primary);
             color: white;
             padding: 14px 36px;
             font-size: 1.05em;
         }
 
         .btn-success:hover {
-            background: linear-gradient(135deg, #319795 0%, #2c7a7b 100%);
             transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(56, 178, 172, 0.3);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
         }
 
         /* 결과 화면 스타일 */
@@ -291,7 +342,7 @@
 
         /* 수집형 카드 스타일 */
         .collection-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--gradient-primary);
             border-radius: 20px;
             padding: 30px;
             margin: 30px auto;
@@ -366,7 +417,7 @@
             height: 120px;
             border-radius: 50%;
             margin: 0 auto 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--gradient-primary);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -447,7 +498,7 @@
 
         .section-title {
             font-size: 1.8em;
-            color: #1a202c;
+            color: var(--gray-900);
             margin-bottom: 30px;
             font-weight: 600;
             text-align: center;
@@ -464,31 +515,31 @@
             background: white;
             padding: 24px;
             border-radius: 12px;
-            border-left: 4px solid #2b6cb0;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid var(--primary-color);
+            box-shadow: var(--shadow-md);
             transition: transform 0.2s ease;
         }
 
         .trait-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow-lg);
         }
 
         .trait-title {
             font-weight: 600;
-            color: #1a202c;
+            color: var(--gray-900);
             margin-bottom: 8px;
             font-size: 1.1em;
         }
 
         .trait-desc {
-            color: #4a5568;
+            color: var(--gray-600);
             font-size: 0.95em;
             line-height: 1.5;
         }
 
         .compatibility {
-            background: linear-gradient(135deg, #38b2ac 0%, #319795 100%);
+            background: var(--gradient-primary);
             color: white;
             padding: 30px;
             border-radius: 12px;
@@ -513,19 +564,19 @@
             margin: 40px 0;
             text-align: center;
             padding: 30px;
-            background: #f0f4f8;
+            background: var(--gray-50);
             border-radius: 12px;
         }
 
         .detail-section h3 {
             font-size: 1.3em;
-            color: #1a202c;
+            color: var(--gray-900);
             margin-bottom: 15px;
             font-weight: 600;
         }
 
         .detail-section p {
-            color: #4a5568;
+            color: var(--gray-600);
             margin-bottom: 20px;
             font-size: 1.05em;
         }
@@ -535,15 +586,15 @@
             text-align: center;
             margin: 30px 0;
             padding: 20px;
-            background: #f8fafc;
+            background: var(--gray-50);
             border-radius: 12px;
-            border: 1px solid #e2e8f0;
+            border: 1px solid var(--gray-200);
         }
 
         .share-title {
             font-size: 1.2em;
             font-weight: 600;
-            color: #1a202c;
+            color: var(--gray-900);
             margin-bottom: 15px;
         }
 
@@ -583,7 +634,7 @@
 
         .restart-btn {
             margin-top: 40px;
-            background: #2b6cb0;
+            background: var(--gradient-primary);
             color: white;
             padding: 14px 40px;
             font-size: 1.1em;
@@ -598,14 +649,14 @@
             text-align: center;
             margin: 30px 0;
             padding: 20px;
-            background: #f7fafc;
+            background: var(--gray-50);
             border-radius: 8px;
-            border: 1px solid #e2e8f0;
+            border: 1px solid var(--gray-200);
         }
 
         .ad-label {
             font-size: 0.8em;
-            color: #718096;
+            color: var(--gray-500);
             margin-bottom: 10px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -620,58 +671,62 @@
             background: white;
         }
 
-        /* Footer 스타일 */
+        /* Footer 스타일 - 전체 사이트 통일 */
         .footer {
-            background: #2d3748;
+            background: var(--gray-900);
+            color: white;
             margin-top: 60px;
-            padding: 30px 20px;
-            color: white;
+            padding: 48px 20px;
         }
 
-        .footer-container {
-            max-width: 800px;
+        .footer-content {
+            max-width: 1280px;
             margin: 0 auto;
-            text-align: center;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
         }
-
+        
+        .footer-section h3 {
+            font-size: 18px;
+            margin-bottom: 16px;
+        }
+        
         .footer-links {
-            margin-bottom: 20px;
+            list-style: none;
         }
-
-        .footer-link {
-            color: #a0aec0;
+        
+        .footer-links li {
+            margin-bottom: 8px;
+        }
+        
+        .footer-links a {
+            color: var(--gray-400);
             text-decoration: none;
-            font-weight: 500;
-            transition: color 0.2s ease;
-            padding: 8px 16px;
-            border-radius: 6px;
-            display: inline-block;
+            transition: color 0.2s;
         }
-
-        .footer-link:hover {
+        
+        .footer-links a:hover {
             color: white;
-            background: rgba(255, 255, 255, 0.1);
         }
 
-        .footer-divider {
-            color: #4a5568;
-            margin: 0 8px;
-        }
-
-        .footer-copyright {
-            color: #718096;
-            font-size: 0.9em;
-            margin: 0;
-            line-height: 1.5;
+        .footer-bottom {
+            max-width: 1280px;
+            margin: 32px auto 0;
+            padding-top: 32px;
+            border-top: 1px solid var(--gray-800);
+            text-align: center;
+            color: var(--gray-500);
         }
 
         @media (max-width: 768px) {
             body {
-                padding: 10px;
+                padding: 0;
             }
             
             .container {
-                border-radius: 8px;
+                margin: 20px;
+                border-radius: 12px;
             }
             
             .header {
@@ -682,18 +737,8 @@
                 font-size: 2em;
             }
 
-            .nav-links {
-                position: static;
-                display: flex;
-                justify-content: center;
-                gap: 10px;
-                margin-top: 15px;
-                flex-wrap: wrap;
-            }
-
-            .nav-link {
-                font-size: 0.8em;
-                padding: 6px 12px;
+            .nav-menu {
+                display: none;
             }
             
             .content {
@@ -736,24 +781,6 @@
                 font-size: 0.7em;
             }
 
-            .footer-links {
-                display: flex;
-                flex-direction: column;
-                gap: 8px;
-                align-items: center;
-            }
-
-            .footer-divider {
-                display: none;
-            }
-
-            .footer-link {
-                padding: 12px 24px;
-                background: rgba(255, 255, 255, 0.1);
-                border-radius: 8px;
-                margin: 4px 0;
-            }
-
             /* 모바일에서 카카오톡 공유 버튼 스타일 */
             .share-section {
                 margin: 20px 0;
@@ -775,13 +802,22 @@
     </style>
 </head>
 <body>
+    <!-- 통일된 네비게이션 -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="/" class="logo">doha.kr</a>
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link">홈</a></li>
+                <li><a href="/tests/" class="nav-link">심리테스트</a></li>
+                <li><a href="/tools/" class="nav-link">실용도구</a></li>
+                <li><a href="/community/" class="nav-link">커뮤니티</a></li>
+                <li><a href="/about/" class="nav-link">소개</a></li>
+            </ul>
+        </div>
+    </nav>
+
     <div class="container">
         <div class="header">
-            <div class="nav-links">
-                <a href="/tests/mbti/" class="nav-link">MBTI 테스트</a>
-                <a href="/about/" class="nav-link">사이트 소개</a>
-                <a href="/contact/" class="nav-link">문의하기</a>
-            </div>
             <h1>테토-에겐 성격 유형 분석</h1>
             <p>과학적 접근법으로 알아보는 나의 성격 유형</p>
         </div>
@@ -877,7 +913,7 @@
                 <div class="detail-section">
                     <h3>더 자세한 분석이 궁금하신가요?</h3>
                     <p>당신의 성격 유형에 대한 심층 분석을 확인해보세요. 직업, 연애, 인간관계, 스트레스 대처법 등 다양한 측면에서의 상세한 가이드를 제공합니다.</p>
-                    <a href="#" class="btn btn-success" id="detail-btn" onclick="viewDetailedResult()">상세 분석 보기</a>
+                    <a href="/tests/teto-egen/" class="btn btn-success">상세 분석 보기</a>
                 </div>
                 
                 <!-- 하단 광고 -->
@@ -908,17 +944,34 @@
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-links">
-                <a href="/about/" class="footer-link">소개</a>
-                <span class="footer-divider">|</span>
-                <a href="/privacy/" class="footer-link">개인정보처리방침</a>
-                <span class="footer-divider">|</span>
-                <a href="/terms/" class="footer-link">이용약관</a>
-                <span class="footer-divider">|</span>
-                <a href="/contact/" class="footer-link">문의하기</a>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>서비스</h3>
+                <ul class="footer-links">
+                    <li><a href="/tests/">심리테스트</a></li>
+                    <li><a href="/tools/">실용도구</a></li>
+                    <li><a href="/community/">커뮤니티</a></li>
+                </ul>
             </div>
-            <p class="footer-copyright">© 2025 테토-에겐 성격 유형 분석. 과학적 근거를 바탕으로 한 성격 분석 도구입니다.</p>
+            <div class="footer-section">
+                <h3>인기 콘텐츠</h3>
+                <ul class="footer-links">
+                    <li><a href="/tests/teto-egen/test.html">테토-에겐 테스트</a></li>
+                    <li><a href="/tools/text-counter.html">글자수 세기</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>정보</h3>
+                <ul class="footer-links">
+                    <li><a href="/about/">사이트 소개</a></li>
+                    <li><a href="/privacy/">개인정보처리방침</a></li>
+                    <li><a href="/terms/">이용약관</a></li>
+                    <li><a href="/contact/">문의하기</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 doha.kr. All rights reserved.</p>
         </div>
     </footer>
 
@@ -1272,13 +1325,6 @@
 
             // 결과 화면 광고 로드
             setTimeout(loadAds, 500);
-        }
-
-        // 상세 결과 보기
-        function viewDetailedResult() {
-            if (currentResultType) {
-                window.location.href = `/tests/teto-egen/result-detail.html?type=${encodeURIComponent(currentResultType)}`;
-            }
         }
 
         // 테스트 재시작
