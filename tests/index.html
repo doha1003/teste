@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>심리테스트 - 다양한 무료 성격 테스트 | doha.kr</title>
+    <meta name="description" content="테토-에겐, MBTI 등 다양한 심리테스트를 무료로 체험해보세요. 나를 더 깊이 이해할 수 있는 기회!">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
+    
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #8b5cf6;
+            --accent-color: #f59e0b;
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            --gradient-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans KR', -apple-system, sans-serif;
+            background-color: var(--gray-50);
+            color: var(--gray-900);
+            line-height: 1.6;
+        }
+        
+        /* 네비게이션 */
+        .navbar {
+            background: white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .navbar-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 64px;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+        
+        .nav-menu {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+        
+        .nav-link {
+            color: var(--gray-600);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--primary-color);
+        }
+        
+        /* 헤더 */
+        .header {
+            background: linear-gradient(135deg, #f8fafc 0%, #e5e7eb 100%);
+            padding: 60px 20px;
+            text-align: center;
+        }
+        
+        .header-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .header-title {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .header-subtitle {
+            font-size: 20px;
+            color: var(--gray-600);
+            line-height: 1.5;
+        }
+        
+        /* 테스트 그리드 */
+        .tests-container {
+            max-width: 1280px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+        
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 32px;
+            margin-bottom: 60px;
+        }
+        
+        .test-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+            transition: all 0.3s;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .test-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+        }
+        
+        .test-card-header {
+            height: 200px;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .test-card-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.2) 50%, transparent 70%);
+            transform: rotate(45deg);
+            transition: all 0.6s;
+        }
+        
+        .test-card:hover .test-card-header::before {
+            animation: shine 0.6s ease-in-out;
+        }
+        
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+        
+        .test-card-content {
+            padding: 24px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .test-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--gray-900);
+        }
+        
+        .test-description {
+            color: var(--gray-600);
+            margin-bottom: 20px;
+            flex: 1;
+        }
+        
+        .test-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 16px;
+            border-top: 1px solid var(--gray-200);
+        }
+        
+        .test-time {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--gray-500);
+            font-size: 14px;
+        }
+        
+        .test-participants {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--gray-500);
+            font-size: 14px;
+        }
+        
+        .start-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--gradient-primary);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        
+        .start-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+        }
+        
+        /* 광고 */
+        .ad-container {
+            margin: 40px 0;
+            text-align: center;
+        }
+        
+        .ad-label {
+            font-size: 12px;
+            color: var(--gray-500);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        /* 푸터 */
+        .footer {
+            background: var(--gray-900);
+            color: white;
+            padding: 48px 20px;
+            margin-top: 80px;
+        }
+        
+        .footer-content {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+        
+        .footer-section h3 {
+            font-size: 18px;
+            margin-bottom: 16px;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 8px;
+        }
+        
+        .footer-links a {
+            color: var(--gray-400);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .footer-bottom {
+            max-width: 1280px;
+            margin: 32px auto 0;
+            padding-top: 32px;
+            border-top: 1px solid var(--gray-800);
+            text-align: center;
+            color: var(--gray-500);
+        }
+        
+        /* 준비중 뱃지 */
+        .coming-soon {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: var(--accent-color);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        @media (max-width: 768px) {
+            .header-title {
+                font-size: 36px;
+            }
+            
+            .nav-menu {
+                display: none;
+            }
+            
+            .test-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 네비게이션 -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="/" class="logo">doha.kr</a>
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link">홈</a></li>
+                <li><a href="/tests/" class="nav-link active">심리테스트</a></li>
+                <li><a href="/tools/" class="nav-link">실용도구</a></li>
+                <li><a href="/community/" class="nav-link">커뮤니티</a></li>
+                <li><a href="/about/" class="nav-link">소개</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- 헤더 -->
+    <header class="header">
+        <div class="header-content">
+            <h1 class="header-title">심리테스트</h1>
+            <p class="header-subtitle">
+                나를 더 깊이 이해하고 싶다면?<br>
+                다양한 심리테스트로 진짜 나를 발견해보세요
+            </p>
+        </div>
+    </header>
+    
+    <!-- 테스트 목록 -->
+    <main class="tests-container">
+        <div class="test-grid">
+            <!-- 테토-에겐 테스트 -->
+            <a href="/tests/teto-egen/test.html" class="test-card">
+                <div class="test-card-header">
+                    🎭
+                </div>
+                <div class="test-card-content">
+                    <h2 class="test-title">테토-에겐 성격 유형 테스트</h2>
+                    <p class="test-description">
+                        당신은 주도적인 테토형? 아니면 조화로운 에겐형? 
+                        10가지 질문으로 당신의 성격 유형을 분석해드립니다.
+                    </p>
+                    <div class="test-meta">
+                        <span class="test-time">⏱️ 5분</span>
+                        <span class="test-participants">👥 152만명 참여</span>
+                    </div>
+                    <div style="margin-top: 16px;">
+                        <span class="start-button">테스트 시작하기 →</span>
+                    </div>
+                </div>
+            </a>
+            
+            <!-- MBTI 테스트 -->
+            <div class="test-card" style="position: relative;">
+                <span class="coming-soon">준비중</span>
+                <div class="test-card-header" style="opacity: 0.7;">
+                    🔮
+                </div>
+                <div class="test-card-content" style="opacity: 0.7;">
+                    <h2 class="test-title">MBTI 성격유형 검사</h2>
+                    <p class="test-description">
+                        16가지 성격 유형 중 나는 어떤 유형일까요? 
+                        60개의 정밀한 문항으로 당신의 MBTI를 찾아드립니다.
+                    </p>
+                    <div class="test-meta">
+                        <span class="test-time">⏱️ 15분</span>
+                        <span class="test-participants">👥 준비중</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 사랑의 언어 테스트 -->
+            <div class="test-card" style="position: relative;">
+                <span class="coming-soon">준비중</span>
+                <div class="test-card-header" style="opacity: 0.7;">
+                    💝
+                </div>
+                <div class="test-card-content" style="opacity: 0.7;">
+                    <h2 class="test-title">사랑의 언어 테스트</h2>
+                    <p class="test-description">
+                        당신이 사랑을 표현하고 느끼는 방식은? 
+                        5가지 사랑의 언어 중 당신의 주 언어를 찾아보세요.
+                    </p>
+                    <div class="test-meta">
+                        <span class="test-time">⏱️ 10분</span>
+                        <span class="test-participants">👥 준비중</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 스트레스 유형 테스트 -->
+            <div class="test-card" style="position: relative;">
+                <span class="coming-soon">준비중</span>
+                <div class="test-card-header" style="opacity: 0.7;">
+                    😰
+                </div>
+                <div class="test-card-content" style="opacity: 0.7;">
+                    <h2 class="test-title">스트레스 유형 테스트</h2>
+                    <p class="test-description">
+                        스트레스 받을 때 당신의 반응은? 
+                        나만의 스트레스 패턴을 알고 건강하게 대처하는 방법을 찾아보세요.
+                    </p>
+                    <div class="test-meta">
+                        <span class="test-time">⏱️ 7분</span>
+                        <span class="test-participants">👥 준비중</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 광고 -->
+        <div class="ad-container">
+            <div class="ad-label">광고</div>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-7905640648499222"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </main>
+    
+    <!-- 푸터 -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>서비스</h3>
+                <ul class="footer-links">
+                    <li><a href="/tests/">심리테스트</a></li>
+                    <li><a href="/tools/">실용도구</a></li>
+                    <li><a href="/community/">커뮤니티</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>인기 콘텐츠</h3>
+                <ul class="footer-links">
+                    <li><a href="/tests/teto-egen/test.html">테토-에겐 테스트</a></li>
+                    <li><a href="/tools/text-counter.html">글자수 세기</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>정보</h3>
+                <ul class="footer-links">
+                    <li><a href="/about/">사이트 소개</a></li>
+                    <li><a href="/privacy/">개인정보처리방침</a></li>
+                    <li><a href="/terms/">이용약관</a></li>
+                    <li><a href="/contact/">문의하기</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 doha.kr. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+        // 애드센스 로드
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</body>
+</html>
