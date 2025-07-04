@@ -110,18 +110,19 @@
 
         .container {
             max-width: 800px;
-            margin: 40px auto;
+            margin: 0 auto;
             background: white;
-            border-radius: 16px;
-            box-shadow: var(--shadow-lg);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
             overflow: hidden;
         }
 
         .header {
-            background: var(--gradient-primary);
+            background: linear-gradient(135deg, #2b6cb0 0%, #2c5282 100%);
             color: white;
             padding: 40px 30px;
             text-align: center;
+            position: relative;
         }
 
         .header h1 {
@@ -137,6 +138,32 @@
             font-weight: 300;
         }
 
+        /* 네비게이션 링크들 */
+        .nav-links {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-link-old {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .nav-link-old:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
+        }
+
         .content {
             padding: 40px 30px;
         }
@@ -146,20 +173,20 @@
             text-align: center;
             margin-bottom: 40px;
             padding: 30px;
-            background: var(--gray-50);
+            background: #f8fafc;
             border-radius: 12px;
-            border: 1px solid var(--gray-200);
+            border: 1px solid #e2e8f0;
         }
 
         .intro-section h2 {
             font-size: 1.5em;
-            color: var(--gray-900);
+            color: #1a202c;
             margin-bottom: 15px;
             font-weight: 600;
         }
 
         .intro-section p {
-            color: var(--gray-600);
+            color: #4a5568;
             margin-bottom: 20px;
             font-size: 1.05em;
             line-height: 1.6;
@@ -177,13 +204,12 @@
             padding: 15px;
             border-radius: 8px;
             font-size: 0.9em;
-            color: var(--gray-700);
+            color: #2d3748;
             font-weight: 500;
-            box-shadow: var(--shadow-sm);
         }
 
         .start-test-btn {
-            background: var(--gradient-primary);
+            background: linear-gradient(135deg, #38b2ac 0%, #319795 100%);
             color: white;
             padding: 16px 48px;
             font-size: 1.2em;
@@ -196,8 +222,9 @@
         }
 
         .start-test-btn:hover {
+            background: linear-gradient(135deg, #319795 0%, #2c7a7b 100%);
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.3);
+            box-shadow: 0 6px 20px rgba(56, 178, 172, 0.3);
         }
 
         .progress-container {
@@ -213,21 +240,21 @@
 
         .progress-text {
             font-size: 0.9em;
-            color: var(--gray-500);
+            color: #718096;
             font-weight: 500;
         }
 
         .progress-bar {
             width: 100%;
             height: 6px;
-            background: var(--gray-200);
+            background: #e2e8f0;
             border-radius: 3px;
             overflow: hidden;
         }
 
         .progress {
             height: 100%;
-            background: var(--gradient-primary);
+            background: #2b6cb0;
             transition: width 0.4s ease;
             border-radius: 3px;
         }
@@ -239,7 +266,7 @@
         .question {
             font-size: 1.4em;
             margin-bottom: 30px;
-            color: var(--gray-900);
+            color: #1a202c;
             font-weight: 600;
             line-height: 1.4;
         }
@@ -251,8 +278,8 @@
         }
 
         .option {
-            background: var(--gray-50);
-            border: 2px solid var(--gray-200);
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
             border-radius: 8px;
             padding: 20px 24px;
             cursor: pointer;
@@ -263,15 +290,15 @@
         }
 
         .option:hover {
-            background: var(--gray-100);
-            border-color: var(--gray-300);
+            background: #edf2f7;
+            border-color: #cbd5e0;
             transform: translateY(-1px);
         }
 
         .option.selected {
             background: #ebf8ff;
-            border-color: var(--primary-color);
-            color: var(--gray-900);
+            border-color: #2b6cb0;
+            color: #1a365d;
         }
 
         .option.selected::after {
@@ -280,7 +307,7 @@
             right: 20px;
             top: 50%;
             transform: translateY(-50%);
-            color: var(--primary-color);
+            color: #2b6cb0;
             font-weight: bold;
             font-size: 1.2em;
         }
@@ -304,34 +331,35 @@
         }
 
         .btn-primary {
-            background: var(--gradient-primary);
+            background: #2b6cb0;
             color: white;
         }
 
         .btn-primary:hover {
+            background: #2c5282;
             transform: translateY(-1px);
-            box-shadow: var(--shadow-md);
         }
 
         .btn-secondary {
-            background: var(--gray-200);
-            color: var(--gray-600);
+            background: #e2e8f0;
+            color: #4a5568;
         }
 
         .btn-secondary:hover {
-            background: var(--gray-300);
+            background: #cbd5e0;
         }
 
         .btn-success {
-            background: var(--gradient-primary);
+            background: linear-gradient(135deg, #38b2ac 0%, #319795 100%);
             color: white;
             padding: 14px 36px;
             font-size: 1.05em;
         }
 
         .btn-success:hover {
+            background: linear-gradient(135deg, #319795 0%, #2c7a7b 100%);
             transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+            box-shadow: 0 4px 12px rgba(56, 178, 172, 0.3);
         }
 
         /* 결과 화면 스타일 */
@@ -342,7 +370,7 @@
 
         /* 수집형 카드 스타일 */
         .collection-card {
-            background: var(--gradient-primary);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             border-radius: 20px;
             padding: 30px;
             margin: 30px auto;
@@ -417,7 +445,7 @@
             height: 120px;
             border-radius: 50%;
             margin: 0 auto 20px;
-            background: var(--gradient-primary);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -498,7 +526,7 @@
 
         .section-title {
             font-size: 1.8em;
-            color: var(--gray-900);
+            color: #1a202c;
             margin-bottom: 30px;
             font-weight: 600;
             text-align: center;
@@ -515,31 +543,31 @@
             background: white;
             padding: 24px;
             border-radius: 12px;
-            border-left: 4px solid var(--primary-color);
-            box-shadow: var(--shadow-md);
+            border-left: 4px solid #2b6cb0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
             transition: transform 0.2s ease;
         }
 
         .trait-card:hover {
             transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
         .trait-title {
             font-weight: 600;
-            color: var(--gray-900);
+            color: #1a202c;
             margin-bottom: 8px;
             font-size: 1.1em;
         }
 
         .trait-desc {
-            color: var(--gray-600);
+            color: #4a5568;
             font-size: 0.95em;
             line-height: 1.5;
         }
 
         .compatibility {
-            background: var(--gradient-primary);
+            background: linear-gradient(135deg, #38b2ac 0%, #319795 100%);
             color: white;
             padding: 30px;
             border-radius: 12px;
@@ -564,19 +592,19 @@
             margin: 40px 0;
             text-align: center;
             padding: 30px;
-            background: var(--gray-50);
+            background: #f0f4f8;
             border-radius: 12px;
         }
 
         .detail-section h3 {
             font-size: 1.3em;
-            color: var(--gray-900);
+            color: #1a202c;
             margin-bottom: 15px;
             font-weight: 600;
         }
 
         .detail-section p {
-            color: var(--gray-600);
+            color: #4a5568;
             margin-bottom: 20px;
             font-size: 1.05em;
         }
@@ -586,15 +614,15 @@
             text-align: center;
             margin: 30px 0;
             padding: 20px;
-            background: var(--gray-50);
+            background: #f8fafc;
             border-radius: 12px;
-            border: 1px solid var(--gray-200);
+            border: 1px solid #e2e8f0;
         }
 
         .share-title {
             font-size: 1.2em;
             font-weight: 600;
-            color: var(--gray-900);
+            color: #1a202c;
             margin-bottom: 15px;
         }
 
@@ -634,7 +662,7 @@
 
         .restart-btn {
             margin-top: 40px;
-            background: var(--gradient-primary);
+            background: #2b6cb0;
             color: white;
             padding: 14px 40px;
             font-size: 1.1em;
@@ -649,14 +677,14 @@
             text-align: center;
             margin: 30px 0;
             padding: 20px;
-            background: var(--gray-50);
+            background: #f7fafc;
             border-radius: 8px;
-            border: 1px solid var(--gray-200);
+            border: 1px solid #e2e8f0;
         }
 
         .ad-label {
             font-size: 0.8em;
-            color: var(--gray-500);
+            color: #718096;
             margin-bottom: 10px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -671,62 +699,58 @@
             background: white;
         }
 
-        /* Footer 스타일 - 전체 사이트 통일 */
+        /* Footer 스타일 */
         .footer {
-            background: var(--gray-900);
-            color: white;
+            background: #2d3748;
             margin-top: 60px;
-            padding: 48px 20px;
-        }
-
-        .footer-content {
-            max-width: 1280px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-        }
-        
-        .footer-section h3 {
-            font-size: 18px;
-            margin-bottom: 16px;
-        }
-        
-        .footer-links {
-            list-style: none;
-        }
-        
-        .footer-links li {
-            margin-bottom: 8px;
-        }
-        
-        .footer-links a {
-            color: var(--gray-400);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-        
-        .footer-links a:hover {
+            padding: 30px 20px;
             color: white;
         }
 
-        .footer-bottom {
-            max-width: 1280px;
-            margin: 32px auto 0;
-            padding-top: 32px;
-            border-top: 1px solid var(--gray-800);
+        .footer-container {
+            max-width: 800px;
+            margin: 0 auto;
             text-align: center;
-            color: var(--gray-500);
+        }
+
+        .footer-links {
+            margin-bottom: 20px;
+        }
+
+        .footer-link {
+            color: #a0aec0;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+            padding: 8px 16px;
+            border-radius: 6px;
+            display: inline-block;
+        }
+
+        .footer-link:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-divider {
+            color: #4a5568;
+            margin: 0 8px;
+        }
+
+        .footer-copyright {
+            color: #718096;
+            font-size: 0.9em;
+            margin: 0;
+            line-height: 1.5;
         }
 
         @media (max-width: 768px) {
             body {
-                padding: 0;
+                padding: 10px;
             }
             
             .container {
-                margin: 20px;
-                border-radius: 12px;
+                border-radius: 8px;
             }
             
             .header {
@@ -737,8 +761,18 @@
                 font-size: 2em;
             }
 
-            .nav-menu {
-                display: none;
+            .nav-links {
+                position: static;
+                display: flex;
+                justify-content: center;
+                gap: 10px;
+                margin-top: 15px;
+                flex-wrap: wrap;
+            }
+
+            .nav-link-old {
+                font-size: 0.8em;
+                padding: 6px 12px;
             }
             
             .content {
@@ -781,6 +815,24 @@
                 font-size: 0.7em;
             }
 
+            .footer-links {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+                align-items: center;
+            }
+
+            .footer-divider {
+                display: none;
+            }
+
+            .footer-link {
+                padding: 12px 24px;
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 8px;
+                margin: 4px 0;
+            }
+
             /* 모바일에서 카카오톡 공유 버튼 스타일 */
             .share-section {
                 margin: 20px 0;
@@ -802,7 +854,7 @@
     </style>
 </head>
 <body>
-    <!-- 통일된 네비게이션 -->
+    <!-- 네비게이션 -->
     <nav class="navbar">
         <div class="navbar-container">
             <a href="/" class="logo">doha.kr</a>
@@ -818,6 +870,11 @@
 
     <div class="container">
         <div class="header">
+            <div class="nav-links">
+                <a href="/tests/mbti/" class="nav-link-old">MBTI 테스트</a>
+                <a href="/about/" class="nav-link-old">사이트 소개</a>
+                <a href="/contact/" class="nav-link-old">문의하기</a>
+            </div>
             <h1>테토-에겐 성격 유형 분석</h1>
             <p>과학적 접근법으로 알아보는 나의 성격 유형</p>
         </div>
@@ -913,7 +970,7 @@
                 <div class="detail-section">
                     <h3>더 자세한 분석이 궁금하신가요?</h3>
                     <p>당신의 성격 유형에 대한 심층 분석을 확인해보세요. 직업, 연애, 인간관계, 스트레스 대처법 등 다양한 측면에서의 상세한 가이드를 제공합니다.</p>
-                    <a href="/tests/teto-egen/" class="btn btn-success">상세 분석 보기</a>
+                    <a href="#" class="btn btn-success" id="detail-btn" onclick="viewDetailedResult()">상세 분석 보기</a>
                 </div>
                 
                 <!-- 하단 광고 -->
@@ -944,34 +1001,17 @@
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>서비스</h3>
-                <ul class="footer-links">
-                    <li><a href="/tests/">심리테스트</a></li>
-                    <li><a href="/tools/">실용도구</a></li>
-                    <li><a href="/community/">커뮤니티</a></li>
-                </ul>
+        <div class="footer-container">
+            <div class="footer-links">
+                <a href="/about/" class="footer-link">소개</a>
+                <span class="footer-divider">|</span>
+                <a href="/privacy/" class="footer-link">개인정보처리방침</a>
+                <span class="footer-divider">|</span>
+                <a href="/terms/" class="footer-link">이용약관</a>
+                <span class="footer-divider">|</span>
+                <a href="/contact/" class="footer-link">문의하기</a>
             </div>
-            <div class="footer-section">
-                <h3>인기 콘텐츠</h3>
-                <ul class="footer-links">
-                    <li><a href="/tests/teto-egen/test.html">테토-에겐 테스트</a></li>
-                    <li><a href="/tools/text-counter.html">글자수 세기</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h3>정보</h3>
-                <ul class="footer-links">
-                    <li><a href="/about/">사이트 소개</a></li>
-                    <li><a href="/privacy/">개인정보처리방침</a></li>
-                    <li><a href="/terms/">이용약관</a></li>
-                    <li><a href="/contact/">문의하기</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2025 doha.kr. All rights reserved.</p>
+            <p class="footer-copyright">© 2024 doha.kr. 과학적 근거를 바탕으로 한 성격 분석 도구입니다.</p>
         </div>
     </footer>
 
@@ -1325,6 +1365,13 @@
 
             // 결과 화면 광고 로드
             setTimeout(loadAds, 500);
+        }
+
+        // 상세 결과 보기
+        function viewDetailedResult() {
+            if (currentResultType) {
+                window.location.href = `result-detail.html?type=${encodeURIComponent(currentResultType)}`;
+            }
         }
 
         // 테스트 재시작
