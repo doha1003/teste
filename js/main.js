@@ -1,6 +1,356 @@
-// Main JavaScript for doha.kr
+// 모바일 메뉴 토글
+function toggleMobileMenu() {
+    const navMenu = document.querySelector('.nav-menu');
+    const menuBtn = document.querySelector('.mobile-menu-btn');
+    
+    if (navMenu) {
+        navMenu.classList.toggle('active');
+    }
+    
+    if (menuBtn) {
+        menuBtn.classList.toggle('active');
+    }
+}
 
-// Component loading function
+// 스크롤 애니메이션
+function handleScrollAnimation() {
+    const elements = document.querySelectorAll('.fade-in');
+    
+    elements.forEach(element => {
+        const rect = element.getBoundingClientRect();
+        const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+        
+        if (isVisible && !element.classList.contains('animated')) {
+            element.classList.add('animated');
+            element.style.opacity = '1';
+            element.style.transform = 'translateY(0)';
+        }
+    });
+}
+
+// 부드러운 스크롤
+function smoothScroll(target) {
+    const element = document.querySelector(target);
+    if (element) {
+        element.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
+    }
+}
+
+// 페이지 로드 시 애니메이션
+function initPageAnimations() {
+    // 초기 애니메이션 트리거
+    handleScrollAnimation();
+    
+    // 스크롤 이벤트 리스너
+    window.addEventListener('scroll', throttle(handleScrollAnimation, 100));
+}
+
+// 쓰로틀 함수 (성능 최적화)
+function throttle(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+// 폼 유효성 검사
+function validateForm(formId) {
+    const form = document.getElementById(formId);
+    if (!form) return true;
+    
+    const inputs = form.querySelectorAll('input[required], textarea[required]');
+    let isValid = true;
+    
+    inputs.forEach(input => {
+        if (!input.value.trim()) {
+            input.classList.add('error');
+            isValid = false;
+        } else {
+            input.classList.remove('error');
+        }
+    });
+    
+    return isValid;
+}
+
+// 쿠키 관련 함수들
+function setCookie(name, value, days) {
+    const expires = new Date();
+    expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
+    document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/`;
+}
+
+function getCookie(name) {
+    const nameEQ = name + "=";
+    const ca = document.cookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+}
+
+// 결과 공유 기능
+function shareResult(platform, title, url) {
+    const text = encodeURIComponent(title);
+    const encodedUrl = encodeURIComponent(url || window.location.href);
+    
+    const shareUrls = {
+        facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
+        twitter: `https://twitter.com/intent/tweet?text=${text}&url=${encodedUrl}`,
+        kakao: `https://story.kakao.com/share?url=${encodedUrl}`,
+        line: `https://social-plugins.line.me/lineit/share?url=${encodedUrl}`,
+        copylink: null
+    };
+    
+    if (platform === 'copylink') {
+        copyToClipboard(url || window.location.href);
+        showNotification('링크가 복사되었습니다!');
+    } else if (shareUrls[platform]) {
+        window.open(shareUrls[platform], '_blank', 'width=600,height=400');
+    }
+}
+
+// 클립보드에 복사
+function copyToClipboard(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).catch(err => {
+            console.error('복사 실패:', err);
+            fallbackCopyToClipboard(text);
+        });
+    } else {
+        fallbackCopyToClipboard(text);
+    }
+}
+
+// 클립보드 복사 폴백
+function fallbackCopyToClipboard(text) {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.position = "fixed";
+    textArea.style.left = "-999999px";
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    
+    try {
+        document.execCommand('copy');
+    } catch (err) {
+        console.error('복사 실패:', err);
+    }
+    
+    document.body.removeChild(textArea);
+}
+
+// 알림 표시
+function showNotification(message, type = 'success') {
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.textContent = message;
+    
+    // 스타일 추가
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 16px 24px;
+        background: ${type === 'success' ? 'var(--success-color)' : 'var(--error-color)'};
+        color: white;
+        border-radius: 8px;
+        box-shadow: var(--shadow-lg);
+        z-index: 9999;
+        animation: slideInRight 0.3s ease;
+    `;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.style.animation = 'slideOutRight 0.3s ease';
+        setTimeout(() => notification.remove(), 300);
+    }, 3000);
+}
+
+// 로컬 스토리지 헬퍼
+const storage = {
+    set(key, value) {
+        try {
+            localStorage.setItem(key, JSON.stringify(value));
+            return true;
+        } catch (e) {
+            console.error('Storage set error:', e);
+            return false;
+        }
+    },
+    
+    get(key) {
+        try {
+            const item = localStorage.getItem(key);
+            return item ? JSON.parse(item) : null;
+        } catch (e) {
+            console.error('Storage get error:', e);
+            return null;
+        }
+    },
+    
+    remove(key) {
+        try {
+            localStorage.removeItem(key);
+            return true;
+        } catch (e) {
+            console.error('Storage remove error:', e);
+            return false;
+        }
+    },
+    
+    clear() {
+        try {
+            localStorage.clear();
+            return true;
+        } catch (e) {
+            console.error('Storage clear error:', e);
+            return false;
+        }
+    }
+};
+
+// 디바운스 함수
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+// 날짜 포맷팅
+function formatDate(date, format = 'YYYY-MM-DD') {
+    const d = new Date(date);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    const hours = String(d.getHours()).padStart(2, '0');
+    const minutes = String(d.getMinutes()).padStart(2, '0');
+    
+    return format
+        .replace('YYYY', year)
+        .replace('MM', month)
+        .replace('DD', day)
+        .replace('HH', hours)
+        .replace('mm', minutes);
+}
+
+// 숫자 포맷팅 (천 단위 콤마)
+function formatNumber(num) {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
+// URL 파라미터 가져오기
+function getUrlParam(name) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(name);
+}
+
+// 이미지 지연 로딩
+function lazyLoadImages() {
+    const images = document.querySelectorAll('img[data-src]');
+    
+    const imageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                img.src = img.dataset.src;
+                img.removeAttribute('data-src');
+                observer.unobserve(img);
+            }
+        });
+    });
+    
+    images.forEach(img => imageObserver.observe(img));
+}
+
+// 다크 모드 토글
+function toggleDarkMode() {
+    const isDarkMode = document.body.classList.toggle('dark-mode');
+    storage.set('darkMode', isDarkMode);
+    return isDarkMode;
+}
+
+// 다크 모드 초기화
+function initDarkMode() {
+    const isDarkMode = storage.get('darkMode');
+    if (isDarkMode) {
+        document.body.classList.add('dark-mode');
+    }
+}
+
+// 애니메이션 클래스 추가를 위한 CSS
+const animationStyles = `
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutRight {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+.animated {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+
+input.error, textarea.error {
+    border-color: var(--error-color) !important;
+}
+
+.dark-mode {
+    --gray-50: #111827;
+    --gray-100: #1f2937;
+    --gray-200: #374151;
+    --gray-300: #4b5563;
+    --gray-400: #6b7280;
+    --gray-500: #9ca3af;
+    --gray-600: #d1d5db;
+    --gray-700: #e5e7eb;
+    --gray-800: #f3f4f6;
+    --gray-900: #f9fafb;
+}
+`;
+
+// 스타일 삽입
+function injectStyles() {
+    const styleElement = document.createElement('style');
+    styleElement.textContent = animationStyles;
+    document.head.appendChild(styleElement);
+}
+
+// 컴포넌트 로더
 async function loadComponent(componentName, targetId) {
     try {
         const response = await fetch(`/includes/${componentName}.html`);
@@ -9,205 +359,142 @@ async function loadComponent(componentName, targetId) {
             const target = document.getElementById(targetId);
             if (target) {
                 target.innerHTML = html;
-                console.log(`✅ Loaded ${componentName} component`);
-            } else {
-                console.warn(`❌ Target element ${targetId} not found`);
             }
         } else {
-            console.error(`❌ Failed to load ${componentName}: ${response.status}`);
-            // Fallback: create basic components inline
-            createFallbackComponent(componentName, targetId);
+            // Fallback for footer component
+            if (componentName === 'footer') {
+                const target = document.getElementById(targetId);
+                if (target) {
+                    target.innerHTML = `
+                        <footer class="footer">
+                            <div class="footer-content">
+                                <div class="footer-section">
+                                    <h3>doha.kr</h3>
+                                    <p style="color: var(--gray-400); margin-top: 8px;">
+                                        일상을 더 재미있게 만드는 공간<br>
+                                        심리테스트와 실용도구의 만남
+                                    </p>
+                                    <div class="footer-social">
+                                        <a href="mailto:youtubdoha@gmail.com" class="social-link">📧</a>
+                                    </div>
+                                </div>
+                                
+                                <div class="footer-section">
+                                    <h3>서비스</h3>
+                                    <ul class="footer-links">
+                                        <li><a href="/">홈</a></li>
+                                        <li><a href="/tests/">심리테스트</a></li>
+                                        <li><a href="/tools/">실용도구</a></li>
+                                        <li><a href="/about/">사이트 소개</a></li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="footer-section">
+                                    <h3>인기 콘텐츠</h3>
+                                    <ul class="footer-links">
+                                        <li><a href="/tests/teto-egen/start.html">테토-에겐 테스트</a></li>
+                                        <li><a href="/tests/mbti/">MBTI 테스트</a></li>
+                                        <li><a href="/tools/text-counter.html">글자수 세기</a></li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="footer-section">
+                                    <h3>고객지원</h3>
+                                    <ul class="footer-links">
+                                        <li><a href="/contact/">문의하기</a></li>
+                                        <li><a href="/faq/">자주 묻는 질문</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="footer-bottom">
+                                <div class="footer-legal">
+                                    <a href="/privacy/">개인정보처리방침</a>
+                                    <a href="/terms/">이용약관</a>
+                                </div>
+                                <p>&copy; 2025 doha.kr. All rights reserved.</p>
+                            </div>
+                        </footer>
+                    `;
+                }
+            }
         }
     } catch (error) {
-        console.error(`❌ Error loading component ${componentName}:`, error);
-        // Fallback: create basic components inline
-        createFallbackComponent(componentName, targetId);
-    }
-}
-
-// Fallback component creation
-function createFallbackComponent(componentName, targetId) {
-    const target = document.getElementById(targetId);
-    if (!target) return;
-
-    if (componentName === 'navbar') {
-        target.innerHTML = `
-            <nav class="navbar">
-                <div class="navbar-container">
-                    <a href="/" class="logo">doha.kr</a>
-                    <ul class="nav-menu" id="nav-menu">
-                        <li><a href="/" class="nav-link">홈</a></li>
-                        <li><a href="/tests/" class="nav-link">심리테스트</a></li>
-                        <li><a href="/tools/" class="nav-link">실용도구</a></li>
-                        <li><a href="/contact/" class="nav-link">문의</a></li>
-                        <li><a href="/about/" class="nav-link">소개</a></li>
-                    </ul>
-                    <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </button>
-                </div>
-            </nav>
-        `;
-    } else if (componentName === 'footer') {
-        target.innerHTML = `
-            <footer class="footer">
-                <div class="footer-content">
-                    <div class="footer-section">
-                        <h3>doha.kr</h3>
-                        <p style="color: var(--gray-400); margin-top: 8px;">
-                            일상을 더 재미있게 만드는 공간<br>
-                            심리테스트와 실용도구의 만남
-                        </p>
-                        <div class="footer-social">
-                            <a href="mailto:youtubdoha@gmail.com" class="social-link">📧</a>
-                        </div>
-                    </div>
-                    
-                    <div class="footer-section">
-                        <h3>서비스</h3>
-                        <ul class="footer-links">
-                            <li><a href="/">홈</a></li>
-                            <li><a href="/tests/">심리테스트</a></li>
-                            <li><a href="/tools/">실용도구</a></li>
-                            <li><a href="/about/">사이트 소개</a></li>
-                        </ul>
-                    </div>
-                    
-                    <div class="footer-section">
-                        <h3>인기 콘텐츠</h3>
-                        <ul class="footer-links">
-                            <li><a href="/tests/teto-egen/start.html">테토-에겐 테스트</a></li>
-                            <li><a href="/tests/mbti/">MBTI 테스트</a></li>
-                            <li><a href="/tools/text-counter.html">글자수 세기</a></li>
-                        </ul>
-                    </div>
-                    
-                    <div class="footer-section">
-                        <h3>고객지원</h3>
-                        <ul class="footer-links">
-                            <li><a href="/contact/">문의하기</a></li>
-                            <li><a href="/faq/">자주 묻는 질문</a></li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <div class="footer-bottom">
-                    <div class="footer-legal">
-                        <a href="/privacy/">개인정보처리방침</a>
-                        <a href="/terms/">이용약관</a>
-                    </div>
-                    <p>&copy; 2025 doha.kr. All rights reserved.</p>
-                </div>
-            </footer>
-        `;
-    }
-    console.log(`✅ Created fallback ${componentName} component`);
-}
-
-// Mobile menu toggle
-function toggleMobileMenu() {
-    const navMenu = document.getElementById('nav-menu');
-    const mobileBtn = document.querySelector('.mobile-menu-btn');
-    
-    if (navMenu) {
-        navMenu.classList.toggle('active');
-    }
-    
-    if (mobileBtn) {
-        mobileBtn.classList.toggle('active');
-    }
-}
-
-// FAQ toggle functionality
-function toggleFAQ(element) {
-    const faqItem = element.parentElement;
-    faqItem.classList.toggle('active');
-}
-
-// Smooth scroll for anchor links
-function initSmoothScroll() {
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
+        console.error(`Failed to load component ${componentName}:`, error);
+        // Fallback for navbar
+        if (componentName === 'navbar') {
+            const target = document.getElementById(targetId);
             if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
+                target.innerHTML = `
+                    <nav class="navbar">
+                        <div class="nav-container">
+                            <a href="/" class="nav-logo">doha.kr</a>
+                            <div class="nav-menu">
+                                <a href="/tests/" class="nav-link">심리테스트</a>
+                                <a href="/tools/" class="nav-link">실용도구</a>
+                                <a href="/about/" class="nav-link">사이트 소개</a>
+                                <a href="/contact/" class="nav-link">문의하기</a>
+                            </div>
+                            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </button>
+                        </div>
+                    </nav>
+                `;
             }
-        });
-    });
-}
-
-// Initialize animations
-function initAnimations() {
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('fade-in');
-            }
-        });
-    }, observerOptions);
-
-    // Observe all cards and sections
-    document.querySelectorAll('.feature-card, .test-card, .tool-card, .section').forEach(el => {
-        observer.observe(el);
-    });
-}
-
-// Initialize everything when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('🚀 Initializing doha.kr...');
-    
-    // Load components
-    loadComponent('navbar', 'navbar-placeholder');
-    loadComponent('footer', 'footer-placeholder');
-    
-    // Initialize other features
-    initSmoothScroll();
-    
-    // Initialize animations after a short delay
-    setTimeout(initAnimations, 500);
-    
-    console.log('✅ doha.kr initialized successfully');
-});
-
-// Handle window resize for mobile menu
-window.addEventListener('resize', function() {
-    const navMenu = document.getElementById('nav-menu');
-    if (window.innerWidth > 768 && navMenu) {
-        navMenu.classList.remove('active');
-        document.querySelector('.mobile-menu-btn')?.classList.remove('active');
-    }
-});
-
-// Add fade-in animation CSS
-const style = document.createElement('style');
-style.textContent = `
-    .fade-in {
-        opacity: 0;
-        transform: translateY(20px);
-        animation: fadeInUp 0.6s forwards;
-    }
-    
-    @keyframes fadeInUp {
-        to {
-            opacity: 1;
-            transform: translateY(0);
         }
     }
+}
+
+// 네비게이션과 푸터 컴포넌트 로드
+async function loadComponents() {
+    const navTarget = document.getElementById('navbar-placeholder');
+    const footerTarget = document.getElementById('footer-placeholder');
     
-    .stagger-1 { animation-delay: 0.1s; }
-    .stagger-2 { animation-delay: 0.2s; }
-    .stagger-3 { animation-delay: 0.3s; }
-    .stagger-4 { animation-delay: 0.4s; }
-`;
-document.head.appendChild(style);
+    if (navTarget) {
+        await loadComponent('navbar', 'navbar-placeholder');
+    }
+    
+    if (footerTarget) {
+        await loadComponent('footer', 'footer-placeholder');
+    }
+}
+
+// DOM 로드 완료 시 초기화
+document.addEventListener('DOMContentLoaded', async function() {
+    // 컴포넌트 로드
+    await loadComponents();
+    
+    // 스타일 삽입
+    injectStyles();
+    
+    // 페이지 애니메이션 초기화
+    initPageAnimations();
+    
+    // 이미지 지연 로딩
+    lazyLoadImages();
+    
+    // 다크 모드 초기화
+    initDarkMode();
+    
+    // AdSense 광고 로드
+    if (typeof adsbygoogle !== 'undefined') {
+        try {
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        } catch (e) {
+            console.error('AdSense error:', e);
+        }
+    }
+});
+
+// 전역 함수로 내보내기
+window.toggleMobileMenu = toggleMobileMenu;
+window.shareResult = shareResult;
+window.showNotification = showNotification;
+window.validateForm = validateForm;
+window.storage = storage;
+window.formatDate = formatDate;
+window.formatNumber = formatNumber;
+window.toggleDarkMode = toggleDarkMode;
