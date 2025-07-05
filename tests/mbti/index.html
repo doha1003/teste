@@ -35,194 +35,314 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
+    
     <!-- External CSS -->
     <link rel="stylesheet" href="/css/styles.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/images/placeholder-favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/images/logo.svg">
+    <link rel="manifest" href="/manifest.json">
     
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
     
     <style>
         /* Page-specific styles */
-        .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        /* CSS 변수 */
+        /* 네비게이션 */
+        /* 히어로 섹션 */
+        .hero {
+            background: linear-gradient(135deg, #3b82f6 0%, #10b981 100%);
             color: white;
-            padding: 80px 20px;
+            padding: 100px 20px;
             text-align: center;
             position: relative;
             overflow: hidden;
         }
-        
-        .header-content {
-            max-width: 800px;
+        .hero::before,
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .hero::before {
+            top: -150px;
+            left: -150px;
+        }
+        .hero::after {
+            bottom: -150px;
+            right: -150px;
+        }
+        .hero-content {
+            max-width: 900px;
             margin: 0 auto;
             position: relative;
             z-index: 1;
         }
-        
-        .header-title {
-            font-size: 48px;
-            font-weight: 700;
-            margin-bottom: 20px;
-            color: white;
-        }
-        
-        .header-subtitle {
-            font-size: 20px;
-            margin-bottom: 40px;
-            line-height: 1.5;
-            opacity: 0.9;
-        }
-        
-        .start-button {
+        .hero-badge {
             display: inline-block;
-            margin-top: 24px;
-            padding: 16px 48px;
             background: rgba(255, 255, 255, 0.2);
-            color: white;
-            font-size: 18px;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 14px;
             font-weight: 600;
-            border-radius: 12px;
-            text-decoration: none;
-            transition: all 0.3s;
-            border: 2px solid rgba(255, 255, 255, 0.3);
+            margin-bottom: 20px;
             backdrop-filter: blur(10px);
         }
-        
-        .start-button:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-        }
-        
-        /* 메인 컨테이너 */
-        .main-container {
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-        
-        /* 정보 섹션 */
-        .info-section {
-            background: white;
-            border-radius: 16px;
-            padding: 40px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-            margin-bottom: 40px;
-        }
-        
-        .info-title {
-            font-size: 28px;
+        .hero-title {
+            font-size: 52px;
             font-weight: 700;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        .hero-subtitle {
+            font-size: 20px;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            opacity: 0.95;
+        }
+        .mbti-types-preview {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        .type-badge {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .test-start-btn {
+            background: rgba(255, 255, 255, 0.9);
+            color: #1f2937;
+            font-size: 20px;
+            font-weight: 700;
+            padding: 16px 48px;
+            border-radius: 50px;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+        .test-start-btn:hover {
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* 소개 섹션 */
+        .intro {
+            padding: 80px 20px;
+            background: white;
+        }
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+        .content-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .section-title {
+            font-size: 36px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 48px;
             color: var(--gray-900);
         }
-        
-        .info-content {
-            color: var(--gray-700);
+        .intro-text {
+            font-size: 18px;
             line-height: 1.8;
+            color: var(--gray-700);
+            margin-bottom: 24px;
+            text-align: left;
         }
-        
-        .info-content h3 {
-            font-size: 20px;
+        .highlight {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             font-weight: 600;
-            margin: 32px 0 16px;
-            color: var(--gray-800);
         }
         
-        .info-content p {
-            margin-bottom: 16px;
-        }
-        
-        /* MBTI 그리드 */
-        .mbti-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
-            margin: 32px 0;
-        }
-        
-        .mbti-type {
+        /* 4가지 지표 섹션 */
+        .dimensions {
+            padding: 80px 20px;
             background: var(--gray-50);
-            border: 2px solid var(--gray-200);
+        }
+        .dimensions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin-top: 48px;
+        }
+        .dimension-card {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            text-align: center;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s;
+        }
+        .dimension-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-xl);
+        }
+        .dimension-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        .dimension-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--gray-900);
+        }
+        .dimension-pair {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+        }
+        .dimension-type {
+            flex: 1;
+            background: var(--gray-100);
+            padding: 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            color: var(--gray-700);
+        }
+        .dimension-description {
+            margin-top: 16px;
+            color: var(--gray-600);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        /* 16가지 유형 섹션 */
+        .types {
+            padding: 80px 20px;
+            background: white;
+        }
+        .types-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-top: 48px;
+        }
+        .type-card {
+            background: var(--gray-50);
             border-radius: 12px;
-            padding: 20px;
+            padding: 24px;
             text-align: center;
             transition: all 0.3s;
-            cursor: pointer;
+            position: relative;
+            overflow: hidden;
         }
-        
-        .mbti-type:hover {
-            border-color: var(--primary-color);
+        .type-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient-primary);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+            transform-origin: left;
+        }
+        .type-card:hover {
+            background: white;
+            box-shadow: var(--shadow-lg);
             transform: translateY(-4px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
         }
-        
-        .mbti-type h4 {
-            font-size: 24px;
+        .type-card:hover::before {
+            transform: scaleX(1);
+        }
+        .type-name {
+            font-size: 20px;
             font-weight: 700;
-            color: var(--primary-color);
             margin-bottom: 8px;
+            color: var(--gray-900);
         }
-        
-        .mbti-type .nickname {
+        .type-nickname {
             font-size: 14px;
             color: var(--gray-600);
-            margin-bottom: 4px;
+            margin-bottom: 12px;
         }
-        
-        .mbti-type .description {
+        .type-traits {
             font-size: 12px;
             color: var(--gray-500);
         }
         
-        /* 인지 기능 테이블 */
-        .functions-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 24px 0;
-        }
-        
-        .functions-table th,
-        .functions-table td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid var(--gray-200);
-        }
-        
-        .functions-table th {
+        /* 특징 섹션 */
+        .features {
+            padding: 80px 20px;
             background: var(--gray-50);
-            font-weight: 600;
-            color: var(--gray-700);
         }
-        
-        .functions-table tr:last-child td {
-            border-bottom: none;
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 32px;
+            margin-top: 48px;
+        }
+        .feature-card {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s;
+        }
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-xl);
+        }
+        .feature-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--gradient-primary);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin-bottom: 24px;
+        }
+        .feature-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--gray-900);
+        }
+        .feature-description {
+            color: var(--gray-600);
+            line-height: 1.6;
         }
         
         /* FAQ 섹션 */
-        .faq-section {
+        .faq {
+            padding: 80px 20px;
             background: white;
-            border-radius: 16px;
-            padding: 40px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
         }
-        
-        .faq-title {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 32px;
-            color: var(--gray-900);
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
         }
-        
         .faq-item {
             border-bottom: 1px solid var(--gray-200);
             padding: 24px 0;
         }
-        
         .faq-item:last-child {
             border-bottom: none;
         }
-        
         .faq-question {
             font-size: 18px;
             font-weight: 600;
@@ -231,34 +351,78 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            transition: color 0.2s;
+            padding: 16px 24px;
+            background: var(--gray-50);
+            border-radius: 8px;
+            margin-bottom: 16px;
         }
-        
+        .faq-question:hover {
+            color: var(--primary-color);
+        }
         .faq-arrow {
             transition: transform 0.3s;
             color: var(--gray-500);
         }
-        
         .faq-item.active .faq-arrow {
             transform: rotate(180deg);
+            color: var(--primary-color);
         }
-        
         .faq-answer {
-            margin-top: 16px;
             color: var(--gray-600);
             line-height: 1.7;
             display: none;
+            padding-left: 24px;
         }
-        
         .faq-item.active .faq-answer {
             display: block;
+            animation: fadeIn 0.3s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* CTA 섹션 */
+        .cta {
+            padding: 80px 20px;
+            background: var(--gradient-primary);
+            color: white;
+            text-align: center;
+        }
+        .cta-title {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        .cta-description {
+            font-size: 20px;
+            margin-bottom: 32px;
+            opacity: 0.9;
+        }
+        .cta-button {
+            background: white;
+            color: var(--primary-color);
+            font-size: 20px;
+            font-weight: 700;
+            padding: 16px 48px;
+            border-radius: 50px;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+        }
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
         }
         
         /* 광고 컨테이너 */
         .ad-container {
-            margin: 40px 0;
+            max-width: 1280px;
+            margin: 40px auto;
+            padding: 0 20px;
             text-align: center;
         }
-        
         .ad-label {
             font-size: 12px;
             color: var(--gray-500);
@@ -267,320 +431,465 @@
             letter-spacing: 0.5px;
         }
         
-        /* 반응형 */
+        /* 반응형 디자인 */
         @media (max-width: 768px) {
-            .header-title {
-                font-size: 32px;
+            .hero-title {
+                font-size: 36px;
             }
-            
-            .info-section {
-                padding: 24px;
+            .hero-subtitle {
+                font-size: 18px;
             }
-            
-            .mbti-grid {
+            .test-start-btn {
+                font-size: 18px;
+                padding: 14px 32px;
+            }
+            .types-grid {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 12px;
+            }
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            .faq-question {
+                padding: 20px 24px;
+                font-size: 16px;
+            }
+            .mbti-types-preview {
+                gap: 8px;
+            }
+            .type-badge {
+                font-size: 12px;
+                padding: 6px 12px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- 네비게이션 바 -->
-    <div id="navbar-placeholder"></div>
+    <!-- 네비게이션 -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="/" class="logo">doha.kr</a>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="/" class="nav-link">홈</a></li>
+                <li><a href="/tests/" class="nav-link">심리테스트</a></li>
+                <li><a href="/tools/" class="nav-link">실용도구</a></li>
+                <li><a href="/contact/" class="nav-link">문의</a></li>
+                <li><a href="/about/" class="nav-link">소개</a></li>
+            </ul>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
     
-    <!-- 헤더 -->
-    <header class="header">
-        <div class="header-content">
-            <h1 class="header-title">MBTI 성격유형 검사</h1>
-            <p class="header-subtitle">
-                Myers-Briggs Type Indicator 기반의 과학적 성격 검사<br>
-                16가지 성격 유형 중 나의 유형을 찾아보세요
+    <!-- 히어로 섹션 -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">🌟 전 세계 1억명이 선택한 성격 검사</div>
+            <h1 class="hero-title">MBTI 성격유형 검사</h1>
+            <p class="hero-subtitle">
+                Myers-Briggs Type Indicator® 기반의 정확한 성격 분석<br>
+                16가지 성격 유형 중 당신은 어떤 유형일까요?
             </p>
-            <a href="#" class="start-button">MBTI 검사 시작하기 (준비중) →</a>
+            
+            <div class="mbti-types-preview">
+                <span class="type-badge">INTJ</span>
+                <span class="type-badge">INFP</span>
+                <span class="type-badge">ENFP</span>
+                <span class="type-badge">ENTJ</span>
+                <span class="type-badge">ISFJ</span>
+                <span class="type-badge">ESTP</span>
+                <span class="type-badge">INFJ</span>
+                <span class="type-badge">ENTP</span>
+            </div>
+            
+            <a href="test.html" class="test-start-btn">무료 검사 시작하기</a>
         </div>
-    </header>
+    </section>
     
-    <!-- 메인 컨테이너 -->
-    <div class="main-container">
-        <!-- MBTI 소개 -->
-        <div class="info-section">
-            <h2 class="info-title">MBTI란 무엇인가요?</h2>
-            <div class="info-content">
-                <p>
-                    MBTI(Myers-Briggs Type Indicator)는 카를 융의 심리 유형론을 기반으로 캐서린 쿡 브릭스와 
-                    이사벨 브릭스 마이어스 모녀가 개발한 성격 유형 검사입니다. 전 세계에서 가장 널리 사용되는 
-                    성격 검사 도구로, 개인의 선호도와 행동 경향을 분석해 16가지 성격 유형 중 하나로 분류합니다.
+    <!-- MBTI 소개 섹션 -->
+    <section class="intro">
+        <div class="container">
+            <div class="content-wrapper">
+                <h2 class="section-title">MBTI란 무엇인가요?</h2>
+                
+                <p class="intro-text">
+                    MBTI(Myers-Briggs Type Indicator)는 <span class="highlight">칼 융의 심리 유형론</span>을 
+                    바탕으로 캐서린 쿡 브릭스(Katharine C. Briggs)와 그녀의 딸 이자벨 브릭스 마이어스(Isabel B. Myers)가 
+                    개발한 성격 유형 검사입니다. 1962년 처음 발표된 이래로 전 세계적으로 가장 널리 사용되는 
+                    성격 검사 도구로 자리잡았습니다.
                 </p>
                 
-                <h3>4가지 기본 차원</h3>
-                <table class="functions-table">
-                    <thead>
-                        <tr>
-                            <th>차원</th>
-                            <th>설명</th>
-                            <th>유형</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>외향(E) vs 내향(I)</strong></td>
-                            <td>에너지의 방향과 주의의 초점</td>
-                            <td>Extraversion / Introversion</td>
-                        </tr>
-                        <tr>
-                            <td><strong>감각(S) vs 직관(N)</strong></td>
-                            <td>정보를 인식하고 처리하는 방식</td>
-                            <td>Sensing / iNtuition</td>
-                        </tr>
-                        <tr>
-                            <td><strong>사고(T) vs 감정(F)</strong></td>
-                            <td>의사결정을 내리는 기준</td>
-                            <td>Thinking / Feeling</td>
-                        </tr>
-                        <tr>
-                            <td><strong>판단(J) vs 인식(P)</strong></td>
-                            <td>외부 세계를 대하는 태도</td>
-                            <td>Judging / Perceiving</td>
-                        </tr>
-                    </tbody>
-                </table>
-                
-                <h3>16가지 MBTI 성격 유형</h3>
-                <div class="mbti-grid">
-                    <div class="mbti-type">
-                        <h4>INTJ</h4>
-                        <div class="nickname">건축가</div>
-                        <div class="description">전략적 사고자</div>
-                    </div>
-                    <div class="mbti-type">
-                        <h4>INTP</h4>
-                        <div class="nickname">논리학자</div>
-                        <div class="description">객관적 분석가</div>
-                    </div>
-                    <div class="mbti-type">
-                        <h4>ENTJ</h4>
-                        <div class="nickname">통솔자</div>
-                        <div class="description">대담한 지휘관</div>
-                    </div>
-                    <div class="mbti-type">
-                        <h4>ENTP</h4>
-                        <div class="nickname">변론가</div>
-                        <div class="description">논쟁을 즐기는 혁신가</div>
-                    </div>
-                    
-                    <div class="mbti-type">
-                        <h4>INFJ</h4>
-                        <div class="nickname">옵호자</div>
-                        <div class="description">통찰력 있는 선구자</div>
-                    </div>
-                    <div class="mbti-type">
-                        <h4>INFP</h4>
-                        <div class="nickname">중재자</div>
-                        <div class="description">열정적인 이상주의자</div>
-                    </div>
-                    <div class="mbti-type">
-                        <h4>ENFJ</h4>
-                        <div class="nickname">선도자</div>
-                        <div class="description">카리스마 있는 지도자</div>
-                    </div>
-                    <div class="mbti-type">
-                        <h4>ENFP</h4>
-                        <div class="nickname">활동가</div>
-                        <div class="description">자유로운 영혼</div>
-                    </div>
-                    
-                    <div class="mbti-type">
-                        <h4>ISTJ</h4>
-                        <div class="nickname">관리자</div>
-                        <div class="description">청렴결백한 논리주의자</div>
-                    </div>
-                    <div class="mbti-type">
-                        <h4>ISFJ</h4>
-                        <div class="nickname">수호자</div>
-                        <div class="description">용감한 수호자</div>
-                    </div>
-                    <div class="mbti-type">
-                        <h4>ESTJ</h4>
-                        <div class="nickname">경영자</div>
-                        <div class="description">엄격한 관리자</div>
-                    </div>
-                    <div class="mbti-type">
-                        <h4>ESFJ</h4>
-                        <div class="nickname">집정관</div>
-                        <div class="description">사교적인 외교관</div>
-                    </div>
-                    
-                    <div class="mbti-type">
-                        <h4>ISTP</h4>
-                        <div class="nickname">장인</div>
-                        <div class="description">만능 재주꾼</div>
-                    </div>
-                    <div class="mbti-type">
-                        <h4>ISFP</h4>
-                        <div class="nickname">모험가</div>
-                        <div class="description">호기심 많은 예술가</div>
-                    </div>
-                    <div class="mbti-type">
-                        <h4>ESTP</h4>
-                        <div class="nickname">기업가</div>
-                        <div class="description">모험을 즐기는 사업가</div>
-                    </div>
-                    <div class="mbti-type">
-                        <h4>ESFP</h4>
-                        <div class="nickname">연예인</div>
-                        <div class="description">자유로운 연예인</div>
-                    </div>
-                </div>
-                
-                <h3>인지 기능의 이해</h3>
-                <p>
-                    MBTI는 8가지 인지 기능을 기반으로 합니다. 각 성격 유형은 이 중 4가지 주요 기능을 
-                    특정한 순서로 사용합니다:
+                <p class="intro-text">
+                    MBTI는 개인의 선호 경향을 <span class="highlight">4가지 이분법적 지표</span>로 파악하여, 
+                    총 16가지 성격 유형으로 분류합니다. 이는 사람들이 정보를 인식하고 판단하는 방식, 
+                    에너지를 얻는 방향, 그리고 외부 세계를 대하는 태도에서 나타나는 선호도를 측정합니다.
                 </p>
                 
-                <table class="functions-table">
-                    <thead>
-                        <tr>
-                            <th>인지 기능</th>
-                            <th>설명</th>
-                            <th>특징</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Te (외향 사고)</strong></td>
-                            <td>객관적 논리와 효율성</td>
-                            <td>체계적, 목표 지향적</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Ti (내향 사고)</strong></td>
-                            <td>내부적 논리와 분석</td>
-                            <td>정확성, 원리 추구</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Fe (외향 감정)</strong></td>
-                            <td>타인의 감정과 조화</td>
-                            <td>공감, 관계 중시</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Fi (내향 감정)</strong></td>
-                            <td>개인적 가치와 진정성</td>
-                            <td>가치관, 진실성</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Se (외향 감각)</strong></td>
-                            <td>현재의 경험과 현실</td>
-                            <td>실용적, 행동 지향</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Si (내향 감각)</strong></td>
-                            <td>과거 경험과 전통</td>
-                            <td>신중함, 세부사항</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Ne (외향 직관)</strong></td>
-                            <td>가능성과 연결</td>
-                            <td>창의적, 탐구적</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Ni (내향 직관)</strong></td>
-                            <td>통찰과 패턴</td>
-                            <td>전략적, 미래 지향</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <p class="intro-text">
+                    중요한 점은 MBTI가 능력이나 성격의 좋고 나쁨을 평가하는 것이 아니라, 
+                    <span class="highlight">개인의 타고난 선호 경향</span>을 이해하는 도구라는 것입니다. 
+                    모든 성격 유형은 고유한 강점과 잠재력을 가지고 있으며, 서로 다른 상황에서 
+                    각자의 방식으로 기여할 수 있습니다.
+                </p>
             </div>
         </div>
-        
-        <!-- 광고 영역 -->
-        <div class="ad-container">
-            <div class="ad-label">광고</div>
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-7905640648499222"
-                 data-ad-slot="1234567890"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-        </div>
-        
-        <!-- FAQ 섹션 -->
-        <div class="faq-section">
-            <h2 class="faq-title">자주 묻는 질문</h2>
+    </section>
+    
+    <!-- 4가지 선호 지표 섹션 -->
+    <section class="dimensions">
+        <div class="container">
+            <h2 class="section-title">MBTI의 4가지 선호 지표</h2>
             
-            <div class="faq-item">
-                <div class="faq-question">
-                    MBTI 검사는 얼마나 정확한가요?
-                    <span class="faq-arrow">▼</span>
+            <div class="dimensions-grid">
+                <div class="dimension-card">
+                    <div class="dimension-icon">⚡</div>
+                    <h3 class="dimension-title">에너지 방향</h3>
+                    <div class="dimension-pair">
+                        <span class="dimension-type">E (외향)</span>
+                        <span class="dimension-type">I (내향)</span>
+                    </div>
+                    <p class="dimension-description">
+                        에너지를 얻고 주의를 기울이는 방향이 외부 세계인지 내부 세계인지를 나타냅니다.
+                    </p>
                 </div>
-                <div class="faq-answer">
-                    MBTI는 자기 보고식 검사로, 응답자의 자기 인식과 솔직한 답변에 따라 정확도가 결정됩니다. 
-                    연구에 따르면 테스트-재테스트 신뢰도는 70-90%로 나타납니다. 
-                    다만, 성격은 시간에 따라 변할 수 있으므로 주기적으로 재검사를 받는 것이 좋습니다.
+                
+                <div class="dimension-card">
+                    <div class="dimension-icon">👁️</div>
+                    <h3 class="dimension-title">인식 기능</h3>
+                    <div class="dimension-pair">
+                        <span class="dimension-type">S (감각)</span>
+                        <span class="dimension-type">N (직관)</span>
+                    </div>
+                    <p class="dimension-description">
+                        정보를 수집할 때 구체적 사실에 집중하는지 전체적 가능성에 집중하는지를 나타냅니다.
+                    </p>
                 </div>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question">
-                    MBTI 유형은 바뀌나요?
-                    <span class="faq-arrow">▼</span>
+                
+                <div class="dimension-card">
+                    <div class="dimension-icon">⚖️</div>
+                    <h3 class="dimension-title">판단 기능</h3>
+                    <div class="dimension-pair">
+                        <span class="dimension-type">T (사고)</span>
+                        <span class="dimension-type">F (감정)</span>
+                    </div>
+                    <p class="dimension-description">
+                        의사결정을 내릴 때 논리적 분석을 우선하는지 인간적 가치를 우선하는지를 나타냅니다.
+                    </p>
                 </div>
-                <div class="faq-answer">
-                    네, MBTI 유형은 바뀌 수 있습니다. 특히 20대 초반에서 30대 중반 사이에 
-                    성격 변화가 가장 크게 나타납니다. 삶의 경험, 환경 변화, 개인적 성장 등이 
-                    성격 유형 변화에 영향을 줄 수 있습니다.
-                </div>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question">
-                    가장 희귀한 MBTI 유형은 무엇인가요?
-                    <span class="faq-arrow">▼</span>
-                </div>
-                <div class="faq-answer">
-                    통계적으로 INFJ가 가장 희귀한 유형으로, 전체 인구의 약 1-2%를 차지합니다. 
-                    그 다음으로는 INTJ(2-3%), ENTJ(2-3%)가 희귀합니다. 
-                    반면 ISFJ, ESFJ, ISTJ는 가장 흔한 유형으로 각각 10-14%를 차지합니다.
-                </div>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question">
-                    MBTI로 직업을 선택해도 되나요?
-                    <span class="faq-arrow">▼</span>
-                </div>
-                <div class="faq-answer">
-                    MBTI는 직업 선택에 참고 자료로 활용할 수 있지만, 유일한 기준이 되어서는 안 됩니다. 
-                    개인의 관심사, 능력, 가치관, 환경적 요인 등을 종합적으로 고려해야 합니다. 
-                    MBTI는 업무 스타일과 선호도를 이해하는 데 도움을 줄 수 있습니다.
-                </div>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question">
-                    MBTI 궁합이 정말 중요한가요?
-                    <span class="faq-arrow">▼</span>
-                </div>
-                <div class="faq-answer">
-                    MBTI 궁합은 참고 사항일 뿐, 절대적인 기준이 아닙니다. 
-                    모든 유형은 서로 잘 어울릴 수 있으며, 개인의 성숙도, 가치관, 의사소통 능력이 
-                    더 중요합니다. MBTI는 서로의 차이를 이해하는 도구로 활용하는 것이 가장 바람직합니다.
+                
+                <div class="dimension-card">
+                    <div class="dimension-icon">🎯</div>
+                    <h3 class="dimension-title">생활 양식</h3>
+                    <div class="dimension-pair">
+                        <span class="dimension-type">J (판단)</span>
+                        <span class="dimension-type">P (인식)</span>
+                    </div>
+                    <p class="dimension-description">
+                        외부 세계에 대한 태도가 계획적이고 체계적인지 유연하고 개방적인지를 나타냅니다.
+                    </p>
                 </div>
             </div>
         </div>
+    </section>
+    
+    <!-- 16가지 성격 유형 섹션 -->
+    <section class="types">
+        <div class="container">
+            <h2 class="section-title">16가지 성격 유형</h2>
+            
+            <div class="types-grid">
+                <div class="type-card">
+                    <h3 class="type-name">INTJ</h3>
+                    <p class="type-nickname">건축가</p>
+                    <p class="type-traits">독립적, 혁신적, 전략적</p>
+                </div>
+                
+                <div class="type-card">
+                    <h3 class="type-name">INTP</h3>
+                    <p class="type-nickname">논리술사</p>
+                    <p class="type-traits">분석적, 창의적, 객관적</p>
+                </div>
+                
+                <div class="type-card">
+                    <h3 class="type-name">ENTJ</h3>
+                    <p class="type-nickname">통솔자</p>
+                    <p class="type-traits">지도력, 결단력, 목표지향적</p>
+                </div>
+                
+                <div class="type-card">
+                    <h3 class="type-name">ENTP</h3>
+                    <p class="type-nickname">변론가</p>
+                    <p class="type-traits">혁신적, 활기찬, 도전적</p>
+                </div>
+                
+                <div class="type-card">
+                    <h3 class="type-name">INFJ</h3>
+                    <p class="type-nickname">옹호자</p>
+                    <p class="type-traits">이상주의적, 통찰력, 원칙적</p>
+                </div>
+                
+                <div class="type-card">
+                    <h3 class="type-name">INFP</h3>
+                    <p class="type-nickname">중재자</p>
+                    <p class="type-traits">창의적, 이상주의적, 개방적</p>
+                </div>
+                
+                <div class="type-card">
+                    <h3 class="type-name">ENFJ</h3>
+                    <p class="type-nickname">선도자</p>
+                    <p class="type-traits">카리스마, 이타적, 영감을 주는</p>
+                </div>
+                
+                <div class="type-card">
+                    <h3 class="type-name">ENFP</h3>
+                    <p class="type-nickname">활동가</p>
+                    <p class="type-traits">열정적, 창의적, 사교적</p>
+                </div>
+                
+                <div class="type-card">
+                    <h3 class="type-name">ISTJ</h3>
+                    <p class="type-nickname">물류관리자</p>
+                    <p class="type-traits">신중한, 책임감, 실용적</p>
+                </div>
+                
+                <div class="type-card">
+                    <h3 class="type-name">ISFJ</h3>
+                    <p class="type-nickname">수호자</p>
+                    <p class="type-traits">보호본능, 온화한, 헌신적</p>
+                </div>
+                
+                <div class="type-card">
+                    <h3 class="type-name">ESTJ</h3>
+                    <p class="type-nickname">경영자</p>
+                    <p class="type-traits">조직적, 실용적, 논리적</p>
+                </div>
+                
+                <div class="type-card">
+                    <h3 class="type-name">ESFJ</h3>
+                    <p class="type-nickname">집정관</p>
+                    <p class="type-traits">사교적, 배려심, 협력적</p>
+                </div>
+                
+                <div class="type-card">
+                    <h3 class="type-name">ISTP</h3>
+                    <p class="type-nickname">만능재주꾼</p>
+                    <p class="type-traits">실용적, 유연한, 논리적</p>
+                </div>
+                
+                <div class="type-card">
+                    <h3 class="type-name">ISFP</h3>
+                    <p class="type-nickname">모험가</p>
+                    <p class="type-traits">예술적, 온화한, 개방적</p>
+                </div>
+                
+                <div class="type-card">
+                    <h3 class="type-name">ESTP</h3>
+                    <p class="type-nickname">사업가</p>
+                    <p class="type-traits">활동적, 현실적, 관찰력</p>
+                </div>
+                
+                <div class="type-card">
+                    <h3 class="type-name">ESFP</h3>
+                    <p class="type-nickname">연예인</p>
+                    <p class="type-traits">활기찬, 자발적, 협력적</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 특징 섹션 -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">우리 MBTI 검사의 특징</h2>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3 class="feature-title">정확한 분석</h3>
+                    <p class="feature-description">
+                        검증된 60문항을 통해 정확하고 신뢰성 있는 성격 유형 분석을 제공합니다.
+                        각 문항은 MBTI 이론에 기반하여 세심하게 설계되었습니다.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">💡</div>
+                    <h3 class="feature-title">자세한 해석</h3>
+                    <p class="feature-description">
+                        단순한 유형 분류를 넘어서 성격적 특성, 강점, 약점, 
+                        적합한 직업군과 연애 궁합까지 종합적인 정보를 제공합니다.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🚀</div>
+                    <h3 class="feature-title">빠른 결과</h3>
+                    <p class="feature-description">
+                        약 10-15분의 간단한 검사로 즉시 결과를 확인할 수 있습니다. 
+                        복잡한 가입 절차 없이 바로 시작하세요.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3 class="feature-title">개인정보 보호</h3>
+                    <p class="feature-description">
+                        검사 결과는 개인 기기에만 저장되며, 별도의 개인정보 수집 없이 
+                        익명으로 진행됩니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 광고 영역 -->
+    <div class="ad-container">
+        <div class="ad-label">광고</div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-7905640648499222"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
     </div>
     
+    <!-- FAQ 섹션 -->
+    <section class="faq">
+        <div class="container">
+            <div class="faq-container">
+                <h2 class="section-title">자주 묻는 질문</h2>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        MBTI 검사는 얼마나 정확한가요?
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        MBTI는 70년 이상의 연구와 검증을 거친 성격 유형 이론입니다. 
+                        하지만 성격은 복합적이고 변화할 수 있으므로, 절대적인 분류보다는 
+                        자신을 이해하는 도구로 활용하시기를 권장합니다.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        검사 결과가 다르게 나올 수 있나요?
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        네, 가능합니다. 현재 상황이나 기분, 성장과 경험에 따라 
+                        답변이 달라질 수 있습니다. 가장 평상시 자신의 모습을 기준으로 
+                        솔직하게 답변하시면 더 정확한 결과를 얻을 수 있습니다.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        어떤 유형이 가장 좋은 건가요?
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        모든 MBTI 유형은 고유한 강점과 가치를 가지고 있습니다. 
+                        '좋은' 성격 유형은 존재하지 않으며, 각자의 특성을 이해하고 
+                        발전시키는 것이 중요합니다.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        MBTI 결과를 어떻게 활용하면 좋을까요?
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        자기 이해 증진, 타인과의 소통 개선, 진로 선택의 참고자료, 
+                        팀워크 향상 등에 활용할 수 있습니다. 단, 모든 결정의 절대적 기준이 
+                        아닌 하나의 참고자료로 활용하시기 바랍니다.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA 섹션 -->
+    <section class="cta">
+        <div class="container">
+            <h2 class="cta-title">지금 바로 내 성격 유형을 알아보세요!</h2>
+            <p class="cta-description">
+                60개 문항, 10분이면 충분합니다. 완전 무료!
+            </p>
+            <a href="test.html" class="cta-button">무료 검사 시작하기</a>
+        </div>
+    </section>
+    
     <!-- 푸터 -->
-    <div id="footer-placeholder"></div>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>doha.kr</h3>
+                <p style="color: var(--gray-400); margin-top: 8px;">
+                    일상을 더 재미있게 만드는 공간<br>
+                    심리테스트와 실용도구의 만남
+                </p>
+                <div class="footer-social">
+                    <a href="mailto:youtubdoha@gmail.com" class="social-link">📧</a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>서비스</h3>
+                <ul class="footer-links">
+                    <li><a href="/">홈</a></li>
+                    <li><a href="/tests/">심리테스트</a></li>
+                    <li><a href="/tools/">실용도구</a></li>
+                    <li><a href="/about/">사이트 소개</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>인기 콘텐츠</h3>
+                <ul class="footer-links">
+                    <li><a href="/tests/teto-egen/start.html">테토-에겐 테스트</a></li>
+                    <li><a href="/tests/mbti/">MBTI 테스트</a></li>
+                    <li><a href="/tools/text-counter.html">글자수 세기</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>고객지원</h3>
+                <ul class="footer-links">
+                    <li><a href="/contact/">문의하기</a></li>
+                    <li><a href="/faq/">자주 묻는 질문</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="footer-legal">
+                <a href="/privacy/">개인정보처리방침</a>
+                <a href="/terms/">이용약관</a>
+            </div>
+            <p>&copy; 2025 doha.kr. All rights reserved.</p>
+        </div>
+    </footer>
     
     <!-- External JavaScript -->
     <script src="/js/main.js"></script>
     
     <script>
-        // FAQ 토글 기능
+        // FAQ 토글
         document.querySelectorAll('.faq-question').forEach(question => {
             question.addEventListener('click', () => {
                 const faqItem = question.parentElement;
                 faqItem.classList.toggle('active');
+                
+                // 다른 FAQ 항목 닫기
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    if (item !== faqItem) {
+                        item.classList.remove('active');
+                    }
+                });
             });
         });
         
