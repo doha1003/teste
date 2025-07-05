@@ -454,23 +454,6 @@
             line-height: 1.6;
             opacity: 0.95;
         }
-        /* 상세 분석 버튼 섹션 */
-        .detail-section {
-            background: #f3f4f6;
-            margin: 40px 0;
-            text-align: center;
-            padding: 30px;
-            border-radius: 12px;
-        }
-        .detail-section h3 {
-            font-size: 1.3em;
-            margin-bottom: 15px;
-            font-weight: 600;
-        }
-        .detail-section p {
-            margin-bottom: 20px;
-            font-size: 1.05em;
-        }
         /* 카카오톡 공유 버튼 스타일 */
         .share-section {
             text-align: center;
@@ -529,17 +512,6 @@
             background: white;
             border-radius: 16px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            animation: slideUp 0.5s ease;
-        }
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
         .analysis-section {
             margin-bottom: 40px;
@@ -575,6 +547,11 @@
             left: 0;
             color: #667eea;
             font-weight: bold;
+        }
+        .analysis-content h4 {
+            font-size: 1.2em;
+            margin: 20px 0 10px 0;
+            color: #333;
         }
         /* 애드센스 광고 스타일 */
         .ad-container {
@@ -774,15 +751,8 @@
                 
                 <div class="compatibility" id="compatibility"></div>
 
-                <!-- 상세 분석 보기 섹션 -->
-                <div class="detail-section">
-                    <h3>더 자세한 분석이 궁금하신가요?</h3>
-                    <p>당신의 성격 유형에 대한 심층 분석을 확인해보세요. 직업, 연애, 인간관계, 스트레스 대처법 등 다양한 측면에서의 상세한 가이드를 제공합니다.</p>
-                    <button class="btn btn-success" onclick="showDetailedAnalysis()">상세 분석 보기</button>
-                </div>
-                
-                <!-- 상세 분석 내용 (숨김) -->
-                <div id="detailed-analysis" class="detailed-analysis hidden">
+                <!-- 상세 분석 내용 -->
+                <div id="detailed-analysis" class="detailed-analysis">
                     <h2 class="section-title">심층 성격 분석</h2>
                     
                     <div class="analysis-section" id="career-analysis">
@@ -804,8 +774,6 @@
                         <h3>🌱 성장 가이드</h3>
                         <div class="analysis-content" id="growth-content"></div>
                     </div>
-                    
-                    <button class="btn btn-secondary" onclick="hideDetailedAnalysis()">상세 분석 닫기</button>
                 </div>
                 
                 <!-- 하단 광고 -->
@@ -863,6 +831,7 @@
                     <li><a href="/tests/teto-egen/">테토-에겐 테스트</a></li>
                     <li><a href="/tests/mbti/">MBTI 검사</a></li>
                     <li><a href="/tools/text-counter.html">글자수 세기</a></li>
+                    <li><a href="/tools/bmi-calculator.html">BMI 계산기</a></li>
                 </ul>
             </div>
             
