@@ -294,7 +294,6 @@ function showResult() {
             rarity: 'EPIC',
             color: '#3b82f6',
             description: '타고난 리더십과 추진력을 갖춘 당신은 테토남입니다. 목표를 향해 직진하는 강인한 의지와 결단력이 당신의 가장 큰 무기입니다.',
-            shareImage: 'https://doha.kr/images/teto-male-card.jpg',
             stats: [
                 { label: '리더십', value: '95%' },
                 { label: '추진력', value: '92%' },
@@ -319,7 +318,6 @@ function showResult() {
             rarity: 'LEGENDARY',
             color: '#ec4899',
             description: '독립적이고 당당한 당신은 테토녀입니다. 자신만의 색깔과 주관이 뚜렷하며, 도전을 두려워하지 않는 용기가 있습니다.',
-            shareImage: 'https://doha.kr/images/teto-female-card.jpg',
             stats: [
                 { label: '독립성', value: '93%' },
                 { label: '창의력', value: '90%' },
@@ -344,7 +342,6 @@ function showResult() {
             rarity: 'RARE',
             color: '#10b981',
             description: '섬세하고 사려 깊은 당신은 에겐남입니다. 타인을 배려하는 따뜻한 마음과 안정적인 성격으로 신뢰받는 사람입니다.',
-            shareImage: 'https://doha.kr/images/egen-male-card.jpg',
             stats: [
                 { label: '공감력', value: '94%' },
                 { label: '안정성', value: '91%' },
@@ -369,7 +366,6 @@ function showResult() {
             rarity: 'MYTHIC',
             color: '#a855f7',
             description: '감성적이고 직관적인 당신은 에겐녀입니다. 풍부한 감수성과 세심한 배려로 주변을 따뜻하게 만드는 사람입니다.',
-            shareImage: 'https://doha.kr/images/egen-female-card.jpg',
             stats: [
                 { label: '감수성', value: '96%' },
                 { label: '직관력', value: '92%' },
@@ -448,7 +444,7 @@ function showResult() {
     showDetailedAnalysis();
 }
 
-// 카카오톡 공유 (정적 이미지 URL 사용)
+// 카카오톡 공유 (기존 OG 이미지 사용)
 function shareKakao() {
     // Kakao SDK 초기화 확인
     if (typeof Kakao === 'undefined') {
@@ -482,34 +478,18 @@ function shareKakao() {
     `.trim();
     
     try {
-        // 고급 공유 (List 템플릿 사용)
+        // Feed 템플릿 사용 (기존 OG 이미지 활용)
         Kakao.Share.sendDefault({
-            objectType: 'list',
-            headerTitle: '🎭 테토-에겐 성격 유형 테스트',
-            headerLink: {
-                mobileWebUrl: 'https://doha.kr/tests/teto-egen/',
-                webUrl: 'https://doha.kr/tests/teto-egen/'
-            },
-            contents: [
-                {
-                    title: `나는 ${data.type}! ${data.emoji}`,
-                    description: shareDescription,
-                    imageUrl: data.shareImage || 'https://doha.kr/images/teto-egen-og.png',
-                    link: {
-                        mobileWebUrl: 'https://doha.kr/tests/teto-egen/',
-                        webUrl: 'https://doha.kr/tests/teto-egen/'
-                    }
-                },
-                {
-                    title: `[${data.rarity}] 등급의 희귀 성격!`,
-                    description: analysisPreview,
-                    imageUrl: 'https://doha.kr/images/teto-egen-stats.png',
-                    link: {
-                        mobileWebUrl: 'https://doha.kr/tests/teto-egen/',
-                        webUrl: 'https://doha.kr/tests/teto-egen/'
-                    }
+            objectType: 'feed',
+            content: {
+                title: `나는 ${data.type}! ${data.emoji}`,
+                description: `${shareDescription}\n\n${analysisPreview}`,
+                imageUrl: 'https://doha.kr/images/teto-egen-og.png',
+                link: {
+                    mobileWebUrl: 'https://doha.kr/tests/teto-egen/',
+                    webUrl: 'https://doha.kr/tests/teto-egen/'
                 }
-            ],
+            },
             buttons: [
                 {
                     title: '나도 테스트하기',
@@ -517,47 +497,13 @@ function shareKakao() {
                         mobileWebUrl: 'https://doha.kr/tests/teto-egen/',
                         webUrl: 'https://doha.kr/tests/teto-egen/'
                     }
-                },
-                {
-                    title: '상세 분석 보기',
-                    link: {
-                        mobileWebUrl: 'https://doha.kr/tests/teto-egen/start.html',
-                        webUrl: 'https://doha.kr/tests/teto-egen/start.html'
-                    }
                 }
             ]
         });
-        console.log('Advanced Kakao share successful');
-    } catch (e) {
-        // Fallback: 기본 Feed 템플릿
-        console.log('List template failed, using feed template as fallback');
-        try {
-            Kakao.Share.sendDefault({
-                objectType: 'feed',
-                content: {
-                    title: `나는 ${data.type}! ${data.emoji}`,
-                    description: `${shareDescription}\n\n${analysisPreview}`,
-                    imageUrl: data.shareImage || 'https://doha.kr/images/teto-egen-og.png',
-                    link: {
-                        mobileWebUrl: 'https://doha.kr/tests/teto-egen/',
-                        webUrl: 'https://doha.kr/tests/teto-egen/'
-                    }
-                },
-                buttons: [
-                    {
-                        title: '나도 테스트하기',
-                        link: {
-                            mobileWebUrl: 'https://doha.kr/tests/teto-egen/',
-                            webUrl: 'https://doha.kr/tests/teto-egen/'
-                        }
-                    }
-                ]
-            });
-            console.log('Fallback Kakao share successful');
-        } catch (fallbackError) {
-            alert('카카오톡 공유 중 오류가 발생했습니다: ' + fallbackError.message);
-            console.error('Kakao share error:', fallbackError);
-        }
+        console.log('Kakao share successful');
+    } catch (error) {
+        alert('카카오톡 공유 중 오류가 발생했습니다: ' + error.message);
+        console.error('Kakao share error:', error);
     }
 }
 
