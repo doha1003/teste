@@ -18,7 +18,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- External CSS -->
+    <!-- External CSS - 기존 스타일 유지 -->
     <link rel="stylesheet" href="/css/styles.css">
     
     <!-- Google AdSense -->
@@ -58,8 +58,8 @@
     <section class="hero">
         <div class="hero-content">
             <h1 class="hero-title fade-in">
-                일상을 더 재미있게 만드는<br>
-                <span style="background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">doha.kr</span>
+                <span class="hero-text-safe">일상을 더 재미있게 만드는</span><br>
+                <span class="gradient-text-safe">doha.kr</span>
             </h1>
             <p class="hero-subtitle fade-in stagger-1">
                 심리테스트로 나를 발견하고, 실용도구로 일상을 편리하게!<br>
@@ -282,6 +282,31 @@
             <p>&copy; 2025 doha.kr. All rights reserved.</p>
         </div>
     </footer>
+    
+    <!-- 텍스트 색상 안전 스타일 -->
+    <style>
+        .hero-text-safe {
+            color: #1a1a1a !important;
+            text-shadow: 0 2px 4px rgba(255, 255, 255, 0.5);
+        }
+        
+        .gradient-text-safe {
+            color: #5B21B6 !important;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+        }
+        
+        /* Fallback for browsers that don't support background-clip */
+        @supports not (background-clip: text) {
+            .gradient-text-safe {
+                color: #5B21B6 !important;
+                -webkit-text-fill-color: #5B21B6 !important;
+            }
+        }
+    </style>
     
     <!-- External JavaScript -->
     <script src="/js/main.js"></script>
