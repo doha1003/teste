@@ -12,6 +12,27 @@ function toggleMobileMenu() {
     }
 }
 
+// 서비스 탭 필터링
+function showServices(category) {
+    const cards = document.querySelectorAll('.service-card');
+    const buttons = document.querySelectorAll('.tab-button');
+    
+    // 버튼 활성화 상태 변경
+    buttons.forEach(btn => {
+        btn.classList.remove('active');
+    });
+    event.target.classList.add('active');
+    
+    // 카드 필터링
+    cards.forEach(card => {
+        if (category === 'all' || card.dataset.category && card.dataset.category.includes(category)) {
+            card.style.display = 'block';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+}
+
 // 스크롤 애니메이션
 function handleScrollAnimation() {
     const elements = document.querySelectorAll('.fade-in');
@@ -163,7 +184,7 @@ function showNotification(message, type = 'success') {
         top: 20px;
         right: 20px;
         padding: 16px 24px;
-        background: ${type === 'success' ? 'var(--success-color)' : 'var(--error-color)'};
+        background: ${type === 'success' ? 'var(--success-color)' : 'var(--error-color)'}`;
         color: white;
         border-radius: 8px;
         box-shadow: var(--shadow-lg);
@@ -548,6 +569,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
 // 전역 함수로 내보내기
 window.toggleMobileMenu = toggleMobileMenu;
+window.showServices = showServices;
 window.shareResult = shareResult;
 window.showNotification = showNotification;
 window.validateForm = validateForm;
