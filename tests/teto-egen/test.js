@@ -1,9 +1,16 @@
 // 테토-에겐 테스트 로직
 
 // 카카오 SDK 초기화
-if (typeof Kakao !== 'undefined') {
-    Kakao.init('8b5c6e8f97ec3d51a6f784b8b4b5ed99');
-}
+document.addEventListener('DOMContentLoaded', function() {
+    if (typeof Kakao !== 'undefined' && !Kakao.isInitialized()) {
+        try {
+            Kakao.init('8b5c6e8f97ec3d51a6f784b8b4b5ed99');
+            console.log('Kakao SDK initialized successfully');
+        } catch (e) {
+            console.error('Kakao SDK initialization failed:', e);
+        }
+    }
+});
 
 // 테스트 데이터
 const questions = [
@@ -396,13 +403,15 @@ function showResult() {
 // 카카오톡 공유
 function shareKakao() {
     // Kakao SDK 초기화 확인
+    if (typeof Kakao === 'undefined') {
+        alert('카카오톡 SDK가 로드되지 않았습니다.');
+        return;
+    }
+    
     if (!Kakao.isInitialized()) {
-        try {
-            Kakao.init('8b5c6e8f97ec3d51a6f784b8b4b5ed99');
-        } catch (e) {
-            alert('카카오톡 공유 기능을 초기화할 수 없습니다.');
-            return;
-        }
+        alert('카카오톡 SDK가 초기화되지 않았습니다. 페이지를 새로고침해주세요.');
+        console.error('Kakao SDK not initialized');
+        return;
     }
     
     const result = window.storage ? window.storage.get('teto-egen-result') : null;
