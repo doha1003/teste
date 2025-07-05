@@ -309,7 +309,8 @@ function showResult() {
                 best: '에겐녀',
                 good: '테토녀',
                 challenging: '테토남'
-            }
+            },
+            shareDescription: '강력한 리더십과 추진력을 가진 테토남! 목표 달성의 달인이자 카리스마 넘치는 성격입니다.'
         },
         'teto-female': {
             type: '테토녀',
@@ -332,7 +333,8 @@ function showResult() {
                 best: '에겐남',
                 good: '테토남',
                 challenging: '테토녀'
-            }
+            },
+            shareDescription: '독립적이고 창의적인 테토녀! 자신만의 길을 당당하게 걸어가는 도전정신의 소유자입니다.'
         },
         'egen-male': {
             type: '에겐남',
@@ -355,7 +357,8 @@ function showResult() {
                 best: '테토녀',
                 good: '에겐녀',
                 challenging: '에겐남'
-            }
+            },
+            shareDescription: '섬세하고 따뜻한 에겐남! 높은 공감력과 배려심으로 주변을 편안하게 만드는 신사입니다.'
         },
         'egen-female': {
             type: '에겐녀',
@@ -378,7 +381,8 @@ function showResult() {
                 best: '테토남',
                 good: '에겐남',
                 challenging: '에겐녀'
-            }
+            },
+            shareDescription: '감성적이고 직관적인 에겐녀! 풍부한 감수성과 따뜻한 마음으로 주변을 치유하는 힐러입니다.'
         }
     };
     
@@ -431,14 +435,119 @@ function showResult() {
     storage.set('teto-egen-result', {
         type: resultType,
         data: resultData,
-        date: new Date().toISOString()
+        date: new Date().toISOString(),
+        answers: answers,
+        score: totalScore
     });
     
     // 상세 분석 자동 표시
     showDetailedAnalysis();
+    
+    // 결과 카드 이미지 생성 (공유용)
+    generateResultCardImage(resultData);
 }
 
-// 카카오톡 공유
+// 결과 카드 이미지 생성 함수 (Canvas API 사용)
+function generateResultCardImage(resultData) {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    
+    // 카드 크기 설정 (카카오톡 공유에 최적화)
+    canvas.width = 800;
+    canvas.height = 600;
+    
+    // 배경 그라디언트
+    const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+    gradient.addColorStop(0, resultData.color);
+    gradient.addColorStop(1, resultData.color + 'dd');
+    
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    // 카드 배경
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+    ctx.roundRect(40, 40, canvas.width - 80, canvas.height - 80, 20);
+    ctx.fill();
+    
+    // 텍스트 스타일 설정
+    ctx.fillStyle = '#333';
+    ctx.textAlign = 'center';
+    
+    // 이모지 (대형)
+    ctx.font = 'bold 120px serif';
+    ctx.fillText(resultData.emoji, canvas.width / 2, 200);
+    
+    // 결과 타입
+    ctx.font = 'bold 48px "Noto Sans KR", Arial';
+    ctx.fillStyle = resultData.color;
+    ctx.fillText(resultData.type, canvas.width / 2, 280);
+    
+    // 희귀도
+    ctx.font = 'bold 24px "Noto Sans KR", Arial';
+    ctx.fillStyle = '#666';
+    ctx.fillText(`[${resultData.rarity}]`, canvas.width / 2, 320);
+    
+    // 설명 (줄바꿈 처리)
+    ctx.font = '20px "Noto Sans KR", Arial';
+    ctx.fillStyle = '#555';
+    const description = resultData.shareDescription || resultData.description;
+    const words = description.split(' ');
+    let line = '';
+    let y = 370;
+    
+    for (let n = 0; n < words.length; n++) {
+        const testLine = line + words[n] + ' ';
+        const metrics = ctx.measureText(testLine);
+        const testWidth = metrics.width;
+        
+        if (testWidth > canvas.width - 120 && n > 0) {
+            ctx.fillText(line, canvas.width / 2, y);
+            line = words[n] + ' ';
+            y += 30;
+        } else {
+            line = testLine;
+        }
+    }
+    ctx.fillText(line, canvas.width / 2, y);
+    
+    // 사이트 정보
+    ctx.font = 'bold 18px "Noto Sans KR", Arial';
+    ctx.fillStyle = '#999';
+    ctx.fillText('doha.kr 테토-에겐 테스트', canvas.width / 2, canvas.height - 60);
+    
+    // Canvas를 Blob으로 변환 후 저장
+    canvas.toBlob(function(blob) {
+        const imageUrl = URL.createObjectURL(blob);
+        
+        // 결과에 이미지 URL 추가 저장
+        const result = storage.get('teto-egen-result');
+        if (result) {
+            result.imageUrl = imageUrl;
+            storage.set('teto-egen-result', result);
+        }
+        
+        console.log('Result card image generated:', imageUrl);
+    }, 'image/png', 0.9);
+}
+
+// Canvas roundRect 폴리필 (구형 브라우저 지원)
+if (!CanvasRenderingContext2D.prototype.roundRect) {
+    CanvasRenderingContext2D.prototype.roundRect = function(x, y, width, height, radius) {
+        this.beginPath();
+        this.moveTo(x + radius, y);
+        this.lineTo(x + width - radius, y);
+        this.quadraticCurveTo(x + width, y, x + width, y + radius);
+        this.lineTo(x + width, y + height - radius);
+        this.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+        this.lineTo(x + radius, y + height);
+        this.quadraticCurveTo(x, y + height, x, y + height - radius);
+        this.lineTo(x, y + radius);
+        this.quadraticCurveTo(x, y, x + radius, y);
+        this.closePath();
+    };
+}
+
+// 고급 카카오톡 공유 (동적 이미지 + 상세 정보)
 function shareKakao() {
     // Kakao SDK 초기화 확인
     if (typeof Kakao === 'undefined') {
@@ -461,18 +570,45 @@ function shareKakao() {
         return;
     }
     
+    const { data } = result;
+    const shareDescription = data.shareDescription || data.description;
+    
+    // 상세 분석 정보 추가
+    const analysisPreview = `
+✨ 주요 특성: ${data.traits.map(t => t.title).join(', ')}
+🎯 최고 궁합: ${data.compatibility.best}
+💪 강점: ${data.stats[0].label} ${data.stats[0].value}
+    `.trim();
+    
     try {
+        // 고급 공유 (List 템플릿 사용)
         Kakao.Share.sendDefault({
-            objectType: 'feed',
-            content: {
-                title: `나는 ${result.data.type}! 🎉`,
-                description: result.data.description,
-                imageUrl: 'https://doha.kr/images/teto-egen-og.png',
-                link: {
-                    mobileWebUrl: 'https://doha.kr/tests/teto-egen/',
-                    webUrl: 'https://doha.kr/tests/teto-egen/'
-                }
+            objectType: 'list',
+            headerTitle: '🎭 테토-에겐 성격 유형 테스트',
+            headerLink: {
+                mobileWebUrl: 'https://doha.kr/tests/teto-egen/',
+                webUrl: 'https://doha.kr/tests/teto-egen/'
             },
+            contents: [
+                {
+                    title: `나는 ${data.type}! ${data.emoji}`,
+                    description: shareDescription,
+                    imageUrl: result.imageUrl || 'https://doha.kr/images/teto-egen-og.png',
+                    link: {
+                        mobileWebUrl: 'https://doha.kr/tests/teto-egen/',
+                        webUrl: 'https://doha.kr/tests/teto-egen/'
+                    }
+                },
+                {
+                    title: `[${data.rarity}] 등급의 희귀 성격!`,
+                    description: analysisPreview,
+                    imageUrl: 'https://doha.kr/images/teto-egen-stats.png',
+                    link: {
+                        mobileWebUrl: 'https://doha.kr/tests/teto-egen/',
+                        webUrl: 'https://doha.kr/tests/teto-egen/'
+                    }
+                }
+            ],
             buttons: [
                 {
                     title: '나도 테스트하기',
@@ -480,13 +616,47 @@ function shareKakao() {
                         mobileWebUrl: 'https://doha.kr/tests/teto-egen/',
                         webUrl: 'https://doha.kr/tests/teto-egen/'
                     }
+                },
+                {
+                    title: '상세 분석 보기',
+                    link: {
+                        mobileWebUrl: 'https://doha.kr/tests/teto-egen/start.html',
+                        webUrl: 'https://doha.kr/tests/teto-egen/start.html'
+                    }
                 }
             ]
         });
-        console.log('Kakao share successful');
+        console.log('Advanced Kakao share successful');
     } catch (e) {
-        alert('카카오톡 공유 중 오류가 발생했습니다: ' + e.message);
-        console.error('Kakao share error:', e);
+        // Fallback: 기본 Feed 템플릿
+        console.log('List template failed, using feed template as fallback');
+        try {
+            Kakao.Share.sendDefault({
+                objectType: 'feed',
+                content: {
+                    title: `나는 ${data.type}! ${data.emoji}`,
+                    description: `${shareDescription}\n\n${analysisPreview}`,
+                    imageUrl: result.imageUrl || 'https://doha.kr/images/teto-egen-og.png',
+                    link: {
+                        mobileWebUrl: 'https://doha.kr/tests/teto-egen/',
+                        webUrl: 'https://doha.kr/tests/teto-egen/'
+                    }
+                },
+                buttons: [
+                    {
+                        title: '나도 테스트하기',
+                        link: {
+                            mobileWebUrl: 'https://doha.kr/tests/teto-egen/',
+                            webUrl: 'https://doha.kr/tests/teto-egen/'
+                        }
+                    }
+                ]
+            });
+            console.log('Fallback Kakao share successful');
+        } catch (fallbackError) {
+            alert('카카오톡 공유 중 오류가 발생했습니다: ' + fallbackError.message);
+            console.error('Kakao share error:', fallbackError);
+        }
     }
 }
 
