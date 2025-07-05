@@ -17,12 +17,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    
     <!-- External CSS -->
     <link rel="stylesheet" href="/css/styles.css">
     
     <!-- Favicon -->
-    <link rel="icon" href="/images/placeholder-favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="/images/logo.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/images/logo.svg">
     <link rel="manifest" href="/manifest.json">
     
@@ -61,10 +60,7 @@
     </script>
     
     <style>
-        /* Page-specific styles */
-        /* CSS 변수 정의 */
-        /* 네비게이션 바 */
-        /* 헤더 섹션 */
+        /* 실용도구 페이지 전용 스타일 */
         .header {
             background: white;
             padding: 80px 20px;
@@ -72,6 +68,7 @@
             position: relative;
             overflow: hidden;
         }
+        
         .header::before {
             content: '';
             position: absolute;
@@ -83,17 +80,20 @@
                         radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
             animation: float 20s ease-in-out infinite;
         }
+        
         @keyframes float {
             0%, 100% { transform: translate(0, 0) rotate(0deg); }
             33% { transform: translate(30px, -30px) rotate(120deg); }
             66% { transform: translate(-20px, 20px) rotate(240deg); }
         }
+        
         .header-content {
             max-width: 800px;
             margin: 0 auto;
             position: relative;
             z-index: 1;
         }
+        
         .header-title {
             font-size: 48px;
             font-weight: 700;
@@ -103,25 +103,21 @@
             -webkit-text-fill-color: transparent;
             line-height: 1.2;
         }
+        
         .header-subtitle {
             font-size: 20px;
             color: #6b7280;
             margin-bottom: 32px;
             line-height: 1.5;
         }
-        /* 컨테이너 */
-        .container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 80px 20px;
-        }
-        /* 도구 그리드 */
+        
         .tools-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 32px;
             margin-bottom: 60px;
         }
+        
         .tool-card {
             background: white;
             border-radius: 16px;
@@ -133,6 +129,7 @@
             text-decoration: none;
             color: inherit;
         }
+        
         .tool-card::before {
             content: '';
             position: absolute;
@@ -145,32 +142,39 @@
             transition: transform 0.3s;
             transform-origin: left;
         }
+        
         .tool-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
+        
         .tool-card:hover::before {
             transform: scaleX(1);
         }
+        
         .tool-icon {
             font-size: 48px;
             margin-bottom: 24px;
             display: block;
         }
+        
         .tool-title {
             font-size: 24px;
             font-weight: 700;
             margin-bottom: 16px;
             color: #111827;
         }
+        
         .tool-description {
             line-height: 1.6;
             margin-bottom: 24px;
             color: #6b7280;
         }
+        
         .tool-features {
             margin-bottom: 24px;
         }
+        
         .tool-feature {
             display: flex;
             align-items: center;
@@ -179,6 +183,7 @@
             font-size: 14px;
             color: #6b7280;
         }
+        
         .tool-button {
             background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
             color: white;
@@ -190,35 +195,30 @@
             transition: all 0.2s;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
+        
         .tool-button:hover {
             transform: translateY(-2px);
+            color: white;
         }
-        /* 광고 컨테이너 */
-        .ad-container {
-            max-width: 1280px;
-            margin: 40px auto;
-            padding: 0 20px;
-            text-align: center;
-        }
-        .ad-label {
-            font-size: 12px;
-            color: #9ca3af;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        /* 푸터 */
+        
         /* 반응형 디자인 */
         @media (max-width: 768px) {
+            .header {
+                padding: 60px 20px;
+            }
+            
             .header-title {
                 font-size: 36px;
             }
+            
             .header-subtitle {
                 font-size: 18px;
             }
+            
             .tools-grid {
                 grid-template-columns: 1fr;
             }
+            
             .tool-card {
                 padding: 24px;
             }
@@ -226,24 +226,8 @@
     </style>
 </head>
 <body>
-    <!-- 네비게이션 바 -->
-    <nav class="navbar">
-        <div class="navbar-container">
-            <a href="/" class="logo">doha.kr</a>
-            <ul class="nav-menu" id="nav-menu">
-                <li><a href="/" class="nav-link">홈</a></li>
-                <li><a href="/tests/" class="nav-link">심리테스트</a></li>
-                <li><a href="/tools/" class="nav-link">실용도구</a></li>
-                <li><a href="/contact/" class="nav-link">문의</a></li>
-                <li><a href="/about/" class="nav-link">소개</a></li>
-            </ul>
-            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </div>
-    </nav>
+    <!-- 네비게이션 바 (컴포넌트) -->
+    <div id="navbar-placeholder"></div>
     
     <!-- 헤더 섹션 -->
     <header class="header">
@@ -415,57 +399,8 @@
         </div>
     </div>
     
-    <!-- 푸터 -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>doha.kr</h3>
-                <p style="color: var(--gray-400); margin-top: 8px;">
-                    일상을 더 재미있게 만드는 공간<br>
-                    심리테스트와 실용도구의 만남
-                </p>
-                <div class="footer-social">
-                    <a href="mailto:youtubdoha@gmail.com" class="social-link">📧</a>
-                </div>
-            </div>
-            
-            <div class="footer-section">
-                <h3>서비스</h3>
-                <ul class="footer-links">
-                    <li><a href="/">홈</a></li>
-                    <li><a href="/tests/">심리테스트</a></li>
-                    <li><a href="/tools/">실용도구</a></li>
-                    <li><a href="/about/">사이트 소개</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-section">
-                <h3>인기 콘텐츠</h3>
-                <ul class="footer-links">
-                    <li><a href="/tests/teto-egen/start.html">테토-에겐 테스트</a></li>
-                    <li><a href="/tests/mbti/">MBTI 테스트</a></li>
-                    <li><a href="/tools/text-counter.html">글자수 세기</a></li>
-                    <li><a href="/tools/bmi-calculator.html">BMI 계산기</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-section">
-                <h3>고객지원</h3>
-                <ul class="footer-links">
-                    <li><a href="/contact/">문의하기</a></li>
-                    <li><a href="/faq/">자주 묻는 질문</a></li>
-                </ul>
-            </div>
-        </div>
-        
-        <div class="footer-bottom">
-            <div class="footer-legal">
-                <a href="/privacy/">개인정보처리방침</a>
-                <a href="/terms/">이용약관</a>
-            </div>
-            <p>&copy; 2025 doha.kr. All rights reserved.</p>
-        </div>
-    </footer>
+    <!-- 푸터 (컴포넌트) -->
+    <div id="footer-placeholder"></div>
     
     <!-- External JavaScript -->
     <script src="/js/main.js"></script>
