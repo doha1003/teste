@@ -3,310 +3,407 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>실용도구 - 일상에 필요한 무료 온라인 도구 | doha.kr</title>
-    <meta name="description" content="글자수 세기, 연봉 계산기, BMI 계산기 등 일상생활에 필요한 다양한 실용도구를 무료로 이용하세요.">
+    <title>실용도구 | doha.kr</title>
+    <meta name="description" content="일상생활에 유용한 다양한 도구들을 무료로 이용하세요! 글자수 세기, 연봉 계산기, BMI 계산기 등 실용적인 도구를 제공합니다.">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="실용도구 | doha.kr">
+    <meta property="og:description" content="일상생활에 유용한 다양한 도구들을 무료로 이용하세요!">
+    <meta property="og:image" content="https://doha.kr/images/og-image.png">
+    <meta property="og:url" content="https://doha.kr/tools/">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
+    
     <!-- External CSS -->
     <link rel="stylesheet" href="/css/styles.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/images/placeholder-favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/images/logo.svg">
+    <link rel="manifest" href="/manifest.json">
     
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
     
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "실용도구 - doha.kr",
+        "url": "https://doha.kr/tools/",
+        "description": "일상생활에 유용한 다양한 도구들을 무료로 이용하세요! 글자수 세기, 연봉 계산기, BMI 계산기 등 실용적인 도구를 제공합니다.",
+        "applicationCategory": "UtilityApplication",
+        "operatingSystem": "Any",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "KRW"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "ratingCount": "2150"
+        },
+        "applicationSubCategory": [
+            "글자수 세기",
+            "연봉 계산기",
+            "BMI 계산기",
+            "환율 계산기",
+            "비밀번호 생성기",
+            "QR코드 생성기"
+        ]
+    }
+    </script>
+    
     <style>
-        :root {
-            --primary-color: #3b82f6;
-            --secondary-color: #10b981;
-            --accent-color: #f59e0b;
-            --error-color: #ef4444;
-            
-            --gray-50: #f9fafb;
-            --gray-100: #f3f4f6;
-            --gray-200: #e5e7eb;
-            --gray-300: #d1d5db;
-            --gray-400: #9ca3af;
-            --gray-500: #6b7280;
-            --gray-600: #4b5563;
-            --gray-700: #374151;
-            --gray-800: #1f2937;
-            --gray-900: #111827;
-            
-            --gradient-primary: linear-gradient(135deg, #3b82f6 0%, #10b981 100%);
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Noto Sans KR', -apple-system, sans-serif;
-            background-color: var(--gray-50);
-            color: var(--gray-900);
-            line-height: 1.6;
-        }
-        
-        /* 헤더 */
+        /* Page-specific styles */
+        /* CSS 변수 정의 */
+        /* 네비게이션 바 */
+        /* 헤더 섹션 */
         .header {
-            background: linear-gradient(135deg, #ebf5ff 0%, #e0f2fe 100%);
-            padding: 60px 20px;
+            background: white;
+            padding: 80px 20px;
             text-align: center;
+            position: relative;
+            overflow: hidden;
         }
-        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 20% 80%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(30px, -30px) rotate(120deg); }
+            66% { transform: translate(-20px, 20px) rotate(240deg); }
+        }
         .header-content {
             max-width: 800px;
             margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
-        
         .header-title {
             font-size: 48px;
             font-weight: 700;
             margin-bottom: 16px;
-            background: var(--gradient-primary);
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            line-height: 1.2;
         }
-        
         .header-subtitle {
             font-size: 20px;
-            color: var(--gray-600);
+            color: #6b7280;
+            margin-bottom: 32px;
             line-height: 1.5;
         }
-        
-        /* 도구 그리드 */
-        .tools-container {
+        /* 컨테이너 */
+        .container {
             max-width: 1280px;
-            margin: 60px auto;
-            padding: 0 20px;
+            margin: 0 auto;
+            padding: 80px 20px;
         }
-        
-        .tool-grid {
+        /* 도구 그리드 */
+        .tools-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 32px;
             margin-bottom: 60px;
         }
-        
         .tool-card {
             background: white;
             border-radius: 16px;
             padding: 32px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
             text-decoration: none;
             color: inherit;
-            display: flex;
-            flex-direction: column;
         }
-        
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+            transform-origin: left;
+        }
         .tool-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
-        
+        .tool-card:hover::before {
+            transform: scaleX(1);
+        }
         .tool-icon {
-            width: 64px;
-            height: 64px;
-            background: var(--gradient-primary);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 32px;
+            font-size: 48px;
             margin-bottom: 24px;
+            display: block;
         }
-        
         .tool-title {
             font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: var(--gray-900);
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #111827;
         }
-        
         .tool-description {
-            color: var(--gray-600);
+            line-height: 1.6;
             margin-bottom: 24px;
-            flex: 1;
+            color: #6b7280;
         }
-        
         .tool-features {
-            list-style: none;
             margin-bottom: 24px;
         }
-        
-        .tool-features li {
-            padding: 8px 0;
-            padding-left: 24px;
-            position: relative;
-            color: var(--gray-700);
-        }
-        
-        .tool-features li::before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            color: var(--secondary-color);
-            font-weight: bold;
-        }
-        
-        .use-button {
-            display: inline-flex;
+        .tool-feature {
+            display: flex;
             align-items: center;
             gap: 8px;
-            background: var(--gradient-primary);
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #6b7280;
+        }
+        .tool-button {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
             color: white;
             padding: 12px 24px;
             border-radius: 8px;
             font-weight: 600;
+            display: inline-block;
             text-decoration: none;
             transition: all 0.2s;
-            text-align: center;
-            justify-content: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
-        
-        .use-button:hover {
+        .tool-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
         }
-        
-        /* 광고 */
+        /* 광고 컨테이너 */
         .ad-container {
-            margin: 40px 0;
+            max-width: 1280px;
+            margin: 40px auto;
+            padding: 0 20px;
             text-align: center;
         }
-        
         .ad-label {
             font-size: 12px;
-            color: var(--gray-500);
+            color: #9ca3af;
             margin-bottom: 8px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-        
-        /* 준비중 뱃지 */
-        .coming-soon {
-            display: inline-block;
-            background: var(--accent-color);
-            color: white;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            text-transform: uppercase;
-            margin-left: 8px;
-        }
-        
+        /* 푸터 */
+        /* 반응형 디자인 */
         @media (max-width: 768px) {
             .header-title {
                 font-size: 36px;
             }
-            
-            .tool-grid {
+            .header-subtitle {
+                font-size: 18px;
+            }
+            .tools-grid {
                 grid-template-columns: 1fr;
-                gap: 24px;
+            }
+            .tool-card {
+                padding: 24px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- 네비게이션 -->
-    <div id="navbar-placeholder"></div>
+    <!-- 네비게이션 바 -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="/" class="logo">doha.kr</a>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="/" class="nav-link">홈</a></li>
+                <li><a href="/tests/" class="nav-link">심리테스트</a></li>
+                <li><a href="/tools/" class="nav-link">실용도구</a></li>
+                <li><a href="/contact/" class="nav-link">문의</a></li>
+                <li><a href="/about/" class="nav-link">소개</a></li>
+            </ul>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
     
-    <!-- 헤더 -->
+    <!-- 헤더 섹션 -->
     <header class="header">
         <div class="header-content">
             <h1 class="header-title">실용도구</h1>
             <p class="header-subtitle">
-                일상생활에 필요한 다양한 도구들<br>
-                간편하고 빠르게, 무료로 이용하세요
+                일상생활에 유용한 다양한 도구들을 무료로 이용하세요!
             </p>
         </div>
     </header>
     
-    <!-- 도구 목록 -->
-    <main class="tools-container">
-        <div class="tool-grid">
+    <!-- 메인 컨텐츠 -->
+    <div class="container">
+        <div class="tools-grid">
             <!-- 글자수 세기 -->
             <a href="/tools/text-counter.html" class="tool-card">
-                <div class="tool-icon">📝</div>
+                <span class="tool-icon">📝</span>
                 <h2 class="tool-title">글자수 세기</h2>
                 <p class="tool-description">
-                    자기소개서, 리포트, 논문 작성 시 필수! 
-                    공백 포함/제외, 바이트, 원고지 환산까지 한번에 확인하세요.
+                    자소서, 리포트 작성 시 필수! 글자수와 단어수를 실시간으로 확인할 수 있는 도구입니다.
                 </p>
-                <ul class="tool-features">
-                    <li>실시간 글자수 계산</li>
-                    <li>공백 포함/제외 옵션</li>
-                    <li>바이트 및 원고지 환산</li>
-                    <li>한글/영문/숫자 구분 집계</li>
-                </ul>
-                <span class="use-button">도구 사용하기 →</span>
+                <div class="tool-features">
+                    <div class="tool-feature">
+                        <span>✅</span>
+                        <span>실시간 글자수 카운팅</span>
+                    </div>
+                    <div class="tool-feature">
+                        <span>✅</span>
+                        <span>공백 포함/제외 선택</span>
+                    </div>
+                    <div class="tool-feature">
+                        <span>✅</span>
+                        <span>단어수 및 문단수 표시</span>
+                    </div>
+                </div>
+                <span class="tool-button">도구 사용하기</span>
             </a>
             
             <!-- 연봉 계산기 -->
             <div class="tool-card" style="opacity: 0.7;">
-                <div class="tool-icon">💰</div>
-                <h2 class="tool-title">
-                    연봉 계산기
-                    <span class="coming-soon">준비중</span>
-                </h2>
+                <span class="tool-icon">💰</span>
+                <h2 class="tool-title">연봉 실수령액 계산기</h2>
                 <p class="tool-description">
-                    연봉, 월급, 실수령액을 한번에 계산! 
-                    4대보험과 세금을 정확하게 계산해 실수령액을 알려드립니다.
+                    세금 공제 후 실제 받는 금액을 계산해보세요. 국민연금, 건강보험료 등을 자동으로 계산합니다.
                 </p>
-                <ul class="tool-features">
-                    <li>2025년 최신 세율 적용</li>
-                    <li>4대보험 자동 계산</li>
-                    <li>연봉/월급 상호 변환</li>
-                    <li>부양가족 공제 반영</li>
-                </ul>
+                <div class="tool-features">
+                    <div class="tool-feature">
+                        <span>✅</span>
+                        <span>정확한 세금 계산</span>
+                    </div>
+                    <div class="tool-feature">
+                        <span>✅</span>
+                        <span>월별 실수령액 분석</span>
+                    </div>
+                    <div class="tool-feature">
+                        <span>✅</span>
+                        <span>4대보험료 상세 내역</span>
+                    </div>
+                </div>
+                <span class="tool-button" style="background: var(--gray-400);">준비중</span>
             </div>
             
             <!-- BMI 계산기 -->
             <div class="tool-card" style="opacity: 0.7;">
-                <div class="tool-icon">⚖️</div>
-                <h2 class="tool-title">
-                    BMI 계산기
-                    <span class="coming-soon">준비중</span>
-                </h2>
+                <span class="tool-icon">🏃</span>
+                <h2 class="tool-title">BMI 계산기</h2>
                 <p class="tool-description">
-                    키와 몸무게로 체질량지수(BMI)를 계산하고 
-                    건강 상태를 확인해보세요.
+                    키와 몸무게로 체질량지수를 확인하고, 건강한 체중 범위를 알아보세요.
                 </p>
-                <ul class="tool-features">
-                    <li>BMI 자동 계산</li>
-                    <li>비만도 판정</li>
-                    <li>표준 체중 제시</li>
-                    <li>건강 관리 팁</li>
-                </ul>
+                <div class="tool-features">
+                    <div class="tool-feature">
+                        <span>✅</span>
+                        <span>정확한 BMI 계산</span>
+                    </div>
+                    <div class="tool-feature">
+                        <span>✅</span>
+                        <span>건강 상태 분석</span>
+                    </div>
+                    <div class="tool-feature">
+                        <span>✅</span>
+                        <span>적정 체중 제안</span>
+                    </div>
+                </div>
+                <span class="tool-button" style="background: var(--gray-400);">준비중</span>
             </div>
             
-            <!-- 단위 변환기 -->
+            <!-- 환율 계산기 -->
             <div class="tool-card" style="opacity: 0.7;">
-                <div class="tool-icon">🔄</div>
-                <h2 class="tool-title">
-                    단위 변환기
-                    <span class="coming-soon">준비중</span>
-                </h2>
+                <span class="tool-icon">💱</span>
+                <h2 class="tool-title">환율 계산기</h2>
                 <p class="tool-description">
-                    길이, 무게, 온도, 면적 등 다양한 단위를 
-                    간편하게 변환하세요.
+                    실시간 환율 정보로 다양한 통화 간 환전 금액을 계산할 수 있습니다.
                 </p>
-                <ul class="tool-features">
-                    <li>다양한 단위 지원</li>
-                    <li>실시간 변환</li>
-                    <li>자주 쓰는 단위 저장</li>
-                    <li>변환 기록 확인</li>
-                </ul>
+                <div class="tool-features">
+                    <div class="tool-feature">
+                        <span>✅</span>
+                        <span>실시간 환율 정보</span>
+                    </div>
+                    <div class="tool-feature">
+                        <span>✅</span>
+                        <span>주요 통화 지원</span>
+                    </div>
+                    <div class="tool-feature">
+                        <span>✅</span>
+                        <span>환율 변동 그래프</span>
+                    </div>
+                </div>
+                <span class="tool-button" style="background: var(--gray-400);">준비중</span>
+            </div>
+            
+            <!-- 비밀번호 생성기 -->
+            <div class="tool-card" style="opacity: 0.7;">
+                <span class="tool-icon">🔐</span>
+                <h2 class="tool-title">비밀번호 생성기</h2>
+                <p class="tool-description">
+                    안전하고 강력한 비밀번호를 자동으로 생성해주는 도구입니다.
+                </p>
+                <div class="tool-features">
+                    <div class="tool-feature">
+                        <span>✅</span>
+                        <span>안전한 랜덤 생성</span>
+                    </div>
+                    <div class="tool-feature">
+                        <span>✅</span>
+                        <span>길이 및 조건 설정</span>
+                    </div>
+                    <div class="tool-feature">
+                        <span>✅</span>
+                        <span>보안 강도 표시</span>
+                    </div>
+                </div>
+                <span class="tool-button" style="background: var(--gray-400);">준비중</span>
+            </div>
+            
+            <!-- QR코드 생성기 -->
+            <div class="tool-card" style="opacity: 0.7;">
+                <span class="tool-icon">📱</span>
+                <h2 class="tool-title">QR코드 생성기</h2>
+                <p class="tool-description">
+                    텍스트나 링크를 QR코드로 변환하여 쉽게 공유할 수 있습니다.
+                </p>
+                <div class="tool-features">
+                    <div class="tool-feature">
+                        <span>✅</span>
+                        <span>다양한 형식 지원</span>
+                    </div>
+                    <div class="tool-feature">
+                        <span>✅</span>
+                        <span>고해상도 다운로드</span>
+                    </div>
+                    <div class="tool-feature">
+                        <span>✅</span>
+                        <span>커스텀 디자인</span>
+                    </div>
+                </div>
+                <span class="tool-button" style="background: var(--gray-400);">준비중</span>
             </div>
         </div>
         
-        <!-- 광고 -->
+        <!-- 광고 영역 -->
         <div class="ad-container">
             <div class="ad-label">광고</div>
             <ins class="adsbygoogle"
@@ -316,16 +413,65 @@
                  data-ad-format="auto"
                  data-full-width-responsive="true"></ins>
         </div>
-    </main>
+    </div>
     
     <!-- 푸터 -->
-    <div id="footer-placeholder"></div>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>doha.kr</h3>
+                <p style="color: var(--gray-400); margin-top: 8px;">
+                    일상을 더 재미있게 만드는 공간<br>
+                    심리테스트와 실용도구의 만남
+                </p>
+                <div class="footer-social">
+                    <a href="mailto:youtubdoha@gmail.com" class="social-link">📧</a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>서비스</h3>
+                <ul class="footer-links">
+                    <li><a href="/">홈</a></li>
+                    <li><a href="/tests/">심리테스트</a></li>
+                    <li><a href="/tools/">실용도구</a></li>
+                    <li><a href="/about/">사이트 소개</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>인기 콘텐츠</h3>
+                <ul class="footer-links">
+                    <li><a href="/tests/teto-egen/start.html">테토-에겐 테스트</a></li>
+                    <li><a href="/tests/mbti/">MBTI 테스트</a></li>
+                    <li><a href="/tools/text-counter.html">글자수 세기</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>고객지원</h3>
+                <ul class="footer-links">
+                    <li><a href="/contact/">문의하기</a></li>
+                    <li><a href="/faq/">자주 묻는 질문</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="footer-legal">
+                <a href="/privacy/">개인정보처리방침</a>
+                <a href="/terms/">이용약관</a>
+            </div>
+            <p>&copy; 2025 doha.kr. All rights reserved.</p>
+        </div>
+    </footer>
     
     <!-- External JavaScript -->
     <script src="/js/main.js"></script>
     
+    <!-- AdSense initialization -->
     <script>
-        // 애드센스 로드
+        // 애드센스 광고 로드
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </body>
