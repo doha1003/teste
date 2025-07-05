@@ -2,15 +2,52 @@
 
 // 카카오 SDK 초기화
 document.addEventListener('DOMContentLoaded', function() {
-    if (typeof Kakao !== 'undefined' && !Kakao.isInitialized()) {
+    // SDK 로드 대기
+    setTimeout(function() {
+        if (typeof Kakao !== 'undefined') {
+            if (!Kakao.isInitialized()) {
+                try {
+                    // JavaScript 키 사용 (일관성 있게 통일)
+                    Kakao.init('19d8ba832f94d513957adc17883c1282');
+                    console.log('Kakao SDK initialized:', Kakao.isInitialized());
+                    
+                    // 초기화 확인
+                    if (Kakao.isInitialized()) {
+                        console.log('Kakao SDK Version:', Kakao.VERSION);
+                    }
+                } catch (e) {
+                    console.error('Kakao SDK initialization failed:', e);
+                    console.error('Error details:', e.message);
+                }
+            } else {
+                console.log('Kakao SDK already initialized');
+            }
+        } else {
+            console.error('Kakao SDK not loaded');
+        }
+    }, 500);
+});
+
+// 통일된 스토리지 래퍼
+const storage = {
+    set: function(key, value) {
         try {
-            Kakao.init('8b5c6e8f97ec3d51a6f784b8b4b5ed99');
-            console.log('Kakao SDK initialized successfully');
+            localStorage.setItem(key, JSON.stringify(value));
+            console.log('Data saved to localStorage:', key);
         } catch (e) {
-            console.error('Kakao SDK initialization failed:', e);
+            console.error('Failed to save to localStorage:', e);
+        }
+    },
+    get: function(key) {
+        try {
+            const item = localStorage.getItem(key);
+            return item ? JSON.parse(item) : null;
+        } catch (e) {
+            console.error('Failed to get from localStorage:', e);
+            return null;
         }
     }
-});
+};
 
 // 테스트 데이터
 const questions = [
@@ -390,21 +427,23 @@ function showResult() {
         </p>
     `;
     
-    // 결과 저장
-    if (window.storage) {
-        window.storage.set('teto-egen-result', {
-            type: resultType,
-            data: resultData,
-            date: new Date().toISOString()
-        });
-    }
+    // 결과 저장 (수정된 스토리지 사용)
+    storage.set('teto-egen-result', {
+        type: resultType,
+        data: resultData,
+        date: new Date().toISOString()
+    });
+    
+    // 상세 분석 자동 표시
+    showDetailedAnalysis();
 }
 
 // 카카오톡 공유
 function shareKakao() {
     // Kakao SDK 초기화 확인
     if (typeof Kakao === 'undefined') {
-        alert('카카오톡 SDK가 로드되지 않았습니다.');
+        alert('카카오톡 SDK가 로드되지 않았습니다. 페이지를 새로고침해주세요.');
+        console.error('Kakao SDK not loaded');
         return;
     }
     
@@ -414,9 +453,11 @@ function shareKakao() {
         return;
     }
     
-    const result = window.storage ? window.storage.get('teto-egen-result') : null;
+    // 수정된 스토리지에서 결과 가져오기
+    const result = storage.get('teto-egen-result');
     if (!result) {
-        alert('테스트 결과를 찾을 수 없습니다.');
+        alert('테스트 결과를 찾을 수 없습니다. 테스트를 다시 진행해주세요.');
+        console.error('No test result found in storage');
         return;
     }
     
@@ -442,8 +483,9 @@ function shareKakao() {
                 }
             ]
         });
+        console.log('Kakao share successful');
     } catch (e) {
-        alert('카카오톡 공유 중 오류가 발생했습니다.');
+        alert('카카오톡 공유 중 오류가 발생했습니다: ' + e.message);
         console.error('Kakao share error:', e);
     }
 }
@@ -658,9 +700,9 @@ const detailedAnalysis = {
     }
 };
 
-// 상세 분석 표시
+// 상세 분석 표시 (버튼 없이 자동 표시)
 function showDetailedAnalysis() {
-    const result = window.storage ? window.storage.get('teto-egen-result') : null;
+    const result = storage.get('teto-egen-result');
     if (!result) return;
     
     const analysis = detailedAnalysis[result.type];
@@ -671,21 +713,6 @@ function showDetailedAnalysis() {
     document.getElementById('relationship-content').innerHTML = analysis.relationship;
     document.getElementById('stress-content').innerHTML = analysis.stress;
     document.getElementById('growth-content').innerHTML = analysis.growth;
-    
-    // 상세 분석 섹션 표시
-    document.getElementById('detailed-analysis').classList.remove('hidden');
-    
-    // 버튼 숨기기
-    document.querySelector('.detail-section').style.display = 'none';
-    
-    // 스크롤
-    document.getElementById('detailed-analysis').scrollIntoView({ behavior: 'smooth' });
-}
-
-// 상세 분석 숨기기
-function hideDetailedAnalysis() {
-    document.getElementById('detailed-analysis').classList.add('hidden');
-    document.querySelector('.detail-section').style.display = 'block';
 }
 
 // 전역 함수로 내보내기
@@ -697,4 +724,3 @@ window.previousQuestion = previousQuestion;
 window.shareKakao = shareKakao;
 window.restartTest = restartTest;
 window.showDetailedAnalysis = showDetailedAnalysis;
-window.hideDetailedAnalysis = hideDetailedAnalysis;
