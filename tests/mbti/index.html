@@ -9,7 +9,7 @@
     
     <!-- Open Graph -->
     <meta property="og:title" content="MBTI 성격유형 검사 - 나는 어떤 유형일까?">
-    <meta property="og:description" content="60개 문항으로 정확하게 분석하는 MBTI 성격유형 검사. 16가지 성격 유형 중 당신의 유형을 찾아보세요.">
+    <meta property="og:description" content="24개 문항으로 정확하게 분석하는 MBTI 성격유형 검사. 16가지 성격 유형 중 당신의 유형을 찾아보세요.">
     <meta property="og:image" content="https://doha.kr/images/mbti-og.png">
     <meta property="og:url" content="https://doha.kr/tests/mbti/">
     
@@ -21,8 +21,8 @@
         "name": "MBTI 성격유형 검사",
         "description": "Myers-Briggs Type Indicator 기반의 16가지 성격유형 분석 테스트",
         "educationalLevel": "All",
-        "numberOfQuestions": 60,
-        "timeRequired": "PT15M",
+        "numberOfQuestions": 24,
+        "timeRequired": "PT10M",
         "provider": {
             "@type": "Organization",
             "name": "doha.kr"
@@ -35,12 +35,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    
     <!-- External CSS -->
     <link rel="stylesheet" href="/css/styles.css">
     
     <!-- Favicon -->
-    <link rel="icon" href="/images/placeholder-favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="/images/logo.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/images/logo.svg">
     <link rel="manifest" href="/manifest.json">
     
@@ -48,10 +47,7 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
     
     <style>
-        /* Page-specific styles */
-        /* CSS 변수 */
-        /* 네비게이션 */
-        /* 히어로 섹션 */
+        /* MBTI 페이지 전용 스타일 */
         .hero {
             background: linear-gradient(135deg, #3b82f6 0%, #10b981 100%);
             color: white;
@@ -60,6 +56,7 @@
             position: relative;
             overflow: hidden;
         }
+        
         .hero::before,
         .hero::after {
             content: '';
@@ -69,20 +66,24 @@
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.1);
         }
+        
         .hero::before {
             top: -150px;
             left: -150px;
         }
+        
         .hero::after {
             bottom: -150px;
             right: -150px;
         }
+        
         .hero-content {
             max-width: 900px;
             margin: 0 auto;
             position: relative;
             z-index: 1;
         }
+        
         .hero-badge {
             display: inline-block;
             background: rgba(255, 255, 255, 0.2);
@@ -93,18 +94,21 @@
             margin-bottom: 20px;
             backdrop-filter: blur(10px);
         }
+        
         .hero-title {
             font-size: 52px;
             font-weight: 700;
             margin-bottom: 20px;
             line-height: 1.2;
         }
+        
         .hero-subtitle {
             font-size: 20px;
             line-height: 1.6;
             margin-bottom: 40px;
             opacity: 0.95;
         }
+        
         .mbti-types-preview {
             display: flex;
             justify-content: center;
@@ -112,6 +116,7 @@
             margin-bottom: 40px;
             flex-wrap: wrap;
         }
+        
         .type-badge {
             background: rgba(255, 255, 255, 0.15);
             color: white;
@@ -122,6 +127,7 @@
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
+        
         .test-start-btn {
             background: rgba(255, 255, 255, 0.9);
             color: #1f2937;
@@ -134,25 +140,45 @@
             transition: all 0.3s;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
         }
+        
         .test-start-btn:hover {
             background: white;
             transform: translateY(-2px);
             box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+            color: #1f2937;
         }
         
-        /* 소개 섹션 */
-        .intro {
+        /* 기타 섹션들 */
+        .intro, .dimensions, .types, .features, .faq, .cta {
             padding: 80px 20px;
+        }
+        
+        .intro {
             background: white;
         }
-        .container {
-            max-width: 1280px;
-            margin: 0 auto;
+        
+        .dimensions {
+            background: var(--gray-50);
         }
-        .content-wrapper {
-            max-width: 800px;
-            margin: 0 auto;
+        
+        .types {
+            background: white;
         }
+        
+        .features {
+            background: var(--gray-50);
+        }
+        
+        .faq {
+            background: white;
+        }
+        
+        .cta {
+            background: var(--gradient-primary);
+            color: white;
+            text-align: center;
+        }
+        
         .section-title {
             font-size: 36px;
             font-weight: 700;
@@ -160,6 +186,16 @@
             margin-bottom: 48px;
             color: var(--gray-900);
         }
+        
+        .cta .section-title {
+            color: white;
+        }
+        
+        .content-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
         .intro-text {
             font-size: 18px;
             line-height: 1.8;
@@ -167,6 +203,7 @@
             margin-bottom: 24px;
             text-align: left;
         }
+        
         .highlight {
             background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
             -webkit-background-clip: text;
@@ -174,79 +211,48 @@
             font-weight: 600;
         }
         
-        /* 4가지 지표 섹션 */
-        .dimensions {
-            padding: 80px 20px;
-            background: var(--gray-50);
-        }
-        .dimensions-grid {
+        /* Grid 레이아웃들 */
+        .dimensions-grid, .types-grid, .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 32px;
             margin-top: 48px;
         }
-        .dimension-card {
+        
+        .dimensions-grid {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+        
+        .types-grid {
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+        
+        .features-grid {
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        }
+        
+        /* 카드 스타일들 */
+        .dimension-card, .type-card, .feature-card {
             background: white;
             border-radius: 16px;
             padding: 32px;
-            text-align: center;
             box-shadow: var(--shadow-md);
             transition: all 0.3s;
+            text-align: center;
         }
-        .dimension-card:hover {
+        
+        .dimension-card:hover, .type-card:hover, .feature-card:hover {
             transform: translateY(-4px);
             box-shadow: var(--shadow-xl);
         }
-        .dimension-icon {
-            font-size: 48px;
-            margin-bottom: 20px;
-        }
-        .dimension-title {
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 20px;
-            color: var(--gray-900);
-        }
-        .dimension-pair {
-            display: flex;
-            justify-content: space-between;
-            gap: 16px;
-        }
-        .dimension-type {
-            flex: 1;
-            background: var(--gray-100);
-            padding: 16px;
-            border-radius: 8px;
-            font-weight: 600;
-            color: var(--gray-700);
-        }
-        .dimension-description {
-            margin-top: 16px;
-            color: var(--gray-600);
-            font-size: 14px;
-            line-height: 1.6;
-        }
         
-        /* 16가지 유형 섹션 */
-        .types {
-            padding: 80px 20px;
-            background: white;
-        }
-        .types-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
-            margin-top: 48px;
-        }
         .type-card {
-            background: var(--gray-50);
-            border-radius: 12px;
             padding: 24px;
-            text-align: center;
-            transition: all 0.3s;
+            background: var(--gray-50);
             position: relative;
             overflow: hidden;
         }
+        
         .type-card::before {
             content: '';
             position: absolute;
@@ -259,90 +265,30 @@
             transition: transform 0.3s;
             transform-origin: left;
         }
+        
         .type-card:hover {
             background: white;
-            box-shadow: var(--shadow-lg);
-            transform: translateY(-4px);
         }
+        
         .type-card:hover::before {
             transform: scaleX(1);
         }
-        .type-name {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: var(--gray-900);
-        }
-        .type-nickname {
-            font-size: 14px;
-            color: var(--gray-600);
-            margin-bottom: 12px;
-        }
-        .type-traits {
-            font-size: 12px;
-            color: var(--gray-500);
-        }
         
-        /* 특징 섹션 */
-        .features {
-            padding: 80px 20px;
-            background: var(--gray-50);
-        }
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 32px;
-            margin-top: 48px;
-        }
-        .feature-card {
-            background: white;
-            border-radius: 16px;
-            padding: 32px;
-            box-shadow: var(--shadow-md);
-            transition: all 0.3s;
-        }
-        .feature-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-xl);
-        }
-        .feature-icon {
-            width: 64px;
-            height: 64px;
-            background: var(--gradient-primary);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 32px;
-            margin-bottom: 24px;
-        }
-        .feature-title {
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 16px;
-            color: var(--gray-900);
-        }
-        .feature-description {
-            color: var(--gray-600);
-            line-height: 1.6;
-        }
-        
-        /* FAQ 섹션 */
-        .faq {
-            padding: 80px 20px;
-            background: white;
-        }
+        /* FAQ 스타일 */
         .faq-container {
             max-width: 800px;
             margin: 0 auto;
         }
+        
         .faq-item {
             border-bottom: 1px solid var(--gray-200);
             padding: 24px 0;
         }
+        
         .faq-item:last-child {
             border-bottom: none;
         }
+        
         .faq-question {
             font-size: 18px;
             font-weight: 600;
@@ -357,105 +303,74 @@
             border-radius: 8px;
             margin-bottom: 16px;
         }
+        
         .faq-question:hover {
             color: var(--primary-color);
         }
+        
         .faq-arrow {
             transition: transform 0.3s;
             color: var(--gray-500);
         }
+        
         .faq-item.active .faq-arrow {
             transform: rotate(180deg);
             color: var(--primary-color);
         }
+        
         .faq-answer {
             color: var(--gray-600);
             line-height: 1.7;
             display: none;
             padding-left: 24px;
         }
+        
         .faq-item.active .faq-answer {
             display: block;
             animation: fadeIn 0.3s ease-in;
         }
+        
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
         }
         
-        /* CTA 섹션 */
-        .cta {
-            padding: 80px 20px;
-            background: var(--gradient-primary);
-            color: white;
-            text-align: center;
-        }
-        .cta-title {
-            font-size: 36px;
-            font-weight: 700;
-            margin-bottom: 16px;
-        }
-        .cta-description {
-            font-size: 20px;
-            margin-bottom: 32px;
-            opacity: 0.9;
-        }
-        .cta-button {
-            background: white;
-            color: var(--primary-color);
-            font-size: 20px;
-            font-weight: 700;
-            padding: 16px 48px;
-            border-radius: 50px;
-            text-decoration: none;
-            display: inline-block;
-            transition: all 0.3s;
-        }
-        .cta-button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-        }
-        
-        /* 광고 컨테이너 */
-        .ad-container {
-            max-width: 1280px;
-            margin: 40px auto;
-            padding: 0 20px;
-            text-align: center;
-        }
-        .ad-label {
-            font-size: 12px;
-            color: var(--gray-500);
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
         /* 반응형 디자인 */
         @media (max-width: 768px) {
+            .hero {
+                padding: 80px 20px;
+            }
+            
             .hero-title {
                 font-size: 36px;
             }
+            
             .hero-subtitle {
                 font-size: 18px;
             }
+            
             .test-start-btn {
                 font-size: 18px;
                 padding: 14px 32px;
             }
+            
             .types-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
+            
             .features-grid {
                 grid-template-columns: 1fr;
             }
+            
             .faq-question {
                 padding: 20px 24px;
                 font-size: 16px;
             }
+            
             .mbti-types-preview {
                 gap: 8px;
             }
+            
             .type-badge {
                 font-size: 12px;
                 padding: 6px 12px;
@@ -464,24 +379,8 @@
     </style>
 </head>
 <body>
-    <!-- 네비게이션 -->
-    <nav class="navbar">
-        <div class="navbar-container">
-            <a href="/" class="logo">doha.kr</a>
-            <ul class="nav-menu" id="nav-menu">
-                <li><a href="/" class="nav-link">홈</a></li>
-                <li><a href="/tests/" class="nav-link">심리테스트</a></li>
-                <li><a href="/tools/" class="nav-link">실용도구</a></li>
-                <li><a href="/contact/" class="nav-link">문의</a></li>
-                <li><a href="/about/" class="nav-link">소개</a></li>
-            </ul>
-            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </div>
-    </nav>
+    <!-- 네비게이션 (컴포넌트) -->
+    <div id="navbar-placeholder"></div>
     
     <!-- 히어로 섹션 -->
     <section class="hero">
@@ -544,49 +443,49 @@
             
             <div class="dimensions-grid">
                 <div class="dimension-card">
-                    <div class="dimension-icon">⚡</div>
-                    <h3 class="dimension-title">에너지 방향</h3>
-                    <div class="dimension-pair">
-                        <span class="dimension-type">E (외향)</span>
-                        <span class="dimension-type">I (내향)</span>
+                    <div style="font-size: 48px; margin-bottom: 20px;">⚡</div>
+                    <h3 style="font-size: 24px; font-weight: 600; margin-bottom: 20px; color: var(--gray-900);">에너지 방향</h3>
+                    <div style="display: flex; justify-content: space-between; gap: 16px;">
+                        <span style="flex: 1; background: var(--gray-100); padding: 16px; border-radius: 8px; font-weight: 600; color: var(--gray-700);">E (외향)</span>
+                        <span style="flex: 1; background: var(--gray-100); padding: 16px; border-radius: 8px; font-weight: 600; color: var(--gray-700);">I (내향)</span>
                     </div>
-                    <p class="dimension-description">
+                    <p style="margin-top: 16px; color: var(--gray-600); font-size: 14px; line-height: 1.6;">
                         에너지를 얻고 주의를 기울이는 방향이 외부 세계인지 내부 세계인지를 나타냅니다.
                     </p>
                 </div>
                 
                 <div class="dimension-card">
-                    <div class="dimension-icon">👁️</div>
-                    <h3 class="dimension-title">인식 기능</h3>
-                    <div class="dimension-pair">
-                        <span class="dimension-type">S (감각)</span>
-                        <span class="dimension-type">N (직관)</span>
+                    <div style="font-size: 48px; margin-bottom: 20px;">👁️</div>
+                    <h3 style="font-size: 24px; font-weight: 600; margin-bottom: 20px; color: var(--gray-900);">인식 기능</h3>
+                    <div style="display: flex; justify-content: space-between; gap: 16px;">
+                        <span style="flex: 1; background: var(--gray-100); padding: 16px; border-radius: 8px; font-weight: 600; color: var(--gray-700);">S (감각)</span>
+                        <span style="flex: 1; background: var(--gray-100); padding: 16px; border-radius: 8px; font-weight: 600; color: var(--gray-700);">N (직관)</span>
                     </div>
-                    <p class="dimension-description">
+                    <p style="margin-top: 16px; color: var(--gray-600); font-size: 14px; line-height: 1.6;">
                         정보를 수집할 때 구체적 사실에 집중하는지 전체적 가능성에 집중하는지를 나타냅니다.
                     </p>
                 </div>
                 
                 <div class="dimension-card">
-                    <div class="dimension-icon">⚖️</div>
-                    <h3 class="dimension-title">판단 기능</h3>
-                    <div class="dimension-pair">
-                        <span class="dimension-type">T (사고)</span>
-                        <span class="dimension-type">F (감정)</span>
+                    <div style="font-size: 48px; margin-bottom: 20px;">⚖️</div>
+                    <h3 style="font-size: 24px; font-weight: 600; margin-bottom: 20px; color: var(--gray-900);">판단 기능</h3>
+                    <div style="display: flex; justify-content: space-between; gap: 16px;">
+                        <span style="flex: 1; background: var(--gray-100); padding: 16px; border-radius: 8px; font-weight: 600; color: var(--gray-700);">T (사고)</span>
+                        <span style="flex: 1; background: var(--gray-100); padding: 16px; border-radius: 8px; font-weight: 600; color: var(--gray-700);">F (감정)</span>
                     </div>
-                    <p class="dimension-description">
+                    <p style="margin-top: 16px; color: var(--gray-600); font-size: 14px; line-height: 1.6;">
                         의사결정을 내릴 때 논리적 분석을 우선하는지 인간적 가치를 우선하는지를 나타냅니다.
                     </p>
                 </div>
                 
                 <div class="dimension-card">
-                    <div class="dimension-icon">🎯</div>
-                    <h3 class="dimension-title">생활 양식</h3>
-                    <div class="dimension-pair">
-                        <span class="dimension-type">J (판단)</span>
-                        <span class="dimension-type">P (인식)</span>
+                    <div style="font-size: 48px; margin-bottom: 20px;">🎯</div>
+                    <h3 style="font-size: 24px; font-weight: 600; margin-bottom: 20px; color: var(--gray-900);">생활 양식</h3>
+                    <div style="display: flex; justify-content: space-between; gap: 16px;">
+                        <span style="flex: 1; background: var(--gray-100); padding: 16px; border-radius: 8px; font-weight: 600; color: var(--gray-700);">J (판단)</span>
+                        <span style="flex: 1; background: var(--gray-100); padding: 16px; border-radius: 8px; font-weight: 600; color: var(--gray-700);">P (인식)</span>
                     </div>
-                    <p class="dimension-description">
+                    <p style="margin-top: 16px; color: var(--gray-600); font-size: 14px; line-height: 1.6;">
                         외부 세계에 대한 태도가 계획적이고 체계적인지 유연하고 개방적인지를 나타냅니다.
                     </p>
                 </div>
@@ -594,166 +493,62 @@
         </div>
     </section>
     
-    <!-- 16가지 성격 유형 섹션 -->
+    <!-- 16가지 성격 유형 섹션 (요약) -->
     <section class="types">
         <div class="container">
             <h2 class="section-title">16가지 성격 유형</h2>
             
             <div class="types-grid">
                 <div class="type-card">
-                    <h3 class="type-name">INTJ</h3>
-                    <p class="type-nickname">건축가</p>
-                    <p class="type-traits">독립적, 혁신적, 전략적</p>
+                    <h3 style="font-size: 20px; font-weight: 700; margin-bottom: 8px; color: var(--gray-900);">INTJ</h3>
+                    <p style="font-size: 14px; color: var(--gray-600); margin-bottom: 12px;">건축가</p>
+                    <p style="font-size: 12px; color: var(--gray-500);">독립적, 혁신적, 전략적</p>
                 </div>
                 
                 <div class="type-card">
-                    <h3 class="type-name">INTP</h3>
-                    <p class="type-nickname">논리술사</p>
-                    <p class="type-traits">분석적, 창의적, 객관적</p>
+                    <h3 style="font-size: 20px; font-weight: 700; margin-bottom: 8px; color: var(--gray-900);">INTP</h3>
+                    <p style="font-size: 14px; color: var(--gray-600); margin-bottom: 12px;">논리술사</p>
+                    <p style="font-size: 12px; color: var(--gray-500);">분석적, 창의적, 객관적</p>
                 </div>
                 
                 <div class="type-card">
-                    <h3 class="type-name">ENTJ</h3>
-                    <p class="type-nickname">통솔자</p>
-                    <p class="type-traits">지도력, 결단력, 목표지향적</p>
+                    <h3 style="font-size: 20px; font-weight: 700; margin-bottom: 8px; color: var(--gray-900);">ENTJ</h3>
+                    <p style="font-size: 14px; color: var(--gray-600); margin-bottom: 12px;">통솔자</p>
+                    <p style="font-size: 12px; color: var(--gray-500);">지도력, 결단력, 목표지향적</p>
                 </div>
                 
                 <div class="type-card">
-                    <h3 class="type-name">ENTP</h3>
-                    <p class="type-nickname">변론가</p>
-                    <p class="type-traits">혁신적, 활기찬, 도전적</p>
+                    <h3 style="font-size: 20px; font-weight: 700; margin-bottom: 8px; color: var(--gray-900);">ENTP</h3>
+                    <p style="font-size: 14px; color: var(--gray-600); margin-bottom: 12px;">변론가</p>
+                    <p style="font-size: 12px; color: var(--gray-500);">혁신적, 활기찬, 도전적</p>
                 </div>
                 
                 <div class="type-card">
-                    <h3 class="type-name">INFJ</h3>
-                    <p class="type-nickname">옹호자</p>
-                    <p class="type-traits">이상주의적, 통찰력, 원칙적</p>
+                    <h3 style="font-size: 20px; font-weight: 700; margin-bottom: 8px; color: var(--gray-900);">INFJ</h3>
+                    <p style="font-size: 14px; color: var(--gray-600); margin-bottom: 12px;">옹호자</p>
+                    <p style="font-size: 12px; color: var(--gray-500);">이상주의적, 통찰력, 원칙적</p>
                 </div>
                 
                 <div class="type-card">
-                    <h3 class="type-name">INFP</h3>
-                    <p class="type-nickname">중재자</p>
-                    <p class="type-traits">창의적, 이상주의적, 개방적</p>
+                    <h3 style="font-size: 20px; font-weight: 700; margin-bottom: 8px; color: var(--gray-900);">INFP</h3>
+                    <p style="font-size: 14px; color: var(--gray-600); margin-bottom: 12px;">중재자</p>
+                    <p style="font-size: 12px; color: var(--gray-500);">창의적, 이상주의적, 개방적</p>
                 </div>
                 
                 <div class="type-card">
-                    <h3 class="type-name">ENFJ</h3>
-                    <p class="type-nickname">선도자</p>
-                    <p class="type-traits">카리스마, 이타적, 영감을 주는</p>
+                    <h3 style="font-size: 20px; font-weight: 700; margin-bottom: 8px; color: var(--gray-900);">ENFJ</h3>
+                    <p style="font-size: 14px; color: var(--gray-600); margin-bottom: 12px;">선도자</p>
+                    <p style="font-size: 12px; color: var(--gray-500);">카리스마, 이타적, 영감을 주는</p>
                 </div>
                 
                 <div class="type-card">
-                    <h3 class="type-name">ENFP</h3>
-                    <p class="type-nickname">활동가</p>
-                    <p class="type-traits">열정적, 창의적, 사교적</p>
-                </div>
-                
-                <div class="type-card">
-                    <h3 class="type-name">ISTJ</h3>
-                    <p class="type-nickname">물류관리자</p>
-                    <p class="type-traits">신중한, 책임감, 실용적</p>
-                </div>
-                
-                <div class="type-card">
-                    <h3 class="type-name">ISFJ</h3>
-                    <p class="type-nickname">수호자</p>
-                    <p class="type-traits">보호본능, 온화한, 헌신적</p>
-                </div>
-                
-                <div class="type-card">
-                    <h3 class="type-name">ESTJ</h3>
-                    <p class="type-nickname">경영자</p>
-                    <p class="type-traits">조직적, 실용적, 논리적</p>
-                </div>
-                
-                <div class="type-card">
-                    <h3 class="type-name">ESFJ</h3>
-                    <p class="type-nickname">집정관</p>
-                    <p class="type-traits">사교적, 배려심, 협력적</p>
-                </div>
-                
-                <div class="type-card">
-                    <h3 class="type-name">ISTP</h3>
-                    <p class="type-nickname">만능재주꾼</p>
-                    <p class="type-traits">실용적, 유연한, 논리적</p>
-                </div>
-                
-                <div class="type-card">
-                    <h3 class="type-name">ISFP</h3>
-                    <p class="type-nickname">모험가</p>
-                    <p class="type-traits">예술적, 온화한, 개방적</p>
-                </div>
-                
-                <div class="type-card">
-                    <h3 class="type-name">ESTP</h3>
-                    <p class="type-nickname">사업가</p>
-                    <p class="type-traits">활동적, 현실적, 관찰력</p>
-                </div>
-                
-                <div class="type-card">
-                    <h3 class="type-name">ESFP</h3>
-                    <p class="type-nickname">연예인</p>
-                    <p class="type-traits">활기찬, 자발적, 협력적</p>
+                    <h3 style="font-size: 20px; font-weight: 700; margin-bottom: 8px; color: var(--gray-900);">ENFP</h3>
+                    <p style="font-size: 14px; color: var(--gray-600); margin-bottom: 12px;">활동가</p>
+                    <p style="font-size: 12px; color: var(--gray-500);">열정적, 창의적, 사교적</p>
                 </div>
             </div>
         </div>
     </section>
-    
-    <!-- 특징 섹션 -->
-    <section class="features">
-        <div class="container">
-            <h2 class="section-title">우리 MBTI 검사의 특징</h2>
-            
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">🎯</div>
-                    <h3 class="feature-title">정확한 분석</h3>
-                    <p class="feature-description">
-                        검증된 60문항을 통해 정확하고 신뢰성 있는 성격 유형 분석을 제공합니다.
-                        각 문항은 MBTI 이론에 기반하여 세심하게 설계되었습니다.
-                    </p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">💡</div>
-                    <h3 class="feature-title">자세한 해석</h3>
-                    <p class="feature-description">
-                        단순한 유형 분류를 넘어서 성격적 특성, 강점, 약점, 
-                        적합한 직업군과 연애 궁합까지 종합적인 정보를 제공합니다.
-                    </p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">🚀</div>
-                    <h3 class="feature-title">빠른 결과</h3>
-                    <p class="feature-description">
-                        약 10-15분의 간단한 검사로 즉시 결과를 확인할 수 있습니다. 
-                        복잡한 가입 절차 없이 바로 시작하세요.
-                    </p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">🔒</div>
-                    <h3 class="feature-title">개인정보 보호</h3>
-                    <p class="feature-description">
-                        검사 결과는 개인 기기에만 저장되며, 별도의 개인정보 수집 없이 
-                        익명으로 진행됩니다.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- 광고 영역 -->
-    <div class="ad-container">
-        <div class="ad-label">광고</div>
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-7905640648499222"
-             data-ad-slot="1234567890"
-             data-ad-format="auto"
-             data-full-width-responsive="true"></ins>
-    </div>
     
     <!-- FAQ 섹션 -->
     <section class="faq">
@@ -796,83 +591,34 @@
                         발전시키는 것이 중요합니다.
                     </div>
                 </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question">
-                        MBTI 결과를 어떻게 활용하면 좋을까요?
-                        <span class="faq-arrow">▼</span>
-                    </div>
-                    <div class="faq-answer">
-                        자기 이해 증진, 타인과의 소통 개선, 진로 선택의 참고자료, 
-                        팀워크 향상 등에 활용할 수 있습니다. 단, 모든 결정의 절대적 기준이 
-                        아닌 하나의 참고자료로 활용하시기 바랍니다.
-                    </div>
-                </div>
             </div>
         </div>
     </section>
+    
+    <!-- 광고 영역 -->
+    <div class="ad-container">
+        <div class="ad-label">광고</div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-7905640648499222"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+    </div>
     
     <!-- CTA 섹션 -->
     <section class="cta">
         <div class="container">
-            <h2 class="cta-title">지금 바로 내 성격 유형을 알아보세요!</h2>
-            <p class="cta-description">
-                60개 문항, 10분이면 충분합니다. 완전 무료!
+            <h2 style="font-size: 36px; font-weight: 700; margin-bottom: 16px;">지금 바로 내 성격 유형을 알아보세요!</h2>
+            <p style="font-size: 20px; margin-bottom: 32px; opacity: 0.9;">
+                24개 문항, 10분이면 충분합니다. 완전 무료!
             </p>
-            <a href="test.html" class="cta-button">무료 검사 시작하기</a>
+            <a href="test.html" style="background: white; color: var(--primary-color); font-size: 20px; font-weight: 700; padding: 16px 48px; border-radius: 50px; text-decoration: none; display: inline-block; transition: all 0.3s;">무료 검사 시작하기</a>
         </div>
     </section>
     
-    <!-- 푸터 -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>doha.kr</h3>
-                <p style="color: var(--gray-400); margin-top: 8px;">
-                    일상을 더 재미있게 만드는 공간<br>
-                    심리테스트와 실용도구의 만남
-                </p>
-                <div class="footer-social">
-                    <a href="mailto:youtubdoha@gmail.com" class="social-link">📧</a>
-                </div>
-            </div>
-            
-            <div class="footer-section">
-                <h3>서비스</h3>
-                <ul class="footer-links">
-                    <li><a href="/">홈</a></li>
-                    <li><a href="/tests/">심리테스트</a></li>
-                    <li><a href="/tools/">실용도구</a></li>
-                    <li><a href="/about/">사이트 소개</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-section">
-                <h3>인기 콘텐츠</h3>
-                <ul class="footer-links">
-                    <li><a href="/tests/teto-egen/start.html">테토-에겐 테스트</a></li>
-                    <li><a href="/tests/mbti/">MBTI 테스트</a></li>
-                    <li><a href="/tools/text-counter.html">글자수 세기</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-section">
-                <h3>고객지원</h3>
-                <ul class="footer-links">
-                    <li><a href="/contact/">문의하기</a></li>
-                    <li><a href="/faq/">자주 묻는 질문</a></li>
-                </ul>
-            </div>
-        </div>
-        
-        <div class="footer-bottom">
-            <div class="footer-legal">
-                <a href="/privacy/">개인정보처리방침</a>
-                <a href="/terms/">이용약관</a>
-            </div>
-            <p>&copy; 2025 doha.kr. All rights reserved.</p>
-        </div>
-    </footer>
+    <!-- 푸터 (컴포넌트) -->
+    <div id="footer-placeholder"></div>
     
     <!-- External JavaScript -->
     <script src="/js/main.js"></script>
