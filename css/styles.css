@@ -189,7 +189,7 @@ a:hover {
     transform: rotate(-45deg) translate(7px, -6px);
 }
 
-/* 히어로 섹션 - 보라색 그라디언트 배경으로 수정 */
+/* 히어로 섹션 */
 .hero {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
@@ -348,169 +348,243 @@ a:hover {
     font-weight: 700;
     margin-bottom: 12px;
     color: var(--gray-900);
+    text-align: center;
 }
 
 .section-subtitle {
     font-size: 18px;
     color: var(--gray-600);
+    text-align: center;
 }
 
-/* 그리드 레이아웃 */
-.grid {
+/* Features 섹션 */
+.features {
+    padding: 80px 0;
+    background: white;
+}
+
+.features-grid {
     display: grid;
-    gap: 24px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 32px;
+    margin-top: 48px;
 }
 
-.grid-cols-1 { grid-template-columns: repeat(1, 1fr); }
-.grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
-.grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
-.grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
-
-/* 카드 스타일 */
-.feature-card, .test-card, .tool-card {
+.feature-card {
     background: white;
     border-radius: 16px;
     padding: 32px;
     box-shadow: var(--shadow-md);
     transition: all 0.3s;
     border: 1px solid var(--gray-200);
+    text-align: center;
 }
 
-.feature-card:hover, .test-card:hover, .tool-card:hover {
+.feature-card:hover {
     transform: translateY(-4px);
     box-shadow: var(--shadow-xl);
 }
 
-.feature-icon, .test-emoji, .tool-icon {
+.feature-icon {
     font-size: 48px;
     margin-bottom: 16px;
     display: block;
 }
 
-.feature-card h3, .test-card h3, .tool-card h3 {
+.feature-title {
     font-size: 24px;
     font-weight: 600;
     color: var(--gray-900);
     margin-bottom: 12px;
 }
 
-.feature-card p, .test-card p, .tool-card p {
+.feature-description {
     color: var(--gray-600);
     line-height: 1.6;
-}
-
-.test-badge {
-    display: inline-block;
-    background: var(--gradient-primary);
-    color: white;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 500;
     margin-bottom: 16px;
 }
 
-.test-stats {
-    display: flex;
-    gap: 16px;
-    margin: 16px 0;
-    font-size: 14px;
-    color: var(--gray-500);
-}
-
-.tool-link {
+.feature-link {
     color: var(--primary-color);
     font-weight: 500;
-    margin-top: 16px;
-    display: inline-block;
+    text-decoration: none;
+    transition: color 0.2s;
 }
 
-.tool-link.disabled {
-    color: var(--gray-400);
-    cursor: not-allowed;
+.feature-link:hover {
+    color: var(--secondary-color);
 }
 
-/* 소개 섹션 스타일 추가 */
-.intro {
-    padding: 80px 20px;
-    background: white;
+/* Popular Services 섹션 */
+.popular-services {
+    padding: 80px 0;
+    background: var(--gray-50);
 }
 
-.content-wrapper {
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.intro-text {
-    font-size: 18px;
-    line-height: 1.8;
-    margin-bottom: 32px;
-    color: var(--gray-700);
-}
-
-.highlight {
-    background: linear-gradient(180deg, transparent 60%, rgba(99, 102, 241, 0.3) 60%);
-    padding: 0 4px;
-}
-
-/* 성별 선택 UI 스타일 추가 */
-.gender-selection {
-    text-align: center;
-    margin: 40px 0;
-}
-
-.gender-selection h3 {
-    font-size: 24px;
-    font-weight: 600;
-    margin-bottom: 24px;
-    color: var(--gray-900);
-}
-
-.gender-options {
+.services-tabs {
     display: flex;
-    gap: 24px;
     justify-content: center;
+    gap: 16px;
+    margin: 32px 0;
     flex-wrap: wrap;
 }
 
-.gender-option {
-    background: white;
+.tab-button {
+    padding: 12px 24px;
     border: 2px solid var(--gray-200);
-    border-radius: 16px;
-    padding: 32px 24px;
+    background: white;
+    color: var(--gray-700);
+    border-radius: 8px;
     cursor: pointer;
-    transition: all 0.3s;
-    text-align: center;
-    min-width: 160px;
+    font-weight: 500;
+    transition: all 0.2s;
 }
 
-.gender-option:hover {
-    border-color: var(--primary-color);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-lg);
-}
-
-.gender-option.selected {
+.tab-button.active,
+.tab-button:hover {
     border-color: var(--primary-color);
     background: var(--primary-color);
     color: white;
 }
 
-.gender-icon {
-    font-size: 48px;
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    margin-top: 32px;
+}
+
+.service-card {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    position: relative;
+}
+
+.service-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-xl);
+}
+
+.service-card.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.service-card.disabled:hover {
+    transform: none;
+    box-shadow: var(--shadow-md);
+}
+
+.service-emoji {
+    font-size: 36px;
     margin-bottom: 16px;
     display: block;
 }
 
-.gender-label {
+.service-name {
     font-size: 20px;
     font-weight: 600;
+    color: var(--gray-900);
     margin-bottom: 8px;
 }
 
-.gender-desc {
+.service-desc {
+    color: var(--gray-600);
     font-size: 14px;
-    opacity: 0.8;
+    line-height: 1.5;
+    margin-bottom: 16px;
+}
+
+.service-badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: var(--primary-color);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+/* Stats 섹션 */
+.stats {
+    padding: 80px 0;
+    background: var(--gray-900);
+    color: white;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 32px;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 48px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 8px;
+}
+
+.stat-label {
+    font-size: 16px;
+    color: var(--gray-400);
+}
+
+/* CTA 섹션 */
+.cta {
+    padding: 80px 0;
+    background: var(--gradient-primary);
+    color: white;
+    text-align: center;
+}
+
+.cta-box {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.cta-title {
+    font-size: 36px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 16px;
+}
+
+.cta-description {
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 32px;
+    line-height: 1.6;
+}
+
+.cta-button {
+    background: white;
+    color: var(--primary-color);
+    padding: 16px 32px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.3);
+    color: var(--primary-color);
 }
 
 /* 푸터 */
@@ -622,32 +696,24 @@ a:hover {
     letter-spacing: 0.5px;
 }
 
-/* CTA 섹션 */
-.cta-section {
-    background: var(--gradient-primary);
-    color: white;
-    text-align: center;
-    padding: 80px 20px;
+/* 애니메이션 */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.6s forwards;
 }
 
-.cta-section h2 {
-    color: white;
-    font-size: 36px;
-    margin-bottom: 16px;
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-.cta-section p {
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 20px;
-    margin-bottom: 32px;
-}
-
-.cta-buttons {
-    display: flex;
-    gap: 16px;
-    justify-content: center;
-    flex-wrap: wrap;
-}
+.stagger-1 { animation-delay: 0.1s; }
+.stagger-2 { animation-delay: 0.2s; }
+.stagger-3 { animation-delay: 0.3s; }
+.stagger-4 { animation-delay: 0.4s; }
 
 /* 유틸리티 클래스 */
 .text-center { text-align: center; }
@@ -671,8 +737,13 @@ a:hover {
 
 /* 반응형 디자인 */
 @media (max-width: 1024px) {
-    .grid-cols-4 { grid-template-columns: repeat(2, 1fr); }
-    .grid-cols-3 { grid-template-columns: repeat(2, 1fr); }
+    .features-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+    
+    .services-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
 }
 
 @media (max-width: 768px) {
@@ -708,10 +779,13 @@ a:hover {
         font-size: 32px;
     }
     
-    .grid-cols-2,
-    .grid-cols-3,
-    .grid-cols-4 { 
-        grid-template-columns: 1fr; 
+    .features-grid,
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
     
     .footer-content {
@@ -731,13 +805,12 @@ a:hover {
         padding: 0 16px;
     }
     
-    .gender-options {
+    .services-tabs {
         flex-direction: column;
         align-items: center;
     }
     
-    .gender-option {
-        width: 100%;
-        max-width: 300px;
+    .tab-button {
+        width: 200px;
     }
 }
