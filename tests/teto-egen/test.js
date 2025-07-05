@@ -294,6 +294,7 @@ function showResult() {
             rarity: 'EPIC',
             color: '#3b82f6',
             description: '타고난 리더십과 추진력을 갖춘 당신은 테토남입니다. 목표를 향해 직진하는 강인한 의지와 결단력이 당신의 가장 큰 무기입니다.',
+            shareImage: 'https://doha.kr/images/teto-male-card.jpg',
             stats: [
                 { label: '리더십', value: '95%' },
                 { label: '추진력', value: '92%' },
@@ -318,6 +319,7 @@ function showResult() {
             rarity: 'LEGENDARY',
             color: '#ec4899',
             description: '독립적이고 당당한 당신은 테토녀입니다. 자신만의 색깔과 주관이 뚜렷하며, 도전을 두려워하지 않는 용기가 있습니다.',
+            shareImage: 'https://doha.kr/images/teto-female-card.jpg',
             stats: [
                 { label: '독립성', value: '93%' },
                 { label: '창의력', value: '90%' },
@@ -342,6 +344,7 @@ function showResult() {
             rarity: 'RARE',
             color: '#10b981',
             description: '섬세하고 사려 깊은 당신은 에겐남입니다. 타인을 배려하는 따뜻한 마음과 안정적인 성격으로 신뢰받는 사람입니다.',
+            shareImage: 'https://doha.kr/images/egen-male-card.jpg',
             stats: [
                 { label: '공감력', value: '94%' },
                 { label: '안정성', value: '91%' },
@@ -366,6 +369,7 @@ function showResult() {
             rarity: 'MYTHIC',
             color: '#a855f7',
             description: '감성적이고 직관적인 당신은 에겐녀입니다. 풍부한 감수성과 세심한 배려로 주변을 따뜻하게 만드는 사람입니다.',
+            shareImage: 'https://doha.kr/images/egen-female-card.jpg',
             stats: [
                 { label: '감수성', value: '96%' },
                 { label: '직관력', value: '92%' },
@@ -442,112 +446,9 @@ function showResult() {
     
     // 상세 분석 자동 표시
     showDetailedAnalysis();
-    
-    // 결과 카드 이미지 생성 (공유용)
-    generateResultCardImage(resultData);
 }
 
-// 결과 카드 이미지 생성 함수 (Canvas API 사용)
-function generateResultCardImage(resultData) {
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    
-    // 카드 크기 설정 (카카오톡 공유에 최적화)
-    canvas.width = 800;
-    canvas.height = 600;
-    
-    // 배경 그라디언트
-    const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-    gradient.addColorStop(0, resultData.color);
-    gradient.addColorStop(1, resultData.color + 'dd');
-    
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
-    // 카드 배경
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
-    ctx.roundRect(40, 40, canvas.width - 80, canvas.height - 80, 20);
-    ctx.fill();
-    
-    // 텍스트 스타일 설정
-    ctx.fillStyle = '#333';
-    ctx.textAlign = 'center';
-    
-    // 이모지 (대형)
-    ctx.font = 'bold 120px serif';
-    ctx.fillText(resultData.emoji, canvas.width / 2, 200);
-    
-    // 결과 타입
-    ctx.font = 'bold 48px "Noto Sans KR", Arial';
-    ctx.fillStyle = resultData.color;
-    ctx.fillText(resultData.type, canvas.width / 2, 280);
-    
-    // 희귀도
-    ctx.font = 'bold 24px "Noto Sans KR", Arial';
-    ctx.fillStyle = '#666';
-    ctx.fillText(`[${resultData.rarity}]`, canvas.width / 2, 320);
-    
-    // 설명 (줄바꿈 처리)
-    ctx.font = '20px "Noto Sans KR", Arial';
-    ctx.fillStyle = '#555';
-    const description = resultData.shareDescription || resultData.description;
-    const words = description.split(' ');
-    let line = '';
-    let y = 370;
-    
-    for (let n = 0; n < words.length; n++) {
-        const testLine = line + words[n] + ' ';
-        const metrics = ctx.measureText(testLine);
-        const testWidth = metrics.width;
-        
-        if (testWidth > canvas.width - 120 && n > 0) {
-            ctx.fillText(line, canvas.width / 2, y);
-            line = words[n] + ' ';
-            y += 30;
-        } else {
-            line = testLine;
-        }
-    }
-    ctx.fillText(line, canvas.width / 2, y);
-    
-    // 사이트 정보
-    ctx.font = 'bold 18px "Noto Sans KR", Arial';
-    ctx.fillStyle = '#999';
-    ctx.fillText('doha.kr 테토-에겐 테스트', canvas.width / 2, canvas.height - 60);
-    
-    // Canvas를 Blob으로 변환 후 저장
-    canvas.toBlob(function(blob) {
-        const imageUrl = URL.createObjectURL(blob);
-        
-        // 결과에 이미지 URL 추가 저장
-        const result = storage.get('teto-egen-result');
-        if (result) {
-            result.imageUrl = imageUrl;
-            storage.set('teto-egen-result', result);
-        }
-        
-        console.log('Result card image generated:', imageUrl);
-    }, 'image/png', 0.9);
-}
-
-// Canvas roundRect 폴리필 (구형 브라우저 지원)
-if (!CanvasRenderingContext2D.prototype.roundRect) {
-    CanvasRenderingContext2D.prototype.roundRect = function(x, y, width, height, radius) {
-        this.beginPath();
-        this.moveTo(x + radius, y);
-        this.lineTo(x + width - radius, y);
-        this.quadraticCurveTo(x + width, y, x + width, y + radius);
-        this.lineTo(x + width, y + height - radius);
-        this.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
-        this.lineTo(x + radius, y + height);
-        this.quadraticCurveTo(x, y + height, x, y + height - radius);
-        this.lineTo(x, y + radius);
-        this.quadraticCurveTo(x, y, x + radius, y);
-        this.closePath();
-    };
-}
-
-// 고급 카카오톡 공유 (동적 이미지 + 상세 정보)
+// 카카오톡 공유 (정적 이미지 URL 사용)
 function shareKakao() {
     // Kakao SDK 초기화 확인
     if (typeof Kakao === 'undefined') {
@@ -593,7 +494,7 @@ function shareKakao() {
                 {
                     title: `나는 ${data.type}! ${data.emoji}`,
                     description: shareDescription,
-                    imageUrl: result.imageUrl || 'https://doha.kr/images/teto-egen-og.png',
+                    imageUrl: data.shareImage || 'https://doha.kr/images/teto-egen-og.png',
                     link: {
                         mobileWebUrl: 'https://doha.kr/tests/teto-egen/',
                         webUrl: 'https://doha.kr/tests/teto-egen/'
@@ -636,7 +537,7 @@ function shareKakao() {
                 content: {
                     title: `나는 ${data.type}! ${data.emoji}`,
                     description: `${shareDescription}\n\n${analysisPreview}`,
-                    imageUrl: result.imageUrl || 'https://doha.kr/images/teto-egen-og.png',
+                    imageUrl: data.shareImage || 'https://doha.kr/images/teto-egen-og.png',
                     link: {
                         mobileWebUrl: 'https://doha.kr/tests/teto-egen/',
                         webUrl: 'https://doha.kr/tests/teto-egen/'
