@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI 계산기 - 체질량지수 계산 및 건강 상태 확인 | doha.kr</title>
+    <meta name="description" content="키와 몸무게로 BMI(체질량지수)를 계산하고 건강 상태를 확인하세요. 정상 체중 범위와 건강 관리 팁을 제공합니다.">
+    <meta name="keywords" content="BMI계산기, 체질량지수, 비만도계산, 표준체중, 건강관리, 다이어트">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="BMI 계산기 - 나의 건강 상태는?">
+    <meta property="og:description" content="간단하게 키와 몸무게로 BMI를 계산하고 건강 상태를 확인해보세요!">
+    <meta property="og:image" content="https://doha.kr/images/bmi-og.png">
+    <meta property="og:url" content="https://doha.kr/tools/bmi-calculator.html">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" href="/css/styles.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/images/placeholder-favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/images/logo.svg">
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "@name": "BMI 계산기",
+        "alternateName": "체질량지수 계산기",
+        "url": "https://doha.kr/tools/bmi-calculator.html",
+        "description": "키와 몸무게로 BMI(체질량지수)를 계산하고 건강 상태를 확인하는 무료 도구",
+        "applicationCategory": "HealthApplication",
+        "operatingSystem": "Any",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "KRW"
+        },
+        "featureList": [
+            "실시간 BMI 계산",
+            "건강 상태 분석",
+            "표준 체중 제시",
+            "BMI 차트 시각화",
+            "건강 관리 조언"
+        ]
+    }
+    </script>
+    
+    <style>
+        /* Page-specific styles */
+        .header {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+        .header-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .header-title {
+            font-size: 40px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        .header-subtitle {
+            font-size: 18px;
+            opacity: 0.95;
+            line-height: 1.6;
+        }
+        
+        /* 메인 컨테이너 */
+        .main-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        
+        /* BMI 계산기 섹션 */
+        .calculator-section {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            margin-bottom: 40px;
+        }
+        
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        /* 입력 영역 */
+        .input-section {
+            background: #f9fafb;
+            padding: 30px;
+            border-radius: 12px;
+        }
+        
+        .input-group {
+            margin-bottom: 24px;
+        }
+        
+        .input-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #374151;
+        }
+        
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .input-field {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.2s;
+        }
+        
+        .input-field:focus {
+            outline: none;
+            border-color: #10b981;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+        }
+        
+        .input-unit {
+            font-weight: 500;
+            color: #6b7280;
+            min-width: 30px;
+        }
+        
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            margin-top: 8px;
+        }
+        
+        .radio-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            color: #4b5563;
+        }
+        
+        .radio-label input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        
+        .calculate-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 16px 32px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 12px;
+        }
+        
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
+        }
+        
+        .calculate-btn:active {
+            transform: translateY(0);
+        }
+        
+        /* 결과 영역 */
+        .result-section {
+            text-align: center;
+            padding: 30px;
+            background: #f0fdf4;
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .result-section.hidden {
+            display: none;
+        }
+        
+        .bmi-value {
+            font-size: 72px;
+            font-weight: 700;
+            color: #047857;
+            margin-bottom: 8px;
+            line-height: 1;
+        }
+        
+        .bmi-status {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        
+        .bmi-description {
+            font-size: 16px;
+            color: #374151;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+        
+        .weight-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 24px;
+        }
+        
+        .weight-card {
+            background: white;
+            padding: 16px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .weight-card-label {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 4px;
+        }
+        
+        .weight-card-value {
+            font-size: 20px;
+            font-weight: 600;
+            color: #111827;
+        }
+        
+        /* BMI 차트 */
+        .bmi-chart {
+            margin-top: 40px;
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .chart-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .chart-bar {
+            height: 40px;
+            background: linear-gradient(to right, 
+                #3b82f6 0%, 
+                #10b981 18.5%, 
+                #f59e0b 25%, 
+                #ef4444 30%, 
+                #991b1b 35%);
+            border-radius: 20px;
+            position: relative;
+            margin-bottom: 20px;
+        }
+        
+        .chart-pointer {
+            position: absolute;
+            top: -10px;
+            transform: translateX(-50%);
+            transition: left 0.5s ease;
+        }
+        
+        .chart-pointer-arrow {
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 15px solid #111827;
+            margin: 0 auto;
+        }
+        
+        .chart-pointer-value {
+            background: #111827;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+            white-space: nowrap;
+            margin-bottom: 4px;
+        }
+        
+        .chart-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: #6b7280;
+            margin-top: 8px;
+        }
+        
+        /* 건강 조언 섹션 */
+        .advice-section {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            margin-bottom: 40px;
+        }
+        
+        .advice-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+        
+        .advice-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+            margin-top: 32px;
+        }
+        
+        .advice-card {
+            background: #f9fafb;
+            padding: 24px;
+            border-radius: 12px;
+            transition: all 0.2s;
+        }
+        
+        .advice-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        
+        .advice-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+            display: block;
+        }
+        
+        .advice-card-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #111827;
+        }
+        
+        .advice-card-desc {
+            font-size: 14px;
+            color: #6b7280;
+            line-height: 1.5;
+        }
+        
+        /* BMI 정보 테이블 */
+        .bmi-info-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 32px;
+        }
+        
+        .bmi-info-table th,
+        .bmi-info-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .bmi-info-table th {
+            background: #f9fafb;
+            font-weight: 600;
+            color: #374151;
+        }
+        
+        .bmi-info-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        
+        .status-underweight { background: #dbeafe; color: #1e40af; }
+        .status-normal { background: #d1fae5; color: #065f46; }
+        .status-overweight { background: #fed7aa; color: #92400e; }
+        .status-obese { background: #fee2e2; color: #991b1b; }
+        
+        /* 광고 영역 */
+        .ad-container {
+            margin: 40px 0;
+            text-align: center;
+        }
+        
+        .ad-label {
+            font-size: 12px;
+            color: #9ca3af;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        /* 반응형 */
+        @media (max-width: 768px) {
+            .header-title {
+                font-size: 32px;
+            }
+            
+            .calculator-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            
+            .calculator-section,
+            .advice-section {
+                padding: 24px;
+            }
+            
+            .bmi-value {
+                font-size: 56px;
+            }
+            
+            .bmi-status {
+                font-size: 20px;
+            }
+            
+            .advice-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 네비게이션 -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="/" class="logo">doha.kr</a>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="/" class="nav-link">홈</a></li>
+                <li><a href="/tests/" class="nav-link">심리테스트</a></li>
+                <li><a href="/tools/" class="nav-link">실용도구</a></li>
+                <li><a href="/contact/" class="nav-link">문의</a></li>
+                <li><a href="/about/" class="nav-link">소개</a></li>
+            </ul>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+    
+    <!-- 헤더 -->
+    <header class="header">
+        <div class="header-content">
+            <h1 class="header-title">BMI 계산기</h1>
+            <p class="header-subtitle">
+                체질량지수(BMI)를 계산하여 건강 상태를 확인하세요.<br>
+                표준 체중 범위와 맞춤형 건강 조언을 제공합니다.
+            </p>
+        </div>
+    </header>
+    
+    <!-- 메인 컨테이너 -->
+    <div class="main-container">
+        <!-- BMI 계산기 섹션 -->
+        <div class="calculator-section">
+            <div class="calculator-grid">
+                <!-- 입력 영역 -->
+                <div class="input-section">
+                    <h2 style="font-size: 24px; margin-bottom: 24px; color: #111827;">정보 입력</h2>
+                    
+                    <div class="input-group">
+                        <label class="input-label">성별</label>
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="gender" value="male" checked>
+                                남성
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="gender" value="female">
+                                여성
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label class="input-label">나이</label>
+                        <div class="input-wrapper">
+                            <input type="number" id="age" class="input-field" placeholder="25" min="1" max="120">
+                            <span class="input-unit">세</span>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label class="input-label">키</label>
+                        <div class="input-wrapper">
+                            <input type="number" id="height" class="input-field" placeholder="170" min="100" max="250" step="0.1">
+                            <span class="input-unit">cm</span>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label class="input-label">몸무게</label>
+                        <div class="input-wrapper">
+                            <input type="number" id="weight" class="input-field" placeholder="65" min="20" max="300" step="0.1">
+                            <span class="input-unit">kg</span>
+                        </div>
+                    </div>
+                    
+                    <button class="calculate-btn" onclick="calculateBMI()">
+                        BMI 계산하기
+                    </button>
+                </div>
+                
+                <!-- 결과 영역 -->
+                <div class="result-section hidden" id="resultSection">
+                    <div class="bmi-value" id="bmiValue">0</div>
+                    <div class="bmi-status" id="bmiStatus">-</div>
+                    <div class="bmi-description" id="bmiDescription">
+                        키와 몸무게를 입력하고 계산 버튼을 클릭하세요.
+                    </div>
+                    
+                    <div class="weight-info">
+                        <div class="weight-card">
+                            <div class="weight-card-label">표준 체중</div>
+                            <div class="weight-card-value" id="standardWeight">-</div>
+                        </div>
+                        <div class="weight-card">
+                            <div class="weight-card-label">체중 차이</div>
+                            <div class="weight-card-value" id="weightDiff">-</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- BMI 차트 -->
+            <div class="bmi-chart hidden" id="bmiChart">
+                <h3 class="chart-title">BMI 지수 범위</h3>
+                <div class="chart-bar">
+                    <div class="chart-pointer" id="chartPointer" style="left: 0%;">
+                        <div class="chart-pointer-value" id="chartValue">0</div>
+                        <div class="chart-pointer-arrow"></div>
+                    </div>
+                </div>
+                <div class="chart-labels">
+                    <span>저체중</span>
+                    <span>정상</span>
+                    <span>과체중</span>
+                    <span>비만</span>
+                    <span>고도비만</span>
+                </div>
+            </div>
+            
+            <!-- BMI 범위 정보 테이블 -->
+            <table class="bmi-info-table">
+                <thead>
+                    <tr>
+                        <th>BMI 범위</th>
+                        <th>분류</th>
+                        <th>건강 위험도</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>18.5 미만</td>
+                        <td><span class="status-badge status-underweight">저체중</span></td>
+                        <td>영양실조 위험</td>
+                    </tr>
+                    <tr>
+                        <td>18.5 ~ 22.9</td>
+                        <td><span class="status-badge status-normal">정상</span></td>
+                        <td>건강한 상태</td>
+                    </tr>
+                    <tr>
+                        <td>23.0 ~ 24.9</td>
+                        <td><span class="status-badge status-overweight">과체중</span></td>
+                        <td>주의 필요</td>
+                    </tr>
+                    <tr>
+                        <td>25.0 ~ 29.9</td>
+                        <td><span class="status-badge status-obese">비만</span></td>
+                        <td>질병 위험 증가</td>
+                    </tr>
+                    <tr>
+                        <td>30.0 이상</td>
+                        <td><span class="status-badge status-obese">고도비만</span></td>
+                        <td>심각한 건강 위험</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- 광고 영역 -->
+        <div class="ad-container">
+            <div class="ad-label">광고</div>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-7905640648499222"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+        
+        <!-- 건강 조언 섹션 -->
+        <div class="advice-section">
+            <h2 class="advice-title">건강한 체중 관리를 위한 조언</h2>
+            
+            <div class="advice-grid">
+                <div class="advice-card">
+                    <span class="advice-icon">🥗</span>
+                    <h3 class="advice-card-title">균형 잡힌 식단</h3>
+                    <p class="advice-card-desc">
+                        신선한 채소와 과일, 통곡물, 저지방 단백질을 충분히 섭취하세요. 
+                        가공식품과 설탕이 많은 음식은 피하는 것이 좋습니다.
+                    </p>
+                </div>
+                
+                <div class="advice-card">
+                    <span class="advice-icon">🏃</span>
+                    <h3 class="advice-card-title">규칙적인 운동</h3>
+                    <p class="advice-card-desc">
+                        주 3-5회, 30분 이상의 유산소 운동과 근력 운동을 병행하세요. 
+                        일상에서 계단 이용하기 등 작은 활동도 도움이 됩니다.
+                    </p>
+                </div>
+                
+                <div class="advice-card">
+                    <span class="advice-icon">💧</span>
+                    <h3 class="advice-card-title">충분한 수분 섭취</h3>
+                    <p class="advice-card-desc">
+                        하루 8잔 이상의 물을 마시세요. 충분한 수분 섭취는 신진대사를 
+                        활발하게 하고 체중 관리에 도움이 됩니다.
+                    </p>
+                </div>
+                
+                <div class="advice-card">
+                    <span class="advice-icon">😴</span>
+                    <h3 class="advice-card-title">충분한 수면</h3>
+                    <p class="advice-card-desc">
+                        매일 7-8시간의 충분한 수면을 취하세요. 수면 부족은 
+                        호르몬 불균형을 일으켜 체중 증가의 원인이 될 수 있습니다.
+                    </p>
+                </div>
+                
+                <div class="advice-card">
+                    <span class="advice-icon">🧘</span>
+                    <h3 class="advice-card-title">스트레스 관리</h3>
+                    <p class="advice-card-desc">
+                        명상, 요가, 취미 활동 등으로 스트레스를 관리하세요. 
+                        과도한 스트레스는 과식의 원인이 될 수 있습니다.
+                    </p>
+                </div>
+                
+                <div class="advice-card">
+                    <span class="advice-icon">📊</span>
+                    <h3 class="advice-card-title">정기적인 체크</h3>
+                    <p class="advice-card-desc">
+                        정기적으로 체중과 BMI를 확인하고 기록하세요. 
+                        작은 변화도 빨리 파악하여 관리할 수 있습니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 푸터 -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>doha.kr</h3>
+                <p style="color: var(--gray-400); margin-top: 8px;">
+                    일상을 더 재미있게 만드는 공간<br>
+                    심리테스트와 실용도구의 만남
+                </p>
+                <div class="footer-social">
+                    <a href="mailto:contact@doha.kr" class="social-link" aria-label="이메일">📧</a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>서비스</h3>
+                <ul class="footer-links">
+                    <li><a href="/">홈</a></li>
+                    <li><a href="/tests/">심리테스트</a></li>
+                    <li><a href="/tools/">실용도구</a></li>
+                    <li><a href="/about/">사이트 소개</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>인기 콘텐츠</h3>
+                <ul class="footer-links">
+                    <li><a href="/tests/teto-egen/start.html">테토-에겐 테스트</a></li>
+                    <li><a href="/tests/mbti/">MBTI 테스트</a></li>
+                    <li><a href="/tools/text-counter.html">글자수 세기</a></li>
+                    <li><a href="/tools/bmi-calculator.html">BMI 계산기</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>고객지원</h3>
+                <ul class="footer-links">
+                    <li><a href="/contact/">문의하기</a></li>
+                    <li><a href="/faq/">자주 묻는 질문</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="footer-legal">
+                <a href="/privacy/">개인정보처리방침</a>
+                <a href="/terms/">이용약관</a>
+            </div>
+            <p>&copy; 2025 doha.kr. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <!-- External JavaScript -->
+    <script src="/js/main.js"></script>
+    
+    <!-- BMI Calculator JavaScript -->
+    <script>
+        function calculateBMI() {
+            // 입력값 가져오기
+            const height = parseFloat(document.getElementById('height').value);
+            const weight = parseFloat(document.getElementById('weight').value);
+            const age = parseInt(document.getElementById('age').value);
+            const gender = document.querySelector('input[name="gender"]:checked').value;
+            
+            // 유효성 검사
+            if (!height || !weight) {
+                alert('키와 몸무게를 모두 입력해주세요.');
+                return;
+            }
+            
+            if (height < 100 || height > 250) {
+                alert('키는 100cm에서 250cm 사이로 입력해주세요.');
+                return;
+            }
+            
+            if (weight < 20 || weight > 300) {
+                alert('몸무게는 20kg에서 300kg 사이로 입력해주세요.');
+                return;
+            }
+            
+            // BMI 계산
+            const heightInMeters = height / 100;
+            const bmi = weight / (heightInMeters * heightInMeters);
+            const roundedBMI = Math.round(bmi * 10) / 10;
+            
+            // 표준 체중 계산 (브로카 공식)
+            let standardWeight;
+            if (gender === 'male') {
+                standardWeight = (height - 100) * 0.9;
+            } else {
+                standardWeight = (height - 100) * 0.85;
+            }
+            const weightDifference = weight - standardWeight;
+            
+            // BMI 상태 판정
+            let status, statusColor, description;
+            if (bmi < 18.5) {
+                status = '저체중';
+                statusColor = '#3b82f6';
+                description = '체중이 정상 범위보다 낮습니다. 균형 잡힌 식사와 적절한 영양 섭취가 필요합니다.';
+            } else if (bmi < 23) {
+                status = '정상';
+                statusColor = '#10b981';
+                description = '건강한 체중을 유지하고 있습니다. 현재의 생활 습관을 꾸준히 유지하세요.';
+            } else if (bmi < 25) {
+                status = '과체중';
+                statusColor = '#f59e0b';
+                description = '정상 범위를 약간 초과했습니다. 식단 조절과 운동으로 관리가 필요합니다.';
+            } else if (bmi < 30) {
+                status = '비만';
+                statusColor = '#ef4444';
+                description = '건강에 주의가 필요합니다. 전문가와 상담하여 체중 관리 계획을 세우세요.';
+            } else {
+                status = '고도비만';
+                statusColor = '#991b1b';
+                description = '건강 위험이 높은 상태입니다. 의료 전문가의 도움을 받아 체중 관리를 시작하세요.';
+            }
+            
+            // 결과 표시
+            document.getElementById('bmiValue').textContent = roundedBMI;
+            document.getElementById('bmiValue').style.color = statusColor;
+            document.getElementById('bmiStatus').textContent = status;
+            document.getElementById('bmiStatus').style.color = statusColor;
+            document.getElementById('bmiDescription').textContent = description;
+            
+            document.getElementById('standardWeight').textContent = `${Math.round(standardWeight * 10) / 10}kg`;
+            document.getElementById('weightDiff').textContent = 
+                weightDifference > 0 ? `+${Math.round(weightDifference * 10) / 10}kg` : 
+                `${Math.round(weightDifference * 10) / 10}kg`;
+            document.getElementById('weightDiff').style.color = 
+                Math.abs(weightDifference) < 5 ? '#10b981' : '#ef4444';
+            
+            // 차트 포인터 위치 계산
+            let pointerPosition;
+            if (bmi < 18.5) {
+                pointerPosition = (bmi / 18.5) * 18.5;
+            } else if (bmi < 23) {
+                pointerPosition = 18.5 + ((bmi - 18.5) / 4.5) * 6.5;
+            } else if (bmi < 25) {
+                pointerPosition = 25 + ((bmi - 23) / 2) * 5;
+            } else if (bmi < 30) {
+                pointerPosition = 30 + ((bmi - 25) / 5) * 5;
+            } else {
+                pointerPosition = Math.min(35 + ((bmi - 30) / 10) * 65, 100);
+            }
+            
+            document.getElementById('chartPointer').style.left = `${pointerPosition}%`;
+            document.getElementById('chartValue').textContent = roundedBMI;
+            
+            // 결과 섹션 표시
+            document.getElementById('resultSection').classList.remove('hidden');
+            document.getElementById('bmiChart').classList.remove('hidden');
+            
+            // 스크롤 이동
+            document.getElementById('resultSection').scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'center' 
+            });
+        }
+        
+        // Enter 키로 계산하기
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputs = document.querySelectorAll('.input-field');
+            inputs.forEach(input => {
+                input.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        calculateBMI();
+                    }
+                });
+            });
+        });
+    </script>
+    
+    <!-- AdSense initialization -->
+    <script>
+        // 애드센스 광고 로드
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</body>
+</html>
