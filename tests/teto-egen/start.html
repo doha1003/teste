@@ -3,221 +3,241 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>테토-에겐 성격 유형 테스트 - doha.kr</title>
+    <title>테토-에겐 성격 유형 테스트</title>
     
-    <!-- Google AdSense -->
+    <!-- Google AdSense 헤드 태그 (사용자 게시자 ID 적용) -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
+    
+    <!-- 사이트 확인용 메타 태그 -->
     <meta name="google-adsense-account" content="ca-pub-7905640648499222">
+    
+    <!-- 카카오 JavaScript SDK -->
+    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js" integrity="sha384-DKYJZ8NLiK8MN4/C5P2dtSmLQ4KwPaoqAfyA/DfmEc1VDxu4yyC7wy6K1Hs90nka" crossorigin="anonymous"></script>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
+    
     <!-- External CSS -->
     <link rel="stylesheet" href="/css/styles.css">
     
     <!-- Favicon -->
     <link rel="icon" href="/images/placeholder-favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/images/logo.svg">
+    <link rel="manifest" href="/manifest.json">
     
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Quiz",
+        "name": "테토-에겐 성격 유형 테스트",
+        "description": "10가지 질문으로 테토형과 에겐형 중 당신의 성격 유형을 분석합니다",
+        "educationalLevel": "All",
+        "numberOfQuestions": 10,
+        "timeRequired": "PT5M",
+        "provider": {
+            "@type": "Organization",
+            "name": "doha.kr",
+            "url": "https://doha.kr"
+        },
+        "isAccessibleForFree": true,
+        "url": "https://doha.kr/tests/teto-egen/test.html"
+    }
+    </script>
     <style>
-        /* 테스트 전용 스타일 */
-        .test-container {
+        /* Page-specific styles */
+        /* CSS 변수 정의 - 전체 사이트 통일 */
+        /* 통일된 네비게이션 바 */
+        /* 모바일 메뉴 버튼 */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+        }
+        .mobile-menu-btn span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            margin: 4px 0;
+            transition: all 0.3s;
+        }
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .mobile-menu-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+        .container {
             max-width: 800px;
             margin: 40px auto;
             background: white;
             border-radius: 16px;
             overflow: hidden;
-            box-shadow: var(--shadow-lg);
         }
-        
-        .test-header {
-            background: var(--gradient-primary);
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             padding: 40px 30px;
             text-align: center;
         }
-        
-        .test-header h1 {
+        .header h1 {
             font-size: 2.5em;
             margin-bottom: 8px;
             font-weight: 600;
-            color: white;
+            letter-spacing: -0.025em;
         }
-        
-        .test-header p {
+        .header p {
             font-size: 1.2em;
             opacity: 0.9;
             font-weight: 300;
-            color: white;
         }
-        
-        .test-content {
+        .content {
             padding: 40px 30px;
         }
-        
-        /* 성별 선택 화면 */
-        .gender-selection {
+        /* 테스트 시작 전 안내 섹션 */
+        .intro-section {
             text-align: center;
-            padding: 40px 20px;
-        }
-        
-        .gender-title {
-            font-size: 2em;
-            margin-bottom: 16px;
-            color: var(--gray-900);
-            font-weight: 600;
-        }
-        
-        .gender-subtitle {
-            font-size: 1.1em;
-            color: var(--gray-600);
             margin-bottom: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-radius: 12px;
+        }
+        .intro-section h2 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: #2d3748;
+        }
+        .intro-section p {
+            margin-bottom: 20px;
+            font-size: 1.05em;
             line-height: 1.6;
+            color: #4a5568;
         }
-        
-        .gender-options {
-            display: flex;
-            gap: 24px;
-            justify-content: center;
-            margin-bottom: 40px;
+        .intro-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
         }
-        
-        .gender-option {
+        .intro-feature {
             background: white;
-            border: 2px solid var(--gray-200);
-            border-radius: 16px;
-            padding: 32px 24px;
-            cursor: pointer;
-            transition: all 0.3s;
-            min-width: 180px;
-            text-align: center;
-        }
-        
-        .gender-option:hover {
-            border-color: var(--primary-color);
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
-        }
-        
-        .gender-option.selected {
-            border-color: var(--primary-color);
-            background: rgba(99, 102, 241, 0.05);
-        }
-        
-        .gender-icon {
-            font-size: 4em;
-            margin-bottom: 16px;
-            display: block;
-        }
-        
-        .gender-label {
-            font-size: 1.3em;
-            font-weight: 600;
-            color: var(--gray-900);
-            margin-bottom: 8px;
-        }
-        
-        .gender-desc {
+            padding: 15px;
+            border-radius: 8px;
             font-size: 0.9em;
-            color: var(--gray-600);
+            font-weight: 500;
+            color: #2d3748;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-        
-        /* 테스트 진행 화면 */
+        .start-test-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 16px 48px;
+            font-size: 1.2em;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+        .start-test-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.3);
+        }
         .progress-container {
             margin-bottom: 40px;
         }
-        
         .progress-info {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 8px;
         }
-        
         .progress-text {
             font-size: 0.9em;
             font-weight: 500;
-            color: var(--gray-700);
+            color: #4a5568;
         }
-        
         .progress-bar {
             width: 100%;
-            height: 8px;
-            background: var(--gray-200);
-            border-radius: 4px;
+            height: 6px;
+            background: #e2e8f0;
+            border-radius: 3px;
             overflow: hidden;
         }
-        
         .progress {
             height: 100%;
-            background: var(--gradient-primary);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             transition: width 0.4s ease;
-            border-radius: 4px;
+            border-radius: 3px;
         }
-        
         .question-container {
             margin-bottom: 40px;
         }
-        
         .question {
             font-size: 1.4em;
             margin-bottom: 30px;
             font-weight: 600;
             line-height: 1.4;
-            color: var(--gray-900);
+            color: #2d3748;
         }
-        
         .options {
             display: flex;
             flex-direction: column;
             gap: 16px;
         }
-        
         .option {
-            border: 2px solid var(--gray-200);
-            border-radius: 12px;
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
             padding: 20px 24px;
             cursor: pointer;
             transition: all 0.2s ease;
             font-size: 1.05em;
             line-height: 1.5;
             position: relative;
-            background: white;
+            color: #2d3748;
         }
-        
         .option:hover {
-            border-color: var(--primary-color);
+            background: #edf2f7;
+            border-color: #667eea;
             transform: translateY(-1px);
-            box-shadow: var(--shadow-md);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
         }
-        
         .option.selected {
-            border-color: var(--primary-color);
-            background: rgba(99, 102, 241, 0.05);
+            background: linear-gradient(135deg, #ebf8ff 0%, #e6fffa 100%);
+            border-color: #667eea;
+            color: #2b6cb0;
         }
-        
         .option.selected::after {
             content: '✓';
             position: absolute;
             right: 20px;
             top: 50%;
             transform: translateY(-50%);
-            color: var(--primary-color);
             font-weight: bold;
             font-size: 1.2em;
+            color: #667eea;
         }
-        
         .navigation {
             display: flex;
             justify-content: space-between;
             margin-top: 40px;
         }
-        
         .btn {
-            padding: 14px 32px;
+            padding: 12px 32px;
             border: none;
-            border-radius: 8px;
+            border-radius: 6px;
             font-size: 1em;
             font-weight: 600;
             cursor: pointer;
@@ -225,185 +245,588 @@
             text-decoration: none;
             display: inline-block;
         }
-        
         .btn-primary {
-            background: var(--gradient-primary);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            box-shadow: var(--shadow-md);
         }
-        
         .btn-primary:hover {
             transform: translateY(-1px);
-            box-shadow: var(--shadow-lg);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
         }
-        
-        .btn-primary:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-        }
-        
         .btn-secondary {
-            background: white;
-            color: var(--gray-700);
-            border: 2px solid var(--gray-200);
+            background: #edf2f7;
+            color: #4a5568;
+            border: 2px solid #e2e8f0;
         }
-        
         .btn-secondary:hover {
-            border-color: var(--primary-color);
-            color: var(--primary-color);
+            background: #e2e8f0;
+            border-color: #cbd5e0;
         }
-        
-        /* 결과 화면 */
+        .btn-success {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            padding: 14px 36px;
+            font-size: 1.05em;
+        }
+        .btn-success:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(72, 187, 120, 0.3);
+        }
+        /* 결과 화면 스타일 - 대폭 강화 */
         .result-container {
             text-align: center;
             padding: 40px 30px;
         }
         
-        .result-card {
+        /* 수집형 카드 스타일 - 더욱 화려하게 */
+        .collection-card {
             border-radius: 20px;
-            padding: 40px;
+            padding: 40px 30px;
             margin: 30px auto;
             max-width: 500px;
-            background: white;
-            box-shadow: var(--shadow-xl);
-            border: 1px solid var(--gray-200);
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(145deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 6s ease infinite;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.25), 0 0 0 1px rgba(255,255,255,0.1);
+            transform: perspective(1000px) rotateY(0deg);
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         
-        .result-avatar {
-            width: 120px;
-            height: 120px;
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            25% { background-position: 100% 50%; }
+            50% { background-position: 100% 100%; }
+            75% { background-position: 0% 100%; }
+        }
+        
+        .collection-card:hover {
+            transform: perspective(1000px) rotateY(10deg) scale(1.05);
+            box-shadow: 0 35px 70px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.2);
+        }
+        
+        /* 홀로그램 반짝이는 효과 - 더욱 강화 */
+        .collection-card::before {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: -100%;
+            width: 300%;
+            height: 300%;
+            background: linear-gradient(45deg, 
+                transparent 30%, 
+                rgba(255,255,255,0.1) 35%,
+                rgba(255,255,255,0.6) 40%,
+                rgba(255,255,255,0.1) 45%,
+                transparent 50%);
+            transform: rotate(45deg);
+            animation: shine 4s infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes shine {
+            0% { transform: translateX(-150%) translateY(-150%) rotate(45deg); }
+            50% { transform: translateX(50%) translateY(50%) rotate(45deg); }
+            100% { transform: translateX(150%) translateY(150%) rotate(45deg); }
+        }
+        
+        /* 카드 테두리 반짝임 - 더욱 화려하게 */
+        .collection-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 20px;
+            padding: 4px;
+            background: linear-gradient(45deg, 
+                #ff6b6b, #4ecdc4, #45b7d1, #96c93d, #feca57, #ff9ff3, #54a0ff, #5f27cd, #ff6b6b);
+            background-size: 600% 600%;
+            animation: rainbow-border 3s linear infinite;
+            z-index: -1;
+        }
+        
+        @keyframes rainbow-border {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .card-inner {
+            background: rgba(255,255,255,0.95);
+            border-radius: 16px;
+            padding: 40px 30px;
+            position: relative;
+            z-index: 1;
+            backdrop-filter: blur(10px);
+        }
+        
+        .card-avatar {
+            width: 140px;
+            height: 140px;
             border-radius: 50%;
-            margin: 0 auto 20px;
+            margin: 0 auto 25px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 4em;
+            font-size: 5em;
+            background: linear-gradient(145deg, #667eea, #764ba2);
             color: white;
-            background: var(--gradient-primary);
-            box-shadow: var(--shadow-lg);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4), inset 0 2px 5px rgba(255,255,255,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card-avatar::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: avatarShine 3s infinite;
+        }
+        
+        @keyframes avatarShine {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            50% { transform: translateX(0%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
         }
         
         .result-type {
-            font-size: 2.2em;
+            font-size: 3em;
             font-weight: 700;
             margin-bottom: 15px;
-            background: var(--gradient-primary);
+            background: linear-gradient(45deg, #667eea, #764ba2, #f093fb, #f5576c);
+            background-size: 300% 300%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            animation: textGradient 4s ease infinite;
+            text-shadow: 0 0 30px rgba(102, 126, 234, 0.5);
+        }
+        
+        @keyframes textGradient {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
         
         .result-description {
+            font-size: 1.2em;
+            line-height: 1.6;
+            color: #2d3748;
+            margin-bottom: 25px;
+            padding: 20px;
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .card-rarity {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(45deg, #ffd700, #ffed4e, #ffd700);
+            background-size: 200% 200%;
+            animation: goldShine 2s ease infinite;
+            color: #2d3748;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 0.9em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 6px 20px rgba(255,215,0,0.4);
+            z-index: 10;
+        }
+        
+        @keyframes goldShine {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .card-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        .stat-item {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid #dee2e6;
+            transition: all 0.3s ease;
+        }
+        
+        .stat-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        
+        .stat-label {
+            font-size: 0.85em;
+            color: #6c757d;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        
+        .stat-value {
+            font-weight: bold;
+            color: #495057;
+            font-size: 1.1em;
+        }
+        
+        .traits-section {
+            margin: 60px 0;
+            padding: 30px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 16px;
+        }
+        
+        .section-title {
+            font-size: 2em;
+            margin-bottom: 30px;
+            font-weight: 600;
+            text-align: center;
+            color: #2d3748;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+        
+        .result-traits {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+        
+        .trait-card {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .trait-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+        }
+        
+        .trait-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+        
+        .trait-title {
+            font-weight: 600;
+            margin-bottom: 12px;
+            font-size: 1.2em;
+            color: #2d3748;
+        }
+        
+        .trait-desc {
+            font-size: 1em;
+            line-height: 1.6;
+            color: #4a5568;
+        }
+        
+        .compatibility {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            margin: 40px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .compatibility::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.5); opacity: 0; }
+        }
+        
+        .compatibility h3 {
+            font-size: 1.6em;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .compatibility p {
             font-size: 1.1em;
             line-height: 1.6;
-            color: var(--gray-700);
-            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+        
+        /* 상세 분석 버튼 섹션 */
+        .detail-section {
+            margin: 50px 0;
+            text-align: center;
+            padding: 40px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 16px;
+            color: white;
+        }
+        
+        .detail-section h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .detail-section p {
+            margin-bottom: 25px;
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        /* 카카오톡 공유 버튼 스타일 - 강화 */
+        .share-section {
+            text-align: center;
+            margin: 40px 0;
+            padding: 30px;
+            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+            border-radius: 16px;
+            border: 2px solid #e9ecef;
+        }
+        
+        .share-title {
+            font-size: 1.4em;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #2d3748;
+        }
+        
+        .kakao-share-btn {
+            background: linear-gradient(135deg, #FEE500 0%, #FFD700 100%);
+            color: #000000;
+            border: none;
+            border-radius: 12px;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            margin: 0 10px;
+            box-shadow: 0 4px 15px rgba(254, 229, 0, 0.3);
+        }
+        
+        .kakao-share-btn:hover {
+            background: linear-gradient(135deg, #F5DC00 0%, #FFA500 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(254, 229, 0, 0.4);
+        }
+        
+        .kakao-share-btn:active {
+            transform: translateY(-1px);
+        }
+        
+        .kakao-icon {
+            width: 24px;
+            height: 24px;
+            background: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%23000" d="M12 2C6.48 2 2 5.58 2 10c0 3.17 2.11 5.95 5.35 7.36l-.89 3.26c-.06.22.2.4.39.27L11.65 18c.12 0 .23.01.35.01 5.52 0 10-3.58 10-8s-4.48-8-10-8z"/></svg>') no-repeat center;
+            background-size: contain;
+        }
+        
+        .restart-btn {
+            margin-top: 40px;
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            padding: 16px 45px;
+            font-size: 1.2em;
         }
         
         .hidden {
             display: none;
         }
         
-        /* 광고 */
+        /* 애드센스 광고 스타일 */
         .ad-container {
             text-align: center;
             margin: 40px 0;
-            padding: 20px;
-            background: var(--gray-50);
-            border-radius: 8px;
+            padding: 25px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 12px;
+            border: 1px solid #dee2e6;
         }
         
         .ad-label {
-            font-size: 0.8em;
-            color: var(--gray-500);
-            margin-bottom: 10px;
+            font-size: 0.85em;
+            margin-bottom: 15px;
+            color: #6c757d;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+        
+        .header-ad {
+            margin: 25px 0;
+        }
+        
+        .result-ad {
+            margin: 40px 0;
+            background: white;
         }
         
         /* 반응형 */
         @media (max-width: 768px) {
-            .test-container {
+            .container {
                 margin: 20px;
                 border-radius: 12px;
             }
-            
-            .test-header {
+            .header {
                 padding: 30px 20px;
             }
-            
-            .test-header h1 {
+            .header h1 {
                 font-size: 2em;
             }
-            
-            .test-content {
+            .mobile-menu-btn {
+                display: block;
+            }
+            .content {
                 padding: 30px 20px;
             }
-            
-            .gender-options {
-                flex-direction: column;
-                align-items: center;
+            .intro-features {
+                grid-template-columns: 1fr;
             }
-            
-            .gender-option {
-                width: 100%;
-                max-width: 300px;
-            }
-            
-            .result-card {
-                padding: 30px 20px;
+            .collection-card {
                 margin: 20px 0;
+                padding: 30px 20px;
+                max-width: 100%;
             }
-            
+            .collection-card:hover {
+                transform: perspective(1000px) rotateY(3deg) scale(1.02);
+            }
             .result-type {
-                font-size: 1.8em;
+                font-size: 2.2em;
             }
-            
-            .result-avatar {
+            .card-inner {
+                padding: 30px 20px;
+            }
+            .card-avatar {
                 width: 100px;
                 height: 100px;
-                font-size: 3em;
+                font-size: 3.5em;
+                margin-bottom: 20px;
+            }
+            .card-rarity {
+                top: 15px;
+                right: 15px;
+                padding: 8px 16px;
+                font-size: 0.8em;
+            }
+            .share-section {
+                margin: 25px 0;
+                padding: 20px;
+            }
+            .share-title {
+                font-size: 1.2em;
+                margin-bottom: 15px;
+            }
+            .kakao-share-btn {
+                padding: 12px 25px;
+                font-size: 1em;
+                width: 100%;
+                max-width: 280px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- 네비게이션 -->
-    <div id="navbar-placeholder"></div>
+    <!-- 통일된 네비게이션 -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="/" class="logo">doha.kr</a>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="/" class="nav-link">홈</a></li>
+                <li><a href="/tests/" class="nav-link">심리테스트</a></li>
+                <li><a href="/tools/" class="nav-link">실용도구</a></li>
+                <li><a href="/contact/" class="nav-link">문의</a></li>
+                <li><a href="/about/" class="nav-link">소개</a></li>
+            </ul>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
 
-    <div class="test-container">
-        <div class="test-header">
+    <div class="container">
+        <div class="header">
             <h1>테토-에겐 성격 유형 분석</h1>
-            <p>10가지 질문으로 알아보는 나의 성격 유형</p>
+            <p>과학적 접근법으로 알아보는 나의 성격 유형</p>
         </div>
 
-        <div class="test-content">
-            <!-- 성별 선택 화면 -->
-            <div id="gender-screen" class="gender-selection">
-                <h2 class="gender-title">성별을 선택해주세요</h2>
-                <p class="gender-subtitle">
-                    정확한 분석을 위해 성별을 선택해주세요.<br>
-                    성별에 따른 미묘한 차이를 반영하여 더욱 정교한 결과를 제공합니다.
+        <div class="content">
+            <!-- 헤더 광고 -->
+            <div class="ad-container header-ad">
+                <div class="ad-label">광고</div>
+                <!-- 배너 광고 (728x90 또는 320x50) -->
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-7905640648499222"
+                     data-ad-slot="1234567890"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+            </div>
+
+            <!-- 테스트 시작 전 안내 -->
+            <div id="intro-screen" class="intro-section">
+                <h2>당신의 성격 유형을 발견하세요!</h2>
+                <p>
+                    10개의 간단한 질문으로 당신만의 고유한 성격 유형을 분석합니다. 
+                    테토(Teto)와 에겐(Egen) 두 가지 성향을 바탕으로 총 4가지 유형으로 분류하여
+                    상세한 분석 결과를 제공합니다.
                 </p>
                 
-                <div class="gender-options">
-                    <div class="gender-option" onclick="selectGender('M')">
-                        <span class="gender-icon">👨</span>
-                        <div class="gender-label">남성</div>
-                        <div class="gender-desc">Male</div>
-                    </div>
-                    
-                    <div class="gender-option" onclick="selectGender('F')">
-                        <span class="gender-icon">👩</span>
-                        <div class="gender-label">여성</div>
-                        <div class="gender-desc">Female</div>
-                    </div>
+                <div class="intro-features">
+                    <div class="intro-feature">🎯 정확한 분석</div>
+                    <div class="intro-feature">⚡ 빠른 테스트</div>
+                    <div class="intro-feature">📊 상세한 결과</div>
+                    <div class="intro-feature">💡 실용적 조언</div>
                 </div>
                 
-                <button class="btn btn-primary" id="start-test-btn" onclick="startTest()" disabled>
-                    테스트 시작하기
-                </button>
+                <button class="start-test-btn" onclick="startTest()">테스트 시작하기</button>
             </div>
 
             <!-- 테스트 화면 -->
@@ -431,274 +854,126 @@
 
             <!-- 결과 화면 -->
             <div id="result-screen" class="result-container hidden">
-                <div class="result-card">
-                    <div class="result-avatar" id="result-avatar">🦋</div>
-                    <div class="result-type" id="result-type"></div>
-                    <div class="result-description" id="result-description"></div>
+                <!-- 수집형 카드로 변경된 결과 표시 -->
+                <div class="collection-card" id="result-card">
+                    <div class="card-rarity" id="card-rarity">LEGENDARY</div>
+                    <div class="card-inner">
+                        <div class="card-avatar" id="card-avatar">🦋</div>
+                        <div class="result-type" id="result-type"></div>
+                        <div class="result-description" id="result-description"></div>
+                        <div class="card-stats" id="card-stats"></div>
+                    </div>
                 </div>
                 
-                <!-- 광고 -->
-                <div class="ad-container">
+                <!-- 결과 중간 광고 -->
+                <div class="ad-container result-ad">
                     <div class="ad-label">광고</div>
+                    <!-- 정사각형 광고 (300x250) -->
                     <ins class="adsbygoogle"
                          style="display:block"
                          data-ad-client="ca-pub-7905640648499222"
-                         data-ad-slot="1234567890"
+                         data-ad-slot="2345678901"
                          data-ad-format="auto"
                          data-full-width-responsive="true"></ins>
                 </div>
-                
-                <div class="navigation">
-                    <a href="/tests/teto-egen/" class="btn btn-secondary">상세 분석 보기</a>
-                    <button class="btn btn-primary" onclick="restartTest()">다시 테스트하기</button>
+
+                <div class="traits-section">
+                    <h2 class="section-title">주요 성격 특성</h2>
+                    <div class="result-traits" id="result-traits"></div>
                 </div>
+                
+                <div class="compatibility" id="compatibility"></div>
+
+                <!-- 상세 분석 보기 섹션 -->
+                <div class="detail-section">
+                    <h3>더 자세한 분석이 궁금하신가요?</h3>
+                    <p>당신의 성격 유형에 대한 심층 분석을 확인해보세요. 직업, 연애, 인간관계, 스트레스 대처법 등 다양한 측면에서의 상세한 가이드를 제공합니다.</p>
+                    <a href="/tests/teto-egen/" class="btn btn-success">상세 분석 보기</a>
+                </div>
+                
+                <!-- 하단 광고 -->
+                <div class="ad-container">
+                    <div class="ad-label">광고</div>
+                    <!-- 배너 광고 (728x90 또는 320x50) -->
+                    <ins class="adsbygoogle"
+                         style="display:block"
+                         data-ad-client="ca-pub-7905640648499222"
+                         data-ad-slot="3456789012"
+                         data-ad-format="auto"
+                         data-full-width-responsive="true"></ins>
+                </div>
+
+                <!-- 카카오톡 공유하기 섹션 -->
+                <div class="share-section">
+                    <div class="share-title">내 성격 유형을 친구들과 공유해보세요!</div>
+                    <button class="kakao-share-btn" onclick="shareKakao()">
+                        <span class="kakao-icon"></span>
+                        카카오톡으로 공유하기
+                    </button>
+                </div>
+                
+                <button class="btn btn-primary restart-btn" onclick="restartTest()">새로운 테스트 시작</button>
             </div>
         </div>
     </div>
 
-    <!-- 푸터 -->
-    <div id="footer-placeholder"></div>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>doha.kr</h3>
+                <p style="color: var(--gray-400); margin-top: 8px;">
+                    일상을 더 재미있게 만드는 공간<br>
+                    심리테스트와 실용도구의 만남
+                </p>
+                <div class="footer-social">
+                    <a href="mailto:contact@doha.kr" class="social-link" aria-label="이메일">📧</a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>서비스</h3>
+                <ul class="footer-links">
+                    <li><a href="/tests/">심리테스트</a></li>
+                    <li><a href="/tools/">실용도구</a></li>
+                    <li><a href="/community/">커뮤니티 (준비중)</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>인기 콘텐츠</h3>
+                <ul class="footer-links">
+                    <li><a href="/tests/teto-egen/">테토-에겐 테스트</a></li>
+                    <li><a href="/tests/mbti/">MBTI 검사</a></li>
+                    <li><a href="/tools/text-counter.html">글자수 세기</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>고객지원</h3>
+                <ul class="footer-links">
+                    <li><a href="/about/">사이트 소개</a></li>
+                    <li><a href="/contact/">문의하기</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="footer-legal">
+                <a href="/privacy/">개인정보처리방침</a>
+                <a href="/terms/">이용약관</a>
+            </div>
+            <p>&copy; 2025 doha.kr. All rights reserved.</p>
+        </div>
+    </footer>
 
     <!-- External JavaScript -->
     <script src="/js/main.js"></script>
-    
-    <!-- 테스트 로직 -->
-    <script>
-        // 테스트 변수
-        let selectedGender = '';
-        let currentQuestion = 0;
-        let answers = [];
-
-        // 테스트 질문
-        const questions = [
-            {
-                question: "주말에 친구들과의 약속이 취소되었을 때 당신의 반응은?",
-                options: [
-                    { text: "좋아! 혼자만의 시간을 가질 수 있겠네", type: "egen" },
-                    { text: "아쉽긴 하지만 다른 친구들에게 연락해서 새로운 계획을 세운다", type: "teto" }
-                ]
-            },
-            {
-                question: "새로운 프로젝트를 시작할 때 당신의 접근 방식은?",
-                options: [
-                    { text: "꼼꼼히 계획을 세우고 단계별로 진행한다", type: "egen" },
-                    { text: "일단 시작하고 진행하면서 조정한다", type: "teto" }
-                ]
-            },
-            {
-                question: "파티에서 당신은 주로?",
-                options: [
-                    { text: "친한 몇 명과 깊은 대화를 나눈다", type: "egen" },
-                    { text: "여러 사람들과 어울리며 분위기를 이끈다", type: "teto" }
-                ]
-            },
-            {
-                question: "문제가 생겼을 때 당신의 첫 번째 반응은?",
-                options: [
-                    { text: "혼자 차근차근 생각해본다", type: "egen" },
-                    { text: "주변 사람들과 의논한다", type: "teto" }
-                ]
-            },
-            {
-                question: "여행을 계획할 때 당신은?",
-                options: [
-                    { text: "세세한 일정을 미리 짜놓는다", type: "egen" },
-                    { text: "대략적인 틀만 정하고 즉흥적으로 진행한다", type: "teto" }
-                ]
-            },
-            {
-                question: "스트레스를 받을 때 당신의 해소법은?",
-                options: [
-                    { text: "혼자만의 공간에서 충분한 휴식을 취한다", type: "egen" },
-                    { text: "친구들과 만나서 이야기하거나 활동한다", type: "teto" }
-                ]
-            },
-            {
-                question: "새로운 사람들과의 만남에서 당신은?",
-                options: [
-                    { text: "상대방이 먼저 말을 걸어주길 기다린다", type: "egen" },
-                    { text: "적극적으로 먼저 대화를 시작한다", type: "teto" }
-                ]
-            },
-            {
-                question: "중요한 결정을 내릴 때 당신은?",
-                options: [
-                    { text: "충분히 생각하고 신중하게 결정한다", type: "egen" },
-                    { text: "직감을 믿고 빠르게 결정한다", type: "teto" }
-                ]
-            },
-            {
-                question: "학습이나 업무 스타일은?",
-                options: [
-                    { text: "조용한 환경에서 혼자 집중하는 것을 선호한다", type: "egen" },
-                    { text: "팀원들과 함께 토론하며 진행하는 것을 선호한다", type: "teto" }
-                ]
-            },
-            {
-                question: "에너지를 충전하는 방법은?",
-                options: [
-                    { text: "혼자만의 시간을 통해 내적 평화를 찾는다", type: "egen" },
-                    { text: "다양한 사람들과의 만남을 통해 활력을 얻는다", type: "teto" }
-                ]
-            }
-        ];
-
-        // 성별 선택
-        function selectGender(gender) {
-            selectedGender = gender;
-            
-            // 모든 옵션에서 selected 클래스 제거
-            document.querySelectorAll('.gender-option').forEach(option => {
-                option.classList.remove('selected');
-            });
-            
-            // 선택된 옵션에 selected 클래스 추가
-            event.target.closest('.gender-option').classList.add('selected');
-            
-            // 시작 버튼 활성화
-            document.getElementById('start-test-btn').disabled = false;
-        }
-
-        // 테스트 시작
-        function startTest() {
-            if (!selectedGender) {
-                alert('성별을 선택해주세요.');
-                return;
-            }
-            
-            document.getElementById('gender-screen').classList.add('hidden');
-            document.getElementById('test-screen').classList.remove('hidden');
-            showQuestion();
-        }
-
-        // 질문 표시
-        function showQuestion() {
-            if (currentQuestion < questions.length) {
-                const q = questions[currentQuestion];
-                document.getElementById('question').textContent = q.question;
-                document.getElementById('progress-text').textContent = `질문 ${currentQuestion + 1} / ${questions.length}`;
-                document.getElementById('progress-percent').textContent = `${Math.round(((currentQuestion + 1) / questions.length) * 100)}%`;
-                document.getElementById('progress').style.width = `${((currentQuestion + 1) / questions.length) * 100}%`;
-
-                const optionsContainer = document.getElementById('options');
-                optionsContainer.innerHTML = '';
-
-                q.options.forEach((option, index) => {
-                    const optionDiv = document.createElement('div');
-                    optionDiv.className = 'option';
-                    optionDiv.textContent = option.text;
-                    optionDiv.onclick = () => selectOption(index);
-                    optionsContainer.appendChild(optionDiv);
-                });
-
-                document.getElementById('prev-btn').style.display = currentQuestion > 0 ? 'block' : 'none';
-                document.getElementById('next-btn').style.display = 'none';
-            }
-        }
-
-        // 옵션 선택
-        function selectOption(optionIndex) {
-            document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
-            document.querySelectorAll('.option')[optionIndex].classList.add('selected');
-
-            answers[currentQuestion] = questions[currentQuestion].options[optionIndex];
-            document.getElementById('next-btn').style.display = 'block';
-        }
-
-        // 다음 질문
-        function nextQuestion() {
-            if (answers[currentQuestion]) {
-                currentQuestion++;
-                if (currentQuestion >= questions.length) {
-                    showResult();
-                } else {
-                    showQuestion();
-                }
-            }
-        }
-
-        // 이전 질문
-        function previousQuestion() {
-            if (currentQuestion > 0) {
-                currentQuestion--;
-                showQuestion();
-                
-                if (answers[currentQuestion]) {
-                    const prevAnswerIndex = questions[currentQuestion].options.indexOf(answers[currentQuestion]);
-                    if (prevAnswerIndex !== -1) {
-                        document.querySelectorAll('.option')[prevAnswerIndex].classList.add('selected');
-                        document.getElementById('next-btn').style.display = 'block';
-                    }
-                }
-            }
-        }
-
-        // 결과 표시
-        function showResult() {
-            let tetoScore = 0;
-            let egenScore = 0;
-
-            answers.forEach(answer => {
-                if (answer.type === 'teto') {
-                    tetoScore++;
-                } else {
-                    egenScore++;
-                }
-            });
-
-            let resultType, resultEmoji, resultDescription;
-
-            if (tetoScore > egenScore) {
-                if (selectedGender === 'M') {
-                    resultType = "테토남 (Teto Male)";
-                    resultEmoji = "💪";
-                    resultDescription = "타고난 리더형으로 목표 지향적이고 추진력이 강합니다. 논리적 사고와 빠른 결단력으로 조직을 이끌어나가는 능력이 뛰어납니다.";
-                } else {
-                    resultType = "테토녀 (Teto Female)";
-                    resultEmoji = "🔥";
-                    resultDescription = "자신감과 독립성을 겸비한 현대적 여성상입니다. 열정적이고 도전적이며, 자신의 의견을 당당하게 표현합니다.";
-                }
-            } else {
-                if (selectedGender === 'M') {
-                    resultType = "에겐남 (Egen Male)";
-                    resultEmoji = "🌸";
-                    resultDescription = "섬세하고 공감 능력이 뛰어난 신사입니다. 타인을 배려하고 조화를 중시하며, 안정적이고 신뢰할 수 있는 파트너입니다.";
-                } else {
-                    resultType = "에겐녀 (Egen Female)";
-                    resultEmoji = "🦋";
-                    resultDescription = "따뜻한 감성과 깊은 직관력을 지닌 여성입니다. 타인과의 정서적 교감을 중시하며, 조화와 평화를 사랑합니다.";
-                }
-            }
-
-            document.getElementById('test-screen').classList.add('hidden');
-            document.getElementById('result-screen').classList.remove('hidden');
-            document.getElementById('result-avatar').textContent = resultEmoji;
-            document.getElementById('result-type').textContent = resultType;
-            document.getElementById('result-description').textContent = resultDescription;
-
-            // 광고 로드
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        }
-
-        // 테스트 재시작
-        function restartTest() {
-            selectedGender = '';
-            currentQuestion = 0;
-            answers = [];
-            
-            document.getElementById('result-screen').classList.add('hidden');
-            document.getElementById('gender-screen').classList.remove('hidden');
-            
-            // 성별 선택 초기화
-            document.querySelectorAll('.gender-option').forEach(option => {
-                option.classList.remove('selected');
-            });
-            document.getElementById('start-test-btn').disabled = true;
-        }
-    </script>
+    <script src="test.js"></script>
     
     <!-- AdSense initialization -->
     <script>
+        // 애드센스 광고 로드
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </body>
