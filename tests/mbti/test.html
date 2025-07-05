@@ -419,6 +419,10 @@
             box-shadow: var(--shadow-md);
         }
         
+        .hidden {
+            display: none;
+        }
+        
         /* 반응형 */
         @media (max-width: 768px) {
             .test-container {
@@ -724,6 +728,9 @@
 
     <!-- External JavaScript -->
     <script src="/js/main.js"></script>
+    
+    <!-- 카카오 JavaScript SDK -->
+    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js" integrity="sha384-DKYJZ8NLiK8MN4/C5P2dtSmLQ4KwPaoqAfyA/DfmEc1VDxu4yyC7wy6K1Hs90nka" crossorigin="anonymous"></script>
     
     <!-- MBTI 테스트 로직 -->
     <script>
@@ -1643,7 +1650,9 @@
         };
 
         // 카카오 SDK 초기화
-        Kakao.init('8b5c6e8f97ec3d51a6f784b8b4b5ed99');
+        if (typeof Kakao !== 'undefined') {
+            Kakao.init('8b5c6e8f97ec3d51a6f784b8b4b5ed99');
+        }
 
         // DOM 요소들
         const testScreen = document.getElementById('test-screen');
@@ -1690,7 +1699,7 @@
             // 새로운 선택 표시
             document.querySelectorAll('.option')[optionIndex].classList.add('selected');
             
-            // 답변 저장
+            // 답변 저장 (단순한 인덱스로)
             answers[currentQuestion] = optionIndex;
             
             // 다음 버튼 활성화
@@ -1874,8 +1883,9 @@
 
         // 카카오톡 공유하기
         function shareKakao() {
-            if (!Kakao.isInitialized()) {
-                Kakao.init('8b5c6e8f97ec3d51a6f784b8b4b5ed99');
+            if (typeof Kakao === 'undefined' || !Kakao.isInitialized()) {
+                alert('카카오톡 공유 기능을 사용할 수 없습니다.');
+                return;
             }
 
             const resultType = document.getElementById('result-type').textContent;
