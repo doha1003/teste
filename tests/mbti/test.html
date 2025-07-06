@@ -1,1 +1,792 @@
-$(cat /tmp/mbti_fixed.html)
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MBTI 성격유형 검사 - 16가지 성격 유형 테스트 | doha.kr</title>
+    <meta name="description" content="24개의 심층적인 문항으로 정확하게 분석하는 MBTI 성격유형 검사. 16가지 성격 유형 중 당신의 유형을 찾아보세요.">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="MBTI 성격유형 검사 - 나는 어떤 유형일까?">
+    <meta property="og:description" content="24개의 심층적인 문항으로 정확하게 분석하는 MBTI 성격유형 검사">
+    <meta property="og:image" content="https://doha.kr/images/mbti-og.png">
+    <meta property="og:url" content="https://doha.kr/tests/mbti/test.html">
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" href="/css/styles.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/images/placeholder-favicon.svg" type="image/svg+xml">
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
+    
+    <!-- Kakao JavaScript SDK -->
+    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js" integrity="sha384-DKYJZ8NLiK8MN4/C5P2dtSmLQ4KwPaoqAfyA/DfmEc1VDxu4yyC7wy6K1Hs90nka" crossorigin="anonymous"></script>
+    
+    <style>
+        /* MBTI 테스트 전용 스타일 */
+        .progress-container {
+            margin-bottom: var(--space-10);
+        }
+        
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-2);
+        }
+        
+        .progress-text {
+            font-size: 0.9375rem;
+            font-weight: var(--font-medium);
+            color: var(--gray-700);
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--gray-200);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background: var(--gradient-brand);
+            transition: width var(--duration-500) var(--ease-out);
+            border-radius: var(--radius-lg);
+        }
+        
+        .question-container {
+            margin-bottom: var(--space-10);
+        }
+        
+        .question {
+            font-size: 1.375rem;
+            margin-bottom: var(--space-8);
+            font-weight: var(--font-semibold);
+            line-height: var(--leading-normal);
+            color: var(--gray-800);
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-4);
+        }
+        
+        .option {
+            background: var(--gray-50);
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-xl);
+            padding: var(--space-5) var(--space-6);
+            cursor: pointer;
+            transition: all var(--duration-200) var(--ease-out);
+            font-size: 1.0625rem;
+            line-height: var(--leading-relaxed);
+            position: relative;
+            color: var(--gray-700);
+        }
+        
+        .option:hover {
+            transform: translateY(-1px);
+            border-color: var(--primary-500);
+            background: var(--gray-100);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .option.selected {
+            background: #e0f2fe;
+            border-color: #0284c7;
+            color: #0c4a6e;
+        }
+        
+        .option.selected::after {
+            content: '✓';
+            position: absolute;
+            right: var(--space-5);
+            top: 50%;
+            transform: translateY(-50%);
+            font-weight: var(--font-bold);
+            font-size: 1.25rem;
+            color: #0284c7;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: var(--space-10);
+        }
+        
+        .btn {
+            padding: var(--space-3) var(--space-8);
+            border: none;
+            border-radius: var(--radius-xl);
+            font-size: 1rem;
+            font-weight: var(--font-semibold);
+            cursor: pointer;
+            transition: all var(--duration-200) var(--ease-out);
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: var(--gradient-brand);
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .btn-secondary {
+            background: var(--gray-100);
+            color: var(--gray-700);
+            border: 1px solid var(--gray-300);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--gray-200);
+            transform: translateY(-1px);
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        /* 결과 화면 스타일 */
+        .result-container {
+            text-align: center;
+            padding: var(--space-12) var(--space-8);
+        }
+        
+        .result-card {
+            background: white;
+            border-radius: var(--radius-3xl);
+            padding: var(--space-10);
+            margin: var(--space-8) auto;
+            max-width: 600px;
+            box-shadow: var(--shadow-2xl);
+            text-align: center;
+        }
+        
+        .result-type {
+            font-size: 3rem;
+            font-weight: var(--font-black);
+            margin-bottom: var(--space-4);
+            background: var(--gradient-brand);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .result-description {
+            font-size: 1.25rem;
+            line-height: var(--leading-relaxed);
+            color: var(--gray-700);
+            margin-bottom: var(--space-8);
+        }
+        
+        .result-traits {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-5);
+            margin: var(--space-8) 0;
+        }
+        
+        .trait-card {
+            background: var(--gray-50);
+            padding: var(--space-6);
+            border-radius: var(--radius-xl);
+            text-align: left;
+        }
+        
+        .trait-title {
+            font-weight: var(--font-semibold);
+            margin-bottom: var(--space-2);
+            font-size: 1.125rem;
+            color: var(--gray-800);
+        }
+        
+        .trait-desc {
+            font-size: 0.9375rem;
+            line-height: var(--leading-relaxed);
+            color: var(--gray-600);
+        }
+        
+        .restart-btn {
+            margin-top: var(--space-10);
+            padding: var(--space-4) var(--space-10);
+            font-size: 1.125rem;
+        }
+        
+        /* 카카오 공유 버튼 */
+        .share-container {
+            margin: var(--space-8) 0;
+            text-align: center;
+        }
+        
+        .share-title {
+            font-size: 1.125rem;
+            font-weight: var(--font-semibold);
+            margin-bottom: var(--space-4);
+        }
+        
+        .kakao-share-btn {
+            background: #FEE500;
+            color: #000000;
+            border: none;
+            border-radius: var(--radius-xl);
+            padding: var(--space-3) var(--space-6);
+            font-size: 1rem;
+            font-weight: var(--font-semibold);
+            cursor: pointer;
+            transition: all var(--duration-200) var(--ease-out);
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            text-decoration: none;
+            margin: 0 var(--space-3);
+        }
+        
+        .kakao-share-btn:hover {
+            background: #F5DC00;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(254, 229, 0, 0.4);
+        }
+        
+        .copy-btn {
+            background: var(--gray-600);
+            color: white;
+        }
+        
+        .copy-btn:hover {
+            background: var(--gray-700);
+        }
+        
+        /* 반응형 디자인 */
+        @media (max-width: 768px) {
+            .test-container { 
+                margin: var(--space-4); 
+            }
+            .test-header { 
+                padding: var(--space-8) var(--space-6); 
+            }
+            .test-content { 
+                padding: var(--space-8) var(--space-6); 
+            }
+            .question { 
+                font-size: 1.25rem; 
+            }
+            .option { 
+                padding: var(--space-4) var(--space-5); 
+            }
+            .result-traits { 
+                grid-template-columns: 1fr; 
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 네비게이션 -->
+    <div id="navbar-placeholder"></div>
+    
+    <div class="test-container">
+        <div class="test-header">
+            <h1>MBTI 성격유형 검사</h1>
+            <p>24개 문항으로 알아보는 나의 성격 유형</p>
+        </div>
+        
+        <div class="test-content">
+            <!-- 테스트 시작 화면 -->
+            <div id="intro-screen" class="test-info">
+                <h2>MBTI 성격유형을 알아보세요!</h2>
+                <p>
+                    24개의 간단한 질문을 통해 당신의 MBTI 성격유형을 분석해드립니다.<br>
+                    정확한 결과를 위해 솔직하게 답변해주세요.
+                </p>
+                <div style="text-align: center;">
+                    <button class="test-btn" onclick="startTest()">
+                        테스트 시작하기
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 테스트 진행 화면 -->
+            <div id="test-screen" class="hidden">
+                <div class="progress-container">
+                    <div class="progress-info">
+                        <span class="progress-text" id="progress-text">질문 0 / 24</span>
+                        <span class="progress-text" id="progress-percent">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress" id="progress"></div>
+                    </div>
+                </div>
+                
+                <div class="question-container">
+                    <div class="question" id="question"></div>
+                    <div class="options" id="options"></div>
+                </div>
+                
+                <div class="navigation">
+                    <button class="btn btn-secondary" id="prev-btn" onclick="previousQuestion()">이전</button>
+                    <button class="btn btn-primary" id="next-btn" onclick="nextQuestion()">다음</button>
+                </div>
+            </div>
+            
+            <!-- 결과 화면 -->
+            <div id="result-screen" class="result-container hidden">
+                <div class="result-card">
+                    <div class="result-type" id="result-type">INFP</div>
+                    <div class="result-description" id="result-description">
+                        중재자형 - 이상주의적이고 창의적인 성격
+                    </div>
+                    
+                    <div class="result-traits" id="result-traits">
+                        <!-- 동적으로 생성 -->
+                    </div>
+                    
+                    <!-- 카카오톡 공유하기 섹션 -->
+                    <div class="share-container">
+                        <div class="share-title">내 성격 유형을 친구들과 공유해보세요!</div>
+                        <button class="kakao-share-btn" onclick="shareKakao()">
+                            💬 카카오톡으로 공유하기
+                        </button>
+                        <button class="kakao-share-btn copy-btn" onclick="copyLink()">
+                            📋 링크 복사하기
+                        </button>
+                    </div>
+                    
+                    <button class="btn btn-primary restart-btn" onclick="restartTest()">
+                        다시 테스트하기
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 푸터 -->
+    <div id="footer-placeholder"></div>
+    
+    <!-- External JavaScript -->
+    <script src="/js/main.js"></script>
+    
+    <script>
+        // 카카오 SDK 초기화
+        if (typeof Kakao !== 'undefined') {
+            Kakao.init('8b5c6e8f97ec3d51a6f784b8b4b5ed99');
+        }
+        
+        // MBTI 테스트 질문들
+        const mbtiQuestions = [
+            {
+                question: "새로운 사람들과의 모임에서 나는:",
+                options: [
+                    { text: "먼저 다가가서 대화를 시작한다", dimension: "E" },
+                    { text: "다른 사람이 먼저 말을 걸어올 때까지 기다린다", dimension: "I" }
+                ]
+            },
+            {
+                question: "계획을 세울 때 나는:",
+                options: [
+                    { text: "구체적이고 실현 가능한 계획을 선호한다", dimension: "S" },
+                    { text: "큰 그림과 가능성에 초점을 맞춘다", dimension: "N" }
+                ]
+            },
+            {
+                question: "결정을 내릴 때 나는:",
+                options: [
+                    { text: "논리적 분석과 객관적 사실을 중시한다", dimension: "T" },
+                    { text: "감정과 가치관을 더 중요하게 생각한다", dimension: "F" }
+                ]
+            },
+            {
+                question: "일상생활에서 나는:",
+                options: [
+                    { text: "계획된 일정을 선호하고 체계적이다", dimension: "J" },
+                    { text: "유연하고 즉흥적인 것을 선호한다", dimension: "P" }
+                ]
+            },
+            {
+                question: "에너지를 얻는 방식:",
+                options: [
+                    { text: "다른 사람들과 함께 있을 때 활력을 얻는다", dimension: "E" },
+                    { text: "혼자만의 시간을 통해 재충전한다", dimension: "I" }
+                ]
+            },
+            {
+                question: "정보를 처리하는 방식:",
+                options: [
+                    { text: "세부사항과 사실에 주목한다", dimension: "S" },
+                    { text: "패턴과 가능성을 본다", dimension: "N" }
+                ]
+            },
+            {
+                question: "갈등 상황에서:",
+                options: [
+                    { text: "공정하고 논리적인 해결책을 찾는다", dimension: "T" },
+                    { text: "모든 사람의 감정을 고려한다", dimension: "F" }
+                ]
+            },
+            {
+                question: "작업 스타일:",
+                options: [
+                    { text: "마감일을 정하고 체계적으로 진행한다", dimension: "J" },
+                    { text: "영감이 올 때까지 기다리며 유연하게 한다", dimension: "P" }
+                ]
+            },
+            {
+                question: "파티에서 나는:",
+                options: [
+                    { text: "많은 사람들과 이야기하며 즐긴다", dimension: "E" },
+                    { text: "몇 명과 깊은 대화를 나눈다", dimension: "I" }
+                ]
+            },
+            {
+                question: "문제 해결 시:",
+                options: [
+                    { text: "검증된 방법과 경험을 활용한다", dimension: "S" },
+                    { text: "새로운 방법과 창의적 아이디어를 시도한다", dimension: "N" }
+                ]
+            },
+            {
+                question: "비판을 받을 때:",
+                options: [
+                    { text: "객관적으로 분석하고 개선점을 찾는다", dimension: "T" },
+                    { text: "감정적으로 상처받고 개인적으로 받아들인다", dimension: "F" }
+                ]
+            },
+            {
+                question: "여행 계획:",
+                options: [
+                    { text: "미리 상세히 계획하고 예약한다", dimension: "J" },
+                    { text: "즉흥적으로 결정하며 유연하게 한다", dimension: "P" }
+                ]
+            },
+            {
+                question: "스트레스를 받을 때:",
+                options: [
+                    { text: "친구들과 이야기하며 해소한다", dimension: "E" },
+                    { text: "혼자만의 시간을 가지며 정리한다", dimension: "I" }
+                ]
+            },
+            {
+                question: "학습할 때:",
+                options: [
+                    { text: "단계별로 차근차근 배운다", dimension: "S" },
+                    { text: "전체적인 맥락을 먼저 이해한다", dimension: "N" }
+                ]
+            },
+            {
+                question: "팀워크에서:",
+                options: [
+                    { text: "효율성과 성과에 집중한다", dimension: "T" },
+                    { text: "팀원들의 화합과 관계에 신경쓴다", dimension: "F" }
+                ]
+            },
+            {
+                question: "새로운 환경에서:",
+                options: [
+                    { text: "빠르게 적응하고 계획을 세운다", dimension: "J" },
+                    { text: "상황을 보며 천천히 적응한다", dimension: "P" }
+                ]
+            },
+            {
+                question: "주말 계획:",
+                options: [
+                    { text: "친구들과 만나거나 외부 활동을 한다", dimension: "E" },
+                    { text: "집에서 휴식하거나 취미를 즐긴다", dimension: "I" }
+                ]
+            },
+            {
+                question: "새로운 아이디어:",
+                options: [
+                    { text: "실용성과 실현 가능성을 먼저 고려한다", dimension: "S" },
+                    { text: "창의성과 혁신성에 흥미를 느낀다", dimension: "N" }
+                ]
+            },
+            {
+                question: "친구의 고민 상담:",
+                options: [
+                    { text: "논리적인 해결책을 제시한다", dimension: "T" },
+                    { text: "공감하고 위로해준다", dimension: "F" }
+                ]
+            },
+            {
+                question: "업무 환경:",
+                options: [
+                    { text: "구조화되고 예측 가능한 환경을 선호한다", dimension: "J" },
+                    { text: "유연하고 변화가 있는 환경을 선호한다", dimension: "P" }
+                ]
+            },
+            {
+                question: "의사소통 스타일:",
+                options: [
+                    { text: "생각을 말로 표현하며 정리한다", dimension: "E" },
+                    { text: "먼저 생각한 후 신중하게 말한다", dimension: "I" }
+                ]
+            },
+            {
+                question: "정보 수집:",
+                options: [
+                    { text: "구체적이고 상세한 정보를 선호한다", dimension: "S" },
+                    { text: "개념적이고 추상적인 정보를 선호한다", dimension: "N" }
+                ]
+            },
+            {
+                question: "의견 충돌 시:",
+                options: [
+                    { text: "사실과 논리로 설득한다", dimension: "T" },
+                    { text: "상대방의 입장을 이해하려 노력한다", dimension: "F" }
+                ]
+            },
+            {
+                question: "마감 압박:",
+                options: [
+                    { text: "미리 완료하여 여유를 둔다", dimension: "J" },
+                    { text: "마감에 맞춰 집중해서 완료한다", dimension: "P" }
+                ]
+            }
+        ];
+        
+        // 상태 관리
+        let currentQuestion = -1;
+        let answers = {};
+        
+        // 화면 전환
+        function showScreen(screenId) {
+            document.querySelectorAll('#intro-screen, #test-screen, #result-screen').forEach(screen => {
+                screen.classList.add('hidden');
+            });
+            document.getElementById(screenId).classList.remove('hidden');
+        }
+        
+        // 테스트 시작
+        function startTest() {
+            currentQuestion = 0;
+            answers = {};
+            showScreen('test-screen');
+            showQuestion();
+        }
+        
+        // 질문 표시
+        function showQuestion() {
+            if (currentQuestion >= mbtiQuestions.length) {
+                showResult();
+                return;
+            }
+            
+            const q = mbtiQuestions[currentQuestion];
+            const progressPercent = ((currentQuestion + 1) / mbtiQuestions.length) * 100;
+            
+            // 진행률 업데이트
+            document.getElementById('progress-text').textContent = `질문 ${currentQuestion + 1} / ${mbtiQuestions.length}`;
+            document.getElementById('progress-percent').textContent = `${Math.round(progressPercent)}%`;
+            document.getElementById('progress').style.width = `${progressPercent}%`;
+            
+            // 질문 표시
+            document.getElementById('question').textContent = q.question;
+            
+            // 옵션 표시
+            const optionsContainer = document.getElementById('options');
+            optionsContainer.innerHTML = '';
+            
+            q.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option';
+                optionElement.textContent = option.text;
+                optionElement.onclick = () => selectOption(index);
+                
+                // 이전 답변 표시
+                if (answers[currentQuestion] === index) {
+                    optionElement.classList.add('selected');
+                }
+                
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            // 버튼 상태 업데이트
+            document.getElementById('prev-btn').style.display = currentQuestion > 0 ? 'block' : 'none';
+            document.getElementById('next-btn').textContent = currentQuestion === mbtiQuestions.length - 1 ? '결과 보기' : '다음';
+            document.getElementById('next-btn').disabled = answers[currentQuestion] === undefined;
+        }
+        
+        // 옵션 선택
+        function selectOption(index) {
+            answers[currentQuestion] = index;
+            
+            // 선택 표시 업데이트
+            document.querySelectorAll('.option').forEach((opt, i) => {
+                opt.classList.toggle('selected', i === index);
+            });
+            
+            // 다음 버튼 활성화
+            document.getElementById('next-btn').disabled = false;
+        }
+        
+        // 다음 질문
+        function nextQuestion() {
+            if (answers[currentQuestion] === undefined) return;
+            
+            currentQuestion++;
+            showQuestion();
+        }
+        
+        // 이전 질문
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showQuestion();
+            }
+        }
+        
+        // 결과 계산
+        function showResult() {
+            // MBTI 점수 계산
+            const scores = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
+            
+            Object.keys(answers).forEach(questionIndex => {
+                const question = mbtiQuestions[parseInt(questionIndex)];
+                const selectedOption = question.options[answers[questionIndex]];
+                scores[selectedOption.dimension]++;
+            });
+            
+            // MBTI 타입 결정
+            const mbtiType = 
+                (scores.E > scores.I ? 'E' : 'I') +
+                (scores.S > scores.N ? 'S' : 'N') +
+                (scores.T > scores.F ? 'T' : 'F') +
+                (scores.J > scores.P ? 'J' : 'P');
+            
+            // MBTI 타입별 설명
+            const mbtiDescriptions = {
+                'ENFJ': { name: '언변능숙형', desc: '타인의 성장을 돕는 카리스마 있는 리더. 따뜻하고 공감능력이 뛰어나며, 다른 사람들에게 영감을 주는 천생 리더입니다.' },
+                'ENFP': { name: '활동가형', desc: '열정적이고 창의적인 동기부여자. 새로운 가능성에 열정적이며, 사람들과의 관계를 중시하는 자유로운 영혼입니다.' },
+                'ENTJ': { name: '대담한 통솔자', desc: '대담하고 상상력이 풍부한 강력한 의지의 리더. 목표 달성을 위해 체계적으로 계획하고 실행하는 타고난 지도자입니다.' },
+                'ENTP': { name: '토론가형', desc: '똑똑하고 호기심 많은 사상가. 새로운 아이디어와 도전을 즐기며, 창의적인 문제 해결을 좋아합니다.' },
+                'ESFJ': { name: '집정관형', desc: '매우 충성스럽고 따뜻하며 마음씨 착한 협력자. 다른 사람들을 돌보고 조화로운 환경을 만드는 것을 중시합니다.' },
+                'ESFP': { name: '연예인형', desc: '즉흥적이고 열정적이며 사람들과 어울리기 좋아하는 연예인. 현재를 즐기며 다른 사람들에게 기쁨을 주는 것을 좋아합니다.' },
+                'ESTJ': { name: '경영자형', desc: '뛰어난 관리 능력을 가진 현실주의자. 체계적이고 효율적으로 일을 처리하며, 전통과 질서를 중시합니다.' },
+                'ESTP': { name: '모험가형', desc: '똑똑하고 에너지 넘치며 현실적인 문제 해결사. 현재에 집중하며 실용적인 해결책을 찾는 것을 좋아합니다.' },
+                'INFJ': { name: '선의의 옹호자', desc: '조용하고 신비로우며 영감을 주는 이상주의자. 깊이 있는 통찰력을 가지고 있으며, 의미 있는 목표를 추구합니다.' },
+                'INFP': { name: '중재자형', desc: '이상주의적이고 충성스러우며 자신의 가치관에 대해 열정적. 조화를 추구하며 다른 사람의 잠재력을 발견하는 데 관심이 많습니다.' },
+                'INTJ': { name: '건축가형', desc: '상상력이 풍부하고 전략적인 사상가. 독창적이고 결단력이 있으며, 자신의 아이디어와 목표에 대해 확고한 의지를 보입니다.' },
+                'INTP': { name: '논리술사형', desc: '혁신적인 발명가로 지식에 대한 갈증이 끊이지 않음. 논리적이고 분석적이며, 복잡한 문제를 해결하는 것을 즐깁니다.' },
+                'ISFJ': { name: '수호자형', desc: '매우 헌신적이고 따뜻한 수호자. 다른 사람들을 보호하고 돌보는 것을 중시하며, 전통적인 가치를 존중합니다.' },
+                'ISFP': { name: '모험가형', desc: '유연하고 매력적인 예술가. 조용하고 친근하며, 자신만의 독특한 관점을 가지고 있고 아름다움을 추구합니다.' },
+                'ISTJ': { name: '현실주의자', desc: '사실을 중요시하며 신뢰할 수 있는 현실주의자. 체계적이고 성실하며, 책임감이 강하고 전통을 중시합니다.' },
+                'ISTP': { name: '만능재주꾼', desc: '대담하고 실용적인 실험정신이 풍부한 만능재주꾼. 현실적이고 적응력이 뛰어나며, 손으로 직접 만드는 것을 좋아합니다.' }
+            };
+            
+            const result = mbtiDescriptions[mbtiType];
+            
+            // 결과 표시
+            showScreen('result-screen');
+            document.getElementById('result-type').textContent = mbtiType;
+            document.getElementById('result-description').innerHTML = 
+                `<strong>${result.name}</strong><br>${result.desc}`;
+            
+            // 특성 표시
+            const traits = [
+                {
+                    title: `E/I 성향: ${scores.E > scores.I ? '외향적' : '내향적'}`,
+                    desc: `${scores.E > scores.I ? scores.E : scores.I}/${Math.max(scores.E, scores.I) + Math.min(scores.E, scores.I)} - ${scores.E > scores.I ? '사람들과의 상호작용에서 에너지를 얻습니다' : '혼자만의 시간에서 에너지를 얻습니다'}`
+                },
+                {
+                    title: `S/N 성향: ${scores.S > scores.N ? '현실적' : '직관적'}`,
+                    desc: `${scores.S > scores.N ? scores.S : scores.N}/${Math.max(scores.S, scores.N) + Math.min(scores.S, scores.N)} - ${scores.S > scores.N ? '구체적인 사실과 세부사항을 중시합니다' : '가능성과 전체적인 패턴을 중시합니다'}`
+                },
+                {
+                    title: `T/F 성향: ${scores.T > scores.F ? '논리적' : '감정적'}`,
+                    desc: `${scores.T > scores.F ? scores.T : scores.F}/${Math.max(scores.T, scores.F) + Math.min(scores.T, scores.F)} - ${scores.T > scores.F ? '논리와 객관적 분석을 기반으로 결정합니다' : '가치관과 감정을 기반으로 결정합니다'}`
+                },
+                {
+                    title: `J/P 성향: ${scores.J > scores.P ? '계획적' : '즉흥적'}`,
+                    desc: `${scores.J > scores.P ? scores.J : scores.P}/${Math.max(scores.J, scores.P) + Math.min(scores.J, scores.P)} - ${scores.J > scores.P ? '체계적이고 계획적인 생활을 선호합니다' : '유연하고 즉흥적인 생활을 선호합니다'}`
+                }
+            ];
+            
+            const traitsContainer = document.getElementById('result-traits');
+            traitsContainer.innerHTML = traits.map(trait => `
+                <div class="trait-card">
+                    <div class="trait-title">${trait.title}</div>
+                    <div class="trait-desc">${trait.desc}</div>
+                </div>
+            `).join('');
+        }
+        
+        // 테스트 재시작
+        function restartTest() {
+            currentQuestion = -1;
+            answers = {};
+            showScreen('intro-screen');
+        }
+        
+        // 카카오톡 공유
+        function shareKakao() {
+            if (typeof Kakao !== 'undefined' && Kakao.isInitialized()) {
+                const resultType = document.getElementById('result-type').textContent;
+                const resultDesc = document.getElementById('result-description').textContent;
+                
+                Kakao.Link.sendDefault({
+                    objectType: 'feed',
+                    content: {
+                        title: `나의 MBTI 유형: ${resultType}`,
+                        description: resultDesc,
+                        imageUrl: 'https://doha.kr/images/mbti-og.png',
+                        link: {
+                            mobileWebUrl: 'https://doha.kr/tests/mbti/',
+                            webUrl: 'https://doha.kr/tests/mbti/',
+                        },
+                    },
+                    buttons: [
+                        {
+                            title: '나도 테스트하기',
+                            link: {
+                                mobileWebUrl: 'https://doha.kr/tests/mbti/',
+                                webUrl: 'https://doha.kr/tests/mbti/',
+                            },
+                        },
+                    ],
+                });
+            } else {
+                alert('카카오톡 공유 기능을 사용할 수 없습니다.');
+            }
+        }
+        
+        // 링크 복사
+        function copyLink() {
+            const url = 'https://doha.kr/tests/mbti/';
+            navigator.clipboard.writeText(url).then(() => {
+                alert('링크가 복사되었습니다!');
+            }).catch(() => {
+                alert('링크 복사에 실패했습니다.');
+            });
+        }
+        
+        // 전역 함수 설정
+        window.startTest = startTest;
+        window.selectOption = selectOption;
+        window.nextQuestion = nextQuestion;
+        window.previousQuestion = previousQuestion;
+        window.restartTest = restartTest;
+        window.shareKakao = shareKakao;
+        window.copyLink = copyLink;
+    </script>
+    
+    <!-- AdSense initialization -->
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</body>
+</html>
