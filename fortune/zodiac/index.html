@@ -34,23 +34,23 @@
             padding: 0 20px;
         }
         
-        /* 간결한 히어로 섹션 */
+        /* 컴팩트한 히어로 섹션 */
         .compact-hero {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 40px 20px;
+            padding: 30px 20px;
             text-align: center;
             color: white;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
         
         .compact-hero h1 {
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 700;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
         
         .compact-hero p {
-            font-size: 16px;
+            font-size: 14px;
             opacity: 0.9;
             margin: 0;
         }
@@ -354,11 +354,15 @@
         /* 모바일 반응형 */
         @media (max-width: 768px) {
             .compact-hero {
-                padding: 30px 20px;
+                padding: 25px 20px;
             }
             
             .compact-hero h1 {
-                font-size: 24px;
+                font-size: 20px;
+            }
+            
+            .compact-hero p {
+                font-size: 13px;
             }
             
             .zodiac-grid {
@@ -411,7 +415,7 @@
     <!-- 네비게이션 -->
     <div id="navbar-placeholder"></div>
     
-    <!-- 간결한 페이지 헤더 -->
+    <!-- 컴팩트한 페이지 헤더 -->
     <div class="compact-hero">
         <h1>🌟 별자리 운세</h1>
         <p>AI가 분석하는 12궁도 별자리별 오늘의 운세</p>
@@ -419,7 +423,7 @@
     
     <div class="fortune-container">
         <!-- 날짜 표시 -->
-        <div style="text-align: center; margin-bottom: 40px;">
+        <div style="text-align: center; margin-bottom: 30px;">
             <h2 id="todayDate"></h2>
         </div>
         
@@ -641,7 +645,7 @@
             document.getElementById('fortuneResult').innerHTML = resultHTML;
         }
         
-        // 모의 운세 생성
+        // 모든 별자리별 고유 운세 생성
         function generateMockFortune(zodiac) {
             const fortunes = {
                 aries: {
@@ -658,12 +662,75 @@
                     luckyNumber: "2, 6, 14",
                     luckyColor: "초록색"
                 },
+                gemini: {
+                    overall: "소통과 교류가 활발해지는 시기입니다. 새로운 사람들과의 만남이 예상되며, 이를 통해 다양한 기회가 생길 것입니다. 호기심을 가지고 여러 분야에 관심을 기울여보세요.",
+                    scores: { love: 88, money: 72, work: 85, health: 78 },
+                    advice: "다양한 관점으로 상황을 바라보세요. 한 가지 방법에 얽매이지 말고 창의적인 해결책을 찾아보는 것이 좋겠습니다. 새로운 아이디어가 큰 변화를 만들어낼 것입니다.",
+                    luckyNumber: "5, 11, 18",
+                    luckyColor: "노란색"
+                },
+                cancer: {
+                    overall: "감정적으로 충만한 시기입니다. 가족이나 가까운 사람들과의 관계가 더욱 돈독해질 것입니다. 직감을 믿고 행동하면 좋은 결과를 얻을 수 있을 것입니다.",
+                    scores: { love: 90, money: 68, work: 75, health: 82 },
+                    advice: "감정을 억누르지 말고 솔직하게 표현해보세요. 진정성 있는 소통이 관계를 더욱 깊게 만들 것입니다. 때로는 직감이 이성보다 더 정확한 답을 줄 수 있습니다.",
+                    luckyNumber: "4, 9, 16",
+                    luckyColor: "은색"
+                },
+                leo: {
+                    overall: "당신의 매력과 창의성이 최고조에 달하는 시기입니다. 주목받을 기회가 많아지며, 자신감을 가지고 무대에 서세요. 리더십을 발휘할 절호의 기회가 찾아올 것입니다.",
+                    scores: { love: 92, money: 77, work: 88, health: 80 },
+                    advice: "자신을 과시하는 것보다 진정한 가치를 보여주는 것이 중요합니다. 겸손함과 자신감의 균형을 잘 맞추면 더 많은 사람들의 마음을 얻을 수 있을 것입니다.",
+                    luckyNumber: "1, 8, 19",
+                    luckyColor: "금색"
+                },
+                virgo: {
+                    overall: "세심함과 완벽주의가 빛을 발하는 시기입니다. 디테일에 신경 쓴 노력이 큰 성과로 이어질 것입니다. 건강 관리에도 특별히 신경 쓰는 것이 좋겠습니다.",
+                    scores: { love: 78, money: 82, work: 95, health: 85 },
+                    advice: "완벽을 추구하되 너무 스트레스받지 마세요. 때로는 80%의 완성도로도 충분할 때가 있습니다. 자신에게 너무 엄격하지 말고 여유를 가져보세요.",
+                    luckyNumber: "6, 12, 24",
+                    luckyColor: "네이비블루"
+                },
                 libra: {
                     overall: "균형과 조화를 추구하는 당신의 특성이 오늘 특히 빛을 발할 것입니다. 갈등 상황에서 중재자 역할을 맡게 될 수 있으며, 이는 당신에게 새로운 기회를 가져다줄 것입니다.",
                     scores: { love: 88, money: 75, work: 82, health: 80 },
-                    advice: "오늘은 새로운 시작을 위한 준비의 날입니다. 주변 사람들과의 관계에 더욱 신경 쓰고, 소통을 통해 서로의 마음을 나누는 시간을 가져보세요.",
-                    luckyNumber: "1, 9, 17",
-                    luckyColor: "파란색"
+                    advice: "결정을 내리기 어려운 상황이 올 수 있습니다. 모든 것을 고려하되, 너무 오랫동안 망설이지는 마세요. 때로는 직감에 따라 빠른 결정을 내리는 것도 필요합니다.",
+                    luckyNumber: "7, 15, 22",
+                    luckyColor: "분홍색"
+                },
+                scorpio: {
+                    overall: "강렬한 에너지와 집중력이 최고조에 달하는 시기입니다. 깊이 있는 연구나 분석이 필요한 일에서 탁월한 성과를 거둘 수 있습니다. 직감이 특히 예리해질 것입니다.",
+                    scores: { love: 86, money: 90, work: 87, health: 77 },
+                    advice: "감정을 컨트롤하는 것이 중요합니다. 강한 에너지를 건설적인 방향으로 활용하면 놀라운 결과를 얻을 수 있습니다. 너무 의심하지 말고 때로는 타인을 믿어보세요.",
+                    luckyNumber: "8, 13, 27",
+                    luckyColor: "진홍색"
+                },
+                sagittarius: {
+                    overall: "모험과 탐험의 기운이 가득한 시기입니다. 새로운 경험이나 학습에 도전해보세요. 긍정적인 마인드가 행운을 불러올 것이며, 해외나 먼 곳과의 인연이 생길 수 있습니다.",
+                    scores: { love: 83, money: 78, work: 89, health: 88 },
+                    advice: "너무 성급하게 결론을 내리지 마세요. 충분한 정보를 수집하고 신중하게 판단하는 것이 중요합니다. 낙관적인 태도는 좋지만 현실적인 계획도 필요합니다.",
+                    luckyNumber: "9, 17, 25",
+                    luckyColor: "보라색"
+                },
+                capricorn: {
+                    overall: "꾸준한 노력이 인정받는 시기입니다. 책임감 있는 행동과 성실함이 주변 사람들에게 신뢰를 얻게 할 것입니다. 장기적인 목표에 한 걸음 더 가까워지는 하루가 될 것입니다.",
+                    scores: { love: 74, money: 88, work: 93, health: 79 },
+                    advice: "때로는 휴식도 필요합니다. 지나치게 자신을 몰아붙이지 말고 적절한 여유를 가져보세요. 효율성도 중요하지만 인간관계에도 시간을 투자하는 것이 좋겠습니다.",
+                    luckyNumber: "10, 16, 28",
+                    luckyColor: "검은색"
+                },
+                aquarius: {
+                    overall: "독창적인 아이디어와 미래지향적인 사고가 빛을 발하는 시기입니다. 기술이나 혁신과 관련된 분야에서 좋은 기회가 찾아올 수 있습니다. 친구들과의 네트워킹이 도움이 될 것입니다.",
+                    scores: { love: 81, money: 84, work: 91, health: 83 },
+                    advice: "전통적인 방법에 얽매이지 말고 새로운 접근법을 시도해보세요. 남들과 다른 당신의 관점이 혁신적인 해결책을 만들어낼 것입니다. 개인주의와 협력의 균형을 잘 맞춰보세요.",
+                    luckyNumber: "11, 20, 29",
+                    luckyColor: "하늘색"
+                },
+                pisces: {
+                    overall: "감성과 직감이 예리해지는 시기입니다. 예술적 영감이나 창의적 아이디어가 떠오를 수 있습니다. 타인의 감정을 잘 이해하게 되어 도움을 줄 기회가 많아질 것입니다.",
+                    scores: { love: 91, money: 71, work: 79, health: 86 },
+                    advice: "현실과 이상 사이에서 균형을 찾아보세요. 꿈을 포기하지 말되 실현 가능한 계획을 세우는 것이 중요합니다. 감정에 휩쓸리지 말고 객관적인 판단력도 유지하세요.",
+                    luckyNumber: "12, 21, 30",
+                    luckyColor: "바다색"
                 }
             };
             
