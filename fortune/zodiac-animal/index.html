@@ -34,6 +34,27 @@
             padding: 0 20px;
         }
         
+        /* 컴팩트한 히어로 섹션 */
+        .compact-hero {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 30px 20px;
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+        
+        .compact-hero h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        
+        .compact-hero p {
+            font-size: 14px;
+            opacity: 0.9;
+            margin: 0;
+        }
+        
         .animal-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -350,6 +371,18 @@
         
         /* 모바일 반응형 */
         @media (max-width: 768px) {
+            .compact-hero {
+                padding: 25px 20px;
+            }
+            
+            .compact-hero h1 {
+                font-size: 20px;
+            }
+            
+            .compact-hero p {
+                font-size: 13px;
+            }
+            
             .animal-grid {
                 grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
                 gap: 15px;
@@ -404,113 +437,108 @@
     <!-- 네비게이션 -->
     <div id="navbar-placeholder"></div>
     
+    <!-- 컴팩트한 페이지 헤더 -->
+    <div class="compact-hero">
+        <h1>🐲 띠별 운세</h1>
+        <p>AI가 분석하는 12지신 띠별 오늘의 운세</p>
+    </div>
+    
     <div class="fortune-container">
-        <div class="hero">
-            <div class="hero-content">
-                <h1 class="hero-title fade-in">🐲 띠별 운세</h1>
-                <p class="hero-subtitle fade-in stagger-1">AI가 분석하는 12지신 띠별 오늘의 운세</p>
+        <!-- 날짜 표시 -->
+        <div style="text-align: center; margin-bottom: 30px;">
+            <h2 id="todayDate"></h2>
+        </div>
+        
+        <!-- 띠 선택 그리드 -->
+        <div class="animal-grid">
+            <div class="animal-card" data-animal="rat" onclick="showAnimalFortune('rat')">
+                <span class="animal-emoji">🐀</span>
+                <div class="animal-name">쥐띠</div>
+                <div class="animal-hanja">子</div>
+            </div>
+            
+            <div class="animal-card" data-animal="ox" onclick="showAnimalFortune('ox')">
+                <span class="animal-emoji">🐂</span>
+                <div class="animal-name">소띠</div>
+                <div class="animal-hanja">丑</div>
+            </div>
+            
+            <div class="animal-card" data-animal="tiger" onclick="showAnimalFortune('tiger')">
+                <span class="animal-emoji">🐅</span>
+                <div class="animal-name">호랑이띠</div>
+                <div class="animal-hanja">寅</div>
+            </div>
+            
+            <div class="animal-card" data-animal="rabbit" onclick="showAnimalFortune('rabbit')">
+                <span class="animal-emoji">🐇</span>
+                <div class="animal-name">토끼띠</div>
+                <div class="animal-hanja">卯</div>
+            </div>
+            
+            <div class="animal-card" data-animal="dragon" onclick="showAnimalFortune('dragon')">
+                <span class="animal-emoji">🐉</span>
+                <div class="animal-name">용띠</div>
+                <div class="animal-hanja">辰</div>
+            </div>
+            
+            <div class="animal-card" data-animal="snake" onclick="showAnimalFortune('snake')">
+                <span class="animal-emoji">🐍</span>
+                <div class="animal-name">뱀띠</div>
+                <div class="animal-hanja">巳</div>
+            </div>
+            
+            <div class="animal-card" data-animal="horse" onclick="showAnimalFortune('horse')">
+                <span class="animal-emoji">🐎</span>
+                <div class="animal-name">말띠</div>
+                <div class="animal-hanja">午</div>
+            </div>
+            
+            <div class="animal-card" data-animal="sheep" onclick="showAnimalFortune('sheep')">
+                <span class="animal-emoji">🐑</span>
+                <div class="animal-name">양띠</div>
+                <div class="animal-hanja">未</div>
+            </div>
+            
+            <div class="animal-card" data-animal="monkey" onclick="showAnimalFortune('monkey')">
+                <span class="animal-emoji">🐒</span>
+                <div class="animal-name">원숭이띠</div>
+                <div class="animal-hanja">申</div>
+            </div>
+            
+            <div class="animal-card" data-animal="rooster" onclick="showAnimalFortune('rooster')">
+                <span class="animal-emoji">🐓</span>
+                <div class="animal-name">닭띠</div>
+                <div class="animal-hanja">酉</div>
+            </div>
+            
+            <div class="animal-card" data-animal="dog" onclick="showAnimalFortune('dog')">
+                <span class="animal-emoji">🐕</span>
+                <div class="animal-name">개띠</div>
+                <div class="animal-hanja">戌</div>
+            </div>
+            
+            <div class="animal-card" data-animal="pig" onclick="showAnimalFortune('pig')">
+                <span class="animal-emoji">🐖</span>
+                <div class="animal-name">돼지띠</div>
+                <div class="animal-hanja">亥</div>
             </div>
         </div>
         
-        <div class="features">
-            <div class="container">
-                <!-- 날짜 표시 -->
-                <div class="section-title" style="text-align: center; margin-bottom: 40px;">
-                    <h2 id="todayDate"></h2>
-                </div>
-                
-                <!-- 띠 선택 그리드 -->
-                <div class="animal-grid">
-                    <div class="animal-card" data-animal="rat" onclick="showAnimalFortune('rat')">
-                        <span class="animal-emoji">🐀</span>
-                        <div class="animal-name">쥐띠</div>
-                        <div class="animal-hanja">子</div>
-                    </div>
-                    
-                    <div class="animal-card" data-animal="ox" onclick="showAnimalFortune('ox')">
-                        <span class="animal-emoji">🐂</span>
-                        <div class="animal-name">소띠</div>
-                        <div class="animal-hanja">丑</div>
-                    </div>
-                    
-                    <div class="animal-card" data-animal="tiger" onclick="showAnimalFortune('tiger')">
-                        <span class="animal-emoji">🐅</span>
-                        <div class="animal-name">호랑이띠</div>
-                        <div class="animal-hanja">寅</div>
-                    </div>
-                    
-                    <div class="animal-card" data-animal="rabbit" onclick="showAnimalFortune('rabbit')">
-                        <span class="animal-emoji">🐇</span>
-                        <div class="animal-name">토끼띠</div>
-                        <div class="animal-hanja">卯</div>
-                    </div>
-                    
-                    <div class="animal-card" data-animal="dragon" onclick="showAnimalFortune('dragon')">
-                        <span class="animal-emoji">🐉</span>
-                        <div class="animal-name">용띠</div>
-                        <div class="animal-hanja">辰</div>
-                    </div>
-                    
-                    <div class="animal-card" data-animal="snake" onclick="showAnimalFortune('snake')">
-                        <span class="animal-emoji">🐍</span>
-                        <div class="animal-name">뱀띠</div>
-                        <div class="animal-hanja">巳</div>
-                    </div>
-                    
-                    <div class="animal-card" data-animal="horse" onclick="showAnimalFortune('horse')">
-                        <span class="animal-emoji">🐎</span>
-                        <div class="animal-name">말띠</div>
-                        <div class="animal-hanja">午</div>
-                    </div>
-                    
-                    <div class="animal-card" data-animal="sheep" onclick="showAnimalFortune('sheep')">
-                        <span class="animal-emoji">🐑</span>
-                        <div class="animal-name">양띠</div>
-                        <div class="animal-hanja">未</div>
-                    </div>
-                    
-                    <div class="animal-card" data-animal="monkey" onclick="showAnimalFortune('monkey')">
-                        <span class="animal-emoji">🐒</span>
-                        <div class="animal-name">원숭이띠</div>
-                        <div class="animal-hanja">申</div>
-                    </div>
-                    
-                    <div class="animal-card" data-animal="rooster" onclick="showAnimalFortune('rooster')">
-                        <span class="animal-emoji">🐓</span>
-                        <div class="animal-name">닭띠</div>
-                        <div class="animal-hanja">酉</div>
-                    </div>
-                    
-                    <div class="animal-card" data-animal="dog" onclick="showAnimalFortune('dog')">
-                        <span class="animal-emoji">🐕</span>
-                        <div class="animal-name">개띠</div>
-                        <div class="animal-hanja">戌</div>
-                    </div>
-                    
-                    <div class="animal-card" data-animal="pig" onclick="showAnimalFortune('pig')">
-                        <span class="animal-emoji">🐖</span>
-                        <div class="animal-name">돼지띠</div>
-                        <div class="animal-hanja">亥</div>
-                    </div>
-                </div>
-                
-                <!-- 운세 결과 -->
-                <div id="fortuneResult" class="fortune-result" style="display: none;">
-                    <!-- 결과가 여기에 표시됩니다 -->
-                </div>
-            </div>
+        <!-- 운세 결과 -->
+        <div id="fortuneResult" class="fortune-result" style="display: none;">
+            <!-- 결과가 여기에 표시됩니다 -->
         </div>
-        
-        <!-- 광고 영역 -->
-        <div class="ad-container">
-            <div class="ad-label">광고</div>
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-7905640648499222"
-                 data-ad-slot="1234567890"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-        </div>
+    </div>
+    
+    <!-- 광고 영역 -->
+    <div class="ad-container">
+        <div class="ad-label">광고</div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-7905640648499222"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
     </div>
     
     <!-- 푸터 -->
@@ -640,7 +668,7 @@
             document.getElementById('fortuneResult').innerHTML = resultHTML;
         }
         
-        // 모의 운세 생성
+        // 모든 띠별 고유 운세 생성
         function generateMockAnimalFortune(animal) {
             const fortunes = {
                 rat: {
@@ -657,12 +685,75 @@
                     luckyDirection: "동북쪽",
                     luckyTime: "오전 9-11시"
                 },
+                tiger: {
+                    overall: "용기와 추진력이 최고조에 달하는 시기입니다. 대담한 도전이 성공으로 이어질 것이며, 리더십을 발휘할 기회가 많아집니다. 정의감과 카리스마가 사람들의 마음을 사로잡을 것입니다.",
+                    scores: { love: 88, money: 78, work: 92, health: 85 },
+                    advice: "과감하게 앞으로 나아가세요. 당신의 용기가 주변 사람들에게 용기를 주고, 새로운 길을 열어갈 것입니다. 때로는 위험을 감수하는 것이 더 큰 성과를 가져옵니다.",
+                    luckyDirection: "동쪽",
+                    luckyTime: "오전 5-7시"
+                },
+                rabbit: {
+                    overall: "조화롭고 평온한 에너지가 가득한 날입니다. 세심한 배려와 온화한 성격이 주변 사람들에게 좋은 인상을 줄 것입니다. 예술적 감각이나 미적 능력이 특히 빛을 발할 것입니다.",
+                    scores: { love: 92, money: 73, work: 82, health: 88 },
+                    advice: "급하지 않게 천천히 진행하세요. 당신의 세심함과 배려가 오히려 더 큰 신뢰를 얻게 해줄 것입니다. 감정적인 소통에 특히 신경 써보세요.",
+                    luckyDirection: "동쪽",
+                    luckyTime: "오전 5-7시"
+                },
                 dragon: {
                     overall: "용의 기운이 강하게 뻗치는 날입니다. 리더십을 발휘할 기회가 많아지고, 큰 꿈을 현실로 만들 수 있는 에너지가 충만합니다. 자신감을 가지고 도전하면 놀라운 결과를 얻을 수 있습니다.",
                     scores: { love: 88, money: 92, work: 95, health: 82 },
                     advice: "오늘은 당신의 카리스마가 최고조에 달하는 날입니다. 망설이지 말고 큰 계획을 세우고 실행에 옮기세요. 주변 사람들이 당신을 따를 것입니다.",
-                    luckyDirection: "동쪽",
+                    luckyDirection: "남동쪽",
                     luckyTime: "오전 7-9시"
+                },
+                snake: {
+                    overall: "지혜와 직감이 예리해지는 시기입니다. 복잡한 문제도 차근차근 분석하여 해결할 수 있으며, 깊이 있는 통찰력으로 다른 사람들을 놀라게 할 것입니다. 신중한 판단이 큰 이익을 가져다줄 것입니다.",
+                    scores: { love: 84, money: 89, work: 87, health: 79 },
+                    advice: "서두르지 말고 신중하게 접근하세요. 당신의 예리한 직감과 분석력이 최고의 결과를 만들어낼 것입니다. 때로는 침묵이 최고의 전략일 수 있습니다.",
+                    luckyDirection: "남동쪽",
+                    luckyTime: "오전 9-11시"
+                },
+                horse: {
+                    overall: "활기찬 에너지와 자유로운 정신이 빛나는 날입니다. 새로운 여행이나 모험에 나서기 좋은 시기이며, 독립적인 성향이 좋은 결과를 가져다줄 것입니다. 움직임이 많은 하루가 될 것입니다.",
+                    scores: { love: 86, money: 81, work: 89, health: 92 },
+                    advice: "자유롭게 행동하세요. 당신의 활동력과 추진력이 새로운 기회를 만들어낼 것입니다. 제약에 얽매이지 말고 본능에 따라 움직여보세요.",
+                    luckyDirection: "남쪽",
+                    luckyTime: "오전 11시-오후 1시"
+                },
+                sheep: {
+                    overall: "온화하고 협력적인 에너지가 가득한 날입니다. 팀워크와 화합을 중시하는 당신의 성향이 좋은 결과를 만들어낼 것입니다. 예술적 감각이나 창의적 능력이 특히 주목받을 것입니다.",
+                    scores: { love: 90, money: 76, work: 83, health: 85 },
+                    advice: "다른 사람들과의 협력을 중시하세요. 당신의 배려심과 온화함이 갈등을 해결하고 좋은 관계를 만들어갈 것입니다. 창의적인 일에 시간을 투자해보세요.",
+                    luckyDirection: "남서쪽",
+                    luckyTime: "오후 1-3시"
+                },
+                monkey: {
+                    overall: "재치와 유머가 빛나는 날입니다. 똑똑하고 민첩한 사고로 어려운 문제도 쉽게 해결할 수 있습니다. 새로운 아이디어나 창의적인 해결책이 사람들의 관심을 끌 것입니다.",
+                    scores: { love: 87, money: 84, work: 91, health: 83 },
+                    advice: "창의적인 사고를 발휘하세요. 당신의 기발한 아이디어와 재치가 새로운 돌파구를 만들어낼 것입니다. 유머를 잃지 말고 즐겁게 하루를 보내세요.",
+                    luckyDirection: "서남쪽",
+                    luckyTime: "오후 3-5시"
+                },
+                rooster: {
+                    overall: "정확성과 계획성이 빛을 발하는 날입니다. 체계적인 접근과 꼼꼼한 준비가 큰 성과로 이어질 것입니다. 시간 관리를 잘하고 규칙적인 생활을 유지하면 더욱 좋은 결과를 얻을 수 있습니다.",
+                    scores: { love: 82, money: 87, work: 94, health: 86 },
+                    advice: "계획적으로 행동하세요. 당신의 정확성과 시간 개념이 큰 신뢰를 얻게 해줄 것입니다. 세부사항에 신경 쓰되, 너무 완벽주의에 빠지지는 마세요.",
+                    luckyDirection: "서쪽",
+                    luckyTime: "오후 5-7시"
+                },
+                dog: {
+                    overall: "충실함과 신뢰성이 돋보이는 날입니다. 정직하고 성실한 태도가 주변 사람들에게 깊은 인상을 줄 것입니다. 어려운 상황에서도 의리를 지키는 당신의 모습이 존경받을 것입니다.",
+                    scores: { love: 89, money: 80, work: 88, health: 91 },
+                    advice: "진실되게 행동하세요. 당신의 성실함과 의리가 진정한 신뢰 관계를 만들어갈 것입니다. 어려운 친구를 도와주는 것을 주저하지 마세요.",
+                    luckyDirection: "서북쪽",
+                    luckyTime: "오후 7-9시"
+                },
+                pig: {
+                    overall: "풍요롭고 행복한 에너지가 가득한 날입니다. 관대한 마음과 따뜻한 성품이 사람들에게 기쁨을 선사할 것입니다. 물질적인 풍요로움과 정신적인 만족을 동시에 얻을 수 있는 좋은 시기입니다.",
+                    scores: { love: 91, money: 93, work: 85, health: 88 },
+                    advice: "너그러운 마음으로 사람들을 대하세요. 당신의 관대함과 온화함이 더 큰 행복을 불러올 것입니다. 가족이나 가까운 사람들과 시간을 보내는 것이 특히 좋겠습니다.",
+                    luckyDirection: "북서쪽",
+                    luckyTime: "오후 9-11시"
                 }
             };
             
