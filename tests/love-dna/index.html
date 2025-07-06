@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>러브 DNA 테스트 - 연애 스타일 분석 | doha.kr</title>
+    <meta name="description" content="L-O-V-E-D 5축 분석으로 당신만의 연애 스타일을 발견하세요. 32가지 러브 DNA 유형 중 나는 어떤 연애 스타일일까요?">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="러브 DNA 테스트 - 나만의 연애 스타일 찾기">
+    <meta property="og:description" content="25개 질문으로 알아보는 나만의 연애 스타일! 32가지 러브 DNA 유형 중 당신은?">
+    <meta property="og:image" content="https://doha.kr/images/og-love-dna.jpg">
+    <meta property="og:url" content="https://doha.kr/tests/love-dna/">
+    
+    <!-- 폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- 스타일시트 -->
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        .love-intro-hero {
+            background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .love-intro-hero::before {
+            content: '💕';
+            position: absolute;
+            font-size: 200px;
+            opacity: 0.1;
+            top: -50px;
+            right: -50px;
+            transform: rotate(-15deg);
+        }
+        
+        .love-intro-hero h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+        
+        .love-intro-hero p {
+            font-size: 1.3em;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+        
+        .love-intro-content {
+            max-width: 900px;
+            margin: -40px auto 60px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            padding: 60px 40px;
+        }
+        
+        .love-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .love-feature {
+            text-align: center;
+            padding: 30px;
+            border-radius: 16px;
+            background: #f8f9fa;
+            transition: all 0.3s ease;
+        }
+        
+        .love-feature:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .love-feature-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+            display: block;
+        }
+        
+        .love-feature h3 {
+            color: #1f2937;
+            margin-bottom: 10px;
+        }
+        
+        .love-dna-types {
+            background: #fef3f2;
+            padding: 40px;
+            border-radius: 16px;
+            margin: 40px 0;
+        }
+        
+        .love-dna-types h2 {
+            text-align: center;
+            color: #1f2937;
+            margin-bottom: 30px;
+        }
+        
+        .dna-axis {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .axis-name {
+            font-weight: 700;
+            color: #ff6b9d;
+            font-size: 1.2em;
+        }
+        
+        .axis-description {
+            color: #6b7280;
+            flex: 1;
+            margin: 0 20px;
+        }
+        
+        .start-test-cta {
+            text-align: center;
+            margin: 60px 0;
+        }
+        
+        .start-test-btn {
+            background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
+            color: white;
+            padding: 20px 60px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.3em;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.3);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .start-test-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 107, 157, 0.4);
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            .love-intro-hero h1 {
+                font-size: 2em;
+            }
+            
+            .love-intro-content {
+                margin: -20px 20px 40px;
+                padding: 40px 20px;
+            }
+            
+            .love-features {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+    </style>
+    
+    <!-- 애드센스 -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
+</head>
+<body>
+    <!-- 네비게이션 -->
+    <div id="navbar-placeholder"></div>
+    
+    <!-- 히어로 섹션 -->
+    <div class="love-intro-hero">
+        <h1>💕 러브 DNA 테스트</h1>
+        <p>L-O-V-E-D 5축 분석으로 발견하는 나만의 연애 스타일</p>
+        <a href="/tests/love-dna/test.html" class="start-test-btn">테스트 시작하기</a>
+    </div>
+    
+    <!-- 메인 콘텐츠 -->
+    <div class="love-intro-content">
+        <h2 style="text-align: center; font-size: 2em; margin-bottom: 40px; color: #1f2937;">
+            32가지 러브 DNA로 알아보는<br>당신만의 특별한 연애 스타일
+        </h2>
+        
+        <div class="love-features">
+            <div class="love-feature">
+                <span class="love-feature-icon">🧬</span>
+                <h3>과학적 분석</h3>
+                <p>5가지 핵심 축으로 분석하는 체계적인 연애 성향 테스트</p>
+            </div>
+            
+            <div class="love-feature">
+                <span class="love-feature-icon">💑</span>
+                <h3>궁합 분석</h3>
+                <p>32가지 유형별 최고의 궁합과 도전적인 관계 파악</p>
+            </div>
+            
+            <div class="love-feature">
+                <span class="love-feature-icon">📊</span>
+                <h3>상세한 결과</h3>
+                <p>연애 스타일, 강점, 주의점까지 종합적인 분석 제공</p>
+            </div>
+        </div>
+        
+        <div class="love-dna-types">
+            <h2>L-O-V-E-D 5축 분석 시스템</h2>
+            
+            <div class="dna-axis">
+                <span class="axis-name">L - Love Expression</span>
+                <span class="axis-description">사랑 표현 방식 (직접적 vs 간접적)</span>
+                <span style="font-size: 1.5em;">💌</span>
+            </div>
+            
+            <div class="dna-axis">
+                <span class="axis-name">O - Openness</span>
+                <span class="axis-description">관계의 개방성 (독립적 vs 일체형)</span>
+                <span style="font-size: 1.5em;">🔓</span>
+            </div>
+            
+            <div class="dna-axis">
+                <span class="axis-name">V - Value Priority</span>
+                <span class="axis-description">가치관 우선순위 (감정 vs 현실)</span>
+                <span style="font-size: 1.5em;">⚖️</span>
+            </div>
+            
+            <div class="dna-axis">
+                <span class="axis-name">E - Energy</span>
+                <span class="axis-description">관계 에너지 (열정적 vs 안정적)</span>
+                <span style="font-size: 1.5em;">⚡</span>
+            </div>
+            
+            <div class="dna-axis">
+                <span class="axis-name">D - Decision Making</span>
+                <span class="axis-description">의사결정 방식 (계획적 vs 즉흥적)</span>
+                <span style="font-size: 1.5em;">🎯</span>
+            </div>
+        </div>
+        
+        <div class="start-test-cta">
+            <p style="color: #6b7280; margin-bottom: 20px; font-size: 1.1em;">
+                25개의 질문으로 당신의 러브 DNA를 분석해드립니다
+            </p>
+            <a href="/tests/love-dna/test.html" class="start-test-btn">지금 시작하기 →</a>
+            <p style="color: #9ca3af; margin-top: 15px; font-size: 0.9em;">
+                ⏰ 약 8분 소요 | 📱 모바일 최적화
+            </p>
+        </div>
+    </div>
+    
+    <!-- 푸터 -->
+    <div id="footer-placeholder"></div>
+    
+    <!-- JavaScript -->
+    <script src="/js/main.js"></script>
+</body>
+</html>
