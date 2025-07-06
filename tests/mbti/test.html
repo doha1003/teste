@@ -14,6 +14,7 @@
     
     <!-- External CSS -->
     <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/mbti-result-fix.css">
     
     <!-- Favicon -->
     <link rel="icon" href="/images/placeholder-favicon.svg" type="image/svg+xml">
@@ -97,1572 +98,1321 @@
         }
         
         .feature-item {
-            padding: var(--space-4);
-            background: var(--gray-50);
-            border-radius: var(--radius-xl);
-            font-weight: var(--font-medium);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-2);
         }
         
-        .test-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .feature-number {
+            font-size: 2rem;
+            font-weight: var(--font-bold);
+            color: var(--primary-600);
+        }
+        
+        .feature-label {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+        
+        .start-button {
+            display: inline-block;
+            background: var(--primary-600);
             color: white;
-            border: none;
-            padding: var(--space-4) var(--space-10);
+            padding: var(--space-4) var(--space-8);
             border-radius: var(--radius-full);
-            font-size: 1.125rem;
             font-weight: var(--font-semibold);
+            font-size: 1.125rem;
+            transition: all var(--duration-normal) var(--ease-out);
+            border: none;
             cursor: pointer;
-            transition: all var(--duration-300) var(--ease-out);
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            margin-top: var(--space-6);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
         }
         
-        .test-btn:hover {
+        .start-button:hover {
+            background: var(--primary-700);
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
         }
         
-        /* 진행 화면 스타일 */
-        #test-screen {
+        /* 질문 화면 스타일 */
+        .question-container {
             background: white;
             border-radius: var(--radius-3xl);
             padding: var(--space-10);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            margin: 0 auto;
+            max-width: 800px;
+            min-height: 500px;
+            display: none;
         }
         
         .progress-container {
-            margin-bottom: var(--space-10);
+            margin-bottom: var(--space-8);
         }
         
         .progress-info {
             display: flex;
             justify-content: space-between;
-            align-items: center;
             margin-bottom: var(--space-2);
-        }
-        
-        .progress-text {
-            font-size: 0.9375rem;
-            font-weight: var(--font-medium);
-            color: var(--gray-700);
+            font-size: 0.875rem;
+            color: var(--gray-600);
         }
         
         .progress-bar {
-            width: 100%;
-            height: 8px;
             background: var(--gray-200);
-            border-radius: var(--radius-lg);
+            height: 8px;
+            border-radius: var(--radius-full);
             overflow: hidden;
         }
         
-        .progress {
+        .progress-fill {
+            background: var(--primary-600);
             height: 100%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            transition: width var(--duration-500) var(--ease-out);
-            border-radius: var(--radius-lg);
+            width: 0;
+            transition: width var(--duration-normal) var(--ease-out);
         }
         
-        .question-container {
-            margin-bottom: var(--space-10);
-        }
-        
-        .question {
-            font-size: 1.375rem;
-            margin-bottom: var(--space-8);
+        .question-text {
+            font-size: 1.5rem;
             font-weight: var(--font-semibold);
-            line-height: var(--leading-normal);
-            color: var(--gray-800);
+            color: var(--gray-900);
+            text-align: center;
+            margin-bottom: var(--space-10);
+            line-height: 1.4;
         }
         
-        .scenario-context {
-            background: var(--gray-50);
-            padding: var(--space-4);
-            border-radius: var(--radius-lg);
-            margin-bottom: var(--space-6);
-            font-size: 1rem;
-            line-height: var(--leading-relaxed);
-            color: var(--gray-600);
-            border-left: 4px solid var(--primary-500);
-        }
-        
-        .options {
+        .answers-container {
             display: flex;
             flex-direction: column;
             gap: var(--space-3);
+            max-width: 600px;
+            margin: 0 auto;
         }
         
-        .option {
-            background: white;
-            border: 2px solid var(--gray-200);
-            border-radius: var(--radius-xl);
-            padding: var(--space-5) var(--space-6);
-            cursor: pointer;
-            transition: all var(--duration-200) var(--ease-out);
-            font-size: 1rem;
-            line-height: var(--leading-relaxed);
-            position: relative;
-            color: var(--gray-700);
-            text-align: left;
-        }
-        
-        .option:hover {
-            transform: translateY(-1px);
-            border-color: var(--primary-500);
+        .answer-option {
             background: var(--gray-50);
-            box-shadow: var(--shadow-md);
-        }
-        
-        .option.selected {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-color: transparent;
-            color: white;
-            transform: scale(1.02);
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-        }
-        
-        .option-number {
-            position: absolute;
-            left: var(--space-6);
-            top: 50%;
-            transform: translateY(-50%);
-            width: 24px;
-            height: 24px;
-            background: var(--gray-200);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.875rem;
-            font-weight: var(--font-semibold);
-        }
-        
-        .option.selected .option-number {
-            background: rgba(255, 255, 255, 0.3);
-            color: white;
-        }
-        
-        .option-text {
-            margin-left: var(--space-10);
-        }
-        
-        .navigation {
-            display: flex;
-            justify-content: space-between;
-            margin-top: var(--space-10);
-        }
-        
-        .btn {
-            padding: var(--space-3) var(--space-8);
-            border: none;
+            border: 2px solid transparent;
             border-radius: var(--radius-xl);
-            font-size: 1rem;
-            font-weight: var(--font-semibold);
+            padding: var(--space-4) var(--space-6);
             cursor: pointer;
-            transition: all var(--duration-200) var(--ease-out);
-            text-decoration: none;
-            display: inline-block;
+            transition: all var(--duration-normal) var(--ease-out);
+            text-align: left;
+            font-size: 1.0625rem;
         }
         
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            box-shadow: var(--shadow-md);
+        .answer-option:hover {
+            background: var(--primary-50);
+            border-color: var(--primary-300);
+            transform: translateX(4px);
         }
         
-        .btn-primary:hover {
-            transform: translateY(-1px);
-            box-shadow: var(--shadow-lg);
+        .answer-option.selected {
+            background: var(--primary-100);
+            border-color: var(--primary-600);
+            color: var(--primary-800);
         }
         
-        .btn-primary:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-        }
-        
-        .btn-secondary {
-            background: var(--gray-100);
-            color: var(--gray-700);
-            border: 1px solid var(--gray-300);
-        }
-        
-        .btn-secondary:hover {
-            background: var(--gray-200);
-            transform: translateY(-1px);
-        }
-        
-        .hidden {
-            display: none;
-        }
-        
-        /* 결과 화면 스타일 - 완전 새로운 디자인 */
+        /* 결과 화면 스타일 */
         .result-container {
-            padding: 0;
-            background: transparent;
+            display: none;
+            animation: fadeIn 1s ease-out;
         }
         
-        .result-hero {
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .result-header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
+            padding: var(--space-16) var(--space-6);
             text-align: center;
-            padding: var(--space-16) var(--space-8) var(--space-12);
             position: relative;
             overflow: hidden;
         }
         
-        .result-hero::before {
+        .result-header::before {
             content: '';
             position: absolute;
             top: -50%;
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle at 30% 70%, rgba(255,255,255,0.2) 0%, transparent 50%);
-            animation: pulse 3s ease-in-out infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.5; }
-            50% { transform: scale(1.1); opacity: 0.8; }
-        }
-        
-        .result-type-badge {
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            padding: var(--space-6) var(--space-12);
-            border-radius: var(--radius-full);
-            margin-bottom: var(--space-6);
-            position: relative;
-            z-index: 1;
+            background: radial-gradient(circle at 20% 80%, rgba(255,255,255,0.1) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
         }
         
         .result-type {
             font-size: 4rem;
-            font-weight: var(--font-black);
-            margin: 0;
-            letter-spacing: 0.1em;
-            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            font-weight: var(--font-bold);
+            margin-bottom: var(--space-4);
+            position: relative;
+            z-index: 1;
         }
         
-        .result-name {
+        .result-title {
             font-size: 2rem;
             font-weight: var(--font-semibold);
-            margin: var(--space-4) 0;
-            opacity: 0.95;
+            margin-bottom: var(--space-4);
+            position: relative;
+            z-index: 1;
         }
         
-        .result-description {
+        .result-subtitle {
             font-size: 1.25rem;
-            line-height: var(--leading-relaxed);
-            max-width: 600px;
-            margin: 0 auto var(--space-8);
             opacity: 0.9;
-        }
-        
-        .rarity-badge {
-            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-            color: white;
-            padding: var(--space-2) var(--space-6);
-            border-radius: var(--radius-full);
-            font-size: 0.875rem;
-            font-weight: var(--font-semibold);
-            display: inline-block;
-            box-shadow: 0 4px 10px rgba(251, 191, 36, 0.3);
-        }
-        
-        /* 성향 분석 카드 */
-        .trait-analysis-card {
-            background: white;
-            border-radius: var(--radius-3xl);
-            padding: var(--space-10);
-            margin: -var(--space-16) var(--space-8) var(--space-8);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
             position: relative;
-            z-index: 2;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
+            z-index: 1;
         }
         
-        .trait-bars {
-            display: grid;
-            gap: var(--space-8);
-        }
-        
-        .trait-bar {
-            position: relative;
-        }
-        
-        .trait-labels {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: var(--space-3);
-            font-weight: var(--font-semibold);
-            color: var(--gray-700);
-        }
-        
-        .trait-bar-bg {
-            height: 40px;
-            background: var(--gray-100);
-            border-radius: var(--radius-full);
-            overflow: hidden;
-            position: relative;
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06);
-        }
-        
-        .trait-bar-fill {
-            height: 100%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            transition: width var(--duration-1000) var(--ease-out);
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            padding-right: var(--space-4);
-            color: white;
-            font-weight: var(--font-bold);
-            font-size: 1rem;
-            border-radius: var(--radius-full);
-            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
-        }
-        
-        /* 결과 섹션들 - 카드 스타일 */
-        .result-sections {
-            padding: 0 var(--space-8) var(--space-12);
-            max-width: 1200px;
+        .result-content {
+            padding: var(--space-8);
+            max-width: 900px;
             margin: 0 auto;
-        }
-        
-        .result-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: var(--space-6);
-            margin-bottom: var(--space-8);
         }
         
         .result-section {
             background: white;
-            padding: var(--space-8);
             border-radius: var(--radius-2xl);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-            transition: all var(--duration-300) var(--ease-out);
-            border: 1px solid var(--gray-100);
-        }
-        
-        .result-section:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
-        }
-        
-        .section-icon {
-            width: 56px;
-            height: 56px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: var(--radius-xl);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.75rem;
-            margin-bottom: var(--space-4);
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+            padding: var(--space-8);
+            margin-bottom: var(--space-6);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
         }
         
         .section-title {
-            font-size: 1.25rem;
+            font-size: 1.5rem;
             font-weight: var(--font-semibold);
+            color: var(--gray-900);
             margin-bottom: var(--space-4);
-            color: var(--gray-800);
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
         }
         
-        .section-content {
-            font-size: 1rem;
-            line-height: var(--leading-relaxed);
-            color: var(--gray-600);
+        .section-icon {
+            font-size: 1.75rem;
         }
         
-        /* 유명인 그리드 */
-        .famous-grid {
+        .personality-description {
+            font-size: 1.125rem;
+            line-height: 1.8;
+            color: var(--gray-700);
+        }
+        
+        .traits-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            gap: var(--space-3);
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-4);
+            margin-top: var(--space-4);
         }
         
-        .famous-person {
+        .trait-item {
             background: var(--gray-50);
             padding: var(--space-4);
             border-radius: var(--radius-xl);
             text-align: center;
+        }
+        
+        .trait-label {
             font-size: 0.875rem;
-            font-weight: var(--font-medium);
-            transition: all var(--duration-200) var(--ease-out);
-            border: 2px solid transparent;
+            color: var(--gray-600);
+            margin-bottom: var(--space-1);
         }
         
-        .famous-person:hover {
-            background: white;
-            border-color: var(--primary-300);
-            transform: translateY(-1px);
-            box-shadow: var(--shadow-sm);
+        .trait-value {
+            font-size: 1.125rem;
+            font-weight: var(--font-semibold);
+            color: var(--primary-700);
         }
         
-        /* 궁합 카드 */
-        .compatibility-cards {
+        .celebrities-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: var(--space-4);
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: var(--space-3);
+            margin-top: var(--space-4);
         }
         
-        .compat-card {
-            background: var(--gray-50);
-            padding: var(--space-5);
-            border-radius: var(--radius-xl);
+        .celebrity-item {
+            background: var(--primary-50);
+            padding: var(--space-3);
+            border-radius: var(--radius-lg);
             text-align: center;
-            transition: all var(--duration-200) var(--ease-out);
+            font-weight: var(--font-medium);
+            color: var(--primary-800);
         }
         
-        .compat-card:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-        
-        .compat-level {
-            font-size: 0.75rem;
-            font-weight: var(--font-bold);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: var(--space-2);
-        }
-        
-        .compat-best { 
-            color: #10b981; 
-            background: rgba(16, 185, 129, 0.1);
-            padding: var(--space-1) var(--space-3);
-            border-radius: var(--radius-full);
-            display: inline-block;
-        }
-        .compat-good { 
-            color: #3b82f6;
-            background: rgba(59, 130, 246, 0.1);
-            padding: var(--space-1) var(--space-3);
-            border-radius: var(--radius-full);
-            display: inline-block;
-        }
-        .compat-challenge { 
-            color: #f59e0b;
-            background: rgba(245, 158, 11, 0.1);
-            padding: var(--space-1) var(--space-3);
-            border-radius: var(--radius-full);
-            display: inline-block;
-        }
-        
-        /* 직업 리스트 */
-        .job-list {
+        .careers-list {
             display: flex;
             flex-wrap: wrap;
             gap: var(--space-2);
+            margin-top: var(--space-4);
         }
         
-        .job-item {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+        .career-tag {
+            background: var(--gray-100);
             padding: var(--space-2) var(--space-4);
             border-radius: var(--radius-full);
             font-size: 0.875rem;
+            color: var(--gray-700);
+        }
+        
+        .compatibility-section {
+            display: grid;
+            gap: var(--space-4);
+            margin-top: var(--space-4);
+        }
+        
+        .compatibility-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+        }
+        
+        .compatibility-label {
             font-weight: var(--font-medium);
-            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
+            color: var(--gray-700);
+            min-width: 80px;
         }
         
-        /* 상세 분석 카드 */
-        .detail-card {
-            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
-            border-radius: var(--radius-2xl);
-            padding: var(--space-8);
-            margin-bottom: var(--space-6);
-            position: relative;
-            overflow: hidden;
+        .compatibility-types {
+            display: flex;
+            gap: var(--space-2);
+            flex-wrap: wrap;
         }
         
-        .detail-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .type-tag {
+            background: var(--primary-100);
+            color: var(--primary-800);
+            padding: var(--space-1) var(--space-3);
+            border-radius: var(--radius-md);
+            font-size: 0.875rem;
+            font-weight: var(--font-medium);
         }
         
-        /* 공유 섹션 */
-        .share-container {
+        .share-section {
+            background: var(--gray-50);
+            padding: var(--space-6);
+            border-radius: var(--radius-xl);
             text-align: center;
-            padding: var(--space-12) var(--space-8);
-            background: white;
-            border-radius: var(--radius-3xl);
-            margin: var(--space-8);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            margin-top: var(--space-8);
         }
         
         .share-title {
-            font-size: 1.5rem;
+            font-size: 1.25rem;
             font-weight: var(--font-semibold);
-            margin-bottom: var(--space-6);
-            color: var(--gray-800);
+            color: var(--gray-900);
+            margin-bottom: var(--space-4);
         }
         
         .share-buttons {
             display: flex;
-            gap: var(--space-4);
+            gap: var(--space-3);
             justify-content: center;
             flex-wrap: wrap;
         }
         
-        .kakao-share-btn {
-            background: #FEE500;
-            color: #000000;
+        .share-button {
+            padding: var(--space-3) var(--space-5);
+            border-radius: var(--radius-lg);
+            font-weight: var(--font-medium);
             border: none;
-            border-radius: var(--radius-xl);
-            padding: var(--space-4) var(--space-8);
-            font-size: 1rem;
-            font-weight: var(--font-semibold);
             cursor: pointer;
-            transition: all var(--duration-200) var(--ease-out);
-            display: inline-flex;
+            transition: all var(--duration-normal) var(--ease-out);
+            display: flex;
             align-items: center;
             gap: var(--space-2);
+        }
+        
+        .kakao-share {
+            background: #FEE500;
+            color: #000000;
+        }
+        
+        .kakao-share:hover {
+            background: #FDDC3F;
+            transform: translateY(-2px);
+        }
+        
+        .link-copy {
+            background: var(--gray-200);
+            color: var(--gray-700);
+        }
+        
+        .link-copy:hover {
+            background: var(--gray-300);
+            transform: translateY(-2px);
+        }
+        
+        .retry-button {
+            display: inline-block;
+            background: var(--primary-600);
+            color: white;
+            padding: var(--space-4) var(--space-6);
+            border-radius: var(--radius-full);
+            font-weight: var(--font-semibold);
             text-decoration: none;
-            box-shadow: 0 4px 12px rgba(254, 229, 0, 0.3);
+            margin-top: var(--space-4);
+            transition: all var(--duration-normal) var(--ease-out);
         }
         
-        .kakao-share-btn:hover {
-            background: #F5DC00;
+        .retry-button:hover {
+            background: var(--primary-700);
             transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(254, 229, 0, 0.4);
-        }
-        
-        .copy-btn {
-            background: var(--gray-700);
-            color: white;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        }
-        
-        .copy-btn:hover {
-            background: var(--gray-800);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
-        }
-        
-        .restart-btn {
-            margin-top: var(--space-8);
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: var(--space-4) var(--space-10);
-            font-size: 1.125rem;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-        }
-        
-        .restart-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
         }
         
         /* 반응형 디자인 */
         @media (max-width: 768px) {
-            .test-content { 
-                padding: var(--space-4); 
+            .test-header h1 {
+                font-size: 2rem;
             }
-            .result-hero {
-                padding: var(--space-12) var(--space-4) var(--space-8);
+            
+            .question-text {
+                font-size: 1.25rem;
             }
+            
             .result-type {
                 font-size: 3rem;
             }
-            .result-name {
+            
+            .result-title {
                 font-size: 1.5rem;
             }
-            .result-grid {
-                grid-template-columns: 1fr;
+            
+            .test-content,
+            .result-content {
+                padding: var(--space-4);
             }
-            .trait-analysis-card {
-                margin: -var(--space-12) var(--space-4) var(--space-4);
+            
+            .test-info,
+            .question-container,
+            .result-section {
                 padding: var(--space-6);
-            }
-            .share-container {
-                margin: var(--space-4);
             }
         }
     </style>
 </head>
 <body>
-    <!-- 네비게이션 -->
     <div id="navbar-placeholder"></div>
     
     <div class="test-container">
         <div class="test-header">
             <h1>MBTI 성격유형 검사</h1>
-            <p>시나리오 기반 24문항 정밀 분석</p>
+            <p>당신의 진짜 성격을 찾아보세요</p>
         </div>
         
         <div class="test-content">
-            <!-- 테스트 시작 화면 -->
-            <div id="intro-screen" class="test-info">
-                <h2>더 정확한 MBTI 성격유형 검사</h2>
-                <p>
-                    이 검사는 24개의 실제 상황 시나리오를 통해 당신의 MBTI 성격유형을 정밀하게 분석합니다.<br>
-                    각 상황에서 5가지 선택지 중 가장 자신과 가까운 답변을 선택해주세요.
-                </p>
+            <!-- 시작 화면 -->
+            <div class="test-info" id="testInfo">
+                <h2>정밀 MBTI 성격유형 검사</h2>
+                <p>실제 상황 시나리오와 5단계 세밀한 답변으로<br>더욱 정확한 당신의 성격유형을 분석합니다</p>
+                
                 <div class="test-features">
-                    <div class="feature-item">🎯 시나리오 기반 질문</div>
-                    <div class="feature-item">📊 5단계 정밀 답변</div>
-                    <div class="feature-item">✨ 상세한 분석 결과</div>
-                    <div class="feature-item">💼 맞춤 직업 추천</div>
-                    <div class="feature-item">💝 연애 궁합 분석</div>
+                    <div class="feature-item">
+                        <div class="feature-number">24</div>
+                        <div class="feature-label">심층 문항</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-number">5</div>
+                        <div class="feature-label">단계 답변</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-number">16</div>
+                        <div class="feature-label">성격 유형</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-number">10</div>
+                        <div class="feature-label">분 소요</div>
+                    </div>
                 </div>
-                <div style="text-align: center; margin-top: 2rem;">
-                    <button class="test-btn" onclick="startTest()">
-                        테스트 시작하기
-                    </button>
-                </div>
+                
+                <button class="start-button" onclick="startTest()">검사 시작하기</button>
             </div>
             
-            <!-- 테스트 진행 화면 -->
-            <div id="test-screen" class="hidden">
+            <!-- 질문 화면 -->
+            <div class="question-container" id="questionContainer">
                 <div class="progress-container">
                     <div class="progress-info">
-                        <span class="progress-text" id="progress-text">질문 0 / 24</span>
-                        <span class="progress-text" id="progress-percent">0%</span>
+                        <span>문항 <span id="currentQuestion">1</span>/24</span>
+                        <span id="progressPercent">4%</span>
                     </div>
                     <div class="progress-bar">
-                        <div class="progress" id="progress"></div>
+                        <div class="progress-fill" id="progressFill"></div>
                     </div>
                 </div>
                 
-                <div class="question-container">
-                    <div class="question" id="question"></div>
-                    <div class="scenario-context" id="scenario-context"></div>
-                    <div class="options" id="options"></div>
-                </div>
+                <div class="question-text" id="questionText"></div>
                 
-                <div class="navigation">
-                    <button class="btn btn-secondary" id="prev-btn" onclick="previousQuestion()">이전</button>
-                    <button class="btn btn-primary" id="next-btn" onclick="nextQuestion()">다음</button>
-                </div>
-            </div>
-            
-            <!-- 결과 화면 -->
-            <div id="result-screen" class="result-container hidden">
-                <!-- 결과 히어로 섹션 -->
-                <div class="result-hero">
-                    <div class="result-type-badge">
-                        <div class="result-type" id="result-type">INFP</div>
-                    </div>
-                    <h2 class="result-name" id="result-name">열정적인 중재자</h2>
-                    <p class="result-description" id="result-description">
-                        항상 선을 추구하는 부드럽고 친절한 이타주의자
-                    </p>
-                    <div class="rarity-badge" id="rarity-badge">
-                        전체 인구의 4.4% (희귀한 유형)
-                    </div>
-                </div>
-                
-                <!-- 성향 분석 카드 -->
-                <div class="trait-analysis-card">
-                    <h3 style="text-align: center; margin-bottom: 2rem; color: var(--gray-800);">성향 분석 결과</h3>
-                    <div class="trait-bars">
-                        <div class="trait-bar">
-                            <div class="trait-labels">
-                                <span>외향형 (E)</span>
-                                <span>내향형 (I)</span>
-                            </div>
-                            <div class="trait-bar-bg">
-                                <div class="trait-bar-fill" id="ei-bar"></div>
-                            </div>
-                        </div>
-                        <div class="trait-bar">
-                            <div class="trait-labels">
-                                <span>감각형 (S)</span>
-                                <span>직관형 (N)</span>
-                            </div>
-                            <div class="trait-bar-bg">
-                                <div class="trait-bar-fill" id="sn-bar"></div>
-                            </div>
-                        </div>
-                        <div class="trait-bar">
-                            <div class="trait-labels">
-                                <span>사고형 (T)</span>
-                                <span>감정형 (F)</span>
-                            </div>
-                            <div class="trait-bar-bg">
-                                <div class="trait-bar-fill" id="tf-bar"></div>
-                            </div>
-                        </div>
-                        <div class="trait-bar">
-                            <div class="trait-labels">
-                                <span>판단형 (J)</span>
-                                <span>인식형 (P)</span>
-                            </div>
-                            <div class="trait-bar-bg">
-                                <div class="trait-bar-fill" id="jp-bar"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- 결과 섹션들 -->
-                <div class="result-sections">
-                    <!-- 주요 섹션 그리드 -->
-                    <div class="result-grid">
-                        <!-- 유명인 섹션 -->
-                        <div class="result-section">
-                            <div class="section-icon">🌟</div>
-                            <h3 class="section-title">같은 유형의 유명인</h3>
-                            <div class="famous-grid" id="famous-people"></div>
-                        </div>
-                        
-                        <!-- 직업 추천 섹션 -->
-                        <div class="result-section">
-                            <div class="section-icon">💼</div>
-                            <h3 class="section-title">추천 직업</h3>
-                            <div class="job-list" id="job-recommendations"></div>
-                        </div>
-                        
-                        <!-- 연애 궁합 섹션 -->
-                        <div class="result-section">
-                            <div class="section-icon">💝</div>
-                            <h3 class="section-title">연애 궁합</h3>
-                            <div class="compatibility-cards" id="compatibility"></div>
-                        </div>
-                        
-                        <!-- 강점 섹션 -->
-                        <div class="result-section">
-                            <div class="section-icon">✨</div>
-                            <h3 class="section-title">강점</h3>
-                            <div class="section-content" id="strengths"></div>
-                        </div>
-                        
-                        <!-- 약점 섹션 -->
-                        <div class="result-section">
-                            <div class="section-icon">🎯</div>
-                            <h3 class="section-title">개선점</h3>
-                            <div class="section-content" id="weaknesses"></div>
-                        </div>
-                        
-                        <!-- 스트레스 대처법 -->
-                        <div class="result-section">
-                            <div class="section-icon">🧘</div>
-                            <h3 class="section-title">스트레스 대처법</h3>
-                            <div class="section-content" id="stress-management"></div>
-                        </div>
-                    </div>
-                    
-                    <!-- 상세 분석 섹션들 -->
-                    <div class="detail-card">
-                        <h3 class="section-title">💕 연애 스타일</h3>
-                        <div class="section-content" id="love-style"></div>
-                    </div>
-                    
-                    <div class="detail-card">
-                        <h3 class="section-title">🌱 성장 포인트</h3>
-                        <div class="section-content" id="growth-points"></div>
-                    </div>
-                </div>
-                
-                <!-- 공유하기 섹션 -->
-                <div class="share-container">
-                    <div class="share-title">내 성격 유형을 친구들과 공유해보세요!</div>
-                    <div class="share-buttons">
-                        <button class="kakao-share-btn" onclick="shareKakao()">
-                            💬 카카오톡으로 공유하기
-                        </button>
-                        <button class="kakao-share-btn copy-btn" onclick="copyLink()">
-                            📋 링크 복사하기
-                        </button>
-                    </div>
-                    <button class="btn restart-btn" onclick="restartTest()">
-                        다시 테스트하기
-                    </button>
-                </div>
+                <div class="answers-container" id="answersContainer"></div>
             </div>
         </div>
     </div>
     
-    <!-- 푸터 -->
+    <!-- 결과 화면 -->
+    <div class="result-container" id="resultContainer">
+        <div class="result-header">
+            <div class="result-type" id="resultType"></div>
+            <div class="result-title" id="resultTitle"></div>
+            <div class="result-subtitle" id="resultSubtitle"></div>
+            <div class="result-rarity" id="resultRarity"></div>
+        </div>
+        
+        <div class="result-content">
+            <!-- 성격 설명 -->
+            <div class="result-section">
+                <h3 class="section-title">
+                    <span class="section-icon">🎭</span>
+                    성격 특징
+                </h3>
+                <div class="personality-description" id="personalityDescription"></div>
+            </div>
+            
+            <!-- 성향 분석 -->
+            <div class="result-section">
+                <h3 class="section-title">
+                    <span class="section-icon">📊</span>
+                    성향 분석
+                </h3>
+                <div class="traits-grid" id="traitsGrid"></div>
+            </div>
+            
+            <!-- 유명인 -->
+            <div class="result-section">
+                <h3 class="section-title">
+                    <span class="section-icon">⭐</span>
+                    같은 유형의 유명인
+                </h3>
+                <div class="celebrities-grid" id="celebritiesGrid"></div>
+            </div>
+            
+            <!-- 추천 직업 -->
+            <div class="result-section">
+                <h3 class="section-title">
+                    <span class="section-icon">💼</span>
+                    추천 직업
+                </h3>
+                <div class="careers-list" id="careersList"></div>
+            </div>
+            
+            <!-- 연애 궁합 -->
+            <div class="result-section">
+                <h3 class="section-title">
+                    <span class="section-icon">💕</span>
+                    연애 궁합
+                </h3>
+                <div class="compatibility-section" id="compatibilitySection"></div>
+            </div>
+            
+            <!-- 강점과 약점 -->
+            <div class="result-section">
+                <h3 class="section-title">
+                    <span class="section-icon">💪</span>
+                    강점
+                </h3>
+                <div id="strengthsList"></div>
+            </div>
+            
+            <div class="result-section">
+                <h3 class="section-title">
+                    <span class="section-icon">🎯</span>
+                    약점
+                </h3>
+                <div id="weaknessesList"></div>
+            </div>
+            
+            <!-- 추가 정보 -->
+            <div class="result-section">
+                <h3 class="section-title">
+                    <span class="section-icon">🌱</span>
+                    성장 포인트
+                </h3>
+                <div id="growthPoints"></div>
+            </div>
+            
+            <!-- 공유하기 -->
+            <div class="share-section">
+                <h3 class="share-title">결과 공유하기</h3>
+                <div class="share-buttons">
+                    <button class="share-button kakao-share" id="kakaoShare">
+                        <span>🗨️</span> 카카오톡
+                    </button>
+                    <button class="share-button link-copy" onclick="copyLink()">
+                        <span>🔗</span> 링크 복사
+                    </button>
+                </div>
+                <a href="/tests/mbti/" class="retry-button">다시 검사하기</a>
+            </div>
+        </div>
+    </div>
+    
     <div id="footer-placeholder"></div>
     
-    <!-- External JavaScript -->
-    <script src="/js/main.js"></script>
-    
     <script>
-        // 카카오 SDK 초기화
-        if (typeof Kakao !== 'undefined') {
-            Kakao.init('8b5c6e8f97ec3d51a6f784b8b4b5ed99');
-        }
+        // Kakao SDK 초기화
+        Kakao.init('8b5c6e8f97ec3d51a6f784b8b4b5ed99');
         
-        // MBTI 테스트 질문들 (24문항, 시나리오 기반)
-        const mbtiQuestions = [
+        // MBTI 테스트 질문 데이터
+        const questions = [
             {
-                question: "주말 계획을 세울 때",
-                scenario: "이번 주말에 자유 시간이 생겼습니다. 어떻게 보내실 건가요?",
-                options: [
-                    { text: "친구들에게 연락해서 함께 할 활동을 계획한다", score: { E: 2, I: 0 } },
-                    { text: "소규모 모임이나 가까운 친구와의 만남을 선호한다", score: { E: 1, I: 0 } },
-                    { text: "반은 혼자, 반은 사람들과 시간을 보낸다", score: { E: 0, I: 0 } },
-                    { text: "집에서 취미 활동을 하며 조용히 보낸다", score: { E: 0, I: 1 } },
-                    { text: "완전히 혼자만의 시간을 가지며 재충전한다", score: { E: 0, I: 2 } }
+                id: 1,
+                text: "금요일 저녁, 친구가 갑자기 파티에 초대합니다. 당신의 반응은?",
+                dimension: "E",
+                answers: [
+                    { text: "신난다! 바로 준비하고 나간다", value: 2 },
+                    { text: "좋아하지만 잠시 고민한다", value: 1 },
+                    { text: "상황에 따라 다르다", value: 0 },
+                    { text: "내키지 않지만 의리상 간다", value: -1 },
+                    { text: "정중히 거절하고 집에서 쉰다", value: -2 }
                 ]
             },
             {
-                question: "새로운 프로젝트를 시작할 때",
-                scenario: "회사에서 새로운 프로젝트를 맡게 되었습니다. 어떻게 접근하시겠습니까?",
-                options: [
-                    { text: "구체적인 계획과 일정을 먼저 세운다", score: { S: 2, N: 0 } },
-                    { text: "실용적인 목표를 설정하고 단계별로 진행한다", score: { S: 1, N: 0 } },
-                    { text: "목표와 비전을 균형있게 고려한다", score: { S: 0, N: 0 } },
-                    { text: "큰 그림과 최종 비전을 먼저 그린다", score: { S: 0, N: 1 } },
-                    { text: "혁신적인 아이디어와 가능성을 탐색한다", score: { S: 0, N: 2 } }
+                id: 2,
+                text: "새로운 프로젝트를 시작할 때 당신의 접근법은?",
+                dimension: "S",
+                answers: [
+                    { text: "구체적인 계획과 일정을 먼저 짠다", value: 2 },
+                    { text: "대략적인 계획을 세우고 시작한다", value: 1 },
+                    { text: "기본 틀만 잡고 유연하게 진행한다", value: 0 },
+                    { text: "큰 그림을 그리고 디테일은 나중에", value: -1 },
+                    { text: "영감이 떠오르는 대로 진행한다", value: -2 }
                 ]
             },
             {
-                question: "팀원과 의견 충돌이 생겼을 때",
-                scenario: "프로젝트 진행 중 팀원과 방향성에 대해 의견이 다릅니다. 어떻게 해결하시겠습니까?",
-                options: [
-                    { text: "논리적인 근거와 데이터로 내 주장을 뒷받침한다", score: { T: 2, F: 0 } },
-                    { text: "객관적인 분석을 통해 최선의 방안을 찾는다", score: { T: 1, F: 0 } },
-                    { text: "논리와 감정을 모두 고려하여 접근한다", score: { T: 0, F: 0 } },
-                    { text: "팀원의 감정과 관계를 우선 고려한다", score: { T: 0, F: 1 } },
-                    { text: "모두가 만족할 수 있는 조화로운 해결책을 찾는다", score: { T: 0, F: 2 } }
+                id: 3,
+                text: "친구가 실연으로 힘들어할 때 당신은?",
+                dimension: "T",
+                answers: [
+                    { text: "해결책과 조언을 제시한다", value: 2 },
+                    { text: "상황을 분석하며 이야기를 들어준다", value: 1 },
+                    { text: "공감하면서도 현실적 조언을 한다", value: 0 },
+                    { text: "주로 감정적 지지를 보낸다", value: -1 },
+                    { text: "그저 옆에서 들어주고 공감한다", value: -2 }
                 ]
             },
             {
-                question: "여행 계획을 세울 때",
-                scenario: "한 달 후 일주일간의 휴가가 있습니다. 어떻게 준비하시겠습니까?",
-                options: [
-                    { text: "숙소, 교통, 일정을 모두 미리 예약한다", score: { J: 2, P: 0 } },
-                    { text: "주요 일정만 정하고 세부사항은 나중에 결정한다", score: { J: 1, P: 0 } },
-                    { text: "대략적인 계획만 세운다", score: { J: 0, P: 0 } },
-                    { text: "목적지만 정하고 나머지는 즉흥적으로", score: { J: 0, P: 1 } },
-                    { text: "그날그날 기분에 따라 자유롭게 움직인다", score: { J: 0, P: 2 } }
+                id: 4,
+                text: "여행 계획을 세울 때 당신의 스타일은?",
+                dimension: "J",
+                answers: [
+                    { text: "시간별로 상세한 일정표를 만든다", value: 2 },
+                    { text: "주요 장소와 시간만 정해둔다", value: 1 },
+                    { text: "대략적인 코스만 정한다", value: 0 },
+                    { text: "숙소만 예약하고 나머진 즉흥적으로", value: -1 },
+                    { text: "완전히 즉흥적으로 떠난다", value: -2 }
                 ]
             },
             {
-                question: "파티나 모임에서",
-                scenario: "회사 창립기념 파티에 참석했습니다. 당신의 모습은?",
-                options: [
-                    { text: "여러 그룹을 돌아다니며 활발히 대화한다", score: { E: 2, I: 0 } },
-                    { text: "새로운 사람들과 네트워킹을 즐긴다", score: { E: 1, I: 0 } },
-                    { text: "아는 사람들과 적당히 어울린다", score: { E: 0, I: 0 } },
-                    { text: "몇몇 친한 동료들과만 대화한다", score: { E: 0, I: 1 } },
-                    { text: "조용한 곳에서 한두 명과 깊은 대화를 나눈다", score: { E: 0, I: 2 } }
+                id: 5,
+                text: "회의나 모임에서 당신의 모습은?",
+                dimension: "E",
+                answers: [
+                    { text: "적극적으로 의견을 제시하고 주도한다", value: 2 },
+                    { text: "필요할 때 의견을 말한다", value: 1 },
+                    { text: "상황에 따라 다르게 행동한다", value: 0 },
+                    { text: "주로 듣고 중요한 것만 말한다", value: -1 },
+                    { text: "조용히 듣기만 한다", value: -2 }
                 ]
             },
             {
-                question: "문제 해결 방식",
-                scenario: "복잡한 문제를 해결해야 합니다. 어떤 방식을 선호하시나요?",
-                options: [
-                    { text: "과거 경험과 검증된 방법을 활용한다", score: { S: 2, N: 0 } },
-                    { text: "구체적인 사실과 데이터를 분석한다", score: { S: 1, N: 0 } },
-                    { text: "경험과 직관을 함께 사용한다", score: { S: 0, N: 0 } },
-                    { text: "패턴을 찾고 새로운 관점을 시도한다", score: { S: 0, N: 1 } },
-                    { text: "창의적이고 혁신적인 해결책을 모색한다", score: { S: 0, N: 2 } }
+                id: 6,
+                text: "요리를 할 때 당신은?",
+                dimension: "S",
+                answers: [
+                    { text: "레시피를 정확히 따른다", value: 2 },
+                    { text: "레시피를 참고하되 조금씩 조정한다", value: 1 },
+                    { text: "대략적으로 따르며 맛을 본다", value: 0 },
+                    { text: "레시피는 참고만 하고 자유롭게", value: -1 },
+                    { text: "완전히 감각적으로 요리한다", value: -2 }
                 ]
             },
             {
-                question: "친구가 고민을 털어놓을 때",
-                scenario: "가까운 친구가 심각한 고민을 상담합니다. 어떻게 도와주시겠습니까?",
-                options: [
-                    { text: "문제를 분석하고 실질적인 해결책을 제시한다", score: { T: 2, F: 0 } },
-                    { text: "객관적인 조언과 다양한 옵션을 제공한다", score: { T: 1, F: 0 } },
-                    { text: "공감하면서도 현실적인 조언을 한다", score: { T: 0, F: 0 } },
-                    { text: "먼저 충분히 공감하고 위로한다", score: { T: 0, F: 1 } },
-                    { text: "감정적 지지와 따뜻한 위로에 집중한다", score: { T: 0, F: 2 } }
+                id: 7,
+                text: "중요한 결정을 내릴 때 당신은?",
+                dimension: "T",
+                answers: [
+                    { text: "장단점을 리스트로 만들어 분석한다", value: 2 },
+                    { text: "논리적으로 따져보고 결정한다", value: 1 },
+                    { text: "이성과 감정을 모두 고려한다", value: 0 },
+                    { text: "마음이 끌리는 쪽을 더 중시한다", value: -1 },
+                    { text: "직감과 느낌을 따른다", value: -2 }
                 ]
             },
             {
-                question: "업무 스타일",
-                scenario: "중요한 프로젝트의 마감일이 2주 후입니다. 어떻게 진행하시나요?",
-                options: [
-                    { text: "즉시 시작하여 체계적으로 진행한다", score: { J: 2, P: 0 } },
-                    { text: "계획을 세우고 일정에 맞춰 진행한다", score: { J: 1, P: 0 } },
-                    { text: "적당한 속도로 진행한다", score: { J: 0, P: 0 } },
-                    { text: "마감일이 가까워지면 집중력이 높아진다", score: { J: 0, P: 1 } },
-                    { text: "압박감 속에서 최고의 성과를 낸다", score: { J: 0, P: 2 } }
+                id: 8,
+                text: "주말 계획이 갑자기 취소되었을 때?",
+                dimension: "J",
+                answers: [
+                    { text: "바로 다른 계획을 세운다", value: 2 },
+                    { text: "아쉽지만 대안을 찾는다", value: 1 },
+                    { text: "그냥 쉬어도 괜찮다고 생각한다", value: 0 },
+                    { text: "오히려 자유로워서 좋다", value: -1 },
+                    { text: "즉흥적으로 하고 싶은 걸 한다", value: -2 }
                 ]
             },
             {
-                question: "학습 방식",
-                scenario: "새로운 기술이나 지식을 배워야 합니다. 어떤 방식을 선호하시나요?",
-                options: [
-                    { text: "스터디 그룹이나 강의를 통해 배운다", score: { E: 2, I: 0 } },
-                    { text: "질문하고 토론하며 배운다", score: { E: 1, I: 0 } },
-                    { text: "강의와 자습을 병행한다", score: { E: 0, I: 0 } },
-                    { text: "책이나 온라인 자료로 독학한다", score: { E: 0, I: 1 } },
-                    { text: "혼자서 깊이 파고들며 마스터한다", score: { E: 0, I: 2 } }
+                id: 9,
+                text: "스트레스를 받았을 때 당신은?",
+                dimension: "E",
+                answers: [
+                    { text: "친구들을 만나 수다로 푼다", value: 2 },
+                    { text: "가까운 사람과 이야기한다", value: 1 },
+                    { text: "상황에 따라 다르다", value: 0 },
+                    { text: "혼자만의 시간이 더 필요하다", value: -1 },
+                    { text: "완전히 혼자 있으며 회복한다", value: -2 }
                 ]
             },
             {
-                question: "설명하는 방식",
-                scenario: "복잡한 개념을 다른 사람에게 설명해야 합니다. 어떻게 설명하시나요?",
-                options: [
-                    { text: "구체적인 예시와 단계별 설명을 사용한다", score: { S: 2, N: 0 } },
-                    { text: "실제 사례와 경험을 들어 설명한다", score: { S: 1, N: 0 } },
-                    { text: "개념과 예시를 균형있게 사용한다", score: { S: 0, N: 0 } },
-                    { text: "전체적인 맥락과 원리를 먼저 설명한다", score: { S: 0, N: 1 } },
-                    { text: "비유와 추상적 개념으로 이해시킨다", score: { S: 0, N: 2 } }
+                id: 10,
+                text: "새로운 기술이나 기기를 접할 때?",
+                dimension: "S",
+                answers: [
+                    { text: "설명서를 꼼꼼히 읽고 시작한다", value: 2 },
+                    { text: "기본 사용법을 익히고 써본다", value: 1 },
+                    { text: "대충 보고 직접 써본다", value: 0 },
+                    { text: "일단 써보면서 익힌다", value: -1 },
+                    { text: "직관적으로 이것저것 눌러본다", value: -2 }
                 ]
             },
             {
-                question: "팀 프로젝트에서의 역할",
-                scenario: "팀 프로젝트를 진행합니다. 어떤 역할을 맡고 싶으신가요?",
-                options: [
-                    { text: "효율성과 성과를 책임지는 역할", score: { T: 2, F: 0 } },
-                    { text: "논리적 분석과 전략을 담당하는 역할", score: { T: 1, F: 0 } },
-                    { text: "분석과 협력을 모두 하는 역할", score: { T: 0, F: 0 } },
-                    { text: "팀원들의 화합과 동기부여를 담당", score: { T: 0, F: 1 } },
-                    { text: "팀 분위기와 관계를 케어하는 역할", score: { T: 0, F: 2 } }
+                id: 11,
+                text: "팀 프로젝트에서 갈등이 생겼을 때?",
+                dimension: "T",
+                answers: [
+                    { text: "객관적 기준으로 해결책을 제시한다", value: 2 },
+                    { text: "논리적으로 상황을 정리한다", value: 1 },
+                    { text: "양쪽 입장을 모두 고려한다", value: 0 },
+                    { text: "감정적 화해를 우선시한다", value: -1 },
+                    { text: "모두의 감정을 먼저 살핀다", value: -2 }
                 ]
             },
             {
-                question: "변화에 대한 태도",
-                scenario: "회사에서 갑작스런 조직개편이 발표되었습니다. 당신의 반응은?",
-                options: [
-                    { text: "새로운 체계와 규칙을 빨리 파악한다", score: { J: 2, P: 0 } },
-                    { text: "변화에 대한 계획을 세운다", score: { J: 1, P: 0 } },
-                    { text: "상황을 지켜보며 적응한다", score: { J: 0, P: 0 } },
-                    { text: "유연하게 받아들이고 기회를 찾는다", score: { J: 0, P: 1 } },
-                    { text: "변화를 즐기며 새로운 가능성에 흥분한다", score: { J: 0, P: 2 } }
+                id: 12,
+                text: "책상이나 작업 공간의 상태는?",
+                dimension: "J",
+                answers: [
+                    { text: "항상 깔끔하게 정리되어 있다", value: 2 },
+                    { text: "대체로 정돈되어 있다", value: 1 },
+                    { text: "필요에 따라 정리한다", value: 0 },
+                    { text: "좀 어질러져 있어도 괜찮다", value: -1 },
+                    { text: "창의적인 무질서 상태다", value: -2 }
                 ]
             },
             {
-                question: "스트레스 해소 방법",
-                scenario: "매우 스트레스가 많은 한 주를 보냈습니다. 어떻게 해소하시나요?",
-                options: [
-                    { text: "친구들과 만나 수다를 떨며 해소한다", score: { E: 2, I: 0 } },
-                    { text: "사람들과 활동적인 것을 한다", score: { E: 1, I: 0 } },
-                    { text: "상황에 따라 다르게 해소한다", score: { E: 0, I: 0 } },
-                    { text: "조용한 취미활동으로 마음을 진정시킨다", score: { E: 0, I: 1 } },
-                    { text: "완전히 혼자만의 시간을 갖는다", score: { E: 0, I: 2 } }
+                id: 13,
+                text: "새로운 사람들과의 모임에서?",
+                dimension: "E",
+                answers: [
+                    { text: "먼저 다가가 대화를 시작한다", value: 2 },
+                    { text: "자연스럽게 대화에 참여한다", value: 1 },
+                    { text: "분위기를 보며 행동한다", value: 0 },
+                    { text: "다가오는 사람과만 대화한다", value: -1 },
+                    { text: "최소한의 대화만 나눈다", value: -2 }
                 ]
             },
             {
-                question: "새로운 도구나 기기를 다룰 때",
-                scenario: "새로 산 전자기기를 사용해야 합니다. 어떻게 시작하시나요?",
-                options: [
-                    { text: "설명서를 꼼꼼히 읽고 순서대로 따라한다", score: { S: 2, N: 0 } },
-                    { text: "기본 기능부터 하나씩 익혀나간다", score: { S: 1, N: 0 } },
-                    { text: "필요한 부분만 확인하고 사용한다", score: { S: 0, N: 0 } },
-                    { text: "일단 켜보고 직관적으로 사용한다", score: { S: 0, N: 1 } },
-                    { text: "이것저것 만져보며 새로운 기능을 발견한다", score: { S: 0, N: 2 } }
+                id: 14,
+                text: "문제를 해결할 때 선호하는 방식은?",
+                dimension: "S",
+                answers: [
+                    { text: "검증된 방법을 차근차근 적용한다", value: 2 },
+                    { text: "기존 방법을 상황에 맞게 수정한다", value: 1 },
+                    { text: "여러 방법을 조합한다", value: 0 },
+                    { text: "새로운 접근법을 시도해본다", value: -1 },
+                    { text: "완전히 창의적인 해결책을 찾는다", value: -2 }
                 ]
             },
             {
-                question: "비판을 받았을 때",
-                scenario: "상사로부터 업무에 대한 날카로운 비판을 받았습니다. 어떻게 받아들이시나요?",
-                options: [
-                    { text: "객관적으로 분석하여 개선점을 찾는다", score: { T: 2, F: 0 } },
-                    { text: "논리적으로 타당한지 먼저 판단한다", score: { T: 1, F: 0 } },
-                    { text: "내용과 전달방식 모두 고려한다", score: { T: 0, F: 0 } },
-                    { text: "감정적으로 상처받지만 의미를 찾으려 한다", score: { T: 0, F: 1 } },
-                    { text: "관계와 감정에 큰 영향을 받는다", score: { T: 0, F: 2 } }
+                id: 15,
+                text: "영화나 드라마를 볼 때?",
+                dimension: "T",
+                answers: [
+                    { text: "줄거리와 구성을 분석하며 본다", value: 2 },
+                    { text: "이야기의 논리성을 따진다", value: 1 },
+                    { text: "그냥 즐기며 본다", value: 0 },
+                    { text: "감정이입하며 본다", value: -1 },
+                    { text: "완전히 몰입해서 함께 운다/웃는다", value: -2 }
                 ]
             },
             {
-                question: "쇼핑 스타일",
-                scenario: "계절이 바뀌어 새 옷을 사러 갑니다. 어떻게 쇼핑하시나요?",
-                options: [
-                    { text: "필요한 목록을 작성하고 계획적으로 구매한다", score: { J: 2, P: 0 } },
-                    { text: "대략적인 계획을 가지고 쇼핑한다", score: { J: 1, P: 0 } },
-                    { text: "계획과 즉흥을 적절히 섞는다", score: { J: 0, P: 0 } },
-                    { text: "마음에 드는 것이 있으면 즉시 구매한다", score: { J: 0, P: 1 } },
-                    { text: "아무 계획 없이 즐기며 쇼핑한다", score: { J: 0, P: 2 } }
+                id: 16,
+                text: "약속 시간에 대한 당신의 태도는?",
+                dimension: "J",
+                answers: [
+                    { text: "항상 10분 일찍 도착한다", value: 2 },
+                    { text: "정시에 맞춰 도착한다", value: 1 },
+                    { text: "대략 시간에 맞춘다", value: 0 },
+                    { text: "조금 늦어도 크게 신경 안 쓴다", value: -1 },
+                    { text: "시간은 유동적이라고 생각한다", value: -2 }
                 ]
             },
             {
-                question: "아이디어 발표할 때",
-                scenario: "회의에서 새로운 아이디어를 발표해야 합니다. 어떻게 준비하시나요?",
-                options: [
-                    { text: "즉흥적으로 열정적으로 발표한다", score: { E: 2, I: 0 } },
-                    { text: "대화하듯 자연스럽게 설명한다", score: { E: 1, I: 0 } },
-                    { text: "적당히 준비하고 발표한다", score: { E: 0, I: 0 } },
-                    { text: "충분히 준비한 후 발표한다", score: { E: 0, I: 1 } },
-                    { text: "완벽하게 준비하고 연습 후 발표한다", score: { E: 0, I: 2 } }
+                id: 17,
+                text: "에너지를 충전하는 방법은?",
+                dimension: "E",
+                answers: [
+                    { text: "사람들과 어울리며 에너지를 얻는다", value: 2 },
+                    { text: "친한 사람들과의 시간이 좋다", value: 1 },
+                    { text: "때에 따라 다르다", value: 0 },
+                    { text: "혼자만의 시간이 더 필요하다", value: -1 },
+                    { text: "완전한 고독 속에서 충전한다", value: -2 }
                 ]
             },
             {
-                question: "독서 취향",
-                scenario: "휴가 때 읽을 책을 고릅니다. 어떤 책을 선택하시나요?",
-                options: [
-                    { text: "실용적인 자기계발서나 전문서적", score: { S: 2, N: 0 } },
-                    { text: "현실적인 이야기나 전기", score: { S: 1, N: 0 } },
-                    { text: "다양한 장르를 골고루", score: { S: 0, N: 0 } },
-                    { text: "상상력을 자극하는 소설이나 철학서", score: { S: 0, N: 1 } },
-                    { text: "판타지나 공상과학 소설", score: { S: 0, N: 2 } }
+                id: 18,
+                text: "선물을 고를 때 당신은?",
+                dimension: "S",
+                answers: [
+                    { text: "실용적이고 쓸모있는 것을 고른다", value: 2 },
+                    { text: "받는 사람이 필요한 것을 고른다", value: 1 },
+                    { text: "실용성과 의미를 모두 고려한다", value: 0 },
+                    { text: "의미와 감성을 더 중시한다", value: -1 },
+                    { text: "독특하고 특별한 의미를 담는다", value: -2 }
                 ]
             },
             {
-                question: "결정을 내릴 때",
-                scenario: "이직 제안을 받았습니다. 어떻게 결정하시나요?",
-                options: [
-                    { text: "연봉, 복지, 성장가능성을 분석한다", score: { T: 2, F: 0 } },
-                    { text: "장단점을 객관적으로 비교한다", score: { T: 1, F: 0 } },
-                    { text: "이성과 감정을 모두 고려한다", score: { T: 0, F: 0 } },
-                    { text: "가족과 개인의 행복을 우선 고려한다", score: { T: 0, F: 1 } },
-                    { text: "직감과 느낌을 따라 결정한다", score: { T: 0, F: 2 } }
+                id: 19,
+                text: "비판을 받았을 때의 반응은?",
+                dimension: "T",
+                answers: [
+                    { text: "객관적으로 타당한지 분석한다", value: 2 },
+                    { text: "논리적으로 받아들일 부분을 찾는다", value: 1 },
+                    { text: "일리 있는 부분은 수용한다", value: 0 },
+                    { text: "감정적으로 상처받지만 참는다", value: -1 },
+                    { text: "감정적으로 크게 동요한다", value: -2 }
                 ]
             },
             {
-                question: "일의 마무리",
-                scenario: "프로젝트가 90% 완성되었습니다. 어떻게 마무리하시나요?",
-                options: [
-                    { text: "완벽하게 마무리될 때까지 집중한다", score: { J: 2, P: 0 } },
-                    { text: "계획대로 차근차근 마무리한다", score: { J: 1, P: 0 } },
-                    { text: "중요한 부분만 마무리한다", score: { J: 0, P: 0 } },
-                    { text: "다른 흥미로운 일이 생기면 전환한다", score: { J: 0, P: 1 } },
-                    { text: "새로운 프로젝트를 시작하고 싶어진다", score: { J: 0, P: 2 } }
+                id: 20,
+                text: "하루 일과를 계획할 때?",
+                dimension: "J",
+                answers: [
+                    { text: "시간대별로 세밀하게 계획한다", value: 2 },
+                    { text: "중요한 일정만 정해둔다", value: 1 },
+                    { text: "대략적인 순서만 정한다", value: 0 },
+                    { text: "그때그때 유연하게 한다", value: -1 },
+                    { text: "계획 없이 흘러가는 대로 한다", value: -2 }
                 ]
             },
             {
-                question: "주말 아침",
-                scenario: "토요일 아침입니다. 오늘 하루를 어떻게 시작하시나요?",
-                options: [
-                    { text: "친구들과 브런치 약속을 잡는다", score: { E: 2, I: 0 } },
-                    { text: "가족이나 연인과 외출한다", score: { E: 1, I: 0 } },
-                    { text: "상황에 따라 다르다", score: { E: 0, I: 0 } },
-                    { text: "집에서 조용히 커피를 마신다", score: { E: 0, I: 1 } },
-                    { text: "혼자만의 취미활동을 즐긴다", score: { E: 0, I: 2 } }
+                id: 21,
+                text: "대화 중 침묵이 흐를 때?",
+                dimension: "E",
+                answers: [
+                    { text: "바로 새로운 화제를 꺼낸다", value: 2 },
+                    { text: "자연스럽게 대화를 이어간다", value: 1 },
+                    { text: "상황을 봐가며 대응한다", value: 0 },
+                    { text: "침묵도 괜찮다고 생각한다", value: -1 },
+                    { text: "오히려 침묵이 편안하다", value: -2 }
                 ]
             },
             {
-                question: "업무 보고서 작성",
-                scenario: "중요한 보고서를 작성해야 합니다. 어떻게 작성하시나요?",
-                options: [
-                    { text: "데이터와 숫자 위주로 명확하게", score: { S: 2, N: 0 } },
-                    { text: "사실과 근거 중심으로 체계적으로", score: { S: 1, N: 0 } },
-                    { text: "사실과 인사이트를 균형있게", score: { S: 0, N: 0 } },
-                    { text: "큰 그림과 미래 비전을 강조", score: { S: 0, N: 1 } },
-                    { text: "창의적인 아이디어와 가능성 중심", score: { S: 0, N: 2 } }
+                id: 22,
+                text: "새로운 아이디어를 떠올릴 때?",
+                dimension: "S",
+                answers: [
+                    { text: "기존 사례를 참고하여 발전시킨다", value: 2 },
+                    { text: "현실적 가능성을 먼저 고려한다", value: 1 },
+                    { text: "상상과 현실을 조합한다", value: 0 },
+                    { text: "자유롭게 상상의 나래를 편다", value: -1 },
+                    { text: "완전히 새로운 것을 창조한다", value: -2 }
                 ]
             },
             {
-                question: "팀원의 실수를 발견했을 때",
-                scenario: "팀원이 중요한 실수를 했습니다. 어떻게 대처하시나요?",
-                options: [
-                    { text: "문제점을 지적하고 해결방안을 제시한다", score: { T: 2, F: 0 } },
-                    { text: "객관적으로 상황을 설명하고 개선을 요청한다", score: { T: 1, F: 0 } },
-                    { text: "상황과 감정을 모두 고려하여 대화한다", score: { T: 0, F: 0 } },
-                    { text: "먼저 격려하고 함께 해결방법을 찾는다", score: { T: 0, F: 1 } },
-                    { text: "팀원의 감정을 배려하며 조심스럽게 접근한다", score: { T: 0, F: 2 } }
+                id: 23,
+                text: "친구의 고민을 들을 때?",
+                dimension: "T",
+                answers: [
+                    { text: "문제의 원인과 해결책을 찾는다", value: 2 },
+                    { text: "상황을 객관적으로 정리해준다", value: 1 },
+                    { text: "공감하면서도 조언한다", value: 0 },
+                    { text: "주로 감정적 지지를 보낸다", value: -1 },
+                    { text: "완전히 공감하고 위로에 집중한다", value: -2 }
                 ]
             },
             {
-                question: "새해 계획",
-                scenario: "새해가 시작되었습니다. 올해 계획은 어떻게 세우시나요?",
-                options: [
-                    { text: "구체적인 목표와 실행계획을 수립한다", score: { J: 2, P: 0 } },
-                    { text: "주요 목표들을 정리하고 계획한다", score: { J: 1, P: 0 } },
-                    { text: "대략적인 방향만 정한다", score: { J: 0, P: 0 } },
-                    { text: "큰 틀만 정하고 유연하게 진행한다", score: { J: 0, P: 1 } },
-                    { text: "계획 없이 자연스럽게 흘러간다", score: { J: 0, P: 2 } }
+                id: 24,
+                text: "목표를 달성하는 과정에서?",
+                dimension: "J",
+                answers: [
+                    { text: "단계별 계획을 철저히 따른다", value: 2 },
+                    { text: "큰 틀은 지키되 유연하게 조정한다", value: 1 },
+                    { text: "상황에 맞게 계획을 수정한다", value: 0 },
+                    { text: "과정보다 결과에 집중한다", value: -1 },
+                    { text: "즉흥적으로 최선을 다한다", value: -2 }
                 ]
             }
         ];
         
-        // MBTI 상세 결과 데이터
-        const mbtiDetails = {
-            'INTJ': {
-                name: '용의주도한 전략가',
-                description: '상상력이 풍부하며 철두철미한 계획을 세우는 전략가형',
-                rarity: '2.1%',
-                famous: ['일론 머스크', '마크 저커버그', '아이작 뉴턴', '니콜라 테슬라', '크리스토퍼 놀란'],
-                jobs: ['CEO/경영자', '과학자/연구원', '시스템 설계자', '투자 분석가', '전략 컨설턴트', '소프트웨어 아키텍트', '대학교수'],
+        // MBTI 결과 데이터
+        const mbtiResults = {
+            "INTJ": {
+                title: "전략가",
+                subtitle: "독창적인 사고를 가진 계획적인 전략가",
+                description: "INTJ는 독립적이고 결단력 있으며, 높은 기준을 가지고 있습니다. 복잡한 문제를 해결하는 것을 즐기며, 장기적인 비전을 가지고 목표를 향해 나아갑니다. 효율성을 중시하고 불필요한 것들을 제거하려 합니다.",
+                rarity: "전체 인구의 약 2.1%",
+                celebrities: ["일론 머스크", "마크 저커버그", "크리스토퍼 놀란", "미셸 오바마", "아이작 뉴턴"],
+                careers: ["전략 컨설턴트", "소프트웨어 개발자", "투자 분석가", "과학자", "기업 임원", "건축가", "대학교수"],
                 compatibility: {
-                    best: ['ENFP', 'ENTP'],
-                    good: ['INFJ', 'INFP', 'ENFJ'],
-                    challenge: ['ESFP', 'ESTP']
+                    best: ["ENFP", "ENTP"],
+                    good: ["INTJ", "INFJ", "ENTJ"],
+                    challenging: ["ESFP", "ISFP"]
                 },
-                strengths: '• 독립적이고 결단력 있음\n• 높은 기준과 성취욕\n• 복잡한 문제 해결 능력\n• 장기적 비전과 통찰력',
-                weaknesses: '• 지나치게 비판적일 수 있음\n• 감정 표현의 어려움\n• 완벽주의 성향\n• 타인의 감정 간과 가능성',
-                stress: '• 혼자만의 시간을 갖고 재충전하기\n• 복잡한 퍼즐이나 전략 게임하기\n• 장기 프로젝트 계획 세우기\n• 새로운 지식 습득하기',
-                love: '지적인 대화와 깊은 신뢰를 바탕으로 한 관계를 추구합니다. 겉으로는 차가워 보이지만 신뢰하는 사람에게는 헌신적입니다.',
-                growth: '• 감정적 표현력 기르기\n• 즉흥성과 유연성 개발\n• 팀워크 스킬 향상\n• 과정의 즐거움 느끼기'
+                strengths: ["전략적 사고", "독립성", "결단력", "높은 기준", "창의적 문제해결"],
+                weaknesses: ["감정 표현 부족", "과도한 비판", "융통성 부족", "완벽주의"],
+                stressManagement: "혼자만의 시간을 가지며 문제를 분석하고, 장기 계획을 재정비합니다.",
+                loveStyle: "신중하고 진지한 관계를 추구하며, 지적인 교감을 중요시합니다.",
+                growthPoints: "감정적 공감 능력을 기르고, 타인의 관점을 이해하려 노력하세요."
             },
-            'INTP': {
-                name: '논리술사형',
-                description: '끊임없이 새로운 지식을 갈망하는 혁신적인 발명가',
-                rarity: '3.3%',
-                famous: ['알베르트 아인슈타인', '빌 게이츠', '찰스 다윈', '마리 퀴리', '래리 페이지'],
-                jobs: ['연구원/과학자', '프로그래머', '데이터 분석가', '철학자', '수학자', '게임 개발자', '기술 작가'],
+            "INTP": {
+                title: "사색가",
+                subtitle: "논리적이고 창의적인 문제 해결사",
+                description: "INTP는 논리적이고 분석적이며, 이론과 추상적 개념에 관심이 많습니다. 지적 호기심이 강하고 복잡한 문제를 파악하고 해결하는 것을 즐깁니다. 독립적이고 회의적이며, 기존의 사고방식에 도전합니다.",
+                rarity: "전체 인구의 약 3.3%",
+                celebrities: ["알베르트 아인슈타인", "빌 게이츠", "찰스 다윈", "마리 퀴리", "세르게이 브린"],
+                careers: ["연구원", "프로그래머", "수학자", "철학자", "시스템 분석가", "경제학자", "게임 개발자"],
                 compatibility: {
-                    best: ['ENTJ', 'ESTJ'],
-                    good: ['INTJ', 'INFJ', 'ENTP'],
-                    challenge: ['ESFJ', 'ISFJ']
+                    best: ["ENTJ", "ESTJ"],
+                    good: ["INTP", "ENTP", "INTJ"],
+                    challenging: ["ESFJ", "ISFJ"]
                 },
-                strengths: '• 뛰어난 분석력과 논리력\n• 독창적 사고와 창의성\n• 지식에 대한 열정\n• 객관적이고 공정한 판단',
-                weaknesses: '• 감정 표현의 서투름\n• 일상적 업무 소홀\n• 사회적 관습 무시 경향\n• 결정 장애 가능성',
-                stress: '• 복잡한 이론 탐구하기\n• 프로그래밍이나 퍼즐 풀기\n• 혼자서 연구하고 실험하기\n• 온라인 토론 참여하기',
-                love: '지적 자극과 개인의 자유를 중시합니다. 감정 표현은 서툴지만 논리적으로 사랑을 표현하려 노력합니다.',
-                growth: '• 감정 인식 능력 개발\n• 실행력 강화\n• 대인관계 기술 향상\n• 일상 관리 능력 개선'
+                strengths: ["논리적 사고", "창의성", "객관성", "지적 호기심", "문제 해결 능력"],
+                weaknesses: ["감정 표현 어려움", "실행력 부족", "사회성 부족", "비판적 성향"],
+                stressManagement: "복잡한 퍼즐이나 문제를 풀며 마음을 진정시킵니다.",
+                loveStyle: "지적인 대화와 독립성을 중시하며, 서로의 공간을 존중하는 관계를 선호합니다.",
+                growthPoints: "감정을 인정하고 표현하는 연습을 하고, 실천력을 기르세요."
             },
-            'ENTJ': {
-                name: '대담한 통솔자',
-                description: '대담하고 상상력이 풍부하며 강한 의지를 가진 지도자',
-                rarity: '1.8%',
-                famous: ['스티브 잡스', '마가렛 대처', '나폴레옹', '잭 웰치', '고든 램지'],
-                jobs: ['CEO/임원', '창업가', '변호사', '정치인', '경영 컨설턴트', '투자은행가', '군 장교'],
+            "ENTJ": {
+                title: "통솔자",
+                subtitle: "대담하고 상상력이 풍부한 지도자",
+                description: "ENTJ는 타고난 리더로 카리스마가 있고 자신감이 넘칩니다. 장기적인 계획을 세우고 목표를 달성하는 데 탁월하며, 효율성과 생산성을 중시합니다. 도전을 즐기고 높은 기준을 가지고 있습니다.",
+                rarity: "전체 인구의 약 1.8%",
+                celebrities: ["스티브 잡스", "마거릿 대처", "잭 웰치", "고든 램지", "프랭클린 루즈벨트"],
+                careers: ["CEO", "경영 컨설턴트", "기업가", "변호사", "투자은행가", "정치인", "군 장교"],
                 compatibility: {
-                    best: ['INTP', 'INFP'],
-                    good: ['ENTP', 'INTJ', 'ENFP'],
-                    challenge: ['ISFP', 'ISFJ']
+                    best: ["INTP", "INFP"],
+                    good: ["ENTJ", "ENTP", "INTJ"],
+                    challenging: ["ISFP", "ESFP"]
                 },
-                strengths: '• 천부적 리더십\n• 강한 추진력과 결단력\n• 전략적 사고\n• 높은 자신감',
-                weaknesses: '• 지나친 지배욕\n• 감정적 둔감함\n• 인내심 부족\n• 비판에 대한 민감성',
-                stress: '• 새로운 프로젝트 기획하기\n• 운동으로 에너지 발산하기\n• 리더십 책 읽기\n• 네트워킹 이벤트 참여하기',
-                love: '열정적이고 헌신적이며, 파트너와 함께 성장하고자 합니다. 관계에서도 주도적 역할을 선호합니다.',
-                growth: '• 경청 능력 개발\n• 감정적 공감 능력 향상\n• 인내심 기르기\n• 타협의 가치 인식'
+                strengths: ["리더십", "전략적 사고", "결단력", "효율성", "목표 지향성"],
+                weaknesses: ["무뚝뚝함", "참을성 부족", "감정 무시", "지나친 지배욕"],
+                stressManagement: "운동이나 경쟁적인 활동을 통해 스트레스를 해소합니다.",
+                loveStyle: "파트너와 함께 성장하고 목표를 달성하는 것을 중요시합니다.",
+                growthPoints: "타인의 감정을 고려하고, 인내심을 기르며, 위임하는 법을 배우세요."
             },
-            'ENTP': {
-                name: '뜨거운 논쟁을 즐기는 변론가',
-                description: '지적 도전을 즐기는 영리하고 호기심 많은 사색가',
-                rarity: '3.2%',
-                famous: ['토마스 에디슨', '월트 디즈니', '리차드 파인만', '사샤 바론 코헨', '로버트 다우니 주니어'],
-                jobs: ['기업가', '변호사', '마케팅 전문가', '정치 평론가', '발명가', '벤처 투자가', '크리에이티브 디렉터'],
+            "ENTP": {
+                title: "발명가",
+                subtitle: "똑똑하고 호기심이 많은 사색가",
+                description: "ENTP는 창의적이고 영리하며 새로운 아이디어와 가능성을 탐구하는 것을 좋아합니다. 토론을 즐기고 기존의 관념에 도전하며, 다양한 관점에서 문제를 바라봅니다. 적응력이 뛰어나고 기발한 해결책을 제시합니다.",
+                rarity: "전체 인구의 약 3.2%",
+                celebrities: ["토마스 에디슨", "레오나르도 다빈치", "마크 트웨인", "사샤 바론 코헨", "로버트 다우니 주니어"],
+                careers: ["기업가", "발명가", "마케팅 전략가", "변호사", "컨설턴트", "영화 감독", "정치 분석가"],
                 compatibility: {
-                    best: ['INFJ', 'INTJ'],
-                    good: ['ENFP', 'INFP', 'ENTJ'],
-                    challenge: ['ISFJ', 'ESFJ']
+                    best: ["INFJ", "INTJ"],
+                    good: ["ENTP", "ENFP", "ENTJ"],
+                    challenging: ["ISFJ", "ESFJ"]
                 },
-                strengths: '• 빠른 사고와 기지\n• 창의적 문제 해결\n• 뛰어난 토론 능력\n• 다재다능함',
-                weaknesses: '• 일상적 업무 기피\n• 논쟁을 위한 논쟁\n• 감정적 고려 부족\n• 마무리 약함',
-                stress: '• 새로운 아이디어 브레인스토밍\n• 지적인 토론 참여\n• 다양한 분야 공부하기\n• 즉흥 여행 떠나기',
-                love: '지적 자극과 재미있는 대화를 중시합니다. 자유롭고 독립적인 관계를 선호하며 새로운 경험을 함께 나누길 원합니다.',
-                growth: '• 꾸준함과 인내심 개발\n• 감정적 민감성 향상\n• 세부사항 관리 능력\n• 프로젝트 완수 능력'
+                strengths: ["창의성", "빠른 사고", "적응력", "논리력", "혁신성"],
+                weaknesses: ["산만함", "논쟁적", "감정 무시", "마무리 부족"],
+                stressManagement: "새로운 프로젝트나 아이디어를 탐구하며 에너지를 회복합니다.",
+                loveStyle: "지적인 자극과 재미있는 대화를 중시하며, 변화와 성장을 추구합니다.",
+                growthPoints: "한 가지에 집중하는 능력을 기르고, 타인의 감정을 배려하세요."
             },
-            'INFJ': {
-                name: '선의의 옹호자',
-                description: '조용하고 신비로우며 샘솟는 영감을 지닌 이상주의자',
-                rarity: '1.5%',
-                famous: ['넬슨 만델라', '마틴 루터 킹', '요한 볼프강 폰 괴테', '니콜 키드먼', 'J.K. 롤링'],
-                jobs: ['상담사/심리학자', '작가', '사회복지사', '인사 담당자', '예술가', '종교 지도자', '비영리단체 활동가'],
+            "INFJ": {
+                title: "옹호자",
+                subtitle: "선의의 옹호자이자 신비로운 이상주의자",
+                description: "INFJ는 깊은 통찰력과 강한 직관을 가진 이상주의자입니다. 타인의 감정을 잘 이해하고 공감하며, 조화로운 관계를 중시합니다. 창의적이고 독창적이며, 자신의 가치관에 따라 행동합니다.",
+                rarity: "전체 인구의 약 1.5% (가장 희귀)",
+                celebrities: ["넬슨 만델라", "마틴 루터 킹", "니콜 키드먼", "모건 프리먼", "테일러 스위프트"],
+                careers: ["심리상담사", "작가", "교사", "사회복지사", "예술가", "인사 담당자", "종교 지도자"],
                 compatibility: {
-                    best: ['ENTP', 'ENFP'],
-                    good: ['INFP', 'ENFJ', 'INTJ'],
-                    challenge: ['ESTP', 'ISTP']
+                    best: ["ENTP", "ENFP"],
+                    good: ["INFJ", "INTJ", "ENFJ"],
+                    challenging: ["ESTP", "ISTP"]
                 },
-                strengths: '• 깊은 통찰력과 직관\n• 강한 공감 능력\n• 창의성과 상상력\n• 헌신적이고 이타적',
-                weaknesses: '• 지나친 완벽주의\n• 비판에 민감함\n• 번아웃 위험성\n• 갈등 회피 성향',
-                stress: '• 일기 쓰기나 명상하기\n• 자연 속에서 산책하기\n• 예술 활동 참여하기\n• 소수의 친한 친구와 시간 보내기',
-                love: '정신적 교감과 깊은 유대감을 추구합니다. 진정성 있고 의미 있는 관계를 원하며 파트너를 깊이 이해하려 노력합니다.',
-                growth: '• 자기 주장 능력 강화\n• 현실적 목표 설정\n• 비판 수용 능력 개발\n• 경계 설정 연습'
+                strengths: ["통찰력", "공감 능력", "창의성", "헌신", "이상주의"],
+                weaknesses: ["과도한 완벽주의", "비판에 민감", "번아웃", "갈등 회피"],
+                stressManagement: "혼자만의 조용한 시간을 가지며 명상이나 글쓰기를 합니다.",
+                loveStyle: "깊고 의미 있는 관계를 추구하며, 정서적 친밀감을 중요시합니다.",
+                growthPoints: "자기 돌봄을 우선시하고, 현실적인 목표를 설정하세요."
             },
-            'INFP': {
-                name: '열정적인 중재자',
-                description: '항상 선을 추구하는 부드럽고 친절한 이타주의자',
-                rarity: '4.4%',
-                famous: ['윌리엄 셰익스피어', '반 고흐', '톨킨', '조니 뎁', '팀 버튼'],
-                jobs: ['작가/시인', '심리상담사', '그래픽 디자이너', '사회복지사', '교사', '음악가', '비영리단체 활동가'],
+            "INFP": {
+                title: "중재자",
+                subtitle: "열정적이고 창의적인 이상주의자",
+                description: "INFP는 깊은 감수성과 풍부한 상상력을 가진 이상주의자입니다. 진정성을 중시하고 자신의 가치관에 충실하며, 타인을 돕고자 하는 열정이 있습니다. 창의적이고 개방적이며, 가능성을 탐구합니다.",
+                rarity: "전체 인구의 약 4.4%",
+                celebrities: ["윌리엄 셰익스피어", "J.R.R. 톨킨", "조니 뎁", "오드리 헵번", "존 레논"],
+                careers: ["작가", "심리학자", "예술가", "음악가", "사회운동가", "상담사", "그래픽 디자이너"],
                 compatibility: {
-                    best: ['ENFJ', 'ENTJ'],
-                    good: ['INFJ', 'ENFP', 'INTP'],
-                    challenge: ['ESTJ', 'ESFP']
+                    best: ["ENTJ", "ENFJ"],
+                    good: ["INFP", "ENFP", "INFJ"],
+                    challenging: ["ESTJ", "ISTJ"]
                 },
-                strengths: '• 강한 가치관과 신념\n• 뛰어난 창의성\n• 깊은 공감 능력\n• 개방적이고 유연함',
-                weaknesses: '• 지나치게 이상적\n• 비판에 매우 민감\n• 현실 감각 부족\n• 결정 장애',
-                stress: '• 창작 활동에 몰두하기\n• 가치관을 공유하는 사람들과 교류\n• 자연 속에서 휴식 취하기\n• 감정 일기 작성하기',
-                love: '운명적이고 낭만적인 사랑을 꿈꿉니다. 진정성과 깊은 정서적 연결을 중시하며 상대방의 잠재력을 봅니다.',
-                growth: '• 현실적 사고 연습\n• 자기주장 능력 향상\n• 비판적 사고 개발\n• 실행력 강화'
+                strengths: ["창의성", "공감 능력", "이상주의", "개방성", "진정성"],
+                weaknesses: ["과도한 이상주의", "비판에 민감", "우유부단", "자기 비판"],
+                stressManagement: "창의적인 활동이나 자연 속에서 시간을 보내며 회복합니다.",
+                loveStyle: "진실되고 깊은 감정적 연결을 추구하며, 서로를 있는 그대로 받아들입니다.",
+                growthPoints: "현실적인 관점을 기르고, 자신에게 더 관대해지세요."
             },
-            'ENFJ': {
-                name: '정의로운 사회운동가',
-                description: '카리스마와 영향력으로 청중을 압도하는 리더',
-                rarity: '2.5%',
-                famous: ['버락 오바마', '오프라 윈프리', '마야 안젤루', '모건 프리먼', '미하일 고르바초프'],
-                jobs: ['교사/교수', 'HR 매니저', '상담사', '정치인', '종교 지도자', '코치/멘토', '방송인'],
+            "ENFJ": {
+                title: "선도자",
+                subtitle: "카리스마 있고 영감을 주는 지도자",
+                description: "ENFJ는 따뜻하고 열정적이며 타인을 격려하고 이끄는 데 탁월합니다. 공감 능력이 뛰어나고 조화를 중시하며, 사람들의 잠재력을 이끌어내는 것을 즐깁니다. 이타적이고 책임감이 강합니다.",
+                rarity: "전체 인구의 약 2.5%",
+                celebrities: ["오프라 윈프리", "버락 오바마", "마야 안젤루", "벤 애플렉", "제니퍼 로렌스"],
+                careers: ["교사", "상담사", "인사 관리자", "이벤트 기획자", "정치인", "코치", "종교 지도자"],
                 compatibility: {
-                    best: ['INFP', 'ISFP'],
-                    good: ['ENFP', 'INFJ', 'ENTJ'],
-                    challenge: ['ISTP', 'ESTP']
+                    best: ["INFP", "ISFP"],
+                    good: ["ENFJ", "INFJ", "ENFP"],
+                    challenging: ["ISTP", "ESTP"]
                 },
-                strengths: '• 탁월한 리더십\n• 뛰어난 공감 능력\n• 카리스마와 설득력\n• 이타적이고 헌신적',
-                weaknesses: '• 지나친 이타심\n• 비판에 민감함\n• 자기 희생 경향\n• 경직된 이상주의',
-                stress: '• 타인을 돕는 활동 참여\n• 감사 일기 작성\n• 요가나 명상 실천\n• 긍정적인 사람들과 교류',
-                love: '상대방의 성장을 돕고 함께 발전하는 관계를 추구합니다. 깊은 정서적 연결과 헌신적인 사랑을 합니다.',
-                growth: '• 자기 돌봄 우선순위화\n• 거절하는 법 배우기\n• 객관적 판단력 개발\n• 개인 시간 확보'
+                strengths: ["리더십", "공감 능력", "커뮤니케이션", "이타심", "카리스마"],
+                weaknesses: ["과도한 이타심", "비판에 민감", "번아웃", "타인 의존"],
+                stressManagement: "신뢰하는 사람과 대화하며 감정을 표현하고 지지를 받습니다.",
+                loveStyle: "파트너의 성장을 돕고 함께 발전하는 관계를 추구합니다.",
+                growthPoints: "자신의 필요를 우선시하고, 'No'라고 말하는 법을 배우세요."
             },
-            'ENFP': {
-                name: '재기발랄한 활동가',
-                description: '창의적이며 사교적인 자유로운 영혼의 소유자',
-                rarity: '8.1%',
-                famous: ['로빈 윌리엄스', '월트 디즈니', '앤 해서웨이', '엘런 디제너러스', '윌 스미스'],
-                jobs: ['광고 기획자', '이벤트 플래너', '기자/방송인', '배우/연예인', '상담사', '마케팅 전문가', '사회운동가'],
+            "ENFP": {
+                title: "활동가",
+                subtitle: "열정적이고 창의적인 자유로운 영혼",
+                description: "ENFP는 열정적이고 창의적이며 가능성을 탐구하는 것을 좋아합니다. 따뜻하고 열린 마음을 가지고 있으며, 새로운 경험과 아이디어에 열려 있습니다. 타인과의 깊은 연결을 추구하고 영감을 주고받습니다.",
+                rarity: "전체 인구의 약 8.1%",
+                celebrities: ["로빈 윌리엄스", "월트 디즈니", "엘런 디제너러스", "러셀 브랜드", "제니퍼 애니스톤"],
+                careers: ["마케팅 전문가", "이벤트 기획자", "저널리스트", "배우", "상담사", "기업가", "광고 기획자"],
                 compatibility: {
-                    best: ['INTJ', 'INFJ'],
-                    good: ['ENFJ', 'INFP', 'ENTP'],
-                    challenge: ['ISTJ', 'ISFJ']
+                    best: ["INTJ", "INFJ"],
+                    good: ["ENFP", "ENTP", "ENFJ"],
+                    challenging: ["ISTJ", "ESTJ"]
                 },
-                strengths: '• 뛰어난 창의성\n• 열정과 에너지\n• 탁월한 대인관계\n• 긍정적 시각',
-                weaknesses: '• 집중력 부족\n• 지나친 낙관주의\n• 일관성 부족\n• 스트레스 관리 어려움',
-                stress: '• 새로운 취미 시작하기\n• 친구들과 깊은 대화 나누기\n• 자유로운 여행 떠나기\n• 창의적 프로젝트 진행',
-                love: '열정적이고 로맨틱하며 모험을 함께할 파트너를 원합니다. 정서적 연결과 함께 성장을 중시합니다.',
-                growth: '• 집중력과 끈기 개발\n• 현실적 목표 설정\n• 루틴 만들기 연습\n• 깊이 있는 전문성 개발'
+                strengths: ["열정", "창의성", "공감 능력", "적응력", "커뮤니케이션"],
+                weaknesses: ["산만함", "과도한 감정 기복", "실천력 부족", "스트레스 관리"],
+                stressManagement: "창의적인 활동이나 친구들과의 시간을 통해 에너지를 회복합니다.",
+                loveStyle: "열정적이고 로맨틱하며, 깊은 감정적 연결과 성장을 추구합니다.",
+                growthPoints: "집중력을 기르고, 현실적인 계획을 세우는 연습을 하세요."
             },
-            'ISTJ': {
-                name: '청렴결백한 논리주의자',
-                description: '사실에 근거하여 전통과 충성을 중시하는 관리자',
-                rarity: '11.6%',
-                famous: ['워런 버핏', '조지 워싱턴', '앙겔라 메르켈', '나탈리 포트만', '맷 데이먼'],
-                jobs: ['회계사', '은행원', '공무원', '법무사', '품질관리자', '데이터 분석가', '군인/경찰'],
+            "ISTJ": {
+                title: "현실주의자",
+                subtitle: "책임감 있고 신뢰할 수 있는 관리자",
+                description: "ISTJ는 실용적이고 사실 중심적이며 신뢰할 수 있습니다. 전통과 충성을 중시하고, 체계적으로 일을 처리합니다. 책임감이 강하고 약속을 중요시하며, 안정적이고 질서정연한 환경을 선호합니다.",
+                rarity: "전체 인구의 약 11.6%",
+                celebrities: ["워런 버핏", "안젤라 메르켈", "조지 워싱턴", "나탈리 포트만", "맷 데이먼"],
+                careers: ["회계사", "공무원", "군인", "경찰관", "품질 관리자", "은행원", "프로젝트 매니저"],
                 compatibility: {
-                    best: ['ESFP', 'ESTP'],
-                    good: ['ISFJ', 'ESTJ', 'ISTJ'],
-                    challenge: ['ENFP', 'INFP']
+                    best: ["ESFP", "ESTP"],
+                    good: ["ISTJ", "ISFJ", "ESTJ"],
+                    challenging: ["ENFP", "INFP"]
                 },
-                strengths: '• 강한 책임감\n• 체계적이고 조직적\n• 신뢰할 수 있음\n• 인내심과 끈기',
-                weaknesses: '• 변화에 대한 저항\n• 감정 표현 어려움\n• 융통성 부족\n• 지나친 비판성',
-                stress: '• 체계적인 계획 세우기\n• 규칙적인 운동하기\n• 전통적인 취미 활동\n• 가족과 시간 보내기',
-                love: '안정적이고 헌신적인 관계를 추구합니다. 전통적 가치관을 중시하며 책임감 있는 파트너가 됩니다.',
-                growth: '• 유연성 개발하기\n• 감정 표현 연습\n• 새로운 경험 시도\n• 즉흥성 받아들이기'
+                strengths: ["책임감", "신뢰성", "체계성", "인내심", "정직함"],
+                weaknesses: ["융통성 부족", "감정 표현 어려움", "변화 거부", "완고함"],
+                stressManagement: "규칙적인 운동이나 정리정돈을 통해 마음의 안정을 찾습니다.",
+                loveStyle: "안정적이고 충실한 관계를 추구하며, 실질적인 사랑의 표현을 중시합니다.",
+                growthPoints: "변화에 개방적이 되고, 감정을 표현하는 연습을 하세요."
             },
-            'ISFJ': {
-                name: '용감한 수호자',
-                description: '주변 사람들을 보호하고 돌보는 헌신적인 조력자',
-                rarity: '13.8%',
-                famous: ['마더 테레사', '비욘세', '킴 카다시안', '타이거 우즈', '케이트 미들턴'],
-                jobs: ['간호사', '초등교사', '사서', '사회복지사', '행정 보조원', '고객 서비스', '유치원 교사'],
+            "ISFJ": {
+                title: "수호자",
+                subtitle: "따뜻하고 헌신적인 보호자",
+                description: "ISFJ는 따뜻하고 친절하며 타인을 돌보는 것을 좋아합니다. 책임감이 강하고 신뢰할 수 있으며, 조화로운 환경을 만들기 위해 노력합니다. 전통을 중시하고 실용적이며, 세심한 배려를 보입니다.",
+                rarity: "전체 인구의 약 13.8% (가장 흔함)",
+                celebrities: ["마더 테레사", "케이트 미들턴", "셀레나 고메즈", "베이어드 티", "안네 하사웨이"],
+                careers: ["간호사", "교사", "사회복지사", "행정 보조", "상담사", "영양사", "사서"],
                 compatibility: {
-                    best: ['ESFP', 'ESTP'],
-                    good: ['ISFJ', 'ISTJ', 'ESFJ'],
-                    challenge: ['ENTP', 'ENTJ']
+                    best: ["ESTP", "ESFP"],
+                    good: ["ISFJ", "ISTJ", "ESFJ"],
+                    challenging: ["ENTP", "INTP"]
                 },
-                strengths: '• 따뜻한 배려심\n• 뛰어난 기억력\n• 강한 책임감\n• 헌신적이고 충성스러움',
-                weaknesses: '• 자기 주장 부족\n• 변화 거부감\n• 과도한 걱정\n• 자기 희생 경향',
-                stress: '• 가까운 사람들과 시간 보내기\n• 봉사활동 참여\n• 정원 가꾸기나 요리하기\n• 추억 정리하기',
-                love: '안정적이고 따뜻한 관계를 추구합니다. 상대방을 세심하게 배려하며 가족 중심적 가치관을 가집니다.',
-                growth: '• 자기 주장 연습\n• 변화 수용하기\n• 자기 돌봄 우선시\n• 비판 수용 능력'
+                strengths: ["배려심", "책임감", "충성심", "인내심", "실용성"],
+                weaknesses: ["자기 희생", "변화 거부", "갈등 회피", "과도한 겸손"],
+                stressManagement: "가까운 사람들과 시간을 보내며 정서적 지지를 받습니다.",
+                loveStyle: "헌신적이고 배려 깊은 사랑을 하며, 안정적인 관계를 추구합니다.",
+                growthPoints: "자신의 필요를 표현하고, 변화를 수용하는 법을 배우세요."
             },
-            'ESTJ': {
-                name: '엄격한 관리자',
-                description: '사물과 사람을 관리하는 데 탁월한 능력을 가진 경영자',
-                rarity: '8.7%',
-                famous: ['프랭크 시나트라', '힐러리 클린턴', '사이먼 코웰', '미셸 오바마', '마사 스튜어트'],
-                jobs: ['경영자/관리자', '판사', '은행 지점장', '프로젝트 매니저', '군 장교', '학교 교장', '재무 관리자'],
+            "ESTJ": {
+                title: "경영자",
+                subtitle: "체계적이고 효율적인 관리자",
+                description: "ESTJ는 현실적이고 결단력 있으며 조직을 이끄는 데 탁월합니다. 전통과 질서를 중시하고, 목표 달성을 위해 체계적으로 일합니다. 책임감이 강하고 규칙과 기준을 중요시합니다.",
+                rarity: "전체 인구의 약 8.7%",
+                celebrities: ["미셸 오바마", "프랭크 시나트라", "엠마 왓슨", "사이먼 코웰", "마사 스튜어트"],
+                careers: ["경영자", "군 장교", "판사", "재무 관리자", "경찰 서장", "병원 관리자", "프로젝트 매니저"],
                 compatibility: {
-                    best: ['ISFP', 'ISTP'],
-                    good: ['ISTJ', 'ESTJ', 'ENTJ'],
-                    challenge: ['INFP', 'ISFP']
+                    best: ["ISFP", "ISTP"],
+                    good: ["ESTJ", "ISTJ", "ENTJ"],
+                    challenging: ["INFP", "ENFP"]
                 },
-                strengths: '• 뛰어난 조직력\n• 강한 의지력\n• 실용적 사고\n• 리더십과 결단력',
-                weaknesses: '• 융통성 부족\n• 감정 고려 미흡\n• 지나친 통제욕\n• 권위적 태도',
-                stress: '• 목표 달성 계획 세우기\n• 경쟁적 스포츠 참여\n• 리더십 서적 읽기\n• 체계적 정리정돈',
-                love: '안정적이고 전통적인 관계를 선호합니다. 명확한 역할 분담과 책임감 있는 파트너십을 추구합니다.',
-                growth: '• 감정적 이해력 향상\n• 유연성 개발\n• 경청 능력 향상\n• 타인 신뢰하기'
+                strengths: ["리더십", "조직력", "실행력", "책임감", "결단력"],
+                weaknesses: ["융통성 부족", "감정 무시", "지나친 통제", "비판적"],
+                stressManagement: "체계적인 계획을 세우고 목표를 달성하며 스트레스를 해소합니다.",
+                loveStyle: "안정적이고 전통적인 관계를 선호하며, 명확한 역할 분담을 중시합니다.",
+                growthPoints: "타인의 감정을 고려하고, 유연성을 기르는 연습을 하세요."
             },
-            'ESFJ': {
-                name: '사교적인 외교관',
-                description: '타인을 향한 세심한 관심으로 인기가 많고 사교적인 마당발',
-                rarity: '12.3%',
-                famous: ['테일러 스위프트', '제니퍼 가너', '휴 잭맨', '엘튼 존', '빌 클린턴'],
-                jobs: ['초등교사', 'HR 전문가', '간호사', '이벤트 기획자', '영업 관리자', '호텔 매니저', '고객 서비스 매니저'],
+            "ESFJ": {
+                title: "외교관",
+                subtitle: "친절하고 사교적인 협력자",
+                description: "ESFJ는 따뜻하고 협조적이며 타인과의 조화를 중시합니다. 사회적 책임을 다하고자 하며, 전통과 예의를 중요시합니다. 타인의 필요에 민감하고 도움을 주는 것을 좋아합니다.",
+                rarity: "전체 인구의 약 12.3%",
+                celebrities: ["테일러 스위프트", "제니퍼 가너", "휴 잭맨", "엘튼 존", "대니 글로버"],
+                careers: ["이벤트 기획자", "간호사", "교사", "영업 관리자", "인사 담당자", "호텔 매니저", "공공 관계 전문가"],
                 compatibility: {
-                    best: ['ISFP', 'ISTP'],
-                    good: ['ESFJ', 'ISFJ', 'ESTJ'],
-                    challenge: ['INTP', 'INTJ']
+                    best: ["ISTP", "ISFP"],
+                    good: ["ESFJ", "ISFJ", "ENFJ"],
+                    challenging: ["INTP", "ENTP"]
                 },
-                strengths: '• 뛰어난 대인관계\n• 강한 책임감\n• 협조적이고 친절함\n• 조화와 안정 추구',
-                weaknesses: '• 비판에 민감함\n• 인정욕구 강함\n• 갈등 회피\n• 자기 희생 경향',
-                stress: '• 사교 모임 주최하기\n• 감사 편지 쓰기\n• 가족 행사 기획하기\n• 자원봉사 활동',
-                love: '따뜻하고 안정적인 관계를 추구합니다. 상대방의 필요를 채우는 것에서 기쁨을 느끼며 조화로운 가정을 꿈꿉니다.',
-                growth: '• 자기 의견 표현하기\n• 비판 건설적으로 받아들이기\n• 독립성 키우기\n• 자기 욕구 인식하기'
+                strengths: ["사교성", "책임감", "협조성", "충성심", "배려심"],
+                weaknesses: ["비판에 민감", "갈등 회피", "경직성", "인정 욕구"],
+                stressManagement: "친구나 가족과 시간을 보내며 정서적 지지를 받습니다.",
+                loveStyle: "배려하고 헌신적인 사랑을 하며, 안정적인 관계를 추구합니다.",
+                growthPoints: "자신의 필요를 우선시하고, 비판을 건설적으로 받아들이세요."
             },
-            'ISTP': {
-                name: '만능 재주꾼',
-                description: '대담하고 현실적인 실험정신을 가진 탐험가',
-                rarity: '5.4%',
-                famous: ['클린트 이스트우드', '톰 크루즈', '브루스 리', '마이클 조던', '스티브 맥퀸'],
-                jobs: ['엔지니어', '파일럿', '정비사', '외과의사', '컴퓨터 프로그래머', '법의학자', '운동선수'],
+            "ISTP": {
+                title: "장인",
+                subtitle: "논리적이고 실용적인 문제 해결사",
+                description: "ISTP는 조용하고 분석적이며 실용적입니다. 도구를 다루는 데 능숙하고 문제를 효율적으로 해결합니다. 독립적이고 적응력이 뛰어나며, 현재에 집중하고 즉각적인 결과를 중시합니다.",
+                rarity: "전체 인구의 약 5.4%",
+                celebrities: ["클린트 이스트우드", "베어 그릴스", "마이클 조던", "브루스 리", "톰 크루즈"],
+                careers: ["엔지니어", "정비사", "파일럿", "외과의사", "컴퓨터 프로그래머", "경찰관", "운동선수"],
                 compatibility: {
-                    best: ['ESFJ', 'ESTJ'],
-                    good: ['ISTP', 'ESTP', 'ISFP'],
-                    challenge: ['ENFJ', 'ENFP']
+                    best: ["ESFJ", "ESTJ"],
+                    good: ["ISTP", "ESTP", "ISTJ"],
+                    challenging: ["ENFJ", "INFJ"]
                 },
-                strengths: '• 뛰어난 손재주\n• 논리적 문제해결\n• 적응력과 유연성\n• 독립적이고 자율적',
-                weaknesses: '• 감정 표현 어려움\n• 장기 계획 부족\n• 무관심해 보임\n• 위험 추구 성향',
-                stress: '• 손으로 만들기 프로젝트\n• 익스트림 스포츠\n• 혼자서 문제 해결하기\n• 자연 속 모험',
-                love: '자유롭고 부담 없는 관계를 선호합니다. 행동으로 사랑을 표현하며 상대방의 독립성을 존중합니다.',
-                growth: '• 감정 인식과 표현\n• 장기적 계획 수립\n• 언어적 소통 능력\n• 타인과의 협력'
+                strengths: ["실용성", "문제 해결 능력", "독립성", "침착함", "적응력"],
+                weaknesses: ["감정 표현 어려움", "장기 계획 부족", "둔감함", "위험 추구"],
+                stressManagement: "손으로 무언가를 만들거나 운동을 통해 스트레스를 해소합니다.",
+                loveStyle: "독립적인 공간을 중시하며, 행동으로 사랑을 표현합니다.",
+                growthPoints: "감정을 인식하고 표현하며, 장기적인 계획을 세우는 연습을 하세요."
             },
-            'ISFP': {
-                name: '호기심 많은 예술가',
-                description: '유연하고 매력적이며 겸손한 예술가',
-                rarity: '8.8%',
-                famous: ['밥 딜런', '프리다 칼로', '프린스', '라나 델 레이', '히스 레저'],
-                jobs: ['예술가/디자이너', '음악가', '요리사', '마사지 치료사', '수의사', '조경 디자이너', '사진작가'],
+            "ISFP": {
+                title: "모험가",
+                subtitle: "유연하고 매력적인 예술가",
+                description: "ISFP는 온화하고 친절하며 예술적 감각이 뛰어납니다. 현재를 즐기고 자신만의 속도로 살아가며, 조화와 미를 추구합니다. 개인의 가치를 중시하고 진정성 있게 행동합니다.",
+                rarity: "전체 인구의 약 8.8%",
+                celebrities: ["밥 딜런", "프리다 칼로", "오드리 헵번", "케빈 코스트너", "브리트니 스피어스"],
+                careers: ["예술가", "디자이너", "요리사", "마사지 치료사", "수의사", "플로리스트", "사진작가"],
                 compatibility: {
-                    best: ['ENFJ', 'ESFJ'],
-                    good: ['ISFP', 'ESFP', 'ISTP'],
-                    challenge: ['ENTJ', 'ESTJ']
+                    best: ["ESTJ", "ESFJ"],
+                    good: ["ISFP", "ESFP", "ISFJ"],
+                    challenging: ["ENTJ", "INTJ"]
                 },
-                strengths: '• 예술적 감각\n• 온화하고 배려심 깊음\n• 개방적이고 유연함\n• 강한 가치관',
-                weaknesses: '• 자기 주장 부족\n• 비판에 민감함\n• 경쟁 회피\n• 계획성 부족',
-                stress: '• 예술 활동에 몰두하기\n• 자연 속 산책\n• 반려동물과 시간 보내기\n• 음악 감상이나 연주',
-                love: '진정성 있고 따뜻한 관계를 추구합니다. 조용히 깊은 사랑을 표현하며 상대방의 개성을 존중합니다.',
-                growth: '• 자기 주장 연습\n• 미래 계획 수립\n• 비판적 사고 개발\n• 리더십 경험 쌓기'
+                strengths: ["예술성", "공감 능력", "유연성", "겸손함", "독립성"],
+                weaknesses: ["비판에 민감", "계획성 부족", "갈등 회피", "자기 표현 어려움"],
+                stressManagement: "자연 속에서 시간을 보내거나 예술 활동을 통해 회복합니다.",
+                loveStyle: "조용하고 깊은 사랑을 하며, 서로의 개성을 존중하는 관계를 추구합니다.",
+                growthPoints: "자신의 의견을 표현하고, 장기적인 목표를 설정하세요."
             },
-            'ESTP': {
-                name: '모험을 즐기는 사업가',
-                description: '현실적이고 사실적이며 즉각적인 결과를 추구하는 행동파',
-                rarity: '4.3%',
-                famous: ['어니스트 헤밍웨이', '마돈나', '에디 머피', '안젤리나 졸리', '도날드 트럼프'],
-                jobs: ['영업 전문가', '기업가', '경찰관', '파라메딕', '스포츠 코치', '부동산 중개인', '건설 감독'],
+            "ESTP": {
+                title: "사업가",
+                subtitle: "영리하고 에너지 넘치는 인식자",
+                description: "ESTP는 활동적이고 현실적이며 문제를 즉각적으로 해결합니다. 모험을 즐기고 리스크를 감수하며, 실제 경험을 통해 배웁니다. 유연하고 관대하며 현재의 순간을 즐깁니다.",
+                rarity: "전체 인구의 약 4.3%",
+                celebrities: ["어니스트 헤밍웨이", "마돈나", "잭 니콜슨", "에디 머피", "도널드 트럼프"],
+                careers: ["기업가", "영업 전문가", "경찰관", "구급대원", "스포츠 에이전트", "주식 중개인", "군인"],
                 compatibility: {
-                    best: ['ISFJ', 'ISTJ'],
-                    good: ['ESTP', 'ESFP', 'ISTP'],
-                    challenge: ['INFJ', 'INFP']
+                    best: ["ISFJ", "ISTJ"],
+                    good: ["ESTP", "ISTP", "ESFP"],
+                    challenging: ["INFJ", "ENFJ"]
                 },
-                strengths: '• 뛰어난 관찰력\n• 즉각적 문제해결\n• 대담하고 모험적\n• 현실적이고 실용적',
-                weaknesses: '• 무모한 행동\n• 장기 계획 부족\n• 무신경한 발언\n• 인내심 부족',
-                stress: '• 스포츠나 운동하기\n• 새로운 모험 시도\n• 경쟁적 게임 참여\n• 즉흥 여행 떠나기',
-                love: '흥미진진하고 활동적인 관계를 추구합니다. 현재를 즐기며 함께 모험을 즐길 파트너를 원합니다.',
-                growth: '• 인내심 기르기\n• 감정적 민감성 개발\n• 장기 목표 설정\n• 신중한 의사결정'
+                strengths: ["행동력", "현실 감각", "적응력", "문제 해결", "사교성"],
+                weaknesses: ["인내심 부족", "장기 계획 부족", "무모함", "감정 무시"],
+                stressManagement: "신체 활동이나 새로운 경험을 통해 에너지를 발산합니다.",
+                loveStyle: "재미있고 활동적인 관계를 추구하며, 현재를 함께 즐기는 것을 중시합니다.",
+                growthPoints: "인내심을 기르고, 결과를 고려한 행동을 하는 연습을 하세요."
             },
-            'ESFP': {
-                name: '자유로운 영혼의 연예인',
-                description: '즉흥적이고 에너지 넘치며 열정적인 연예인',
-                rarity: '8.5%',
-                famous: ['마릴린 먼로', '엘비스 프레슬리', '제이미 폭스', '아델', '리차드 브랜슨'],
-                jobs: ['연예인/배우', '이벤트 기획자', '초등학교 교사', '관광 가이드', '판매원', '피트니스 트레이너', '미용사'],
+            "ESFP": {
+                title: "연예인",
+                subtitle: "자발적이고 에너지 넘치는 열정가",
+                description: "ESFP는 활발하고 우호적이며 삶을 즐깁니다. 타인과 함께하는 것을 좋아하고 주변에 긍정적인 에너지를 전파합니다. 실용적이면서도 따뜻하고, 현재의 순간을 소중히 여깁니다.",
+                rarity: "전체 인구의 약 8.5%",
+                celebrities: ["마릴린 먼로", "제이미 폭스", "아델", "미크 재거", "케이티 페리"],
+                careers: ["배우", "이벤트 기획자", "초등학교 교사", "관광 가이드", "판매원", "코미디언", "피트니스 트레이너"],
                 compatibility: {
-                    best: ['ISFJ', 'ISTJ'],
-                    good: ['ESFP', 'ESTP', 'ISFP'],
-                    challenge: ['INTJ', 'INFJ']
+                    best: ["ISTJ", "ISFJ"],
+                    good: ["ESFP", "ESTP", "ISFP"],
+                    challenging: ["INTJ", "ENTJ"]
                 },
-                strengths: '• 뛰어난 사교성\n• 긍정적 에너지\n• 적응력과 유연성\n• 타고난 연예인',
-                weaknesses: '• 장기 계획 부족\n• 충동적 결정\n• 비판에 민감함\n• 집중력 부족',
-                stress: '• 파티나 모임 참석\n• 노래방이나 춤추기\n• 새로운 사람들 만나기\n• 쇼핑이나 외출',
-                love: '즐겁고 활발한 관계를 추구합니다. 매 순간을 즐기며 상대방과 함께하는 모든 경험을 소중히 여깁니다.',
-                growth: '• 장기적 관점 개발\n• 깊이 있는 학습\n• 혼자만의 시간 갖기\n• 재정 관리 능력'
+                strengths: ["열정", "사교성", "적응력", "현실 감각", "낙관성"],
+                weaknesses: ["집중력 부족", "비판에 민감", "장기 계획 부족", "충동성"],
+                stressManagement: "친구들과 즐거운 시간을 보내며 긍정적인 에너지를 회복합니다.",
+                loveStyle: "재미있고 즉흥적인 사랑을 하며, 함께 즐거운 시간을 보내는 것을 중시합니다.",
+                growthPoints: "장기적인 계획을 세우고, 비판을 건설적으로 받아들이세요."
             }
         };
         
-        // 상태 관리
-        let currentQuestion = -1;
-        let answers = {};
-        
-        // 화면 전환
-        function showScreen(screenId) {
-            document.querySelectorAll('#intro-screen, #test-screen, #result-screen').forEach(screen => {
-                screen.classList.add('hidden');
-            });
-            document.getElementById(screenId).classList.remove('hidden');
-        }
+        // 전역 변수
+        let currentQuestion = 0;
+        let scores = { E: 0, S: 0, T: 0, J: 0 };
+        let answers = [];
         
         // 테스트 시작
         function startTest() {
-            currentQuestion = 0;
-            answers = {};
-            showScreen('test-screen');
+            document.getElementById('testInfo').style.display = 'none';
+            document.getElementById('questionContainer').style.display = 'block';
             showQuestion();
         }
         
         // 질문 표시
         function showQuestion() {
-            if (currentQuestion >= mbtiQuestions.length) {
-                showResult();
-                return;
-            }
+            const question = questions[currentQuestion];
+            document.getElementById('questionText').textContent = question.text;
+            document.getElementById('currentQuestion').textContent = currentQuestion + 1;
             
-            const q = mbtiQuestions[currentQuestion];
-            const progressPercent = ((currentQuestion + 1) / mbtiQuestions.length) * 100;
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            document.getElementById('progressPercent').textContent = Math.round(progress) + '%';
+            document.getElementById('progressFill').style.width = progress + '%';
             
-            // 진행률 업데이트
-            document.getElementById('progress-text').textContent = `질문 ${currentQuestion + 1} / ${mbtiQuestions.length}`;
-            document.getElementById('progress-percent').textContent = `${Math.round(progressPercent)}%`;
-            document.getElementById('progress').style.width = `${progressPercent}%`;
+            const answersContainer = document.getElementById('answersContainer');
+            answersContainer.innerHTML = '';
             
-            // 질문 표시
-            document.getElementById('question').textContent = q.question;
-            document.getElementById('scenario-context').textContent = q.scenario;
-            
-            // 옵션 표시
-            const optionsContainer = document.getElementById('options');
-            optionsContainer.innerHTML = '';
-            
-            q.options.forEach((option, index) => {
-                const optionElement = document.createElement('div');
-                optionElement.className = 'option';
-                optionElement.innerHTML = `
-                    <span class="option-number">${index + 1}</span>
-                    <span class="option-text">${option.text}</span>
-                `;
-                optionElement.onclick = () => selectOption(index);
-                
-                // 이전 답변 표시
-                if (answers[currentQuestion] === index) {
-                    optionElement.classList.add('selected');
-                }
-                
-                optionsContainer.appendChild(optionElement);
+            question.answers.forEach((answer, index) => {
+                const answerElement = document.createElement('div');
+                answerElement.className = 'answer-option';
+                answerElement.textContent = answer.text;
+                answerElement.onclick = () => selectAnswer(index);
+                answersContainer.appendChild(answerElement);
             });
-            
-            // 버튼 상태 업데이트
-            document.getElementById('prev-btn').style.display = currentQuestion > 0 ? 'block' : 'none';
-            document.getElementById('next-btn').textContent = currentQuestion === mbtiQuestions.length - 1 ? '결과 보기' : '다음';
-            document.getElementById('next-btn').disabled = answers[currentQuestion] === undefined;
         }
         
-        // 옵션 선택
-        function selectOption(index) {
+        // 답변 선택
+        function selectAnswer(index) {
+            const question = questions[currentQuestion];
+            const answer = question.answers[index];
+            
+            // 이전 답변이 있으면 점수 제거
+            if (answers[currentQuestion] !== undefined) {
+                const prevAnswer = question.answers[answers[currentQuestion]];
+                scores[question.dimension] -= prevAnswer.value;
+            }
+            
+            // 새 답변 점수 추가
+            scores[question.dimension] += answer.value;
             answers[currentQuestion] = index;
             
-            // 선택 표시 업데이트
-            document.querySelectorAll('.option').forEach((opt, i) => {
-                opt.classList.toggle('selected', i === index);
+            // UI 업데이트
+            const options = document.querySelectorAll('.answer-option');
+            options.forEach((option, i) => {
+                option.classList.toggle('selected', i === index);
             });
             
-            // 다음 버튼 활성화
-            document.getElementById('next-btn').disabled = false;
+            // 자동으로 다음 질문으로
+            setTimeout(() => {
+                if (currentQuestion < questions.length - 1) {
+                    currentQuestion++;
+                    showQuestion();
+                } else {
+                    showResult();
+                }
+            }, 300);
         }
         
-        // 다음 질문
-        function nextQuestion() {
-            if (answers[currentQuestion] === undefined) return;
-            
-            currentQuestion++;
-            showQuestion();
-        }
-        
-        // 이전 질문
-        function previousQuestion() {
-            if (currentQuestion > 0) {
-                currentQuestion--;
-                showQuestion();
-            }
-        }
-        
-        // 결과 계산
+        // 결과 계산 및 표시
         function showResult() {
-            // MBTI 점수 계산
-            const scores = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
+            // MBTI 유형 계산
+            let type = '';
+            type += scores.E > 0 ? 'E' : 'I';
+            type += scores.S > 0 ? 'S' : 'N';
+            type += scores.T > 0 ? 'T' : 'F';
+            type += scores.J > 0 ? 'J' : 'P';
             
-            Object.keys(answers).forEach(questionIndex => {
-                const question = mbtiQuestions[parseInt(questionIndex)];
-                const selectedOption = question.options[answers[questionIndex]];
-                const optionScores = selectedOption.score;
-                
-                Object.keys(optionScores).forEach(dimension => {
-                    scores[dimension] += optionScores[dimension];
-                });
-            });
-            
-            // MBTI 타입 결정
-            const mbtiType = 
-                (scores.E > scores.I ? 'E' : 'I') +
-                (scores.S > scores.N ? 'S' : 'N') +
-                (scores.T > scores.F ? 'T' : 'F') +
-                (scores.J > scores.P ? 'J' : 'P');
-            
-            const details = mbtiDetails[mbtiType];
-            
-            // 퍼센트 계산
-            const totalEI = scores.E + scores.I || 1;
-            const totalSN = scores.S + scores.N || 1;
-            const totalTF = scores.T + scores.F || 1;
-            const totalJP = scores.J + scores.P || 1;
-            
-            const percentEI = scores.E > scores.I ? (scores.E / totalEI * 100) : (scores.I / totalEI * 100);
-            const percentSN = scores.S > scores.N ? (scores.S / totalSN * 100) : (scores.N / totalSN * 100);
-            const percentTF = scores.T > scores.F ? (scores.T / totalTF * 100) : (scores.F / totalTF * 100);
-            const percentJP = scores.J > scores.P ? (scores.J / totalJP * 100) : (scores.P / totalJP * 100);
+            // 결과 데이터 가져오기
+            const result = mbtiResults[type];
             
             // 결과 표시
-            showScreen('result-screen');
-            document.getElementById('result-type').textContent = mbtiType;
-            document.getElementById('result-name').textContent = details.name;
-            document.getElementById('result-description').textContent = details.description;
-            document.getElementById('rarity-badge').textContent = 
-                `전체 인구의 ${details.rarity} (${parseFloat(details.rarity) < 5 ? '희귀한' : '일반적인'} 유형)`;
+            document.querySelector('.test-container').style.display = 'none';
+            document.getElementById('resultContainer').style.display = 'block';
             
-            // 성향 퍼센트 바 업데이트
-            setTimeout(() => {
-                document.getElementById('ei-bar').style.width = `${percentEI}%`;
-                document.getElementById('ei-bar').textContent = `${Math.round(percentEI)}%`;
-                
-                document.getElementById('sn-bar').style.width = `${percentSN}%`;
-                document.getElementById('sn-bar').textContent = `${Math.round(percentSN)}%`;
-                
-                document.getElementById('tf-bar').style.width = `${percentTF}%`;
-                document.getElementById('tf-bar').textContent = `${Math.round(percentTF)}%`;
-                
-                document.getElementById('jp-bar').style.width = `${percentJP}%`;
-                document.getElementById('jp-bar').textContent = `${Math.round(percentJP)}%`;
-            }, 100);
+            // 기본 정보
+            document.getElementById('resultType').textContent = type;
+            document.getElementById('resultTitle').textContent = result.title;
+            document.getElementById('resultSubtitle').textContent = result.subtitle;
+            document.getElementById('resultRarity').textContent = result.rarity;
+            document.getElementById('personalityDescription').textContent = result.description;
+            
+            // 성향 분석
+            const traitsGrid = document.getElementById('traitsGrid');
+            const traitData = [
+                { label: '에너지 방향', value: type[0] === 'E' ? '외향형 (E)' : '내향형 (I)' },
+                { label: '인식 기능', value: type[1] === 'S' ? '감각형 (S)' : '직관형 (N)' },
+                { label: '판단 기능', value: type[2] === 'T' ? '사고형 (T)' : '감정형 (F)' },
+                { label: '생활 양식', value: type[3] === 'J' ? '판단형 (J)' : '인식형 (P)' }
+            ];
+            
+            traitsGrid.innerHTML = traitData.map(trait => `
+                <div class="trait-item">
+                    <div class="trait-label">${trait.label}</div>
+                    <div class="trait-value">${trait.value}</div>
+                </div>
+            `).join('');
             
             // 유명인
-            document.getElementById('famous-people').innerHTML = details.famous.map(person => 
-                `<div class="famous-person">${person}</div>`
+            const celebritiesGrid = document.getElementById('celebritiesGrid');
+            celebritiesGrid.innerHTML = result.celebrities.map(celeb => 
+                `<div class="celebrity-item">${celeb}</div>`
             ).join('');
             
-            // 직업 추천
-            document.getElementById('job-recommendations').innerHTML = details.jobs.map(job => 
-                `<div class="job-item">${job}</div>`
+            // 추천 직업
+            const careersList = document.getElementById('careersList');
+            careersList.innerHTML = result.careers.map(career => 
+                `<span class="career-tag">${career}</span>`
             ).join('');
             
             // 연애 궁합
-            document.getElementById('compatibility').innerHTML = `
-                <div class="compat-card">
-                    <div class="compat-level compat-best">최고의 궁합</div>
-                    <div>${details.compatibility.best.join(', ')}</div>
+            const compatibilitySection = document.getElementById('compatibilitySection');
+            compatibilitySection.innerHTML = `
+                <div class="compatibility-item">
+                    <div class="compatibility-label">최고의 궁합</div>
+                    <div class="compatibility-types">
+                        ${result.compatibility.best.map(type => `<span class="type-tag">${type}</span>`).join('')}
+                    </div>
                 </div>
-                <div class="compat-card">
-                    <div class="compat-level compat-good">좋은 궁합</div>
-                    <div>${details.compatibility.good.join(', ')}</div>
+                <div class="compatibility-item">
+                    <div class="compatibility-label">좋은 궁합</div>
+                    <div class="compatibility-types">
+                        ${result.compatibility.good.map(type => `<span class="type-tag">${type}</span>`).join('')}
+                    </div>
                 </div>
-                <div class="compat-card">
-                    <div class="compat-level compat-challenge">도전적 관계</div>
-                    <div>${details.compatibility.challenge.join(', ')}</div>
+                <div class="compatibility-item">
+                    <div class="compatibility-label">도전적 궁합</div>
+                    <div class="compatibility-types">
+                        ${result.compatibility.challenging.map(type => `<span class="type-tag">${type}</span>`).join('')}
+                    </div>
                 </div>
             `;
             
-            // 기타 섹션들
-            document.getElementById('strengths').innerHTML = details.strengths.replace(/\n/g, '<br>');
-            document.getElementById('weaknesses').innerHTML = details.weaknesses.replace(/\n/g, '<br>');
-            document.getElementById('stress-management').innerHTML = details.stress.replace(/\n/g, '<br>');
-            document.getElementById('love-style').innerHTML = details.love;
-            document.getElementById('growth-points').innerHTML = details.growth.replace(/\n/g, '<br>');
-        }
-        
-        // 테스트 재시작
-        function restartTest() {
-            currentQuestion = -1;
-            answers = {};
-            showScreen('intro-screen');
-        }
-        
-        // 카카오톡 공유
-        function shareKakao() {
-            if (typeof Kakao !== 'undefined' && Kakao.isInitialized()) {
-                const resultType = document.getElementById('result-type').textContent;
-                const resultDesc = document.getElementById('result-description').textContent;
-                
-                Kakao.Link.sendDefault({
+            // 강점과 약점
+            document.getElementById('strengthsList').innerHTML = 
+                `<ul>${result.strengths.map(s => `<li>${s}</li>`).join('')}</ul>`;
+            document.getElementById('weaknessesList').innerHTML = 
+                `<ul>${result.weaknesses.map(w => `<li>${w}</li>`).join('')}</ul>`;
+            
+            // 성장 포인트
+            document.getElementById('growthPoints').innerHTML = 
+                `<p>${result.growthPoints}</p>
+                 <p><strong>스트레스 관리:</strong> ${result.stressManagement}</p>
+                 <p><strong>연애 스타일:</strong> ${result.loveStyle}</p>`;
+            
+            // 카카오톡 공유 설정
+            document.getElementById('kakaoShare').onclick = () => {
+                Kakao.Share.sendDefault({
                     objectType: 'feed',
                     content: {
-                        title: `나의 MBTI 유형: ${resultType}`,
-                        description: resultDesc,
+                        title: `나의 MBTI 유형은 ${type} - ${result.title}`,
+                        description: result.subtitle,
                         imageUrl: 'https://doha.kr/images/mbti-og.png',
                         link: {
                             mobileWebUrl: 'https://doha.kr/tests/mbti/',
-                            webUrl: 'https://doha.kr/tests/mbti/',
-                        },
+                            webUrl: 'https://doha.kr/tests/mbti/'
+                        }
                     },
                     buttons: [
                         {
                             title: '나도 테스트하기',
                             link: {
                                 mobileWebUrl: 'https://doha.kr/tests/mbti/',
-                                webUrl: 'https://doha.kr/tests/mbti/',
-                            },
-                        },
-                    ],
+                                webUrl: 'https://doha.kr/tests/mbti/'
+                            }
+                        }
+                    ]
                 });
-            } else {
-                alert('카카오톡 공유 기능을 사용할 수 없습니다.');
-            }
+            };
         }
         
         // 링크 복사
@@ -1674,20 +1424,8 @@
                 alert('링크 복사에 실패했습니다.');
             });
         }
-        
-        // 전역 함수 설정
-        window.startTest = startTest;
-        window.selectOption = selectOption;
-        window.nextQuestion = nextQuestion;
-        window.previousQuestion = previousQuestion;
-        window.restartTest = restartTest;
-        window.shareKakao = shareKakao;
-        window.copyLink = copyLink;
     </script>
     
-    <!-- AdSense initialization -->
-    <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
+    <script src="/js/main.js"></script>
 </body>
 </html>
