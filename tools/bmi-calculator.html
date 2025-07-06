@@ -188,6 +188,7 @@
             grid-template-columns: 1fr 1fr;
             gap: 48px;
             margin-bottom: 40px;
+            align-items: start; /* 상단 정렬 */
         }
         
         /* Input Section */
@@ -336,6 +337,8 @@
             position: relative;
             overflow: hidden;
             border: 1px solid #bae6fd;
+            display: flex;
+            flex-direction: column;
         }
         
         .bmi-result-section::before {
@@ -352,6 +355,21 @@
         @keyframes pulse {
             0%, 100% { transform: scale(1); opacity: 0.5; }
             50% { transform: scale(1.1); opacity: 0.3; }
+        }
+        
+        .bmi-result-section h2 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: var(--bmi-gray-800);
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .bmi-result-section h2::before {
+            content: '📊';
+            margin-right: 10px;
         }
         
         .bmi-result-card {
@@ -423,6 +441,51 @@
             font-size: 24px;
             font-weight: 700;
             color: var(--bmi-gray-900);
+        }
+        
+        /* 결과 섹션 내 추가 콘텐츠 */
+        .bmi-quick-tips {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 12px;
+            padding: 24px;
+            margin-top: 24px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .bmi-quick-tips h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--bmi-gray-800);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .bmi-quick-tips h3::before {
+            content: '💡';
+        }
+        
+        .bmi-tips-grid {
+            display: grid;
+            gap: 12px;
+        }
+        
+        .bmi-tip-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 8px;
+            font-size: 14px;
+            color: var(--bmi-gray-700);
+        }
+        
+        .bmi-tip-icon {
+            font-size: 16px;
+            flex-shrink: 0;
         }
         
         /* BMI Chart */
@@ -855,6 +918,8 @@
                 
                 <!-- 결과 영역 -->
                 <div class="bmi-result-section hidden" id="resultSection">
+                    <h2>계산 결과</h2>
+                    
                     <div class="bmi-result-card">
                         <div class="bmi-value" id="bmiValue">0</div>
                         <div class="bmi-status" id="bmiStatus">-</div>
@@ -870,6 +935,29 @@
                             <div class="bmi-weight-card">
                                 <div class="bmi-weight-card-label">체중 차이</div>
                                 <div class="bmi-weight-card-value" id="weightDiff">-</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 빠른 건강 팁 -->
+                    <div class="bmi-quick-tips">
+                        <h3>빠른 건강 팁</h3>
+                        <div class="bmi-tips-grid" id="quickTips">
+                            <div class="bmi-tip-item">
+                                <span class="bmi-tip-icon">🥗</span>
+                                <span>균형잡힌 식단이 건강한 체중 유지의 핵심입니다</span>
+                            </div>
+                            <div class="bmi-tip-item">
+                                <span class="bmi-tip-icon">🚶‍♀️</span>
+                                <span>하루 30분 이상 꾸준한 운동을 실천해보세요</span>
+                            </div>
+                            <div class="bmi-tip-item">
+                                <span class="bmi-tip-icon">💧</span>
+                                <span>하루 8잔 이상의 물을 마시는 것이 좋습니다</span>
+                            </div>
+                            <div class="bmi-tip-item">
+                                <span class="bmi-tip-icon">😴</span>
+                                <span>충분한 수면은 건강한 체중 관리에 필수적입니다</span>
                             </div>
                         </div>
                     </div>
