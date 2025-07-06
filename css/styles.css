@@ -1266,7 +1266,7 @@ a:focus {
 }
 
 /* =========================================================================
-   SERVICE HIGHLIGHTS SECTION
+   SERVICE HIGHLIGHTS SECTION - 운세 특징 섹션 이모티콘 수정
    ========================================================================= */
 .service-highlights {
     padding: var(--space-32) 0;
@@ -1317,14 +1317,21 @@ a:focus {
     box-shadow: var(--shadow-xl);
 }
 
+/* 🚨 이모티콘 가시성 문제 수정 - 그라디언트 텍스트 효과 제거 */
 .highlight-icon {
     font-size: 4rem;
     margin-bottom: var(--space-4);
     display: block;
-    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: #f59e0b !important; /* 고정 색상으로 변경 */
+    /* 그라디언트 텍스트 효과를 제거하여 이모티콘 가시성 확보 */
+    background: none !important;
+    -webkit-background-clip: unset !important;
+    -webkit-text-fill-color: unset !important;
+    background-clip: unset !important;
+    /* 이모티콘 폰트 최적화 */
+    font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+    font-weight: normal;
+    font-style: normal;
 }
 
 .highlight-title {
