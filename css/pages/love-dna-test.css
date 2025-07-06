@@ -1,0 +1,610 @@
+/* Love DNA 테스트 페이지 전용 스타일 */
+
+/* 페이지 배경 - 로맨틱한 그라데이션 */
+body {
+    background: linear-gradient(135deg, #ff6b9d 0%, #feca57 50%, #ff9ff3 100%);
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* 플로팅 하트 애니메이션 */
+body::before, body::after {
+    content: '💕';
+    position: fixed;
+    font-size: 40px;
+    opacity: 0.1;
+    animation: floatHeart 20s infinite ease-in-out;
+    pointer-events: none;
+}
+
+body::before {
+    top: 10%;
+    left: 5%;
+    animation-delay: 0s;
+}
+
+body::after {
+    bottom: 10%;
+    right: 5%;
+    animation-delay: 10s;
+}
+
+@keyframes floatHeart {
+    0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.1; }
+    50% { transform: translateY(-30px) rotate(180deg); opacity: 0.2; }
+}
+
+/* 메인 컨테이너 */
+.love-test-container {
+    max-width: 900px;
+    margin: 40px auto;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* 헤더 */
+.love-test-header {
+    background: linear-gradient(135deg, #ff6b9d 0%, #ee5a6f 100%);
+    color: white;
+    padding: 40px 30px;
+    text-align: center;
+}
+
+.love-test-header h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.love-test-header p {
+    font-size: 1.2em;
+    opacity: 0.9;
+}
+
+/* 컨텐츠 영역 */
+.love-test-content {
+    padding: 40px 30px;
+}
+
+/* 시작 화면 */
+.love-intro-section {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.love-intro-title {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: var(--gray-800);
+    font-weight: 600;
+}
+
+.love-intro-text {
+    font-size: 1.1em;
+    color: var(--gray-600);
+    margin-bottom: 40px;
+    line-height: 1.6;
+}
+
+.love-intro-features {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.love-intro-feature {
+    text-align: center;
+}
+
+.love-intro-feature .feature-icon {
+    font-size: 2.5em;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.love-intro-feature .feature-text {
+    color: var(--gray-700);
+    font-weight: 500;
+}
+
+/* 진행도 바 */
+.love-progress-container {
+    margin-bottom: 40px;
+}
+
+.love-progress-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.love-progress-text {
+    font-size: 0.9em;
+    font-weight: 500;
+    color: var(--gray-700);
+}
+
+.love-progress-bar {
+    width: 100%;
+    height: 10px;
+    background: var(--gray-200);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.love-progress {
+    height: 100%;
+    background: linear-gradient(135deg, #ff6b9d 0%, #ee5a6f 100%);
+    transition: width 0.4s ease;
+    border-radius: 5px;
+}
+
+/* 질문 영역 */
+.love-question-container {
+    margin-bottom: 40px;
+    min-height: 300px;
+}
+
+.love-question {
+    font-size: 1.4em;
+    margin-bottom: 30px;
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--gray-800);
+    text-align: center;
+}
+
+.love-options {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.love-option {
+    background: var(--gray-50);
+    border: 2px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 20px 24px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1.05em;
+    line-height: 1.5;
+    text-align: center;
+}
+
+.love-option:hover {
+    transform: translateY(-2px);
+    border-color: #ff6b9d;
+    background: #fff5f7;
+    box-shadow: 0 4px 12px rgba(255, 107, 157, 0.2);
+}
+
+.love-option.selected {
+    background: #fff5f7;
+    border-color: #ff6b9d;
+    color: #d63384;
+}
+
+/* 네비게이션 버튼 */
+.love-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+}
+
+.love-btn {
+    padding: 12px 32px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.love-btn-primary {
+    background: linear-gradient(135deg, #ff6b9d 0%, #ee5a6f 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(255, 107, 157, 0.3);
+}
+
+.love-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 107, 157, 0.4);
+}
+
+.love-btn-primary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.love-btn-secondary {
+    background: var(--gray-100);
+    color: var(--gray-700);
+    border: 1px solid var(--gray-300);
+}
+
+.love-btn-secondary:hover {
+    background: var(--gray-200);
+}
+
+/* 결과 화면 */
+.love-result-container {
+    padding: 0;
+}
+
+/* 결과 히어로 */
+.result-hero {
+    background: linear-gradient(135deg, #ff6b9d 0%, #ee5a6f 100%);
+    color: white;
+    text-align: center;
+    padding: 60px 30px;
+    position: relative;
+    overflow: hidden;
+}
+
+.result-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><g fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="2"><circle cx="100" cy="100" r="50"/><circle cx="300" cy="200" r="75"/><circle cx="600" cy="150" r="60"/><circle cx="900" cy="250" r="40"/><circle cx="1100" cy="100" r="80"/></g></svg>') no-repeat center;
+    background-size: cover;
+}
+
+.result-hero-content {
+    position: relative;
+    z-index: 1;
+}
+
+.result-dna {
+    font-size: 4em;
+    font-weight: 900;
+    margin-bottom: 20px;
+    letter-spacing: 5px;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.result-type {
+    font-size: 2em;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.result-nickname {
+    font-size: 1.3em;
+    opacity: 0.9;
+    margin-bottom: 20px;
+}
+
+.result-rarity {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 1.1em;
+}
+
+/* DNA 시각화 */
+.dna-visualization {
+    background: white;
+    padding: 50px 30px;
+    max-width: 700px;
+    margin: -30px auto 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 10;
+}
+
+.dna-title {
+    text-align: center;
+    font-size: 1.6em;
+    margin-bottom: 30px;
+    color: var(--gray-800);
+}
+
+.dna-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    margin-bottom: 10px;
+    background: var(--gray-50);
+    border-radius: 10px;
+}
+
+.dna-label {
+    font-weight: 600;
+    color: var(--gray-700);
+}
+
+.dna-value {
+    font-size: 1.2em;
+    font-weight: 700;
+    color: #ff6b9d;
+    background: linear-gradient(135deg, #ff6b9d 0%, #ee5a6f 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* 상세 카드 */
+.result-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    padding: 0 30px 50px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.detail-card {
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.detail-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(135deg, #ff6b9d 0%, #ee5a6f 100%);
+}
+
+.detail-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+.detail-card-icon {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+.detail-card-title {
+    font-size: 1.3em;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: var(--gray-800);
+}
+
+.detail-card-content {
+    color: var(--gray-600);
+    line-height: 1.6;
+}
+
+.detail-list {
+    list-style: none;
+    padding: 0;
+}
+
+.detail-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--gray-100);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.detail-list li:last-child {
+    border-bottom: none;
+}
+
+.detail-list li::before {
+    content: '💕';
+    font-size: 1.2em;
+}
+
+/* 유명인 섹션 */
+.celebrities-section {
+    background: linear-gradient(135deg, #fff5f7 0%, #ffe0e6 100%);
+    padding: 50px 30px;
+    text-align: center;
+}
+
+.celebrities-title {
+    font-size: 1.8em;
+    margin-bottom: 30px;
+    color: var(--gray-800);
+}
+
+.celebrities-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.celebrity-chip {
+    background: white;
+    padding: 10px 20px;
+    border-radius: 25px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+    font-weight: 500;
+    color: var(--gray-700);
+    transition: all 0.3s ease;
+}
+
+.celebrity-chip:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.12);
+    background: linear-gradient(135deg, #ff6b9d 0%, #ee5a6f 100%);
+    color: white;
+}
+
+/* 공유 섹션 */
+.share-section {
+    text-align: center;
+    padding: 50px 30px;
+    background: white;
+}
+
+.share-title {
+    font-size: 1.5em;
+    margin-bottom: 25px;
+    color: var(--gray-800);
+}
+
+.share-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+}
+
+.share-btn {
+    padding: 14px 28px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.05em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.share-btn-kakao {
+    background: #FEE500;
+    color: #000000;
+}
+
+.share-btn-kakao:hover {
+    background: #FFDD00;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(254, 229, 0, 0.4);
+}
+
+.share-btn-copy {
+    background: var(--gray-800);
+    color: white;
+}
+
+.share-btn-copy:hover {
+    background: var(--gray-900);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.restart-btn {
+    background: linear-gradient(135deg, #ff6b9d 0%, #ee5a6f 100%);
+    color: white;
+    padding: 16px 40px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.15em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(255, 107, 157, 0.3);
+}
+
+.restart-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(255, 107, 157, 0.4);
+}
+
+/* 유틸리티 클래스 */
+.love-hidden {
+    display: none !important;
+}
+
+.love-start-button {
+    padding: 16px 40px;
+    font-size: 1.2em;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .love-test-container {
+        margin: 20px;
+        border-radius: 16px;
+    }
+    
+    .love-test-header, .love-test-content {
+        padding: 30px 20px;
+    }
+    
+    .love-test-header h1 {
+        font-size: 2em;
+    }
+    
+    .love-intro-features {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .love-question {
+        font-size: 1.2em;
+    }
+    
+    .love-option {
+        padding: 16px 20px;
+        font-size: 1em;
+    }
+    
+    .love-navigation {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    
+    .love-btn {
+        flex: 1;
+        min-width: 120px;
+    }
+    
+    .result-dna {
+        font-size: 3em;
+        letter-spacing: 3px;
+    }
+    
+    .result-type {
+        font-size: 1.5em;
+    }
+    
+    .result-details {
+        grid-template-columns: 1fr;
+        padding: 0 20px 40px;
+    }
+    
+    .detail-card {
+        padding: 25px 20px;
+    }
+    
+    .share-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .share-btn {
+        width: 100%;
+        max-width: 280px;
+        justify-content: center;
+    }
+}
