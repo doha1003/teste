@@ -34,6 +34,27 @@
             padding: 0 20px;
         }
         
+        /* 간결한 히어로 섹션 */
+        .compact-hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+        
+        .compact-hero h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        
+        .compact-hero p {
+            font-size: 16px;
+            opacity: 0.9;
+            margin: 0;
+        }
+        
         .zodiac-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -332,6 +353,14 @@
         
         /* 모바일 반응형 */
         @media (max-width: 768px) {
+            .compact-hero {
+                padding: 30px 20px;
+            }
+            
+            .compact-hero h1 {
+                font-size: 24px;
+            }
+            
             .zodiac-grid {
                 grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
                 gap: 15px;
@@ -382,113 +411,108 @@
     <!-- 네비게이션 -->
     <div id="navbar-placeholder"></div>
     
+    <!-- 간결한 페이지 헤더 -->
+    <div class="compact-hero">
+        <h1>🌟 별자리 운세</h1>
+        <p>AI가 분석하는 12궁도 별자리별 오늘의 운세</p>
+    </div>
+    
     <div class="fortune-container">
-        <div class="hero">
-            <div class="hero-content">
-                <h1 class="hero-title fade-in">🌟 별자리 운세</h1>
-                <p class="hero-subtitle fade-in stagger-1">AI가 분석하는 12궁도 별자리별 오늘의 운세</p>
+        <!-- 날짜 표시 -->
+        <div style="text-align: center; margin-bottom: 40px;">
+            <h2 id="todayDate"></h2>
+        </div>
+        
+        <!-- 별자리 선택 그리드 -->
+        <div class="zodiac-grid">
+            <div class="zodiac-card" data-zodiac="aries" onclick="showZodiacFortune('aries')">
+                <span class="zodiac-emoji">♈</span>
+                <div class="zodiac-name">양자리</div>
+                <div class="zodiac-period">3.21 - 4.19</div>
+            </div>
+            
+            <div class="zodiac-card" data-zodiac="taurus" onclick="showZodiacFortune('taurus')">
+                <span class="zodiac-emoji">♉</span>
+                <div class="zodiac-name">황소자리</div>
+                <div class="zodiac-period">4.20 - 5.20</div>
+            </div>
+            
+            <div class="zodiac-card" data-zodiac="gemini" onclick="showZodiacFortune('gemini')">
+                <span class="zodiac-emoji">♊</span>
+                <div class="zodiac-name">쌍둥이자리</div>
+                <div class="zodiac-period">5.21 - 6.21</div>
+            </div>
+            
+            <div class="zodiac-card" data-zodiac="cancer" onclick="showZodiacFortune('cancer')">
+                <span class="zodiac-emoji">♋</span>
+                <div class="zodiac-name">게자리</div>
+                <div class="zodiac-period">6.22 - 7.22</div>
+            </div>
+            
+            <div class="zodiac-card" data-zodiac="leo" onclick="showZodiacFortune('leo')">
+                <span class="zodiac-emoji">♌</span>
+                <div class="zodiac-name">사자자리</div>
+                <div class="zodiac-period">7.23 - 8.22</div>
+            </div>
+            
+            <div class="zodiac-card" data-zodiac="virgo" onclick="showZodiacFortune('virgo')">
+                <span class="zodiac-emoji">♍</span>
+                <div class="zodiac-name">처녀자리</div>
+                <div class="zodiac-period">8.23 - 9.22</div>
+            </div>
+            
+            <div class="zodiac-card" data-zodiac="libra" onclick="showZodiacFortune('libra')">
+                <span class="zodiac-emoji">♎</span>
+                <div class="zodiac-name">천칭자리</div>
+                <div class="zodiac-period">9.23 - 10.23</div>
+            </div>
+            
+            <div class="zodiac-card" data-zodiac="scorpio" onclick="showZodiacFortune('scorpio')">
+                <span class="zodiac-emoji">♏</span>
+                <div class="zodiac-name">전갈자리</div>
+                <div class="zodiac-period">10.24 - 11.22</div>
+            </div>
+            
+            <div class="zodiac-card" data-zodiac="sagittarius" onclick="showZodiacFortune('sagittarius')">
+                <span class="zodiac-emoji">♐</span>
+                <div class="zodiac-name">사수자리</div>
+                <div class="zodiac-period">11.23 - 12.21</div>
+            </div>
+            
+            <div class="zodiac-card" data-zodiac="capricorn" onclick="showZodiacFortune('capricorn')">
+                <span class="zodiac-emoji">♑</span>
+                <div class="zodiac-name">염소자리</div>
+                <div class="zodiac-period">12.22 - 1.19</div>
+            </div>
+            
+            <div class="zodiac-card" data-zodiac="aquarius" onclick="showZodiacFortune('aquarius')">
+                <span class="zodiac-emoji">♒</span>
+                <div class="zodiac-name">물병자리</div>
+                <div class="zodiac-period">1.20 - 2.18</div>
+            </div>
+            
+            <div class="zodiac-card" data-zodiac="pisces" onclick="showZodiacFortune('pisces')">
+                <span class="zodiac-emoji">♓</span>
+                <div class="zodiac-name">물고기자리</div>
+                <div class="zodiac-period">2.19 - 3.20</div>
             </div>
         </div>
         
-        <div class="features">
-            <div class="container">
-                <!-- 날짜 표시 -->
-                <div class="section-title" style="text-align: center; margin-bottom: 40px;">
-                    <h2 id="todayDate"></h2>
-                </div>
-                
-                <!-- 별자리 선택 그리드 -->
-                <div class="zodiac-grid">
-                    <div class="zodiac-card" data-zodiac="aries" onclick="showZodiacFortune('aries')">
-                        <span class="zodiac-emoji">♈</span>
-                        <div class="zodiac-name">양자리</div>
-                        <div class="zodiac-period">3.21 - 4.19</div>
-                    </div>
-                    
-                    <div class="zodiac-card" data-zodiac="taurus" onclick="showZodiacFortune('taurus')">
-                        <span class="zodiac-emoji">♉</span>
-                        <div class="zodiac-name">황소자리</div>
-                        <div class="zodiac-period">4.20 - 5.20</div>
-                    </div>
-                    
-                    <div class="zodiac-card" data-zodiac="gemini" onclick="showZodiacFortune('gemini')">
-                        <span class="zodiac-emoji">♊</span>
-                        <div class="zodiac-name">쌍둥이자리</div>
-                        <div class="zodiac-period">5.21 - 6.21</div>
-                    </div>
-                    
-                    <div class="zodiac-card" data-zodiac="cancer" onclick="showZodiacFortune('cancer')">
-                        <span class="zodiac-emoji">♋</span>
-                        <div class="zodiac-name">게자리</div>
-                        <div class="zodiac-period">6.22 - 7.22</div>
-                    </div>
-                    
-                    <div class="zodiac-card" data-zodiac="leo" onclick="showZodiacFortune('leo')">
-                        <span class="zodiac-emoji">♌</span>
-                        <div class="zodiac-name">사자자리</div>
-                        <div class="zodiac-period">7.23 - 8.22</div>
-                    </div>
-                    
-                    <div class="zodiac-card" data-zodiac="virgo" onclick="showZodiacFortune('virgo')">
-                        <span class="zodiac-emoji">♍</span>
-                        <div class="zodiac-name">처녀자리</div>
-                        <div class="zodiac-period">8.23 - 9.22</div>
-                    </div>
-                    
-                    <div class="zodiac-card" data-zodiac="libra" onclick="showZodiacFortune('libra')">
-                        <span class="zodiac-emoji">♎</span>
-                        <div class="zodiac-name">천칭자리</div>
-                        <div class="zodiac-period">9.23 - 10.23</div>
-                    </div>
-                    
-                    <div class="zodiac-card" data-zodiac="scorpio" onclick="showZodiacFortune('scorpio')">
-                        <span class="zodiac-emoji">♏</span>
-                        <div class="zodiac-name">전갈자리</div>
-                        <div class="zodiac-period">10.24 - 11.22</div>
-                    </div>
-                    
-                    <div class="zodiac-card" data-zodiac="sagittarius" onclick="showZodiacFortune('sagittarius')">
-                        <span class="zodiac-emoji">♐</span>
-                        <div class="zodiac-name">사수자리</div>
-                        <div class="zodiac-period">11.23 - 12.21</div>
-                    </div>
-                    
-                    <div class="zodiac-card" data-zodiac="capricorn" onclick="showZodiacFortune('capricorn')">
-                        <span class="zodiac-emoji">♑</span>
-                        <div class="zodiac-name">염소자리</div>
-                        <div class="zodiac-period">12.22 - 1.19</div>
-                    </div>
-                    
-                    <div class="zodiac-card" data-zodiac="aquarius" onclick="showZodiacFortune('aquarius')">
-                        <span class="zodiac-emoji">♒</span>
-                        <div class="zodiac-name">물병자리</div>
-                        <div class="zodiac-period">1.20 - 2.18</div>
-                    </div>
-                    
-                    <div class="zodiac-card" data-zodiac="pisces" onclick="showZodiacFortune('pisces')">
-                        <span class="zodiac-emoji">♓</span>
-                        <div class="zodiac-name">물고기자리</div>
-                        <div class="zodiac-period">2.19 - 3.20</div>
-                    </div>
-                </div>
-                
-                <!-- 운세 결과 -->
-                <div id="fortuneResult" class="fortune-result" style="display: none;">
-                    <!-- 결과가 여기에 표시됩니다 -->
-                </div>
-            </div>
+        <!-- 운세 결과 -->
+        <div id="fortuneResult" class="fortune-result" style="display: none;">
+            <!-- 결과가 여기에 표시됩니다 -->
         </div>
-        
-        <!-- 광고 영역 -->
-        <div class="ad-container">
-            <div class="ad-label">광고</div>
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-7905640648499222"
-                 data-ad-slot="1234567890"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-        </div>
+    </div>
+    
+    <!-- 광고 영역 -->
+    <div class="ad-container">
+        <div class="ad-label">광고</div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-7905640648499222"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
     </div>
     
     <!-- 푸터 -->
