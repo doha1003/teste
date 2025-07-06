@@ -25,6 +25,323 @@
     
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
+    
+    <style>
+        /* 운세 입력 폼 스타일 */
+        .fortune-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .fortune-form {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 24px;
+            padding: 48px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 40px;
+        }
+        
+        .fortune-form::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="stars" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23stars)"/></svg>');
+            animation: sparkle 10s linear infinite;
+        }
+        
+        @keyframes sparkle {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-20px); }
+        }
+        
+        .fortune-form h2 {
+            color: white;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 28px;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .form-group {
+            margin-bottom: 28px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .form-group label {
+            display: block;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+            margin-bottom: 12px;
+            font-size: 16px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            color: white;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+        
+        .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .radio-group {
+            display: flex;
+            gap: 24px;
+            margin-top: 12px;
+        }
+        
+        .radio-label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+            cursor: pointer;
+            padding: 12px 20px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            flex: 1;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .radio-label::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .radio-label:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .radio-label:hover::before {
+            left: 100%;
+        }
+        
+        .radio-label input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            margin: 0;
+            accent-color: #fff;
+        }
+        
+        .radio-label input[type="radio"]:checked + span,
+        .radio-label:has(input[type="radio"]:checked) {
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+        }
+        
+        .form-helper-text {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .form-helper-text::before {
+            content: '💡';
+            font-size: 16px;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
+            border: none;
+            border-radius: 16px;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 32px;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 8px 24px rgba(255, 107, 107, 0.3);
+        }
+        
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s ease;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(255, 107, 107, 0.4);
+        }
+        
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+        
+        .submit-btn:active {
+            transform: translateY(-1px);
+        }
+        
+        /* 결과 영역 스타일 */
+        .fortune-result {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            margin-top: 40px;
+        }
+        
+        .fortune-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 24px;
+            border-bottom: 2px solid #f3f4f6;
+        }
+        
+        .fortune-date {
+            color: #6b7280;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+        
+        .fortune-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: #111827;
+        }
+        
+        .fortune-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+        
+        .fortune-category {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .fortune-category::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .category-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #374151;
+        }
+        
+        .category-title span {
+            font-size: 24px;
+            margin-right: 8px;
+        }
+        
+        .category-score {
+            font-size: 32px;
+            font-weight: 700;
+            color: #6366f1;
+            margin-bottom: 12px;
+        }
+        
+        .category-description {
+            color: #6b7280;
+            line-height: 1.5;
+        }
+        
+        /* 모바일 반응형 */
+        @media (max-width: 768px) {
+            .fortune-form {
+                padding: 32px 24px;
+                margin: 0 16px 32px;
+            }
+            
+            .fortune-form h2 {
+                font-size: 24px;
+            }
+            
+            .radio-group {
+                flex-direction: column;
+                gap: 12px;
+            }
+            
+            .radio-label {
+                justify-content: flex-start;
+            }
+            
+            .fortune-categories {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* 로딩 애니메이션 */
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f3f4f6;
+            border-top: 4px solid #6366f1;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
 </head>
 <body>
     <!-- 네비게이션 바 -->
@@ -45,43 +362,44 @@
     
     <!-- 운세 입력 폼 -->
     <section class="features">
-        <div class="container">
+        <div class="fortune-container">
             <form id="dailyFortuneForm" class="fortune-form fade-in">
-                <h2 style="text-align: center; margin-bottom: 32px;">운세 정보 입력</h2>
+                <h2>✨ 운세 정보 입력 ✨</h2>
                 
                 <div class="form-group">
-                    <label for="userName">이름</label>
+                    <label for="userName">👤 이름</label>
                     <input type="text" id="userName" name="userName" class="form-control" required placeholder="이름을 입력하세요">
                 </div>
                 
                 <div class="form-group">
-                    <label for="birthDate">생년월일</label>
+                    <label for="birthDate">📅 생년월일</label>
                     <input type="date" id="birthDate" name="birthDate" class="form-control" required>
                 </div>
                 
                 <div class="form-group">
-                    <label>성별</label>
+                    <label>⚥ 성별</label>
                     <div class="radio-group">
                         <label class="radio-label">
                             <input type="radio" name="gender" value="male" required>
-                            남성
+                            <span>👨 남성</span>
                         </label>
                         <label class="radio-label">
                             <input type="radio" name="gender" value="female" required>
+                            <span>👩 여성</span>
                         </label>
                     </div>
                 </div>
                 
                 <div class="form-group">
-                    <label for="birthTime">출생 시간 (선택사항)</label>
+                    <label for="birthTime">🕐 출생 시간 (선택사항)</label>
                     <input type="time" id="birthTime" name="birthTime" class="form-control">
-                    <small style="color: var(--gray-600); margin-top: 4px; display: block;">
+                    <div class="form-helper-text">
                         출생 시간을 입력하면 더 정확한 운세를 볼 수 있습니다
-                    </small>
+                    </div>
                 </div>
                 
-                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 24px;">
-                    운세 보기
+                <button type="submit" class="submit-btn">
+                    🔮 운세 보기
                 </button>
             </form>
             
@@ -107,12 +425,12 @@
     <section class="service-highlights">
         <div class="container">
             <div class="highlight-card">
-                <h3>AI 운세 안내</h3>
+                <h3>🔮 AI 운세 안내</h3>
                 <ul>
-                    <li>AI가 분석한 운세는 참고용이며, 절대적인 예측이 아닙니다.</li>
-                    <li>입력하신 개인정보는 운세 분석에만 사용되며, 저장되지 않습니다.</li>
-                    <li>매일 자정에 운세가 업데이트됩니다.</li>
-                    <li>더 정확한 운세를 원하시면 출생 시간을 함께 입력해주세요.</li>
+                    <li>✨ AI가 분석한 운세는 참고용이며, 절대적인 예측이 아닙니다.</li>
+                    <li>🔒 입력하신 개인정보는 운세 분석에만 사용되며, 저장되지 않습니다.</li>
+                    <li>🌙 매일 자정에 운세가 업데이트됩니다.</li>
+                    <li>⏰ 더 정확한 운세를 원하시면 출생 시간을 함께 입력해주세요.</li>
                 </ul>
             </div>
         </div>
@@ -142,8 +460,9 @@
             resultDiv.style.display = 'block';
             resultDiv.innerHTML = `
                 <div style="text-align: center; padding: 40px;">
-                    <div style="font-size: 3em; margin-bottom: 20px;">🔮</div>
-                    <p style="margin-top: 20px;">AI가 운세를 분석 중입니다...</p>
+                    <div class="loading-spinner"></div>
+                    <p style="margin-top: 20px; font-size: 18px; color: #6366f1;">🔮 AI가 운세를 분석 중입니다...</p>
+                    <p style="color: #6b7280; margin-top: 8px;">잠시만 기다려주세요</p>
                 </div>
             `;
             
@@ -153,7 +472,7 @@
             // 모의 운세 생성 (실제로는 AI API 호출)
             setTimeout(() => {
                 displayFortuneResult(userData);
-            }, 2500);
+            }, 3000);
         });
         
         function displayFortuneResult(userData) {
@@ -164,22 +483,24 @@
                 day: 'numeric' 
             });
             
-            // 모의 운세 데이터
+            // 간단한 시드 기반 운세 생성
+            const birthDate = new Date(userData.birthDate);
+            const seed = birthDate.getDate() + new Date().getDate();
+            
             const fortuneData = {
-                overallScore: 85,
-                overall: "오늘은 새로운 기회가 찾아오는 날입니다. 긍정적인 마음가짐으로 하루를 시작하세요.",
-                loveScore: 80,
-                moneyScore: 75,
-                healthScore: 90,
-                advice: "작은 변화가 큰 행운을 가져다줄 것입니다.",
-                luckyNumber: "7, 21",
-                luckyColor: "파란색"
+                overallScore: 70 + (seed % 25),
+                loveScore: 65 + (seed % 30),
+                moneyScore: 60 + (seed % 35),
+                healthScore: 75 + (seed % 20),
+                advice: "오늘은 새로운 시작을 위한 좋은 날입니다. 긍정적인 마음가짐으로 하루를 보내세요.",
+                luckyNumber: `${3 + (seed % 7)}, ${15 + (seed % 10)}`,
+                luckyColor: ["파란색", "빨간색", "노란색", "초록색"][seed % 4]
             };
             
             resultDiv.innerHTML = `
                 <div class="fortune-header">
                     <div class="fortune-date">${today}</div>
-                    <div class="fortune-name">${userData.name}님의 운세</div>
+                    <div class="fortune-name">🌟 ${userData.name}님의 운세 🌟</div>
                 </div>
                 
                 <div class="fortune-categories">
@@ -189,7 +510,7 @@
                         </div>
                         <div class="category-score">${fortuneData.overallScore}/100</div>
                         <div class="category-description">
-                            ${fortuneData.overall}
+                            전체적으로 좋은 운세를 보이고 있습니다.
                         </div>
                     </div>
                     
@@ -199,7 +520,7 @@
                         </div>
                         <div class="category-score">${fortuneData.loveScore}/100</div>
                         <div class="category-description">
-                            사랑운이 좋습니다.
+                            사랑과 관련된 좋은 소식이 있을 수 있습니다.
                         </div>
                     </div>
                     
@@ -209,7 +530,7 @@
                         </div>
                         <div class="category-score">${fortuneData.moneyScore}/100</div>
                         <div class="category-description">
-                            재정관리에 신경쓰세요.
+                            재정 관리에 신중을 기하시기 바랍니다.
                         </div>
                     </div>
                     
@@ -219,26 +540,34 @@
                         </div>
                         <div class="category-score">${fortuneData.healthScore}/100</div>
                         <div class="category-description">
-                            건강관리에 유의하세요.
+                            건강 상태가 양호합니다. 꾸준한 관리가 중요합니다.
                         </div>
                     </div>
                 </div>
                 
-                <div style="margin-top: 40px; padding: 24px; background: var(--gray-50); border-radius: 12px;">
-                    <h3 style="margin-bottom: 12px;">🔮 오늘의 조언</h3>
-                    <p style="color: var(--gray-700); line-height: 1.7;">
+                <div style="margin-top: 40px; padding: 32px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 20px; color: white;">
+                    <h3 style="margin-bottom: 16px; text-align: center;">🔮 오늘의 특별한 조언</h3>
+                    <p style="line-height: 1.7; text-align: center; font-size: 16px;">
                         ${fortuneData.advice}
                     </p>
                     
-                    <div style="margin-top: 20px; display: flex; gap: 20px; font-size: 14px;">
-                        <span><strong>행운의 숫자:</strong> ${fortuneData.luckyNumber}</span>
-                        <span><strong>행운의 색상:</strong> ${fortuneData.luckyColor}</span>
+                    <div style="margin-top: 24px; display: flex; justify-content: center; gap: 40px; font-size: 14px; flex-wrap: wrap;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 20px; margin-bottom: 4px;">🎲</div>
+                            <div><strong>행운의 숫자</strong></div>
+                            <div>${fortuneData.luckyNumber}</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 20px; margin-bottom: 4px;">🎨</div>
+                            <div><strong>행운의 색상</strong></div>
+                            <div>${fortuneData.luckyColor}</div>
+                        </div>
                     </div>
                 </div>
                 
-                <div style="margin-top: 24px; text-align: center;">
-                    <button onclick="location.reload()" class="btn btn-secondary">
-                        다시 보기
+                <div style="margin-top: 32px; text-align: center;">
+                    <button onclick="location.reload()" class="btn btn-secondary" style="padding: 12px 32px; border-radius: 25px;">
+                        🔄 다시 보기
                     </button>
                 </div>
             `;
