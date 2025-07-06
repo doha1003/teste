@@ -1,0 +1,26 @@
+/* Service Highlights 이모티콘 수정 */
+.highlight-icon {
+    font-size: 4rem !important;
+    margin-bottom: var(--space-4);
+    display: block;
+    /* 그라디언트 제거하고 일반 색상으로 변경 */
+    background: none !important;
+    -webkit-background-clip: unset !important;
+    -webkit-text-fill-color: unset !important;
+    background-clip: unset !important;
+    color: #f59e0b !important; /* 주황색으로 설정 */
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+}
+
+/* 호버 효과 추가 */
+.highlight-card:hover .highlight-icon {
+    transform: scale(1.1);
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.15));
+}
+
+/* 다크모드 대응 */
+@media (prefers-color-scheme: dark) {
+    .highlight-icon {
+        color: #fbbf24 !important; /* 다크모드에서는 더 밝은 색상 */
+    }
+}
