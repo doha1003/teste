@@ -1,0 +1,37 @@
+/* =========================================================================
+   EMOJI VISIBILITY FIX
+   ========================================================================= */
+
+/* Fix for service-highlights section emoji visibility issue */
+.service-highlights .highlight-icon {
+    /* Remove gradient text effect that makes emojis invisible */
+    background: none !important;
+    -webkit-background-clip: unset !important;
+    -webkit-text-fill-color: unset !important;
+    background-clip: unset !important;
+    
+    /* Use solid color instead */
+    color: #f59e0b !important;
+    
+    /* Keep other styles */
+    font-size: 4rem;
+    margin-bottom: var(--space-4);
+    display: block;
+}
+
+/* Alternative fix for all emoji elements */
+.highlight-icon:not(svg),
+.service-emoji:not(svg) {
+    /* Ensure emojis are always visible with proper color */
+    -webkit-text-fill-color: initial !important;
+    background-clip: initial !important;
+    -webkit-background-clip: initial !important;
+}
+
+/* Ensure proper rendering for emoji characters */
+.highlight-card .highlight-icon {
+    /* Additional emoji rendering optimization */
+    font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+    font-weight: normal;
+    font-style: normal;
+}
