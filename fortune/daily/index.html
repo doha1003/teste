@@ -29,7 +29,7 @@
     <style>
         /* 운세 입력 폼 스타일 */
         .fortune-container {
-            max-width: 600px;
+            max-width: 800px;
             margin: 0 auto;
             padding: 0 20px;
         }
@@ -37,22 +37,44 @@
         /* 간결한 히어로 섹션 */
         .compact-hero {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 40px 20px;
+            padding: 60px 20px;
             text-align: center;
             color: white;
-            margin-bottom: 40px;
+            margin-bottom: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .compact-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="40" r="1" fill="rgba(255,255,255,0.15)"/><circle cx="40" cy="80" r="1.5" fill="rgba(255,255,255,0.1)"/></svg>');
+            animation: twinkle 8s ease-in-out infinite;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
         }
         
         .compact-hero h1 {
-            font-size: 28px;
+            font-size: 36px;
             font-weight: 700;
-            margin-bottom: 8px;
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 1;
         }
         
         .compact-hero p {
-            font-size: 16px;
+            font-size: 18px;
             opacity: 0.9;
             margin: 0;
+            position: relative;
+            z-index: 1;
         }
         
         .fortune-form {
@@ -62,7 +84,7 @@
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
             position: relative;
             overflow: hidden;
-            margin-bottom: 40px;
+            margin-bottom: 60px;
         }
         
         .fortune-form::before {
@@ -248,44 +270,103 @@
         .fortune-result {
             background: white;
             border-radius: 24px;
-            padding: 40px;
+            padding: 50px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            margin-top: 40px;
+            margin-top: 60px;
+            border: 3px solid #f3f4f6;
         }
         
         .fortune-header {
             text-align: center;
-            margin-bottom: 40px;
-            padding-bottom: 24px;
-            border-bottom: 2px solid #f3f4f6;
+            margin-bottom: 50px;
+            padding: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .fortune-header::before {
+            content: '✨🔮✨';
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 20px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.1); }
         }
         
         .fortune-date {
-            color: #6b7280;
-            font-size: 16px;
-            margin-bottom: 8px;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 18px;
+            margin-bottom: 12px;
+            font-weight: 500;
         }
         
         .fortune-name {
-            font-size: 24px;
+            font-size: 32px;
             font-weight: 700;
-            color: #111827;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .fortune-overview {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 50px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .fortune-overview h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #8b4513;
+            font-weight: 700;
+        }
+        
+        .overall-score {
+            font-size: 48px;
+            font-weight: 900;
+            color: #ff6b6b;
+            margin: 20px 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .overall-description {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #5d4037;
+            max-width: 600px;
+            margin: 0 auto;
         }
         
         .fortune-categories {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 24px;
-            margin-bottom: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
         }
         
         .fortune-category {
             background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-            border-radius: 16px;
-            padding: 24px;
-            text-align: center;
+            border-radius: 20px;
+            padding: 35px;
             position: relative;
             overflow: hidden;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+        
+        .fortune-category:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
         }
         
         .fortune-category::before {
@@ -294,47 +375,168 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 4px;
+            height: 6px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
         
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .category-icon {
+            font-size: 32px;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+        }
+        
         .category-title {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 12px;
+            font-size: 22px;
+            font-weight: 700;
             color: #374151;
         }
         
-        .category-title span {
-            font-size: 24px;
-            margin-right: 8px;
+        .category-score {
+            font-size: 36px;
+            font-weight: 900;
+            color: #6366f1;
+            margin-bottom: 20px;
+            text-align: center;
         }
         
-        .category-score {
-            font-size: 32px;
-            font-weight: 700;
-            color: #6366f1;
-            margin-bottom: 12px;
+        .score-bar {
+            width: 100%;
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 6px;
+            overflow: hidden;
+            margin-bottom: 25px;
+        }
+        
+        .score-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 6px;
+            transition: width 1.5s ease;
         }
         
         .category-description {
-            color: #6b7280;
-            line-height: 1.5;
+            color: #4b5563;
+            line-height: 1.8;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .category-advice {
+            background: rgba(102, 126, 234, 0.1);
+            padding: 20px;
+            border-radius: 12px;
+            color: #374151;
+            font-style: italic;
+            line-height: 1.6;
+            border-left: 4px solid #667eea;
+        }
+        
+        .detailed-analysis {
+            margin-top: 50px;
+            padding: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            color: white;
+        }
+        
+        .detailed-analysis h3 {
+            font-size: 28px;
+            margin-bottom: 30px;
+            text-align: center;
+            color: white;
+        }
+        
+        .analysis-sections {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .analysis-section {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .analysis-section h4 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #fbbf24;
+            font-weight: 600;
+        }
+        
+        .analysis-section p {
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 0;
+        }
+        
+        .lucky-info {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            padding: 40px;
+            border-radius: 20px;
+            margin: 40px 0;
+            text-align: center;
+            color: white;
+        }
+        
+        .lucky-info h3 {
+            font-size: 24px;
+            margin-bottom: 30px;
+            color: white;
+        }
+        
+        .lucky-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+        }
+        
+        .lucky-item {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .lucky-item-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        .lucky-item-label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+        
+        .lucky-item-value {
+            font-size: 18px;
+            font-weight: 700;
         }
         
         /* 모바일 반응형 */
         @media (max-width: 768px) {
             .compact-hero {
-                padding: 30px 20px;
+                padding: 40px 20px;
             }
             
             .compact-hero h1 {
-                font-size: 24px;
+                font-size: 28px;
             }
             
             .fortune-form {
                 padding: 32px 24px;
-                margin: 0 16px 32px;
+                margin: 0 16px 40px;
             }
             
             .fortune-form h2 {
@@ -350,17 +552,30 @@
                 justify-content: flex-start;
             }
             
+            .fortune-result {
+                padding: 30px 20px;
+                margin: 40px 16px;
+            }
+            
             .fortune-categories {
                 grid-template-columns: 1fr;
+            }
+            
+            .analysis-sections {
+                grid-template-columns: 1fr;
+            }
+            
+            .lucky-items {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
         
         /* 로딩 애니메이션 */
         .loading-spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid #f3f4f6;
-            border-top: 4px solid #6366f1;
+            width: 60px;
+            height: 60px;
+            border: 5px solid #f3f4f6;
+            border-top: 5px solid #6366f1;
             border-radius: 50%;
             animation: spin 1s linear infinite;
             margin: 0 auto 20px;
@@ -369,6 +584,34 @@
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
+        }
+        
+        .loading-text {
+            text-align: center;
+            font-size: 18px;
+            color: #6366f1;
+            margin: 20px 0;
+        }
+        
+        .loading-tips {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+        
+        .loading-tips h4 {
+            color: #374151;
+            margin-bottom: 10px;
+        }
+        
+        .loading-tips ul {
+            color: #6b7280;
+            padding-left: 20px;
+        }
+        
+        .loading-tips li {
+            margin-bottom: 5px;
         }
     </style>
 </head>
@@ -379,7 +622,7 @@
     <!-- 간결한 페이지 헤더 -->
     <div class="compact-hero">
         <h1>🌅 오늘의 운세</h1>
-        <p>AI가 분석하는 개인 맞춤형 일일 운세</p>
+        <p>AI가 분석하는 전문적인 개인 맞춤형 일일 운세</p>
     </div>
     
     <!-- 운세 입력 폼 -->
@@ -462,11 +705,77 @@
     <!-- External JavaScript -->
     <script src="/js/main.js"></script>
     <script>
-        // 일일 운세 처리 스크립트
+        // 상세한 운세 데이터
+        const fortuneTemplates = {
+            overall: {
+                excellent: [
+                    "오늘은 당신에게 매우 특별한 날이 될 것입니다. 우주의 에너지가 당신을 향해 긍정적으로 흘러가고 있으며, 모든 일이 순조롭게 풀릴 가능성이 높습니다. 새로운 기회들이 연달아 찾아올 것이니 준비된 마음으로 하루를 시작하세요.",
+                    "별들의 배치가 당신에게 매우 유리하게 작용하고 있습니다. 오늘 하루 동안 당신의 직감과 통찰력이 특히 예리해질 것이며, 중요한 결정을 내리기에 최적의 시기입니다. 자신감을 가지고 도전해보세요."
+                ],
+                good: [
+                    "전체적으로 안정된 하루가 될 것입니다. 큰 변화는 없지만 작은 행복들이 당신을 기다리고 있으며, 평온한 마음으로 하루를 보낼 수 있을 것입니다. 주변 사람들과의 관계에서 따뜻한 에너지를 느낄 수 있습니다.",
+                    "오늘은 꾸준함이 빛을 발하는 날입니다. 그동안 노력해온 일들이 서서히 결실을 맺기 시작할 것이며, 인내심을 가지고 계속 전진한다면 좋은 결과를 얻을 수 있을 것입니다."
+                ],
+                normal: [
+                    "평범하지만 의미 있는 하루가 될 것입니다. 특별한 일은 없을 수 있지만, 일상 속에서 작은 깨달음이나 소소한 즐거움을 찾을 수 있을 것입니다. 마음의 여유를 가지고 하루를 보내세요.",
+                    "오늘은 재정비의 시간입니다. 그동안 미뤄왔던 일들을 정리하고, 앞으로의 계획을 세우기에 좋은 날입니다. 급하지 않게, 차근차근 하나씩 해결해나가세요."
+                ]
+            },
+            love: {
+                excellent: [
+                    "애정 운이 최고조에 달한 오늘, 연인이 있다면 깊은 유대감을 느낄 수 있는 특별한 순간들이 기다리고 있습니다. 솔직한 대화를 통해 서로를 더 깊이 이해하게 될 것이며, 관계가 한 단계 발전할 가능성이 높습니다. 싱글이라면 운명적인 만남이 찾아올 수 있는 날입니다.",
+                    "사랑의 여신이 당신을 특별히 돌보고 있는 하루입니다. 연인과의 관계에서 새로운 면을 발견하게 될 것이며, 이는 두 사람의 관계를 더욱 풍성하게 만들어줄 것입니다. 적극적인 표현이 좋은 결과를 가져다줄 것입니다."
+                ],
+                good: [
+                    "애정 관계에서 안정감을 느낄 수 있는 하루입니다. 큰 감동은 없을 수 있지만, 평온하고 따뜻한 시간을 보낼 수 있을 것입니다. 상대방에 대한 감사한 마음을 표현해보세요. 작은 배려가 큰 기쁨을 가져다줄 것입니다.",
+                    "오늘은 서로에 대한 이해가 깊어지는 날입니다. 일상적인 대화 속에서도 새로운 발견이 있을 것이며, 함께하는 시간의 소중함을 다시 한번 느끼게 될 것입니다."
+                ],
+                normal: [
+                    "애정 운이 평탄한 하루입니다. 특별한 일은 없겠지만, 현재 관계를 점검해볼 수 있는 좋은 시간이 될 것입니다. 상대방의 입장에서 생각해보고, 더 나은 관계를 위해 무엇을 할 수 있을지 고민해보세요.",
+                    "오늘은 혼자만의 시간을 갖는 것도 좋겠습니다. 자신을 돌아보고, 앞으로의 관계에 대해 생각해볼 수 있는 여유로운 하루가 될 것입니다."
+                ]
+            },
+            money: {
+                excellent: [
+                    "금전 운이 상승세를 타고 있는 오늘, 예상치 못한 수입이나 좋은 투자 기회가 찾아올 수 있습니다. 하지만 욕심을 부리지 말고 신중하게 판단하여 결정하세요. 장기적인 관점에서 재정 계획을 세우기에도 좋은 날입니다.",
+                    "재물의 기운이 당신을 향해 흘러오고 있습니다. 새로운 수입원이 생기거나, 기존 투자에서 좋은 소식을 들을 수 있을 것입니다. 다만 과도한 지출은 피하고, 현명한 소비 습관을 유지하세요."
+                ],
+                good: [
+                    "재정 상태가 안정적인 하루입니다. 큰 수입은 없겠지만 지출도 크지 않아 균형 잡힌 하루를 보낼 수 있을 것입니다. 가계부를 정리하거나 앞으로의 재정 계획을 세워보는 것이 좋겠습니다.",
+                    "오늘은 절약의 지혜가 빛나는 날입니다. 작은 절약이 모여 큰 목돈이 될 수 있다는 것을 실감하게 될 것이며, 현명한 소비 습관의 중요성을 다시 한번 깨닫게 됩니다."
+                ],
+                normal: [
+                    "금전 운이 보통인 하루입니다. 불필요한 지출을 줄이고, 꼭 필요한 것에만 돈을 사용하는 것이 좋겠습니다. 충동구매는 피하고, 신중하게 소비 결정을 내리세요.",
+                    "재정 관리에 대해 다시 한번 점검해볼 수 있는 날입니다. 현재의 수입과 지출을 분석해보고, 더 효율적인 재정 운용 방법을 모색해보세요."
+                ]
+            },
+            health: {
+                excellent: [
+                    "건강 운이 최상인 오늘, 몸과 마음이 모두 활력으로 넘칠 것입니다. 새로운 운동을 시작하거나 건강한 습관을 만들기에 최적의 날입니다. 면역력도 강화되어 있어 웬만한 스트레스나 피로도 쉽게 이겨낼 수 있을 것입니다.",
+                    "생명력이 왕성한 하루입니다. 평소보다 더 많은 에너지를 느낄 수 있을 것이며, 이를 건설적인 활동에 활용하면 큰 성과를 얻을 수 있습니다. 몸의 신호에 귀 기울이며 건강을 유지하세요."
+                ],
+                good: [
+                    "전반적으로 건강한 컨디션을 유지할 수 있는 하루입니다. 규칙적인 생활 리듬을 유지하고, 적당한 운동과 충분한 휴식을 취한다면 더욱 좋은 상태를 유지할 수 있을 것입니다.",
+                    "몸의 균형이 잘 맞춰진 하루입니다. 평소 관리해온 건강 습관들이 좋은 결과를 보여줄 것이며, 꾸준함의 중요성을 다시 한번 느끼게 될 것입니다."
+                ],
+                normal: [
+                    "건강 상태가 평범한 하루입니다. 특별한 문제는 없겠지만, 과로는 피하고 충분한 휴식을 취하는 것이 좋겠습니다. 스트레스 관리에도 신경 쓰시기 바랍니다.",
+                    "몸의 신호에 주의 깊게 귀 기울여야 하는 날입니다. 작은 불편함이라도 무시하지 말고, 필요하다면 충분한 휴식을 취하거나 전문가의 조언을 구해보세요."
+                ]
+            }
+        };
+
+        const luckyItems = {
+            colors: ["빨간색", "파란색", "노란색", "초록색", "보라색", "주황색", "분홍색", "흰색", "검은색", "금색", "은색"],
+            numbers: ["3, 7", "1, 9", "2, 8", "4, 6", "5, 7", "1, 3", "2, 9", "4, 8", "6, 7", "3, 5"],
+            items: ["목걸이", "반지", "시계", "향수", "꽃", "책", "음악", "차", "초콜릿", "향초"],
+            directions: ["동쪽", "서쪽", "남쪽", "북쪽", "동남쪽", "서남쪽", "동북쪽", "서북쪽"],
+            times: ["오전 10시", "오후 2시", "오후 6시", "오전 11시", "오후 4시", "오후 8시"]
+        };
+
         document.getElementById('dailyFortuneForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // 폼 데이터 수집
             const formData = new FormData(e.target);
             const userData = {
                 name: formData.get('userName'),
@@ -475,122 +784,260 @@
                 birthTime: formData.get('birthTime') || null
             };
             
-            // 결과 영역 표시
             const resultDiv = document.getElementById('fortuneResult');
             resultDiv.style.display = 'block';
             resultDiv.innerHTML = `
-                <div style="text-align: center; padding: 40px;">
+                <div style="text-align: center; padding: 60px 20px;">
                     <div class="loading-spinner"></div>
-                    <p style="margin-top: 20px; font-size: 18px; color: #6366f1;">🔮 AI가 운세를 분석 중입니다...</p>
-                    <p style="color: #6b7280; margin-top: 8px;">잠시만 기다려주세요</p>
+                    <div class="loading-text">🔮 AI가 운세를 분석 중입니다...</div>
+                    <p style="color: #6b7280; margin-top: 12px;">복잡한 천체 배치와 개인 정보를 종합 분석하고 있습니다</p>
+                    
+                    <div class="loading-tips">
+                        <h4>💡 운세 분석 과정</h4>
+                        <ul>
+                            <li>생년월일 기반 사주팔자 분석</li>
+                            <li>오늘의 천체 배치 확인</li>
+                            <li>개인별 맞춤 운세 생성</li>
+                            <li>상세 해석 및 조언 작성</li>
+                        </ul>
+                    </div>
                 </div>
             `;
             
-            // 결과로 스크롤
             resultDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
             
-            // 모의 운세 생성 (실제로는 AI API 호출)
             setTimeout(() => {
-                displayFortuneResult(userData);
-            }, 3000);
+                displayDetailedFortune(userData);
+            }, 4000);
         });
         
-        function displayFortuneResult(userData) {
+        function displayDetailedFortune(userData) {
             const resultDiv = document.getElementById('fortuneResult');
             const today = new Date().toLocaleDateString('ko-KR', { 
                 year: 'numeric', 
                 month: 'long', 
-                day: 'numeric' 
+                day: 'numeric',
+                weekday: 'long'
             });
             
-            // 간단한 시드 기반 운세 생성
             const birthDate = new Date(userData.birthDate);
-            const seed = birthDate.getDate() + new Date().getDate();
+            const seed = birthDate.getDate() + birthDate.getMonth() + new Date().getDate();
             
-            const fortuneData = {
-                overallScore: 70 + (seed % 25),
-                loveScore: 65 + (seed % 30),
-                moneyScore: 60 + (seed % 35),
-                healthScore: 75 + (seed % 20),
-                advice: "오늘은 새로운 시작을 위한 좋은 날입니다. 긍정적인 마음가짐으로 하루를 보내세요.",
-                luckyNumber: `${3 + (seed % 7)}, ${15 + (seed % 10)}`,
-                luckyColor: ["파란색", "빨간색", "노란색", "초록색"][seed % 4]
+            // 운세 점수 생성
+            const scores = {
+                overall: Math.max(60, 75 + (seed % 25)),
+                love: Math.max(55, 70 + (seed % 30)), 
+                money: Math.max(50, 65 + (seed % 35)),
+                health: Math.max(65, 80 + (seed % 20)),
+                work: Math.max(60, 70 + (seed % 25)),
+                study: Math.max(55, 75 + (seed % 30))
+            };
+            
+            // 운세 텍스트 선택
+            function getFortuneText(category, score) {
+                const templates = fortuneTemplates[category];
+                if (score >= 85) return templates.excellent[seed % templates.excellent.length];
+                if (score >= 70) return templates.good[seed % templates.good.length];
+                return templates.normal[seed % templates.normal.length];
+            }
+            
+            // 행운 아이템 선택
+            const lucky = {
+                color: luckyItems.colors[seed % luckyItems.colors.length],
+                number: luckyItems.numbers[seed % luckyItems.numbers.length],
+                item: luckyItems.items[seed % luckyItems.items.length],
+                direction: luckyItems.directions[seed % luckyItems.directions.length],
+                time: luckyItems.times[seed % luckyItems.times.length]
             };
             
             resultDiv.innerHTML = `
                 <div class="fortune-header">
                     <div class="fortune-date">${today}</div>
-                    <div class="fortune-name">🌟 ${userData.name}님의 운세 🌟</div>
+                    <div class="fortune-name">🌟 ${userData.name}님의 상세 운세 🌟</div>
+                </div>
+                
+                <div class="fortune-overview">
+                    <h3>🔮 오늘의 전체 운세</h3>
+                    <div class="overall-score">${scores.overall}/100</div>
+                    <div class="overall-description">
+                        ${getFortuneText('overall', scores.overall)}
+                    </div>
                 </div>
                 
                 <div class="fortune-categories">
                     <div class="fortune-category">
-                        <div class="category-title">
-                            <span>🌟</span> 총운
+                        <div class="category-header">
+                            <div class="category-icon">💕</div>
+                            <div class="category-title">애정운</div>
                         </div>
-                        <div class="category-score">${fortuneData.overallScore}/100</div>
+                        <div class="category-score">${scores.love}/100</div>
+                        <div class="score-bar">
+                            <div class="score-fill" style="width: ${scores.love}%"></div>
+                        </div>
                         <div class="category-description">
-                            전체적으로 좋은 운세를 보이고 있습니다.
+                            ${getFortuneText('love', scores.love)}
+                        </div>
+                        <div class="category-advice">
+                            💡 조언: ${scores.love >= 80 ? '적극적으로 마음을 표현해보세요' : scores.love >= 65 ? '진솔한 대화의 시간을 가져보세요' : '서두르지 말고 차근차근 관계를 발전시켜나가세요'}
                         </div>
                     </div>
                     
                     <div class="fortune-category">
-                        <div class="category-title">
-                            <span>💕</span> 애정운
+                        <div class="category-header">
+                            <div class="category-icon">💰</div>
+                            <div class="category-title">금전운</div>
                         </div>
-                        <div class="category-score">${fortuneData.loveScore}/100</div>
+                        <div class="category-score">${scores.money}/100</div>
+                        <div class="score-bar">
+                            <div class="score-fill" style="width: ${scores.money}%"></div>
+                        </div>
                         <div class="category-description">
-                            사랑과 관련된 좋은 소식이 있을 수 있습니다.
+                            ${getFortuneText('money', scores.money)}
+                        </div>
+                        <div class="category-advice">
+                            💡 조언: ${scores.money >= 80 ? '투자 기회를 신중히 검토해보세요' : scores.money >= 65 ? '계획적인 소비가 중요합니다' : '불필요한 지출을 줄이고 저축에 집중하세요'}
                         </div>
                     </div>
                     
                     <div class="fortune-category">
-                        <div class="category-title">
-                            <span>💰</span> 금전운
+                        <div class="category-header">
+                            <div class="category-icon">💪</div>
+                            <div class="category-title">건강운</div>
                         </div>
-                        <div class="category-score">${fortuneData.moneyScore}/100</div>
+                        <div class="category-score">${scores.health}/100</div>
+                        <div class="score-bar">
+                            <div class="score-fill" style="width: ${scores.health}%"></div>
+                        </div>
                         <div class="category-description">
-                            재정 관리에 신중을 기하시기 바랍니다.
+                            ${getFortuneText('health', scores.health)}
+                        </div>
+                        <div class="category-advice">
+                            💡 조언: ${scores.health >= 80 ? '새로운 운동을 시작하기 좋은 날입니다' : scores.health >= 65 ? '규칙적인 생활 리듬을 유지하세요' : '충분한 휴식과 스트레스 관리가 필요합니다'}
                         </div>
                     </div>
                     
                     <div class="fortune-category">
-                        <div class="category-title">
-                            <span>💪</span> 건강운
+                        <div class="category-header">
+                            <div class="category-icon">💼</div>
+                            <div class="category-title">직업운</div>
                         </div>
-                        <div class="category-score">${fortuneData.healthScore}/100</div>
+                        <div class="category-score">${scores.work}/100</div>
+                        <div class="score-bar">
+                            <div class="score-fill" style="width: ${scores.work}%"></div>
+                        </div>
                         <div class="category-description">
-                            건강 상태가 양호합니다. 꾸준한 관리가 중요합니다.
+                            ${scores.work >= 80 ? '업무에서 큰 성과를 거둘 수 있는 날입니다. 새로운 프로젝트나 도전에 적극적으로 임하세요. 동료들과의 협력도 원활하게 이루어질 것입니다.' : 
+                              scores.work >= 65 ? '안정적인 업무 흐름을 유지할 수 있는 하루입니다. 꾸준함이 좋은 결과를 가져다줄 것이며, 상사나 동료들의 인정을 받을 수 있습니다.' :
+                              '업무에 집중력이 필요한 날입니다. 서두르지 말고 차근차근 일을 처리하세요. 예상치 못한 변수가 생길 수 있으니 유연하게 대처하는 것이 중요합니다.'}
+                        </div>
+                        <div class="category-advice">
+                            💡 조언: ${scores.work >= 80 ? '리더십을 발휘할 기회를 놓치지 마세요' : scores.work >= 65 ? '동료들과의 소통을 늘려보세요' : '완벽보다는 완성에 집중하세요'}
+                        </div>
+                    </div>
+                    
+                    <div class="fortune-category">
+                        <div class="category-header">
+                            <div class="category-icon">📚</div>
+                            <div class="category-title">학업운</div>
+                        </div>
+                        <div class="category-score">${scores.study}/100</div>
+                        <div class="score-bar">
+                            <div class="score-fill" style="width: ${scores.study}%"></div>
+                        </div>
+                        <div class="category-description">
+                            ${scores.study >= 80 ? '학습 능력이 최고조에 달한 날입니다. 새로운 지식을 흡수하는 속도가 빠르고, 복잡한 개념도 쉽게 이해할 수 있을 것입니다. 중요한 시험이나 발표를 앞두고 있다면 자신감을 가지세요.' :
+                              scores.study >= 65 ? '집중력이 좋은 하루입니다. 계획적으로 학습을 진행한다면 좋은 성과를 얻을 수 있을 것입니다. 복습보다는 새로운 내용을 학습하기에 적합한 날입니다.' :
+                              '학습에 대한 동기 부여가 필요한 날입니다. 목표를 다시 한번 명확히 하고, 작은 것부터 차근차근 시작해보세요. 무리하지 말고 꾸준히 하는 것이 중요합니다.'}
+                        </div>
+                        <div class="category-advice">
+                            💡 조언: ${scores.study >= 80 ? '어려운 과목에 도전해보세요' : scores.study >= 65 ? '그룹 스터디가 도움이 될 것입니다' : '기초를 다지는 데 집중하세요'}
                         </div>
                     </div>
                 </div>
                 
-                <div style="margin-top: 40px; padding: 32px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 20px; color: white;">
-                    <h3 style="margin-bottom: 16px; text-align: center;">🔮 오늘의 특별한 조언</h3>
-                    <p style="line-height: 1.7; text-align: center; font-size: 16px;">
-                        ${fortuneData.advice}
-                    </p>
-                    
-                    <div style="margin-top: 24px; display: flex; justify-content: center; gap: 40px; font-size: 14px; flex-wrap: wrap;">
-                        <div style="text-align: center;">
-                            <div style="font-size: 20px; margin-bottom: 4px;">🎲</div>
-                            <div><strong>행운의 숫자</strong></div>
-                            <div>${fortuneData.luckyNumber}</div>
+                <div class="detailed-analysis">
+                    <h3>🔍 심층 분석</h3>
+                    <div class="analysis-sections">
+                        <div class="analysis-section">
+                            <h4>🌅 오전 운세 (06:00 - 12:00)</h4>
+                            <p>오전 시간대에는 새로운 에너지가 충만해집니다. 중요한 결정이나 새로운 시작을 계획하고 있다면 오전 시간을 활용하는 것이 좋습니다. 특히 ${lucky.time} 경에 좋은 소식이나 기회가 찾아올 수 있습니다.</p>
                         </div>
-                        <div style="text-align: center;">
-                            <div style="font-size: 20px; margin-bottom: 4px;">🎨</div>
-                            <div><strong>행운의 색상</strong></div>
-                            <div>${fortuneData.luckyColor}</div>
+                        
+                        <div class="analysis-section">
+                            <h4>☀️ 오후 운세 (12:00 - 18:00)</h4>
+                            <p>오후에는 인간관계에서 좋은 에너지가 흐릅니다. 사람들과의 만남이나 중요한 대화를 나누기에 적합한 시간대입니다. 업무적인 미팅이나 개인적인 만남 모두 긍정적인 결과를 가져다줄 것입니다.</p>
+                        </div>
+                        
+                        <div class="analysis-section">
+                            <h4>🌙 저녁 운세 (18:00 - 24:00)</h4>
+                            <p>저녁 시간에는 내면의 성찰과 휴식이 필요한 시간입니다. 하루를 정리하고 내일을 준비하는 시간으로 활용하세요. 가족이나 가까운 사람들과 따뜻한 시간을 보내는 것이 좋겠습니다.</p>
+                        </div>
+                        
+                        <div class="analysis-section">
+                            <h4>⚠️ 주의사항</h4>
+                            <p>오늘은 ${lucky.direction} 방향으로의 이동이나 활동을 피하는 것이 좋겠습니다. 또한 감정적인 결정보다는 이성적인 판단을 우선시하세요. 작은 오해가 큰 문제로 번질 수 있으니 소통에 신경 쓰시기 바랍니다.</p>
                         </div>
                     </div>
                 </div>
                 
-                <div style="margin-top: 32px; text-align: center;">
-                    <button onclick="location.reload()" class="btn btn-secondary" style="padding: 12px 32px; border-radius: 25px;">
-                        🔄 다시 보기
-                    </button>
+                <div class="lucky-info">
+                    <h3>🍀 오늘의 행운 정보</h3>
+                    <div class="lucky-items">
+                        <div class="lucky-item">
+                            <div class="lucky-item-icon">🎨</div>
+                            <div class="lucky-item-label">행운의 색상</div>
+                            <div class="lucky-item-value">${lucky.color}</div>
+                        </div>
+                        
+                        <div class="lucky-item">
+                            <div class="lucky-item-icon">🎲</div>
+                            <div class="lucky-item-label">행운의 숫자</div>
+                            <div class="lucky-item-value">${lucky.number}</div>
+                        </div>
+                        
+                        <div class="lucky-item">
+                            <div class="lucky-item-icon">✨</div>
+                            <div class="lucky-item-label">행운의 아이템</div>
+                            <div class="lucky-item-value">${lucky.item}</div>
+                        </div>
+                        
+                        <div class="lucky-item">
+                            <div class="lucky-item-icon">🧭</div>
+                            <div class="lucky-item-label">행운의 방향</div>
+                            <div class="lucky-item-value">${lucky.direction}</div>
+                        </div>
+                        
+                        <div class="lucky-item">
+                            <div class="lucky-item-icon">⏰</div>
+                            <div class="lucky-item-label">행운의 시간</div>
+                            <div class="lucky-item-value">${lucky.time}</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 40px; text-align: center; padding: 30px; background: #f8fafc; border-radius: 15px;">
+                    <h4 style="color: #374151; margin-bottom: 20px;">🔄 다른 운세도 확인해보세요</h4>
+                    <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                        <button onclick="location.href='/fortune/tarot/'" class="btn btn-secondary" style="padding: 10px 20px; border-radius: 20px;">
+                            🃏 타로 운세
+                        </button>
+                        <button onclick="location.href='/fortune/zodiac/'" class="btn btn-secondary" style="padding: 10px 20px; border-radius: 20px;">
+                            ♈ 별자리 운세
+                        </button>
+                        <button onclick="location.reload()" class="btn btn-primary" style="padding: 10px 20px; border-radius: 20px;">
+                            🔄 다시 보기
+                        </button>
+                    </div>
                 </div>
             `;
+            
+            // 점수 바 애니메이션
+            setTimeout(() => {
+                const scoreFills = document.querySelectorAll('.score-fill');
+                scoreFills.forEach(fill => {
+                    fill.style.width = fill.style.width;
+                });
+            }, 300);
         }
     </script>
     
