@@ -25,6 +25,380 @@
     
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
+    
+    <style>
+        /* 띠별 운세 전용 스타일 */
+        .fortune-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .animal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+        
+        .animal-card {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+            border-radius: 20px;
+            padding: 30px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            color: #333;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(255, 154, 158, 0.3);
+        }
+        
+        .animal-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.1) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .animal-card:hover {
+            transform: translateY(-15px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(255, 154, 158, 0.4);
+        }
+        
+        .animal-card:hover::before {
+            opacity: 1;
+        }
+        
+        .animal-card.active {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            box-shadow: 0 15px 35px rgba(240, 147, 251, 0.4);
+            transform: translateY(-8px) scale(1.02);
+        }
+        
+        .animal-emoji {
+            font-size: 56px;
+            margin-bottom: 16px;
+            display: block;
+            animation: animalBounce 3s ease-in-out infinite;
+        }
+        
+        @keyframes animalBounce {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-8px) rotate(-5deg); }
+            75% { transform: translateY(-4px) rotate(5deg); }
+        }
+        
+        .animal-name {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .animal-hanja {
+            font-size: 24px;
+            font-weight: 700;
+            color: #8B5CF6;
+            font-family: serif;
+        }
+        
+        .animal-card.active .animal-hanja {
+            color: #ffd700;
+        }
+        
+        /* 운세 결과 스타일 */
+        .fortune-result {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 24px;
+            padding: 40px;
+            color: white;
+            margin: 40px 0;
+            box-shadow: 0 25px 50px rgba(240, 147, 251, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .fortune-result::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="chinese" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse"><text x="10" y="15" font-size="12" fill="rgba(255,255,255,0.05)" text-anchor="middle">福</text></pattern></defs><rect width="100" height="100" fill="url(%23chinese)"/></svg>');
+            animation: chineseFloat 25s linear infinite;
+        }
+        
+        @keyframes chineseFloat {
+            0% { transform: translateY(0) translateX(0); }
+            100% { transform: translateY(-20px) translateX(-10px); }
+        }
+        
+        .animal-header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .animal-header-emoji {
+            font-size: 90px;
+            margin-bottom: 20px;
+            display: block;
+            animation: fortuneRotate 4s ease-in-out infinite;
+        }
+        
+        @keyframes fortuneRotate {
+            0%, 100% { transform: rotateY(0deg) scale(1); }
+            50% { transform: rotateY(180deg) scale(1.1); }
+        }
+        
+        .animal-header-name {
+            font-size: 32px;
+            font-weight: 700;
+            margin: 10px 0;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        
+        .animal-header-hanja {
+            font-size: 40px;
+            font-weight: 700;
+            color: #ffd700;
+            font-family: serif;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .fortune-categories {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .fortune-category {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .fortune-category:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px);
+        }
+        
+        .category-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+        
+        .category-description {
+            line-height: 1.6;
+            text-align: center;
+            opacity: 0.95;
+            font-size: 16px;
+        }
+        
+        .scores-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .score-card {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(15px);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .score-card:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-5px) scale(1.02);
+        }
+        
+        .score-title {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+        
+        .score-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: #ffd700;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        
+        .advice-box {
+            background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.1) 100%);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(15px);
+        }
+        
+        .advice-title {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #ffd700;
+        }
+        
+        .advice-text {
+            font-size: 16px;
+            line-height: 1.7;
+            opacity: 0.95;
+        }
+        
+        .lucky-info {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .lucky-item {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 20px;
+            border-radius: 12px;
+            min-width: 140px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .lucky-label {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-bottom: 8px;
+        }
+        
+        .lucky-value {
+            font-size: 18px;
+            font-weight: 600;
+            color: #ffd700;
+        }
+        
+        .reset-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 25px;
+            padding: 15px 30px;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .reset-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.4);
+        }
+        
+        /* 로딩 스타일 */
+        .loading-container {
+            text-align: center;
+            padding: 60px 40px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .loading-emoji {
+            font-size: 70px;
+            margin-bottom: 20px;
+            display: block;
+            animation: loadingSpin 2s ease-in-out infinite;
+        }
+        
+        @keyframes loadingSpin {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.2) rotate(180deg); }
+        }
+        
+        .loading-text {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        
+        .loading-subtext {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        /* 모바일 반응형 */
+        @media (max-width: 768px) {
+            .animal-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 15px;
+            }
+            
+            .animal-card {
+                padding: 20px 15px;
+            }
+            
+            .animal-emoji {
+                font-size: 42px;
+            }
+            
+            .animal-name {
+                font-size: 16px;
+            }
+            
+            .animal-hanja {
+                font-size: 20px;
+            }
+            
+            .fortune-result {
+                padding: 30px 20px;
+                margin: 20px 0;
+            }
+            
+            .animal-header-emoji {
+                font-size: 70px;
+            }
+            
+            .animal-header-name {
+                font-size: 24px;
+            }
+            
+            .animal-header-hanja {
+                font-size: 30px;
+            }
+            
+            .scores-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+            
+            .lucky-info {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- 네비게이션 -->
@@ -46,77 +420,77 @@
                 </div>
                 
                 <!-- 띠 선택 그리드 -->
-                <div class="features-grid">
-                    <div class="feature-card" data-animal="rat" onclick="showAnimalFortune('rat')">
-                        <div class="feature-icon">🐀</div>
-                        <div class="feature-title">쥐띠</div>
-                        <div class="feature-description">子</div>
+                <div class="animal-grid">
+                    <div class="animal-card" data-animal="rat" onclick="showAnimalFortune('rat')">
+                        <span class="animal-emoji">🐀</span>
+                        <div class="animal-name">쥐띠</div>
+                        <div class="animal-hanja">子</div>
                     </div>
                     
-                    <div class="feature-card" data-animal="ox" onclick="showAnimalFortune('ox')">
-                        <div class="feature-icon">🐂</div>
-                        <div class="feature-title">소띠</div>
-                        <div class="feature-description">丑</div>
+                    <div class="animal-card" data-animal="ox" onclick="showAnimalFortune('ox')">
+                        <span class="animal-emoji">🐂</span>
+                        <div class="animal-name">소띠</div>
+                        <div class="animal-hanja">丑</div>
                     </div>
                     
-                    <div class="feature-card" data-animal="tiger" onclick="showAnimalFortune('tiger')">
-                        <div class="feature-icon">🐅</div>
-                        <div class="feature-title">호랑이띠</div>
-                        <div class="feature-description">寅</div>
+                    <div class="animal-card" data-animal="tiger" onclick="showAnimalFortune('tiger')">
+                        <span class="animal-emoji">🐅</span>
+                        <div class="animal-name">호랑이띠</div>
+                        <div class="animal-hanja">寅</div>
                     </div>
                     
-                    <div class="feature-card" data-animal="rabbit" onclick="showAnimalFortune('rabbit')">
-                        <div class="feature-icon">🐇</div>
-                        <div class="feature-title">토끼띠</div>
-                        <div class="feature-description">卯</div>
+                    <div class="animal-card" data-animal="rabbit" onclick="showAnimalFortune('rabbit')">
+                        <span class="animal-emoji">🐇</span>
+                        <div class="animal-name">토끼띠</div>
+                        <div class="animal-hanja">卯</div>
                     </div>
                     
-                    <div class="feature-card" data-animal="dragon" onclick="showAnimalFortune('dragon')">
-                        <div class="feature-icon">🐉</div>
-                        <div class="feature-title">용띠</div>
-                        <div class="feature-description">辰</div>
+                    <div class="animal-card" data-animal="dragon" onclick="showAnimalFortune('dragon')">
+                        <span class="animal-emoji">🐉</span>
+                        <div class="animal-name">용띠</div>
+                        <div class="animal-hanja">辰</div>
                     </div>
                     
-                    <div class="feature-card" data-animal="snake" onclick="showAnimalFortune('snake')">
-                        <div class="feature-icon">🐍</div>
-                        <div class="feature-title">뱀띠</div>
-                        <div class="feature-description">巳</div>
+                    <div class="animal-card" data-animal="snake" onclick="showAnimalFortune('snake')">
+                        <span class="animal-emoji">🐍</span>
+                        <div class="animal-name">뱀띠</div>
+                        <div class="animal-hanja">巳</div>
                     </div>
                     
-                    <div class="feature-card" data-animal="horse" onclick="showAnimalFortune('horse')">
-                        <div class="feature-icon">🐎</div>
-                        <div class="feature-title">말띠</div>
-                        <div class="feature-description">午</div>
+                    <div class="animal-card" data-animal="horse" onclick="showAnimalFortune('horse')">
+                        <span class="animal-emoji">🐎</span>
+                        <div class="animal-name">말띠</div>
+                        <div class="animal-hanja">午</div>
                     </div>
                     
-                    <div class="feature-card" data-animal="sheep" onclick="showAnimalFortune('sheep')">
-                        <div class="feature-icon">🐑</div>
-                        <div class="feature-title">양띠</div>
-                        <div class="feature-description">未</div>
+                    <div class="animal-card" data-animal="sheep" onclick="showAnimalFortune('sheep')">
+                        <span class="animal-emoji">🐑</span>
+                        <div class="animal-name">양띠</div>
+                        <div class="animal-hanja">未</div>
                     </div>
                     
-                    <div class="feature-card" data-animal="monkey" onclick="showAnimalFortune('monkey')">
-                        <div class="feature-icon">🐒</div>
-                        <div class="feature-title">원숭이띠</div>
-                        <div class="feature-description">申</div>
+                    <div class="animal-card" data-animal="monkey" onclick="showAnimalFortune('monkey')">
+                        <span class="animal-emoji">🐒</span>
+                        <div class="animal-name">원숭이띠</div>
+                        <div class="animal-hanja">申</div>
                     </div>
                     
-                    <div class="feature-card" data-animal="rooster" onclick="showAnimalFortune('rooster')">
-                        <div class="feature-icon">🐓</div>
-                        <div class="feature-title">닭띠</div>
-                        <div class="feature-description">酉</div>
+                    <div class="animal-card" data-animal="rooster" onclick="showAnimalFortune('rooster')">
+                        <span class="animal-emoji">🐓</span>
+                        <div class="animal-name">닭띠</div>
+                        <div class="animal-hanja">酉</div>
                     </div>
                     
-                    <div class="feature-card" data-animal="dog" onclick="showAnimalFortune('dog')">
-                        <div class="feature-icon">🐕</div>
-                        <div class="feature-title">개띠</div>
-                        <div class="feature-description">戌</div>
+                    <div class="animal-card" data-animal="dog" onclick="showAnimalFortune('dog')">
+                        <span class="animal-emoji">🐕</span>
+                        <div class="animal-name">개띠</div>
+                        <div class="animal-hanja">戌</div>
                     </div>
                     
-                    <div class="feature-card" data-animal="pig" onclick="showAnimalFortune('pig')">
-                        <div class="feature-icon">🐖</div>
-                        <div class="feature-title">돼지띠</div>
-                        <div class="feature-description">亥</div>
+                    <div class="animal-card" data-animal="pig" onclick="showAnimalFortune('pig')">
+                        <span class="animal-emoji">🐖</span>
+                        <div class="animal-name">돼지띠</div>
+                        <div class="animal-hanja">亥</div>
                     </div>
                 </div>
                 
@@ -181,18 +555,27 @@
             // 로딩 효과
             const fortuneResult = document.getElementById('fortuneResult');
             fortuneResult.style.display = 'block';
-            fortuneResult.innerHTML = '<div style="text-align: center; padding: 40px;"><div style="font-size: 3em; margin-bottom: 20px;">🔮</div><p>AI가 운세를 분석하고 있습니다...</p></div>';
+            fortuneResult.innerHTML = `
+                <div class="loading-container">
+                    <span class="loading-emoji">🔮</span>
+                    <div class="loading-text">AI가 12지신의 기운을 분석하고 있습니다</div>
+                    <div class="loading-subtext">동양의 지혜를 해석 중...</div>
+                </div>
+            `;
             
             // 선택된 띠 강조
-            document.querySelectorAll('.feature-card').forEach(card => {
+            document.querySelectorAll('.animal-card').forEach(card => {
                 card.classList.remove('active');
             });
             document.querySelector(`[data-animal="${animal}"]`).classList.add('active');
             
-            // 1초 후 결과 표시
+            // 결과로 스크롤
+            fortuneResult.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            // 2초 후 결과 표시
             setTimeout(() => {
                 displayAnimalResult(animal);
-            }, 1000);
+            }, 2000);
         }
         
         // 운세 결과 표시
@@ -201,10 +584,10 @@
             const fortune = generateMockAnimalFortune(animal);
             
             const resultHTML = `
-                <div style="text-align: center; margin-bottom: 30px;">
-                    <span style="font-size: 4em;">${info.emoji}</span>
-                    <h3 style="margin: 10px 0;">${info.name}</h3>
-                    <div style="font-size: 2em; color: #8B5CF6;">${info.hanja}</div>
+                <div class="animal-header">
+                    <span class="animal-header-emoji">${info.emoji}</span>
+                    <h3 class="animal-header-name">${info.name}</h3>
+                    <div class="animal-header-hanja">${info.hanja}</div>
                 </div>
                 
                 <div class="fortune-categories">
@@ -213,38 +596,44 @@
                         <div class="category-description">${fortune.overall}</div>
                     </div>
                     
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 30px 0;">
-                        <div class="fortune-category">
-                            <div class="category-title">💕 애정운</div>
-                            <div class="category-score">${fortune.scores.love}점</div>
+                    <div class="scores-grid">
+                        <div class="score-card">
+                            <div class="score-title">💕 애정운</div>
+                            <div class="score-value">${fortune.scores.love}점</div>
                         </div>
-                        <div class="fortune-category">
-                            <div class="category-title">💰 재물운</div>
-                            <div class="category-score">${fortune.scores.money}점</div>
+                        <div class="score-card">
+                            <div class="score-title">💰 재물운</div>
+                            <div class="score-value">${fortune.scores.money}점</div>
                         </div>
-                        <div class="fortune-category">
-                            <div class="category-title">💼 사업운</div>
-                            <div class="category-score">${fortune.scores.work}점</div>
+                        <div class="score-card">
+                            <div class="score-title">💼 사업운</div>
+                            <div class="score-value">${fortune.scores.work}점</div>
                         </div>
-                        <div class="fortune-category">
-                            <div class="category-title">🏃 건강운</div>
-                            <div class="category-score">${fortune.scores.health}점</div>
+                        <div class="score-card">
+                            <div class="score-title">🏃 건강운</div>
+                            <div class="score-value">${fortune.scores.health}점</div>
                         </div>
                     </div>
                     
-                    <div class="fortune-category">
-                        <div class="category-title">💡 오늘의 조언</div>
-                        <div class="category-description">${fortune.advice}</div>
+                    <div class="advice-box">
+                        <div class="advice-title">💡 오늘의 특별한 조언</div>
+                        <div class="advice-text">${fortune.advice}</div>
                     </div>
                     
-                    <div style="display: flex; justify-content: space-around; margin-top: 20px; font-size: 14px;">
-                        <span><strong>길방향:</strong> ${fortune.luckyDirection}</span>
-                        <span><strong>행운의 시간:</strong> ${fortune.luckyTime}</span>
+                    <div class="lucky-info">
+                        <div class="lucky-item">
+                            <div class="lucky-label">🧭 길방향</div>
+                            <div class="lucky-value">${fortune.luckyDirection}</div>
+                        </div>
+                        <div class="lucky-item">
+                            <div class="lucky-label">⏰ 행운의 시간</div>
+                            <div class="lucky-value">${fortune.luckyTime}</div>
+                        </div>
                     </div>
                 </div>
                 
-                <div style="text-align: center; margin-top: 30px;">
-                    <button onclick="resetAnimal()" class="btn btn-secondary">다른 띠 보기</button>
+                <div style="text-align: center;">
+                    <button onclick="resetAnimal()" class="reset-btn">🔄 다른 띠 보기</button>
                 </div>
             `;
             
@@ -255,25 +644,32 @@
         function generateMockAnimalFortune(animal) {
             const fortunes = {
                 rat: {
-                    overall: "총명함과 기민함이 빛나는 날입니다. 새로운 기회를 포착하는 능력이 뛰어나 좋은 성과를 거둘 수 있습니다.",
+                    overall: "총명함과 기민함이 빛나는 날입니다. 새로운 기회를 포착하는 능력이 뛰어나 좋은 성과를 거둘 수 있습니다. 작은 것에서도 큰 가치를 발견하는 당신의 혜안이 오늘 특히 빛을 발할 것입니다.",
                     scores: { love: 85, money: 90, work: 85, health: 75 },
-                    advice: "오늘은 직감을 믿고 행동하세요. 작은 기회도 놓치지 않는 당신의 민첩함이 큰 성공으로 이어질 것입니다.",
+                    advice: "오늘은 직감을 믿고 행동하세요. 작은 기회도 놓치지 않는 당신의 민첩함이 큰 성공으로 이어질 것입니다. 변화를 두려워하지 말고 적극적으로 받아들이세요.",
                     luckyDirection: "북쪽",
                     luckyTime: "오후 2-4시"
                 },
                 ox: {
-                    overall: "꾸준한 노력이 결실을 맺는 시기입니다. 인내심과 성실함으로 어려운 과제도 해결할 수 있습니다.",
+                    overall: "꾸준한 노력이 결실을 맺는 시기입니다. 인내심과 성실함으로 어려운 과제도 해결할 수 있습니다. 당신의 우직함이 주변 사람들에게 신뢰를 주며, 든든한 지지를 받게 될 것입니다.",
                     scores: { love: 75, money: 85, work: 90, health: 80 },
-                    advice: "서두르지 말고 차근차근 진행하세요. 당신의 우직한 노력이 곧 큰 보상으로 돌아올 것입니다.",
+                    advice: "서두르지 말고 차근차근 진행하세요. 당신의 우직한 노력이 곧 큰 보상으로 돌아올 것입니다. 때로는 느린 것이 더 확실한 길일 수 있습니다.",
                     luckyDirection: "동북쪽",
                     luckyTime: "오전 9-11시"
+                },
+                dragon: {
+                    overall: "용의 기운이 강하게 뻗치는 날입니다. 리더십을 발휘할 기회가 많아지고, 큰 꿈을 현실로 만들 수 있는 에너지가 충만합니다. 자신감을 가지고 도전하면 놀라운 결과를 얻을 수 있습니다.",
+                    scores: { love: 88, money: 92, work: 95, health: 82 },
+                    advice: "오늘은 당신의 카리스마가 최고조에 달하는 날입니다. 망설이지 말고 큰 계획을 세우고 실행에 옮기세요. 주변 사람들이 당신을 따를 것입니다.",
+                    luckyDirection: "동쪽",
+                    luckyTime: "오전 7-9시"
                 }
             };
             
             return fortunes[animal] || {
-                overall: "좋은 하루가 예상됩니다. 긍정적인 마음가짐으로 하루를 보내세요.",
+                overall: "좋은 하루가 예상됩니다. 긍정적인 마음가짐으로 하루를 보내세요. 당신만의 특별한 매력이 오늘 사람들의 마음을 사로잡을 것입니다.",
                 scores: { love: 80, money: 75, work: 85, health: 80 },
-                advice: "오늘은 새로운 시작을 위한 준비의 날입니다.",
+                advice: "오늘은 새로운 시작을 위한 준비의 날입니다. 차분한 마음으로 계획을 세우고, 작은 행동부터 시작해보세요.",
                 luckyDirection: "남쪽",
                 luckyTime: "오전 10-12시"
             };
@@ -282,8 +678,14 @@
         // 띠 선택 초기화
         function resetAnimal() {
             document.getElementById('fortuneResult').style.display = 'none';
-            document.querySelectorAll('.feature-card').forEach(card => {
+            document.querySelectorAll('.animal-card').forEach(card => {
                 card.classList.remove('active');
+            });
+            
+            // 띠 선택 영역으로 부드럽게 스크롤
+            document.querySelector('.animal-grid').scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'center' 
             });
         }
     </script>
