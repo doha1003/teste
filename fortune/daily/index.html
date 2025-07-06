@@ -34,6 +34,27 @@
             padding: 0 20px;
         }
         
+        /* 간결한 히어로 섹션 */
+        .compact-hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+        
+        .compact-hero h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        
+        .compact-hero p {
+            font-size: 16px;
+            opacity: 0.9;
+            margin: 0;
+        }
+        
         .fortune-form {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             border-radius: 24px;
@@ -303,6 +324,14 @@
         
         /* 모바일 반응형 */
         @media (max-width: 768px) {
+            .compact-hero {
+                padding: 30px 20px;
+            }
+            
+            .compact-hero h1 {
+                font-size: 24px;
+            }
+            
             .fortune-form {
                 padding: 32px 24px;
                 margin: 0 16px 32px;
@@ -347,68 +376,59 @@
     <!-- 네비게이션 바 -->
     <div id="navbar-placeholder"></div>
     
-    <!-- 페이지 헤더 -->
-    <section class="hero">
-        <div class="hero-content">
-            <h1 class="hero-title fade-in">
-                🌅 오늘의 운세
-            </h1>
-            <p class="hero-subtitle fade-in stagger-1">
-                AI가 분석하는 정확한 일일 운세<br>
-                개인정보 기반 맞춤형 분석
-            </p>
-        </div>
-    </section>
+    <!-- 간결한 페이지 헤더 -->
+    <div class="compact-hero">
+        <h1>🌅 오늘의 운세</h1>
+        <p>AI가 분석하는 개인 맞춤형 일일 운세</p>
+    </div>
     
     <!-- 운세 입력 폼 -->
-    <section class="features">
-        <div class="fortune-container">
-            <form id="dailyFortuneForm" class="fortune-form fade-in">
-                <h2>✨ 운세 정보 입력 ✨</h2>
-                
-                <div class="form-group">
-                    <label for="userName">👤 이름</label>
-                    <input type="text" id="userName" name="userName" class="form-control" required placeholder="이름을 입력하세요">
-                </div>
-                
-                <div class="form-group">
-                    <label for="birthDate">📅 생년월일</label>
-                    <input type="date" id="birthDate" name="birthDate" class="form-control" required>
-                </div>
-                
-                <div class="form-group">
-                    <label>⚥ 성별</label>
-                    <div class="radio-group">
-                        <label class="radio-label">
-                            <input type="radio" name="gender" value="male" required>
-                            <span>👨 남성</span>
-                        </label>
-                        <label class="radio-label">
-                            <input type="radio" name="gender" value="female" required>
-                            <span>👩 여성</span>
-                        </label>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="birthTime">🕐 출생 시간 (선택사항)</label>
-                    <input type="time" id="birthTime" name="birthTime" class="form-control">
-                    <div class="form-helper-text">
-                        출생 시간을 입력하면 더 정확한 운세를 볼 수 있습니다
-                    </div>
-                </div>
-                
-                <button type="submit" class="submit-btn">
-                    🔮 운세 보기
-                </button>
-            </form>
+    <div class="fortune-container">
+        <form id="dailyFortuneForm" class="fortune-form fade-in">
+            <h2>✨ 운세 정보 입력 ✨</h2>
             
-            <!-- 운세 결과 영역 -->
-            <div id="fortuneResult" class="fortune-result" style="display: none;">
-                <!-- 결과가 여기에 표시됩니다 -->
+            <div class="form-group">
+                <label for="userName">👤 이름</label>
+                <input type="text" id="userName" name="userName" class="form-control" required placeholder="이름을 입력하세요">
             </div>
+            
+            <div class="form-group">
+                <label for="birthDate">📅 생년월일</label>
+                <input type="date" id="birthDate" name="birthDate" class="form-control" required>
+            </div>
+            
+            <div class="form-group">
+                <label>⚥ 성별</label>
+                <div class="radio-group">
+                    <label class="radio-label">
+                        <input type="radio" name="gender" value="male" required>
+                        <span>👨 남성</span>
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="gender" value="female" required>
+                        <span>👩 여성</span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="birthTime">🕐 출생 시간 (선택사항)</label>
+                <input type="time" id="birthTime" name="birthTime" class="form-control">
+                <div class="form-helper-text">
+                    출생 시간을 입력하면 더 정확한 운세를 볼 수 있습니다
+                </div>
+            </div>
+            
+            <button type="submit" class="submit-btn">
+                🔮 운세 보기
+            </button>
+        </form>
+        
+        <!-- 운세 결과 영역 -->
+        <div id="fortuneResult" class="fortune-result" style="display: none;">
+            <!-- 결과가 여기에 표시됩니다 -->
         </div>
-    </section>
+    </div>
     
     <!-- 광고 영역 -->
     <div class="ad-container">
