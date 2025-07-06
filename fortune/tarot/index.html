@@ -34,6 +34,27 @@
             padding: 0 20px;
         }
         
+        /* 컴팩트한 히어로 섹션 */
+        .compact-hero {
+            background: linear-gradient(135deg, #2d1b69 0%, #11998e 100%);
+            padding: 30px 20px;
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+        
+        .compact-hero h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        
+        .compact-hero p {
+            font-size: 14px;
+            opacity: 0.9;
+            margin: 0;
+        }
+        
         .tarot-step {
             margin: 40px 0;
         }
@@ -523,6 +544,18 @@
         
         /* 모바일 반응형 */
         @media (max-width: 768px) {
+            .compact-hero {
+                padding: 25px 20px;
+            }
+            
+            .compact-hero h1 {
+                font-size: 20px;
+            }
+            
+            .compact-hero p {
+                font-size: 13px;
+            }
+            
             .fortune-form {
                 padding: 32px 24px;
                 margin: 0 16px 32px;
@@ -568,106 +601,101 @@
     <!-- 네비게이션 -->
     <div id="navbar-placeholder"></div>
     
+    <!-- 컴팩트한 페이지 헤더 -->
+    <div class="compact-hero">
+        <h1>🃏 AI 타로 리딩</h1>
+        <p>AI가 해석하는 신비로운 타로 카드의 메시지</p>
+    </div>
+    
     <div class="fortune-container">
-        <div class="hero">
-            <div class="hero-content">
-                <h1 class="hero-title fade-in">🃏 AI 타로 리딩</h1>
-                <p class="hero-subtitle fade-in stagger-1">AI가 해석하는 신비로운 타로 카드의 메시지</p>
-            </div>
-        </div>
-        
-        <div class="features">
-            <div class="container">
-                <!-- 질문 입력 단계 -->
-                <div id="questionStep" class="tarot-step">
-                    <form id="tarotQuestionForm" class="fortune-form">
-                        <h2>🔮 질문을 입력하세요 ✨</h2>
-                        
-                        <div class="form-group">
-                            <label for="tarotQuestion">🌟 궁금한 것을 질문해주세요</label>
-                            <textarea 
-                                id="tarotQuestion" 
-                                name="tarotQuestion" 
-                                class="form-control" 
-                                rows="4" 
-                                required 
-                                placeholder="예: 앞으로의 연애운은 어떨까요? 새로운 직장에서 잘 적응할 수 있을까요?"
-                                style="resize: vertical;"
-                            ></textarea>
-                            <div class="form-helper-text">
-                                구체적이고 명확한 질문일수록 더 정확한 답변을 받을 수 있습니다
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>🃏 타로 스프레드 선택</label>
-                            <div class="radio-group">
-                                <label class="radio-label">
-                                    <input type="radio" name="spreadType" value="single" required checked>
-                                    <span>⚡ 원카드 리딩 (빠른 답변)</span>
-                                </label>
-                                <label class="radio-label">
-                                    <input type="radio" name="spreadType" value="three" required>
-                                    <span>🔺 쓰리카드 리딩 (과거-현재-미래)</span>
-                                </label>
-                                <label class="radio-label">
-                                    <input type="radio" name="spreadType" value="celtic" required>
-                                    <span>✨ 셀틱 크로스 (상세 분석)</span>
-                                </label>
-                            </div>
-                        </div>
-                        
-                        <button type="submit" class="submit-btn">
-                            🎴 카드 선택하기
-                        </button>
-                    </form>
-                </div>
+        <!-- 질문 입력 단계 -->
+        <div id="questionStep" class="tarot-step">
+            <form id="tarotQuestionForm" class="fortune-form">
+                <h2>🔮 질문을 입력하세요 ✨</h2>
                 
-                <!-- 카드 선택 단계 -->
-                <div id="cardStep" class="tarot-step" style="display: none;">
-                    <h2 style="text-align: center; margin-bottom: 20px; color: #2d1b69;">🎴 카드를 선택하세요</h2>
-                    <p style="text-align: center; margin-bottom: 40px; color: #6b7280; font-size: 18px;">
-                        🧘‍♀️ 직감을 믿고 끌리는 카드를 선택해주세요
-                    </p>
-                    
-                    <div id="cardGrid" class="card-grid">
-                        <!-- 카드들이 여기에 동적으로 생성됩니다 -->
-                    </div>
-                    
-                    <div style="text-align: center; margin-top: 30px;">
-                        <button onclick="goBackToQuestion()" class="back-btn">
-                            ↩️ 질문 다시 입력
-                        </button>
+                <div class="form-group">
+                    <label for="tarotQuestion">🌟 궁금한 것을 질문해주세요</label>
+                    <textarea 
+                        id="tarotQuestion" 
+                        name="tarotQuestion" 
+                        class="form-control" 
+                        rows="4" 
+                        required 
+                        placeholder="예: 앞으로의 연애운은 어떨까요? 새로운 직장에서 잘 적응할 수 있을까요?"
+                        style="resize: vertical;"
+                    ></textarea>
+                    <div class="form-helper-text">
+                        구체적이고 명확한 질문일수록 더 정확한 답변을 받을 수 있습니다
                     </div>
                 </div>
                 
-                <!-- 결과 단계 -->
-                <div id="resultStep" class="tarot-step" style="display: none;">
-                    <h2 style="text-align: center; margin-bottom: 30px; color: #2d1b69;">✨ 타로 리딩 결과</h2>
-                    
-                    <div id="tarotResult">
-                        <!-- 결과가 여기에 표시됩니다 -->
-                    </div>
-                    
-                    <div style="text-align: center; margin-top: 30px;">
-                        <button onclick="restartTarot()" class="restart-btn">
-                            🔄 새로운 질문하기
-                        </button>
+                <div class="form-group">
+                    <label>🃏 타로 스프레드 선택</label>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="spreadType" value="single" required checked>
+                            <span>⚡ 원카드 리딩 (빠른 답변)</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="spreadType" value="three" required>
+                            <span>🔺 쓰리카드 리딩 (과거-현재-미래)</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="spreadType" value="celtic" required>
+                            <span>✨ 셀틱 크로스 (상세 분석)</span>
+                        </label>
                     </div>
                 </div>
+                
+                <button type="submit" class="submit-btn">
+                    🎴 카드 선택하기
+                </button>
+            </form>
+        </div>
+        
+        <!-- 카드 선택 단계 -->
+        <div id="cardStep" class="tarot-step" style="display: none;">
+            <h2 style="text-align: center; margin-bottom: 20px; color: #2d1b69;">🎴 카드를 선택하세요</h2>
+            <p style="text-align: center; margin-bottom: 40px; color: #6b7280; font-size: 18px;">
+                🧘‍♀️ 직감을 믿고 끌리는 카드를 선택해주세요
+            </p>
+            
+            <div id="cardGrid" class="card-grid">
+                <!-- 카드들이 여기에 동적으로 생성됩니다 -->
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <button onclick="goBackToQuestion()" class="back-btn">
+                    ↩️ 질문 다시 입력
+                </button>
             </div>
         </div>
         
-        <!-- 광고 영역 -->
-        <div class="ad-container">
-            <div class="ad-label">광고</div>
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-7905640648499222"
-                 data-ad-slot="1234567890"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
+        <!-- 결과 단계 -->
+        <div id="resultStep" class="tarot-step" style="display: none;">
+            <h2 style="text-align: center; margin-bottom: 30px; color: #2d1b69;">✨ 타로 리딩 결과</h2>
+            
+            <div id="tarotResult">
+                <!-- 결과가 여기에 표시됩니다 -->
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <button onclick="restartTarot()" class="restart-btn">
+                    🔄 새로운 질문하기
+                </button>
+            </div>
         </div>
+    </div>
+    
+    <!-- 광고 영역 -->
+    <div class="ad-container">
+        <div class="ad-label">광고</div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-7905640648499222"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
     </div>
     
     <!-- 푸터 -->
