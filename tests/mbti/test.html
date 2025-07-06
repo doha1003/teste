@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MBTI 성격유형 검사 - 60문항 정밀 분석 | doha.kr</title>
-    <meta name="description" content="60개의 심층적인 문항으로 정확하게 분석하는 MBTI 성격유형 검사. 16가지 성격 유형 중 당신의 유형을 찾아보세요.">
+    <title>MBTI 성격유형 검사 - 정밀 분석 버전 | doha.kr</title>
+    <meta name="description" content="24개의 심층적인 시나리오 문항과 5단계 답변으로 정확하게 분석하는 MBTI 성격유형 검사. 16가지 성격 유형 중 당신의 유형을 찾아보세요.">
     
     <!-- Open Graph -->
     <meta property="og:title" content="MBTI 성격유형 검사 - 나는 어떤 유형일까?">
-    <meta property="og:description" content="60개의 심층적인 문항으로 정확하게 분석하는 MBTI 성격유형 검사">
+    <meta property="og:description" content="시나리오 기반 질문과 5단계 정밀 답변으로 분석하는 MBTI 성격유형 검사">
     <meta property="og:image" content="https://doha.kr/images/mbti-og.png">
     <meta property="og:url" content="https://doha.kr/tests/mbti/test.html">
     
@@ -70,68 +70,74 @@
             color: var(--gray-800);
         }
         
+        .scenario-context {
+            background: var(--gray-50);
+            padding: var(--space-4);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--space-6);
+            font-size: 1rem;
+            line-height: var(--leading-relaxed);
+            color: var(--gray-600);
+            border-left: 4px solid var(--primary-500);
+        }
+        
         .options {
             display: flex;
             flex-direction: column;
             gap: var(--space-3);
         }
         
-        /* 5단계 답변 옵션 스타일 */
-        .option-scale {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: var(--space-6) 0;
-        }
-        
-        .scale-label {
-            font-size: 0.875rem;
-            color: var(--gray-600);
-            text-align: center;
-            flex: 1;
-            max-width: 150px;
-        }
-        
-        .scale-buttons {
-            display: flex;
-            gap: var(--space-2);
-            margin: 0 var(--space-4);
-        }
-        
-        .scale-btn {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            border: 2px solid var(--gray-300);
+        .option {
             background: white;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-xl);
+            padding: var(--space-5) var(--space-6);
             cursor: pointer;
             transition: all var(--duration-200) var(--ease-out);
-            font-weight: var(--font-semibold);
+            font-size: 1rem;
+            line-height: var(--leading-relaxed);
             position: relative;
+            color: var(--gray-700);
+            text-align: left;
         }
         
-        .scale-btn:hover {
-            transform: scale(1.1);
+        .option:hover {
+            transform: translateY(-1px);
+            border-color: var(--primary-500);
+            background: var(--gray-50);
             box-shadow: var(--shadow-md);
         }
         
-        .scale-btn.selected {
-            background: var(--primary-600);
-            border-color: var(--primary-600);
+        .option.selected {
+            background: #e0f2fe;
+            border-color: #0284c7;
+            color: #0c4a6e;
+        }
+        
+        .option-number {
+            position: absolute;
+            left: var(--space-6);
+            top: 50%;
+            transform: translateY(-50%);
+            width: 24px;
+            height: 24px;
+            background: var(--gray-200);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+            font-weight: var(--font-semibold);
+        }
+        
+        .option.selected .option-number {
+            background: #0284c7;
             color: white;
         }
         
-        .scale-btn[data-value="2"] { background-color: #10b981; }
-        .scale-btn[data-value="1"] { background-color: #60a5fa; }
-        .scale-btn[data-value="0"] { background-color: #f3f4f6; color: var(--gray-700); }
-        .scale-btn[data-value="-1"] { background-color: #fbbf24; }
-        .scale-btn[data-value="-2"] { background-color: #f87171; }
-        
-        .scale-btn.selected[data-value="2"] { background-color: #059669; }
-        .scale-btn.selected[data-value="1"] { background-color: #2563eb; }
-        .scale-btn.selected[data-value="0"] { background-color: #6b7280; }
-        .scale-btn.selected[data-value="-1"] { background-color: #f59e0b; }
-        .scale-btn.selected[data-value="-2"] { background-color: #ef4444; }
+        .option-text {
+            margin-left: var(--space-10);
+        }
         
         .navigation {
             display: flex;
@@ -258,6 +264,46 @@
             color: var(--gray-700);
         }
         
+        /* 성향 퍼센트 바 */
+        .trait-bars {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-6);
+            margin: var(--space-8) 0;
+        }
+        
+        .trait-bar {
+            position: relative;
+        }
+        
+        .trait-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--space-2);
+            font-weight: var(--font-semibold);
+        }
+        
+        .trait-bar-bg {
+            height: 32px;
+            background: var(--gray-200);
+            border-radius: var(--radius-full);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .trait-bar-fill {
+            height: 100%;
+            background: var(--gradient-brand);
+            transition: width var(--duration-1000) var(--ease-out);
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: var(--space-3);
+            color: white;
+            font-weight: var(--font-semibold);
+            font-size: 0.875rem;
+        }
+        
         /* 유명인 그리드 */
         .famous-grid {
             display: grid;
@@ -370,16 +416,11 @@
             .test-container { 
                 margin: var(--space-4); 
             }
-            .scale-buttons {
-                gap: var(--space-1);
+            .question {
+                font-size: 1.125rem;
             }
-            .scale-btn {
-                width: 40px;
-                height: 40px;
-                font-size: 0.875rem;
-            }
-            .scale-label {
-                font-size: 0.75rem;
+            .option {
+                padding: var(--space-4) var(--space-5);
             }
             .famous-grid {
                 grid-template-columns: 1fr 1fr;
@@ -397,21 +438,21 @@
     <div class="test-container">
         <div class="test-header">
             <h1>MBTI 성격유형 검사</h1>
-            <p>60개 문항으로 알아보는 정밀 성격 분석</p>
+            <p>시나리오 기반 24문항 정밀 분석</p>
         </div>
         
         <div class="test-content">
             <!-- 테스트 시작 화면 -->
             <div id="intro-screen" class="test-info">
-                <h2>정밀 MBTI 성격유형 검사</h2>
+                <h2>더 정확한 MBTI 성격유형 검사</h2>
                 <p>
-                    이 검사는 60개의 심층적인 질문을 통해 당신의 MBTI 성격유형을 정확하게 분석합니다.<br>
-                    각 질문에 대해 5단계로 답변하여 더욱 정밀한 결과를 받아보세요.
+                    이 검사는 24개의 실제 상황 시나리오를 통해 당신의 MBTI 성격유형을 정밀하게 분석합니다.<br>
+                    각 상황에서 5가지 선택지 중 가장 자신과 가까운 답변을 선택해주세요.
                 </p>
                 <div class="test-features">
-                    <div class="feature-item">✨ 60문항 정밀 분석</div>
-                    <div class="feature-item">📊 5단계 세밀한 답변</div>
-                    <div class="feature-item">🎯 희귀도 통계 제공</div>
+                    <div class="feature-item">🎯 시나리오 기반 질문</div>
+                    <div class="feature-item">📊 5단계 정밀 답변</div>
+                    <div class="feature-item">✨ 상세한 분석 결과</div>
                     <div class="feature-item">💼 맞춤 직업 추천</div>
                     <div class="feature-item">💝 연애 궁합 분석</div>
                 </div>
@@ -426,7 +467,7 @@
             <div id="test-screen" class="hidden">
                 <div class="progress-container">
                     <div class="progress-info">
-                        <span class="progress-text" id="progress-text">질문 0 / 60</span>
+                        <span class="progress-text" id="progress-text">질문 0 / 24</span>
                         <span class="progress-text" id="progress-percent">0%</span>
                     </div>
                     <div class="progress-bar">
@@ -436,17 +477,8 @@
                 
                 <div class="question-container">
                     <div class="question" id="question"></div>
-                    <div class="option-scale">
-                        <div class="scale-label" id="scale-left">매우 그렇다</div>
-                        <div class="scale-buttons" id="scale-buttons">
-                            <button class="scale-btn" data-value="2" onclick="selectOption(2)">2</button>
-                            <button class="scale-btn" data-value="1" onclick="selectOption(1)">1</button>
-                            <button class="scale-btn" data-value="0" onclick="selectOption(0)">0</button>
-                            <button class="scale-btn" data-value="-1" onclick="selectOption(-1)">-1</button>
-                            <button class="scale-btn" data-value="-2" onclick="selectOption(-2)">-2</button>
-                        </div>
-                        <div class="scale-label" id="scale-right">매우 아니다</div>
-                    </div>
+                    <div class="scenario-context" id="scenario-context"></div>
+                    <div class="options" id="options"></div>
                 </div>
                 
                 <div class="navigation">
@@ -464,6 +496,46 @@
                     </div>
                     <div class="rarity-badge" id="rarity-badge">
                         전체 인구의 4.4% (희귀한 유형)
+                    </div>
+                    
+                    <!-- 성향 퍼센트 표시 -->
+                    <div class="trait-bars">
+                        <div class="trait-bar">
+                            <div class="trait-labels">
+                                <span>외향형 (E)</span>
+                                <span>내향형 (I)</span>
+                            </div>
+                            <div class="trait-bar-bg">
+                                <div class="trait-bar-fill" id="ei-bar"></div>
+                            </div>
+                        </div>
+                        <div class="trait-bar">
+                            <div class="trait-labels">
+                                <span>감각형 (S)</span>
+                                <span>직관형 (N)</span>
+                            </div>
+                            <div class="trait-bar-bg">
+                                <div class="trait-bar-fill" id="sn-bar"></div>
+                            </div>
+                        </div>
+                        <div class="trait-bar">
+                            <div class="trait-labels">
+                                <span>사고형 (T)</span>
+                                <span>감정형 (F)</span>
+                            </div>
+                            <div class="trait-bar-bg">
+                                <div class="trait-bar-fill" id="tf-bar"></div>
+                            </div>
+                        </div>
+                        <div class="trait-bar">
+                            <div class="trait-labels">
+                                <span>판단형 (J)</span>
+                                <span>인식형 (P)</span>
+                            </div>
+                            <div class="trait-bar-bg">
+                                <div class="trait-bar-fill" id="jp-bar"></div>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="result-sections">
@@ -549,75 +621,272 @@
             Kakao.init('8b5c6e8f97ec3d51a6f784b8b4b5ed99');
         }
         
-        // MBTI 테스트 질문들 (60문항)
+        // MBTI 테스트 질문들 (24문항, 시나리오 기반)
         const mbtiQuestions = [
-            // E/I 질문들 (15문항)
-            { question: "파티나 모임에서 새로운 사람들과 대화하는 것이 즐겁다", dimension: "E" },
-            { question: "혼자 있는 시간이 필요하며, 그 시간을 즐긴다", dimension: "I" },
-            { question: "많은 사람들 앞에서 발표하는 것이 편안하다", dimension: "E" },
-            { question: "깊이 있는 일대일 대화를 선호한다", dimension: "I" },
-            { question: "새로운 환경에서 먼저 다가가 인사한다", dimension: "E" },
-            { question: "관찰하고 파악한 후에 참여하는 편이다", dimension: "I" },
-            { question: "생각을 말로 표현하면서 정리한다", dimension: "E" },
-            { question: "충분히 생각한 후에 의견을 표현한다", dimension: "I" },
-            { question: "여러 사람과 함께 일할 때 에너지를 얻는다", dimension: "E" },
-            { question: "혼자 집중해서 일할 때 더 생산적이다", dimension: "I" },
-            { question: "주말에는 친구들과 만나는 약속을 선호한다", dimension: "E" },
-            { question: "주말에는 집에서 휴식하는 것을 선호한다", dimension: "I" },
-            { question: "처음 만난 사람과도 쉽게 친해진다", dimension: "E" },
-            { question: "친해지는 데 시간이 걸리지만 깊은 관계를 맺는다", dimension: "I" },
-            { question: "여러 활동을 동시에 즐기는 것을 좋아한다", dimension: "E" },
-            
-            // S/N 질문들 (15문항)
-            { question: "구체적인 사실과 세부사항에 주목한다", dimension: "S" },
-            { question: "전체적인 패턴과 가능성에 더 관심이 있다", dimension: "N" },
-            { question: "실용적이고 현실적인 해결책을 선호한다", dimension: "S" },
-            { question: "창의적이고 혁신적인 아이디어를 추구한다", dimension: "N" },
-            { question: "경험을 통해 배우는 것을 선호한다", dimension: "S" },
-            { question: "이론과 개념을 먼저 이해하려 한다", dimension: "N" },
-            { question: "현재에 집중하며 실제적인 것을 중시한다", dimension: "S" },
-            { question: "미래의 가능성과 잠재력에 더 흥미를 느낀다", dimension: "N" },
-            { question: "단계별 지침을 따르는 것이 편안하다", dimension: "S" },
-            { question: "자유롭게 탐색하고 실험하는 것을 좋아한다", dimension: "N" },
-            { question: "검증된 방법과 전통을 존중한다", dimension: "S" },
-            { question: "새로운 방법과 변화를 추구한다", dimension: "N" },
-            { question: "구체적인 예시가 있을 때 이해가 잘 된다", dimension: "S" },
-            { question: "추상적인 개념도 쉽게 이해한다", dimension: "N" },
-            { question: "오감으로 느낄 수 있는 것을 신뢰한다", dimension: "S" },
-            
-            // T/F 질문들 (15문항)
-            { question: "결정할 때 논리와 일관성을 최우선으로 한다", dimension: "T" },
-            { question: "결정할 때 사람들의 감정을 우선 고려한다", dimension: "F" },
-            { question: "객관적인 분석을 통해 문제를 해결한다", dimension: "T" },
-            { question: "공감과 이해를 통해 문제를 해결한다", dimension: "F" },
-            { question: "비판적 사고를 중요하게 여긴다", dimension: "T" },
-            { question: "조화로운 관계를 중요하게 여긴다", dimension: "F" },
-            { question: "진실이 때로는 아프더라도 말해야 한다고 믿는다", dimension: "T" },
-            { question: "상대방의 감정을 고려해 부드럽게 표현한다", dimension: "F" },
-            { question: "공정성과 정의를 추구한다", dimension: "T" },
-            { question: "자비와 동정심을 중시한다", dimension: "F" },
-            { question: "감정보다는 사실에 기반해 판단한다", dimension: "T" },
-            { question: "논리보다는 가치관에 따라 판단한다", dimension: "F" },
-            { question: "업무적 관계와 개인적 관계를 분리한다", dimension: "T" },
-            { question: "모든 관계에서 개인적 연결을 중시한다", dimension: "F" },
-            { question: "효율성과 생산성을 추구한다", dimension: "T" },
-            
-            // J/P 질문들 (15문항)
-            { question: "계획을 세우고 그대로 실행하는 것을 선호한다", dimension: "J" },
-            { question: "상황에 따라 유연하게 대응하는 것을 선호한다", dimension: "P" },
-            { question: "마감일보다 일찍 일을 끝내는 편이다", dimension: "J" },
-            { question: "마감일이 다가올 때 집중력이 높아진다", dimension: "P" },
-            { question: "체계적이고 조직적인 환경에서 일하기 좋다", dimension: "J" },
-            { question: "자유롭고 유연한 환경에서 창의력이 발휘된다", dimension: "P" },
-            { question: "결정을 내린 후에는 잘 바꾸지 않는다", dimension: "J" },
-            { question: "새로운 정보가 있으면 결정을 재고한다", dimension: "P" },
-            { question: "할 일 목록을 만들고 체크하는 것을 좋아한다", dimension: "J" },
-            { question: "그때그때 중요한 일부터 처리한다", dimension: "P" },
-            { question: "예측 가능한 일상이 편안하다", dimension: "J" },
-            { question: "매일 새로운 경험을 하는 것이 즐겁다", dimension: "P" },
-            { question: "시작한 일은 끝을 보려고 한다", dimension: "J" },
-            { question: "여러 프로젝트를 동시에 진행하는 것을 좋아한다", dimension: "P" },
-            { question: "규칙과 절차를 따르는 것이 중요하다", dimension: "J" }
+            {
+                question: "주말 계획을 세울 때",
+                scenario: "이번 주말에 자유 시간이 생겼습니다. 어떻게 보내실 건가요?",
+                options: [
+                    { text: "친구들에게 연락해서 함께 할 활동을 계획한다", score: { E: 2, I: 0 } },
+                    { text: "소규모 모임이나 가까운 친구와의 만남을 선호한다", score: { E: 1, I: 0 } },
+                    { text: "반은 혼자, 반은 사람들과 시간을 보낸다", score: { E: 0, I: 0 } },
+                    { text: "집에서 취미 활동을 하며 조용히 보낸다", score: { E: 0, I: 1 } },
+                    { text: "완전히 혼자만의 시간을 가지며 재충전한다", score: { E: 0, I: 2 } }
+                ]
+            },
+            {
+                question: "새로운 프로젝트를 시작할 때",
+                scenario: "회사에서 새로운 프로젝트를 맡게 되었습니다. 어떻게 접근하시겠습니까?",
+                options: [
+                    { text: "구체적인 계획과 일정을 먼저 세운다", score: { S: 2, N: 0 } },
+                    { text: "실용적인 목표를 설정하고 단계별로 진행한다", score: { S: 1, N: 0 } },
+                    { text: "목표와 비전을 균형있게 고려한다", score: { S: 0, N: 0 } },
+                    { text: "큰 그림과 최종 비전을 먼저 그린다", score: { S: 0, N: 1 } },
+                    { text: "혁신적인 아이디어와 가능성을 탐색한다", score: { S: 0, N: 2 } }
+                ]
+            },
+            {
+                question: "팀원과 의견 충돌이 생겼을 때",
+                scenario: "프로젝트 진행 중 팀원과 방향성에 대해 의견이 다릅니다. 어떻게 해결하시겠습니까?",
+                options: [
+                    { text: "논리적인 근거와 데이터로 내 주장을 뒷받침한다", score: { T: 2, F: 0 } },
+                    { text: "객관적인 분석을 통해 최선의 방안을 찾는다", score: { T: 1, F: 0 } },
+                    { text: "논리와 감정을 모두 고려하여 접근한다", score: { T: 0, F: 0 } },
+                    { text: "팀원의 감정과 관계를 우선 고려한다", score: { T: 0, F: 1 } },
+                    { text: "모두가 만족할 수 있는 조화로운 해결책을 찾는다", score: { T: 0, F: 2 } }
+                ]
+            },
+            {
+                question: "여행 계획을 세울 때",
+                scenario: "한 달 후 일주일간의 휴가가 있습니다. 어떻게 준비하시겠습니까?",
+                options: [
+                    { text: "숙소, 교통, 일정을 모두 미리 예약한다", score: { J: 2, P: 0 } },
+                    { text: "주요 일정만 정하고 세부사항은 나중에 결정한다", score: { J: 1, P: 0 } },
+                    { text: "대략적인 계획만 세운다", score: { J: 0, P: 0 } },
+                    { text: "목적지만 정하고 나머지는 즉흥적으로", score: { J: 0, P: 1 } },
+                    { text: "그날그날 기분에 따라 자유롭게 움직인다", score: { J: 0, P: 2 } }
+                ]
+            },
+            {
+                question: "파티나 모임에서",
+                scenario: "회사 창립기념 파티에 참석했습니다. 당신의 모습은?",
+                options: [
+                    { text: "여러 그룹을 돌아다니며 활발히 대화한다", score: { E: 2, I: 0 } },
+                    { text: "새로운 사람들과 네트워킹을 즐긴다", score: { E: 1, I: 0 } },
+                    { text: "아는 사람들과 적당히 어울린다", score: { E: 0, I: 0 } },
+                    { text: "몇몇 친한 동료들과만 대화한다", score: { E: 0, I: 1 } },
+                    { text: "조용한 곳에서 한두 명과 깊은 대화를 나눈다", score: { E: 0, I: 2 } }
+                ]
+            },
+            {
+                question: "문제 해결 방식",
+                scenario: "복잡한 문제를 해결해야 합니다. 어떤 방식을 선호하시나요?",
+                options: [
+                    { text: "과거 경험과 검증된 방법을 활용한다", score: { S: 2, N: 0 } },
+                    { text: "구체적인 사실과 데이터를 분석한다", score: { S: 1, N: 0 } },
+                    { text: "경험과 직관을 함께 사용한다", score: { S: 0, N: 0 } },
+                    { text: "패턴을 찾고 새로운 관점을 시도한다", score: { S: 0, N: 1 } },
+                    { text: "창의적이고 혁신적인 해결책을 모색한다", score: { S: 0, N: 2 } }
+                ]
+            },
+            {
+                question: "친구가 고민을 털어놓을 때",
+                scenario: "가까운 친구가 심각한 고민을 상담합니다. 어떻게 도와주시겠습니까?",
+                options: [
+                    { text: "문제를 분석하고 실질적인 해결책을 제시한다", score: { T: 2, F: 0 } },
+                    { text: "객관적인 조언과 다양한 옵션을 제공한다", score: { T: 1, F: 0 } },
+                    { text: "공감하면서도 현실적인 조언을 한다", score: { T: 0, F: 0 } },
+                    { text: "먼저 충분히 공감하고 위로한다", score: { T: 0, F: 1 } },
+                    { text: "감정적 지지와 따뜻한 위로에 집중한다", score: { T: 0, F: 2 } }
+                ]
+            },
+            {
+                question: "업무 스타일",
+                scenario: "중요한 프로젝트의 마감일이 2주 후입니다. 어떻게 진행하시나요?",
+                options: [
+                    { text: "즉시 시작하여 체계적으로 진행한다", score: { J: 2, P: 0 } },
+                    { text: "계획을 세우고 일정에 맞춰 진행한다", score: { J: 1, P: 0 } },
+                    { text: "적당한 속도로 진행한다", score: { J: 0, P: 0 } },
+                    { text: "마감일이 가까워지면 집중력이 높아진다", score: { J: 0, P: 1 } },
+                    { text: "압박감 속에서 최고의 성과를 낸다", score: { J: 0, P: 2 } }
+                ]
+            },
+            {
+                question: "학습 방식",
+                scenario: "새로운 기술이나 지식을 배워야 합니다. 어떤 방식을 선호하시나요?",
+                options: [
+                    { text: "스터디 그룹이나 강의를 통해 배운다", score: { E: 2, I: 0 } },
+                    { text: "질문하고 토론하며 배운다", score: { E: 1, I: 0 } },
+                    { text: "강의와 자습을 병행한다", score: { E: 0, I: 0 } },
+                    { text: "책이나 온라인 자료로 독학한다", score: { E: 0, I: 1 } },
+                    { text: "혼자서 깊이 파고들며 마스터한다", score: { E: 0, I: 2 } }
+                ]
+            },
+            {
+                question: "설명하는 방식",
+                scenario: "복잡한 개념을 다른 사람에게 설명해야 합니다. 어떻게 설명하시나요?",
+                options: [
+                    { text: "구체적인 예시와 단계별 설명을 사용한다", score: { S: 2, N: 0 } },
+                    { text: "실제 사례와 경험을 들어 설명한다", score: { S: 1, N: 0 } },
+                    { text: "개념과 예시를 균형있게 사용한다", score: { S: 0, N: 0 } },
+                    { text: "전체적인 맥락과 원리를 먼저 설명한다", score: { S: 0, N: 1 } },
+                    { text: "비유와 추상적 개념으로 이해시킨다", score: { S: 0, N: 2 } }
+                ]
+            },
+            {
+                question: "팀 프로젝트에서의 역할",
+                scenario: "팀 프로젝트를 진행합니다. 어떤 역할을 맡고 싶으신가요?",
+                options: [
+                    { text: "효율성과 성과를 책임지는 역할", score: { T: 2, F: 0 } },
+                    { text: "논리적 분석과 전략을 담당하는 역할", score: { T: 1, F: 0 } },
+                    { text: "분석과 협력을 모두 하는 역할", score: { T: 0, F: 0 } },
+                    { text: "팀원들의 화합과 동기부여를 담당", score: { T: 0, F: 1 } },
+                    { text: "팀 분위기와 관계를 케어하는 역할", score: { T: 0, F: 2 } }
+                ]
+            },
+            {
+                question: "변화에 대한 태도",
+                scenario: "회사에서 갑작스런 조직개편이 발표되었습니다. 당신의 반응은?",
+                options: [
+                    { text: "새로운 체계와 규칙을 빨리 파악한다", score: { J: 2, P: 0 } },
+                    { text: "변화에 대한 계획을 세운다", score: { J: 1, P: 0 } },
+                    { text: "상황을 지켜보며 적응한다", score: { J: 0, P: 0 } },
+                    { text: "유연하게 받아들이고 기회를 찾는다", score: { J: 0, P: 1 } },
+                    { text: "변화를 즐기며 새로운 가능성에 흥분한다", score: { J: 0, P: 2 } }
+                ]
+            },
+            {
+                question: "스트레스 해소 방법",
+                scenario: "매우 스트레스가 많은 한 주를 보냈습니다. 어떻게 해소하시나요?",
+                options: [
+                    { text: "친구들과 만나 수다를 떨며 해소한다", score: { E: 2, I: 0 } },
+                    { text: "사람들과 활동적인 것을 한다", score: { E: 1, I: 0 } },
+                    { text: "상황에 따라 다르게 해소한다", score: { E: 0, I: 0 } },
+                    { text: "조용한 취미활동으로 마음을 진정시킨다", score: { E: 0, I: 1 } },
+                    { text: "완전히 혼자만의 시간을 갖는다", score: { E: 0, I: 2 } }
+                ]
+            },
+            {
+                question: "새로운 도구나 기기를 다룰 때",
+                scenario: "새로 산 전자기기를 사용해야 합니다. 어떻게 시작하시나요?",
+                options: [
+                    { text: "설명서를 꼼꼼히 읽고 순서대로 따라한다", score: { S: 2, N: 0 } },
+                    { text: "기본 기능부터 하나씩 익혀나간다", score: { S: 1, N: 0 } },
+                    { text: "필요한 부분만 확인하고 사용한다", score: { S: 0, N: 0 } },
+                    { text: "일단 켜보고 직관적으로 사용한다", score: { S: 0, N: 1 } },
+                    { text: "이것저것 만져보며 새로운 기능을 발견한다", score: { S: 0, N: 2 } }
+                ]
+            },
+            {
+                question: "비판을 받았을 때",
+                scenario: "상사로부터 업무에 대한 날카로운 비판을 받았습니다. 어떻게 받아들이시나요?",
+                options: [
+                    { text: "객관적으로 분석하여 개선점을 찾는다", score: { T: 2, F: 0 } },
+                    { text: "논리적으로 타당한지 먼저 판단한다", score: { T: 1, F: 0 } },
+                    { text: "내용과 전달방식 모두 고려한다", score: { T: 0, F: 0 } },
+                    { text: "감정적으로 상처받지만 의미를 찾으려 한다", score: { T: 0, F: 1 } },
+                    { text: "관계와 감정에 큰 영향을 받는다", score: { T: 0, F: 2 } }
+                ]
+            },
+            {
+                question: "쇼핑 스타일",
+                scenario: "계절이 바뀌어 새 옷을 사러 갑니다. 어떻게 쇼핑하시나요?",
+                options: [
+                    { text: "필요한 목록을 작성하고 계획적으로 구매한다", score: { J: 2, P: 0 } },
+                    { text: "대략적인 계획을 가지고 쇼핑한다", score: { J: 1, P: 0 } },
+                    { text: "계획과 즉흥을 적절히 섞는다", score: { J: 0, P: 0 } },
+                    { text: "마음에 드는 것이 있으면 즉시 구매한다", score: { J: 0, P: 1 } },
+                    { text: "아무 계획 없이 즐기며 쇼핑한다", score: { J: 0, P: 2 } }
+                ]
+            },
+            {
+                question: "아이디어 발표할 때",
+                scenario: "회의에서 새로운 아이디어를 발표해야 합니다. 어떻게 준비하시나요?",
+                options: [
+                    { text: "즉흥적으로 열정적으로 발표한다", score: { E: 2, I: 0 } },
+                    { text: "대화하듯 자연스럽게 설명한다", score: { E: 1, I: 0 } },
+                    { text: "적당히 준비하고 발표한다", score: { E: 0, I: 0 } },
+                    { text: "충분히 준비한 후 발표한다", score: { E: 0, I: 1 } },
+                    { text: "완벽하게 준비하고 연습 후 발표한다", score: { E: 0, I: 2 } }
+                ]
+            },
+            {
+                question: "독서 취향",
+                scenario: "휴가 때 읽을 책을 고릅니다. 어떤 책을 선택하시나요?",
+                options: [
+                    { text: "실용적인 자기계발서나 전문서적", score: { S: 2, N: 0 } },
+                    { text: "현실적인 이야기나 전기", score: { S: 1, N: 0 } },
+                    { text: "다양한 장르를 골고루", score: { S: 0, N: 0 } },
+                    { text: "상상력을 자극하는 소설이나 철학서", score: { S: 0, N: 1 } },
+                    { text: "판타지나 공상과학 소설", score: { S: 0, N: 2 } }
+                ]
+            },
+            {
+                question: "결정을 내릴 때",
+                scenario: "이직 제안을 받았습니다. 어떻게 결정하시나요?",
+                options: [
+                    { text: "연봉, 복지, 성장가능성을 분석한다", score: { T: 2, F: 0 } },
+                    { text: "장단점을 객관적으로 비교한다", score: { T: 1, F: 0 } },
+                    { text: "이성과 감정을 모두 고려한다", score: { T: 0, F: 0 } },
+                    { text: "가족과 개인의 행복을 우선 고려한다", score: { T: 0, F: 1 } },
+                    { text: "직감과 느낌을 따라 결정한다", score: { T: 0, F: 2 } }
+                ]
+            },
+            {
+                question: "일의 마무리",
+                scenario: "프로젝트가 90% 완성되었습니다. 어떻게 마무리하시나요?",
+                options: [
+                    { text: "완벽하게 마무리될 때까지 집중한다", score: { J: 2, P: 0 } },
+                    { text: "계획대로 차근차근 마무리한다", score: { J: 1, P: 0 } },
+                    { text: "중요한 부분만 마무리한다", score: { J: 0, P: 0 } },
+                    { text: "다른 흥미로운 일이 생기면 전환한다", score: { J: 0, P: 1 } },
+                    { text: "새로운 프로젝트를 시작하고 싶어진다", score: { J: 0, P: 2 } }
+                ]
+            },
+            {
+                question: "주말 아침",
+                scenario: "토요일 아침입니다. 오늘 하루를 어떻게 시작하시나요?",
+                options: [
+                    { text: "친구들과 브런치 약속을 잡는다", score: { E: 2, I: 0 } },
+                    { text: "가족이나 연인과 외출한다", score: { E: 1, I: 0 } },
+                    { text: "상황에 따라 다르다", score: { E: 0, I: 0 } },
+                    { text: "집에서 조용히 커피를 마신다", score: { E: 0, I: 1 } },
+                    { text: "혼자만의 취미활동을 즐긴다", score: { E: 0, I: 2 } }
+                ]
+            },
+            {
+                question: "업무 보고서 작성",
+                scenario: "중요한 보고서를 작성해야 합니다. 어떻게 작성하시나요?",
+                options: [
+                    { text: "데이터와 숫자 위주로 명확하게", score: { S: 2, N: 0 } },
+                    { text: "사실과 근거 중심으로 체계적으로", score: { S: 1, N: 0 } },
+                    { text: "사실과 인사이트를 균형있게", score: { S: 0, N: 0 } },
+                    { text: "큰 그림과 미래 비전을 강조", score: { S: 0, N: 1 } },
+                    { text: "창의적인 아이디어와 가능성 중심", score: { S: 0, N: 2 } }
+                ]
+            },
+            {
+                question: "팀원의 실수를 발견했을 때",
+                scenario: "팀원이 중요한 실수를 했습니다. 어떻게 대처하시나요?",
+                options: [
+                    { text: "문제점을 지적하고 해결방안을 제시한다", score: { T: 2, F: 0 } },
+                    { text: "객관적으로 상황을 설명하고 개선을 요청한다", score: { T: 1, F: 0 } },
+                    { text: "상황과 감정을 모두 고려하여 대화한다", score: { T: 0, F: 0 } },
+                    { text: "먼저 격려하고 함께 해결방법을 찾는다", score: { T: 0, F: 1 } },
+                    { text: "팀원의 감정을 배려하며 조심스럽게 접근한다", score: { T: 0, F: 2 } }
+                ]
+            },
+            {
+                question: "새해 계획",
+                scenario: "새해가 시작되었습니다. 올해 계획은 어떻게 세우시나요?",
+                options: [
+                    { text: "구체적인 목표와 실행계획을 수립한다", score: { J: 2, P: 0 } },
+                    { text: "주요 목표들을 정리하고 계획한다", score: { J: 1, P: 0 } },
+                    { text: "대략적인 방향만 정한다", score: { J: 0, P: 0 } },
+                    { text: "큰 틀만 정하고 유연하게 진행한다", score: { J: 0, P: 1 } },
+                    { text: "계획 없이 자연스럽게 흘러간다", score: { J: 0, P: 2 } }
+                ]
+            }
         ];
         
         // MBTI 상세 결과 데이터
@@ -933,21 +1202,28 @@
             
             // 질문 표시
             document.getElementById('question').textContent = q.question;
+            document.getElementById('scenario-context').textContent = q.scenario;
             
-            // 스케일 라벨 업데이트
-            document.getElementById('scale-left').textContent = '매우 그렇다';
-            document.getElementById('scale-right').textContent = '매우 아니다';
+            // 옵션 표시
+            const optionsContainer = document.getElementById('options');
+            optionsContainer.innerHTML = '';
             
-            // 이전 답변 표시
-            if (answers[currentQuestion] !== undefined) {
-                document.querySelectorAll('.scale-btn').forEach(btn => {
-                    btn.classList.toggle('selected', parseInt(btn.dataset.value) === answers[currentQuestion]);
-                });
-            } else {
-                document.querySelectorAll('.scale-btn').forEach(btn => {
-                    btn.classList.remove('selected');
-                });
-            }
+            q.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option';
+                optionElement.innerHTML = `
+                    <span class="option-number">${index + 1}</span>
+                    <span class="option-text">${option.text}</span>
+                `;
+                optionElement.onclick = () => selectOption(index);
+                
+                // 이전 답변 표시
+                if (answers[currentQuestion] === index) {
+                    optionElement.classList.add('selected');
+                }
+                
+                optionsContainer.appendChild(optionElement);
+            });
             
             // 버튼 상태 업데이트
             document.getElementById('prev-btn').style.display = currentQuestion > 0 ? 'block' : 'none';
@@ -956,12 +1232,12 @@
         }
         
         // 옵션 선택
-        function selectOption(value) {
-            answers[currentQuestion] = value;
+        function selectOption(index) {
+            answers[currentQuestion] = index;
             
             // 선택 표시 업데이트
-            document.querySelectorAll('.scale-btn').forEach(btn => {
-                btn.classList.toggle('selected', parseInt(btn.dataset.value) === value);
+            document.querySelectorAll('.option').forEach((opt, i) => {
+                opt.classList.toggle('selected', i === index);
             });
             
             // 다음 버튼 활성화
@@ -991,22 +1267,12 @@
             
             Object.keys(answers).forEach(questionIndex => {
                 const question = mbtiQuestions[parseInt(questionIndex)];
-                const answer = answers[questionIndex];
-                const dimension = question.dimension;
+                const selectedOption = question.options[answers[questionIndex]];
+                const optionScores = selectedOption.score;
                 
-                // 점수 계산 (2, 1, 0, -1, -2)
-                if (answer > 0) {
-                    scores[dimension] += answer;
-                } else if (answer < 0) {
-                    // 반대 차원에 점수 추가
-                    const opposite = {
-                        'E': 'I', 'I': 'E',
-                        'S': 'N', 'N': 'S',
-                        'T': 'F', 'F': 'T',
-                        'J': 'P', 'P': 'J'
-                    };
-                    scores[opposite[dimension]] += Math.abs(answer);
-                }
+                Object.keys(optionScores).forEach(dimension => {
+                    scores[dimension] += optionScores[dimension];
+                });
             });
             
             // MBTI 타입 결정
@@ -1018,6 +1284,17 @@
             
             const details = mbtiDetails[mbtiType];
             
+            // 퍼센트 계산
+            const totalEI = scores.E + scores.I || 1;
+            const totalSN = scores.S + scores.N || 1;
+            const totalTF = scores.T + scores.F || 1;
+            const totalJP = scores.J + scores.P || 1;
+            
+            const percentEI = scores.E > scores.I ? (scores.E / totalEI * 100) : (scores.I / totalEI * 100);
+            const percentSN = scores.S > scores.N ? (scores.S / totalSN * 100) : (scores.N / totalSN * 100);
+            const percentTF = scores.T > scores.F ? (scores.T / totalTF * 100) : (scores.F / totalTF * 100);
+            const percentJP = scores.J > scores.P ? (scores.J / totalJP * 100) : (scores.P / totalJP * 100);
+            
             // 결과 표시
             showScreen('result-screen');
             document.getElementById('result-type').textContent = mbtiType;
@@ -1025,6 +1302,21 @@
                 `<strong>${details.name}</strong><br>${details.description}`;
             document.getElementById('rarity-badge').textContent = 
                 `전체 인구의 ${details.rarity} (${parseFloat(details.rarity) < 5 ? '희귀한' : '일반적인'} 유형)`;
+            
+            // 성향 퍼센트 바 업데이트
+            setTimeout(() => {
+                document.getElementById('ei-bar').style.width = `${percentEI}%`;
+                document.getElementById('ei-bar').textContent = `${Math.round(percentEI)}%`;
+                
+                document.getElementById('sn-bar').style.width = `${percentSN}%`;
+                document.getElementById('sn-bar').textContent = `${Math.round(percentSN)}%`;
+                
+                document.getElementById('tf-bar').style.width = `${percentTF}%`;
+                document.getElementById('tf-bar').textContent = `${Math.round(percentTF)}%`;
+                
+                document.getElementById('jp-bar').style.width = `${percentJP}%`;
+                document.getElementById('jp-bar').textContent = `${Math.round(percentJP)}%`;
+            }, 100);
             
             // 유명인
             document.getElementById('famous-people').innerHTML = details.famous.map(person => 
