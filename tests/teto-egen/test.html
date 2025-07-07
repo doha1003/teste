@@ -200,6 +200,13 @@
             line-height: 1.6;
         }
         
+        /* 진행률 표시 개선 */
+        .progress-step {
+            font-size: 0.875rem;
+            color: var(--gray-500);
+            margin-bottom: 0.25rem;
+        }
+        
         /* 모바일 반응형 */
         @media (max-width: 640px) {
             .gender-options {
@@ -246,31 +253,30 @@
                     </div>
                 </div>
                 
-                <button class="btn btn-primary" id="start-test-btn" onclick="startTestAfterGender()" disabled>
+                <button class="btn btn-primary start-button" id="start-test-btn" onclick="startTestAfterGender()" disabled>
                     테스트 시작하기
                 </button>
             </div>
 
             <!-- 테스트 화면 -->
-            <div id="test-screen" class="hidden">
-                <div class="question-container">
-                    <div class="progress-container">
-                        <div class="progress-info">
-                            <span class="progress-text" id="progress-text">질문 0 / 10</span>
-                            <span class="progress-text" id="progress-percent">0%</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress" id="progress"></div>
-                        </div>
+            <div id="test-screen" class="question-container hidden">
+                <div class="progress-container">
+                    <div class="progress-step" id="progress-step">STEP 1</div>
+                    <div class="progress-info">
+                        <span id="progress-text">질문 1 / 10</span>
+                        <span id="progress-percent">10%</span>
                     </div>
-                    
-                    <div class="question" id="question"></div>
-                    <div class="options" id="options"></div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress"></div>
+                    </div>
+                </div>
+                
+                <div class="question" id="question"></div>
+                <div class="options" id="options"></div>
 
-                    <div class="navigation">
-                        <button class="btn btn-secondary" id="prev-btn" onclick="previousQuestion()">이전</button>
-                        <button class="btn btn-primary" id="next-btn" onclick="nextQuestion()">다음</button>
-                    </div>
+                <div class="navigation">
+                    <button class="btn btn-secondary" id="prev-btn" onclick="previousQuestion()" style="visibility: hidden;">이전</button>
+                    <button class="btn btn-primary" id="next-btn" onclick="nextQuestion()" style="visibility: hidden;">다음</button>
                 </div>
             </div>
 
@@ -307,10 +313,16 @@
                 <!-- 카카오톡 공유하기 섹션 -->
                 <div class="share-section">
                     <div class="share-title">내 성격 유형을 친구들과 공유해보세요!</div>
-                    <button class="kakao-share-btn" onclick="shareKakao()">
-                        <span class="kakao-icon">💬</span>
-                        카카오톡으로 공유하기
-                    </button>
+                    <div class="share-buttons">
+                        <button class="share-button kakao-share" onclick="shareKakao()">
+                            <span>💬</span>
+                            카카오톡 공유
+                        </button>
+                        <button class="share-button link-copy" onclick="copyLink()">
+                            <span>🔗</span>
+                            링크 복사
+                        </button>
+                    </div>
                 </div>
                 
                 <div class="navigation">
@@ -333,6 +345,7 @@
         let selectedGender = '';
         let currentQuestion = 0;
         let answers = [];
+        let selectedAnswerIndex = null;
 
         // 테스트 질문
         const testQuestions = [
@@ -521,6 +534,7 @@
             if (currentQuestion < testQuestions.length) {
                 const q = testQuestions[currentQuestion];
                 document.getElementById('question').textContent = q.question;
+                document.getElementById('progress-step').textContent = `STEP ${currentQuestion + 1}`;
                 document.getElementById('progress-text').textContent = `질문 ${currentQuestion + 1} / ${testQuestions.length}`;
                 document.getElementById('progress-percent').textContent = `${Math.round(((currentQuestion + 1) / testQuestions.length) * 100)}%`;
                 document.getElementById('progress').style.width = `${((currentQuestion + 1) / testQuestions.length) * 100}%`;
@@ -533,11 +547,18 @@
                     optionDiv.className = 'option';
                     optionDiv.textContent = option.text;
                     optionDiv.onclick = () => selectOption(index);
+                    
+                    // 이전에 선택한 답변이 있으면 표시
+                    if (answers[currentQuestion] && answers[currentQuestion].index === index) {
+                        optionDiv.classList.add('selected');
+                    }
+                    
                     optionsContainer.appendChild(optionDiv);
                 });
 
-                document.getElementById('prev-btn').style.display = currentQuestion > 0 ? 'block' : 'none';
-                document.getElementById('next-btn').style.display = 'none';
+                // 네비게이션 버튼 표시/숨김
+                document.getElementById('prev-btn').style.visibility = currentQuestion > 0 ? 'visible' : 'hidden';
+                document.getElementById('next-btn').style.visibility = answers[currentQuestion] ? 'visible' : 'hidden';
             }
         }
 
@@ -546,8 +567,20 @@
             document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
             document.querySelectorAll('.option')[optionIndex].classList.add('selected');
 
-            answers[currentQuestion] = testQuestions[currentQuestion].options[optionIndex];
-            document.getElementById('next-btn').style.display = 'block';
+            selectedAnswerIndex = optionIndex;
+            answers[currentQuestion] = {
+                index: optionIndex,
+                type: testQuestions[currentQuestion].options[optionIndex].type
+            };
+            
+            document.getElementById('next-btn').style.visibility = 'visible';
+            
+            // 마지막 문제가 아니면 자동으로 다음 문제로 이동
+            if (currentQuestion < testQuestions.length - 1) {
+                setTimeout(() => {
+                    nextQuestion();
+                }, 300);
+            }
         }
 
         // 다음 질문
@@ -567,14 +600,6 @@
             if (currentQuestion > 0) {
                 currentQuestion--;
                 showQuestion();
-                
-                if (answers[currentQuestion]) {
-                    const prevAnswerIndex = testQuestions[currentQuestion].options.indexOf(answers[currentQuestion]);
-                    if (prevAnswerIndex !== -1) {
-                        document.querySelectorAll('.option')[prevAnswerIndex].classList.add('selected');
-                        document.getElementById('next-btn').style.display = 'block';
-                    }
-                }
             }
         }
 
@@ -665,11 +690,29 @@
             });
         }
 
+        // 링크 복사
+        function copyLink() {
+            const url = window.location.href;
+            navigator.clipboard.writeText(url).then(() => {
+                alert('링크가 복사되었습니다!');
+            }).catch(() => {
+                // 폴백 방법
+                const textarea = document.createElement('textarea');
+                textarea.value = url;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                alert('링크가 복사되었습니다!');
+            });
+        }
+
         // 테스트 재시작
         function restartTest() {
             selectedGender = '';
             currentQuestion = 0;
             answers = [];
+            selectedAnswerIndex = null;
             
             document.getElementById('result-screen').classList.add('hidden');
             document.getElementById('gender-screen').classList.remove('hidden');
