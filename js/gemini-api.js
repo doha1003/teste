@@ -1,5 +1,5 @@
-// Gemini API 설정 - Repository secrets에서 주입됨
-const GEMINI_API_KEY = 'PLACEHOLDER';
+// Gemini API 설정 - 실제 API 키 사용
+const GEMINI_API_KEY = 'AIzaSyC8Wb_7mRGcjKjP2l9Y0X3v2F5n4BqHcEw';
 const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
 
 // Gemini API 호출 함수
