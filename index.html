@@ -176,10 +176,10 @@
             </p>
             
             <div class="services-tabs fade-in stagger-2">
-                <button class="tab-button active" onclick="showServices('all')">전체</button>
-                <button class="tab-button" onclick="showServices('tests')">심리테스트</button>
-                <button class="tab-button" onclick="showServices('tools')">실용도구</button>
-                <button class="tab-button" onclick="showServices('fortune')">운세</button>
+                <button class="tab-button active" onclick="showServices('all', event)">전체</button>
+                <button class="tab-button" onclick="showServices('tests', event)">심리테스트</button>
+                <button class="tab-button" onclick="showServices('tools', event)">실용도구</button>
+                <button class="tab-button" onclick="showServices('fortune', event)">운세</button>
             </div>
             
             <div class="services-grid fade-in stagger-3">
@@ -284,7 +284,7 @@
     <div class="ad-container">
         <div class="ad-label">광고</div>
         <ins class="adsbygoogle"
-             style="display:block"
+             style="display:block; min-height: 90px;"
              data-ad-client="ca-pub-7905640648499222"
              data-ad-slot="1234567890"
              data-ad-format="auto"
@@ -318,16 +318,23 @@
     
     <!-- 서비스 탭 기능 JavaScript -->
     <script>
-        function showServices(category) {
+        function showServices(category, event) {
+            // event 파라미터가 없으면 기본 처리
+            if (!event) {
+                event = window.event;
+            }
+            
             // 모든 탭 버튼 비활성화
             document.querySelectorAll('.tab-button').forEach(btn => {
                 btn.classList.remove('active');
             });
             
             // 클릭된 탭 활성화
-            event.target.classList.add('active');
+            if (event && event.target) {
+                event.target.classList.add('active');
+            }
             
-            // 모든 서비스 카드 숨기기
+            // 모든 서비스 카드 표시/숨김 처리
             document.querySelectorAll('.service-card').forEach(card => {
                 if (category === 'all') {
                     card.style.display = 'block';
@@ -343,14 +350,12 @@
         
         // 페이지 로드 시 전체 탭 활성화
         document.addEventListener('DOMContentLoaded', function() {
-            showServices('all');
+            // 첫 번째 탭 버튼을 찾아서 활성화
+            const firstTab = document.querySelector('.tab-button');
+            if (firstTab) {
+                showServices('all', { target: firstTab });
+            }
         });
-    </script>
-    
-    <!-- AdSense initialization -->
-    <script>
-        // 애드센스 광고 로드
-        (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </body>
 </html>
