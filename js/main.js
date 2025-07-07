@@ -12,7 +12,7 @@ function toggleMobileMenu() {
     }
 }
 
-// 서비스 탭 필터링
+// 서비스 탭 필터링 (운세 탭 포함)
 function showServices(category) {
     const cards = document.querySelectorAll('.service-card');
     const buttons = document.querySelectorAll('.tab-button');
@@ -27,6 +27,7 @@ function showServices(category) {
         if ((category === 'all' && btn.textContent.includes('전체')) ||
             (category === 'tests' && btn.textContent.includes('심리테스트')) ||
             (category === 'tools' && btn.textContent.includes('실용도구')) ||
+            (category === 'fortune' && btn.textContent.includes('운세')) ||
             (category === 'new' && btn.textContent.includes('최신'))) {
             btn.classList.add('active');
         }
@@ -331,6 +332,36 @@ function initDarkMode() {
     }
 }
 
+// 운세 관련 함수들
+function fortuneHelpers() {
+    // 운세 결과 저장
+    function saveFortune(type, data) {
+        const today = formatDate(new Date(), 'YYYY-MM-DD');
+        const fortuneKey = `fortune_${type}_${today}`;
+        storage.set(fortuneKey, data);
+    }
+    
+    // 운세 결과 불러오기
+    function loadFortune(type) {
+        const today = formatDate(new Date(), 'YYYY-MM-DD');
+        const fortuneKey = `fortune_${type}_${today}`;
+        return storage.get(fortuneKey);
+    }
+    
+    // 운세 공유하기
+    function shareFortune(platform, fortuneType, result) {
+        const title = `doha.kr에서 ${fortuneType} 결과를 확인했어요!`;
+        const url = window.location.href;
+        shareResult(platform, title, url);
+    }
+    
+    return {
+        save: saveFortune,
+        load: loadFortune,
+        share: shareFortune
+    };
+}
+
 // 애니메이션 클래스 추가를 위한 CSS
 const animationStyles = `
 @keyframes slideInRight {
@@ -414,6 +445,7 @@ async function loadComponent(componentName, targetId) {
                             <li><a href="/" class="nav-link">홈</a></li>
                             <li><a href="/tests/" class="nav-link">심리테스트</a></li>
                             <li><a href="/tools/" class="nav-link">실용도구</a></li>
+                            <li><a href="/fortune/" class="nav-link">운세</a></li>
                             <li><a href="/contact/" class="nav-link">문의</a></li>
                             <li><a href="/about/" class="nav-link">소개</a></li>
                         </ul>
@@ -433,7 +465,7 @@ async function loadComponent(componentName, targetId) {
                             <h3>doha.kr</h3>
                             <p style="color: var(--gray-400); margin-top: 8px;">
                                 일상을 더 재미있게 만드는 공간<br>
-                                심리테스트와 실용도구의 만남
+                                심리테스트, 실용도구, 운세의 만남
                             </p>
                             <div class="footer-social">
                                 <a href="mailto:youtubdoha@gmail.com" class="social-link">📧</a>
@@ -446,6 +478,7 @@ async function loadComponent(componentName, targetId) {
                                 <li><a href="/">홈</a></li>
                                 <li><a href="/tests/">심리테스트</a></li>
                                 <li><a href="/tools/">실용도구</a></li>
+                                <li><a href="/fortune/">운세</a></li>
                                 <li><a href="/about/">사이트 소개</a></li>
                             </ul>
                         </div>
@@ -455,15 +488,18 @@ async function loadComponent(componentName, targetId) {
                             <ul class="footer-links">
                                 <li><a href="/tests/teto-egen/">테토-에겐 테스트</a></li>
                                 <li><a href="/tests/mbti/">MBTI 테스트</a></li>
+                                <li><a href="/fortune/daily/">오늘의 운세</a></li>
                                 <li><a href="/tools/text-counter.html">글자수 세기</a></li>
                             </ul>
                         </div>
                         
                         <div class="footer-section">
-                            <h3>고객지원</h3>
+                            <h3>운세 & 고객지원</h3>
                             <ul class="footer-links">
+                                <li><a href="/fortune/daily/">오늘의 운세</a></li>
+                                <li><a href="/fortune/tarot/">타로 카드</a></li>
+                                <li><a href="/fortune/zodiac/">별자리 운세</a></li>
                                 <li><a href="/contact/">문의하기</a></li>
-                                <li><a href="/about/">사이트 소개</a></li>
                             </ul>
                         </div>
                     </div>
@@ -532,3 +568,4 @@ window.storage = storage;
 window.formatDate = formatDate;
 window.formatNumber = formatNumber;
 window.toggleDarkMode = toggleDarkMode;
+window.fortuneHelpers = fortuneHelpers();
