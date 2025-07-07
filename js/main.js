@@ -531,6 +531,25 @@ async function loadComponents() {
     }
 }
 
+// AdSense 초기화 함수
+function initAdSense() {
+    // AdSense가 이미 로드되어 있고, 광고 슬롯이 있는지 확인
+    const adSlots = document.querySelectorAll('.adsbygoogle:not([data-ad-status])');
+    
+    if (adSlots.length > 0 && typeof adsbygoogle !== 'undefined') {
+        adSlots.forEach(slot => {
+            try {
+                // 광고 슬롯에 상태 표시
+                slot.setAttribute('data-ad-status', 'requested');
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            } catch (e) {
+                console.error('AdSense initialization error:', e);
+                slot.setAttribute('data-ad-status', 'error');
+            }
+        });
+    }
+}
+
 // DOM 로드 완료 시 초기화
 document.addEventListener('DOMContentLoaded', async function() {
     // 컴포넌트 로드
@@ -548,14 +567,8 @@ document.addEventListener('DOMContentLoaded', async function() {
     // 다크 모드 초기화
     initDarkMode();
     
-    // AdSense 광고 로드
-    if (typeof adsbygoogle !== 'undefined') {
-        try {
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        } catch (e) {
-            console.error('AdSense error:', e);
-        }
-    }
+    // AdSense 초기화 (약간의 지연 후 실행)
+    setTimeout(initAdSense, 100);
 });
 
 // 전역 함수로 내보내기
