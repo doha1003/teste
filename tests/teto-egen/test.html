@@ -19,6 +19,199 @@
     
     <!-- External CSS -->
     <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/test-common.css">
+    
+    <style>
+        /* 테토-에겐 테스트 전용 스타일 */
+        .gender-selection {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 3rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .gender-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 1rem;
+        }
+        
+        .gender-subtitle {
+            font-size: 1.125rem;
+            color: var(--gray-600);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .gender-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .gender-option {
+            background: var(--gray-50);
+            border: 3px solid transparent;
+            border-radius: 1rem;
+            padding: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .gender-option:hover {
+            background: var(--primary-50);
+            border-color: var(--primary-300);
+            transform: translateY(-4px);
+        }
+        
+        .gender-option.selected {
+            background: var(--primary-100);
+            border-color: var(--primary-600);
+        }
+        
+        .gender-icon {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        
+        .gender-label {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+        
+        .gender-desc {
+            font-size: 0.875rem;
+            color: var(--gray-500);
+            margin-top: 0.25rem;
+        }
+        
+        /* 컬렉션 카드 스타일 */
+        .collection-card {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card-rarity {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #333;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-weight: 700;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .card-rarity.LEGENDARY {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%);
+            color: white;
+        }
+        
+        .card-rarity.EPIC {
+            background: linear-gradient(135deg, #a855f7 0%, #c084fc 100%);
+            color: white;
+        }
+        
+        .card-rarity.RARE {
+            background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
+            color: white;
+        }
+        
+        .card-rarity.MYTHIC {
+            background: linear-gradient(135deg, #ec4899 0%, #f472b6 100%);
+            color: white;
+        }
+        
+        .card-inner {
+            text-align: center;
+        }
+        
+        .card-avatar {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .card-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .stat-item {
+            background: var(--gray-50);
+            padding: 1rem;
+            border-radius: 0.75rem;
+        }
+        
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            margin-bottom: 0.25rem;
+        }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-700);
+        }
+        
+        .traits-section {
+            margin-bottom: 2rem;
+        }
+        
+        .compatibility {
+            background: var(--primary-50);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .compatibility h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary-900);
+            margin-bottom: 0.75rem;
+        }
+        
+        .compatibility p {
+            color: var(--primary-700);
+            line-height: 1.6;
+        }
+        
+        /* 모바일 반응형 */
+        @media (max-width: 640px) {
+            .gender-options {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .card-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- 네비게이션 -->
@@ -60,24 +253,24 @@
 
             <!-- 테스트 화면 -->
             <div id="test-screen" class="hidden">
-                <div class="progress-container">
-                    <div class="progress-info">
-                        <span class="progress-text" id="progress-text">질문 0 / 10</span>
-                        <span class="progress-text" id="progress-percent">0%</span>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress" id="progress"></div>
-                    </div>
-                </div>
-                
                 <div class="question-container">
+                    <div class="progress-container">
+                        <div class="progress-info">
+                            <span class="progress-text" id="progress-text">질문 0 / 10</span>
+                            <span class="progress-text" id="progress-percent">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress" id="progress"></div>
+                        </div>
+                    </div>
+                    
                     <div class="question" id="question"></div>
                     <div class="options" id="options"></div>
-                </div>
 
-                <div class="navigation">
-                    <button class="btn btn-secondary" id="prev-btn" onclick="previousQuestion()">이전</button>
-                    <button class="btn btn-primary" id="next-btn" onclick="nextQuestion()">다음</button>
+                    <div class="navigation">
+                        <button class="btn btn-secondary" id="prev-btn" onclick="previousQuestion()">이전</button>
+                        <button class="btn btn-primary" id="next-btn" onclick="nextQuestion()">다음</button>
+                    </div>
                 </div>
             </div>
 
@@ -488,11 +681,20 @@
             document.getElementById('start-test-btn').disabled = true;
         }
 
-        // 카카오 SDK 초기화
+        // 카카오 SDK 초기화 - setTimeout으로 지연 처리
         document.addEventListener('DOMContentLoaded', function() {
-            if (typeof Kakao !== 'undefined' && !Kakao.isInitialized()) {
-                Kakao.init('19d8ba832f94d513957adc17883c1282');
-            }
+            setTimeout(function() {
+                if (typeof Kakao !== 'undefined') {
+                    try {
+                        if (!Kakao.isInitialized()) {
+                            Kakao.init('19d8ba832f94d513957adc17883c1282');
+                            console.log('Kakao SDK initialized');
+                        }
+                    } catch (error) {
+                        console.error('Kakao SDK initialization error:', error);
+                    }
+                }
+            }, 100);
         });
     </script>
     
