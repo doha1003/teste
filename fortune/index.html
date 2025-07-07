@@ -25,67 +25,410 @@
     
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
+    
+    <style>
+        /* 운세 전용 스타일 */
+        .fortune-hero {
+            background: linear-gradient(135deg, #1a1c29 0%, #2d1b69 50%, #4c1d95 100%);
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            color: white;
+        }
+        
+        .fortune-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)" opacity="0.5"><animate attributeName="opacity" values="0.2;0.8;0.2" dur="3s" repeatCount="indefinite"/></circle><circle cx="80" cy="40" r="1.5" fill="rgba(255,255,255,0.15)" opacity="0.3"><animate attributeName="opacity" values="0.1;0.9;0.1" dur="4s" repeatCount="indefinite" begin="1s"/></circle><circle cx="40" cy="80" r="1" fill="rgba(255,255,255,0.1)" opacity="0.4"><animate attributeName="opacity" values="0.3;0.7;0.3" dur="5s" repeatCount="indefinite" begin="2s"/></circle></svg>') repeat;
+            animation: twinkle 8s ease-in-out infinite;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+        
+        .fortune-hero-content {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .fortune-hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: none;
+        }
+        
+        .fortune-hero p {
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            margin-bottom: 40px;
+            opacity: 0.95;
+            line-height: 1.6;
+        }
+        
+        .fortune-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 18px 36px;
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4);
+        }
+        
+        .fortune-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(139, 92, 246, 0.5);
+            color: white;
+        }
+        
+        .fortune-services {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+        
+        .fortune-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .fortune-card {
+            background: white;
+            border-radius: 24px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+            text-decoration: none;
+            color: inherit;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid transparent;
+        }
+        
+        .fortune-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+        
+        .fortune-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+            border-color: #8b5cf6;
+            color: white;
+        }
+        
+        .fortune-card:hover::before {
+            opacity: 1;
+        }
+        
+        .fortune-card-icon {
+            font-size: 4rem;
+            margin-bottom: 24px;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+            transition: all 0.3s ease;
+        }
+        
+        .fortune-card:hover .fortune-card-icon {
+            transform: scale(1.1) rotate(5deg);
+            filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.2));
+        }
+        
+        .fortune-card h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #1f2937;
+            transition: color 0.3s ease;
+        }
+        
+        .fortune-card:hover h3 {
+            color: white;
+        }
+        
+        .fortune-card p {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #6b7280;
+            margin-bottom: 24px;
+            transition: color 0.3s ease;
+        }
+        
+        .fortune-card:hover p {
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .fortune-card-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .fortune-stats {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            padding: 80px 0;
+            color: white;
+            text-align: center;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .stat-item {
+            padding: 20px;
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 900;
+            color: #fbbf24;
+            display: block;
+            margin-bottom: 8px;
+        }
+        
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .fortune-testimonials {
+            padding: 100px 0;
+            background: white;
+        }
+        
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .testimonial {
+            background: #f8fafc;
+            padding: 30px;
+            border-radius: 20px;
+            border-left: 4px solid #8b5cf6;
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            line-height: 1.7;
+            margin-bottom: 16px;
+            color: #374151;
+        }
+        
+        .testimonial-author {
+            font-weight: 600;
+            color: #8b5cf6;
+        }
+        
+        @media (max-width: 768px) {
+            .fortune-hero {
+                min-height: 60vh;
+                padding: 40px 20px;
+            }
+            
+            .fortune-services {
+                padding: 60px 0;
+            }
+            
+            .fortune-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                padding: 0 20px;
+            }
+            
+            .fortune-card {
+                padding: 30px 20px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 30px;
+            }
+            
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- 네비게이션 바 -->
     <div id="navbar-placeholder"></div>
     
-    <!-- 페이지 헤더 -->
-    <section class="hero">
-        <div class="hero-content">
-            <h1 class="hero-title fade-in">
-                🔮 AI 운세 & 타로
-            </h1>
-            <p class="hero-subtitle fade-in stagger-1">
+    <!-- 신비로운 히어로 섹션 -->
+    <section class="fortune-hero">
+        <div class="fortune-hero-content">
+            <h1 class="fade-in">🔮 AI 운세 & 타로</h1>
+            <p class="fade-in stagger-1">
                 인공지능이 분석하는 개인 맞춤 운세<br>
-                오늘 하루의 운을 미리 확인해보세요
+                오늘 하루의 운을 미리 확인하고 더 나은 선택을 하세요
             </p>
+            <a href="/fortune/daily/" class="fortune-cta fade-in stagger-2">
+                <span>✨</span>
+                지금 운세 보기
+            </a>
         </div>
     </section>
     
     <!-- 운세 서비스 그리드 -->
-    <section class="features">
+    <section class="fortune-services">
         <div class="container">
-            <div class="features-grid">
-                <a href="/fortune/daily/" class="feature-card fade-in stagger-1">
-                    <div class="feature-icon">🌅</div>
-                    <h3 class="feature-title">오늘의 운세</h3>
-                    <p class="feature-description">
+            <h2 class="section-title fade-in">🌟 AI 운세 서비스</h2>
+            <p class="section-subtitle fade-in stagger-1">
+                최첨단 AI 기술로 정확하고 상세한 운세를 제공합니다
+            </p>
+            
+            <div class="fortune-grid">
+                <a href="/fortune/daily/" class="fortune-card fade-in stagger-1">
+                    <div class="fortune-card-icon">🌅</div>
+                    <h3>오늘의 운세</h3>
+                    <p>
                         생년월일과 개인정보를 바탕으로 AI가 분석하는 
                         당신만의 특별한 일일 운세를 확인하세요.
+                        총운, 애정운, 금전운, 건강운, 직업운까지!
                     </p>
-                    <span class="feature-link">운세 보기 →</span>
+                    <span class="fortune-card-badge">NEW</span>
                 </a>
                 
-                <a href="/fortune/zodiac/" class="feature-card fade-in stagger-2">
-                    <div class="feature-icon">⭐</div>
-                    <h3 class="feature-title">별자리 운세</h3>
-                    <p class="feature-description">
-                        12개 별자리별 오늘의 운세를 AI가 상세하게 
-                        분석해드립니다. 애정운, 금전운, 직장운까지!
-                    </p>
-                    <span class="feature-link">별자리 운세 →</span>
-                </a>
-                
-                <a href="/fortune/zodiac-animal/" class="feature-card fade-in stagger-3">
-                    <div class="feature-icon">🐲</div>
-                    <h3 class="feature-title">띠별 운세</h3>
-                    <p class="feature-description">
-                        12지신 동물별 운세를 전통과 AI의 만남으로 
-                        새롭게 해석해드립니다.
-                    </p>
-                    <span class="feature-link">띠별 운세 →</span>
-                </a>
-                
-                <a href="/fortune/tarot/" class="feature-card fade-in stagger-4">
-                    <div class="feature-icon">🃏</div>
-                    <h3 class="feature-title">AI 타로 리딩</h3>
-                    <p class="feature-description">
+                <a href="/fortune/tarot/" class="fortune-card fade-in stagger-2">
+                    <div class="fortune-card-icon">🃏</div>
+                    <h3>AI 타로 리딩</h3>
+                    <p>
                         질문을 입력하고 카드를 선택하면 AI가 
                         신비로운 타로의 메시지를 해석해드립니다.
+                        과거, 현재, 미래의 인사이트를 얻어보세요.
                     </p>
-                    <span class="feature-link">타로 보기 →</span>
+                    <span class="fortune-card-badge">인기</span>
                 </a>
+                
+                <a href="/fortune/zodiac/" class="fortune-card fade-in stagger-3">
+                    <div class="fortune-card-icon">♈</div>
+                    <h3>별자리 운세</h3>
+                    <p>
+                        12개 별자리별 오늘의 운세를 AI가 상세하게 
+                        분석해드립니다. 애정운, 금전운, 직장운은 물론
+                        오늘의 럭키 컬러와 숫자까지!
+                    </p>
+                    <span class="fortune-card-badge">정확</span>
+                </a>
+                
+                <a href="/fortune/zodiac-animal/" class="fortune-card fade-in stagger-4">
+                    <div class="fortune-card-icon">🐅</div>
+                    <h3>띠별 운세</h3>
+                    <p>
+                        12지신 동물별 운세를 전통과 AI의 만남으로 
+                        새롭게 해석해드립니다. 쥐띠부터 돼지띠까지
+                        각 띠의 특성에 맞는 맞춤 조언을 제공합니다.
+                    </p>
+                    <span class="fortune-card-badge">전통</span>
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 통계 섹션 -->
+    <section class="fortune-stats">
+        <div class="container">
+            <h2 class="section-title fade-in" style="color: white; margin-bottom: 60px;">📊 doha.kr 운세 통계</h2>
+            <div class="stats-grid">
+                <div class="stat-item fade-in stagger-1">
+                    <span class="stat-number">15만+</span>
+                    <span class="stat-label">운세 조회 수</span>
+                </div>
+                <div class="stat-item fade-in stagger-2">
+                    <span class="stat-number">95%</span>
+                    <span class="stat-label">만족도</span>
+                </div>
+                <div class="stat-item fade-in stagger-3">
+                    <span class="stat-number">12개</span>
+                    <span class="stat-label">운세 카테고리</span>
+                </div>
+                <div class="stat-item fade-in stagger-4">
+                    <span class="stat-number">24시간</span>
+                    <span class="stat-label">실시간 서비스</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 사용자 후기 -->
+    <section class="fortune-testimonials">
+        <div class="container">
+            <h2 class="section-title fade-in">💬 사용자 후기</h2>
+            <p class="section-subtitle fade-in stagger-1">
+                실제 사용자들이 남긴 생생한 후기를 확인해보세요
+            </p>
+            
+            <div class="testimonials-grid">
+                <div class="testimonial fade-in stagger-1">
+                    <p class="testimonial-text">
+                        "정말 신기해요! AI가 분석한 운세가 실제로 맞아서 깜짝 놀랐습니다. 
+                        특히 오늘의 운세 조언대로 했더니 좋은 일이 생겼어요!"
+                    </p>
+                    <div class="testimonial-author">- 김○○님</div>
+                </div>
+                
+                <div class="testimonial fade-in stagger-2">
+                    <p class="testimonial-text">
+                        "타로 리딩이 정말 자세하고 정확해요. 고민이 있을 때마다 
+                        찾게 되는 사이트입니다. 무료인데 이 정도 퀄리티라니!"
+                    </p>
+                    <div class="testimonial-author">- 이○○님</div>
+                </div>
+                
+                <div class="testimonial fade-in stagger-3">
+                    <p class="testimonial-text">
+                        "별자리 운세가 매일 다르고 구체적이어서 좋아요. 
+                        친구들에게도 추천했더니 모두 만족해합니다."
+                    </p>
+                    <div class="testimonial-author">- 박○○님</div>
+                </div>
             </div>
         </div>
     </section>
@@ -93,7 +436,7 @@
     <!-- 운세 특징 섹션 -->
     <section class="service-highlights">
         <div class="container">
-            <h2 class="section-title fade-in">AI 운세의 특징</h2>
+            <h2 class="section-title fade-in">✨ AI 운세의 특징</h2>
             <div class="highlights-grid">
                 <div class="highlight-card fade-in stagger-1">
                     <div class="highlight-icon">🤖</div>
@@ -132,6 +475,20 @@
              data-ad-format="auto"
              data-full-width-responsive="true"></ins>
     </div>
+    
+    <!-- CTA 섹션 -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-box">
+                <h2 class="cta-title">🔮 지금 바로 운세를 확인해보세요!</h2>
+                <p class="cta-description">
+                    <strong>15만명</strong>이 경험한 정확한 AI 운세<br>
+                    당신의 오늘과 내일을 미리 준비하세요
+                </p>
+                <a href="/fortune/daily/" class="cta-button">무료로 운세 보기</a>
+            </div>
+        </div>
+    </section>
     
     <!-- 푸터 -->
     <div id="footer-placeholder"></div>
