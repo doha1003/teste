@@ -14,6 +14,7 @@
     
     <!-- External CSS -->
     <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/test-common.css">
     <link rel="stylesheet" href="/css/mbti-result-fix.css">
     
     <!-- Favicon -->
@@ -27,61 +28,6 @@
     
     <style>
         /* MBTI 테스트 전용 스타일 */
-        .test-container {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .test-container::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at 20% 80%, rgba(255,255,255,0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 20%, rgba(255,255,255,0.05) 0%, transparent 50%);
-            animation: float 20s ease-in-out infinite;
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            33% { transform: translate(30px, -30px) rotate(120deg); }
-            66% { transform: translate(-20px, 20px) rotate(240deg); }
-        }
-        
-        .test-header {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            color: white;
-            padding: var(--space-8) var(--space-6);
-            text-align: center;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .test-header h1 {
-            font-size: 2.5rem;
-            font-weight: var(--font-bold);
-            margin-bottom: var(--space-2);
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        .test-header p {
-            font-size: 1.125rem;
-            opacity: 0.9;
-        }
-        
-        .test-content {
-            position: relative;
-            z-index: 1;
-            padding: var(--space-8);
-            max-width: 900px;
-            margin: 0 auto;
-        }
-        
         .test-info {
             background: white;
             border-radius: var(--radius-3xl);
@@ -115,217 +61,73 @@
             color: var(--gray-600);
         }
         
-        .start-button {
-            display: inline-block;
-            background: var(--primary-600);
-            color: white;
-            padding: var(--space-4) var(--space-8);
-            border-radius: var(--radius-full);
-            font-weight: var(--font-semibold);
-            font-size: 1.125rem;
-            transition: all var(--duration-normal) var(--ease-out);
-            border: none;
-            cursor: pointer;
-            margin-top: var(--space-6);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
-        }
-        
-        .start-button:hover {
-            background: var(--primary-700);
-            transform: translateY(-2px);
-            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
-        }
-        
-        /* 질문 화면 스타일 */
-        .question-container {
-            background: white;
-            border-radius: var(--radius-3xl);
-            padding: var(--space-10);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            margin: 0 auto;
-            max-width: 800px;
-            min-height: 500px;
-            display: none;
-        }
-        
-        .progress-container {
-            margin-bottom: var(--space-8);
-        }
-        
-        .progress-info {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: var(--space-2);
+        /* 진행률 스타일 개선 */
+        .progress-step {
             font-size: 0.875rem;
-            color: var(--gray-600);
+            color: var(--gray-500);
+            margin-bottom: 0.25rem;
         }
         
-        .progress-bar {
-            background: var(--gray-200);
-            height: 8px;
-            border-radius: var(--radius-full);
-            overflow: hidden;
-        }
-        
-        .progress-fill {
-            background: var(--primary-600);
-            height: 100%;
-            width: 0;
-            transition: width var(--duration-normal) var(--ease-out);
-        }
-        
-        .question-text {
-            font-size: 1.5rem;
-            font-weight: var(--font-semibold);
-            color: var(--gray-900);
-            text-align: center;
-            margin-bottom: var(--space-10);
-            line-height: 1.4;
-        }
-        
-        .answers-container {
+        /* 5단계 답변 옵션 스타일 */
+        .answer-scale {
             display: flex;
             flex-direction: column;
-            gap: var(--space-3);
+            gap: 0.5rem;
             max-width: 600px;
             margin: 0 auto;
         }
         
         .answer-option {
-            background: var(--gray-50);
-            border: 2px solid transparent;
-            border-radius: var(--radius-xl);
-            padding: var(--space-4) var(--space-6);
-            cursor: pointer;
-            transition: all var(--duration-normal) var(--ease-out);
-            text-align: left;
-            font-size: 1.0625rem;
-        }
-        
-        .answer-option:hover {
-            background: var(--primary-50);
-            border-color: var(--primary-300);
-            transform: translateX(4px);
-        }
-        
-        .answer-option.selected {
-            background: var(--primary-100);
-            border-color: var(--primary-600);
-            color: var(--primary-800);
-        }
-        
-        /* 결과 화면 스타일 */
-        .result-container {
-            display: none;
-            animation: fadeIn 1s ease-out;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .result-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: var(--space-16) var(--space-6);
-            text-align: center;
             position: relative;
-            overflow: hidden;
+            padding-left: 2rem;
         }
         
-        .result-header::before {
+        .answer-option::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at 20% 80%, rgba(255,255,255,0.1) 0%, transparent 50%);
-            animation: float 20s ease-in-out infinite;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--gray-400);
+            transition: all 0.2s ease;
         }
         
-        .result-type {
-            font-size: 4rem;
-            font-weight: var(--font-bold);
-            margin-bottom: var(--space-4);
-            position: relative;
-            z-index: 1;
+        .answer-option.strongly-agree::before {
+            background: var(--primary-700);
+            width: 12px;
+            height: 12px;
         }
         
-        .result-title {
-            font-size: 2rem;
-            font-weight: var(--font-semibold);
-            margin-bottom: var(--space-4);
-            position: relative;
-            z-index: 1;
+        .answer-option.agree::before {
+            background: var(--primary-500);
+            width: 10px;
+            height: 10px;
         }
         
-        .result-subtitle {
-            font-size: 1.25rem;
-            opacity: 0.9;
-            position: relative;
-            z-index: 1;
+        .answer-option.neutral::before {
+            background: var(--gray-500);
         }
         
-        .result-content {
-            padding: var(--space-8);
-            max-width: 900px;
-            margin: 0 auto;
+        .answer-option.disagree::before {
+            background: var(--primary-500);
+            width: 10px;
+            height: 10px;
         }
         
-        .result-section {
-            background: white;
-            border-radius: var(--radius-2xl);
-            padding: var(--space-8);
-            margin-bottom: var(--space-6);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        .answer-option.strongly-disagree::before {
+            background: var(--primary-700);
+            width: 12px;
+            height: 12px;
         }
         
-        .section-title {
-            font-size: 1.5rem;
-            font-weight: var(--font-semibold);
-            color: var(--gray-900);
-            margin-bottom: var(--space-4);
-            display: flex;
-            align-items: center;
-            gap: var(--space-2);
-        }
-        
-        .section-icon {
-            font-size: 1.75rem;
-        }
-        
+        /* 결과 페이지 스타일 */
         .personality-description {
             font-size: 1.125rem;
             line-height: 1.8;
             color: var(--gray-700);
-        }
-        
-        .traits-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: var(--space-4);
-            margin-top: var(--space-4);
-        }
-        
-        .trait-item {
-            background: var(--gray-50);
-            padding: var(--space-4);
-            border-radius: var(--radius-xl);
-            text-align: center;
-        }
-        
-        .trait-label {
-            font-size: 0.875rem;
-            color: var(--gray-600);
-            margin-bottom: var(--space-1);
-        }
-        
-        .trait-value {
-            font-size: 1.125rem;
-            font-weight: var(--font-semibold);
-            color: var(--primary-700);
         }
         
         .celebrities-grid {
@@ -392,103 +194,9 @@
             font-weight: var(--font-medium);
         }
         
-        .share-section {
-            background: var(--gray-50);
-            padding: var(--space-6);
-            border-radius: var(--radius-xl);
-            text-align: center;
-            margin-top: var(--space-8);
-        }
-        
-        .share-title {
-            font-size: 1.25rem;
-            font-weight: var(--font-semibold);
-            color: var(--gray-900);
-            margin-bottom: var(--space-4);
-        }
-        
-        .share-buttons {
-            display: flex;
-            gap: var(--space-3);
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        
-        .share-button {
-            padding: var(--space-3) var(--space-5);
-            border-radius: var(--radius-lg);
-            font-weight: var(--font-medium);
-            border: none;
-            cursor: pointer;
-            transition: all var(--duration-normal) var(--ease-out);
-            display: flex;
-            align-items: center;
-            gap: var(--space-2);
-        }
-        
-        .kakao-share {
-            background: #FEE500;
-            color: #000000;
-        }
-        
-        .kakao-share:hover {
-            background: #FDDC3F;
-            transform: translateY(-2px);
-        }
-        
-        .link-copy {
-            background: var(--gray-200);
-            color: var(--gray-700);
-        }
-        
-        .link-copy:hover {
-            background: var(--gray-300);
-            transform: translateY(-2px);
-        }
-        
-        .retry-button {
-            display: inline-block;
-            background: var(--primary-600);
-            color: white;
-            padding: var(--space-4) var(--space-6);
-            border-radius: var(--radius-full);
-            font-weight: var(--font-semibold);
-            text-decoration: none;
-            margin-top: var(--space-4);
-            transition: all var(--duration-normal) var(--ease-out);
-        }
-        
-        .retry-button:hover {
-            background: var(--primary-700);
-            transform: translateY(-2px);
-        }
-        
         /* 반응형 디자인 */
         @media (max-width: 768px) {
-            .test-header h1 {
-                font-size: 2rem;
-            }
-            
-            .question-text {
-                font-size: 1.25rem;
-            }
-            
-            .result-type {
-                font-size: 3rem;
-            }
-            
-            .result-title {
-                font-size: 1.5rem;
-            }
-            
-            .test-content,
-            .result-content {
-                padding: var(--space-4);
-            }
-            
-            .test-info,
-            .question-container,
-            .result-section {
+            .test-info {
                 padding: var(--space-6);
             }
         }
@@ -532,8 +240,9 @@
             </div>
             
             <!-- 질문 화면 -->
-            <div class="question-container" id="questionContainer">
+            <div class="question-container hidden" id="questionContainer">
                 <div class="progress-container">
+                    <div class="progress-step" id="progressStep">STEP 1</div>
                     <div class="progress-info">
                         <span>문항 <span id="currentQuestion">1</span>/24</span>
                         <span id="progressPercent">4%</span>
@@ -545,13 +254,18 @@
                 
                 <div class="question-text" id="questionText"></div>
                 
-                <div class="answers-container" id="answersContainer"></div>
+                <div class="answers-container answer-scale" id="answersContainer"></div>
+                
+                <div class="navigation">
+                    <button class="btn btn-secondary" id="prevBtn" onclick="previousQuestion()" style="visibility: hidden;">이전</button>
+                    <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()" style="visibility: hidden;">다음</button>
+                </div>
             </div>
         </div>
     </div>
     
     <!-- 결과 화면 -->
-    <div class="result-container" id="resultContainer">
+    <div class="result-container hidden" id="resultContainer">
         <div class="result-header">
             <div class="result-type" id="resultType"></div>
             <div class="result-title" id="resultTitle"></div>
@@ -636,13 +350,17 @@
                 <h3 class="share-title">결과 공유하기</h3>
                 <div class="share-buttons">
                     <button class="share-button kakao-share" id="kakaoShare">
-                        <span>🗨️</span> 카카오톡
+                        <span>💬</span> 카카오톡
                     </button>
                     <button class="share-button link-copy" onclick="copyLink()">
                         <span>🔗</span> 링크 복사
                     </button>
                 </div>
-                <a href="/tests/mbti/" class="retry-button">다시 검사하기</a>
+            </div>
+            
+            <div class="navigation">
+                <a href="/tests/mbti/" class="btn btn-secondary">테스트 소개 보기</a>
+                <a href="/tests/mbti/test.html" class="btn btn-primary retry-button">다시 검사하기</a>
             </div>
         </div>
     </div>
@@ -1258,7 +976,7 @@
         // 테스트 시작
         function startTest() {
             document.getElementById('testInfo').style.display = 'none';
-            document.getElementById('questionContainer').style.display = 'block';
+            document.getElementById('questionContainer').classList.remove('hidden');
             showQuestion();
         }
         
@@ -1267,6 +985,7 @@
             const question = questions[currentQuestion];
             document.getElementById('questionText').textContent = question.text;
             document.getElementById('currentQuestion').textContent = currentQuestion + 1;
+            document.getElementById('progressStep').textContent = `STEP ${currentQuestion + 1}`;
             
             const progress = ((currentQuestion + 1) / questions.length) * 100;
             document.getElementById('progressPercent').textContent = Math.round(progress) + '%';
@@ -1279,9 +998,27 @@
                 const answerElement = document.createElement('div');
                 answerElement.className = 'answer-option';
                 answerElement.textContent = answer.text;
+                
+                // 답변 스케일에 따른 클래스 추가
+                if (answer.value === 2) answerElement.classList.add('strongly-agree');
+                else if (answer.value === 1) answerElement.classList.add('agree');
+                else if (answer.value === 0) answerElement.classList.add('neutral');
+                else if (answer.value === -1) answerElement.classList.add('disagree');
+                else if (answer.value === -2) answerElement.classList.add('strongly-disagree');
+                
                 answerElement.onclick = () => selectAnswer(index);
+                
+                // 이전에 선택한 답변이 있으면 표시
+                if (answers[currentQuestion] === index) {
+                    answerElement.classList.add('selected');
+                }
+                
                 answersContainer.appendChild(answerElement);
             });
+            
+            // 네비게이션 버튼 표시/숨김
+            document.getElementById('prevBtn').style.visibility = currentQuestion > 0 ? 'visible' : 'hidden';
+            document.getElementById('nextBtn').style.visibility = answers[currentQuestion] !== undefined ? 'visible' : 'hidden';
         }
         
         // 답변 선택
@@ -1305,15 +1042,35 @@
                 option.classList.toggle('selected', i === index);
             });
             
-            // 자동으로 다음 질문으로
-            setTimeout(() => {
-                if (currentQuestion < questions.length - 1) {
-                    currentQuestion++;
-                    showQuestion();
-                } else {
+            // 버튼 표시
+            document.getElementById('nextBtn').style.visibility = 'visible';
+            
+            // 마지막 문제가 아니면 자동으로 다음 문제로
+            if (currentQuestion < questions.length - 1) {
+                setTimeout(() => {
+                    nextQuestion();
+                }, 300);
+            }
+        }
+        
+        // 다음 질문
+        function nextQuestion() {
+            if (answers[currentQuestion] !== undefined) {
+                currentQuestion++;
+                if (currentQuestion >= questions.length) {
                     showResult();
+                } else {
+                    showQuestion();
                 }
-            }, 300);
+            }
+        }
+        
+        // 이전 질문
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showQuestion();
+            }
         }
         
         // 결과 계산 및 표시
@@ -1330,7 +1087,7 @@
             
             // 결과 표시
             document.querySelector('.test-container').style.display = 'none';
-            document.getElementById('resultContainer').style.display = 'block';
+            document.getElementById('resultContainer').classList.remove('hidden');
             
             // 기본 정보
             document.getElementById('resultType').textContent = type;
@@ -1438,7 +1195,14 @@
             navigator.clipboard.writeText(url).then(() => {
                 alert('링크가 복사되었습니다!');
             }).catch(() => {
-                alert('링크 복사에 실패했습니다.');
+                // 폴백 방법
+                const textarea = document.createElement('textarea');
+                textarea.value = url;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                alert('링크가 복사되었습니다!');
             });
         }
     </script>
