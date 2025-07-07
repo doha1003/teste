@@ -12,8 +12,13 @@ function toggleMobileMenu() {
     }
 }
 
-// 서비스 탭 필터링 (운세 탭 포함)
-function showServices(category) {
+// 서비스 탭 필터링 (이벤트 파라미터 추가로 오류 수정)
+function showServices(category, event) {
+    // 이벤트 객체가 없으면 전역 이벤트 사용
+    if (!event) {
+        event = window.event;
+    }
+    
     const cards = document.querySelectorAll('.service-card');
     const buttons = document.querySelectorAll('.tab-button');
     
@@ -531,22 +536,53 @@ async function loadComponents() {
     }
 }
 
-// AdSense 초기화 함수
+// AdSense 초기화 함수 (수정된 버전)
 function initAdSense() {
-    // AdSense가 이미 로드되어 있고, 광고 슬롯이 있는지 확인
-    const adSlots = document.querySelectorAll('.adsbygoogle:not([data-ad-status])');
-    
-    if (adSlots.length > 0 && typeof adsbygoogle !== 'undefined') {
-        adSlots.forEach(slot => {
-            try {
-                // 광고 슬롯에 상태 표시
-                slot.setAttribute('data-ad-status', 'requested');
-                (adsbygoogle = window.adsbygoogle || []).push({});
-            } catch (e) {
-                console.error('AdSense initialization error:', e);
-                slot.setAttribute('data-ad-status', 'error');
+    try {
+        // 이미 처리된 광고 슬롯은 제외
+        const adSlots = document.querySelectorAll('.adsbygoogle:not([data-adsbygoogle-status])');
+        
+        if (adSlots.length === 0) {
+            return; // 처리할 광고가 없음
+        }
+        
+        // 각 광고 슬롯 크기 검증
+        adSlots.forEach((slot, index) => {
+            const rect = slot.getBoundingClientRect();
+            
+            // 크기가 너무 작은 경우 최소 크기 설정
+            if (rect.width < 50) {
+                slot.style.minWidth = '320px';
+                slot.style.width = '100%';
             }
+            
+            if (rect.height < 50) {
+                slot.style.minHeight = '100px';
+            }
+            
+            // 상태 표시하여 중복 처리 방지
+            slot.setAttribute('data-adsbygoogle-status', 'processing');
         });
+        
+        // AdSense 스크립트가 로드되었는지 확인
+        if (typeof adsbygoogle !== 'undefined') {
+            adSlots.forEach((slot, index) => {
+                try {
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                    slot.setAttribute('data-adsbygoogle-status', 'loaded');
+                } catch (error) {
+                    console.error(`AdSense 슬롯 ${index} 로딩 오류:`, error);
+                    slot.setAttribute('data-adsbygoogle-status', 'error');
+                }
+            });
+        } else {
+            console.warn('AdSense 스크립트가 아직 로드되지 않음');
+            // 나중에 다시 시도
+            setTimeout(initAdSense, 2000);
+        }
+        
+    } catch (error) {
+        console.error('AdSense 초기화 전체 오류:', error);
     }
 }
 
@@ -566,9 +602,11 @@ document.addEventListener('DOMContentLoaded', async function() {
     
     // 다크 모드 초기화
     initDarkMode();
-    
-    // AdSense 초기화 (약간의 지연 후 실행)
-    setTimeout(initAdSense, 100);
+});
+
+// 윈도우 로드 완료 후 AdSense 초기화
+window.addEventListener('load', function() {
+    setTimeout(initAdSense, 1000);
 });
 
 // 전역 함수로 내보내기
