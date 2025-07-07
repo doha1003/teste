@@ -74,7 +74,7 @@
     color: white;
     text-align: center;
     position: relative;
-    overflow: hidden;
+    overflow: visible; /* Changed from hidden to visible for badges */
     box-shadow: 
         0 25px 80px rgba(0, 0, 0, 0.3),
         0 0 100px rgba(255, 255, 255, 0.1),
@@ -114,31 +114,6 @@
 @keyframes borderGlow {
     0% { background-position: 0% 50%; }
     100% { background-position: 400% 50%; }
-}
-
-/* Floating particles inside the box */
-.cta-box::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: 
-        radial-gradient(2px 2px at 20% 30%, rgba(255, 255, 255, 0.4), transparent),
-        radial-gradient(2px 2px at 40% 70%, rgba(255, 255, 255, 0.3), transparent),
-        radial-gradient(1px 1px at 60% 20%, rgba(255, 255, 255, 0.5), transparent),
-        radial-gradient(1px 1px at 80% 80%, rgba(255, 255, 255, 0.3), transparent),
-        radial-gradient(2px 2px at 90% 40%, rgba(255, 255, 255, 0.4), transparent);
-    background-size: 300px 300px;
-    animation: sparkleMove 15s linear infinite;
-    pointer-events: none;
-    border-radius: 28px;
-}
-
-@keyframes sparkleMove {
-    0% { transform: scale(1) rotate(0deg); }
-    100% { transform: scale(1.1) rotate(360deg); }
 }
 
 /* CTA Title - Enhanced Typography */
@@ -340,54 +315,80 @@
     border-color: rgba(255, 255, 255, 0.4);
 }
 
-/* Floating badges around the CTA */
-.cta-box {
-    position: relative;
-}
-
-.cta-box .floating-badge {
+/* Floating badges - Fixed positioning and styles */
+.floating-badge {
     position: absolute;
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(10px);
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-size: 0.85rem;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-size: 0.9rem;
     font-weight: 600;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: 1.5px solid rgba(255, 255, 255, 0.4);
     animation: badgeFloat 6s ease-in-out infinite;
+    color: white;
+    white-space: nowrap;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    z-index: 15;
 }
 
-.cta-box .badge-1 {
-    top: -15px;
-    left: 20px;
+.floating-badge.badge-1 {
+    top: -25px;
+    left: 40px;
     animation-delay: 0s;
+    transform: rotate(-5deg);
 }
 
-.cta-box .badge-2 {
-    top: -15px;
-    right: 20px;
+.floating-badge.badge-2 {
+    top: -25px;
+    right: 40px;
     animation-delay: 2s;
+    transform: rotate(5deg);
 }
 
-.cta-box .badge-3 {
-    bottom: -15px;
+.floating-badge.badge-3 {
+    bottom: -25px;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-50%) rotate(-3deg);
     animation-delay: 4s;
 }
 
 @keyframes badgeFloat {
     0%, 100% { 
-        transform: translateY(0) scale(1); 
-        opacity: 0.8; 
+        transform: translateY(0) rotate(-5deg); 
+        opacity: 0.9; 
     }
     33% { 
-        transform: translateY(-10px) scale(1.05); 
+        transform: translateY(-12px) rotate(-3deg); 
         opacity: 1; 
     }
     66% { 
-        transform: translateY(5px) scale(0.95); 
+        transform: translateY(8px) rotate(-7deg); 
+        opacity: 0.95; 
+    }
+}
+
+/* Special animation for center badge */
+.floating-badge.badge-3 {
+    animation: centerBadgeFloat 6s ease-in-out infinite;
+}
+
+@keyframes centerBadgeFloat {
+    0%, 100% { 
+        transform: translateX(-50%) translateY(0) rotate(-3deg); 
         opacity: 0.9; 
+    }
+    33% { 
+        transform: translateX(-50%) translateY(-12px) rotate(-1deg); 
+        opacity: 1; 
+    }
+    66% { 
+        transform: translateX(-50%) translateY(8px) rotate(-5deg); 
+        opacity: 0.95; 
     }
 }
 
@@ -398,7 +399,7 @@
     }
     
     .cta-box {
-        padding: 50px 30px;
+        padding: 60px 30px;
         margin: 0 20px;
         border-radius: 25px;
     }
@@ -427,14 +428,30 @@
         justify-content: center;
     }
     
+    /* Mobile badge adjustments */
     .floating-badge {
-        display: none;
+        padding: 8px 16px;
+        font-size: 0.8rem;
+    }
+    
+    .floating-badge.badge-1 {
+        top: -20px;
+        left: 20px;
+    }
+    
+    .floating-badge.badge-2 {
+        top: -20px;
+        right: 20px;
+    }
+    
+    .floating-badge.badge-3 {
+        bottom: -20px;
     }
 }
 
 @media (max-width: 480px) {
     .cta-box {
-        padding: 40px 20px;
+        padding: 50px 20px;
         margin: 0 15px;
     }
     
@@ -451,6 +468,12 @@
         padding: 14px 30px;
         font-size: 1rem;
     }
+    
+    /* Hide badges on very small screens */
+    .floating-badge {
+        font-size: 0.75rem;
+        padding: 6px 12px;
+    }
 }
 
 /* Accessibility - Reduced Motion */
@@ -459,7 +482,6 @@
     .cta::before,
     .cta::after,
     .cta-box::before,
-    .cta-box::after,
     .cta-title,
     .cta-title::before,
     .cta-description strong,
@@ -496,5 +518,11 @@
     .cta-button {
         background: #000;
         border: 3px solid #fff;
+    }
+    
+    .floating-badge {
+        background: rgba(0, 0, 0, 0.9);
+        border-color: white;
+        border-width: 2px;
     }
 }
