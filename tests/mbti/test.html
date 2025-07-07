@@ -12,21 +12,48 @@
     <meta property="og:image" content="https://doha.kr/images/mbti-og.png">
     <meta property="og:url" content="https://doha.kr/tests/mbti/test.html">
     
-    <!-- External CSS -->
-    <link rel="stylesheet" href="/css/styles.css">
-    <link rel="stylesheet" href="/css/test-common.css">
-    <link rel="stylesheet" href="/css/mbti-result-fix.css">
+    <!-- External CSS - Fixed absolute paths -->
+    <link rel="stylesheet" href="https://doha.kr/css/styles.css">
+    <link rel="stylesheet" href="https://doha.kr/css/test-common.css">
+    <link rel="stylesheet" href="https://doha.kr/css/mbti-result-fix.css">
     
     <!-- Favicon -->
     <link rel="icon" href="/images/placeholder-favicon.svg" type="image/svg+xml">
     
-    <!-- Google AdSense -->
+    <!-- Google AdSense - Single initialization -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
     
     <!-- Kakao JavaScript SDK -->
     <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.4.0/kakao.min.js" integrity="sha384-mXVrIX2T/Kszp6Z0aEWaA8Nm7J6/ZeWXbL8UpGRjKwWe56Srd/iyNmWMBhcItAjH" crossorigin="anonymous"></script>
     
     <style>
+        /* CSS Variables for consistent theming */
+        :root {
+            --primary-600: #2563eb;
+            --primary-500: #3b82f6;
+            --primary-100: #dbeafe;
+            --primary-50: #eff6ff;
+            --primary-700: #1d4ed8;
+            --primary-800: #1e40af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-400: #9ca3af;
+            --gray-100: #f3f4f6;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+            --space-10: 2.5rem;
+            --radius-lg: 0.5rem;
+            --radius-md: 0.375rem;
+            --radius-full: 9999px;
+            --radius-3xl: 1.5rem;
+            --font-bold: 700;
+            --font-medium: 500;
+        }
+        
         /* MBTI 테스트 전용 스타일 */
         .test-info {
             background: white;
@@ -368,20 +395,34 @@
     <div id="footer-placeholder"></div>
     
     <script>
-        // Kakao SDK 초기화 - setTimeout으로 지연 처리
+        // 단일 AdSense 초기화 방지
+        let adsenseInitialized = false;
+        
+        // Kakao SDK 초기화 - 개선된 버전
         document.addEventListener('DOMContentLoaded', function() {
+            // Kakao SDK 초기화 딜레이
             setTimeout(function() {
                 if (typeof Kakao !== 'undefined') {
                     try {
                         if (!Kakao.isInitialized()) {
                             Kakao.init('8b5c6e8f97ec3d51a6f784b8b4b5ed99');
-                            console.log('Kakao SDK initialized');
+                            console.log('Kakao SDK initialized successfully');
                         }
                     } catch (error) {
                         console.error('Kakao SDK initialization error:', error);
                     }
                 }
-            }, 100);
+            }, 500);
+            
+            // AdSense 초기화 (한번만)
+            if (!adsenseInitialized && window.adsbygoogle) {
+                try {
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                    adsenseInitialized = true;
+                } catch (error) {
+                    console.error('AdSense initialization error:', error);
+                }
+            }
         });
         
         // MBTI 테스트 질문 데이터
