@@ -33,6 +33,7 @@
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="/css/emoji-fix.css">
     <link rel="stylesheet" href="/css/cta-enhancement.css">
+    <link rel="stylesheet" href="/css/styles-fix.css">
     
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
@@ -280,18 +281,29 @@
         </div>
     </section>
     
-    <!-- 광고 영역 -->
-    <div class="ad-container" style="min-height: 250px; margin: 40px auto; max-width: 1200px; padding: 0 20px;">
-        <div class="ad-label">광고</div>
-        <ins class="adsbygoogle"
-             style="display:block; min-height: 90px;"
-             data-ad-client="ca-pub-7905640648499222"
-             data-ad-slot="3892514725"
-             data-ad-format="auto"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
+    <!-- 광고 영역 - AdSense 최적화 -->
+    <div class="ad-container" style="margin: 60px auto; max-width: 1200px; padding: 0 20px; text-align: center;">
+        <div class="ad-label" style="font-size: 12px; color: #999; margin-bottom: 10px; text-transform: uppercase;">광고</div>
+        
+        <!-- 데스크톱 광고 -->
+        <div class="desktop-ad" style="display: block;">
+            <ins class="adsbygoogle"
+                 style="display:inline-block; width:728px; height:90px;"
+                 data-ad-client="ca-pub-7905640648499222"
+                 data-ad-slot="7905640648"
+                 data-ad-format="auto"
+                 data-full-width-responsive="false"></ins>
+        </div>
+        
+        <!-- 모바일 광고 -->
+        <div class="mobile-ad" style="display: none;">
+            <ins class="adsbygoogle"
+                 style="display:inline-block; width:320px; height:100px;"
+                 data-ad-client="ca-pub-7905640648499222"
+                 data-ad-slot="7905640649"
+                 data-ad-format="auto"
+                 data-full-width-responsive="false"></ins>
+        </div>
     </div>
     
     <!-- CTA 섹션 - 완전히 새로운 디자인 -->
@@ -318,6 +330,41 @@
     
     <!-- External JavaScript -->
     <script src="/js/main.js"></script>
+    
+    <!-- AdSense 초기화 및 반응형 처리 -->
+    <script>
+        // AdSense 반응형 처리
+        function handleAdSenseResponsive() {
+            const desktopAd = document.querySelector('.desktop-ad');
+            const mobileAd = document.querySelector('.mobile-ad');
+            
+            if (window.innerWidth <= 768) {
+                // 모바일
+                desktopAd.style.display = 'none';
+                mobileAd.style.display = 'block';
+            } else {
+                // 데스크톱
+                desktopAd.style.display = 'block';
+                mobileAd.style.display = 'none';
+            }
+        }
+        
+        // 페이지 로드 시 및 리사이즈 시 실행
+        window.addEventListener('load', handleAdSenseResponsive);
+        window.addEventListener('resize', handleAdSenseResponsive);
+        
+        // AdSense 초기화 - 지연 로딩
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                try {
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                } catch (e) {
+                    console.log('AdSense loading error:', e);
+                }
+            }, 1000);
+        });
+    </script>
     
     <!-- 서비스 탭 기능 JavaScript -->
     <script>
@@ -360,5 +407,37 @@
             }
         });
     </script>
+
+    <!-- 추가 CSS for AdSense -->
+    <style>
+        @media (max-width: 768px) {
+            .desktop-ad {
+                display: none !important;
+            }
+            .mobile-ad {
+                display: block !important;
+            }
+        }
+        
+        @media (min-width: 769px) {
+            .desktop-ad {
+                display: block !important;
+            }
+            .mobile-ad {
+                display: none !important;
+            }
+        }
+        
+        .ad-container {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
 </body>
 </html>
