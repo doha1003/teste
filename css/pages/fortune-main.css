@@ -103,19 +103,20 @@
     margin-bottom: 0;
 }
 
+/* 운세 서비스 그리드 - 2x2 레이아웃으로 변경 */
 .fortune-page .fortune-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 24px;
-    max-width: 1200px;
-    margin: 40px auto 0;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    max-width: 1000px;
+    margin: 50px auto 0;
     padding: 0 20px;
 }
 
 .fortune-page .fortune-card {
     background: white;
-    border-radius: 16px;
-    padding: 32px;
+    border-radius: 20px;
+    padding: 40px;
     text-align: center;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
     transition: all 0.3s ease;
@@ -124,44 +125,50 @@
     position: relative;
     overflow: hidden;
     border: 2px solid var(--gray-200);
+    min-height: 280px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .fortune-page .fortune-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+    transform: translateY(-6px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
     border-color: var(--primary-500);
 }
 
 /* 이모티콘 아이콘 최적화 */
 .fortune-page .fortune-card-icon {
-    font-size: 3rem;
-    margin-bottom: 16px;
+    font-size: 4rem;
+    margin-bottom: 20px;
     display: block;
     line-height: 1.2;
 }
 
 .fortune-page .fortune-card h3 {
-    font-size: 1.5rem;
+    font-size: 1.75rem;
     font-weight: 600;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
     color: var(--gray-900);
 }
 
 .fortune-page .fortune-card p {
-    font-size: 1rem;
+    font-size: 1.1rem;
     line-height: 1.6;
     color: var(--gray-600);
-    margin-bottom: 16px;
+    margin-bottom: 20px;
+    flex-grow: 1;
 }
 
 .fortune-page .fortune-card-badge {
     display: inline-block;
-    padding: 4px 12px;
+    padding: 6px 16px;
     background: var(--primary-500);
     color: white;
     border-radius: 20px;
-    font-size: 0.875rem;
+    font-size: 0.9rem;
     font-weight: 500;
+    margin-top: auto;
 }
 
 .fortune-page .fortune-card-badge.hot {
@@ -181,47 +188,53 @@
     background: var(--gray-50);
 }
 
+/* 특징 그리드 - 2x2 레이아웃으로 변경 */
 .fortune-page .highlights-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 30px;
-    max-width: 1000px;
-    margin: 40px auto 0;
+    max-width: 800px;
+    margin: 50px auto 0;
     padding: 0 20px;
 }
 
 .fortune-page .highlight-card {
     background: white;
-    padding: 30px;
-    border-radius: 16px;
+    padding: 40px;
+    border-radius: 20px;
     text-align: center;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
     transition: all 0.3s ease;
+    min-height: 240px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .fortune-page .highlight-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
 }
 
 /* 특징 아이콘 최적화 */
 .fortune-page .highlight-icon {
-    font-size: 3.5rem;
-    margin-bottom: 20px;
+    font-size: 4rem;
+    margin-bottom: 24px;
     display: block;
     line-height: 1.2;
 }
 
 .fortune-page .highlight-title {
-    font-size: 1.25rem;
+    font-size: 1.5rem;
     font-weight: 600;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
     color: var(--gray-900);
 }
 
 .fortune-page .highlight-desc {
     color: var(--gray-600);
     line-height: 1.6;
+    font-size: 1.1rem;
 }
 
 /* CTA 섹션 - 완전히 새로운 깔끔한 디자인 */
@@ -307,22 +320,52 @@
         padding: 40px 0;
     }
     
+    /* 모바일에서는 1열로 스택 */
     .fortune-page .fortune-grid {
         grid-template-columns: 1fr;
-        gap: 20px;
+        gap: 24px;
+        margin: 40px auto 0;
     }
     
     .fortune-page .fortune-card {
-        padding: 24px;
+        padding: 32px;
+        min-height: auto;
     }
     
+    .fortune-page .fortune-card-icon {
+        font-size: 3.5rem;
+    }
+    
+    .fortune-page .fortune-card h3 {
+        font-size: 1.5rem;
+    }
+    
+    .fortune-page .fortune-card p {
+        font-size: 1rem;
+    }
+    
+    /* 모바일에서는 1열로 스택 */
     .fortune-page .highlights-grid {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 20px;
+        grid-template-columns: 1fr;
+        gap: 24px;
+        margin: 40px auto 0;
+    }
+    
+    .fortune-page .highlight-card {
+        padding: 32px;
+        min-height: auto;
     }
     
     .fortune-page .highlight-icon {
-        font-size: 3rem;
+        font-size: 3.5rem;
+    }
+    
+    .fortune-page .highlight-title {
+        font-size: 1.3rem;
+    }
+    
+    .fortune-page .highlight-desc {
+        font-size: 1rem;
     }
     
     .fortune-page .section-title {
@@ -349,6 +392,29 @@
     }
 }
 
+/* 태블릿 크기에서도 2x2 유지 */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .fortune-page .fortune-grid {
+        max-width: 900px;
+        gap: 25px;
+    }
+    
+    .fortune-page .fortune-card {
+        padding: 35px;
+        min-height: 260px;
+    }
+    
+    .fortune-page .highlights-grid {
+        max-width: 750px;
+        gap: 25px;
+    }
+    
+    .fortune-page .highlight-card {
+        padding: 35px;
+        min-height: 220px;
+    }
+}
+
 @media (max-width: 480px) {
     .fortune-page .cta-title {
         font-size: 1.75rem;
@@ -362,5 +428,13 @@
     .fortune-page .cta-button {
         padding: 12px 24px;
         font-size: 0.95rem;
+    }
+    
+    .fortune-page .fortune-card {
+        padding: 24px;
+    }
+    
+    .fortune-page .highlight-card {
+        padding: 24px;
     }
 }
