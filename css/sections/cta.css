@@ -1,10 +1,18 @@
-/* CTA (Call to Action) Section Styles */
+/* CTA (Call to Action) Section - Vibrant and Attractive Design */
 
 .cta {
-    padding: var(--space-24) 0;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 100px 0;
+    background: linear-gradient(135deg, #ff6b9d 0%, #c44569 25%, #764ba2 50%, #667eea 75%, #48dbfb 100%);
+    background-size: 400% 400%;
+    animation: ctaGradientShift 12s ease infinite;
     position: relative;
     overflow: hidden;
+}
+
+@keyframes ctaGradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 /* CTA Background Pattern */
@@ -15,122 +23,162 @@
     right: -50%;
     width: 200%;
     height: 200%;
-    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
-    background-size: 50px 50px;
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.15) 2px, transparent 2px);
+    background-size: 60px 60px;
     transform: rotate(45deg);
     pointer-events: none;
+    animation: patternMove 20s linear infinite;
+}
+
+@keyframes patternMove {
+    0% { transform: translate(0, 0) rotate(45deg); }
+    100% { transform: translate(60px, 60px) rotate(45deg); }
 }
 
 /* CTA Container */
 .cta .container {
-    max-width: var(--container-max-width);
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 0 var(--container-padding);
+    padding: 0 20px;
     position: relative;
     z-index: 1;
 }
 
-/* CTA Box */
+/* CTA Box - 글래스모피즘 효과 */
 .cta-box {
-    background-color: white;
-    border-radius: var(--radius-2xl);
-    padding: var(--space-16);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 30px;
+    padding: 80px 60px;
     text-align: center;
     position: relative;
     overflow: hidden;
-    box-shadow: var(--shadow-2xl);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.2);
 }
 
-/* Floating Badges */
+/* Floating Badges - 생생한 색상 */
 .floating-badge {
     position: absolute;
-    background-color: white;
-    padding: var(--space-2) var(--space-4);
-    border-radius: var(--radius-full);
-    font-size: var(--text-sm);
-    font-weight: var(--font-semibold);
-    box-shadow: var(--shadow-lg);
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 700;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
     z-index: 2;
-    animation: float-badge 3s ease-in-out infinite;
+    animation: float-badge 4s ease-in-out infinite;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .badge-1 {
-    top: -20px;
-    left: 10%;
-    background-color: var(--color-success);
+    top: -25px;
+    left: 15%;
+    background: linear-gradient(135deg, #00f260 0%, #0575e6 100%);
     color: white;
     animation-delay: 0s;
 }
 
 .badge-2 {
     top: 50%;
-    right: -20px;
-    background-color: var(--color-warning);
+    right: -30px;
+    background: linear-gradient(135deg, #feca57 0%, #ff9ff3 100%);
     color: white;
-    animation-delay: 1s;
+    animation-delay: 1.5s;
 }
 
 .badge-3 {
-    bottom: -20px;
-    left: 30%;
-    background-color: var(--color-primary);
+    bottom: -25px;
+    left: 25%;
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
     color: white;
-    animation-delay: 2s;
+    animation-delay: 3s;
 }
 
 @keyframes float-badge {
     0%, 100% {
-        transform: translateY(0) rotate(0deg);
+        transform: translateY(0) rotate(0deg) scale(1);
     }
     25% {
-        transform: translateY(-10px) rotate(-5deg);
+        transform: translateY(-15px) rotate(-8deg) scale(1.05);
+    }
+    50% {
+        transform: translateY(0px) rotate(0deg) scale(1);
     }
     75% {
-        transform: translateY(10px) rotate(5deg);
+        transform: translateY(15px) rotate(8deg) scale(1.05);
     }
 }
 
-/* CTA Title */
+/* CTA Title - 강력한 임팩트 */
 .cta-title {
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: var(--font-bold);
-    color: var(--color-gray-900);
-    margin-bottom: var(--space-6);
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 900;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #ff6b9d 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 30px;
     line-height: 1.2;
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    animation: titlePulse 3s ease-in-out infinite;
 }
 
-/* CTA Description */
+@keyframes titlePulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+}
+
+/* CTA Description - 선명한 텍스트 */
 .cta-description {
-    font-size: var(--text-lg);
-    color: var(--color-gray-600);
-    line-height: var(--leading-relaxed);
-    margin-bottom: var(--space-8);
-    max-width: 600px;
+    font-size: 1.3rem;
+    color: #374151;
+    line-height: 1.7;
+    margin-bottom: 50px;
+    max-width: 650px;
     margin-left: auto;
     margin-right: auto;
+    font-weight: 500;
 }
 
 .cta-description strong {
-    color: var(--color-primary);
-    font-weight: var(--font-semibold);
+    background: linear-gradient(135deg, #ff6b9d, #c44569);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 800;
+    font-size: 1.1em;
 }
 
-/* CTA Button */
+/* CTA Button - 매력적인 그라디언트 */
 .cta-button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: var(--space-4) var(--space-8);
-    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+    gap: 12px;
+    padding: 22px 50px;
+    background: linear-gradient(135deg, #ff6b9d 0%, #c44569 25%, #764ba2 75%, #667eea 100%);
+    background-size: 300% 300%;
     color: white;
-    font-size: var(--text-lg);
-    font-weight: var(--font-semibold);
-    border-radius: var(--radius-full);
+    font-size: 1.2rem;
+    font-weight: 800;
+    border-radius: 60px;
     text-decoration: none;
-    transition: all var(--transition-base);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
-    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+    box-shadow: 0 15px 40px rgba(255, 107, 157, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    animation: buttonGradient 3s ease infinite;
+}
+
+@keyframes buttonGradient {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
 }
 
 .cta-button::before {
@@ -140,140 +188,194 @@
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-    transition: left 0.5s;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.6s;
+}
+
+.cta-button::after {
+    content: '🚀';
+    font-size: 1.3em;
+    margin-left: 8px;
+    animation: rocketBounce 2s ease-in-out infinite;
+}
+
+@keyframes rocketBounce {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-3px) rotate(10deg); }
 }
 
 .cta-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 25px 60px rgba(255, 107, 157, 0.6);
+    animation-play-state: paused;
+    background-position: 100% 50%;
 }
 
 .cta-button:hover::before {
     left: 100%;
 }
 
-/* Alternative CTA Styles */
-.cta-dark {
-    background: var(--color-gray-900);
+.cta-button:active {
+    transform: translateY(-2px) scale(1.02);
 }
 
-.cta-dark .cta-box {
-    background-color: var(--color-gray-800);
-    color: white;
-}
-
-.cta-dark .cta-title {
-    color: white;
-}
-
-.cta-dark .cta-description {
-    color: var(--color-gray-300);
-}
-
-.cta-minimal {
-    background: var(--color-gray-50);
-    padding: var(--space-16) 0;
-}
-
-.cta-minimal .cta-box {
-    background: none;
-    box-shadow: none;
-    padding: 0;
-}
-
-.cta-minimal::before {
-    display: none;
-}
-
-/* CTA with Form */
-.cta-form {
-    display: flex;
-    gap: var(--space-3);
-    max-width: 500px;
-    margin: 0 auto;
-}
-
-.cta-input {
-    flex: 1;
-    padding: var(--space-3) var(--space-4);
-    border: 2px solid var(--color-gray-200);
-    border-radius: var(--radius-full);
-    font-size: var(--text-base);
-    transition: all var(--transition-fast);
-}
-
-.cta-input:focus {
-    outline: none;
-    border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-}
-
-.cta-submit {
-    padding: var(--space-3) var(--space-6);
-    background-color: var(--color-primary);
-    color: white;
-    border: none;
-    border-radius: var(--radius-full);
-    font-size: var(--text-base);
-    font-weight: var(--font-semibold);
-    cursor: pointer;
-    transition: all var(--transition-fast);
-    white-space: nowrap;
-}
-
-.cta-submit:hover {
-    background-color: var(--color-primary-dark);
-    transform: translateY(-1px);
-}
-
-/* Responsive CTA */
-@media (max-width: 768px) {
-    .cta {
-        padding: var(--space-16) 0;
-    }
-    
-    .cta-box {
-        padding: var(--space-8);
-    }
-    
-    .floating-badge {
-        display: none;
-    }
-    
-    .cta-form {
-        flex-direction: column;
-    }
-    
-    .cta-submit {
-        width: 100%;
-    }
-}
-
-/* CTA Stats */
+/* CTA Stats - 추가 정보 */
 .cta-stats {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: var(--space-6);
-    margin-top: var(--space-8);
-    padding-top: var(--space-8);
-    border-top: 1px solid var(--color-gray-200);
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 40px;
+    margin-top: 60px;
+    padding-top: 40px;
+    border-top: 2px solid rgba(255, 255, 255, 0.3);
 }
 
 .cta-stat {
     text-align: center;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.cta-stat:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.3);
 }
 
 .cta-stat-number {
-    font-size: var(--text-3xl);
-    font-weight: var(--font-bold);
-    color: var(--color-primary);
-    margin-bottom: var(--space-1);
+    font-size: 2.5rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
 }
 
 .cta-stat-label {
-    font-size: var(--text-sm);
-    color: var(--color-gray-600);
+    font-size: 1rem;
+    color: #4b5563;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .cta {
+        padding: 80px 0;
+    }
+    
+    .cta-box {
+        padding: 60px 30px;
+        border-radius: 20px;
+        margin: 0 10px;
+    }
+    
+    .floating-badge {
+        display: none; /* 모바일에서는 숨김 */
+    }
+    
+    .cta-title {
+        font-size: 2.2rem;
+        margin-bottom: 25px;
+    }
+    
+    .cta-description {
+        font-size: 1.1rem;
+        margin-bottom: 40px;
+        padding: 0 10px;
+    }
+    
+    .cta-button {
+        width: 100%;
+        max-width: 350px;
+        padding: 20px 40px;
+        font-size: 1.1rem;
+    }
+    
+    .cta-stats {
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin-top: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    .cta-box {
+        padding: 40px 20px;
+    }
+    
+    .cta-title {
+        font-size: 2rem;
+    }
+    
+    .cta-description {
+        font-size: 1rem;
+    }
+    
+    .cta-button {
+        padding: 18px 30px;
+        font-size: 1rem;
+        max-width: 300px;
+    }
+    
+    .cta-stats {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Dark theme support */
+@media (prefers-color-scheme: dark) {
+    .cta-box {
+        background: rgba(30, 30, 30, 0.95);
+        border-color: rgba(255, 255, 255, 0.2);
+    }
+    
+    .cta-description {
+        color: #e5e7eb;
+    }
+    
+    .cta-stat-label {
+        color: #d1d5db;
+    }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .cta,
+    .cta::before,
+    .floating-badge,
+    .cta-title,
+    .cta-button {
+        animation: none;
+    }
+    
+    .cta {
+        background: linear-gradient(135deg, #ff6b9d 0%, #667eea 100%);
+    }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+    .cta-box {
+        background: white;
+        border: 3px solid #000;
+    }
+    
+    .cta-title {
+        color: #000;
+        background: none;
+        -webkit-text-fill-color: initial;
+    }
+    
+    .cta-description {
+        color: #000;
+    }
+    
+    .cta-button {
+        background: #000;
+        color: white;
+    }
 }
