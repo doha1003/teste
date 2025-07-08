@@ -29,20 +29,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     
-    <!-- NEW MODULAR CSS STRUCTURE -->
-    <!-- Main CSS that imports all modular files -->
+    <!-- CLEAN CSS STRUCTURE - ONLY MAIN CSS -->
     <link rel="stylesheet" href="/css/main.css">
-    
-    <!-- Additional CSS for specific fixes (will be integrated into modules later) -->
-    <link rel="stylesheet" href="/css/global-text-fix.css">
-    <link rel="stylesheet" href="/css/highlights-fix.css">
-    <link rel="stylesheet" href="/css/emoji-fix.css">
-    <link rel="stylesheet" href="/css/cta-unified.css">
-    <link rel="stylesheet" href="/css/styles-fix.css">
-    <link rel="stylesheet" href="/css/hero-fix.css">
-    
-    <!-- OLD styles.css is now deprecated and not loaded -->
-    <!-- <link rel="stylesheet" href="/css/styles.css"> -->
     
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
@@ -291,11 +279,11 @@
     </section>
     
     <!-- 광고 영역 - AdSense 최적화 -->
-    <div class="ad-container" style="margin: 60px auto; max-width: 1200px; padding: 0 20px; text-align: center;">
-        <div class="ad-label" style="font-size: 12px; color: #6b7280; margin-bottom: 10px; text-transform: uppercase;">광고</div>
+    <div class="ad-container">
+        <div class="ad-label">광고</div>
         
         <!-- 데스크톱 광고 -->
-        <div class="desktop-ad" style="display: block;">
+        <div class="desktop-ad">
             <ins class="adsbygoogle"
                  style="display:inline-block; width:728px; height:90px;"
                  data-ad-client="ca-pub-7905640648499222"
@@ -305,7 +293,7 @@
         </div>
         
         <!-- 모바일 광고 -->
-        <div class="mobile-ad" style="display: none;">
+        <div class="mobile-ad">
             <ins class="adsbygoogle"
                  style="display:inline-block; width:320px; height:100px;"
                  data-ad-client="ca-pub-7905640648499222"
@@ -315,7 +303,7 @@
         </div>
     </div>
     
-    <!-- CTA 섹션 - 완전히 새로운 디자인 -->
+    <!-- CTA 섹션 -->
     <section class="cta">
         <div class="container">
             <div class="cta-box">
@@ -416,37 +404,5 @@
             }
         });
     </script>
-
-    <!-- 추가 CSS for AdSense -->
-    <style>
-        @media (max-width: 768px) {
-            .desktop-ad {
-                display: none !important;
-            }
-            .mobile-ad {
-                display: block !important;
-            }
-        }
-        
-        @media (min-width: 769px) {
-            .desktop-ad {
-                display: block !important;
-            }
-            .mobile-ad {
-                display: none !important;
-            }
-        }
-        
-        .ad-container {
-            background: #f8f9fa;
-            border-radius: 8px;
-            padding: 20px;
-            min-height: 120px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-    </style>
 </body>
 </html>
