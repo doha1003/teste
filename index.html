@@ -13,7 +13,7 @@
     <!-- Open Graph -->
     <meta property="og:title" content="doha.kr - 일상을 더 재미있게">
     <meta property="og:description" content="재미있는 심리테스트와 실용적인 도구들, 그리고 AI 운세까지 무료로 이용하세요!">
-    <meta property="og:image" content="https://doha.kr/images/og-image.png">
+    <meta property="og:image" content="https://doha.kr/images/og-default.png">
     <meta property="og:url" content="https://doha.kr">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="ko_KR">
@@ -22,23 +22,26 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="doha.kr - 일상을 더 재미있게">
     <meta name="twitter:description" content="재미있는 심리테스트와 실용적인 도구들, 그리고 AI 운세까지 무료로 이용하세요!">
-    <meta name="twitter:image" content="https://doha.kr/images/og-image.png">
+    <meta name="twitter:image" content="https://doha.kr/images/og-default.png">
     
     <!-- Preconnect for Performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     
-    <!-- CLEAN CSS STRUCTURE - ONLY MAIN CSS -->
-    <link rel="stylesheet" href="/css/main.css">
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/styles.css">
     
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
     
     <!-- Favicon -->
-    <link rel="icon" href="/images/logo.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/images/logo.svg">
+    <link rel="icon" href="/images/placeholder-favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/images/placeholder-favicon.svg">
     <link rel="manifest" href="/manifest.json">
+    
+    <!-- Kakao JavaScript SDK -->
+    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.4.0/kakao.min.js" integrity="sha384-mXVrIX2T/Kszp6Z0aEWaA8Nm7J6/ZeWXbL8UpGRjKwWe56Srd/iyNmWMBhcItAjH" crossorigin="anonymous"></script>
     
     <!-- Structured Data -->
     <script type="application/ld+json">
@@ -278,29 +281,15 @@
         </div>
     </section>
     
-    <!-- 광고 영역 - AdSense 최적화 -->
+    <!-- 광고 영역 -->
     <div class="ad-container">
         <div class="ad-label">광고</div>
-        
-        <!-- 데스크톱 광고 -->
-        <div class="desktop-ad">
-            <ins class="adsbygoogle"
-                 style="display:inline-block; width:728px; height:90px;"
-                 data-ad-client="ca-pub-7905640648499222"
-                 data-ad-slot="7905640648"
-                 data-ad-format="auto"
-                 data-full-width-responsive="false"></ins>
-        </div>
-        
-        <!-- 모바일 광고 -->
-        <div class="mobile-ad">
-            <ins class="adsbygoogle"
-                 style="display:inline-block; width:320px; height:100px;"
-                 data-ad-client="ca-pub-7905640648499222"
-                 data-ad-slot="7905640649"
-                 data-ad-format="auto"
-                 data-full-width-responsive="false"></ins>
-        </div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-7905640648499222"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
     </div>
     
     <!-- CTA 섹션 -->
@@ -328,81 +317,10 @@
     <!-- External JavaScript -->
     <script src="/js/main.js"></script>
     
-    <!-- AdSense 초기화 및 반응형 처리 -->
+    <!-- AdSense initialization -->
     <script>
-        // AdSense 반응형 처리
-        function handleAdSenseResponsive() {
-            const desktopAd = document.querySelector('.desktop-ad');
-            const mobileAd = document.querySelector('.mobile-ad');
-            
-            if (window.innerWidth <= 768) {
-                // 모바일
-                desktopAd.style.display = 'none';
-                mobileAd.style.display = 'block';
-            } else {
-                // 데스크톱
-                desktopAd.style.display = 'block';
-                mobileAd.style.display = 'none';
-            }
-        }
-        
-        // 페이지 로드 시 및 리사이즈 시 실행
-        window.addEventListener('load', handleAdSenseResponsive);
-        window.addEventListener('resize', handleAdSenseResponsive);
-        
-        // AdSense 초기화 - 지연 로딩
-        window.addEventListener('load', function() {
-            setTimeout(function() {
-                try {
-                    (adsbygoogle = window.adsbygoogle || []).push({});
-                    (adsbygoogle = window.adsbygoogle || []).push({});
-                } catch (e) {
-                    console.log('AdSense loading error:', e);
-                }
-            }, 1000);
-        });
-    </script>
-    
-    <!-- 서비스 탭 기능 JavaScript -->
-    <script>
-        function showServices(category, event) {
-            // event 파라미터가 없으면 기본 처리
-            if (!event) {
-                event = window.event;
-            }
-            
-            // 모든 탭 버튼 비활성화
-            document.querySelectorAll('.tab-button').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            
-            // 클릭된 탭 활성화
-            if (event && event.target) {
-                event.target.classList.add('active');
-            }
-            
-            // 모든 서비스 카드 표시/숨김 처리
-            document.querySelectorAll('.service-card').forEach(card => {
-                if (category === 'all') {
-                    card.style.display = 'block';
-                } else {
-                    if (card.dataset.category === category) {
-                        card.style.display = 'block';
-                    } else {
-                        card.style.display = 'none';
-                    }
-                }
-            });
-        }
-        
-        // 페이지 로드 시 전체 탭 활성화
-        document.addEventListener('DOMContentLoaded', function() {
-            // 첫 번째 탭 버튼을 찾아서 활성화
-            const firstTab = document.querySelector('.tab-button');
-            if (firstTab) {
-                showServices('all', { target: firstTab });
-            }
-        });
+        // 애드센스 광고 로드
+        (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </body>
 </html>
