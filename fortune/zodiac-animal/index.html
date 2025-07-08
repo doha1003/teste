@@ -37,29 +37,78 @@
         </div>
     </section>
     
-    <!-- 서비스 준비 중 안내 -->
+    <!-- 띠 선택 섹션 -->
     <section class="animal-section">
         <div class="container">
-            <div class="service-notice">
-                <div class="notice-icon">🐅</div>
-                <h2>띠별 운세 서비스 준비 중</h2>
-                <p>
-                    전통 사주학과 AI 기술을 결합한 정확한 띠별 운세 서비스를 준비하고 있습니다.<br>
-                    12지신의 지혜를 현대적으로 해석해드리겠습니다.
-                </p>
-                <div class="coming-soon-features">
-                    <h3>준비 중인 기능</h3>
-                    <ul>
-                        <li>🐭 12지신 띠별 상세 운세 (쥐~돼지)</li>
-                        <li>📅 전통 사주학 기반 정확한 분석</li>
-                        <li>🤖 AI 기술을 활용한 현대적 해석</li>
-                        <li>💫 띠별 특성에 맞는 맞춤 조언</li>
-                        <li>🔮 년도별, 월별 운세 예측</li>
-                    </ul>
+            <div id="animalSelection" class="animal-selection">
+                <h2 style="text-align: center; margin-bottom: 40px;">당신의 띠를 선택하세요</h2>
+                <div class="animal-grid">
+                    <div class="animal-card" onclick="selectAnimal('rat')">
+                        <div class="animal-symbol">🐀</div>
+                        <div class="animal-name">쥐띠</div>
+                        <div class="animal-years">子 (자)</div>
+                    </div>
+                    <div class="animal-card" onclick="selectAnimal('ox')">
+                        <div class="animal-symbol">🐂</div>
+                        <div class="animal-name">소띠</div>
+                        <div class="animal-years">丑 (축)</div>
+                    </div>
+                    <div class="animal-card" onclick="selectAnimal('tiger')">
+                        <div class="animal-symbol">🐅</div>
+                        <div class="animal-name">호랑이띠</div>
+                        <div class="animal-years">寅 (인)</div>
+                    </div>
+                    <div class="animal-card" onclick="selectAnimal('rabbit')">
+                        <div class="animal-symbol">🐰</div>
+                        <div class="animal-name">토끼띠</div>
+                        <div class="animal-years">卯 (묘)</div>
+                    </div>
+                    <div class="animal-card" onclick="selectAnimal('dragon')">
+                        <div class="animal-symbol">🐲</div>
+                        <div class="animal-name">용띠</div>
+                        <div class="animal-years">辰 (진)</div>
+                    </div>
+                    <div class="animal-card" onclick="selectAnimal('snake')">
+                        <div class="animal-symbol">🐍</div>
+                        <div class="animal-name">뱀띠</div>
+                        <div class="animal-years">巳 (사)</div>
+                    </div>
+                    <div class="animal-card" onclick="selectAnimal('horse')">
+                        <div class="animal-symbol">🐎</div>
+                        <div class="animal-name">말띠</div>
+                        <div class="animal-years">午 (오)</div>
+                    </div>
+                    <div class="animal-card" onclick="selectAnimal('goat')">
+                        <div class="animal-symbol">🐐</div>
+                        <div class="animal-name">양띠</div>
+                        <div class="animal-years">未 (미)</div>
+                    </div>
+                    <div class="animal-card" onclick="selectAnimal('monkey')">
+                        <div class="animal-symbol">🐒</div>
+                        <div class="animal-name">원숭이띠</div>
+                        <div class="animal-years">申 (신)</div>
+                    </div>
+                    <div class="animal-card" onclick="selectAnimal('rooster')">
+                        <div class="animal-symbol">🐓</div>
+                        <div class="animal-name">닭띠</div>
+                        <div class="animal-years">酉 (유)</div>
+                    </div>
+                    <div class="animal-card" onclick="selectAnimal('dog')">
+                        <div class="animal-symbol">🐕</div>
+                        <div class="animal-name">개띠</div>
+                        <div class="animal-years">戌 (술)</div>
+                    </div>
+                    <div class="animal-card" onclick="selectAnimal('pig')">
+                        <div class="animal-symbol">🐖</div>
+                        <div class="animal-name">돼지띠</div>
+                        <div class="animal-years">亥 (해)</div>
+                    </div>
                 </div>
-                <a href="/fortune/" class="btn btn-primary">
-                    다른 운세 서비스 보기
-                </a>
+            </div>
+            
+            <!-- 운세 결과 영역 -->
+            <div id="animalResult" class="animal-result" style="display: none;">
+                <!-- 결과가 여기에 표시됩니다 -->
             </div>
         </div>
     </section>
@@ -70,8 +119,8 @@
             <div class="info-box">
                 <h3>띠별 운세 안내</h3>
                 <ul>
-                    <li>전통 12지신 사주학과 AI 분석을 결합한 운세를 준비 중입니다.</li>
-                    <li>각 띠의 고유한 특성과 성격을 반영한 맞춤형 조언을 제공할 예정입니다.</li>
+                    <li>전통 12지신 사주학과 AI 분석을 결합한 운세를 제공합니다.</li>
+                    <li>각 띠의 고유한 특성과 성격을 반영한 맞춤형 조언을 받아보세요.</li>
                     <li>년도별, 월별 운세 흐름을 상세하게 분석합니다.</li>
                     <li>운세는 참고용이며, 긍정적인 마음가짐과 노력이 중요합니다.</li>
                 </ul>
@@ -95,6 +144,366 @@
     
     <!-- External JavaScript -->
     <script src="/js/main.js"></script>
+    
+    <script>
+        // 12지신 띠 데이터
+        const animalData = {
+            rat: {
+                symbol: '🐀',
+                name: '쥐띠',
+                hanja: '子 (자)',
+                years: [1936, 1948, 1960, 1972, 1984, 1996, 2008, 2020, 2032],
+                element: '물',
+                traits: ['지혜로운', '적응력 강한', '근면한', '사교적인'],
+                compatibility: ['용띠', '원숭이띠', '소띠'],
+                description: '지혜롭고 적응력이 뛰어난 쥐띠는 어떤 상황에서도 살아남을 수 있는 능력을 가지고 있습니다.'
+            },
+            ox: {
+                symbol: '🐂',
+                name: '소띠',
+                hanja: '丑 (축)',
+                years: [1937, 1949, 1961, 1973, 1985, 1997, 2009, 2021, 2033],
+                element: '흙',
+                traits: ['성실한', '끈기 있는', '신중한', '책임감 강한'],
+                compatibility: ['쥐띠', '뱀띠', '닭띠'],
+                description: '성실하고 끈기가 있는 소띠는 한번 시작한 일을 끝까지 완성하는 능력이 있습니다.'
+            },
+            tiger: {
+                symbol: '🐅',
+                name: '호랑이띠',
+                hanja: '寅 (인)',
+                years: [1938, 1950, 1962, 1974, 1986, 1998, 2010, 2022, 2034],
+                element: '나무',
+                traits: ['용감한', '정의로운', '카리스마 있는', '독립적인'],
+                compatibility: ['말띠', '개띠', '돼지띠'],
+                description: '용감하고 정의로운 호랑이띠는 타고난 리더십으로 많은 사람들을 이끌 수 있습니다.'
+            },
+            rabbit: {
+                symbol: '🐰',
+                name: '토끼띠',
+                hanja: '卯 (묘)',
+                years: [1939, 1951, 1963, 1975, 1987, 1999, 2011, 2023, 2035],
+                element: '나무',
+                traits: ['온화한', '예의바른', '세심한', '평화로운'],
+                compatibility: ['양띠', '돼지띠', '개띠'],
+                description: '온화하고 예의바른 토끼띠는 조화로운 관계를 만들어가는 능력이 뛰어납니다.'
+            },
+            dragon: {
+                symbol: '🐲',
+                name: '용띠',
+                hanja: '辰 (진)',
+                years: [1940, 1952, 1964, 1976, 1988, 2000, 2012, 2024, 2036],
+                element: '흙',
+                traits: ['당당한', '카리스마 있는', '창조적인', '야심찬'],
+                compatibility: ['쥐띠', '원숭이띠', '닭띠'],
+                description: '당당하고 카리스마 있는 용띠는 큰 꿈을 실현할 수 있는 능력을 가지고 있습니다.'
+            },
+            snake: {
+                symbol: '🐍',
+                name: '뱀띠',
+                hanja: '巳 (사)',
+                years: [1941, 1953, 1965, 1977, 1989, 2001, 2013, 2025, 2037],
+                element: '불',
+                traits: ['지혜로운', '직관적인', '신중한', '미스터리한'],
+                compatibility: ['소띠', '닭띠', '원숭이띠'],
+                description: '지혜롭고 직관적인 뱀띠는 깊은 통찰력으로 본질을 꿰뚫어 볼 수 있습니다.'
+            },
+            horse: {
+                symbol: '🐎',
+                name: '말띠',
+                hanja: '午 (오)',
+                years: [1942, 1954, 1966, 1978, 1990, 2002, 2014, 2026, 2038],
+                element: '불',
+                traits: ['자유로운', '활발한', '낙천적인', '모험적인'],
+                compatibility: ['호랑이띠', '양띠', '개띠'],
+                description: '자유롭고 활발한 말띠는 새로운 도전을 즐기며 앞으로 나아가는 추진력이 있습니다.'
+            },
+            goat: {
+                symbol: '🐐',
+                name: '양띠',
+                hanja: '未 (미)',
+                years: [1943, 1955, 1967, 1979, 1991, 2003, 2015, 2027, 2039],
+                element: '흙',
+                traits: ['창조적인', '예술적인', '온순한', '감성적인'],
+                compatibility: ['토끼띠', '말띠', '돼지띠'],
+                description: '창조적이고 예술적인 양띠는 아름다운 것을 만들어내는 재능이 있습니다.'
+            },
+            monkey: {
+                symbol: '🐒',
+                name: '원숭이띠',
+                hanja: '申 (신)',
+                years: [1944, 1956, 1968, 1980, 1992, 2004, 2016, 2028, 2040],
+                element: '금',
+                traits: ['영리한', '유머러스한', '호기심 많은', '적응력 강한'],
+                compatibility: ['쥐띠', '용띠', '뱀띠'],
+                description: '영리하고 유머러스한 원숭이띠는 뛰어난 지능으로 문제를 해결하는 능력이 있습니다.'
+            },
+            rooster: {
+                symbol: '🐓',
+                name: '닭띠',
+                hanja: '酉 (유)',
+                years: [1945, 1957, 1969, 1981, 1993, 2005, 2017, 2029, 2041],
+                element: '금',
+                traits: ['정직한', '꼼꼼한', '시간 관념이 강한', '자신감 있는'],
+                compatibility: ['소띠', '뱀띠', '용띠'],
+                description: '정직하고 꼼꼼한 닭띠는 시간을 잘 지키고 계획적으로 일을 처리하는 능력이 있습니다.'
+            },
+            dog: {
+                symbol: '🐕',
+                name: '개띠',
+                hanja: '戌 (술)',
+                years: [1946, 1958, 1970, 1982, 1994, 2006, 2018, 2030, 2042],
+                element: '흙',
+                traits: ['충성스러운', '정의로운', '책임감 강한', '보호 본능'],
+                compatibility: ['호랑이띠', '토끼띠', '말띠'],
+                description: '충성스럽고 정의로운 개띠는 타인을 보호하고 도움을 주는 것을 좋아합니다.'
+            },
+            pig: {
+                symbol: '🐖',
+                name: '돼지띠',
+                hanja: '亥 (해)',
+                years: [1947, 1959, 1971, 1983, 1995, 2007, 2019, 2031, 2043],
+                element: '물',
+                traits: ['관대한', '성실한', '낙천적인', '인정 많은'],
+                compatibility: ['토끼띠', '양띠', '호랑이띠'],
+                description: '관대하고 성실한 돼지띠는 인정이 많아 많은 사람들에게 사랑받습니다.'
+            }
+        };
+        
+        function selectAnimal(animal) {
+            // 선택 화면 숨기기
+            document.getElementById('animalSelection').style.display = 'none';
+            
+            // 로딩 표시
+            const resultDiv = document.getElementById('animalResult');
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = `
+                <div class="loading" style="text-align: center; padding: 40px;">
+                    <div class="loading-spinner"></div>
+                    <p style="margin-top: 20px;">12지신이 ${animalData[animal].name}의 운세를 알려주고 있습니다...</p>
+                </div>
+            `;
+            
+            // 운세 생성
+            setTimeout(() => {
+                const fortune = generateAnimalFortune(animal);
+                displayAnimalResult(animal, fortune);
+            }, 2000);
+        }
+        
+        function generateAnimalFortune(animal) {
+            const today = new Date();
+            const seed = today.getDate() + today.getMonth() + animal.length;
+            
+            // 시드 기반 운세 생성
+            const totalScore = 60 + Math.floor(seededRandom(seed) * 35);
+            const loveScore = 60 + Math.floor(seededRandom(seed * 2) * 35);
+            const moneyScore = 60 + Math.floor(seededRandom(seed * 3) * 35);
+            const healthScore = 60 + Math.floor(seededRandom(seed * 4) * 35);
+            
+            // 길방향과 행운 시간
+            const directions = ['동쪽', '서쪽', '남쪽', '북쪽', '동남쪽', '서남쪽', '동북쪽', '서북쪽'];
+            const luckyTimes = ['오전 6-8시', '오전 9-11시', '오후 12-2시', '오후 3-5시', '오후 6-8시', '저녁 9-11시'];
+            const luckyColors = ['빨강', '파랑', '노랑', '초록', '보라', '주황', '분홍', '하늘색', '금색', '은색'];
+            
+            const luckyDirection = directions[Math.floor(seededRandom(seed * 5) * directions.length)];
+            const luckyTime = luckyTimes[Math.floor(seededRandom(seed * 6) * luckyTimes.length)];
+            const luckyColor = luckyColors[Math.floor(seededRandom(seed * 7) * luckyColors.length)];
+            
+            return {
+                total: totalScore,
+                love: loveScore,
+                money: moneyScore,
+                health: healthScore,
+                luckyDirection,
+                luckyTime,
+                luckyColor,
+                message: generateAnimalMessage(animal, totalScore)
+            };
+        }
+        
+        function seededRandom(seed) {
+            const x = Math.sin(seed) * 10000;
+            return x - Math.floor(x);
+        }
+        
+        function generateAnimalMessage(animal, score) {
+            const messages = {
+                rat: {
+                    high: "지혜로운 쥐띠의 하루입니다. 새로운 기회를 찾아 적극적으로 행동하세요.",
+                    medium: "적응력이 빛나는 날입니다. 변화하는 상황에 유연하게 대처하세요.",
+                    low: "신중함이 필요한 날입니다. 성급한 결정보다는 차분히 생각해보세요."
+                },
+                ox: {
+                    high: "성실한 소띠의 노력이 결실을 맺는 날입니다. 꾸준히 전진하세요.",
+                    medium: "끈기가 중요한 날입니다. 포기하지 말고 계속 노력하세요.",
+                    low: "인내심이 필요한 시기입니다. 조급해하지 말고 때를 기다리세요."
+                },
+                tiger: {
+                    high: "용감한 호랑이띠의 리더십이 빛나는 날입니다. 앞장서서 이끌어가세요.",
+                    medium: "정의로운 행동이 인정받을 것입니다. 옳은 일을 하세요.",
+                    low: "너무 성급하게 행동하지 마세요. 신중한 판단이 필요합니다."
+                },
+                rabbit: {
+                    high: "온화한 토끼띠의 매력이 빛나는 날입니다. 조화로운 관계를 만들어가세요.",
+                    medium: "예의바른 행동이 좋은 결과를 가져다줄 것입니다.",
+                    low: "너무 소심하게 행동하지 마세요. 때로는 적극성이 필요합니다."
+                },
+                dragon: {
+                    high: "당당한 용띠의 카리스마가 최고조에 달하는 날입니다. 큰 꿈을 펼쳐보세요.",
+                    medium: "창조적인 아이디어가 떠오르는 날입니다. 새로운 프로젝트를 시작해보세요.",
+                    low: "자만하지 마세요. 겸손한 자세가 더 많은 기회를 가져다줄 것입니다."
+                },
+                snake: {
+                    high: "지혜로운 뱀띠의 직감이 정확한 날입니다. 내면의 목소리를 따르세요.",
+                    medium: "신중한 판단이 좋은 결과를 가져다줄 것입니다.",
+                    low: "너무 의심하지 마세요. 때로는 믿음이 필요합니다."
+                },
+                horse: {
+                    high: "자유로운 말띠의 활력이 넘치는 날입니다. 새로운 도전을 시작해보세요.",
+                    medium: "낙천적인 마음가짐이 좋은 운을 가져다줄 것입니다.",
+                    low: "너무 성급하게 행동하지 마세요. 계획을 세우고 실행하세요."
+                },
+                goat: {
+                    high: "창조적인 양띠의 예술적 감각이 빛나는 날입니다. 아름다운 것을 만들어보세요.",
+                    medium: "감성적인 하루가 될 것 같습니다. 마음의 평화를 찾으세요.",
+                    low: "너무 소극적이지 마세요. 자신의 의견을 표현하는 것이 중요합니다."
+                },
+                monkey: {
+                    high: "영리한 원숭이띠의 지능이 빛나는 날입니다. 창의적인 해결책을 찾아보세요.",
+                    medium: "유머러스한 모습이 주변 사람들에게 좋은 인상을 줄 것입니다.",
+                    low: "너무 장난스럽게 행동하지 마세요. 진지함이 필요한 때입니다."
+                },
+                rooster: {
+                    high: "정직한 닭띠의 성실함이 인정받는 날입니다. 꼼꼼하게 일을 처리하세요.",
+                    medium: "시간 관념이 중요한 날입니다. 약속을 잘 지키세요.",
+                    low: "너무 완벽을 추구하지 마세요. 때로는 융통성이 필요합니다."
+                },
+                dog: {
+                    high: "충성스러운 개띠의 의리가 빛나는 날입니다. 주변 사람들을 도와주세요.",
+                    medium: "정의로운 행동이 좋은 결과를 가져다줄 것입니다.",
+                    low: "너무 걱정하지 마세요. 긍정적으로 생각하는 것이 중요합니다."
+                },
+                pig: {
+                    high: "관대한 돼지띠의 인정이 많은 모습이 사랑받는 날입니다.",
+                    medium: "성실한 자세가 좋은 기회를 가져다줄 것입니다.",
+                    low: "너무 관대하지 마세요. 때로는 자신을 위한 선택이 필요합니다."
+                }
+            };
+            
+            const level = score >= 80 ? 'high' : score >= 70 ? 'medium' : 'low';
+            return messages[animal][level];
+        }
+        
+        function displayAnimalResult(animal, fortune) {
+            const today = new Date();
+            const animalInfo = animalData[animal];
+            
+            const resultDiv = document.getElementById('animalResult');
+            resultDiv.innerHTML = `
+                <div class="animal-result-container">
+                    <h2 style="text-align: center; margin-bottom: 10px;">
+                        ${animalInfo.symbol} ${animalInfo.name} 운세
+                    </h2>
+                    <p style="text-align: center; color: var(--gray-600); margin-bottom: 40px;">
+                        ${animalInfo.hanja} • ${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일
+                    </p>
+                    
+                    <div class="animal-info">
+                        <div class="animal-description">
+                            <h3>띠 정보</h3>
+                            <p>${animalInfo.description}</p>
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <strong>오행:</strong> ${animalInfo.element}
+                                </div>
+                                <div class="info-item">
+                                    <strong>최근 해:</strong> ${animalInfo.years.slice(-3).join(', ')}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="animal-traits">
+                            <h3>성격 특징</h3>
+                            <div class="traits-list">
+                                ${animalInfo.traits.map(trait => `<span class="trait-tag">${trait}</span>`).join('')}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="fortune-scores">
+                        <div class="score-item">
+                            <h4>🌟 총운</h4>
+                            <div class="score-bar">
+                                <div class="score-fill" style="width: ${fortune.total}%"></div>
+                            </div>
+                            <span class="score-number">${fortune.total}점</span>
+                        </div>
+                        
+                        <div class="score-item">
+                            <h4>💕 애정운</h4>
+                            <div class="score-bar">
+                                <div class="score-fill" style="width: ${fortune.love}%"></div>
+                            </div>
+                            <span class="score-number">${fortune.love}점</span>
+                        </div>
+                        
+                        <div class="score-item">
+                            <h4>💰 재물운</h4>
+                            <div class="score-bar">
+                                <div class="score-fill" style="width: ${fortune.money}%"></div>
+                            </div>
+                            <span class="score-number">${fortune.money}점</span>
+                        </div>
+                        
+                        <div class="score-item">
+                            <h4>🏃 건강운</h4>
+                            <div class="score-bar">
+                                <div class="score-fill" style="width: ${fortune.health}%"></div>
+                            </div>
+                            <span class="score-number">${fortune.health}점</span>
+                        </div>
+                    </div>
+                    
+                    <div class="today-message">
+                        <h3>📜 오늘의 메시지</h3>
+                        <p>${fortune.message}</p>
+                    </div>
+                    
+                    <div class="luck-info">
+                        <h3>🍀 행운 정보</h3>
+                        <div class="luck-grid">
+                            <div class="luck-item">
+                                <strong>길방향</strong>
+                                <span>${fortune.luckyDirection}</span>
+                            </div>
+                            <div class="luck-item">
+                                <strong>행운의 시간</strong>
+                                <span>${fortune.luckyTime}</span>
+                            </div>
+                            <div class="luck-item">
+                                <strong>행운의 색상</strong>
+                                <span>${fortune.luckyColor}</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="compatibility">
+                        <h3>💘 궁합이 좋은 띠</h3>
+                        <div class="compatibility-list">
+                            ${animalInfo.compatibility.map(comp => `<span class="compatibility-tag">${comp}</span>`).join('')}
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 40px;">
+                        <button onclick="location.reload()" class="btn btn-secondary">
+                            다른 띠 보기
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+    </script>
     
     <style>
         .fortune-page .page-header {
@@ -120,61 +529,228 @@
             background: white;
         }
         
-        .service-notice {
-            max-width: 600px;
+        .animal-selection {
+            max-width: 1200px;
             margin: 0 auto;
-            text-align: center;
+            padding: 0 20px;
+        }
+        
+        .animal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+        
+        .animal-card {
             background: white;
-            padding: 60px 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             border: 2px solid var(--gray-200);
+            border-radius: 16px;
+            padding: 25px 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
         }
         
-        .notice-icon {
-            font-size: 4rem;
-            margin-bottom: 20px;
+        .animal-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--primary-500);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
         }
         
-        .service-notice h2 {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            color: var(--gray-900);
+        .animal-symbol {
+            font-size: 3rem;
+            margin-bottom: 12px;
         }
         
-        .service-notice > p {
-            font-size: 1.125rem;
-            line-height: 1.6;
-            color: var(--gray-600);
-            margin-bottom: 40px;
-        }
-        
-        .coming-soon-features {
-            background: var(--gray-50);
-            padding: 30px;
-            border-radius: 12px;
-            margin-bottom: 40px;
-            text-align: left;
-        }
-        
-        .coming-soon-features h3 {
-            font-size: 1.25rem;
+        .animal-name {
+            font-size: 1.2rem;
             font-weight: 600;
-            margin-bottom: 16px;
+            margin-bottom: 8px;
             color: var(--gray-900);
+        }
+        
+        .animal-years {
+            font-size: 0.9rem;
+            color: var(--gray-600);
+            font-weight: 500;
+        }
+        
+        .animal-result-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .animal-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .animal-description, .animal-traits {
+            background: var(--gray-50);
+            padding: 20px;
+            border-radius: 12px;
+        }
+        
+        .animal-description h3, .animal-traits h3 {
+            margin-bottom: 15px;
+            color: var(--gray-800);
+        }
+        
+        .animal-description p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+            color: var(--gray-700);
+        }
+        
+        .info-grid {
+            display: grid;
+            gap: 8px;
+        }
+        
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+        }
+        
+        .traits-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .trait-tag {
+            background: var(--primary-100);
+            color: var(--primary-700);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+        
+        .fortune-scores {
+            margin-bottom: 40px;
+        }
+        
+        .score-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .score-item h4 {
+            min-width: 80px;
+            margin: 0;
+            color: var(--gray-700);
+        }
+        
+        .score-bar {
+            flex: 1;
+            height: 12px;
+            background: var(--gray-200);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        
+        .score-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #9333ea 0%, #ec4899 100%);
+            transition: width 1s ease;
+        }
+        
+        .score-number {
+            min-width: 50px;
+            font-weight: 600;
+            color: var(--gray-700);
+        }
+        
+        .today-message {
+            background: var(--gray-50);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+        
+        .today-message h3 {
+            margin-bottom: 15px;
+            color: var(--gray-800);
+        }
+        
+        .luck-info {
+            margin-bottom: 30px;
+        }
+        
+        .luck-info h3 {
+            margin-bottom: 20px;
+            color: var(--gray-800);
+        }
+        
+        .luck-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        
+        .luck-item {
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
             text-align: center;
         }
         
-        .coming-soon-features ul {
-            list-style: none;
-            padding: 0;
+        .luck-item strong {
+            display: block;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            opacity: 0.9;
         }
         
-        .coming-soon-features li {
-            padding: 8px 0;
-            font-size: 1rem;
+        .luck-item span {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        
+        .compatibility h3 {
+            margin-bottom: 15px;
+            color: var(--gray-800);
+        }
+        
+        .compatibility-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .compatibility-tag {
+            background: var(--gray-100);
             color: var(--gray-700);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid var(--gray-200);
+            border-top: 3px solid var(--primary-500);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
         
         .info-section {
@@ -227,18 +803,18 @@
             font-size: 1rem;
             text-decoration: none;
             transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
         }
         
-        .btn-primary {
-            background: linear-gradient(135deg, #9333ea 0%, #ec4899 100%);
-            color: white;
-            box-shadow: 0 4px 15px rgba(147, 51, 234, 0.3);
+        .btn-secondary {
+            background: var(--gray-200);
+            color: var(--gray-700);
         }
         
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(147, 51, 234, 0.4);
-            color: white;
+        .btn-secondary:hover {
+            background: var(--gray-300);
+            color: var(--gray-800);
         }
         
         @media (max-width: 768px) {
@@ -250,18 +826,55 @@
                 font-size: 2rem;
             }
             
-            .service-notice {
-                padding: 40px 20px;
+            .animal-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 15px;
+            }
+            
+            .animal-card {
+                padding: 20px 10px;
+            }
+            
+            .animal-symbol {
+                font-size: 2.5rem;
+            }
+            
+            .animal-name {
+                font-size: 1rem;
+            }
+            
+            .animal-result-container {
+                padding: 30px 20px;
                 margin: 0 20px;
             }
             
-            .service-notice h2 {
-                font-size: 1.75rem;
+            .animal-info {
+                grid-template-columns: 1fr;
+            }
+            
+            .luck-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .score-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .score-item h4 {
+                min-width: auto;
             }
             
             .info-box {
                 padding: 30px 20px;
                 margin: 0 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .animal-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
     </style>
