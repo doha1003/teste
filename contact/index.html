@@ -27,460 +27,68 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
+    <!-- External CSS -->
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/pages/contact.css">
+    
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
-    
-    <style>
-        /* CSS 변수 정의 */
-        :root {
-            --primary-color: #6366f1;
-            --secondary-color: #8b5cf6;
-            --accent-color: #f59e0b;
-            --success-color: #10b981;
-            --error-color: #ef4444;
-            
-            --gray-50: #f9fafb;
-            --gray-100: #f3f4f6;
-            --gray-200: #e5e7eb;
-            --gray-300: #d1d5db;
-            --gray-400: #9ca3af;
-            --gray-500: #6b7280;
-            --gray-600: #4b5563;
-            --gray-700: #374151;
-            --gray-800: #1f2937;
-            --gray-900: #111827;
-            
-            --gradient-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-            --gradient-warm: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
-            --gradient-cool: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
-            
-            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
-            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
-            --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
-        }
-        
-        /* 초기화 및 기본 스타일 */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: var(--gray-50);
-            color: var(--gray-900);
-            line-height: 1.6;
-        }
-        
-        /* 네비게이션 바 */
-        .navbar {
-            background: white;
-            box-shadow: var(--shadow-md);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-        
-        .navbar-container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 64px;
-        }
-        
-        .logo {
-            font-size: 24px;
-            font-weight: 700;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-decoration: none;
-        }
-        
-        .nav-menu {
-            display: flex;
-            gap: 32px;
-            list-style: none;
-        }
-        
-        .nav-link {
-            color: var(--gray-600);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-        
-        .nav-link:hover {
-            color: var(--primary-color);
-        }
-        
-        /* 헤더 섹션 */
-        .header {
-            background: white;
-            padding: 80px 20px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at 20% 80%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
-            animation: float 20s ease-in-out infinite;
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            33% { transform: translate(30px, -30px) rotate(120deg); }
-            66% { transform: translate(-20px, 20px) rotate(240deg); }
-        }
-        
-        .header-content {
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .header-title {
-            font-size: 48px;
-            font-weight: 700;
-            margin-bottom: 16px;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .header-subtitle {
-            font-size: 20px;
-            color: var(--gray-600);
-            margin-bottom: 32px;
-        }
-        
-        /* 컨테이너 */
-        .container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 80px 20px;
-        }
-        
-        /* 섹션 카드 */
-        .section {
-            background: white;
-            border-radius: 16px;
-            padding: 48px;
-            box-shadow: var(--shadow-md);
-            margin-bottom: 32px;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: var(--gradient-primary);
-            transform: scaleX(0);
-            transition: transform 0.3s;
-            transform-origin: left;
-        }
-        
-        .section:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-xl);
-        }
-        
-        .section:hover::before {
-            transform: scaleX(1);
-        }
-        
-        .section-title {
-            font-size: 36px;
-            font-weight: 700;
-            margin-bottom: 24px;
-            color: var(--gray-900);
-        }
-        
-        /* 컨택트 그리드 */
-        .contact-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 32px;
-            margin-bottom: 40px;
-        }
-        
-        /* 컨택트 정보 */
-        .info-item {
-            margin-bottom: 32px;
-            display: flex;
-            align-items: flex-start;
-            gap: 16px;
-        }
-        
-        .info-icon {
-            width: 64px;
-            height: 64px;
-            background: var(--gradient-primary);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 32px;
-            flex-shrink: 0;
-        }
-        
-        .info-content h3 {
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: var(--gray-900);
-        }
-        
-        .info-content p {
-            color: var(--gray-600);
-            line-height: 1.6;
-            margin-bottom: 8px;
-        }
-        
-        .info-content a {
-            color: var(--primary-color);
-            text-decoration: none;
-            font-weight: 500;
-        }
-        
-        .info-content a:hover {
-            text-decoration: underline;
-        }
-        
-        /* 문의 폼 */
-        .form-group {
-            margin-bottom: 24px;
-        }
-        
-        .form-label {
-            display: block;
-            font-size: 16px;
-            font-weight: 500;
-            color: var(--gray-700);
-            margin-bottom: 8px;
-        }
-        
-        .form-input,
-        .form-textarea {
-            width: 100%;
-            padding: 12px 16px;
-            border: 2px solid var(--gray-200);
-            border-radius: 8px;
-            font-size: 16px;
-            font-family: inherit;
-            transition: all 0.2s;
-        }
-        
-        .form-input:focus,
-        .form-textarea:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-        }
-        
-        .form-textarea {
-            min-height: 150px;
-            resize: vertical;
-        }
-        
-        .btn {
-            padding: 12px 32px;
-            border-radius: 8px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        
-        .btn-primary {
-            background: var(--gradient-primary);
-            color: white;
-            box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3);
-            width: 100%;
-            justify-content: center;
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
-        }
-        
-        .form-note {
-            margin-top: 16px;
-            font-size: 14px;
-            color: var(--gray-500);
-            text-align: center;
-        }
-        
-        /* FAQ 섹션 */
-        .faq-item {
-            border-bottom: 1px solid var(--gray-200);
-            padding: 24px 0;
-        }
-        
-        .faq-item:last-child {
-            border-bottom: none;
-        }
-        
-        .faq-question {
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--gray-800);
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: color 0.2s;
-        }
-        
-        .faq-question:hover {
-            color: var(--primary-color);
-        }
-        
-        .faq-arrow {
-            transition: transform 0.3s;
-            color: var(--gray-500);
-        }
-        
-        .faq-item.active .faq-arrow {
-            transform: rotate(180deg);
-            color: var(--primary-color);
-        }
-        
-        .faq-answer {
-            margin-top: 16px;
-            color: var(--gray-600);
-            line-height: 1.7;
-            display: none;
-            padding-left: 8px;
-            border-left: 4px solid var(--gray-200);
-        }
-        
-        .faq-item.active .faq-answer {
-            display: block;
-            animation: fadeIn 0.3s ease-in;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        /* 광고 컨테이너 */
-        .ad-container {
-            margin: 40px 0;
-            text-align: center;
-        }
-        
-        .ad-label {
-            font-size: 12px;
-            color: var(--gray-500);
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        /* 반응형 */
-        @media (max-width: 768px) {
-            .header-title {
-                font-size: 36px;
-            }
-            
-            .contact-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .section {
-                padding: 32px 24px;
-            }
-            
-            .nav-menu {
-                display: none;
-            }
-        }
-    </style>
 </head>
-<body>
+<body class="contact-page">
     <!-- 네비게이션 바 -->
-    <nav class="navbar">
-        <div class="navbar-container">
-            <a href="/" class="logo">doha.kr</a>
-            <ul class="nav-menu">
-                <li><a href="/" class="nav-link">홈</a></li>
-                <li><a href="/tests/" class="nav-link">심리테스트</a></li>
-                <li><a href="/fortune/" class="nav-link">운세</a></li>
-                <li><a href="/tools/" class="nav-link">실용도구</a></li>
-                <li><a href="/contact/" class="nav-link">문의</a></li>
-                <li><a href="/about/" class="nav-link">소개</a></li>
+    <nav class="contact-navbar">
+        <div class="contact-navbar-container">
+            <a href="/" class="contact-logo">doha.kr</a>
+            <ul class="contact-nav-menu">
+                <li><a href="/" class="contact-nav-link">홈</a></li>
+                <li><a href="/tests/" class="contact-nav-link">심리테스트</a></li>
+                <li><a href="/fortune/" class="contact-nav-link">운세</a></li>
+                <li><a href="/tools/" class="contact-nav-link">실용도구</a></li>
+                <li><a href="/contact/" class="contact-nav-link">문의</a></li>
+                <li><a href="/about/" class="contact-nav-link">소개</a></li>
             </ul>
         </div>
     </nav>
     
     <!-- 헤더 섹션 -->
-    <header class="header">
-        <div class="header-content">
-            <h1 class="header-title">문의하기</h1>
-            <p class="header-subtitle">
+    <header class="contact-header">
+        <div class="contact-header-content">
+            <h1 class="contact-header-title">문의하기</h1>
+            <p class="contact-header-subtitle">
                 궁금한 점이나 제안사항이 있으신가요? 언제든지 연락주세요!
             </p>
         </div>
     </header>
     
     <!-- 메인 컨텐츠 -->
-    <div class="container">
+    <div class="contact-container">
         <!-- 컨택트 그리드 -->
         <div class="contact-grid">
             <!-- 컨택트 정보 -->
-            <div class="section">
-                <h2 class="section-title">연락처 정보</h2>
+            <div class="contact-section">
+                <h2 class="contact-section-title">연락처 정보</h2>
                 
-                <div class="info-item">
-                    <div class="info-icon">📧</div>
-                    <div class="info-content">
+                <div class="contact-info-item">
+                    <div class="contact-info-icon">📧</div>
+                    <div class="contact-info-content">
                         <h3>이메일</h3>
                         <p><a href="mailto:youtubdoha@gmail.com">youtubdoha@gmail.com</a></p>
                         <p>평일 기준 24시간 이내 답변드립니다.</p>
                     </div>
                 </div>
                 
-                <div class="info-item">
-                    <div class="info-icon">⏰</div>
-                    <div class="info-content">
+                <div class="contact-info-item">
+                    <div class="contact-info-icon">⏰</div>
+                    <div class="contact-info-content">
                         <h3>운영 시간</h3>
                         <p>평일: 오전 10시 - 오후 6시</p>
                         <p>주말 및 공휴일: 휴무</p>
                     </div>
                 </div>
                 
-                <div class="info-item">
-                    <div class="info-icon">💬</div>
-                    <div class="info-content">
+                <div class="contact-info-item">
+                    <div class="contact-info-icon">💬</div>
+                    <div class="contact-info-content">
                         <h3>문의 유형</h3>
                         <p>• 서비스 이용 문의</p>
                         <p>• 기술적 문제 보고</p>
@@ -491,40 +99,40 @@
             </div>
             
             <!-- 문의 폼 -->
-            <div class="section">
-                <h2 class="section-title">이메일 문의</h2>
+            <div class="contact-section">
+                <h2 class="contact-section-title">이메일 문의</h2>
                 <form id="contactForm">
-                    <div class="form-group">
-                        <label class="form-label" for="name">이름 *</label>
-                        <input type="text" id="name" class="form-input" required>
+                    <div class="contact-form-group">
+                        <label class="contact-form-label" for="name">이름 *</label>
+                        <input type="text" id="name" class="contact-form-input" required>
                     </div>
                     
-                    <div class="form-group">
-                        <label class="form-label" for="email">이메일 *</label>
-                        <input type="email" id="email" class="form-input" required>
+                    <div class="contact-form-group">
+                        <label class="contact-form-label" for="email">이메일 *</label>
+                        <input type="email" id="email" class="contact-form-input" required>
                     </div>
                     
-                    <div class="form-group">
-                        <label class="form-label" for="subject">문의 제목 *</label>
-                        <input type="text" id="subject" class="form-input" required>
+                    <div class="contact-form-group">
+                        <label class="contact-form-label" for="subject">문의 제목 *</label>
+                        <input type="text" id="subject" class="contact-form-input" required>
                     </div>
                     
-                    <div class="form-group">
-                        <label class="form-label" for="message">문의 내용 *</label>
-                        <textarea id="message" class="form-textarea" required placeholder="자세한 문의 내용을 입력해주세요..."></textarea>
+                    <div class="contact-form-group">
+                        <label class="contact-form-label" for="message">문의 내용 *</label>
+                        <textarea id="message" class="contact-form-textarea" required placeholder="자세한 문의 내용을 입력해주세요..."></textarea>
                     </div>
                     
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="contact-btn contact-btn-primary">
                         <span>📧</span> 문의 전송하기
                     </button>
-                    <p class="form-note">* 모든 항목은 필수 입력사항입니다.</p>
+                    <p class="contact-form-note">* 모든 항목은 필수 입력사항입니다.</p>
                 </form>
             </div>
         </div>
         
         <!-- 광고 영역 -->
-        <div class="ad-container">
-            <div class="ad-label">광고</div>
+        <div class="contact-ad-container">
+            <div class="contact-ad-label">광고</div>
             <ins class="adsbygoogle"
                  style="display:block"
                  data-ad-client="ca-pub-7905640648499222"
@@ -534,60 +142,60 @@
         </div>
         
         <!-- FAQ 섹션 -->
-        <div class="section">
-            <h2 class="section-title">자주 묻는 질문</h2>
+        <div class="contact-section">
+            <h2 class="contact-section-title">자주 묻는 질문</h2>
             
-            <div class="faq-item">
-                <div class="faq-question">
+            <div class="contact-faq-item">
+                <div class="contact-faq-question">
                     doha.kr은 무료로 이용할 수 있나요?
-                    <span class="faq-arrow">▼</span>
+                    <span class="contact-faq-arrow">▼</span>
                 </div>
-                <div class="faq-answer">
+                <div class="contact-faq-answer">
                     네, doha.kr의 모든 서비스는 완전 무료입니다. 회원가입도 필요없이 
                     모든 심리테스트와 실용도구를 자유롭게 이용하실 수 있습니다.
                 </div>
             </div>
             
-            <div class="faq-item">
-                <div class="faq-question">
+            <div class="contact-faq-item">
+                <div class="contact-faq-question">
                     심리테스트 결과는 얼마나 정확한가요?
-                    <span class="faq-arrow">▼</span>
+                    <span class="contact-faq-arrow">▼</span>
                 </div>
-                <div class="faq-answer">
+                <div class="contact-faq-answer">
                     저희 심리테스트는 재미와 자기이해를 목적으로 제작되었습니다. 
                     전문적인 심리 상담이나 진단을 대체할 수 없으며, 심각한 문제가 있으신 경우 
                     전문가의 도움을 받으시기를 권장합니다.
                 </div>
             </div>
             
-            <div class="faq-item">
-                <div class="faq-question">
+            <div class="contact-faq-item">
+                <div class="contact-faq-question">
                     제휴나 광고 문의는 어떻게 하나요?
-                    <span class="faq-arrow">▼</span>
+                    <span class="contact-faq-arrow">▼</span>
                 </div>
-                <div class="faq-answer">
+                <div class="contact-faq-answer">
                     제휴 및 광고 관련 문의는 youtubdoha@gmail.com으로 
                     자세한 제안서와 함께 보내주시면 검토 후 연락드리겠습니다.
                 </div>
             </div>
             
-            <div class="faq-item">
-                <div class="faq-question">
+            <div class="contact-faq-item">
+                <div class="contact-faq-question">
                     새로운 기능이나 테스트를 제안하고 싶어요.
-                    <span class="faq-arrow">▼</span>
+                    <span class="contact-faq-arrow">▼</span>
                 </div>
-                <div class="faq-answer">
+                <div class="contact-faq-answer">
                     사용자분들의 의견을 언제나 환영합니다! 위의 문의 폼이나 이메일로 
                     아이디어를 보내주시면 적극적으로 검토하여 반영하도록 노력하겠습니다.
                 </div>
             </div>
             
-            <div class="faq-item">
-                <div class="faq-question">
+            <div class="contact-faq-item">
+                <div class="contact-faq-question">
                     개인정보는 어떻게 보호되나요?
-                    <span class="faq-arrow">▼</span>
+                    <span class="contact-faq-arrow">▼</span>
                 </div>
-                <div class="faq-answer">
+                <div class="contact-faq-answer">
                     저희는 최소한의 개인정보만 수집하며, 수집된 정보는 안전하게 보호됩니다. 
                     자세한 내용은 <a href="/privacy/" style="color: var(--primary-color); text-decoration: underline;">개인정보처리방침</a>을 참고해주세요.
                 </div>
@@ -603,13 +211,13 @@
     
     <script>
         // FAQ 토글
-        document.querySelectorAll('.faq-question').forEach(question => {
+        document.querySelectorAll('.contact-faq-question').forEach(question => {
             question.addEventListener('click', () => {
                 const faqItem = question.parentElement;
                 faqItem.classList.toggle('active');
                 
                 // 다른 FAQ 항목 닫기
-                document.querySelectorAll('.faq-item').forEach(item => {
+                document.querySelectorAll('.contact-faq-item').forEach(item => {
                     if (item !== faqItem) {
                         item.classList.remove('active');
                     }
