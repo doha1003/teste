@@ -1,81 +1,51 @@
-# doha.kr - 공식 웹사이트
+# doha.kr - 일상을 더 재미있게 만드는 공간
 
-🌟 일상을 더 재미있게 만드는 공간
+## 프로젝트 설정
 
-## 📁 파일 구조 정리 (2025-07-04)
+### Vercel 배포 설정
 
-### ✅ 현재 사용 중인 메인 파일
-- **`index.html`** - 메인 홈페이지 (🎯 이것만 사용)
-- `_includes/` - 공통 컴포넌트 (네비게이션, 푸터)
-- `css/` - 모듈화된 스타일시트
-- `js/` - JavaScript 파일들
-- `tests/` - 심리테스트 페이지들
-- `tools/` - 실용도구 페이지들
+1. [Vercel](https://vercel.com)에 GitHub 계정으로 로그인
+2. New Project → Import Git Repository → doha1003/teste 선택
+3. Environment Variables 설정:
+   - `GEMINI_API_KEY`: Google Gemini API 키 입력
+4. Deploy 클릭
 
-### ❌ 정리 완료
-- ~~`mbti-test.html`~~ - 잘못된 위치에서 삭제됨
-- ~~`about.html`~~ - 잘못된 위치에서 삭제됨  
-- ~~`contact.html`~~ - 잘못된 위치에서 삭제됨
-- ~~`privacy.html`~~ - 잘못된 위치에서 삭제됨
-- ~~`terms.html`~~ - 잘못된 위치에서 삭제됨
-- ~~`result-detail.html`~~ - 잘못된 위치에서 삭제됨
-- ~~허위 통계 데이터~~ - 모든 페이지에서 제거됨
+### 환경 변수 설정 방법
 
-### 🎯 올바른 파일 구조
-- `/about/index.html` - 소개 페이지
-- `/contact/index.html` - 문의 페이지  
-- `/privacy/index.html` - 개인정보처리방침
-- `/terms/index.html` - 이용약관
-- `/tests/teto-egen/index.html` - 테토-에겐 테스트
-- `/tests/teto-egen/start.html` - 테스트 실행 페이지
-- `/tools/text-counter.html` - 글자수 세기 도구
+1. Vercel 대시보드 → Settings → Environment Variables
+2. 다음 환경 변수 추가:
+   ```
+   GEMINI_API_KEY=your-actual-gemini-api-key-here
+   ```
+3. 모든 환경(Production, Preview, Development)에 적용
+4. 재배포 실행
 
-### 📦 백업 위치
-모든 이전 파일들은 `backup/` 폴더에 안전하게 보관되어 있습니다.
+### Google Gemini API 키 발급
 
----
+1. [Google AI Studio](https://makersuite.google.com/app/apikey) 방문
+2. "Create API Key" 클릭
+3. 발급된 API 키를 Vercel 환경 변수에 설정
 
-## 🚀 주요 기능
+## 기능
 
-### 🧠 심리테스트
-- **테토-에겐 성격 유형 테스트** - 재미있는 성격 분석 테스트
-- MBTI 정밀 검사 (준비중)
+- 심리테스트 (MBTI, 테토-에겐, Love DNA)
+- 실용도구 (글자수 세기, BMI 계산기)
+- AI 운세 (일일운세, 사주, 타로)
 
-### 🛠️ 실용도구  
-- **글자수 세기** - 실시간 텍스트 분석
-- 계산기 (준비중)
-- 연봉 계산기 (준비중)
-- 단위 변환기 (준비중)
+## 기술 스택
 
----
+- Frontend: HTML, CSS, JavaScript
+- AI: Google Gemini API
+- Hosting: Vercel (서버리스 함수 포함)
+- Analytics: Google AdSense
 
-## 📊 2025년 7월 업데이트 내용
+## 로컬 개발
 
-### ✨ 새로워진 점
-1. **통합 컴포넌트 시스템** - 네비게이션과 푸터 통일
-2. **CSS 모듈화** - base.css, layout.css, components.css로 분리
-3. **반응형 디자인** - 모바일 최적화
-4. **광고 최적화** - AdSense 배치 개선
-5. **날짜 업데이트** - 모든 날짜를 2025년 7월로 정정
-6. **허위 정보 제거** - 모든 가짜 통계 및 과학적 근거 주장 삭제
-7. **파일 구조 정리** - 잘못된 위치의 HTML 파일들 삭제
+```bash
+npm install
+vercel dev
+```
 
-### 🔧 기술적 개선
-- 동적 컴포넌트 로딩
-- 모바일 메뉴 추가
-- FAQ 토글 기능
-- 스크롤 효과
-- SEO 최적화
-- CSS 임포트 구조 정리
+## 라이선스
 
----
-
-## 📱 브라우저 지원
-- Chrome (권장)
-- Firefox  
-- Safari
-- Edge
-
-## 📞 문의
-- 웹사이트: https://doha.kr
-- 이메일: contact@doha.kr
+© 2025 doha.kr. All rights reserved.
