@@ -138,7 +138,7 @@
             align-items: center;
             gap: 12px;
             background: white;
-            color: #ff6b9d;
+            color: #ff6b9d !important;
             padding: 18px 40px;
             border-radius: 60px;
             font-size: 1.1em;
@@ -152,6 +152,8 @@
         .love-cta:hover {
             transform: translateY(-3px);
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            color: #e91e63 !important;
+            text-decoration: none;
         }
 
         .love-cta span {
@@ -246,7 +248,7 @@
             line-height: 1.6;
         }
 
-        /* DNA 시스템 설명 */
+        /* DNA 시스템 설명 - 5개 한 줄로 수정 */
         .love-dna-system {
             background: #f8f9ff;
             padding: 80px 20px;
@@ -254,7 +256,7 @@
 
         .love-dna-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-template-columns: repeat(5, 1fr);
             gap: 24px;
             max-width: 1200px;
             margin: 0 auto;
@@ -297,7 +299,7 @@
             line-height: 1.5;
         }
 
-        /* CTA 섹션 */
+        /* CTA 섹션 - 색상 문제 해결 */
         .love-cta-section {
             background: linear-gradient(135deg, #2d3748, #1a202c);
             color: white;
@@ -309,12 +311,14 @@
             font-size: 2.5em;
             font-weight: 800;
             margin-bottom: 16px;
+            color: white !important;
         }
 
         .love-cta-subtitle {
             font-size: 1.2em;
             opacity: 0.9;
             margin-bottom: 40px;
+            color: white !important;
         }
 
         .love-cta-buttons {
@@ -326,7 +330,7 @@
 
         .love-cta-primary {
             background: linear-gradient(135deg, #ff6b9d, #feca57);
-            color: white;
+            color: white !important;
             padding: 16px 40px;
             border-radius: 60px;
             font-size: 1.1em;
@@ -339,11 +343,13 @@
         .love-cta-primary:hover {
             transform: translateY(-3px);
             box-shadow: 0 15px 40px rgba(255, 107, 157, 0.4);
+            color: white !important;
+            text-decoration: none;
         }
 
         .love-cta-secondary {
             background: transparent;
-            color: white;
+            color: white !important;
             padding: 16px 40px;
             border: 2px solid rgba(255, 255, 255, 0.3);
             border-radius: 60px;
@@ -356,6 +362,8 @@
         .love-cta-secondary:hover {
             background: rgba(255, 255, 255, 0.1);
             border-color: rgba(255, 255, 255, 0.5);
+            color: white !important;
+            text-decoration: none;
         }
 
         /* 애니메이션 */
@@ -459,6 +467,17 @@
                 padding: 60px 20px;
             }
 
+            /* 모바일에서는 5축을 3+2로 배치 */
+            .love-dna-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 16px;
+            }
+
+            .love-dna-grid .love-dna-item:nth-child(4),
+            .love-dna-grid .love-dna-item:nth-child(5) {
+                grid-column: span 1;
+            }
+
             .love-cta-section {
                 padding: 60px 20px;
             }
@@ -477,6 +496,17 @@
                 width: 100%;
                 max-width: 300px;
                 text-align: center;
+            }
+        }
+
+        @media (max-width: 600px) {
+            /* 더 작은 화면에서는 2+2+1로 배치 */
+            .love-dna-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .love-dna-grid .love-dna-item:nth-child(5) {
+                grid-column: span 2;
             }
         }
 
