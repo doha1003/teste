@@ -1,0 +1,197 @@
+/* Service Highlights Section - Unified Styles */
+/* 이 파일이 하이라이트 섹션의 모든 스타일을 통합 관리합니다 */
+
+.service-highlights {
+    padding: 80px 0;
+    background: #f8fafc;
+    position: relative;
+    overflow: hidden;
+}
+
+/* 배경 장식 효과 */
+.service-highlights::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    right: -100px;
+    width: 300px;
+    height: 300px;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%);
+    border-radius: 50%;
+    filter: blur(60px);
+}
+
+.highlights-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.highlight-card {
+    background: white;
+    padding: 40px 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+/* 카드 호버 효과 */
+.highlight-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #6366f1 0%, #a855f7 100%);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+}
+
+.highlight-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+}
+
+.highlight-card:hover::before {
+    transform: scaleX(1);
+}
+
+/* 아이콘 스타일 */
+.highlight-icon {
+    font-size: 3.5rem !important;
+    margin-bottom: 20px;
+    display: inline-block;
+    line-height: 1;
+    /* 이모지를 위한 단색 적용 */
+    background: none !important;
+    -webkit-background-clip: unset !important;
+    -webkit-text-fill-color: unset !important;
+    background-clip: unset !important;
+    /* 그라디언트 색상을 참고한 단색 */
+    color: #6366f1 !important;
+    filter: drop-shadow(0 4px 8px rgba(99, 102, 241, 0.25));
+    transition: all 0.3s ease;
+}
+
+/* 각 카드별 아이콘 색상 */
+.highlight-card:nth-child(1) .highlight-icon {
+    color: #10b981 !important; /* 녹색 - 무료 */
+}
+
+.highlight-card:nth-child(2) .highlight-icon {
+    color: #f59e0b !important; /* 주황색 - 빠른 */
+}
+
+.highlight-card:nth-child(3) .highlight-icon {
+    color: #6366f1 !important; /* 파란색 - 정확한 */
+}
+
+.highlight-card:nth-child(4) .highlight-icon {
+    color: #8b5cf6 !important; /* 보라색 - 재미있는 */
+}
+
+/* 호버시 아이콘 효과 */
+.highlight-card:hover .highlight-icon {
+    transform: scale(1.1) rotate(5deg);
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.15));
+}
+
+/* 제목 스타일 */
+.highlight-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 12px;
+}
+
+/* 설명 스타일 */
+.highlight-desc {
+    font-size: 0.95rem;
+    color: #475569;
+    line-height: 1.6;
+    font-weight: 400;
+}
+
+/* 모바일 반응형 */
+@media (max-width: 768px) {
+    .service-highlights {
+        padding: 60px 0;
+    }
+    
+    .highlights-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .highlight-card {
+        padding: 30px 25px;
+    }
+    
+    .highlight-icon {
+        font-size: 3rem !important;
+    }
+    
+    .highlight-title {
+        font-size: 1.1rem;
+    }
+    
+    .highlight-desc {
+        font-size: 0.9rem;
+    }
+}
+
+/* 다크모드 지원 */
+@media (prefers-color-scheme: dark) {
+    .service-highlights {
+        background: #0f172a;
+    }
+    
+    .highlight-card {
+        background: #1e293b;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+    
+    .highlight-card:hover {
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+    
+    .highlight-title {
+        color: #f8fafc;
+    }
+    
+    .highlight-desc {
+        color: #cbd5e1;
+    }
+}
+
+/* 애니메이션 */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    opacity: 0;
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.stagger-1 { animation-delay: 0.1s; }
+.stagger-2 { animation-delay: 0.2s; }
+.stagger-3 { animation-delay: 0.3s; }
+.stagger-4 { animation-delay: 0.4s; }
