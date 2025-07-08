@@ -27,6 +27,40 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
     
     <style>
+        /* 광고 컨테이너 반응형 스타일 */
+        .ad-container {
+            max-width: 728px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #f9fafb;
+            border-radius: 16px;
+            text-align: center;
+            min-width: 320px;
+            overflow: hidden;
+        }
+        
+        @media (max-width: 768px) {
+            .ad-container {
+                padding: 15px;
+                margin: 30px 15px;
+            }
+        }
+        
+        .ad-label {
+            font-size: 12px;
+            color: #6b7280;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        /* AdSense 반응형 설정 */
+        .adsbygoogle {
+            width: 100%;
+            height: auto;
+            min-height: 90px;
+        }
+        
         /* 운세 입력 폼 스타일 */
         .fortune-container {
             max-width: 800px;
@@ -909,7 +943,10 @@
     
     <!-- AdSense initialization -->
     <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
+        // AdSense 반응형 설정을 위한 대기
+        setTimeout(() => {
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        }, 100);
     </script>
 </body>
 </html>
