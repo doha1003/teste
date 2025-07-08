@@ -38,44 +38,87 @@
         </div>
     </section>
     
-    <!-- 서비스 준비중 섹션 -->
-    <section class="service-unavailable">
+    <!-- 타로 리딩 섹션 -->
+    <section class="tarot-section">
         <div class="container">
-            <div class="unavailable-container">
-                <div class="unavailable-icon">🔮</div>
-                <h2 class="unavailable-title">AI 타로 리딩 서비스 준비 중</h2>
-                <p class="unavailable-description">
-                    더욱 정확하고 개인화된 AI 타로 해석 서비스를 준비하고 있습니다.<br>
-                    곧 출시될 예정이니 조금만 기다려 주세요!
-                </p>
-                <div class="unavailable-features">
-                    <h3>준비 중인 기능</h3>
-                    <ul>
-                        <li>✨ AI 기반 개인 맞춤형 타로 해석</li>
-                        <li>🎴 다양한 스프레드 (원카드, 쓰리카드, 켈틱크로스)</li>
-                        <li>🔮 질문별 상세한 통찰과 조언</li>
-                        <li>📱 모바일 최적화된 카드 선택 인터페이스</li>
-                    </ul>
+            <form id="tarotForm" class="tarot-form fade-in">
+                <h2 style="text-align: center; margin-bottom: 32px;">타로 리딩 시작하기</h2>
+                
+                <div class="form-group">
+                    <label for="question">질문을 입력하세요</label>
+                    <textarea 
+                        id="question" 
+                        name="question" 
+                        class="form-control" 
+                        rows="4" 
+                        required 
+                        placeholder="타로에게 묻고 싶은 질문을 구체적으로 적어주세요. 예: 현재 연애 관계가 어떻게 발전할까요?"
+                    ></textarea>
+                    <small style="color: var(--gray-600); margin-top: 4px; display: block;">
+                        구체적인 질문일수록 더 명확한 답을 얻을 수 있습니다
+                    </small>
                 </div>
-                <div class="unavailable-alternatives">
-                    <h3>다른 서비스도 이용해보세요</h3>
-                    <div class="service-links">
-                        <a href="/tests/mbti/" class="alt-service-card">
-                            <span>🎭</span>
-                            <div>
-                                <h4>MBTI 성격검사</h4>
-                                <p>나의 성격 유형 알아보기</p>
+                
+                <div class="form-group">
+                    <label>스프레드 선택</label>
+                    <div class="spread-options">
+                        <label class="radio-card">
+                            <input type="radio" name="spread" value="oneCard" required checked>
+                            <div class="radio-card-content">
+                                <span class="spread-icon">🎴</span>
+                                <span class="spread-name">원 카드</span>
+                                <span class="spread-desc">빠른 통찰</span>
                             </div>
-                        </a>
-                        <a href="/tests/love-dna/" class="alt-service-card">
-                            <span>💕</span>
-                            <div>
-                                <h4>러브 DNA 테스트</h4>
-                                <p>연애 스타일 분석하기</p>
+                        </label>
+                        
+                        <label class="radio-card">
+                            <input type="radio" name="spread" value="threeCard" required>
+                            <div class="radio-card-content">
+                                <span class="spread-icon">🎴🎴🎴</span>
+                                <span class="spread-name">쓰리 카드</span>
+                                <span class="spread-desc">과거-현재-미래</span>
                             </div>
-                        </a>
+                        </label>
+                        
+                        <label class="radio-card">
+                            <input type="radio" name="spread" value="celtic" required>
+                            <div class="radio-card-content">
+                                <span class="spread-icon">🌟</span>
+                                <span class="spread-name">켈틱 크로스</span>
+                                <span class="spread-desc">심층 분석</span>
+                            </div>
+                        </label>
                     </div>
                 </div>
+                
+                <div id="spreadDescription" class="spread-description" style="display: none;">
+                    <!-- 스프레드 설명이 여기에 표시됩니다 -->
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 24px;">
+                    🔮 타로 리딩 시작
+                </button>
+            </form>
+            
+            <!-- 타로 결과 영역 -->
+            <div id="tarotResult" class="tarot-result" style="display: none;">
+                <!-- 결과가 여기에 표시됩니다 -->
+            </div>
+        </div>
+    </section>
+    
+    <!-- 타로 안내 섹션 -->
+    <section class="info-section">
+        <div class="container">
+            <div class="info-box">
+                <h3>AI 타로 리딩 안내</h3>
+                <ul>
+                    <li>타로 카드는 현재 상황에 대한 통찰과 가이드를 제공합니다.</li>
+                    <li>질문은 구체적일수록 더 명확한 답변을 받을 수 있습니다.</li>
+                    <li>카드의 해석은 참고용이며, 최종 결정은 본인이 내리셔야 합니다.</li>
+                    <li>메이저 아르카나 22장을 사용하여 리딩을 진행합니다.</li>
+                    <li>같은 질문도 시기에 따라 다른 카드가 나올 수 있습니다.</li>
+                </ul>
             </div>
         </div>
     </section>
@@ -97,6 +140,7 @@
     
     <!-- External JavaScript -->
     <script src="/js/main.js"></script>
+    <script src="/js/tarot.js"></script>
     
     <!-- AdSense initialization -->
     <script>

@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>별자리 운세 - AI 운세 | doha.kr</title>
-    <meta name="description" content="12궁도 별자리별 오늘의 운세를 확인하세요. 양자리부터 물고기자리까지 상세한 일일 운세를 제공합니다.">
+    <title>AI 별자리 운세 | doha.kr</title>
+    <meta name="description" content="AI가 분석하는 오늘의 별자리 운세. 12개 별자리별 맞춤 운세를 확인하세요.">
     
     <!-- Open Graph -->
-    <meta property="og:title" content="별자리 운세 | doha.kr">
-    <meta property="og:description" content="12궁도 별자리별 오늘의 운세를 확인하세요. 양자리부터 물고기자리까지 상세한 일일 운세를 제공합니다.">
+    <meta property="og:title" content="AI 별자리 운세 | doha.kr">
+    <meta property="og:description" content="AI가 분석하는 오늘의 별자리 운세. 12개 별자리별 맞춤 운세를 확인하세요.">
     <meta property="og:image" content="https://doha.kr/images/og-default.png">
     <meta property="og:url" content="https://doha.kr/fortune/zodiac/">
     
@@ -31,51 +31,111 @@
     <!-- 페이지 헤더 -->
     <section class="page-header">
         <div class="container">
-            <h1 class="page-title fade-in">별자리 운세</h1>
+            <h1 class="page-title fade-in">AI 별자리 운세</h1>
             <p class="page-subtitle fade-in stagger-1">
-                12궁도 별자리별 오늘의 상세 운세
+                당신의 별자리에 맞춘 오늘의 운세를 확인하세요
             </p>
+            <div class="today-date fade-in stagger-2" id="todayDate"></div>
         </div>
     </section>
     
-    <!-- 서비스 준비중 섹션 -->
-    <section class="service-unavailable">
+    <!-- 별자리 선택 섹션 -->
+    <section class="zodiac-selection">
         <div class="container">
-            <div class="unavailable-container">
-                <div class="unavailable-icon">♈</div>
-                <h2 class="unavailable-title">별자리 운세 서비스 준비 중</h2>
-                <p class="unavailable-description">
-                    더욱 정확하고 상세한 별자리 운세 서비스를 준비하고 있습니다.<br>
-                    곧 출시될 예정이니 조금만 기다려 주세요!
-                </p>
-                <div class="unavailable-features">
-                    <h3>준비 중인 기능</h3>
-                    <ul>
-                        <li>♈ 12궁도 별자리별 상세 운세</li>
-                        <li>🌟 일일, 주간, 월간 운세 제공</li>
-                        <li>💕 연애운, 금전운, 건강운 분석</li>
-                        <li>🔮 별자리별 행운의 숫자와 색상</li>
-                    </ul>
+            <h2 style="text-align: center; margin-bottom: 32px;">별자리를 선택하세요</h2>
+            
+            <div class="zodiac-grid">
+                <div class="zodiac-card" data-zodiac="aries" onclick="showZodiacFortune('aries')">
+                    <span class="zodiac-emoji">♈</span>
+                    <span class="zodiac-name">양자리</span>
+                    <span class="zodiac-date">3/21 - 4/19</span>
                 </div>
-                <div class="unavailable-alternatives">
-                    <h3>다른 서비스도 이용해보세요</h3>
-                    <div class="service-links">
-                        <a href="/tests/love-dna/" class="alt-service-card">
-                            <span>💕</span>
-                            <div>
-                                <h4>러브 DNA 테스트</h4>
-                                <p>연애 스타일 분석하기</p>
-                            </div>
-                        </a>
-                        <a href="/tools/text-counter.html" class="alt-service-card">
-                            <span>📝</span>
-                            <div>
-                                <h4>글자수 세기</h4>
-                                <p>텍스트 글자수 확인</p>
-                            </div>
-                        </a>
-                    </div>
+                
+                <div class="zodiac-card" data-zodiac="taurus" onclick="showZodiacFortune('taurus')">
+                    <span class="zodiac-emoji">♉</span>
+                    <span class="zodiac-name">황소자리</span>
+                    <span class="zodiac-date">4/20 - 5/20</span>
                 </div>
+                
+                <div class="zodiac-card" data-zodiac="gemini" onclick="showZodiacFortune('gemini')">
+                    <span class="zodiac-emoji">♊</span>
+                    <span class="zodiac-name">쌍둥이자리</span>
+                    <span class="zodiac-date">5/21 - 6/20</span>
+                </div>
+                
+                <div class="zodiac-card" data-zodiac="cancer" onclick="showZodiacFortune('cancer')">
+                    <span class="zodiac-emoji">♋</span>
+                    <span class="zodiac-name">게자리</span>
+                    <span class="zodiac-date">6/21 - 7/22</span>
+                </div>
+                
+                <div class="zodiac-card" data-zodiac="leo" onclick="showZodiacFortune('leo')">
+                    <span class="zodiac-emoji">♌</span>
+                    <span class="zodiac-name">사자자리</span>
+                    <span class="zodiac-date">7/23 - 8/22</span>
+                </div>
+                
+                <div class="zodiac-card" data-zodiac="virgo" onclick="showZodiacFortune('virgo')">
+                    <span class="zodiac-emoji">♍</span>
+                    <span class="zodiac-name">처녀자리</span>
+                    <span class="zodiac-date">8/23 - 9/22</span>
+                </div>
+                
+                <div class="zodiac-card" data-zodiac="libra" onclick="showZodiacFortune('libra')">
+                    <span class="zodiac-emoji">♎</span>
+                    <span class="zodiac-name">천칭자리</span>
+                    <span class="zodiac-date">9/23 - 10/22</span>
+                </div>
+                
+                <div class="zodiac-card" data-zodiac="scorpio" onclick="showZodiacFortune('scorpio')">
+                    <span class="zodiac-emoji">♏</span>
+                    <span class="zodiac-name">전갈자리</span>
+                    <span class="zodiac-date">10/23 - 11/21</span>
+                </div>
+                
+                <div class="zodiac-card" data-zodiac="sagittarius" onclick="showZodiacFortune('sagittarius')">
+                    <span class="zodiac-emoji">♐</span>
+                    <span class="zodiac-name">사수자리</span>
+                    <span class="zodiac-date">11/22 - 12/21</span>
+                </div>
+                
+                <div class="zodiac-card" data-zodiac="capricorn" onclick="showZodiacFortune('capricorn')">
+                    <span class="zodiac-emoji">♑</span>
+                    <span class="zodiac-name">염소자리</span>
+                    <span class="zodiac-date">12/22 - 1/19</span>
+                </div>
+                
+                <div class="zodiac-card" data-zodiac="aquarius" onclick="showZodiacFortune('aquarius')">
+                    <span class="zodiac-emoji">♒</span>
+                    <span class="zodiac-name">물병자리</span>
+                    <span class="zodiac-date">1/20 - 2/18</span>
+                </div>
+                
+                <div class="zodiac-card" data-zodiac="pisces" onclick="showZodiacFortune('pisces')">
+                    <span class="zodiac-emoji">♓</span>
+                    <span class="zodiac-name">물고기자리</span>
+                    <span class="zodiac-date">2/19 - 3/20</span>
+                </div>
+            </div>
+            
+            <!-- 운세 결과 영역 -->
+            <div id="fortuneResult" class="fortune-result" style="display: none;">
+                <!-- 결과가 여기에 표시됩니다 -->
+            </div>
+        </div>
+    </section>
+    
+    <!-- 별자리 운세 안내 -->
+    <section class="info-section">
+        <div class="container">
+            <div class="info-box">
+                <h3>AI 별자리 운세 안내</h3>
+                <ul>
+                    <li>매일 자정에 새로운 운세가 업데이트됩니다.</li>
+                    <li>AI가 천체의 움직임과 별자리 특성을 분석하여 운세를 제공합니다.</li>
+                    <li>운세는 참고용이며, 긍정적인 마음가짐이 가장 중요합니다.</li>
+                    <li>애정운, 금전운, 직장운, 건강운을 종합적으로 분석합니다.</li>
+                </ul>
             </div>
         </div>
     </section>
@@ -96,6 +156,7 @@
     
     <!-- External JavaScript -->
     <script src="/js/main.js"></script>
+    <script src="/js/zodiac.js"></script>
     
     <!-- AdSense initialization -->
     <script>
