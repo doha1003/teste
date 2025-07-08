@@ -237,30 +237,14 @@
     font-size: 1.1rem;
 }
 
-/* CTA 섹션 - 완전히 새로운 깔끔한 디자인 */
+/* CTA 섹션 - 깔끔한 흰색 배경으로 완전 수정 */
 .fortune-page .cta {
     padding: 80px 0;
-    background: linear-gradient(135deg, #9333ea 0%, #ec4899 100%);
-    color: white;
+    background: white;
     text-align: center;
-    position: relative;
-    overflow: hidden;
-}
-
-.fortune-page .cta::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="25" cy="25" r="1.5" fill="rgba(255,255,255,0.1)" opacity="0.6"><animate attributeName="opacity" values="0.3;0.9;0.3" dur="4s" repeatCount="indefinite"/></circle><circle cx="75" cy="35" r="1" fill="rgba(255,255,255,0.15)" opacity="0.4"><animate attributeName="opacity" values="0.2;0.8;0.2" dur="5s" repeatCount="indefinite" begin="1s"/></circle><circle cx="50" cy="70" r="1.2" fill="rgba(255,255,255,0.1)" opacity="0.5"><animate attributeName="opacity" values="0.4;0.7;0.4" dur="3s" repeatCount="indefinite" begin="2s"/></circle></svg>') repeat;
-    z-index: 0;
 }
 
 .fortune-page .cta .container {
-    position: relative;
-    z-index: 1;
     max-width: 800px;
     margin: 0 auto;
     padding: 0 20px;
@@ -269,6 +253,10 @@
 .fortune-page .cta-box {
     max-width: 600px;
     margin: 0 auto;
+    padding: 60px 40px;
+    background: var(--gray-50);
+    border-radius: 20px;
+    border: 2px solid var(--gray-200);
 }
 
 .fortune-page .cta-title {
@@ -276,34 +264,33 @@
     font-weight: 700;
     margin-bottom: 20px;
     line-height: 1.2;
+    color: var(--gray-900);
 }
 
 .fortune-page .cta-description {
     font-size: 1.25rem;
     line-height: 1.6;
     margin-bottom: 40px;
-    opacity: 0.95;
+    color: var(--gray-600);
 }
 
 .fortune-page .cta-button {
     display: inline-block;
     padding: 16px 40px;
-    background: white;
-    color: #9333ea;
+    background: linear-gradient(135deg, #9333ea 0%, #ec4899 100%);
+    color: white;
     text-decoration: none;
     border-radius: 12px;
     font-weight: 600;
     font-size: 1.1rem;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    border: 2px solid transparent;
+    box-shadow: 0 4px 15px rgba(147, 51, 234, 0.3);
 }
 
 .fortune-page .cta-button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-    color: #9333ea;
-    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 8px 25px rgba(147, 51, 234, 0.4);
+    color: white;
 }
 
 /* 반응형 디자인 */
@@ -376,6 +363,11 @@
         padding: 60px 0;
     }
     
+    .fortune-page .cta-box {
+        padding: 40px 30px;
+        margin: 0 20px;
+    }
+    
     .fortune-page .cta-title {
         font-size: 2rem;
     }
@@ -436,5 +428,10 @@
     
     .fortune-page .highlight-card {
         padding: 24px;
+    }
+    
+    .fortune-page .cta-box {
+        padding: 30px 20px;
+        margin: 0 15px;
     }
 }
