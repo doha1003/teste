@@ -412,6 +412,61 @@ input.error, textarea.error {
     --gray-800: #f3f4f6;
     --gray-900: #f9fafb;
 }
+
+/* Responsive AdSense Styles - Global Fix */
+.ad-container {
+    min-height: 250px !important;
+    margin: 40px auto !important;
+    max-width: 1200px !important;
+    padding: 0 20px !important;
+    text-align: center !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+.ad-label {
+    font-size: 12px !important;
+    color: #666 !important;
+    margin-bottom: 8px !important;
+    text-align: center !important;
+}
+
+.adsbygoogle {
+    min-height: 90px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+    display: block !important;
+}
+
+/* Ensure ads have minimum width on mobile */
+@media (max-width: 320px) {
+    .ad-container {
+        min-width: 300px !important;
+        padding: 0 10px !important;
+    }
+}
+
+/* Small mobile devices */
+@media (max-width: 480px) {
+    .ad-container {
+        min-height: 100px !important;
+        padding: 0 15px !important;
+    }
+}
+
+/* Tablet and desktop responsive sizes */
+@media (min-width: 768px) {
+    .ad-container {
+        min-height: 100px !important;
+    }
+}
+
+@media (min-width: 1024px) {
+    .ad-container {
+        min-height: 90px !important;
+    }
+}
 `;
 
 // 스타일 삽입
@@ -536,9 +591,62 @@ async function loadComponents() {
     }
 }
 
+// Global AdSense responsive fix
+function fixAdSenseResponsive() {
+    // Find all AdSense containers
+    const adContainers = document.querySelectorAll('.ad-container');
+    
+    adContainers.forEach(container => {
+        // Ensure minimum width to prevent "availableWidth=29" error
+        container.style.minWidth = '300px';
+        container.style.width = '100%';
+        container.style.boxSizing = 'border-box';
+        container.style.padding = '0 20px';
+        container.style.margin = '40px auto';
+        container.style.maxWidth = '1200px';
+        
+        // Find AdSense ins element
+        const ins = container.querySelector('.adsbygoogle');
+        if (ins) {
+            ins.style.minHeight = '90px';
+            ins.style.width = '100%';
+            ins.style.maxWidth = '100%';
+            ins.style.overflow = 'hidden';
+            ins.style.display = 'block';
+            
+            // Ensure responsive attribute is set
+            if (!ins.hasAttribute('data-full-width-responsive')) {
+                ins.setAttribute('data-full-width-responsive', 'true');
+            }
+        }
+    });
+    
+    // Monitor viewport width and adjust padding
+    function checkAdContainers() {
+        const width = window.innerWidth;
+        adContainers.forEach(container => {
+            if (width < 320) {
+                container.style.padding = '0 10px';
+                container.style.minWidth = '300px';
+            } else if (width < 480) {
+                container.style.padding = '0 15px';
+            } else {
+                container.style.padding = '0 20px';
+            }
+        });
+    }
+    
+    // Check on load and resize
+    checkAdContainers();
+    window.addEventListener('resize', debounce(checkAdContainers, 250));
+}
+
 // AdSense 초기화 함수 (수정된 버전)
 function initAdSense() {
     try {
+        // Apply responsive fix first
+        fixAdSenseResponsive();
+        
         // 이미 처리된 광고 슬롯은 제외
         const adSlots = document.querySelectorAll('.adsbygoogle:not([data-adsbygoogle-status])');
         
@@ -602,6 +710,9 @@ document.addEventListener('DOMContentLoaded', async function() {
     
     // 다크 모드 초기화
     initDarkMode();
+    
+    // Apply AdSense responsive fix immediately
+    fixAdSenseResponsive();
 });
 
 // 윈도우 로드 완료 후 AdSense 초기화
