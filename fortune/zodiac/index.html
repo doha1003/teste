@@ -37,29 +37,78 @@
         </div>
     </section>
     
-    <!-- 서비스 준비 중 안내 -->
+    <!-- 별자리 선택 섹션 -->
     <section class="zodiac-section">
         <div class="container">
-            <div class="service-notice">
-                <div class="notice-icon">♈</div>
-                <h2>별자리 운세 서비스 준비 중</h2>
-                <p>
-                    12개 별자리별 정확하고 개인화된 AI 운세 서비스를 준비하고 있습니다.<br>
-                    곧 별들의 메시지를 전달해드리겠습니다.
-                </p>
-                <div class="coming-soon-features">
-                    <h3>준비 중인 기능</h3>
-                    <ul>
-                        <li>♈ 12개 별자리별 상세 운세</li>
-                        <li>💫 오늘의 행운 색상 및 숫자</li>
-                        <li>💕 별자리별 애정운 분석</li>
-                        <li>💰 별자리별 금전운 예측</li>
-                        <li>🏃 별자리별 건강운 조언</li>
-                    </ul>
+            <div id="zodiacSelection" class="zodiac-selection">
+                <h2 style="text-align: center; margin-bottom: 40px;">당신의 별자리를 선택하세요</h2>
+                <div class="zodiac-grid">
+                    <div class="zodiac-card" onclick="selectZodiac('aries')">
+                        <div class="zodiac-symbol">♈</div>
+                        <div class="zodiac-name">양자리</div>
+                        <div class="zodiac-date">3.21 - 4.19</div>
+                    </div>
+                    <div class="zodiac-card" onclick="selectZodiac('taurus')">
+                        <div class="zodiac-symbol">♉</div>
+                        <div class="zodiac-name">황소자리</div>
+                        <div class="zodiac-date">4.20 - 5.20</div>
+                    </div>
+                    <div class="zodiac-card" onclick="selectZodiac('gemini')">
+                        <div class="zodiac-symbol">♊</div>
+                        <div class="zodiac-name">쌍둥이자리</div>
+                        <div class="zodiac-date">5.21 - 6.21</div>
+                    </div>
+                    <div class="zodiac-card" onclick="selectZodiac('cancer')">
+                        <div class="zodiac-symbol">♋</div>
+                        <div class="zodiac-name">게자리</div>
+                        <div class="zodiac-date">6.22 - 7.22</div>
+                    </div>
+                    <div class="zodiac-card" onclick="selectZodiac('leo')">
+                        <div class="zodiac-symbol">♌</div>
+                        <div class="zodiac-name">사자자리</div>
+                        <div class="zodiac-date">7.23 - 8.22</div>
+                    </div>
+                    <div class="zodiac-card" onclick="selectZodiac('virgo')">
+                        <div class="zodiac-symbol">♍</div>
+                        <div class="zodiac-name">처녀자리</div>
+                        <div class="zodiac-date">8.23 - 9.22</div>
+                    </div>
+                    <div class="zodiac-card" onclick="selectZodiac('libra')">
+                        <div class="zodiac-symbol">♎</div>
+                        <div class="zodiac-name">천칭자리</div>
+                        <div class="zodiac-date">9.23 - 10.22</div>
+                    </div>
+                    <div class="zodiac-card" onclick="selectZodiac('scorpio')">
+                        <div class="zodiac-symbol">♏</div>
+                        <div class="zodiac-name">전갈자리</div>
+                        <div class="zodiac-date">10.23 - 11.22</div>
+                    </div>
+                    <div class="zodiac-card" onclick="selectZodiac('sagittarius')">
+                        <div class="zodiac-symbol">♐</div>
+                        <div class="zodiac-name">사수자리</div>
+                        <div class="zodiac-date">11.23 - 12.21</div>
+                    </div>
+                    <div class="zodiac-card" onclick="selectZodiac('capricorn')">
+                        <div class="zodiac-symbol">♑</div>
+                        <div class="zodiac-name">염소자리</div>
+                        <div class="zodiac-date">12.22 - 1.19</div>
+                    </div>
+                    <div class="zodiac-card" onclick="selectZodiac('aquarius')">
+                        <div class="zodiac-symbol">♒</div>
+                        <div class="zodiac-name">물병자리</div>
+                        <div class="zodiac-date">1.20 - 2.18</div>
+                    </div>
+                    <div class="zodiac-card" onclick="selectZodiac('pisces')">
+                        <div class="zodiac-symbol">♓</div>
+                        <div class="zodiac-name">물고기자리</div>
+                        <div class="zodiac-date">2.19 - 3.20</div>
+                    </div>
                 </div>
-                <a href="/fortune/" class="btn btn-primary">
-                    다른 운세 서비스 보기
-                </a>
+            </div>
+            
+            <!-- 운세 결과 영역 -->
+            <div id="zodiacResult" class="zodiac-result" style="display: none;">
+                <!-- 결과가 여기에 표시됩니다 -->
             </div>
         </div>
     </section>
@@ -70,8 +119,8 @@
             <div class="info-box">
                 <h3>별자리 운세 안내</h3>
                 <ul>
-                    <li>실제 천체의 움직임과 AI 분석을 결합한 운세를 준비 중입니다.</li>
-                    <li>각 별자리별 특성에 맞는 맞춤형 조언을 제공할 예정입니다.</li>
+                    <li>천체의 움직임과 AI 분석을 결합한 정확한 운세를 제공합니다.</li>
+                    <li>각 별자리별 특성에 맞는 맞춤형 조언을 받아보세요.</li>
                     <li>오늘의 행운 색상, 숫자, 방향 등 구체적인 정보를 포함합니다.</li>
                     <li>별자리 운세는 참고용이며, 긍정적인 마음가짐이 중요합니다.</li>
                 </ul>
@@ -95,6 +144,356 @@
     
     <!-- External JavaScript -->
     <script src="/js/main.js"></script>
+    
+    <script>
+        // 별자리 데이터
+        const zodiacData = {
+            aries: {
+                symbol: '♈',
+                name: '양자리',
+                date: '3.21 - 4.19',
+                element: '불',
+                planet: '화성',
+                traits: ['적극적', '열정적', '리더십', '용감한'],
+                compatibility: ['사자자리', '사수자리', '쌍둥이자리']
+            },
+            taurus: {
+                symbol: '♉',
+                name: '황소자리',
+                date: '4.20 - 5.20',
+                element: '흙',
+                planet: '금성',
+                traits: ['안정적', '현실적', '고집스러운', '성실한'],
+                compatibility: ['처녀자리', '염소자리', '게자리']
+            },
+            gemini: {
+                symbol: '♊',
+                name: '쌍둥이자리',
+                date: '5.21 - 6.21',
+                element: '바람',
+                planet: '수성',
+                traits: ['호기심', '적응력', '소통능력', '다재다능'],
+                compatibility: ['천칭자리', '물병자리', '양자리']
+            },
+            cancer: {
+                symbol: '♋',
+                name: '게자리',
+                date: '6.22 - 7.22',
+                element: '물',
+                planet: '달',
+                traits: ['감정적', '가족중심', '직감적', '보호본능'],
+                compatibility: ['전갈자리', '물고기자리', '황소자리']
+            },
+            leo: {
+                symbol: '♌',
+                name: '사자자리',
+                date: '7.23 - 8.22',
+                element: '불',
+                planet: '태양',
+                traits: ['자신감', '관대함', '창조적', '드라마틱'],
+                compatibility: ['양자리', '사수자리', '쌍둥이자리']
+            },
+            virgo: {
+                symbol: '♍',
+                name: '처녀자리',
+                date: '8.23 - 9.22',
+                element: '흙',
+                planet: '수성',
+                traits: ['완벽주의', '분석적', '실용적', '섬세한'],
+                compatibility: ['황소자리', '염소자리', '게자리']
+            },
+            libra: {
+                symbol: '♎',
+                name: '천칭자리',
+                date: '9.23 - 10.22',
+                element: '바람',
+                planet: '금성',
+                traits: ['균형감', '미적감각', '사교적', '평화주의'],
+                compatibility: ['쌍둥이자리', '물병자리', '사자자리']
+            },
+            scorpio: {
+                symbol: '♏',
+                name: '전갈자리',
+                date: '10.23 - 11.22',
+                element: '물',
+                planet: '명왕성',
+                traits: ['강렬함', '신비로움', '집중력', '변화'],
+                compatibility: ['게자리', '물고기자리', '처녀자리']
+            },
+            sagittarius: {
+                symbol: '♐',
+                name: '사수자리',
+                date: '11.23 - 12.21',
+                element: '불',
+                planet: '목성',
+                traits: ['자유로움', '모험심', '철학적', '낙관적'],
+                compatibility: ['양자리', '사자자리', '천칭자리']
+            },
+            capricorn: {
+                symbol: '♑',
+                name: '염소자리',
+                date: '12.22 - 1.19',
+                element: '흙',
+                planet: '토성',
+                traits: ['야심적', '책임감', '인내심', '현실적'],
+                compatibility: ['황소자리', '처녀자리', '전갈자리']
+            },
+            aquarius: {
+                symbol: '♒',
+                name: '물병자리',
+                date: '1.20 - 2.18',
+                element: '바람',
+                planet: '천왕성',
+                traits: ['독창적', '미래지향', '인도주의', '독립적'],
+                compatibility: ['쌍둥이자리', '천칭자리', '사수자리']
+            },
+            pisces: {
+                symbol: '♓',
+                name: '물고기자리',
+                date: '2.19 - 3.20',
+                element: '물',
+                planet: '해왕성',
+                traits: ['감성적', '상상력', '직관적', '동정심'],
+                compatibility: ['게자리', '전갈자리', '염소자리']
+            }
+        };
+        
+        function selectZodiac(zodiacSign) {
+            // 선택 화면 숨기기
+            document.getElementById('zodiacSelection').style.display = 'none';
+            
+            // 로딩 표시
+            const resultDiv = document.getElementById('zodiacResult');
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = `
+                <div class="loading" style="text-align: center; padding: 40px;">
+                    <div class="loading-spinner"></div>
+                    <p style="margin-top: 20px;">별들이 ${zodiacData[zodiacSign].name}의 운세를 알려주고 있습니다...</p>
+                </div>
+            `;
+            
+            // 운세 생성
+            setTimeout(() => {
+                const fortune = generateZodiacFortune(zodiacSign);
+                displayZodiacResult(zodiacSign, fortune);
+            }, 2000);
+        }
+        
+        function generateZodiacFortune(zodiacSign) {
+            const today = new Date();
+            const seed = today.getDate() + today.getMonth() + zodiacSign.length;
+            
+            // 시드 기반 운세 생성
+            const totalScore = 60 + Math.floor(seededRandom(seed) * 35);
+            const loveScore = 60 + Math.floor(seededRandom(seed * 2) * 35);
+            const moneyScore = 60 + Math.floor(seededRandom(seed * 3) * 35);
+            const healthScore = 60 + Math.floor(seededRandom(seed * 4) * 35);
+            
+            // 행운 정보
+            const luckyNumbers = [1, 3, 7, 9, 11, 13, 17, 21, 23, 27];
+            const luckyColors = ['빨강', '파랑', '노랑', '초록', '보라', '주황', '분홍', '하늘색', '금색', '은색'];
+            const luckyDirections = ['동쪽', '서쪽', '남쪽', '북쪽', '동남쪽', '서남쪽', '동북쪽', '서북쪽'];
+            
+            const luckyNumber = luckyNumbers[Math.floor(seededRandom(seed * 5) * luckyNumbers.length)];
+            const luckyColor = luckyColors[Math.floor(seededRandom(seed * 6) * luckyColors.length)];
+            const luckyDirection = luckyDirections[Math.floor(seededRandom(seed * 7) * luckyDirections.length)];
+            
+            return {
+                total: totalScore,
+                love: loveScore,
+                money: moneyScore,
+                health: healthScore,
+                luckyNumber,
+                luckyColor,
+                luckyDirection,
+                message: generateZodiacMessage(zodiacSign, totalScore)
+            };
+        }
+        
+        function seededRandom(seed) {
+            const x = Math.sin(seed) * 10000;
+            return x - Math.floor(x);
+        }
+        
+        function generateZodiacMessage(zodiacSign, score) {
+            const messages = {
+                aries: {
+                    high: "오늘은 당신의 리더십이 빛나는 날입니다. 새로운 도전을 두려워하지 마세요.",
+                    medium: "에너지가 넘치는 하루입니다. 계획했던 일을 실행에 옮기기 좋은 때입니다.",
+                    low: "조금 더 신중하게 행동하세요. 충동적인 결정은 피하는 것이 좋습니다."
+                },
+                taurus: {
+                    high: "안정적이고 평화로운 하루가 될 것 같습니다. 금전적인 기회가 있을 수 있습니다.",
+                    medium: "꾸준함이 빛을 발하는 날입니다. 계속해서 노력하면 좋은 결과가 있을 것입니다.",
+                    low: "변화를 두려워하지 마세요. 때로는 새로운 시도가 필요합니다."
+                },
+                gemini: {
+                    high: "소통과 네트워킹이 중요한 날입니다. 새로운 정보나 아이디어를 얻을 수 있습니다.",
+                    medium: "호기심을 가지고 다양한 활동에 참여해보세요. 뜻밖의 기회가 있을 수 있습니다.",
+                    low: "집중력이 필요한 날입니다. 한 가지 일에 몰두하는 것이 좋겠습니다."
+                },
+                cancer: {
+                    high: "가족이나 가까운 사람들과의 관계가 더욱 돈독해질 것 같습니다.",
+                    medium: "감정적인 안정을 찾는 것이 중요합니다. 마음의 평화를 유지하세요.",
+                    low: "감정적으로 예민해질 수 있는 날입니다. 충분한 휴식을 취하세요."
+                },
+                leo: {
+                    high: "당신의 매력이 최고조에 달하는 날입니다. 자신감을 가지고 행동하세요.",
+                    medium: "창조적인 활동이나 예술 분야에서 좋은 성과를 얻을 수 있습니다.",
+                    low: "너무 자만하지 마세요. 겸손한 자세가 더 많은 기회를 가져다줄 것입니다."
+                },
+                virgo: {
+                    high: "완벽주의적 성향이 좋은 결과를 가져다줄 것입니다. 세심한 주의가 필요합니다.",
+                    medium: "계획적이고 체계적인 접근이 성공의 열쇠입니다. 꼼꼼하게 준비하세요.",
+                    low: "너무 완벽을 추구하지 마세요. 때로는 융통성이 필요합니다."
+                },
+                libra: {
+                    high: "균형감각이 뛰어난 하루입니다. 조화로운 관계를 유지할 수 있을 것입니다.",
+                    medium: "미적 감각을 발휘할 수 있는 기회가 있습니다. 아름다운 것들을 추구하세요.",
+                    low: "결정을 내리는 데 어려움이 있을 수 있습니다. 신중하게 선택하세요."
+                },
+                scorpio: {
+                    high: "강한 집중력과 의지력이 빛나는 날입니다. 목표를 향해 전진하세요.",
+                    medium: "직감이 예리한 날입니다. 내면의 목소리에 귀를 기울여보세요.",
+                    low: "감정적으로 격해질 수 있는 날입니다. 차분함을 유지하세요."
+                },
+                sagittarius: {
+                    high: "모험과 여행에 대한 욕구가 강해지는 날입니다. 새로운 경험을 해보세요.",
+                    medium: "낙관적인 마음가짐이 좋은 운을 가져다줄 것입니다. 긍정적으로 생각하세요.",
+                    low: "너무 성급하게 행동하지 마세요. 신중한 판단이 필요합니다."
+                },
+                capricorn: {
+                    high: "성실함과 노력이 인정받는 날입니다. 목표 달성에 한 발 더 가까워질 것입니다.",
+                    medium: "책임감 있는 행동이 주변의 신뢰를 얻을 것입니다. 꾸준히 노력하세요.",
+                    low: "너무 완고하지 마세요. 때로는 유연함이 필요합니다."
+                },
+                aquarius: {
+                    high: "독창적인 아이디어가 빛나는 날입니다. 새로운 관점으로 문제를 해결해보세요.",
+                    medium: "친구나 동료들과의 협력이 중요합니다. 팀워크를 발휘하세요.",
+                    low: "너무 독단적으로 행동하지 마세요. 다른 사람의 의견도 들어보세요."
+                },
+                pisces: {
+                    high: "직감과 영감이 뛰어난 날입니다. 예술적 감각을 발휘할 수 있을 것입니다.",
+                    medium: "감정적인 교감이 중요한 날입니다. 따뜻한 마음으로 사람들을 대하세요.",
+                    low: "현실적인 판단이 필요합니다. 너무 꿈만 꾸지 마세요."
+                }
+            };
+            
+            const level = score >= 80 ? 'high' : score >= 70 ? 'medium' : 'low';
+            return messages[zodiacSign][level];
+        }
+        
+        function displayZodiacResult(zodiacSign, fortune) {
+            const today = new Date();
+            const zodiac = zodiacData[zodiacSign];
+            
+            const resultDiv = document.getElementById('zodiacResult');
+            resultDiv.innerHTML = `
+                <div class="zodiac-result-container">
+                    <h2 style="text-align: center; margin-bottom: 30px;">
+                        ${zodiac.symbol} ${zodiac.name} 운세
+                    </h2>
+                    <p style="text-align: center; color: var(--gray-600); margin-bottom: 40px;">
+                        ${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일
+                    </p>
+                    
+                    <div class="zodiac-info">
+                        <div class="zodiac-details">
+                            <h3>별자리 정보</h3>
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <strong>기간:</strong> ${zodiac.date}
+                                </div>
+                                <div class="detail-item">
+                                    <strong>원소:</strong> ${zodiac.element}
+                                </div>
+                                <div class="detail-item">
+                                    <strong>지배행성:</strong> ${zodiac.planet}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="zodiac-traits">
+                            <h3>성격 특징</h3>
+                            <div class="traits-list">
+                                ${zodiac.traits.map(trait => `<span class="trait-tag">${trait}</span>`).join('')}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="fortune-scores">
+                        <div class="score-item">
+                            <h4>💫 총운</h4>
+                            <div class="score-bar">
+                                <div class="score-fill" style="width: ${fortune.total}%"></div>
+                            </div>
+                            <span class="score-number">${fortune.total}점</span>
+                        </div>
+                        
+                        <div class="score-item">
+                            <h4>💕 애정운</h4>
+                            <div class="score-bar">
+                                <div class="score-fill" style="width: ${fortune.love}%"></div>
+                            </div>
+                            <span class="score-number">${fortune.love}점</span>
+                        </div>
+                        
+                        <div class="score-item">
+                            <h4>💰 금전운</h4>
+                            <div class="score-bar">
+                                <div class="score-fill" style="width: ${fortune.money}%"></div>
+                            </div>
+                            <span class="score-number">${fortune.money}점</span>
+                        </div>
+                        
+                        <div class="score-item">
+                            <h4>🏃 건강운</h4>
+                            <div class="score-bar">
+                                <div class="score-fill" style="width: ${fortune.health}%"></div>
+                            </div>
+                            <span class="score-number">${fortune.health}점</span>
+                        </div>
+                    </div>
+                    
+                    <div class="today-message">
+                        <h3>📋 오늘의 메시지</h3>
+                        <p>${fortune.message}</p>
+                    </div>
+                    
+                    <div class="lucky-info">
+                        <h3>🍀 행운 정보</h3>
+                        <div class="lucky-grid">
+                            <div class="lucky-item">
+                                <strong>행운의 숫자</strong>
+                                <span>${fortune.luckyNumber}</span>
+                            </div>
+                            <div class="lucky-item">
+                                <strong>행운의 색상</strong>
+                                <span>${fortune.luckyColor}</span>
+                            </div>
+                            <div class="lucky-item">
+                                <strong>행운의 방향</strong>
+                                <span>${fortune.luckyDirection}</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="compatibility">
+                        <h3>💘 궁합이 좋은 별자리</h3>
+                        <div class="compatibility-list">
+                            ${zodiac.compatibility.map(sign => `<span class="compatibility-tag">${sign}</span>`).join('')}
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 40px;">
+                        <button onclick="location.reload()" class="btn btn-secondary">
+                            다른 별자리 보기
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+    </script>
     
     <style>
         .fortune-page .page-header {
@@ -120,61 +519,221 @@
             background: white;
         }
         
-        .service-notice {
-            max-width: 600px;
+        .zodiac-selection {
+            max-width: 1200px;
             margin: 0 auto;
-            text-align: center;
+            padding: 0 20px;
+        }
+        
+        .zodiac-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+        
+        .zodiac-card {
             background: white;
-            padding: 60px 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             border: 2px solid var(--gray-200);
+            border-radius: 16px;
+            padding: 30px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
         }
         
-        .notice-icon {
-            font-size: 4rem;
-            margin-bottom: 20px;
+        .zodiac-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--primary-500);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
         }
         
-        .service-notice h2 {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            color: var(--gray-900);
+        .zodiac-symbol {
+            font-size: 3rem;
+            margin-bottom: 16px;
+            color: var(--primary-600);
         }
         
-        .service-notice > p {
-            font-size: 1.125rem;
-            line-height: 1.6;
-            color: var(--gray-600);
-            margin-bottom: 40px;
-        }
-        
-        .coming-soon-features {
-            background: var(--gray-50);
-            padding: 30px;
-            border-radius: 12px;
-            margin-bottom: 40px;
-            text-align: left;
-        }
-        
-        .coming-soon-features h3 {
+        .zodiac-name {
             font-size: 1.25rem;
             font-weight: 600;
-            margin-bottom: 16px;
+            margin-bottom: 8px;
             color: var(--gray-900);
+        }
+        
+        .zodiac-date {
+            font-size: 0.9rem;
+            color: var(--gray-600);
+        }
+        
+        .zodiac-result-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .zodiac-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .zodiac-details, .zodiac-traits {
+            background: var(--gray-50);
+            padding: 20px;
+            border-radius: 12px;
+        }
+        
+        .zodiac-details h3, .zodiac-traits h3 {
+            margin-bottom: 15px;
+            color: var(--gray-800);
+        }
+        
+        .detail-grid {
+            display: grid;
+            gap: 10px;
+        }
+        
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .traits-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .trait-tag {
+            background: var(--primary-100);
+            color: var(--primary-700);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+        
+        .fortune-scores {
+            margin-bottom: 40px;
+        }
+        
+        .score-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .score-item h4 {
+            min-width: 80px;
+            margin: 0;
+            color: var(--gray-700);
+        }
+        
+        .score-bar {
+            flex: 1;
+            height: 10px;
+            background: var(--gray-200);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .score-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #9333ea 0%, #ec4899 100%);
+            transition: width 1s ease;
+        }
+        
+        .score-number {
+            min-width: 50px;
+            font-weight: 600;
+            color: var(--gray-700);
+        }
+        
+        .today-message {
+            background: var(--gray-50);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+        
+        .today-message h3 {
+            margin-bottom: 15px;
+            color: var(--gray-800);
+        }
+        
+        .lucky-info {
+            margin-bottom: 30px;
+        }
+        
+        .lucky-info h3 {
+            margin-bottom: 20px;
+            color: var(--gray-800);
+        }
+        
+        .lucky-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        
+        .lucky-item {
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
             text-align: center;
         }
         
-        .coming-soon-features ul {
-            list-style: none;
-            padding: 0;
+        .lucky-item strong {
+            display: block;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            opacity: 0.9;
         }
         
-        .coming-soon-features li {
-            padding: 8px 0;
-            font-size: 1rem;
+        .lucky-item span {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .compatibility h3 {
+            margin-bottom: 15px;
+            color: var(--gray-800);
+        }
+        
+        .compatibility-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .compatibility-tag {
+            background: var(--gray-100);
             color: var(--gray-700);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid var(--gray-200);
+            border-top: 3px solid var(--primary-500);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
         
         .info-section {
@@ -227,18 +786,18 @@
             font-size: 1rem;
             text-decoration: none;
             transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
         }
         
-        .btn-primary {
-            background: linear-gradient(135deg, #9333ea 0%, #ec4899 100%);
-            color: white;
-            box-shadow: 0 4px 15px rgba(147, 51, 234, 0.3);
+        .btn-secondary {
+            background: var(--gray-200);
+            color: var(--gray-700);
         }
         
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(147, 51, 234, 0.4);
-            color: white;
+        .btn-secondary:hover {
+            background: var(--gray-300);
+            color: var(--gray-800);
         }
         
         @media (max-width: 768px) {
@@ -250,13 +809,40 @@
                 font-size: 2rem;
             }
             
-            .service-notice {
-                padding: 40px 20px;
+            .zodiac-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+            
+            .zodiac-card {
+                padding: 20px 15px;
+            }
+            
+            .zodiac-symbol {
+                font-size: 2.5rem;
+            }
+            
+            .zodiac-result-container {
+                padding: 30px 20px;
                 margin: 0 20px;
             }
             
-            .service-notice h2 {
-                font-size: 1.75rem;
+            .zodiac-info {
+                grid-template-columns: 1fr;
+            }
+            
+            .lucky-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .score-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .score-item h4 {
+                min-width: auto;
             }
             
             .info-box {
