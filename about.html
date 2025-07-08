@@ -48,6 +48,10 @@
             margin-bottom: 32px;
         }
         
+        .section-title {
+            color: #111827;
+        }
+        
         .values-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -58,7 +62,7 @@
         .value-card {
             text-align: center;
             padding: 32px;
-            background: var(--gray-50);
+            background: #f9fafb;
             border-radius: 12px;
             transition: all 0.3s;
         }
@@ -66,6 +70,14 @@
         .value-card:hover {
             transform: translateY(-4px);
             box-shadow: var(--shadow-md);
+        }
+        
+        .value-card h3 {
+            color: #111827;
+        }
+        
+        .value-card p {
+            color: #374151;
         }
         
         .value-icon {
@@ -85,7 +97,7 @@
             top: 0;
             bottom: 0;
             width: 2px;
-            background: var(--gray-300);
+            background: #d1d5db;
             transform: translateX(-50%);
         }
         
@@ -98,6 +110,15 @@
             box-shadow: var(--shadow-md);
         }
         
+        .timeline-item h3 {
+            color: #111827;
+            margin-bottom: 8px;
+        }
+        
+        .timeline-item p {
+            color: #374151;
+        }
+        
         .timeline-item::before {
             content: '';
             position: absolute;
@@ -105,10 +126,16 @@
             top: 50%;
             width: 16px;
             height: 16px;
-            background: var(--primary-color);
+            background: #4f46e5;
             border-radius: 50%;
             transform: translate(-50%, -50%);
             z-index: 1;
+        }
+        
+        .mission-section p {
+            color: #374151;
+            font-size: 18px;
+            line-height: 1.8;
         }
         
         @media (max-width: 768px) {
@@ -141,7 +168,7 @@
         <!-- 미션 섹션 -->
         <div class="mission-section">
             <h2 class="section-title">우리의 미션</h2>
-            <p style="font-size: 18px; line-height: 1.8; color: var(--gray-700); margin-top: 16px;">
+            <p style="margin-top: 16px;">
                 doha.kr은 단순한 웹사이트가 아닙니다. 우리는 사람들의 일상에 작은 즐거움과 유용함을 더하는 
                 디지털 공간을 만들어가고 있습니다. 심리테스트를 통해 자신을 더 깊이 이해하고, 
                 실용적인 도구들로 일상의 불편함을 해결하며, 커뮤니티에서 같은 관심사를 가진 사람들과 
@@ -197,7 +224,7 @@
         <!-- 연락처 -->
         <div class="mission-section" style="text-align: center;">
             <h2 class="section-title">함께 만들어가요</h2>
-            <p style="font-size: 18px; line-height: 1.8; color: var(--gray-700); margin: 16px 0 32px;">
+            <p style="margin: 16px 0 32px;">
                 doha.kr은 사용자 여러분의 의견을 소중히 생각합니다.<br>
                 새로운 아이디어나 개선사항이 있다면 언제든 연락주세요.
             </p>

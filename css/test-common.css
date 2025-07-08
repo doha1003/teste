@@ -48,12 +48,13 @@
     font-size: 2.5rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 
 .test-header p {
     font-size: 1.125rem;
-    opacity: 0.9;
+    opacity: 0.95;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
 }
 
 /* 테스트 콘텐츠 영역 */
@@ -86,11 +87,11 @@
     justify-content: space-between;
     margin-bottom: 0.5rem;
     font-size: 0.875rem;
-    color: var(--gray-600);
+    color: #374151; /* var(--gray-600) 대신 더 진한 색상 */
 }
 
 .progress-bar {
-    background: var(--gray-200);
+    background: #e5e7eb; /* var(--gray-200) 대신 명시적 색상 */
     height: 8px;
     border-radius: 9999px;
     overflow: hidden;
@@ -98,7 +99,7 @@
 
 .progress-fill,
 .progress {
-    background: var(--primary-600);
+    background: #4f46e5; /* var(--primary-600) 대신 명시적 색상 */
     height: 100%;
     width: 0;
     transition: width 0.3s ease-out;
@@ -109,7 +110,7 @@
 .question {
     font-size: 1.5rem;
     font-weight: 600;
-    color: var(--gray-900);
+    color: #111827; /* var(--gray-900) 대신 더 진한 색상 */
     text-align: center;
     margin-bottom: 2.5rem;
     line-height: 1.4;
@@ -127,7 +128,7 @@
 
 .answer-option,
 .option {
-    background: var(--gray-50);
+    background: #f9fafb; /* var(--gray-50) 대신 명시적 색상 */
     border: 2px solid transparent;
     border-radius: 1rem;
     padding: 1rem 1.5rem;
@@ -135,20 +136,21 @@
     transition: all 0.2s ease-out;
     text-align: left;
     font-size: 1.0625rem;
+    color: #111827; /* 텍스트 색상 명시 */
 }
 
 .answer-option:hover,
 .option:hover {
-    background: var(--primary-50);
-    border-color: var(--primary-300);
+    background: #ede9fe; /* var(--primary-50) 대신 명시적 색상 */
+    border-color: #a78bfa; /* var(--primary-300) 대신 명시적 색상 */
     transform: translateX(4px);
 }
 
 .answer-option.selected,
 .option.selected {
-    background: var(--primary-100);
-    border-color: var(--primary-600);
-    color: var(--primary-800);
+    background: #ddd6fe; /* var(--primary-100) 대신 명시적 색상 */
+    border-color: #4f46e5; /* var(--primary-600) 대신 명시적 색상 */
+    color: #312e81; /* var(--primary-800) 대신 더 진한 색상 */
 }
 
 /* 결과 컨테이너 공통 스타일 */
@@ -188,6 +190,7 @@
     margin-bottom: 1rem;
     position: relative;
     z-index: 1;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
 
 .result-title {
@@ -196,16 +199,18 @@
     margin-bottom: 1rem;
     position: relative;
     z-index: 1;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.3);
 }
 
 .result-subtitle,
 .result-description {
     font-size: 1.25rem;
-    opacity: 0.9;
+    opacity: 0.95;
     position: relative;
     z-index: 1;
     max-width: 600px;
     margin: 0 auto;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.3);
 }
 
 /* 결과 콘텐츠 공통 스타일 */
@@ -226,7 +231,7 @@
 .section-title {
     font-size: 1.5rem;
     font-weight: 600;
-    color: var(--gray-900);
+    color: #111827; /* var(--gray-900) 대신 더 진한 색상 */
     margin-bottom: 1rem;
     display: flex;
     align-items: center;
@@ -239,7 +244,7 @@
 
 /* 공유 섹션 공통 스타일 */
 .share-section {
-    background: var(--gray-50);
+    background: #f9fafb; /* var(--gray-50) 대신 명시적 색상 */
     padding: 1.5rem;
     border-radius: 1rem;
     text-align: center;
@@ -249,7 +254,7 @@
 .share-title {
     font-size: 1.25rem;
     font-weight: 600;
-    color: var(--gray-900);
+    color: #111827; /* var(--gray-900) 대신 더 진한 색상 */
     margin-bottom: 1rem;
 }
 
@@ -286,12 +291,12 @@
 }
 
 .link-copy {
-    background: var(--gray-200);
-    color: var(--gray-700);
+    background: #e5e7eb; /* var(--gray-200) 대신 명시적 색상 */
+    color: #374151; /* var(--gray-700) 대신 더 진한 색상 */
 }
 
 .link-copy:hover {
-    background: var(--gray-300);
+    background: #d1d5db; /* var(--gray-300) 대신 명시적 색상 */
     transform: translateY(-2px);
 }
 
@@ -308,29 +313,29 @@
 }
 
 .btn-primary {
-    background: var(--primary-600);
+    background: #4f46e5; /* var(--primary-600) 대신 명시적 색상 */
     color: white;
 }
 
 .btn-primary:hover {
-    background: var(--primary-700);
+    background: #4338ca; /* var(--primary-700) 대신 명시적 색상 */
     transform: translateY(-2px);
     box-shadow: var(--test-hover-shadow);
 }
 
 .btn-secondary {
-    background: var(--gray-200);
-    color: var(--gray-700);
+    background: #e5e7eb; /* var(--gray-200) 대신 명시적 색상 */
+    color: #374151; /* var(--gray-700) 대신 더 진한 색상 */
 }
 
 .btn-secondary:hover {
-    background: var(--gray-300);
+    background: #d1d5db; /* var(--gray-300) 대신 명시적 색상 */
     transform: translateY(-2px);
 }
 
 .start-button,
 .retry-button {
-    background: var(--primary-600);
+    background: #4f46e5; /* var(--primary-600) 대신 명시적 색상 */
     color: white;
     padding: 1rem 2rem;
     border-radius: 9999px;
@@ -347,7 +352,7 @@
 
 .start-button:hover,
 .retry-button:hover {
-    background: var(--primary-700);
+    background: #4338ca; /* var(--primary-700) 대신 명시적 색상 */
     transform: translateY(-2px);
     box-shadow: var(--test-hover-shadow);
 }
@@ -367,7 +372,7 @@
 
 /* 광고 컨테이너 공통 스타일 */
 .ad-container {
-    background: var(--gray-50);
+    background: #f9fafb; /* var(--gray-50) 대신 명시적 색상 */
     padding: 1rem;
     border-radius: 0.5rem;
     margin: 1.5rem 0;
@@ -376,7 +381,7 @@
 
 .ad-label {
     font-size: 0.75rem;
-    color: var(--gray-500);
+    color: #6b7280; /* var(--gray-500) 대신 더 진한 색상 */
     margin-bottom: 0.5rem;
 }
 
@@ -451,7 +456,7 @@
 
 .trait-item,
 .trait-card {
-    background: var(--gray-50);
+    background: #f9fafb; /* var(--gray-50) 대신 명시적 색상 */
     padding: 1rem;
     border-radius: 0.75rem;
     text-align: center;
@@ -459,13 +464,13 @@
 
 .trait-title {
     font-weight: 600;
-    color: var(--primary-700);
+    color: #4338ca; /* var(--primary-700) 대신 더 진한 색상 */
     margin-bottom: 0.5rem;
 }
 
 .trait-desc {
     font-size: 0.875rem;
-    color: var(--gray-600);
+    color: #374151; /* var(--gray-600) 대신 더 진한 색상 */
     line-height: 1.5;
 }
 
