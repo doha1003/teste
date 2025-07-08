@@ -1,7 +1,82 @@
-// 운세 데이터 생성 함수들
+// Gemini API 클라이언트 - 서버리스 함수 호출
+const API_ENDPOINT = '/api/fortune';
 
-// 일일 운세 생성
+// 서버리스 API 호출 함수
+async function callFortuneAPI(type, data) {
+    try {
+        const response = await fetch(API_ENDPOINT, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ type, data })
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        
+        if (result.success) {
+            return result.data;
+        } else {
+            console.error('API Error:', result.error);
+            return null;
+        }
+    } catch (error) {
+        console.error('Fortune API 호출 오류:', error);
+        return null;
+    }
+}
+
+// 일일 운세 AI 생성
 async function generateDailyFortuneWithAI(name, birthDate, gender, birthTime = null) {
+    const result = await callFortuneAPI('daily', {
+        name,
+        birthDate,
+        gender,
+        birthTime
+    });
+    
+    if (result) {
+        return {
+            name: name,
+            aiGenerated: true,
+            ...result
+        };
+    }
+    
+    // 폴백: AI 실패시 백업 데이터 사용
+    return generateBackupFortune(name, birthDate);
+}
+
+// 별자리 운세 AI 생성
+async function generateZodiacFortuneWithAI(zodiac) {
+    const result = await callFortuneAPI('zodiac', { zodiac });
+    
+    if (result) {
+        return result;
+    }
+    
+    // 폴백
+    return generateMockZodiacFortune();
+}
+
+// 사주팔자 AI 생성
+async function generateSajuWithAI(sajuData) {
+    const result = await callFortuneAPI('saju', sajuData);
+    
+    if (result) {
+        return result;
+    }
+    
+    // 폴백
+    return generateMockSaju();
+}
+
+// 백업 운세 생성 (AI 실패시 사용)
+function generateBackupFortune(name, birthDate) {
     const today = new Date();
     const todayStr = today.toLocaleDateString('ko-KR');
     
@@ -12,27 +87,7 @@ async function generateDailyFortuneWithAI(name, birthDate, gender, birthTime = n
     const seed = birthDateObj.getDate() + birthDateObj.getMonth() + today.getDate();
     const todayGanzhi = heavenlyStems[seed % 10] + earthlyBranches[seed % 12];
     
-    // 직접 백업 데이터 생성 (서버 API 없이)
-    return generateBackupFortune(name, birthDate, todayGanzhi);
-}
-
-// 별자리 운세 생성
-async function generateZodiacFortuneWithAI(zodiac) {
-    return generateMockZodiacFortune();
-}
-
-// 띠별 운세 생성
-async function generateAnimalFortuneWithAI(animal) {
-    return generateMockAnimalFortune();
-}
-
-// 백업 운세 생성
-function generateBackupFortune(name, birthDate, todayGanzhi) {
-    const seed = new Date().getTime() % 1000;
-    const birthDateObj = new Date(birthDate);
     const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
-    
-    // 생년월일과 오늘 날짜를 기반으로 한 시드값
     const fortuneSeed = (birthDateObj.getDate() + birthDateObj.getMonth() + dayOfYear) % 100;
     
     const fortuneTexts = {
@@ -95,7 +150,7 @@ function generateBackupFortune(name, birthDate, todayGanzhi) {
                    '진시(07-09시)', '사시(09-11시)', '오시(11-13시)', '미시(13-15시)',
                    '신시(15-17시)', '유시(17-19시)', '술시(19-21시)', '해시(21-23시)'][fortuneSeed % 12],
             color: ['청색', '적색', '황색', '백색', '흑색', '녹색', '자색', '주황색'][fortuneSeed % 8],
-            stone: ['수정', '홍수정', '황수정', '백수정', '흑수정', '녹수정', '자수정', '호박'][fortuneSeed % 8],
+            numbers: `${(fortuneSeed % 45) + 1}, ${((fortuneSeed + 17) % 45) + 1}`,
             caution: [
                 '감정적인 결정을 피하고 이성적으로 판단하세요',
                 '서두르지 말고 차근차근 진행하는 것이 좋습니다',
@@ -132,27 +187,33 @@ function generateMockZodiacFortune() {
     };
 }
 
-function generateMockAnimalFortune() {
+function generateMockSaju() {
     const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
     const seed = dayOfYear % 100;
     
-    const overallTexts = [
-        "당신의 띠에 길운이 들어오는 날입니다. 평소 미뤄두었던 일을 시작하기 좋은 때입니다.",
-        "십이지신의 보호를 받는 하루가 될 것입니다. 자신감을 가지고 적극적으로 행동하세요.",
-        "오늘은 당신의 띠가 가진 장점이 빛을 발하는 날입니다. 타고난 재능을 마음껏 발휘하세요.",
-        "좋은 기운이 당신을 감싸고 있습니다. 주변 사람들과의 관계도 원만하게 유지될 것입니다."
+    const sajuTexts = [
+        "당신의 사주는 목(木)기운이 강하여 인자하고 성장하는 기질을 가지고 있습니다. 창의적이고 미래지향적인 성격으로 새로운 일을 시작하기에 적합합니다.",
+        "화(火)의 기운이 강한 사주로 열정적이고 활동적인 성격입니다. 리더십이 강하고 타인을 이끄는 능력이 뛰어납니다.",
+        "토(土)의 기운이 안정적으로 자리잡아 신뢰할 수 있는 성격입니다. 꾸준함과 성실함으로 큰 성과를 이룰 수 있습니다.",
+        "금(金)의 기운이 강하여 결단력과 추진력이 뛰어납니다. 정의감이 강하고 원칙을 중시하는 성격입니다.",
+        "수(水)의 기운이 풍부하여 지혜롭고 유연한 사고를 가지고 있습니다. 상황에 따라 변화할 수 있는 적응력이 뛰어납니다."
     ];
     
     return {
-        overall: overallTexts[seed % overallTexts.length],
-        scores: {
-            love: 72 + (seed % 23),
-            money: 70 + ((seed + 15) % 25),
-            work: 74 + ((seed + 25) % 21),
-            health: 76 + ((seed + 35) % 19)
+        overall: sajuTexts[seed % sajuTexts.length],
+        elements: {
+            wood: 20 + (seed % 20),
+            fire: 20 + ((seed + 10) % 20),
+            earth: 20 + ((seed + 20) % 20),
+            metal: 20 + ((seed + 30) % 20),
+            water: 20 + ((seed + 40) % 20)
         },
-        advice: "인내심을 가지고 꾸준히 노력하세요. 당신의 노력은 반드시 좋은 결실을 맺을 것입니다.",
-        luckyDirection: ['동쪽', '서쪽', '남쪽', '북쪽', '중앙'][seed % 5],
-        luckyTime: `${((seed % 12) + 1) * 2 - 1}-${((seed % 12) + 1) * 2 + 1}시`
+        fortune: {
+            wealth: "재물운이 안정적으로 유지되며, 꾸준한 노력으로 부를 축적할 수 있습니다.",
+            career: "직업운이 상승하는 시기로 승진이나 이직의 기회가 있을 수 있습니다.",
+            love: "애정운이 평온하며, 기존 관계는 더욱 깊어지고 새로운 만남도 기대할 수 있습니다.",
+            health: "건강운은 양호하나 과로를 주의하고 규칙적인 생활습관을 유지하세요."
+        },
+        advice: "당신의 강점을 살려 꾸준히 노력한다면 큰 성과를 얻을 수 있습니다. 주변 사람들과의 조화를 중시하며 겸손한 자세를 유지하세요."
     };
 }
