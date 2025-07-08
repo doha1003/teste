@@ -658,7 +658,7 @@
             document.getElementById('next-btn').disabled = answers[currentQuestion] === undefined;
         }
         
-        // 옵션 선택
+        // 옵션 선택 (자동 넘김 기능 추가)
         function selectOption(index) {
             answers[currentQuestion] = index;
             
@@ -669,6 +669,16 @@
             
             // 다음 버튼 활성화
             document.getElementById('next-btn').disabled = false;
+            
+            // 자동으로 다음 질문으로 넘어가기 (0.8초 딜레이)
+            setTimeout(() => {
+                if (currentQuestion < loveDNAQuestions.length - 1) {
+                    nextQuestion();
+                } else {
+                    // 마지막 질문이면 결과 보기
+                    showResult();
+                }
+            }, 800);
         }
         
         // 다음 질문
