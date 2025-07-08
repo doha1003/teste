@@ -30,8 +30,8 @@
     
     <!-- External CSS -->
     <link rel="stylesheet" href="/css/styles.css">
-    <link rel="stylesheet" href="/css/emoji-fix.css">
     <link rel="stylesheet" href="/css/global-text-fix.css">
+    <link rel="stylesheet" href="/css/emoji-fix.css">
     
     <!-- Favicon -->
     <link rel="icon" href="/images/placeholder-favicon.svg" type="image/svg+xml">
@@ -40,224 +40,326 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
     
     <style>
-        /* Enhanced page-specific styles with better contrast */
+        /* 전역 레이아웃 초기화 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: #f8fafc;
+            line-height: 1.6;
+        }
+        
+        /* 메인 컨테이너 */
         .text-counter-container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 40px 20px;
         }
         
+        /* 헤더 섹션 완전 재정렬 */
         .text-counter-header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 48px;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            color: white;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
         }
         
         .text-counter-header h1 {
-            font-size: 36px;
+            font-size: clamp(28px, 4vw, 42px);
             font-weight: 700;
             margin-bottom: 16px;
-            color: #111827 !important;
-            /* Remove gradient to show emoji properly */
-            background: none !important;
-            -webkit-background-clip: unset !important;
-            -webkit-text-fill-color: unset !important;
+            color: white !important;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            /* 이모지 표시 보장 */
+            font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", 'Noto Sans KR', sans-serif;
         }
         
         .text-counter-header p {
-            font-size: 18px;
-            color: #374151;
+            font-size: clamp(16px, 2.5vw, 20px);
+            color: rgba(255, 255, 255, 0.9);
             margin-bottom: 0;
-            font-weight: 500;
+            font-weight: 400;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
         
+        /* 메인 레이아웃 그리드 완전 재구성 */
         .counter-main {
             display: grid;
-            grid-template-columns: 1fr 300px;
+            grid-template-columns: 2fr 1fr;
             gap: 32px;
-            margin-bottom: 40px;
+            margin-bottom: 48px;
+            align-items: start;
         }
         
+        /* 입력 섹션 */
         .text-input-section {
             background: white;
-            border-radius: 16px;
+            border-radius: 20px;
             padding: 32px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            border: 2px solid #e5e7eb;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e2e8f0;
+            height: fit-content;
         }
         
         .text-input-section h2 {
-            font-size: 20px;
+            font-size: 24px;
             font-weight: 600;
-            margin-bottom: 16px;
-            color: #111827;
+            margin-bottom: 20px;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .text-input-section h2::before {
+            content: "✍️";
+            font-size: 24px;
         }
         
         #textInput {
             width: 100%;
-            min-height: 300px;
-            padding: 16px;
-            border: 2px solid #d1d5db;
-            border-radius: 12px;
+            min-height: 320px;
+            padding: 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 16px;
             font-size: 16px;
-            line-height: 1.5;
+            line-height: 1.6;
             resize: vertical;
-            font-family: inherit;
-            transition: border-color 0.2s;
-            color: #111827;
+            font-family: 'Noto Sans KR', sans-serif;
+            transition: all 0.3s ease;
+            color: #1e293b;
             background: #ffffff;
         }
         
         #textInput:focus {
             outline: none;
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
         }
         
+        #textInput::placeholder {
+            color: #94a3b8;
+            line-height: 1.8;
+        }
+        
+        /* 액션 버튼 */
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+            margin-top: 24px;
+        }
+        
+        .btn {
+            padding: 14px 20px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 15px;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-secondary {
+            background: #f1f5f9;
+            color: #475569;
+            border: 2px solid #e2e8f0;
+        }
+        
+        .btn-secondary:hover {
+            background: #e2e8f0;
+            border-color: #cbd5e1;
+            transform: translateY(-1px);
+        }
+        
+        /* 통계 섹션 완전 재디자인 */
         .counter-stats {
             background: white;
-            border-radius: 16px;
+            border-radius: 20px;
             padding: 32px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            height: fit-content;
-            border: 2px solid #e5e7eb;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e2e8f0;
+            position: sticky;
+            top: 20px;
         }
         
         .counter-stats h2 {
-            font-size: 20px;
+            font-size: 24px;
             font-weight: 600;
             margin-bottom: 24px;
-            color: #111827;
+            color: #1e293b;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
         
         .stat-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 16px 0;
-            border-bottom: 2px solid #e5e7eb;
+            padding: 20px 0;
+            border-bottom: 1px solid #f1f5f9;
+            transition: all 0.3s ease;
         }
         
         .stat-item:last-child {
             border-bottom: none;
         }
         
+        .stat-item:hover {
+            background: #f8fafc;
+            margin: 0 -16px;
+            padding: 20px 16px;
+            border-radius: 12px;
+        }
+        
         .stat-label {
-            font-weight: 600;
-            color: #374151;
+            font-weight: 500;
+            color: #64748b;
             font-size: 15px;
         }
         
         .stat-value {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 800;
-            color: #3b82f6;
+            color: #667eea;
+            text-shadow: 0 2px 4px rgba(102, 126, 234, 0.1);
         }
         
-        .action-buttons {
-            display: flex;
-            gap: 12px;
-            margin-top: 24px;
-            flex-wrap: wrap;
-        }
-        
-        .btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-decoration: none;
-            display: inline-block;
-            text-align: center;
-            font-size: 14px;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-            color: white;
-            border: 2px solid transparent;
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
-        }
-        
-        .btn-secondary {
-            background: #f3f4f6;
-            color: #374151;
-            border: 2px solid #d1d5db;
-        }
-        
-        .btn-secondary:hover {
-            background: #e5e7eb;
-            border-color: #9ca3af;
-        }
-        
+        /* 기능 섹션 */
         .features-section {
             background: white;
-            border-radius: 16px;
-            padding: 32px;
-            margin-bottom: 40px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            border: 2px solid #e5e7eb;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 48px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e2e8f0;
         }
         
         .features-section h2 {
-            font-size: 24px;
+            font-size: 32px;
             font-weight: 700;
-            margin-bottom: 24px;
-            color: #111827;
+            margin-bottom: 32px;
+            color: #1e293b;
             text-align: center;
+            font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", 'Noto Sans KR', sans-serif;
         }
         
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 24px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
         }
         
         .feature-item {
             text-align: center;
-            padding: 24px;
-            border-radius: 12px;
-            background: #f9fafb;
-            border: 2px solid #e5e7eb;
+            padding: 32px 24px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
         }
         
         .feature-icon {
-            font-size: 48px;
-            margin-bottom: 16px;
+            font-size: 56px;
+            margin-bottom: 20px;
             display: block;
-            /* Ensure emoji visibility */
-            -webkit-text-fill-color: initial !important;
-            background: none !important;
-            color: #ea580c;
+            font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
         }
         
         .feature-title {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 600;
-            margin-bottom: 8px;
-            color: #111827;
+            margin-bottom: 12px;
+            color: #1e293b;
         }
         
         .feature-desc {
-            color: #374151;
-            line-height: 1.6;
-            font-weight: 500;
+            color: #64748b;
+            line-height: 1.7;
+            font-weight: 400;
         }
         
-        /* 반응형 디자인 */
+        /* 광고 영역 */
+        .ad-container {
+            margin: 60px auto;
+            max-width: 1200px;
+            padding: 32px;
+            text-align: center;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border-radius: 20px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .ad-label {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+        
+        /* 완벽한 반응형 디자인 */
+        @media (max-width: 1024px) {
+            .counter-main {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+            
+            .counter-stats {
+                position: static;
+            }
+        }
+        
         @media (max-width: 768px) {
+            .text-counter-container {
+                padding: 20px 16px;
+            }
+            
+            .text-counter-header {
+                margin-bottom: 32px;
+                padding: 32px 20px;
+            }
+            
             .text-counter-header h1 {
                 font-size: 28px;
             }
             
-            .counter-main {
-                grid-template-columns: 1fr;
-                gap: 24px;
+            .text-counter-header p {
+                font-size: 16px;
             }
             
             .text-input-section,
@@ -266,15 +368,80 @@
             }
             
             #textInput {
-                min-height: 200px;
+                min-height: 240px;
+                padding: 16px;
             }
             
             .action-buttons {
-                flex-direction: column;
+                grid-template-columns: 1fr;
+                gap: 12px;
             }
             
-            .btn {
-                width: 100%;
+            .features-section {
+                padding: 32px 24px;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            
+            .feature-item {
+                padding: 24px 20px;
+            }
+            
+            .ad-container {
+                margin: 40px auto;
+                padding: 24px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .text-counter-container {
+                padding: 16px 12px;
+            }
+            
+            .text-counter-header {
+                padding: 24px 16px;
+                margin-bottom: 24px;
+            }
+            
+            .text-input-section,
+            .counter-stats {
+                padding: 20px;
+            }
+            
+            .features-section {
+                padding: 24px 16px;
+            }
+            
+            .stat-value {
+                font-size: 24px;
+            }
+        }
+        
+        /* 로딩 애니메이션 */
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* 접근성 개선 */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
             }
         }
     </style>
@@ -285,28 +452,37 @@
     
     <div class="text-counter-container">
         <!-- 헤더 섹션 -->
-        <div class="text-counter-header">
+        <div class="text-counter-header fade-in">
             <h1>📝 텍스트 글자수 세기</h1>
             <p>텍스트의 글자수, 단어수, 문단수를 실시간으로 계산해보세요</p>
         </div>
         
         <!-- 메인 카운터 섹션 -->
         <div class="counter-main">
-            <div class="text-input-section">
+            <div class="text-input-section fade-in">
                 <h2>텍스트 입력</h2>
                 <textarea 
                     id="textInput" 
-                    placeholder="여기에 텍스트를 입력하세요...&#10;&#10;실시간으로 글자수, 단어수, 문단수가 계산됩니다.&#10;소셜미디어 게시글 작성이나 과제 제출 전 글자수 확인에 유용합니다."
+                    placeholder="여기에 텍스트를 입력하세요...
+
+실시간으로 글자수, 단어수, 문단수가 계산됩니다.
+소셜미디어 게시글 작성이나 과제 제출 전 글자수 확인에 유용합니다."
                     oninput="updateCounters()"></textarea>
                 
                 <div class="action-buttons">
-                    <button class="btn btn-primary" onclick="copyText()">📋 텍스트 복사</button>
-                    <button class="btn btn-secondary" onclick="clearText()">🗑️ 텍스트 지우기</button>
-                    <button class="btn btn-secondary" onclick="saveText()">💾 텍스트 저장</button>
+                    <button class="btn btn-primary" onclick="copyText()">
+                        📋 텍스트 복사
+                    </button>
+                    <button class="btn btn-secondary" onclick="clearText()">
+                        🗑️ 텍스트 지우기
+                    </button>
+                    <button class="btn btn-secondary" onclick="saveText()">
+                        💾 텍스트 저장
+                    </button>
                 </div>
             </div>
             
-            <div class="counter-stats">
+            <div class="counter-stats fade-in">
                 <h2>📊 통계</h2>
                 
                 <div class="stat-item">
@@ -337,7 +513,7 @@
         </div>
         
         <!-- 기능 소개 섹션 -->
-        <div class="features-section">
+        <div class="features-section fade-in">
             <h2>✨ 주요 기능</h2>
             <div class="features-grid">
                 <div class="feature-item">
@@ -367,8 +543,8 @@
         </div>
         
         <!-- 광고 영역 -->
-        <div class="ad-container" style="margin: 60px auto; max-width: 1200px; padding: 0 20px; text-align: center; background: #f8f9fa; border-radius: 8px; padding: 20px;">
-            <div class="ad-label" style="font-size: 12px; color: #6b7280; margin-bottom: 10px; text-transform: uppercase;">광고</div>
+        <div class="ad-container">
+            <div class="ad-label">광고</div>
             <ins class="adsbygoogle"
                  style="display:block"
                  data-ad-client="ca-pub-7905640648499222"
@@ -416,13 +592,18 @@
         function copyText() {
             const textArea = document.getElementById('textInput');
             textArea.select();
-            textArea.setSelectionRange(0, 99999); // 모바일 브라우저를 위한 설정
+            textArea.setSelectionRange(0, 99999);
             
             try {
                 document.execCommand('copy');
                 alert('텍스트가 클립보드에 복사되었습니다!');
             } catch (err) {
-                alert('복사에 실패했습니다. 직접 선택해서 복사해주세요.');
+                // 모던 브라우저 대응
+                navigator.clipboard.writeText(textArea.value).then(() => {
+                    alert('텍스트가 클립보드에 복사되었습니다!');
+                }).catch(() => {
+                    alert('복사에 실패했습니다. 직접 선택해서 복사해주세요.');
+                });
             }
         }
         
@@ -451,9 +632,22 @@
             window.URL.revokeObjectURL(url);
         }
         
-        // 페이지 로드 시 초기 카운터 업데이트
+        // 페이지 로드 시 초기 카운터 업데이트 및 애니메이션
         document.addEventListener('DOMContentLoaded', function() {
             updateCounters();
+            
+            // 페이드인 애니메이션 적용
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in');
+                    }
+                });
+            });
+            
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
         });
     </script>
     
