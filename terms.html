@@ -3,295 +3,195 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>이용약관 - 테토-에겐 성격 유형 테스트</title>
+    <title>이용약관 - doha.kr</title>
+    <meta name="description" content="doha.kr의 이용약관을 확인하세요. 서비스 이용에 관한 규정과 조건을 안내합니다.">
     
-    <!-- Google AdSense 헤드 태그 (사용자 게시자 ID 적용) -->
+    <!-- Open Graph -->
+    <meta property="og:title" content="doha.kr 이용약관">
+    <meta property="og:description" content="서비스 이용에 관한 규정과 조건">
+    <meta property="og:url" content="https://doha.kr/terms.html">
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" href="/css/styles.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/images/logo.svg" type="image/svg+xml">
+    
+    <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
     
-    <!-- 사이트 확인용 메타 태그 -->
-    <meta name="google-adsense-account" content="ca-pub-7905640648499222">
-    
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: #f8fafc;
-            color: #2d3748;
-            line-height: 1.6;
-            padding: 20px;
-        }
-
-        .container {
+        .terms-content {
             max-width: 800px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
-            overflow: hidden;
+            margin: 80px auto;
+            padding: 0 20px;
+            line-height: 1.8;
         }
-
-        .header {
-            background: linear-gradient(135deg, #2b6cb0 0%, #2c5282 100%);
-            color: white;
-            padding: 40px 30px;
+        
+        .terms-content h1 {
+            color: #111827;
+            margin-bottom: 32px;
             text-align: center;
         }
-
-        .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 8px;
-            font-weight: 600;
-            letter-spacing: -0.025em;
+        
+        .terms-content h2 {
+            color: #111827;
+            margin: 48px 0 16px;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 8px;
         }
-
-        .header p {
-            font-size: 1.2em;
-            opacity: 0.9;
-            font-weight: 300;
+        
+        .terms-content h3 {
+            color: #374151;
+            margin: 32px 0 16px;
         }
-
-        .content {
-            padding: 40px 30px;
+        
+        .terms-content p, .terms-content li {
+            color: #4b5563;
+            margin-bottom: 16px;
         }
-
-        h2 {
-            color: #1a202c;
-            margin: 30px 0 15px 0;
-            font-size: 1.8em;
-            font-weight: 600;
+        
+        .terms-content ul, .terms-content ol {
+            padding-left: 20px;
         }
-
-        h3 {
-            color: #2b6cb0;
-            margin: 20px 0 10px 0;
-            font-size: 1.2em;
-            font-weight: 600;
-        }
-
-        p {
-            margin-bottom: 15px;
-            color: #4a5568;
-            font-size: 1.05em;
-            line-height: 1.6;
-        }
-
-        strong {
-            color: #1a202c;
-            font-weight: 600;
-        }
-
-        .btn {
-            padding: 12px 32px;
-            border: none;
-            border-radius: 6px;
-            font-size: 1em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-primary {
-            background: #2b6cb0;
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: #2c5282;
-            transform: translateY(-1px);
-        }
-
-        .back-btn {
-            margin-top: 40px;
-        }
-
-        /* Footer 스타일 */
-        .footer {
-            background: #2d3748;
-            margin-top: 60px;
-            padding: 30px 20px;
-            color: white;
-        }
-
-        .footer-container {
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .footer-links {
-            margin-bottom: 20px;
-        }
-
-        .footer-link {
-            color: #a0aec0;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.2s ease;
-            padding: 8px 16px;
-            border-radius: 6px;
-            display: inline-block;
-        }
-
-        .footer-link:hover {
-            color: white;
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .footer-divider {
-            color: #4a5568;
-            margin: 0 8px;
-        }
-
-        .footer-copyright {
-            color: #718096;
-            font-size: 0.9em;
-            margin: 0;
-            line-height: 1.5;
-        }
-
-        /* 애드센스 광고 스타일 */
-        .ad-container {
-            text-align: center;
-            margin: 30px 0;
-            padding: 20px;
-            background: #f7fafc;
+        
+        .last-updated {
+            background: #f0f9ff;
+            padding: 16px;
             border-radius: 8px;
-            border: 1px solid #e2e8f0;
+            margin-bottom: 32px;
+            border-left: 4px solid #0ea5e9;
         }
-
+        
+        /* Responsive AdSense Styles */
+        .ad-container {
+            min-height: 250px;
+            margin: 40px auto;
+            max-width: 1200px;
+            padding: 0 20px;
+            text-align: center;
+        }
+        
         .ad-label {
-            font-size: 0.8em;
-            color: #718096;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 8px;
+            text-align: center;
         }
-
-        @media (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
-            
-            .container {
-                border-radius: 8px;
-            }
-            
-            .header {
-                padding: 30px 20px;
-            }
-            
-            .header h1 {
-                font-size: 2em;
-            }
-            
-            .content {
-                padding: 30px 20px;
-            }
-
-            .footer-links {
-                display: flex;
-                flex-direction: column;
-                gap: 8px;
-                align-items: center;
-            }
-
-            .footer-divider {
-                display: none;
-            }
-
-            .footer-link {
-                padding: 12px 24px;
-                background: rgba(255, 255, 255, 0.1);
-                border-radius: 8px;
-                margin: 4px 0;
-            }
+        
+        .adsbygoogle {
+            min-height: 90px;
+            width: 100%;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>이용약관</h1>
-            <p>테토-에겐 성격 유형 테스트</p>
+    <!-- 네비게이션 바 -->
+    <div id="navbar-placeholder"></div>
+    
+    <!-- 이용약관 내용 -->
+    <div class="terms-content">
+        <h1>이용약관</h1>
+        
+        <div class="last-updated">
+            <strong>최종 수정일:</strong> 2025년 1월 1일<br>
+            <strong>시행일:</strong> 2025년 1월 1일
         </div>
-
-        <div class="content">
-            <!-- 헤더 광고 -->
-            <div class="ad-container">
-                <div class="ad-label">광고</div>
-                <!-- 배너 광고 (728x90 또는 320x50) -->
-                <ins class="adsbygoogle"
-                     style="display:block"
-                     data-ad-client="ca-pub-7905640648499222"
-                     data-ad-slot="1234567890"
-                     data-ad-format="auto"
-                     data-full-width-responsive="true"></ins>
-            </div>
-
-            <h2>1. 서비스 이용</h2>
-            <p>본 웹사이트는 재미를 목적으로 한 성격 유형 테스트 서비스를 제공합니다.</p>
-            <p>테스트 결과는 과학적 근거를 바탕으로 하지 않으며, 엔터테인먼트 목적으로만 사용되어야 합니다.</p>
-            
-            <h2>2. 서비스 이용 조건</h2>
-            <p>- 본 서비스는 누구나 무료로 이용할 수 있습니다.</p>
-            <p>- 서비스 이용 시 타인에게 피해를 주는 행위는 금지됩니다.</p>
-            <p>- 테스트 결과를 상업적 목적으로 사용할 수 없습니다.</p>
-            
-            <h2>3. 서비스 제공 및 변경</h2>
-            <p>운영자는 서비스의 내용, 품질, 시간 등을 사전 통지 없이 변경할 수 있습니다.</p>
-            <p>시스템 점검, 서버 장애 등으로 인해 일시적으로 서비스가 중단될 수 있습니다.</p>
-            
-            <h2>4. 면책사항</h2>
-            <p>본 테스트 결과는 재미를 위한 것으로, 실제 성격이나 특성을 정확히 반영하지 않을 수 있습니다.</p>
-            <p>테스트 결과로 인한 어떠한 문제도 운영자가 책임지지 않습니다.</p>
-            
-            <h2>5. 광고 게재</h2>
-            <p>본 사이트는 Google AdSense를 통해 광고를 게재할 수 있습니다.</p>
-            <p>광고 내용은 Google의 정책에 따라 결정되며, 운영자가 직접 관리하지 않습니다.</p>
-            
-            <h2>6. 지적재산권</h2>
-            <p>본 웹사이트의 디자인, 콘텐츠, 소스코드 등은 운영자의 지적재산권으로 보호됩니다.</p>
-            
-            <h2>7. 약관 변경</h2>
-            <p>본 약관은 관련 법령이나 서비스 정책 변경에 따라 수정될 수 있습니다.</p>
-            <p>변경된 약관은 웹사이트에 게시함으로써 효력을 발생합니다.</p>
-            
-            <p><strong>시행일자: 2025년 1월 1일</strong></p>
-            
-            <a href="index.html" class="btn btn-primary back-btn">메인으로 돌아가기</a>
-        </div>
+        
+        <h2>제1조 (목적)</h2>
+        <p>이 약관은 doha.kr(이하 "사이트")에서 제공하는 인터넷 서비스의 이용조건 및 절차, 이용자와 사이트의 권리, 의무, 책임사항과 기타 필요한 사항을 규정함을 목적으로 합니다.</p>
+        
+        <h2>제2조 (정의)</h2>
+        <p>이 약관에서 사용하는 용어의 정의는 다음과 같습니다:</p>
+        <ol>
+            <li>"서비스"라 함은 구현되는 단말기(PC, TV, 휴대형단말기 등의 각종 유무선 장치를 포함)와 상관없이 "이용자"가 이용할 수 있는 doha.kr 관련 제반 서비스를 의미합니다.</li>
+            <li>"이용자"라 함은 당 사이트에 접속하여 이 약관에 따라 당 사이트가 제공하는 서비스를 받는 자를 말합니다.</li>
+            <li>"콘텐츠"라 함은 문자, 음성, 음향, 화상, 동영상 등의 정보 및 그 밖의 자료를 의미합니다.</li>
+        </ol>
+        
+        <h2>제3조 (약관의 명시와 설명 및 개정)</h2>
+        <ol>
+            <li>사이트는 이 약관의 내용과 상호 및 대표자 성명, 영업소 소재지 주소(소비자의 불만을 처리할 수 있는 곳의 주소를 포함), 전화번호, 전자우편주소, 사업자등록번호, 개인정보보호책임자 등을 이용자가 쉽게 알 수 있도록 사이트의 초기 서비스화면에 게시합니다.</li>
+            <li>사이트는 이용자가 약관에 동의하기에 앞서 약관에 정하여져 있는 내용 중 청약철회, 배송책임, 환불조건 등과 같은 중요한 내용을 이용자가 이해할 수 있도록 별도의 연결화면 또는 팝업화면 등을 제공하여 이용자의 확인을 구하여야 합니다.</li>
+            <li>사이트는 「전자상거래 등에서의 소비자보호에 관한 법률」, 「약관의 규제에 관한 법률」, 「전자문서 및 전자거래기본법」, 「전자금융거래법」, 「전자서명법」, 「정보통신망 이용촉진 및 정보보호 등에 관한 법률」, 「소비자기본법」 등 관련 법을 위배하지 않는 범위에서 이 약관을 개정할 수 있습니다.</li>
+        </ol>
+        
+        <h2>제4조 (서비스의 제공 및 변경)</h2>
+        <ol>
+            <li>사이트는 다음과 같은 업무를 수행합니다:
+                <ul>
+                    <li>심리테스트 서비스 제공</li>
+                    <li>실용도구 서비스 제공</li>
+                    <li>운세 및 타로 서비스 제공</li>
+                    <li>기타 사이트가 정하는 업무</li>
+                </ul>
+            </li>
+            <li>사이트는 재화 또는 용역의 품절 또는 기술적 사양의 변경 등의 경우에는 장차 체결되는 계약에 의해 제공할 재화 또는 용역의 내용을 변경할 수 있습니다. 이 경우에는 변경된 재화 또는 용역의 내용 및 제공일자를 명시하여 현재의 재화 또는 용역의 내용을 게시한 곳에 즉시 공지합니다.</li>
+        </ol>
+        
+        <h2>제5조 (서비스의 중단)</h2>
+        <ol>
+            <li>사이트는 컴퓨터 등 정보통신설비의 보수점검·교체 및 고장, 통신의 두절 등의 사유가 발생한 경우에는 서비스의 제공을 일시적으로 중단할 수 있습니다.</li>
+            <li>사이트는 제1항의 사유로 서비스의 제공이 일시적으로 중단됨으로 인하여 이용자 또는 제3자가 입은 손해에 대하여는 배상하지 않습니다. 단, 사이트에 고의 또는 중대한 과실이 있는 경우에는 그러하지 아니합니다.</li>
+        </ol>
+        
+        <h2>제6조 (이용자의 의무)</h2>
+        <ol>
+            <li>이용자는 다음 행위를 하여서는 안 됩니다:
+                <ul>
+                    <li>신청 또는 변경시 허위 내용의 등록</li>
+                    <li>타인의 정보 도용</li>
+                    <li>사이트에 게시된 정보의 변경</li>
+                    <li>사이트가 정한 정보 이외의 정보(컴퓨터 프로그램 등) 등의 송신 또는 게시</li>
+                    <li>사이트 기타 제3자의 저작권 등 지적재산권에 대한 침해</li>
+                    <li>사이트 기타 제3자의 명예를 손상시키거나 업무를 방해하는 행위</li>
+                    <li>외설 또는 폭력적인 메시지, 화상, 음성, 기타 공서양속에 반하는 정보를 사이트에 공개 또는 게시하는 행위</li>
+                </ul>
+            </li>
+        </ol>
+        
+        <h2>제7조 (저작권의 귀속 및 이용제한)</h2>
+        <ol>
+            <li>사이트가 작성한 저작물에 대한 저작권 기타 지적재산권은 사이트에 귀속합니다.</li>
+            <li>이용자는 사이트를 이용함으로써 얻은 정보 중 사이트에게 지적재산권이 귀속된 정보를 사이트의 사전 승낙 없이 복제, 송신, 출판, 배포, 방송 기타 방법에 의하여 영리목적으로 이용하거나 제3자에게 이용하게 하여서는 안됩니다.</li>
+            <li>사이트는 약정에 따라 이용자에게 귀속된 저작권을 사용하는 경우 당해 이용자에게 통보하여야 합니다.</li>
+        </ol>
+        
+        <h2>제8조 (분쟁해결)</h2>
+        <ol>
+            <li>사이트는 이용자가 제기하는 정당한 의견이나 불만을 반영하고 그 피해를 보상처리하기 위하여 피해보상처리기구를 설치·운영합니다.</li>
+            <li>사이트는 이용자로부터 제출되는 불만사항 및 의견은 우선적으로 그 사항을 처리합니다. 다만, 신속한 처리가 곤란한 경우에는 이용자에게 그 사유와 처리일정을 즉시 통보해 드립니다.</li>
+            <li>사이트와 이용자 간에 발생한 전자상거래 분쟁과 관련하여 이용자의 피해구제신청이 있는 경우에는 공정거래위원회 또는 시·도지사가 의뢰하는 분쟁조정기관의 조정에 따를 수 있습니다.</li>
+        </ol>
+        
+        <h2>제9조 (재판권 및 준거법)</h2>
+        <ol>
+            <li>사이트와 이용자 간에 발생한 전자상거래 분쟁에 관한 소송은 제소 당시의 이용자의 주소에 의하고, 주소가 없는 경우에는 거소를 관할하는 지방법원의 전속관할로 합니다. 다만, 제소 당시 이용자의 주소 또는 거소가 분명하지 않거나 외국 거주자의 경우에는 민사소송법상의 관할법원에 제기합니다.</li>
+            <li>사이트와 이용자 간에 제기된 전자상거래 소송에는 한국법을 적용합니다.</li>
+        </ol>
+        
+        <h2>부칙</h2>
+        <p>이 약관은 2025년 1월 1일부터 적용됩니다.</p>
     </div>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-links">
-                <a href="privacy.html" class="footer-link">개인정보처리방침</a>
-                <span class="footer-divider">|</span>
-                <a href="terms.html" class="footer-link">이용약관</a>
-                <span class="footer-divider">|</span>
-                <a href="contact.html" class="footer-link">문의하기</a>
-            </div>
-            <p class="footer-copyright">© 2025 테토-에겐 성격 유형 분석. 과학적 근거를 바탕으로 한 성격 분석 도구입니다.</p>
-        </div>
-    </footer>
-
-    <script>
-        // 페이지 로드 시 애드센스 광고 로드
-        document.addEventListener('DOMContentLoaded', function() {
-            try {
-                (adsbygoogle = window.adsbygoogle || []).push({});
-            } catch (e) {
-                console.log('AdSense not loaded yet');
-            }
-        });
-    </script>
+    
+    <!-- 광고 영역 -->
+    <div class="ad-container">
+        <div class="ad-label">광고</div>
+        <ins class="adsbygoogle"
+             style="display:block; min-height: 90px;"
+             data-ad-client="ca-pub-7905640648499222"
+             data-ad-slot="9876543210"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+    
+    <!-- 푸터 -->
+    <div id="footer-placeholder"></div>
+    
+    <!-- External JavaScript -->
+    <script src="/js/main.js"></script>
 </body>
 </html>
