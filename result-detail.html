@@ -9,293 +9,20 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
     <meta name="google-adsense-account" content="ca-pub-7905640648499222">
     
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: #f8fafc;
-            color: #2d3748;
-            line-height: 1.6;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .header {
-            background: linear-gradient(135deg, #2b6cb0 0%, #2c5282 100%);
-            color: white;
-            padding: 40px 30px;
-            text-align: center;
-            border-radius: 12px 12px 0 0;
-            margin-bottom: -1px;
-        }
-
-        .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-
-        .type-badge {
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-size: 1.1em;
-            margin-top: 10px;
-        }
-
-        .content {
-            background: white;
-            padding: 40px 30px;
-            border-radius: 0 0 12px 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
-        }
-
-        .section {
-            margin-bottom: 50px;
-        }
-
-        .section-title {
-            font-size: 1.8em;
-            color: #1a202c;
-            margin-bottom: 25px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .section-icon {
-            font-size: 1.2em;
-        }
-
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .feature-card {
-            background: #f7fafc;
-            padding: 24px;
-            border-radius: 8px;
-            border: 1px solid #e2e8f0;
-            transition: transform 0.2s ease;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .feature-card h3 {
-            color: #2b6cb0;
-            margin-bottom: 12px;
-            font-size: 1.2em;
-        }
-
-        .feature-card p {
-            color: #4a5568;
-            font-size: 0.95em;
-            line-height: 1.6;
-        }
-
-        .strength-weakness {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin-bottom: 30px;
-        }
-
-        .strength-box, .weakness-box {
-            padding: 25px;
-            border-radius: 12px;
-        }
-
-        .strength-box {
-            background: #e6fffa;
-            border: 1px solid #81e6d9;
-        }
-
-        .weakness-box {
-            background: #fed7d7;
-            border: 1px solid #fc8181;
-        }
-
-        .box-title {
-            font-size: 1.3em;
-            font-weight: 600;
-            margin-bottom: 15px;
-            color: #1a202c;
-        }
-
-        .list-item {
-            padding: 10px 0;
-            padding-left: 25px;
-            position: relative;
-            color: #4a5568;
-        }
-
-        .list-item::before {
-            content: "•";
-            position: absolute;
-            left: 0;
-            color: #2b6cb0;
-            font-weight: bold;
-            font-size: 1.2em;
-        }
-
-        .career-section {
-            background: #edf2f7;
-            padding: 30px;
-            border-radius: 12px;
-            margin-bottom: 30px;
-        }
-
-        .career-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .career-item {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            text-align: center;
-            border: 2px solid transparent;
-            transition: all 0.2s ease;
-        }
-
-        .career-item:hover {
-            border-color: #2b6cb0;
-            transform: translateY(-2px);
-        }
-
-        .relationship-box {
-            background: linear-gradient(135deg, #ebf8ff 0%, #e0e7ff 100%);
-            padding: 30px;
-            border-radius: 12px;
-            margin-bottom: 30px;
-        }
-
-        .stress-management {
-            background: #fef5e7;
-            padding: 25px;
-            border-radius: 12px;
-            border-left: 4px solid #f39c12;
-        }
-
-        .lifestyle-section {
-            background: white;
-            border: 2px solid #e2e8f0;
-            padding: 30px;
-            border-radius: 12px;
-        }
-
-        .communication-tips {
-            background: #f0fff4;
-            padding: 25px;
-            border-radius: 12px;
-            border-left: 4px solid #48bb78;
-        }
-
-        .success-advice {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 40px;
-            border-radius: 12px;
-            text-align: center;
-            margin-top: 40px;
-        }
-
-        .success-advice h3 {
-            font-size: 1.8em;
-            margin-bottom: 20px;
-        }
-
-        .success-advice p {
-            font-size: 1.1em;
-            line-height: 1.8;
-            opacity: 0.95;
-        }
-
-        /* 애드센스 광고 스타일 */
-        .ad-container {
-            text-align: center;
-            margin: 30px 0;
-            padding: 20px;
-            background: #f7fafc;
-            border-radius: 8px;
-            border: 1px solid #e2e8f0;
-        }
-
-        .ad-label {
-            font-size: 0.8em;
-            color: #718096;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .back-btn {
-            display: inline-block;
-            margin-top: 40px;
-            padding: 14px 40px;
-            background: #2b6cb0;
-            color: white;
-            text-decoration: none;
-            border-radius: 6px;
-            font-weight: 600;
-            transition: all 0.2s ease;
-        }
-
-        .back-btn:hover {
-            background: #2c5282;
-            transform: translateY(-2px);
-        }
-
-        @media (max-width: 768px) {
-            .strength-weakness {
-                grid-template-columns: 1fr;
-            }
-
-            .career-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .header h1 {
-                font-size: 2em;
-            }
-
-            .content {
-                padding: 30px 20px;
-            }
-        }
-    </style>
+    <!-- External CSS -->
+    <link rel="stylesheet" href="/css/pages/result-detail.css">
 </head>
 <body>
-    <div class="container">
-        <div class="header">
+    <div class="result-detail-container">
+        <div class="result-detail-header">
             <h1 id="result-title">성격 유형 상세 분석</h1>
-            <div class="type-badge" id="type-badge">유형 로딩 중...</div>
+            <div class="result-detail-type-badge" id="type-badge">유형 로딩 중...</div>
         </div>
 
-        <div class="content">
+        <div class="result-detail-content">
             <!-- 헤더 광고 -->
-            <div class="ad-container">
-                <div class="ad-label">광고</div>
+            <div class="result-detail-ad-container">
+                <div class="result-detail-ad-label">광고</div>
                 <ins class="adsbygoogle"
                      style="display:block"
                      data-ad-client="ca-pub-7905640648499222"
@@ -305,31 +32,31 @@
             </div>
 
             <!-- 핵심 성격 특징 -->
-            <div class="section">
-                <h2 class="section-title">
-                    <span class="section-icon">💎</span>
+            <div class="result-detail-section">
+                <h2 class="result-detail-section-title">
+                    <span class="result-detail-section-icon">💎</span>
                     핵심 성격 특징
                 </h2>
-                <div class="feature-grid" id="core-features">
+                <div class="result-detail-feature-grid" id="core-features">
                     <!-- JavaScript로 동적 생성 -->
                 </div>
             </div>
 
             <!-- 장점과 단점 -->
-            <div class="section">
-                <h2 class="section-title">
-                    <span class="section-icon">⚖️</span>
+            <div class="result-detail-section">
+                <h2 class="result-detail-section-title">
+                    <span class="result-detail-section-icon">⚖️</span>
                     장점과 개선점
                 </h2>
-                <div class="strength-weakness">
-                    <div class="strength-box">
-                        <h3 class="box-title">강점과 장점</h3>
+                <div class="result-detail-strength-weakness">
+                    <div class="result-detail-strength-box">
+                        <h3 class="result-detail-box-title">강점과 장점</h3>
                         <div id="strengths">
                             <!-- JavaScript로 동적 생성 -->
                         </div>
                     </div>
-                    <div class="weakness-box">
-                        <h3 class="box-title">개선할 점</h3>
+                    <div class="result-detail-weakness-box">
+                        <h3 class="result-detail-box-title">개선할 점</h3>
                         <div id="improvements">
                             <!-- JavaScript로 동적 생성 -->
                         </div>
@@ -338,8 +65,8 @@
             </div>
 
             <!-- 중간 광고 -->
-            <div class="ad-container">
-                <div class="ad-label">광고</div>
+            <div class="result-detail-ad-container">
+                <div class="result-detail-ad-label">광고</div>
                 <ins class="adsbygoogle"
                      style="display:block"
                      data-ad-client="ca-pub-7905640648499222"
@@ -349,26 +76,26 @@
             </div>
 
             <!-- 직업과 커리어 -->
-            <div class="section">
-                <h2 class="section-title">
-                    <span class="section-icon">💼</span>
+            <div class="result-detail-section">
+                <h2 class="result-detail-section-title">
+                    <span class="result-detail-section-icon">💼</span>
                     적합한 직업과 커리어
                 </h2>
-                <div class="career-section">
+                <div class="result-detail-career-section">
                     <p id="career-advice"><!-- JavaScript로 동적 생성 --></p>
-                    <div class="career-grid" id="career-list">
+                    <div class="result-detail-career-grid" id="career-list">
                         <!-- JavaScript로 동적 생성 -->
                     </div>
                 </div>
             </div>
 
             <!-- 연애와 관계 -->
-            <div class="section">
-                <h2 class="section-title">
-                    <span class="section-icon">❤️</span>
+            <div class="result-detail-section">
+                <h2 class="result-detail-section-title">
+                    <span class="result-detail-section-icon">❤️</span>
                     연애 스타일과 관계
                 </h2>
-                <div class="relationship-box">
+                <div class="result-detail-relationship-box">
                     <div id="relationship-content">
                         <!-- JavaScript로 동적 생성 -->
                     </div>
@@ -376,47 +103,47 @@
             </div>
 
             <!-- 스트레스 관리 -->
-            <div class="section">
-                <h2 class="section-title">
-                    <span class="section-icon">🧘</span>
+            <div class="result-detail-section">
+                <h2 class="result-detail-section-title">
+                    <span class="result-detail-section-icon">🧘</span>
                     스트레스 대처법
                 </h2>
-                <div class="stress-management" id="stress-content">
+                <div class="result-detail-stress-management" id="stress-content">
                     <!-- JavaScript로 동적 생성 -->
                 </div>
             </div>
 
             <!-- 일상생활과 취미 -->
-            <div class="section">
-                <h2 class="section-title">
-                    <span class="section-icon">🎯</span>
+            <div class="result-detail-section">
+                <h2 class="result-detail-section-title">
+                    <span class="result-detail-section-icon">🎯</span>
                     일상생활 패턴과 취미
                 </h2>
-                <div class="lifestyle-section" id="lifestyle-content">
+                <div class="result-detail-lifestyle-section" id="lifestyle-content">
                     <!-- JavaScript로 동적 생성 -->
                 </div>
             </div>
 
             <!-- 의사소통 스타일 -->
-            <div class="section">
-                <h2 class="section-title">
-                    <span class="section-icon">💬</span>
+            <div class="result-detail-section">
+                <h2 class="result-detail-section-title">
+                    <span class="result-detail-section-icon">💬</span>
                     의사소통 스타일
                 </h2>
-                <div class="communication-tips" id="communication-content">
+                <div class="result-detail-communication-tips" id="communication-content">
                     <!-- JavaScript로 동적 생성 -->
                 </div>
             </div>
 
             <!-- 성공을 위한 조언 -->
-            <div class="success-advice">
+            <div class="result-detail-success-advice">
                 <h3>성공적인 삶을 위한 조언</h3>
                 <p id="success-advice"><!-- JavaScript로 동적 생성 --></p>
             </div>
 
             <!-- 하단 광고 -->
-            <div class="ad-container">
-                <div class="ad-label">광고</div>
+            <div class="result-detail-ad-container">
+                <div class="result-detail-ad-label">광고</div>
                 <ins class="adsbygoogle"
                      style="display:block"
                      data-ad-client="ca-pub-7905640648499222"
@@ -426,7 +153,7 @@
             </div>
 
             <div style="text-align: center;">
-                <a href="index.html" class="back-btn">다시 테스트하기</a>
+                <a href="index.html" class="result-detail-back-btn">다시 테스트하기</a>
             </div>
         </div>
     </div>
@@ -499,11 +226,11 @@
                     
                     <h4>추천 취미</h4>
                     <ul>
-                        <li class="list-item">헬스, 크로스핏, 격투기</li>
-                        <li class="list-item">주식/부동산 투자</li>
-                        <li class="list-item">전략 시뮬레이션 게임</li>
-                        <li class="list-item">등산, 익스트림 스포츠</li>
-                        <li class="list-item">자기계발 세미나 참여</li>
+                        <li class="result-detail-list-item">헬스, 크로스핏, 격투기</li>
+                        <li class="result-detail-list-item">주식/부동산 투자</li>
+                        <li class="result-detail-list-item">전략 시뮬레이션 게임</li>
+                        <li class="result-detail-list-item">등산, 익스트림 스포츠</li>
+                        <li class="result-detail-list-item">자기계발 세미나 참여</li>
                     </ul>
                 `,
                 communication: "결론부터 말하는 '두괄식' 화법을 선호하며, 사실과 논리에 기반한 명확한 커뮤니케이션을 중시합니다. 감정적인 호소나 모호한 표현은 답답하게 느낄 수 있습니다. 대화할 때는 핵심을 먼저 말하고, 구체적인 근거를 제시하는 것이 효과적입니다.",
@@ -574,11 +301,11 @@
                     
                     <h4>추천 취미</h4>
                     <ul>
-                        <li class="list-item">경쟁적인 스포츠 (테니스, 배드민턴)</li>
-                        <li class="list-item">클라이밍, 마라톤</li>
-                        <li class="list-item">독서 (자기계발서, 전문서적)</li>
-                        <li class="list-item">코딩, 프로그래밍</li>
-                        <li class="list-item">투자 공부 및 실전</li>
+                        <li class="result-detail-list-item">경쟁적인 스포츠 (테니스, 배드민턴)</li>
+                        <li class="result-detail-list-item">클라이밍, 마라톤</li>
+                        <li class="result-detail-list-item">독서 (자기계발서, 전문서적)</li>
+                        <li class="result-detail-list-item">코딩, 프로그래밍</li>
+                        <li class="result-detail-list-item">투자 공부 및 실전</li>
                     </ul>
                 `,
                 communication: "결론부터 말하는 두괄식 화법을 선호하며, 명확하고 논리적으로 의사를 전달합니다. 공감이나 위로의 말보다는 문제 해결을 위한 구체적인 조언을 하는 경향이 있습니다. 효율적이고 직접적인 소통을 선호합니다.",
@@ -649,12 +376,12 @@
                     
                     <h4>추천 취미</h4>
                     <ul>
-                        <li class="list-item">영화/드라마 감상</li>
-                        <li class="list-item">음악 감상 및 악기 연주</li>
-                        <li class="list-item">요리와 베이킹</li>
-                        <li class="list-item">반려 식물/동물 키우기</li>
-                        <li class="list-item">봉사활동</li>
-                        <li class="list-item">독서 (소설, 에세이)</li>
+                        <li class="result-detail-list-item">영화/드라마 감상</li>
+                        <li class="result-detail-list-item">음악 감상 및 악기 연주</li>
+                        <li class="result-detail-list-item">요리와 베이킹</li>
+                        <li class="result-detail-list-item">반려 식물/동물 키우기</li>
+                        <li class="result-detail-list-item">봉사활동</li>
+                        <li class="result-detail-list-item">독서 (소설, 에세이)</li>
                     </ul>
                 `,
                 communication: "상대방의 기분을 고려한 완곡한 표현을 사용하며, 공감과 지지를 표현하는 말을 자주 사용합니다. 상대방의 이야기에 귀 기울이는 훌륭한 경청자입니다. '당신의 마음을 이해해요', '함께 해결해봐요' 같은 따뜻한 표현을 자주 사용합니다.",
@@ -725,12 +452,12 @@
                     
                     <h4>추천 취미</h4>
                     <ul>
-                        <li class="list-item">전시회 관람</li>
-                        <li class="list-item">베이킹과 디저트 만들기</li>
-                        <li class="list-item">다이어리 꾸미기</li>
-                        <li class="list-item">봉사활동</li>
-                        <li class="list-item">요가와 명상</li>
-                        <li class="list-item">플라워 아트</li>
+                        <li class="result-detail-list-item">전시회 관람</li>
+                        <li class="result-detail-list-item">베이킹과 디저트 만들기</li>
+                        <li class="result-detail-list-item">다이어리 꾸미기</li>
+                        <li class="result-detail-list-item">봉사활동</li>
+                        <li class="result-detail-list-item">요가와 명상</li>
+                        <li class="result-detail-list-item">플라워 아트</li>
                     </ul>
                 `,
                 communication: "상대방의 감정을 먼저 살피고, 부드럽고 완곡한 표현을 사용하여 조심스럽게 의사를 전달합니다. 직접적인 비판이나 지적보다는 칭찬과 격려를 통해 상대방의 행동 변화를 유도합니다. '괜찮아요', '함께해요' 같은 위로의 말을 자주 사용합니다.",
@@ -760,7 +487,7 @@
 
             // 핵심 특징
             const coreFeatures = data.coreFeatures.map(feature => `
-                <div class="feature-card">
+                <div class="result-detail-feature-card">
                     <h3>${feature.title}</h3>
                     <p>${feature.desc}</p>
                 </div>
@@ -769,20 +496,20 @@
 
             // 강점
             const strengths = data.strengths.map(item => `
-                <div class="list-item">${item}</div>
+                <div class="result-detail-list-item">${item}</div>
             `).join('');
             document.getElementById('strengths').innerHTML = strengths;
 
             // 개선점
             const improvements = data.improvements.map(item => `
-                <div class="list-item">${item}</div>
+                <div class="result-detail-list-item">${item}</div>
             `).join('');
             document.getElementById('improvements').innerHTML = improvements;
 
             // 커리어
             document.getElementById('career-advice').textContent = data.careerAdvice;
             const careers = data.careers.map(career => `
-                <div class="career-item">${career}</div>
+                <div class="result-detail-career-item">${career}</div>
             `).join('');
             document.getElementById('career-list').innerHTML = careers;
 
