@@ -1,394 +1,162 @@
-/* Love DNA Test Page Styles - Namespaced and Optimized */
-/* Extracted from tests/love-dna/test.html inline styles */
+/* Love DNA 테스트 페이지 전용 CSS */
 
-/* Global Styles Reset */
-* {
+/* 러브 DNA 전용 CSS 변수 */
+:root {
+    --love-primary: #ff6b9d;
+    --love-primary-dark: #e55e8a;
+    --love-secondary: #4ecdc4;
+    --love-accent: #45b7d1;
+    --love-success: #96c93d;
+    --love-warning: #feca57;
+    --love-error: #ff7675;
+    
+    --love-gradient-primary: linear-gradient(135deg, #ff6b9d, #c44569);
+    --love-gradient-secondary: linear-gradient(135deg, #a8e6cf, #7fcdcd);
+    --love-gradient-accent: linear-gradient(135deg, #ffeaa7, #fab1a0);
+    --love-gradient-success: linear-gradient(135deg, #00b894, #00a085);
+    
+    --dna-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --heart-gradient: linear-gradient(135deg, #ff6b9d 0%, #ee5a6f 100%);
+    --magic-gradient: linear-gradient(135deg, #a8e6cf 0%, #88d8c0 100%);
+    
+    --love-bg: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 50%, #ff7675 100%);
+    
+    --love-text-primary: #2d3436;
+    --love-text-secondary: #636e72;
+    --love-text-light: #b2bec3;
+}
+
+/* 전체 페이지 배경 */
+body {
+    background: var(--love-bg);
+    min-height: 100vh;
+    font-family: 'Noto Sans KR', sans-serif;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
 }
 
-body {
-    font-family: 'Noto Sans KR', sans-serif;
-    background: #1a0d26;
-    color: #ffffff;
-    overflow-x: hidden;
-    min-height: 100vh;
-    position: relative;
-}
-
-/* Animated Background */
-.love-animated-background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    background: linear-gradient(180deg, #1a0d26 0%, #2d1b4e 50%, #3d2863 100%);
-}
-
-.love-heart-particle {
-    position: absolute;
-    font-size: 20px;
-    opacity: 0;
-    animation: floatUp 8s linear infinite;
-}
-
-@keyframes floatUp {
-    0% {
-        opacity: 0;
-        transform: translateY(100vh) rotate(0deg);
-    }
-    10% {
-        opacity: 0.3;
-    }
-    90% {
-        opacity: 0.3;
-    }
-    100% {
-        opacity: 0;
-        transform: translateY(-100px) rotate(360deg);
-    }
-}
-
-/* Main Container */
-.love-test-wrapper {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-/* Header Section - Modern and Vibrant Design */
-.love-header-section {
-    background: linear-gradient(135deg, #ff006e 0%, #ff4458 25%, #ff6b9d 50%, #c44569 75%, #ff006e 100%);
-    background-size: 200% 200%;
-    animation: gradientShift 10s ease infinite;
-    border-radius: 30px;
-    padding: 60px 40px;
-    margin-bottom: 40px;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 20px 60px rgba(255, 107, 157, 0.4);
-}
-
-@keyframes gradientShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
-.love-header-section::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: repeating-linear-gradient(
-        45deg,
-        transparent,
-        transparent 10px,
-        rgba(255, 255, 255, 0.05) 10px,
-        rgba(255, 255, 255, 0.05) 20px
-    );
-    animation: slidePattern 20s linear infinite;
-}
-
-@keyframes slidePattern {
-    0% { transform: translate(0, 0); }
-    100% { transform: translate(50px, 50px); }
-}
-
-.love-header-content {
-    position: relative;
-    z-index: 2;
-    text-align: center;
-    color: white;
-}
-
-.love-header-title {
-    font-size: 3.5em;
-    font-weight: 900;
-    margin-bottom: 15px;
-    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-    letter-spacing: -1px;
-    animation: titleGlow 3s ease-in-out infinite;
-}
-
-@keyframes titleGlow {
-    0%, 100% { text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); }
-    50% { text-shadow: 0 4px 30px rgba(255, 255, 255, 0.5), 0 0 60px rgba(255, 107, 157, 0.5); }
-}
-
-.love-header-subtitle {
-    font-size: 1.3em;
-    font-weight: 500;
-    opacity: 1; /* Enhanced visibility */
-    margin-bottom: 30px;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); /* Improved readability */
-}
-
-.love-header-decoration {
-    position: absolute;
-    font-size: 80px;
-    opacity: 0.1;
-    animation: float 6s ease-in-out infinite;
-}
-
-.love-header-decoration:nth-child(1) {
-    top: 20px;
-    left: 20px;
-    animation-delay: 0s;
-}
-
-.love-header-decoration:nth-child(2) {
-    bottom: 20px;
-    right: 20px;
-    animation-delay: 3s;
-}
-
-@keyframes float {
-    0%, 100% { transform: translateY(0px) rotate(0deg); }
-    50% { transform: translateY(-20px) rotate(10deg); }
-}
-
-/* Test Container - Glassmorphism Effect */
+/* 테스트 컨테이너 */
 .love-test-container {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border-radius: 30px;
-    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+/* 테스트 카드 */
+.love-test-card {
+    background: white;
+    border-radius: 24px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
     overflow: hidden;
     position: relative;
-}
-
-/* Intro Screen */
-.love-intro-section {
-    padding: 80px 40px;
-    text-align: center;
-    animation: fadeInUp 0.8s ease;
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.love-intro-title {
-    font-size: 2.5em;
-    font-weight: 800;
-    background: linear-gradient(135deg, #ff006e, #ff6b9d);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 30px;
-}
-
-.love-intro-text {
-    font-size: 1.2em;
-    line-height: 1.8;
-    color: #374151; /* Enhanced contrast for dark background */
-    margin-bottom: 50px;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-    font-weight: 500;
-}
-
-.love-start-button {
-    background: linear-gradient(135deg, #ff006e 0%, #ff4458 100%);
-    color: white;
-    border: none;
-    padding: 20px 60px;
-    font-size: 1.3em;
-    font-weight: 700;
-    border-radius: 60px;
-    cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    box-shadow: 0 10px 40px rgba(255, 0, 110, 0.3);
-    position: relative;
-    overflow: hidden;
-}
-
-.love-start-button::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    transition: width 0.6s, height 0.6s;
-}
-
-.love-start-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 15px 50px rgba(255, 0, 110, 0.4);
-}
-
-.love-start-button:active::before {
-    width: 300px;
-    height: 300px;
-}
-
-/* Progress Display - Premium Design */
-.love-progress-container {
-    padding: 40px 40px 30px;
-    background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
-    position: relative;
-}
-
-.love-progress-info {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     margin-bottom: 20px;
-    color: #764ba2;
-    font-weight: 600;
 }
 
-.love-progress-text {
-    font-size: 1.1em;
-}
-
-.love-progress-bar {
-    height: 12px;
-    background: rgba(255, 255, 255, 0.5);
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.love-progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, #ff006e 0%, #ff6b9d 100%);
-    border-radius: 20px;
-    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 2px 10px rgba(255, 0, 110, 0.4);
-    position: relative;
-    overflow: hidden;
-}
-
-.love-progress-fill::after {
+.love-test-card::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-    animation: shimmer 2s infinite;
+    background: linear-gradient(45deg, 
+        rgba(255, 107, 157, 0.05) 0%, 
+        rgba(196, 69, 105, 0.05) 25%,
+        rgba(168, 230, 207, 0.05) 50%,
+        rgba(127, 205, 205, 0.05) 75%,
+        rgba(255, 107, 157, 0.05) 100%);
+    background-size: 400% 400%;
+    animation: loveGradientShift 8s ease infinite;
+    pointer-events: none;
 }
 
-@keyframes shimmer {
+@keyframes loveGradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+/* 테스트 헤더 */
+.love-test-header {
+    padding: 40px;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+.love-progress-bar {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 107, 157, 0.2);
+    border-radius: 10px;
+    margin-bottom: 30px;
+    overflow: hidden;
+}
+
+.love-progress {
+    height: 100%;
+    background: var(--love-gradient-primary);
+    border-radius: 10px;
+    transition: width 0.5s ease;
+    position: relative;
+}
+
+.love-progress::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    animation: loveShine 2s ease-in-out infinite;
+}
+
+@keyframes loveShine {
     0% { transform: translateX(-100%); }
     100% { transform: translateX(100%); }
 }
 
-/* Question Card - Modern Card Design */
-.love-question-container {
-    padding: 60px 40px;
-    min-height: 500px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    animation: questionFadeIn 0.6s ease;
-}
-
-@keyframes questionFadeIn {
-    from {
-        opacity: 0;
-        transform: scale(0.95);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-.love-question-card {
-    background: linear-gradient(135deg, #f8f9ff 0%, #fff 100%);
-    border-radius: 20px;
-    padding: 40px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-    margin-bottom: 40px;
-    position: relative;
-    overflow: hidden;
-}
-
-.love-question-card::before {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    background: linear-gradient(135deg, #ff006e, #ff6b9d, #764ba2);
-    border-radius: 20px;
-    z-index: -1;
-    opacity: 0.5;
-    animation: borderGradient 3s linear infinite;
-}
-
-@keyframes borderGradient {
-    0%, 100% { opacity: 0.3; }
-    50% { opacity: 0.6; }
-}
-
 .love-question-number {
-    display: inline-block;
-    background: linear-gradient(135deg, #ff006e, #ff6b9d);
-    color: white;
-    padding: 8px 20px;
-    border-radius: 30px;
-    font-weight: 700;
-    margin-bottom: 25px;
-    font-size: 0.9em;
-    letter-spacing: 1px;
+    font-size: 16px;
+    color: var(--love-primary);
+    font-weight: 600;
+    margin-bottom: 10px;
 }
 
-.love-question-text {
-    font-size: 1.8em;
+.love-question-title {
+    font-size: 24px;
     font-weight: 700;
+    color: var(--love-text-primary);
+    line-height: 1.4;
+    margin-bottom: 16px;
+}
+
+.love-question-subtitle {
+    font-size: 16px;
+    color: var(--love-text-secondary);
     line-height: 1.5;
-    color: #2d3748;
-    margin-bottom: 40px;
-    text-align: center;
 }
 
-/* Option Choices - Premium Card Style */
-.love-options {
-    display: grid;
-    gap: 15px;
-    max-width: 700px;
-    margin: 0 auto;
+/* 답변 옵션 */
+.love-answers {
+    padding: 0 40px 40px;
+    position: relative;
+    z-index: 1;
 }
 
-.love-option {
-    background: white;
-    border: 2px solid #f0f0f0;
+.love-answer {
+    background: rgba(255, 255, 255, 0.8);
+    border: 2px solid transparent;
     border-radius: 16px;
-    padding: 20px 30px;
+    padding: 20px;
+    margin-bottom: 16px;
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
-    font-size: 1.1em;
-    color: #4a5568;
-    font-weight: 500;
 }
 
-.love-option::before {
+.love-answer::before {
     content: '';
     position: absolute;
     top: 0;
@@ -396,700 +164,403 @@ body {
     width: 100%;
     height: 100%;
     background: linear-gradient(90deg, transparent, rgba(255, 107, 157, 0.1), transparent);
-    transition: left 0.6s;
+    transition: left 0.5s ease;
 }
 
-.love-option:hover {
-    border-color: #ff6b9d;
-    transform: translateX(5px);
-    box-shadow: 0 8px 25px rgba(255, 107, 157, 0.15);
+.love-answer:hover {
+    border-color: var(--love-primary);
+    background: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 107, 157, 0.2);
 }
 
-.love-option:hover::before {
+.love-answer:hover::before {
     left: 100%;
 }
 
-.love-option.selected {
-    background: linear-gradient(135deg, #ff006e 0%, #ff6b9d 100%);
-    border-color: transparent;
-    color: white;
-    transform: scale(1.02);
-    box-shadow: 0 10px 30px rgba(255, 0, 110, 0.3);
+.love-answer.selected {
+    border-color: var(--love-primary);
+    background: linear-gradient(135deg, #fff 0%, #fff5f7 100%);
+    box-shadow: 0 8px 25px rgba(255, 107, 157, 0.3);
 }
 
-.love-option.selected::after {
-    content: '✓';
-    position: absolute;
-    right: 25px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 1.3em;
-    font-weight: 700;
-    animation: checkmark 0.3s ease;
+.love-answer-text {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--love-text-primary);
+    line-height: 1.5;
 }
 
-@keyframes checkmark {
-    0% {
-        transform: translateY(-50%) scale(0);
-        opacity: 0;
-    }
-    50% {
-        transform: translateY(-50%) scale(1.2);
-    }
-    100% {
-        transform: translateY(-50%) scale(1);
-        opacity: 1;
-    }
-}
-
-/* Navigation Buttons - Modern Style */
-.love-navigation {
+/* 네비게이션 버튼 */
+.love-nav-buttons {
+    padding: 0 40px 40px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 30px 40px 40px;
-    background: #f8f9ff;
+    gap: 16px;
+    position: relative;
+    z-index: 1;
 }
 
-.love-btn {
-    padding: 15px 40px;
-    border-radius: 50px;
-    font-weight: 700;
-    font-size: 1em;
+.love-nav-btn {
+    padding: 14px 28px;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
-    border: none;
-    position: relative;
-    overflow: hidden;
     text-decoration: none;
-    display: inline-block;
-}
-
-.love-btn-primary {
-    background: linear-gradient(135deg, #ff006e 0%, #ff4458 100%);
-    color: white;
-    box-shadow: 0 6px 25px rgba(255, 0, 110, 0.3);
-}
-
-.love-btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(255, 0, 110, 0.4);
-}
-
-.love-btn-primary:disabled {
-    background: linear-gradient(135deg, #e0e0e0, #cccccc);
-    cursor: not-allowed;
-    box-shadow: none;
-    transform: none;
-}
-
-.love-btn-secondary {
-    background: white;
-    color: #ff006e;
-    border: 2px solid #ff006e;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-}
-
-.love-btn-secondary:hover {
-    background: #fff5f7;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-}
-
-/* Result Screen - Premium Design */
-.love-result-container {
-    padding: 60px 40px;
-    animation: resultFadeIn 0.8s ease;
-}
-
-@keyframes resultFadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* DNA Card - Vibrant Gradient */
-.love-dna-card {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    padding: 80px 40px;
-    border-radius: 30px;
-    margin-bottom: 50px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 30px 60px rgba(118, 75, 162, 0.4);
-}
-
-.love-dna-card::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
-    background-size: 50px 50px;
-    animation: dnaMove 20s linear infinite;
-}
-
-@keyframes dnaMove {
-    0% { transform: translate(0, 0); }
-    100% { transform: translate(50px, 50px); }
-}
-
-.love-result-dna {
-    font-size: 4em;
-    font-weight: 900;
-    margin-bottom: 20px;
-    letter-spacing: 5px;
-    text-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-    position: relative;
-    z-index: 2;
-    animation: dnaGlow 2s ease-in-out infinite;
-}
-
-@keyframes dnaGlow {
-    0%, 100% { 
-        text-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-        transform: scale(1);
-    }
-    50% { 
-        text-shadow: 0 5px 30px rgba(255, 255, 255, 0.5), 0 0 60px rgba(255, 107, 157, 0.5);
-        transform: scale(1.05);
-    }
-}
-
-.love-result-title {
-    font-size: 2.8em;
-    font-weight: 800;
-    margin-bottom: 15px;
-    position: relative;
-    z-index: 2;
-}
-
-.love-result-subtitle {
-    font-size: 1.5em;
-    font-weight: 500;
-    opacity: 1; /* Enhanced visibility */
-    margin-bottom: 30px;
-    position: relative;
-    z-index: 2;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); /* Improved readability */
-}
-
-.love-result-rarity {
-    display: inline-block;
-    background: rgba(255, 255, 255, 0.3); /* Enhanced background for better contrast */
-    backdrop-filter: blur(10px);
-    padding: 10px 30px;
-    border-radius: 30px;
-    font-weight: 700;
-    font-size: 1.1em;
-    position: relative;
-    z-index: 2;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); /* Improved readability */
-}
-
-/* DNA Analysis Section */
-.love-dna-analysis {
-    background: white;
-    border-radius: 20px;
-    padding: 50px 40px;
-    margin-bottom: 40px;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
-}
-
-.love-result-detail-title {
-    font-size: 2em;
-    font-weight: 800;
-    margin-bottom: 30px;
-    text-align: center;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-.love-dna-breakdown {
-    background: #f8f9ff;
-    padding: 30px;
-    border-radius: 16px;
-    margin-top: 20px;
-}
-
-.love-dna-axis-result {
-    display: flex;
-    justify-content: space-between;
+    display: inline-flex;
     align-items: center;
-    padding: 15px 0;
-    border-bottom: 1px solid #e5e7eb;
-    font-size: 1.1em;
-}
-
-.love-dna-axis-result:last-child {
-    border-bottom: none;
-}
-
-.love-dna-axis-label {
-    font-weight: 700;
-    color: #1f2937; /* Enhanced contrast: #4a5568 -> #1f2937 */
-}
-
-.love-dna-axis-value {
-    background: linear-gradient(135deg, #ff006e, #ff6b9d);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    font-weight: 600;
-}
-
-/* Result Detail Box */
-.love-result-detail-box {
-    margin-top: 50px;
-}
-
-.love-result-description {
-    font-size: 1.3em;
-    line-height: 1.8;
-    color: #1f2937; /* Enhanced contrast: #4a5568 -> #1f2937 */
-    text-align: center;
-    max-width: 700px;
-    margin: 0 auto 50px;
-    font-weight: 600;
-}
-
-/* Result Grid */
-.love-result-detail-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 25px;
-    margin-bottom: 40px;
-}
-
-.love-result-detail-card {
-    background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
-    padding: 30px;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-    transition: all 0.3s ease;
-    border: 2px solid transparent;
-}
-
-.love-result-detail-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
-    border-color: #ff6b9d;
-}
-
-.love-result-detail-card h4 {
-    font-size: 1.3em;
-    font-weight: 700;
-    margin-bottom: 15px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.love-result-detail-card ul {
-    list-style: none;
-    padding: 0;
-}
-
-.love-result-detail-card li {
-    padding: 8px 0;
-    color: #4a5568;
-    font-weight: 500;
-    position: relative;
-    padding-left: 25px;
-}
-
-.love-result-detail-card li::before {
-    content: '💕';
-    position: absolute;
-    left: 0;
-    font-size: 0.8em;
-}
-
-/* Analysis Cards */
-.love-result-analysis-card {
-    background: white;
-    padding: 35px;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-    margin-bottom: 25px;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.love-result-analysis-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 5px;
-    height: 100%;
-    background: linear-gradient(180deg, #ff006e, #ff6b9d);
-}
-
-.love-result-analysis-card:hover {
-    transform: translateX(5px);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
-}
-
-.love-result-analysis-card h4 {
-    font-size: 1.4em;
-    font-weight: 700;
-    margin-bottom: 15px;
-}
-
-.love-result-analysis-card p {
-    color: #4a5568;
-    line-height: 1.8;
-    font-size: 1.1em;
-    font-weight: 500;
-}
-
-/* Tag Styles */
-.love-career-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.love-career-tag {
-    background: linear-gradient(135deg, #e0f2fe, #dbeafe);
-    color: #0369a1;
-    padding: 8px 20px;
-    border-radius: 25px;
-    font-weight: 600;
-    font-size: 0.95em;
-    transition: all 0.3s ease;
-}
-
-.love-career-tag:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(3, 105, 161, 0.2);
-}
-
-/* Compatibility Section */
-.love-compatibility-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-}
-
-.love-compatibility-section h5 {
-    font-size: 1.1em;
-    font-weight: 700;
-    margin-bottom: 12px;
-}
-
-.love-compatibility-best {
-    color: #10b981;
-}
-
-.love-compatibility-good {
-    color: #f59e0b;
-}
-
-.love-compatibility-challenge {
-    color: #ef4444;
-}
-
-.love-compatibility-types {
-    display: flex;
-    flex-wrap: wrap;
     gap: 8px;
 }
 
-.love-compatibility-type,
-.love-compatibility-type-good,
-.love-compatibility-type-challenge {
-    padding: 8px 18px;
-    border-radius: 20px;
-    font-weight: 600;
-    font-size: 0.9em;
-    transition: all 0.3s ease;
+.love-btn-prev {
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--love-text-secondary);
+    border: 2px solid var(--love-text-light);
 }
 
-.love-compatibility-type {
-    background: #f0fdf4;
-    color: #065f46;
-}
-
-.love-compatibility-type-good {
-    background: #fef3c7;
-    color: #92400e;
-}
-
-.love-compatibility-type-challenge {
-    background: #fee2e2;
-    color: #991b1b;
-}
-
-.love-compatibility-type:hover,
-.love-compatibility-type-good:hover,
-.love-compatibility-type-challenge:hover {
+.love-btn-prev:hover {
+    background: white;
+    border-color: var(--love-primary);
+    color: var(--love-primary);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* Celebrity List */
-.love-celebrity-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    justify-content: center;
+.love-btn-next {
+    background: var(--love-gradient-primary);
+    color: white;
+    border: 2px solid transparent;
+    box-shadow: 0 4px 15px rgba(255, 107, 157, 0.4);
 }
 
-.love-celebrity-item {
-    background: linear-gradient(135deg, #f3e8ff, #e9d5ff);
-    color: #6b21a8;
-    padding: 12px 25px;
-    border-radius: 30px;
-    font-weight: 600;
-    font-size: 1em;
-    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.15);
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
+.love-btn-next:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 107, 157, 0.6);
 }
 
-.love-celebrity-item::before {
-    content: '⭐';
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    font-size: 0.8em;
-    opacity: 0;
-    transition: all 0.3s ease;
+.love-btn-next:disabled {
+    background: var(--love-text-light);
+    color: white;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
 }
 
-.love-celebrity-item:hover {
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 8px 25px rgba(139, 92, 246, 0.25);
-}
-
-.love-celebrity-item:hover::before {
-    opacity: 1;
-    top: 5px;
-    right: 10px;
-}
-
-/* Share Section - Vibrant Design */
-.love-share-section {
-    background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
-    border-radius: 30px;
-    padding: 50px 40px;
-    margin: 50px 0;
+/* 결과 페이지 */
+.love-result-container {
+    padding: 40px;
     text-align: center;
     position: relative;
-    overflow: hidden;
-    box-shadow: 0 20px 50px rgba(250, 177, 160, 0.3);
+    z-index: 1;
 }
 
-.love-share-section::before {
-    content: '💌';
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    font-size: 3em;
-    opacity: 0.2;
-    animation: float 4s ease-in-out infinite;
+.love-result-badge {
+    display: inline-block;
+    background: var(--love-gradient-primary);
+    color: white;
+    padding: 8px 20px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(255, 107, 157, 0.3);
 }
 
-.love-share-title {
-    font-size: 2.2em;
+.love-result-emoji {
+    font-size: 80px;
+    margin-bottom: 20px;
+    display: block;
+    animation: loveFloat 3s ease-in-out infinite;
+}
+
+@keyframes loveFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+.love-result-title {
+    font-size: 36px;
     font-weight: 800;
-    color: #764ba2;
+    margin-bottom: 12px;
+    background: var(--dna-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.2;
+}
+
+.love-result-nickname {
+    font-size: 20px;
+    color: var(--love-text-secondary);
+    margin-bottom: 8px;
+    font-style: italic;
+}
+
+.love-result-rarity {
+    background: var(--love-gradient-success);
+    color: white;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    display: inline-block;
     margin-bottom: 30px;
 }
 
-.love-share-buttons {
-    display: flex;
-    justify-content: center;
+.love-result-description {
+    font-size: 18px;
+    color: var(--love-text-primary);
+    line-height: 1.6;
+    margin-bottom: 40px;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 24px;
+    border-radius: 16px;
+    border-left: 4px solid var(--love-primary);
+}
+
+/* DNA 분석 섹션 */
+.love-dna-analysis {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 20px;
-    flex-wrap: wrap;
     margin-bottom: 40px;
 }
 
-.love-share-btn {
-    padding: 18px 40px;
-    border-radius: 50px;
-    border: none;
+.love-dna-axis {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 16px;
+    text-align: center;
+    border-left: 4px solid;
+    transition: all 0.3s ease;
+}
+
+.love-dna-axis:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+.love-dna-axis:nth-child(1) { border-left-color: #ff6b9d; }
+.love-dna-axis:nth-child(2) { border-left-color: #4ecdc4; }
+.love-dna-axis:nth-child(3) { border-left-color: #45b7d1; }
+.love-dna-axis:nth-child(4) { border-left-color: #96c93d; }
+.love-dna-axis:nth-child(5) { border-left-color: #feca57; }
+
+.love-axis-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--love-text-secondary);
+    margin-bottom: 8px;
+}
+
+.love-axis-result {
+    font-size: 16px;
     font-weight: 700;
-    font-size: 1.1em;
+    color: var(--love-text-primary);
+}
+
+/* 공유 버튼 */
+.love-share-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 30px;
+}
+
+.love-share-btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.3s ease;
+    text-decoration: none;
     display: inline-flex;
     align-items: center;
-    gap: 10px;
-    position: relative;
-    overflow: hidden;
+    gap: 8px;
 }
 
-.love-share-btn-kakao {
-    background: #fee500;
-    color: #3c1e1e;
-    box-shadow: 0 8px 25px rgba(254, 229, 0, 0.3);
+.love-share-kakao {
+    background: #FEE500;
+    color: #000;
 }
 
-.love-share-btn-kakao:hover {
-    background: #fdd835;
-    transform: translateY(-3px);
-    box-shadow: 0 12px 35px rgba(254, 229, 0, 0.4);
+.love-share-kakao:hover {
+    background: #FDD835;
+    transform: translateY(-2px);
 }
 
-.love-share-btn-copy {
+.love-share-copy {
+    background: var(--love-gradient-secondary);
+    color: white;
+}
+
+.love-share-copy:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(168, 230, 207, 0.4);
+}
+
+.love-share-restart {
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--love-text-secondary);
+    border: 2px solid var(--love-text-light);
+}
+
+.love-share-restart:hover {
     background: white;
-    color: #764ba2;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    border-color: var(--love-primary);
+    color: var(--love-primary);
+    transform: translateY(-2px);
 }
 
-.love-share-btn-copy:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+/* 로딩 애니메이션 */
+.love-loading {
+    text-align: center;
+    padding: 60px 40px;
 }
 
-/* Action Buttons */
-.love-action-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
+.love-loading-spinner {
+    width: 60px;
+    height: 60px;
+    border: 4px solid rgba(255, 107, 157, 0.2);
+    border-top: 4px solid var(--love-primary);
+    border-radius: 50%;
+    animation: loveSpinning 1s linear infinite;
+    margin: 0 auto 20px;
 }
 
-/* Hidden Class */
-.love-hidden {
-    display: none !important;
+@keyframes loveSpinning {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
-/* Mobile Responsive */
+.love-loading-text {
+    font-size: 18px;
+    color: var(--love-text-secondary);
+    font-weight: 500;
+}
+
+/* 반응형 디자인 */
 @media (max-width: 768px) {
-    .love-header-title {
-        font-size: 2.5em;
-    }
-    
-    .love-header-subtitle {
-        font-size: 1.1em;
-    }
-    
-    .love-test-wrapper {
-        padding: 10px;
-    }
-    
-    .love-header-section {
-        padding: 40px 25px;
-        border-radius: 20px;
-    }
-    
     .love-test-container {
-        border-radius: 20px;
+        margin: 10px auto;
+        padding: 0 16px;
     }
     
-    .love-intro-section {
-        padding: 50px 25px;
+    .love-test-card {
+        border-radius: 16px;
     }
     
-    .love-intro-title {
-        font-size: 2em;
+    .love-test-header,
+    .love-answers,
+    .love-nav-buttons,
+    .love-result-container {
+        padding: 24px;
     }
     
-    .love-intro-text {
-        font-size: 1.1em;
+    .love-question-title {
+        font-size: 20px;
     }
     
-    .love-start-button {
-        padding: 18px 50px;
-        font-size: 1.2em;
+    .love-question-subtitle {
+        font-size: 14px;
     }
     
-    .love-question-container {
-        padding: 40px 25px;
-        min-height: 400px;
+    .love-answer {
+        padding: 16px;
+        margin-bottom: 12px;
     }
     
-    .love-question-text {
-        font-size: 1.5em;
+    .love-answer-text {
+        font-size: 15px;
     }
     
-    .love-option {
-        padding: 18px 25px;
-        font-size: 1em;
-    }
-    
-    .love-navigation {
-        padding: 25px;
+    .love-nav-buttons {
         flex-direction: column;
-        gap: 15px;
     }
     
-    .love-btn {
+    .love-nav-btn {
         width: 100%;
         justify-content: center;
     }
     
-    .love-result-dna {
-        font-size: 3em;
-    }
-    
     .love-result-title {
-        font-size: 2.2em;
+        font-size: 28px;
     }
     
-    .love-result-subtitle {
-        font-size: 1.3em;
-    }
-    
-    .love-dna-card {
-        padding: 50px 25px;
+    .love-result-emoji {
+        font-size: 60px;
     }
     
     .love-dna-analysis {
-        padding: 35px 25px;
-    }
-    
-    .love-share-section {
-        padding: 40px 25px;
-    }
-    
-    .love-share-title {
-        font-size: 1.8em;
+        grid-template-columns: 1fr;
+        gap: 16px;
     }
     
     .love-share-buttons {
         flex-direction: column;
-        width: 100%;
+        align-items: center;
     }
     
     .love-share-btn {
         width: 100%;
+        max-width: 200px;
         justify-content: center;
-    }
-    
-    .love-action-buttons {
-        flex-direction: column;
-        width: 100%;
-    }
-    
-    .love-action-buttons .love-btn {
-        width: 100%;
-        margin: 0;
     }
 }
 
-/* Animation Optimization */
-@media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
+/* 특수 효과 */
+.love-sparkle {
+    position: relative;
+}
+
+.love-sparkle::before {
+    content: '✨';
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    animation: loveSparkleAnim 2s ease-in-out infinite;
+}
+
+@keyframes loveSparkleAnim {
+    0%, 100% { 
+        opacity: 0;
+        transform: scale(0.5) rotate(0deg);
+    }
+    50% { 
+        opacity: 1;
+        transform: scale(1) rotate(180deg);
+    }
+}
+
+/* 하트 효과 */
+.love-heart-effect {
+    position: relative;
+    overflow: hidden;
+}
+
+.love-heart-effect::after {
+    content: '💖';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    opacity: 0;
+    animation: loveHeartPulse 3s ease-in-out infinite;
+}
+
+@keyframes loveHeartPulse {
+    0%, 100% { 
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.5);
+    }
+    50% { 
+        opacity: 0.7;
+        transform: translate(-50%, -50%) scale(1.2);
     }
 }
