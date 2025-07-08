@@ -5,6 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>테토-에겐 성격 유형 테스트 - doha.kr</title>
     
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://doha.kr/tests/teto-egen/test.html">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="테토-에겐 성격 유형 테스트">
+    <meta property="og:description" content="10가지 질문으로 알아보는 나의 성격 유형 - 테토형 vs 에겐형">
+    <meta property="og:image" content="https://doha.kr/images/og-image.svg">
+    <meta property="og:url" content="https://doha.kr/tests/teto-egen/test.html">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="테토-에겐 성격 유형 테스트">
+    <meta name="twitter:description" content="10가지 질문으로 알아보는 나의 성격 유형 - 테토형 vs 에겐형">
+    <meta name="twitter:image" content="https://doha.kr/images/og-image.svg">
+    
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
     <meta name="google-adsense-account" content="ca-pub-7905640648499222">
@@ -22,7 +38,39 @@
     <link rel="stylesheet" href="/css/test-common.css">
     
     <style>
-        /* 테토-에겐 테스트 전용 스타일 */
+        /* 테스트 컨테이너 기본 스타일 */
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            min-height: 80vh;
+        }
+        
+        .test-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .test-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 16px;
+        }
+        
+        .test-header p {
+            font-size: 1.125rem;
+            color: #6b7280;
+        }
+        
+        /* 공통 숨김 클래스 */
+        .hidden {
+            display: none !important;
+        }
+        
+        /* 성별 선택 스타일 */
         .gender-selection {
             background: white;
             border-radius: 1.5rem;
@@ -36,13 +84,13 @@
         .gender-title {
             font-size: 2rem;
             font-weight: 700;
-            color: var(--gray-900);
+            color: #1f2937;
             margin-bottom: 1rem;
         }
         
         .gender-subtitle {
             font-size: 1.125rem;
-            color: var(--gray-600);
+            color: #6b7280;
             margin-bottom: 2rem;
             line-height: 1.6;
         }
@@ -55,7 +103,7 @@
         }
         
         .gender-option {
-            background: var(--gray-50);
+            background: #f9fafb;
             border: 3px solid transparent;
             border-radius: 1rem;
             padding: 2rem;
@@ -64,14 +112,14 @@
         }
         
         .gender-option:hover {
-            background: var(--primary-50);
-            border-color: var(--primary-300);
+            background: #eff6ff;
+            border-color: #93c5fd;
             transform: translateY(-4px);
         }
         
         .gender-option.selected {
-            background: var(--primary-100);
-            border-color: var(--primary-600);
+            background: #dbeafe;
+            border-color: #3b82f6;
         }
         
         .gender-icon {
@@ -83,16 +131,150 @@
         .gender-label {
             font-size: 1.25rem;
             font-weight: 600;
-            color: var(--gray-900);
+            color: #1f2937;
         }
         
         .gender-desc {
             font-size: 0.875rem;
-            color: var(--gray-500);
+            color: #6b7280;
             margin-top: 0.25rem;
         }
         
-        /* 컬렉션 카드 스타일 */
+        /* 테스트 화면 스타일 */
+        .question-container {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 3rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .progress-container {
+            margin-bottom: 2rem;
+        }
+        
+        .progress-step {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-bottom: 0.5rem;
+        }
+        
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            color: #374151;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            transition: width 0.3s ease;
+            border-radius: 4px;
+        }
+        
+        .question {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 2rem;
+            line-height: 1.4;
+        }
+        
+        .options {
+            margin-bottom: 2rem;
+        }
+        
+        .option {
+            background: #f9fafb;
+            border: 2px solid transparent;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.125rem;
+            line-height: 1.5;
+        }
+        
+        .option:hover {
+            background: #eff6ff;
+            border-color: #93c5fd;
+            transform: translateY(-2px);
+        }
+        
+        .option.selected {
+            background: #dbeafe;
+            border-color: #3b82f6;
+            color: #1e40af;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        
+        /* 버튼 스타일 */
+        .btn {
+            padding: 12px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            border: none;
+            font-size: 16px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        }
+        
+        .btn-primary:disabled {
+            background: #d1d5db;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #374151;
+        }
+        
+        .btn-secondary:hover {
+            background: #e5e7eb;
+        }
+        
+        .start-button {
+            padding: 16px 48px;
+            font-size: 18px;
+            border-radius: 50px;
+        }
+        
+        /* 결과 화면 스타일 */
+        .result-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
         .collection-card {
             background: white;
             border-radius: 1.5rem;
@@ -152,6 +334,20 @@
             50% { transform: translateY(-10px); }
         }
         
+        .result-type {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+        
+        .result-description {
+            font-size: 1.125rem;
+            color: #4b5563;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+        
         .card-stats {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -160,29 +356,64 @@
         }
         
         .stat-item {
-            background: var(--gray-50);
+            background: #f9fafb;
             padding: 1rem;
             border-radius: 0.75rem;
+            text-align: center;
         }
         
         .stat-label {
             font-size: 0.875rem;
-            color: var(--gray-600);
+            color: #6b7280;
             margin-bottom: 0.25rem;
         }
         
         .stat-value {
             font-size: 1.5rem;
             font-weight: 700;
-            color: var(--primary-700);
+            color: #3b82f6;
         }
         
         .traits-section {
             margin-bottom: 2rem;
         }
         
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .result-traits {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        
+        .trait-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .trait-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+        
+        .trait-desc {
+            color: #6b7280;
+            line-height: 1.5;
+        }
+        
         .compatibility {
-            background: var(--primary-50);
+            background: #eff6ff;
             border-radius: 1rem;
             padding: 1.5rem;
             margin-top: 2rem;
@@ -191,20 +422,97 @@
         .compatibility h3 {
             font-size: 1.25rem;
             font-weight: 600;
-            color: var(--primary-900);
+            color: #1e40af;
             margin-bottom: 0.75rem;
         }
         
         .compatibility p {
-            color: var(--primary-700);
+            color: #3730a3;
             line-height: 1.6;
         }
         
-        /* 진행률 표시 개선 */
-        .progress-step {
-            font-size: 0.875rem;
-            color: var(--gray-500);
-            margin-bottom: 0.25rem;
+        /* 공유 섹션 */
+        .share-section {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .share-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+        }
+        
+        .share-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .share-button {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+        
+        .kakao-share {
+            background: #fee500;
+            color: #3c1e1e;
+        }
+        
+        .kakao-share:hover {
+            background: #fdd835;
+            transform: translateY(-2px);
+        }
+        
+        .link-copy {
+            background: #f3f4f6;
+            color: #374151;
+        }
+        
+        .link-copy:hover {
+            background: #e5e7eb;
+            transform: translateY(-2px);
+        }
+        
+        /* 광고 영역 - 개선된 스타일 */
+        .ad-container {
+            margin: 2rem 0;
+            text-align: center;
+            min-height: 100px; /* 최소 높이 보장 */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1rem;
+        }
+        
+        .ad-label {
+            font-size: 12px;
+            color: #9ca3af;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        /* 광고 컨테이너 가시성 확보 */
+        .adsbygoogle {
+            display: block !important;
+            min-width: 320px;
+            width: 100%;
+            max-width: 100%;
         }
         
         /* 모바일 반응형 */
@@ -216,6 +524,29 @@
             
             .card-stats {
                 grid-template-columns: 1fr;
+            }
+            
+            .result-traits {
+                grid-template-columns: 1fr;
+            }
+            
+            .share-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .share-button {
+                width: 100%;
+                max-width: 200px;
+                justify-content: center;
+            }
+            
+            .navigation {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
             }
         }
     </style>
@@ -299,17 +630,6 @@
                 
                 <div class="compatibility" id="compatibility"></div>
                 
-                <!-- 광고 -->
-                <div class="ad-container">
-                    <div class="ad-label">광고</div>
-                    <ins class="adsbygoogle"
-                         style="display:block"
-                         data-ad-client="ca-pub-7905640648499222"
-                         data-ad-slot="1234567890"
-                         data-ad-format="auto"
-                         data-full-width-responsive="true"></ins>
-                </div>
-                
                 <!-- 카카오톡 공유하기 섹션 -->
                 <div class="share-section">
                     <div class="share-title">내 성격 유형을 친구들과 공유해보세요!</div>
@@ -323,6 +643,17 @@
                             링크 복사
                         </button>
                     </div>
+                </div>
+                
+                <!-- 광고 영역 - 결과 표시 후 로드 -->
+                <div class="ad-container" id="ad-container" style="display: none;">
+                    <div class="ad-label">광고</div>
+                    <ins class="adsbygoogle"
+                         style="display:block"
+                         data-ad-client="ca-pub-7905640648499222"
+                         data-ad-slot="1234567890"
+                         data-ad-format="auto"
+                         data-full-width-responsive="true"></ins>
                 </div>
                 
                 <div class="navigation">
@@ -627,6 +958,7 @@
             document.getElementById('result-type').textContent = result.type;
             document.getElementById('result-description').textContent = result.description;
             document.getElementById('card-rarity').textContent = result.rarity;
+            document.getElementById('card-rarity').className = `card-rarity ${result.rarity}`;
 
             // 스탯 표시
             const statsHtml = Object.entries(result.stats).map(([key, value]) => 
@@ -652,8 +984,19 @@
                 <p>${result.compatibility}</p>
             `;
 
-            // 광고 로드
-            (adsbygoogle = window.adsbygoogle || []).push({});
+            // 광고 로드 - 결과 표시 후 지연 로드
+            setTimeout(() => {
+                const adContainer = document.getElementById('ad-container');
+                if (adContainer) {
+                    adContainer.style.display = 'flex';
+                    try {
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    } catch (error) {
+                        console.log('AdSense 로드 실패:', error);
+                        adContainer.style.display = 'none';
+                    }
+                }
+            }, 1000);
         }
 
         // 카카오톡 공유하기
@@ -665,14 +1008,14 @@
 
             const resultType = document.getElementById('result-type').textContent;
             const resultDesc = document.getElementById('result-description').textContent;
-            const currentUrl = window.location.href;
+            const currentUrl = window.location.href.split('?')[0]; // URL 파라미터 제거
 
             Kakao.Share.sendDefault({
                 objectType: 'feed',
                 content: {
                     title: `✨ 나의 성격 유형: ${resultType}`,
                     description: `${resultDesc.substring(0, 60)}...`,
-                    imageUrl: 'https://via.placeholder.com/800x400/667eea/ffffff?text=성격+유형+테스트',
+                    imageUrl: 'https://doha.kr/images/og-image.svg',
                     link: {
                         mobileWebUrl: currentUrl,
                         webUrl: currentUrl,
@@ -692,7 +1035,7 @@
 
         // 링크 복사
         function copyLink() {
-            const url = window.location.href;
+            const url = window.location.href.split('?')[0]; // URL 파라미터 제거
             navigator.clipboard.writeText(url).then(() => {
                 alert('링크가 복사되었습니다!');
             }).catch(() => {
@@ -724,7 +1067,7 @@
             document.getElementById('start-test-btn').disabled = true;
         }
 
-        // 카카오 SDK 초기화 - setTimeout으로 지연 처리
+        // 카카오 SDK 초기화 - 페이지 로드 후 안전하게 초기화
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(function() {
                 if (typeof Kakao !== 'undefined') {
@@ -739,11 +1082,6 @@
                 }
             }, 100);
         });
-    </script>
-    
-    <!-- AdSense initialization -->
-    <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </body>
 </html>
