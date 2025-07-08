@@ -1,0 +1,514 @@
+/* 테토-에겐 성격 유형 테스트 전용 CSS */
+/* 네임스페이스: teto- */
+
+/* 테스트 컨테이너 기본 스타일 */
+.teto-test-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    min-height: 80vh;
+}
+
+.teto-test-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.teto-test-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 16px;
+}
+
+.teto-test-header p {
+    font-size: 1.125rem;
+    color: #6b7280;
+}
+
+/* 공통 숨김 클래스 */
+.teto-hidden {
+    display: none !important;
+}
+
+/* 성별 선택 스타일 */
+.teto-gender-selection {
+    background: white;
+    border-radius: 1.5rem;
+    padding: 3rem;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.teto-gender-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 1rem;
+}
+
+.teto-gender-subtitle {
+    font-size: 1.125rem;
+    color: #6b7280;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.teto-gender-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.teto-gender-option {
+    background: #f9fafb;
+    border: 3px solid transparent;
+    border-radius: 1rem;
+    padding: 2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.teto-gender-option:hover {
+    background: #eff6ff;
+    border-color: #93c5fd;
+    transform: translateY(-4px);
+}
+
+.teto-gender-option.selected {
+    background: #dbeafe;
+    border-color: #3b82f6;
+}
+
+.teto-gender-icon {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.teto-gender-label {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.teto-gender-desc {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin-top: 0.25rem;
+}
+
+/* 테스트 화면 스타일 */
+.teto-question-container {
+    background: white;
+    border-radius: 1.5rem;
+    padding: 3rem;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.teto-progress-container {
+    margin-bottom: 2rem;
+}
+
+.teto-progress-step {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin-bottom: 0.5rem;
+}
+
+.teto-progress-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    color: #374151;
+}
+
+.teto-progress-bar {
+    width: 100%;
+    height: 8px;
+    background: #e5e7eb;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.teto-progress-fill {
+    height: 100%;
+    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+    transition: width 0.3s ease;
+    border-radius: 4px;
+}
+
+.teto-question {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 2rem;
+    line-height: 1.4;
+}
+
+.teto-options {
+    margin-bottom: 2rem;
+}
+
+.teto-option {
+    background: #f9fafb;
+    border: 2px solid transparent;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1.125rem;
+    line-height: 1.5;
+}
+
+.teto-option:hover {
+    background: #eff6ff;
+    border-color: #93c5fd;
+    transform: translateY(-2px);
+}
+
+.teto-option.selected {
+    background: #dbeafe;
+    border-color: #3b82f6;
+    color: #1e40af;
+}
+
+.teto-navigation {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+/* 버튼 스타일 */
+.teto-btn {
+    padding: 12px 32px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    border: none;
+    font-size: 16px;
+}
+
+.teto-btn-primary {
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    color: white;
+}
+
+.teto-btn-primary:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+}
+
+.teto-btn-primary:disabled {
+    background: #d1d5db;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.teto-btn-secondary {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.teto-btn-secondary:hover {
+    background: #e5e7eb;
+}
+
+.teto-start-button {
+    padding: 16px 48px;
+    font-size: 18px;
+    border-radius: 50px;
+}
+
+/* 결과 화면 스타일 */
+.teto-result-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.teto-collection-card {
+    background: white;
+    border-radius: 1.5rem;
+    padding: 2rem;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.teto-card-rarity {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+    color: #333;
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    font-weight: 700;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.teto-card-rarity.LEGENDARY {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%);
+    color: white;
+}
+
+.teto-card-rarity.EPIC {
+    background: linear-gradient(135deg, #a855f7 0%, #c084fc 100%);
+    color: white;
+}
+
+.teto-card-rarity.RARE {
+    background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
+    color: white;
+}
+
+.teto-card-rarity.MYTHIC {
+    background: linear-gradient(135deg, #ec4899 0%, #f472b6 100%);
+    color: white;
+}
+
+.teto-card-inner {
+    text-align: center;
+}
+
+.teto-card-avatar {
+    font-size: 5rem;
+    margin-bottom: 1rem;
+    animation: teto-bounce 2s infinite;
+}
+
+@keyframes teto-bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.teto-result-type {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 1rem;
+}
+
+.teto-result-description {
+    font-size: 1.125rem;
+    color: #4b5563;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+.teto-card-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.teto-stat-item {
+    background: #f9fafb;
+    padding: 1rem;
+    border-radius: 0.75rem;
+    text-align: center;
+}
+
+.teto-stat-label {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin-bottom: 0.25rem;
+}
+
+.teto-stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #3b82f6;
+}
+
+.teto-traits-section {
+    margin-bottom: 2rem;
+}
+
+.teto-section-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.teto-result-traits {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+}
+
+.teto-trait-card {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.teto-trait-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 0.5rem;
+}
+
+.teto-trait-desc {
+    color: #6b7280;
+    line-height: 1.5;
+}
+
+.teto-compatibility {
+    background: #eff6ff;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    margin-top: 2rem;
+}
+
+.teto-compatibility h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1e40af;
+    margin-bottom: 0.75rem;
+}
+
+.teto-compatibility p {
+    color: #3730a3;
+    line-height: 1.6;
+}
+
+/* 공유 섹션 */
+.teto-share-section {
+    background: white;
+    border-radius: 1rem;
+    padding: 2rem;
+    margin: 2rem 0;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.teto-share-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 1.5rem;
+}
+
+.teto-share-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.teto-share-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+}
+
+.teto-kakao-share {
+    background: #fee500;
+    color: #3c1e1e;
+}
+
+.teto-kakao-share:hover {
+    background: #fdd835;
+    transform: translateY(-2px);
+}
+
+.teto-link-copy {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.teto-link-copy:hover {
+    background: #e5e7eb;
+    transform: translateY(-2px);
+}
+
+/* 광고 영역 - 개선된 스타일 */
+.teto-ad-container {
+    margin: 2rem 0;
+    text-align: center;
+    min-height: 100px; /* 최소 높이 보장 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+}
+
+.teto-ad-label {
+    font-size: 12px;
+    color: #9ca3af;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* 광고 컨테이너 가시성 확보 */
+.teto-adsbygoogle {
+    display: block !important;
+    min-width: 320px;
+    width: 100%;
+    max-width: 100%;
+}
+
+/* 모바일 반응형 */
+@media (max-width: 640px) {
+    .teto-gender-options {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .teto-card-stats {
+        grid-template-columns: 1fr;
+    }
+    
+    .teto-result-traits {
+        grid-template-columns: 1fr;
+    }
+    
+    .teto-share-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .teto-share-button {
+        width: 100%;
+        max-width: 200px;
+        justify-content: center;
+    }
+    
+    .teto-navigation {
+        flex-direction: column;
+    }
+    
+    .teto-btn {
+        width: 100%;
+    }
+}
