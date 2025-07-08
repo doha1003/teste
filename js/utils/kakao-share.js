@@ -3,8 +3,8 @@
  * doha.kr - 모든 페이지에서 사용할 수 있는 카카오톡 공유 유틸리티
  */
 
-// 카카오 앱 키 (중앙 관리)
-const KAKAO_APP_KEY = '8b5c6e8f97ec3d51a6f784b8b4b5ed99';
+// 카카오 앱 키 (중앙 관리) - 테토-에겐 테스트와 동일한 키 사용
+const KAKAO_APP_KEY = '19d8ba832f94d513957adc17883c1282';
 
 // 카카오 SDK 초기화 상태
 let kakaoInitialized = false;
