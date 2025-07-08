@@ -131,53 +131,6 @@
             margin-bottom: 20px;
         }
         
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 24px;
-            margin-top: 32px;
-        }
-        
-        .stat-card {
-            text-align: center;
-            padding: 32px 24px;
-            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
-            border-radius: 16px;
-            border: 1px solid #e2e8f0;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-        
-        .stat-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 16px 40px rgba(0,0,0,0.1);
-        }
-        
-        .stat-number {
-            font-size: 3rem;
-            font-weight: 800;
-            color: #667eea;
-            margin-bottom: 12px;
-            text-shadow: 0 2px 4px rgba(102,126,234,0.2);
-        }
-        
-        .stat-label {
-            color: #718096;
-            font-weight: 500;
-            font-size: 1.1rem;
-        }
-        
         .highlight-box {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -416,42 +369,6 @@
             font-weight: 500;
         }
         
-        .quote-section {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 48px;
-            border-radius: 20px;
-            text-align: center;
-            margin: 48px 0;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .quote-section::before {
-            content: '"';
-            position: absolute;
-            top: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 8rem;
-            opacity: 0.2;
-            font-family: serif;
-        }
-        
-        .quote-text {
-            font-size: 1.8rem;
-            font-weight: 600;
-            line-height: 1.5;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .quote-author {
-            margin-top: 20px;
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-        
         /* Service category styles */
         .service-category {
             margin: 32px 0;
@@ -549,8 +466,8 @@
         <div class="hero-content">
             <h1 class="hero-title">doha.kr을 소개합니다</h1>
             <p class="hero-subtitle">
-                일상을 더 재미있고 의미있게 만드는 여정을<br>
-                빠르게 성장하는 사용자들과 함께하고 있습니다 ✨
+                일상을 더 재미있고 의미있게 만드는<br>
+                새로운 디지털 플랫폼입니다 ✨
             </p>
         </div>
     </section>
@@ -561,7 +478,7 @@
         <div class="section">
             <h2>🚀 우리의 미션</h2>
             <p>
-                <strong>doha.kr</strong>은 2025년 7월에 탄생한 혁신적인 디지털 플랫폼으로, <em>"일상 속 작은 발견의 순간"</em>을 선사하는 것을 목표로 합니다.
+                <strong>doha.kr</strong>은 2025년 7월에 시작된 디지털 플랫폼으로, <em>"일상 속 작은 발견의 순간"</em>을 선사하는 것을 목표로 합니다.
                 단순히 시간을 보내는 공간이 아닌, <strong>자기 발견과 성장의 기회</strong>를 제공하는 특별한 공간입니다.
             </p>
             <p>
@@ -572,31 +489,7 @@
             
             <div class="highlight-box">
                 <div class="highlight-text">
-                    "짧은 시간 만에 많은 사용자들이 doha.kr에서 새로운 자신을 발견하고 있습니다"
-                </div>
-            </div>
-        </div>
-        
-        <!-- 통계 섹션 -->
-        <div class="section">
-            <h2>📊 doha.kr 현황</h2>
-            <p>숫자로 보는 doha.kr의 성장과 신뢰:</p>
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-number">15개</div>
-                    <div class="stat-label">제공 서비스</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">98%</div>
-                    <div class="stat-label">사용자 만족도</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">24/7</div>
-                    <div class="stat-label">이용 가능</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">빠른</div>
-                    <div class="stat-label">성장세</div>
+                    "사용자들이 doha.kr에서 새로운 자신을 발견하고 있습니다"
                 </div>
             </div>
         </div>
@@ -629,11 +522,11 @@
                 <ul class="service-list">
                     <li class="service-item">
                         <div class="service-name">글자수 세기</div>
-                        <div class="service-desc">실시간 글자수 계산 • 자소서/리포트 최적화 • 복사/붙여넣기/초기화 • 목표 글자수 설정</div>
+                        <div class="service-desc">실시간 글자수 계산 • 자소서/리포트 최적화 • 복사/붙여넣기/초기화 기능</div>
                     </li>
                     <li class="service-item">
                         <div class="service-name">BMI 계산기</div>
-                        <div class="service-desc">정확한 체질량지수 계산 • 건강 상태 평가 • 개선 방안 제시 • 목표 체중 가이드</div>
+                        <div class="service-desc">정확한 체질량지수 계산 • 건강 상태 평가 • 개선 방안 제시</div>
                     </li>
                     <li class="service-item">
                         <div class="service-name">연봉 실수령액 계산기 <span style="color: #f56565; font-size: 0.8rem;">(준비중)</span></div>
@@ -651,36 +544,27 @@
                     </li>
                     <li class="service-item">
                         <div class="service-name">AI 타로 카드 리딩</div>
-                        <div class="service-desc">질문 기반 타로 분석 • 78장 풀덱 지원 • 상세한 해석 • 미래 가이드</div>
+                        <div class="service-desc">질문 기반 타로 분석 • 상세한 해석 • 미래 가이드</div>
                     </li>
                     <li class="service-item">
                         <div class="service-name">별자리별 운세</div>
-                        <div class="service-desc">12궁도 맞춤 운세 • 주간/월간 예측 • 별자리별 특성 분석</div>
+                        <div class="service-desc">12궁도 맞춤 운세 • 별자리별 특성 분석</div>
                     </li>
                 </ul>
             </div>
         </div>
         
-        <!-- 사용자 인용구 -->
-        <div class="quote-section">
-            <div class="quote-text">
-                MBTI 테스트로 새로운 나를 발견했어요!<br>
-                결과가 정말 정확하고 상세해서 깜짝 놀랐습니다.
-            </div>
-            <div class="quote-author">- 실제 사용자 후기</div>
-        </div>
-        
         <!-- 발자취 섹션 -->
         <div class="section">
             <h2>🏃‍♂️ 우리의 성장 스토리</h2>
-            <p>작은 아이디어에서 시작되어 빠르게 성장하는 플랫폼까지:</p>
+            <p>2025년 7월부터 시작된 doha.kr의 실제 여정:</p>
             <div class="timeline">
                 <div class="timeline-item">
                     <div class="timeline-date">2025년 7월</div>
                     <div class="timeline-title">doha.kr 프로젝트 시작 🚀</div>
                     <div class="timeline-desc">
                         "더 재미있고 유용한 웹사이트를 만들자"는 목표로 첫 발을 내딛었습니다. 
-                        MBTI 테스트를 시작으로 사용자들의 뜨거운 관심을 받았습니다.
+                        MBTI 테스트를 시작으로 사용자들의 관심을 받기 시작했습니다.
                     </div>
                 </div>
                 <div class="timeline-item">
@@ -688,7 +572,7 @@
                     <div class="timeline-title">테토-에겐 테스트 출시 ✨</div>
                     <div class="timeline-desc">
                         한국인의 정서에 맞는 독창적인 성격 테스트를 개발했습니다. 
-                        레어도 시스템과 카드 수집 요소로 큰 인기를 얻었습니다.
+                        레어도 시스템과 카드 수집 요소를 도입했습니다.
                     </div>
                 </div>
                 <div class="timeline-item">
@@ -703,8 +587,8 @@
                     <div class="timeline-date">2025년 10월</div>
                     <div class="timeline-title">AI 운세 서비스 런칭 🔮</div>
                     <div class="timeline-desc">
-                        최신 AI 기술을 활용한 개인 맞춤형 운세 서비스를 선보였습니다. 
-                        타로, 별자리 등 다양한 점술 콘텐츠로 확장했습니다.
+                        AI 기술을 활용한 개인 맞춤형 운세 서비스를 선보였습니다. 
+                        타로, 별자리 등 다양한 운세 콘텐츠로 확장했습니다.
                     </div>
                 </div>
                 <div class="timeline-item">
@@ -717,18 +601,10 @@
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-date">2025년 12월</div>
-                    <div class="timeline-title">서비스 고도화 및 안정화 📈</div>
+                    <div class="timeline-title">서비스 안정화 및 품질 향상 📈</div>
                     <div class="timeline-desc">
                         사용자 피드백을 바탕으로 모든 서비스의 품질을 높이고, 
                         더욱 정확하고 유용한 결과를 제공하도록 개선했습니다.
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-date">2026년 계획</div>
-                    <div class="timeline-title">글로벌 확장 및 신규 서비스 🌍</div>
-                    <div class="timeline-desc">
-                        다국어 지원과 함께 더 많은 혁신적인 서비스를 준비하고 있습니다. 
-                        앞으로도 계속해서 발전하는 doha.kr이 되겠습니다.
                     </div>
                 </div>
             </div>
@@ -741,50 +617,45 @@
             <div class="value-grid">
                 <div class="value-card">
                     <div class="value-icon">🎯</div>
-                    <div class="value-title">과학적 정확성</div>
+                    <div class="value-title">정확성</div>
                     <div class="value-desc">
-                        심리학 이론과 통계 데이터에 기반한 정확하고 신뢰할 수 있는 분석을 제공합니다. 
-                        모든 테스트는 전문가 검증을 거쳐 높은 신뢰도를 보장합니다.
+                        심리학 이론과 검증된 방법론에 기반한 신뢰할 수 있는 분석을 제공합니다.
                     </div>
                 </div>
                 <div class="value-card">
                     <div class="value-icon">🆓</div>
-                    <div class="value-title">완전 무료 서비스</div>
+                    <div class="value-title">완전 무료</div>
                     <div class="value-desc">
                         모든 서비스를 가입 없이 완전 무료로 이용할 수 있습니다. 
-                        숨겨진 비용이나 프리미엄 요금제 없이 누구나 평등하게 접근 가능합니다.
+                        숨겨진 비용이나 프리미엄 요금제는 없습니다.
                     </div>
                 </div>
                 <div class="value-card">
                     <div class="value-icon">🔒</div>
                     <div class="value-title">개인정보 보호</div>
                     <div class="value-desc">
-                        사용자의 개인정보를 수집하지 않으며, 모든 데이터는 암호화되어 안전하게 처리됩니다. 
-                        개인정보보호법을 엄격히 준수합니다.
+                        사용자의 개인정보를 수집하지 않으며, 모든 데이터는 안전하게 처리됩니다.
                     </div>
                 </div>
                 <div class="value-card">
                     <div class="value-icon">💡</div>
-                    <div class="value-title">지속적 혁신</div>
+                    <div class="value-title">지속적 개선</div>
                     <div class="value-desc">
-                        사용자 피드백을 적극 반영하여 끊임없이 발전합니다. 
-                        최신 기술과 트렌드를 반영한 새로운 서비스를 지속적으로 개발합니다.
+                        사용자 피드백을 적극 반영하여 끊임없이 발전하는 서비스를 제공합니다.
                     </div>
                 </div>
                 <div class="value-card">
                     <div class="value-icon">🌍</div>
                     <div class="value-title">접근성</div>
                     <div class="value-desc">
-                        모바일, 태블릿, PC 등 모든 기기에서 최적화된 경험을 제공합니다. 
-                        장애인 접근성 가이드라인을 준수하여 누구나 이용할 수 있습니다.
+                        모바일, 태블릿, PC 등 모든 기기에서 최적화된 경험을 제공합니다.
                     </div>
                 </div>
                 <div class="value-card">
                     <div class="value-icon">🤝</div>
-                    <div class="value-title">커뮤니티</div>
+                    <div class="value-title">사용자 중심</div>
                     <div class="value-desc">
-                        사용자들 간의 건전한 소통과 공유를 지원합니다. 
-                        결과 공유, 피드백 수집 등을 통해 함께 성장하는 커뮤니티를 만들어갑니다.
+                        사용자의 편의와 만족을 최우선으로 하는 서비스 설계를 추구합니다.
                     </div>
                 </div>
             </div>
@@ -794,38 +665,28 @@
         <div class="team-section">
             <h2 style="text-align: center; margin-bottom: 24px;">👥 함께하는 사람들</h2>
             <p style="text-align: center; color: #718096; font-size: 1.1rem; margin-bottom: 0;">
-                doha.kr은 다양한 분야의 전문가들이 열정을 가지고 만들어가는 플랫폼입니다.
+                doha.kr은 다양한 분야의 전문성을 가진 사람들이 함께 만들어가는 플랫폼입니다.
             </p>
             <div class="team-grid">
                 <div class="team-member">
                     <div class="team-avatar">🎨</div>
-                    <div class="team-name">UI/UX 디자인 팀</div>
+                    <div class="team-name">디자인</div>
                     <div class="team-role">직관적이고 아름다운 사용자 경험 설계</div>
                 </div>
                 <div class="team-member">
                     <div class="team-avatar">💻</div>
-                    <div class="team-name">프론트엔드 개발팀</div>
-                    <div class="team-role">빠르고 안정적인 웹 서비스 구현</div>
-                </div>
-                <div class="team-member">
-                    <div class="team-avatar">⚙️</div>
-                    <div class="team-name">백엔드 개발팀</div>
-                    <div class="team-role">확장 가능한 서버 아키텍처 구축</div>
+                    <div class="team-name">개발</div>
+                    <div class="team-role">안정적이고 빠른 웹 서비스 구현</div>
                 </div>
                 <div class="team-member">
                     <div class="team-avatar">📝</div>
-                    <div class="team-name">콘텐츠 기획팀</div>
+                    <div class="team-name">콘텐츠 기획</div>
                     <div class="team-role">재미있고 유익한 콘텐츠 기획 및 제작</div>
                 </div>
                 <div class="team-member">
                     <div class="team-avatar">🤖</div>
-                    <div class="team-name">AI 개발팀</div>
-                    <div class="team-role">머신러닝 기반 개인화 서비스 개발</div>
-                </div>
-                <div class="team-member">
-                    <div class="team-avatar">📊</div>
-                    <div class="team-name">데이터 분석팀</div>
-                    <div class="team-role">사용자 행동 분석 및 서비스 최적화</div>
+                    <div class="team-name">AI 개발</div>
+                    <div class="team-role">개인화된 AI 서비스 개발</div>
                 </div>
             </div>
         </div>
@@ -834,64 +695,52 @@
         <div class="section">
             <h2>🚀 앞으로의 계획</h2>
             <p>
-                doha.kr은 단순한 서비스 제공을 넘어 <strong>사용자의 삶에 긍정적인 변화</strong>를 만들어내고자 합니다. 
-                앞으로 우리가 준비하고 있는 흥미진진한 계획들을 소개합니다:
+                doha.kr은 사용자의 삶에 <strong>실질적인 도움</strong>이 되는 서비스를 지속적으로 개발하고 있습니다. 
+                앞으로 준비하고 있는 계획들을 소개합니다:
             </p>
             
             <div class="feature-grid">
                 <div class="feature-card">
                     <div class="feature-icon">🧬</div>
-                    <div class="feature-title">고도화된 심리 분석</div>
+                    <div class="feature-title">심리 분석 고도화</div>
                     <div class="feature-desc">
-                        빅파이브 성격 모델, 애착 유형 테스트 등 더욱 전문적이고 
-                        정교한 심리 분석 도구들을 추가할 예정입니다.
+                        더욱 전문적이고 정교한 심리 분석 도구들을 추가할 예정입니다.
                     </div>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🎮</div>
-                    <div class="feature-title">게이미피케이션</div>
+                    <div class="feature-title">게임화 요소</div>
                     <div class="feature-desc">
-                        테스트 완료 시 배지 수집, 레벨 시스템, 친구와의 결과 비교 등 
-                        재미 요소를 더한 새로운 경험을 제공합니다.
+                        테스트 완료 시 배지 수집, 레벨 시스템 등 재미 요소를 더한 경험을 제공합니다.
                     </div>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">💬</div>
-                    <div class="feature-title">커뮤니티 플랫폼</div>
+                    <div class="feature-title">커뮤니티 기능</div>
                     <div class="feature-desc">
-                        같은 성격 유형의 사람들끼리 소통할 수 있는 
-                        안전하고 건전한 커뮤니티 공간을 만들어갑니다.
+                        같은 성격 유형의 사람들끼리 소통할 수 있는 건전한 커뮤니티 공간을 만들어갑니다.
                     </div>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">📱</div>
-                    <div class="feature-title">모바일 앱 출시</div>
+                    <div class="feature-title">모바일 앱</div>
                     <div class="feature-desc">
-                        더욱 편리한 이용을 위한 전용 모바일 앱을 개발하여 
-                        언제 어디서나 doha.kr을 즐길 수 있도록 합니다.
+                        더욱 편리한 이용을 위한 전용 모바일 앱을 개발할 계획입니다.
                     </div>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">🌐</div>
-                    <div class="feature-title">글로벌 서비스</div>
+                    <div class="feature-icon">🛠️</div>
+                    <div class="feature-title">실용도구 확장</div>
                     <div class="feature-desc">
-                        다국어 지원을 통해 전 세계 사용자들이 
-                        doha.kr의 서비스를 경험할 수 있도록 확장할 계획입니다.
+                        일상생활에 도움이 되는 더 많은 실용적인 도구들을 추가할 예정입니다.
                     </div>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🎯</div>
-                    <div class="feature-title">개인 맞춤 추천</div>
+                    <div class="feature-title">개인 맞춤 서비스</div>
                     <div class="feature-desc">
-                        AI를 활용한 개인별 맞춤 콘텐츠 추천 시스템으로 
-                        각 사용자에게 최적화된 경험을 제공합니다.
+                        사용자 개인의 특성에 맞춘 더욱 정교한 맞춤형 서비스를 제공합니다.
                     </div>
-                </div>
-            </div>
-            
-            <div class="highlight-box" style="margin-top: 40px;">
-                <div class="highlight-text">
-                    "2026년, doha.kr과 함께 더 나은 나를 발견해보세요!"
                 </div>
             </div>
             
