@@ -29,7 +29,18 @@ jobs:
         
     - name: Replace API key in gemini-api.js
       run: |
-        sed -i "s/const GEMINI_API_KEY = 'PLACEHOLDER';/const GEMINI_API_KEY = '${{ secrets.GEMINI_API_KEY }}';/g" js/gemini-api.js
+        echo "Replacing API key..."
+        if [ -n "${{ secrets.GEMINI_API_KEY }}" ]; then
+          sed -i "s/const GEMINI_API_KEY = 'PLACEHOLDER';/const GEMINI_API_KEY = '${{ secrets.GEMINI_API_KEY }}';/g" js/gemini-api.js
+          echo "API key replaced successfully"
+        else
+          echo "Warning: GEMINI_API_KEY secret is not set"
+        fi
+        
+    - name: Verify API key replacement
+      run: |
+        echo "Checking gemini-api.js content:"
+        head -n 5 js/gemini-api.js
         
     - name: Setup Pages
       uses: actions/configure-pages@v4
