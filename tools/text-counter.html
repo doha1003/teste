@@ -30,6 +30,8 @@
     
     <!-- External CSS -->
     <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/emoji-fix.css">
+    <link rel="stylesheet" href="/css/global-text-fix.css">
     
     <!-- Favicon -->
     <link rel="icon" href="/images/placeholder-favicon.svg" type="image/svg+xml">
@@ -38,7 +40,7 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
     
     <style>
-        /* Page-specific styles */
+        /* Enhanced page-specific styles with better contrast */
         .text-counter-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -54,15 +56,18 @@
             font-size: 36px;
             font-weight: 700;
             margin-bottom: 16px;
-            background: linear-gradient(135deg, #22c55e 0%, #3b82f6 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #111827 !important;
+            /* Remove gradient to show emoji properly */
+            background: none !important;
+            -webkit-background-clip: unset !important;
+            -webkit-text-fill-color: unset !important;
         }
         
         .text-counter-header p {
             font-size: 18px;
-            color: #6b7280;
+            color: #374151;
             margin-bottom: 0;
+            font-weight: 500;
         }
         
         .counter-main {
@@ -76,7 +81,8 @@
             background: white;
             border-radius: 16px;
             padding: 32px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 2px solid #e5e7eb;
         }
         
         .text-input-section h2 {
@@ -90,26 +96,30 @@
             width: 100%;
             min-height: 300px;
             padding: 16px;
-            border: 2px solid #e5e7eb;
+            border: 2px solid #d1d5db;
             border-radius: 12px;
             font-size: 16px;
             line-height: 1.5;
             resize: vertical;
             font-family: inherit;
             transition: border-color 0.2s;
+            color: #111827;
+            background: #ffffff;
         }
         
         #textInput:focus {
             outline: none;
             border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
         }
         
         .counter-stats {
             background: white;
             border-radius: 16px;
             padding: 32px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             height: fit-content;
+            border: 2px solid #e5e7eb;
         }
         
         .counter-stats h2 {
@@ -124,7 +134,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 16px 0;
-            border-bottom: 1px solid #e5e7eb;
+            border-bottom: 2px solid #e5e7eb;
         }
         
         .stat-item:last-child {
@@ -132,13 +142,14 @@
         }
         
         .stat-label {
-            font-weight: 500;
+            font-weight: 600;
             color: #374151;
+            font-size: 15px;
         }
         
         .stat-value {
             font-size: 24px;
-            font-weight: 700;
+            font-weight: 800;
             color: #3b82f6;
         }
         
@@ -146,6 +157,7 @@
             display: flex;
             gap: 12px;
             margin-top: 24px;
+            flex-wrap: wrap;
         }
         
         .btn {
@@ -158,11 +170,13 @@
             text-decoration: none;
             display: inline-block;
             text-align: center;
+            font-size: 14px;
         }
         
         .btn-primary {
             background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
             color: white;
+            border: 2px solid transparent;
         }
         
         .btn-primary:hover {
@@ -173,10 +187,12 @@
         .btn-secondary {
             background: #f3f4f6;
             color: #374151;
+            border: 2px solid #d1d5db;
         }
         
         .btn-secondary:hover {
             background: #e5e7eb;
+            border-color: #9ca3af;
         }
         
         .features-section {
@@ -184,7 +200,8 @@
             border-radius: 16px;
             padding: 32px;
             margin-bottom: 40px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 2px solid #e5e7eb;
         }
         
         .features-section h2 {
@@ -206,12 +223,17 @@
             padding: 24px;
             border-radius: 12px;
             background: #f9fafb;
+            border: 2px solid #e5e7eb;
         }
         
         .feature-icon {
             font-size: 48px;
             margin-bottom: 16px;
             display: block;
+            /* Ensure emoji visibility */
+            -webkit-text-fill-color: initial !important;
+            background: none !important;
+            color: #ea580c;
         }
         
         .feature-title {
@@ -222,8 +244,9 @@
         }
         
         .feature-desc {
-            color: #6b7280;
-            line-height: 1.5;
+            color: #374151;
+            line-height: 1.6;
+            font-weight: 500;
         }
         
         /* 반응형 디자인 */
@@ -249,28 +272,16 @@
             .action-buttons {
                 flex-direction: column;
             }
+            
+            .btn {
+                width: 100%;
+            }
         }
     </style>
 </head>
 <body>
     <!-- 네비게이션 바 -->
-    <nav class="navbar">
-        <div class="navbar-container">
-            <a href="/" class="logo">doha.kr</a>
-            <ul class="nav-menu" id="nav-menu">
-                <li><a href="/" class="nav-link">홈</a></li>
-                <li><a href="/tests/" class="nav-link">심리테스트</a></li>
-                <li><a href="/tools/" class="nav-link">실용도구</a></li>
-                <li><a href="/contact/" class="nav-link">문의</a></li>
-                <li><a href="/about/" class="nav-link">소개</a></li>
-            </ul>
-            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </div>
-    </nav>
+    <div id="navbar-placeholder"></div>
     
     <div class="text-counter-container">
         <!-- 헤더 섹션 -->
@@ -356,8 +367,8 @@
         </div>
         
         <!-- 광고 영역 -->
-        <div class="ad-container">
-            <div class="ad-label">광고</div>
+        <div class="ad-container" style="margin: 60px auto; max-width: 1200px; padding: 0 20px; text-align: center; background: #f8f9fa; border-radius: 8px; padding: 20px;">
+            <div class="ad-label" style="font-size: 12px; color: #6b7280; margin-bottom: 10px; text-transform: uppercase;">광고</div>
             <ins class="adsbygoogle"
                  style="display:block"
                  data-ad-client="ca-pub-7905640648499222"
@@ -368,55 +379,7 @@
     </div>
     
     <!-- 푸터 -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>doha.kr</h3>
-                <p style="color: var(--gray-400); margin-top: 8px;">
-                    일상을 더 재미있게 만드는 공간<br>
-                    심리테스트와 실용도구의 만남
-                </p>
-                <div class="footer-social">
-                    <a href="mailto:youtubdoha@gmail.com" class="social-link">📧</a>
-                </div>
-            </div>
-            
-            <div class="footer-section">
-                <h3>서비스</h3>
-                <ul class="footer-links">
-                    <li><a href="/">홈</a></li>
-                    <li><a href="/tests/">심리테스트</a></li>
-                    <li><a href="/tools/">실용도구</a></li>
-                    <li><a href="/about/">사이트 소개</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-section">
-                <h3>인기 콘텐츠</h3>
-                <ul class="footer-links">
-                    <li><a href="/tests/teto-egen/test.html">테토-에겐 테스트</a></li>
-                    <li><a href="/tests/mbti/">MBTI 테스트</a></li>
-                    <li><a href="/tools/text-counter.html">글자수 세기</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-section">
-                <h3>고객지원</h3>
-                <ul class="footer-links">
-                    <li><a href="/contact/">문의하기</a></li>
-                    <li><a href="/faq/">자주 묻는 질문</a></li>
-                </ul>
-            </div>
-        </div>
-        
-        <div class="footer-bottom">
-            <div class="footer-legal">
-                <a href="/privacy/">개인정보처리방침</a>
-                <a href="/terms/">이용약관</a>
-            </div>
-            <p>&copy; 2025 doha.kr. All rights reserved.</p>
-        </div>
-    </footer>
+    <div id="footer-placeholder"></div>
     
     <!-- External JavaScript -->
     <script src="/js/main.js"></script>
@@ -496,7 +459,15 @@
     
     <!-- AdSense initialization -->
     <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                try {
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                } catch (e) {
+                    console.log('AdSense loading error:', e);
+                }
+            }, 1000);
+        });
     </script>
 </body>
 </html>
