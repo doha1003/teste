@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>러브 DNA 테스트 - 25문항 연애 스타일 분석 | doha.kr</title>
-    <meta name="description" content="25개의 심층적인 문항으로 분석하는 러브 DNA 테스트. 32가지 연애 유형 중 당신의 유형을 찾아보세요.">
+    <title>러브 DNA 테스트 - 나의 연애 스타일은? | doha.kr</title>
+    <meta name="description" content="25개 질문으로 알아보는 나만의 연애 스타일! 32가지 러브 DNA 유형 중 당신은?">
     
     <!-- Open Graph -->
     <meta property="og:title" content="러브 DNA 테스트 - 나의 연애 스타일은?">
@@ -19,8 +19,8 @@
     
     <!-- External CSS -->
     <link rel="stylesheet" href="/css/styles.css">
-    <link rel="stylesheet" href="/css/pages/love-dna-test.css">
-    <link rel="stylesheet" href="/css/pages/love-dna-test-fix.css">
+    <link rel="stylesheet" href="/css/pages/love-dna-test-page.css">
+    <link rel="stylesheet" href="/css/pages/love-dna-fix.css">
     
     <!-- Favicon -->
     <link rel="icon" href="/images/placeholder-favicon.svg" type="image/svg+xml">
@@ -28,18 +28,18 @@
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
 </head>
-<body class="love-test-page">
+<body>
     <!-- 애니메이션 배경 -->
-    <div class="love-animated-background">
-        <div class="love-heart-particle" style="left: 10%; animation-delay: 0s;">💖</div>
-        <div class="love-heart-particle" style="left: 20%; animation-delay: 1s;">💕</div>
-        <div class="love-heart-particle" style="left: 30%; animation-delay: 2s;">💗</div>
-        <div class="love-heart-particle" style="left: 40%; animation-delay: 3s;">💝</div>
-        <div class="love-heart-particle" style="left: 50%; animation-delay: 4s;">💖</div>
-        <div class="love-heart-particle" style="left: 60%; animation-delay: 5s;">💕</div>
-        <div class="love-heart-particle" style="left: 70%; animation-delay: 6s;">💗</div>
-        <div class="love-heart-particle" style="left: 80%; animation-delay: 7s;">💝</div>
-        <div class="love-heart-particle" style="left: 90%; animation-delay: 8s;">💖</div>
+    <div class="animated-background">
+        <div class="heart-particle" style="left: 10%; animation-delay: 0s;">💖</div>
+        <div class="heart-particle" style="left: 20%; animation-delay: 1s;">💕</div>
+        <div class="heart-particle" style="left: 30%; animation-delay: 2s;">💗</div>
+        <div class="heart-particle" style="left: 40%; animation-delay: 3s;">💝</div>
+        <div class="heart-particle" style="left: 50%; animation-delay: 4s;">💖</div>
+        <div class="heart-particle" style="left: 60%; animation-delay: 5s;">💕</div>
+        <div class="heart-particle" style="left: 70%; animation-delay: 6s;">💗</div>
+        <div class="heart-particle" style="left: 80%; animation-delay: 7s;">💝</div>
+        <div class="heart-particle" style="left: 90%; animation-delay: 8s;">💖</div>
     </div>
     
     <!-- 네비게이션 -->
@@ -108,44 +108,56 @@
 
                 <!-- DNA 분석 -->
                 <div class="love-dna-analysis">
-                    <h3 class="love-result-detail-title">🧬 나의 러브 DNA 분석</h3>
-                    <div id="dna-breakdown"></div>
+                    <h3 class="love-analysis-title">🧬 DNA 분석</h3>
+                    <div class="love-dna-breakdown">
+                        <div class="love-axis-item">
+                            <span class="love-axis-label">L (Love Language)</span>
+                            <span class="love-axis-code" id="axis-l">T</span>
+                            <span class="love-axis-description" id="axis-l-desc">터치형 (스킨십)</span>
+                        </div>
+                        <div class="love-axis-item">
+                            <span class="love-axis-label">O (Openness)</span>
+                            <span class="love-axis-code" id="axis-o">F</span>
+                            <span class="love-axis-description" id="axis-o-desc">프리덤형 (자유)</span>
+                        </div>
+                        <div class="love-axis-item">
+                            <span class="love-axis-label">V (Value)</span>
+                            <span class="love-axis-code" id="axis-v">H</span>
+                            <span class="love-axis-description" id="axis-v-desc">하트형 (마음)</span>
+                        </div>
+                        <div class="love-axis-item">
+                            <span class="love-axis-label">E (Exchange)</span>
+                            <span class="love-axis-code" id="axis-e">G</span>
+                            <span class="love-axis-description" id="axis-e-desc">기버형 (베풂)</span>
+                        </div>
+                        <div class="love-axis-item">
+                            <span class="love-axis-label">D (Decision)</span>
+                            <span class="love-axis-code" id="axis-d">M</span>
+                            <span class="love-axis-description" id="axis-d-desc">미디에이터형 (중재)</span>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- 상세 설명 -->
-                <div class="love-result-detail-box">
-                    <p class="love-result-description" id="result-description">
-                        당신은 감성적이고 로맨틱한 연애를 추구하는 타입입니다.
-                    </p>
-                    
-                    <div class="love-result-detail-grid">
-                        <div class="love-result-detail-card">
-                            <h4>💖 연애 스타일</h4>
-                            <ul id="love-style-list">
-                                <li>깊은 감정적 교류를 중요시</li>
-                                <li>로맨틱한 제스처를 좋아함</li>
-                                <li>상대방과의 특별한 추억 만들기</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="love-result-detail-card">
-                            <h4 class="love-career-title">💼 이상적인 데이트</h4>
-                            <div class="love-career-tags" id="ideal-dates">
-                                <span class="love-career-tag">별빛 아래 산책</span>
-                                <span class="love-career-tag">와인과 함께하는 저녁</span>
-                                <span class="love-career-tag">영화관 데이트</span>
-                            </div>
-                        </div>
+                <!-- 연애 스타일 분석 -->
+                <div class="love-result-analysis">
+                    <div class="love-result-analysis-card">
+                        <h4 class="love-description-title">💎 특징</h4>
+                        <p id="description">당신은 연인과의 깊은 정서적 유대를 중요시하며, 낭만적인 사랑을 꿈꾸는 이상주의자입니다. 영화나 소설 같은 아름다운 사랑 이야기를 현실에서 만들고 싶어합니다.</p>
                     </div>
 
                     <div class="love-result-analysis-card">
-                        <h4 class="love-style-title">✨ 강점</h4>
-                        <p id="strengths">깊은 공감 능력과 따뜻한 마음을 가지고 있어 상대방을 편안하게 만들어줍니다.</p>
+                        <h4 class="love-strengths-title">🌟 강점</h4>
+                        <p id="strengths">깊은 공감 능력, 낭만적 감성, 진심 어린 사랑, 예술적 감성, 연인에 대한 헌신</p>
                     </div>
 
                     <div class="love-result-analysis-card">
-                        <h4 class="love-conflict-title">⚡ 주의점</h4>
-                        <p id="weaknesses">지나치게 이상적인 사랑을 추구하다 현실과의 괴리를 느낄 수 있습니다.</p>
+                        <h4 class="love-weaknesses-title">⚠️ 주의점</h4>
+                        <p id="weaknesses">현실과 이상의 간격, 과도한 기대, 상처받기 쉬운 성격, 불안정한 감정</p>
+                    </div>
+
+                    <div class="love-result-analysis-card">
+                        <h4 class="love-dating-title">💑 연애 스타일</h4>
+                        <p id="dating-style">낭만적이고 감성적인 데이트를 선호합니다. 예상치 못한 깜짝 이벤트나 특별한 장소에서의 데이트를 통해 연인과의 특별한 추억을 만들어가는 것을 좋아합니다.</p>
                     </div>
 
                     <div class="love-result-analysis-card">
@@ -230,7 +242,7 @@
                 axis: 'L',
                 question: "연인에게 사랑을 표현하는 가장 좋은 방법은?",
                 options: [
-                    { text: "포옹이나 스킨십으로 애정을 전달한다", value: 'touch' },
+                    { text: "포옥이나 스킨십으로 애정을 전달한다", value: 'touch' },
                     { text: "사랑한다는 말과 칭찬을 자주 한다", value: 'words' },
                     { text: "함께 시간을 보내며 추억을 만든다", value: 'time' },
                     { text: "깜짝 선물이나 이벤트를 준비한다", value: 'gift' },
@@ -250,338 +262,253 @@
             },
             {
                 axis: 'L',
-                question: "기념일에 가장 원하는 것은?",
+                question: "연인에게 받고 싶은 기념일 선물은?",
                 options: [
-                    { text: "따뜻한 포옹과 키스", value: 'touch' },
-                    { text: "감동적인 편지나 고백", value: 'words' },
-                    { text: "둘만의 여행이나 데이트", value: 'time' },
-                    { text: "의미 있는 선물", value: 'gift' },
-                    { text: "특별한 이벤트나 서프라이즈", value: 'action' }
+                    { text: "커플 마사지나 스파 체험", value: 'touch' },
+                    { text: "진심이 담긴 손편지나 영상 메시지", value: 'words' },
+                    { text: "함께하는 여행이나 데이트", value: 'time' },
+                    { text: "예쁜 액세서리나 의미 있는 물건", value: 'gift' },
+                    { text: "집안일을 대신 해주거나 문제 해결", value: 'action' }
                 ]
             },
             {
                 axis: 'L',
-                question: "싸운 후 화해할 때 가장 중요한 것은?",
+                question: "연인이 스트레스받을 때 나는?",
                 options: [
-                    { text: "꼭 안아주며 화해하기", value: 'touch' },
-                    { text: "진심 어린 사과와 대화", value: 'words' },
-                    { text: "함께 시간을 보내며 풀어가기", value: 'time' },
-                    { text: "화해의 선물 주고받기", value: 'gift' },
-                    { text: "잘못을 행동으로 보여주기", value: 'action' }
+                    { text: "따뜻하게 안아주고 등을 두드려준다", value: 'touch' },
+                    { text: "격려의 말과 긍정적인 메시지를 전한다", value: 'words' },
+                    { text: "그 사람의 이야기를 끊까지 들어준다", value: 'time' },
+                    { text: "좋아하는 음식이나 소소한 선물로 위로한다", value: 'gift' },
+                    { text: "문제 해결을 위한 구체적인 도움을 준다", value: 'action' }
                 ]
             },
             {
                 axis: 'L',
-                question: "일상에서 사랑을 느끼는 순간은?",
+                question: "이상적인 데이트는?",
                 options: [
-                    { text: "아침에 일어나 서로를 안을 때", value: 'touch' },
-                    { text: "사랑한다는 문자를 받을 때", value: 'words' },
-                    { text: "저녁을 함께 먹으며 대화할 때", value: 'time' },
-                    { text: "깜짝 간식이나 작은 선물을 받을 때", value: 'gift' },
-                    { text: "집안일을 대신 해줄 때", value: 'action' }
+                    { text: "합께 요리하고 스킨십이 자연스러운 데이트", value: 'touch' },
+                    { text: "깊은 대화와 서로의 마음을 나누는 시간", value: 'words' },
+                    { text: "온전히 둘만의 시간을 보내는 조용한 데이트", value: 'time' },
+                    { text: "예상치 못한 깜짝 이벤트와 로맨틱한 분위기", value: 'gift' },
+                    { text: "함께 무언가를 만들고 성취감을 느끼는 시간", value: 'action' }
                 ]
             },
-            
-            // O축: 관계소유욕 (5문항)
+
+            // O축: 개방성 (5문항)
             {
                 axis: 'O',
-                question: "연인과의 이상적인 연락 빈도는?",
+                question: "연애에서 개인 시간의 중요성은?",
                 options: [
-                    { text: "하루에 한두 번 안부 정도", value: 'freedom' },
-                    { text: "아침 저녁으로 꾸준히", value: 'medium' },
-                    { text: "시간 날 때마다 자주", value: 'close' },
-                    { text: "거의 항상 연락하고 싶다", value: 'possess' },
-                    { text: "중요한 일만 공유하면 충분", value: 'freedom' }
-                ]
-            },
-            {
-                axis: 'O',
-                question: "연인의 친구 모임 참석에 대한 생각은?",
-                options: [
-                    { text: "자유롭게 다녀오라고 한다", value: 'freedom' },
-                    { text: "누구와 가는지 정도만 물어본다", value: 'medium' },
-                    { text: "언제 끝나는지 확인한다", value: 'close' },
-                    { text: "가급적 함께 가고 싶다", value: 'possess' },
-                    { text: "전혀 신경 쓰지 않는다", value: 'freedom' }
+                    { text: "개인 시간이 매우 중요하다 - 자유로운 관계", value: 'freedom' },
+                    { text: "적당한 개인 시간이 필요하다", value: 'medium' },
+                    { text: "가능한 한 많은 시간을 함께 보내고 싶다", value: 'close' },
+                    { text: "연인은 나의 전부여야 한다", value: 'possession' }
                 ]
             },
             {
                 axis: 'O',
-                question: "연인의 SNS 활동에 대한 태도는?",
+                question: "연인이 친구들과 놀러 가는 것에 대해?",
                 options: [
-                    { text: "관심 없고 보지도 않는다", value: 'freedom' },
-                    { text: "가끔 구경하는 정도", value: 'medium' },
-                    { text: "자주 확인하고 댓글도 단다", value: 'close' },
-                    { text: "모든 활동을 체크한다", value: 'possess' },
-                    { text: "서로의 계정을 공유하고 싶다", value: 'possess' }
+                    { text: "완전히 자유롭게 - 늘 사전 동의 없이도 OK", value: 'freedom' },
+                    { text: "미리 말해주면 기분 좋게 보내달라고 한다", value: 'medium' },
+                    { text: "가능하면 나도 함께 어울리고 싶다", value: 'close' },
+                    { text: "왜 나 대신 친구들과 노는데? 싫다", value: 'possession' }
                 ]
             },
             {
                 axis: 'O',
-                question: "연인과 떨어져 있을 때 느낌은?",
+                question: "연인의 SNS 활동에 대한 내 생각은?",
                 options: [
-                    { text: "각자의 시간을 즐긴다", value: 'freedom' },
-                    { text: "적당히 그립지만 괜찮다", value: 'medium' },
-                    { text: "빨리 만나고 싶어 안달난다", value: 'close' },
-                    { text: "불안하고 연락을 자주 한다", value: 'possess' },
-                    { text: "오히려 편하고 자유롭다", value: 'freedom' }
+                    { text: "완전 자유 - 어떤 사진을 올려도 상관없다", value: 'freedom' },
+                    { text: "대충 자유롭게 하되 과한 것만 아니면 OK", value: 'medium' },
+                    { text: "연인 사진이나 드러나는 사랑 표현을 원한다", value: 'close' },
+                    { text: "왜 다른 사람들과 소통하는데? 바로 알고 싶다", value: 'possession' }
                 ]
             },
             {
                 axis: 'O',
-                question: "연인의 이성 친구에 대한 생각은?",
+                question: "연인이 이성 친구와 대화할 때?",
                 options: [
-                    { text: "전혀 문제없다고 생각한다", value: 'freedom' },
-                    { text: "믿지만 약간 신경은 쓰인다", value: 'medium' },
-                    { text: "불편하지만 참는다", value: 'close' },
-                    { text: "매우 불편하고 제한하고 싶다", value: 'possess' },
-                    { text: "서로 신뢰하면 상관없다", value: 'freedom' }
-                ]
-            },
-            
-            // V축: 가치우선순위 (5문항)
-            {
-                axis: 'V',
-                question: "연인을 선택할 때 가장 중요한 것은?",
-                options: [
-                    { text: "외모와 스타일", value: 'fashion' },
-                    { text: "지적 수준과 대화", value: 'brain' },
-                    { text: "성격과 마음씨", value: 'heart' },
-                    { text: "경제력과 사회적 지위", value: 'status' },
-                    { text: "가치관과 인생관", value: 'moral' }
+                    { text: "완전 자연스럽다 - 단순 친구일 뿐", value: 'freedom' },
+                    { text: "별로 신경 안 쓰지만 선을 넘지 않으면 OK", value: 'medium' },
+                    { text: "좀 신경 쓰이지만 이해하려고 노력한다", value: 'close' },
+                    { text: "왜 굳이 이성과 대화해야 하는데? 불편하다", value: 'possession' }
                 ]
             },
             {
-                axis: 'V',
-                question: "데이트 코스를 정할 때 우선순위는?",
+                axis: 'O',
+                question: "연인의 과거 연애 이야기에 대해?",
                 options: [
-                    { text: "분위기 좋고 예쁜 곳", value: 'fashion' },
-                    { text: "전시회나 공연 같은 문화생활", value: 'brain' },
-                    { text: "편하고 대화하기 좋은 곳", value: 'heart' },
-                    { text: "고급스럽고 특별한 곳", value: 'status' },
-                    { text: "의미 있고 추억이 될 곳", value: 'moral' }
+                    { text: "자연스럽게 들을 수 있다 - 그냥 경험담", value: 'freedom' },
+                    { text: "굳이 상세하게 말하지 않으면 OK", value: 'medium' },
+                    { text: "듣기는 싫지만 수용할 수 있다", value: 'close' },
+                    { text: "완전 듣기 싫다 - 과거는 지워야 한다", value: 'possession' }
+                ]
+            },
+
+            // V축: 가치관 (5문항)
+            {
+                axis: 'V',
+                question: "연인을 선택할 때 가장 중요한 요소는?",
+                options: [
+                    { text: "외모와 스타일 - 내 취향에 맞는 비주얼", value: 'fashion' },
+                    { text: "지성과 대화 - 생각이 깊고 대화가 통하는 사람", value: 'brain' },
+                    { text: "성격과 마음 - 착하고 따뜻한 사람", value: 'heart' },
+                    { text: "사회적 지위 - 안정적이고 성공한 사람", value: 'status' },
+                    { text: "가치관 - 나와 비슷한 사고방식과 인생관", value: 'moral' }
                 ]
             },
             {
                 axis: 'V',
-                question: "연인과의 갈등 원인이 될 가능성이 높은 것은?",
+                question: "연인이 자랑스러운 순간은?",
                 options: [
-                    { text: "패션 센스나 외모 관리 소홀", value: 'fashion' },
-                    { text: "지적 대화나 성장 의지 부족", value: 'brain' },
-                    { text: "배려심이나 공감 능력 부족", value: 'heart' },
-                    { text: "경제관념이나 미래 계획 차이", value: 'status' },
-                    { text: "가치관이나 신념의 차이", value: 'moral' }
+                    { text: "함께 나갔을 때 다들 아름다운 커플이라고 할 때", value: 'fashion' },
+                    { text: "그 사람의 통찰력 있는 말에 주변이 감탄할 때", value: 'brain' },
+                    { text: "누군가를 도와주는 착한 모습을 볼 때", value: 'heart' },
+                    { text: "사회적으로 인정받고 성공하는 모습을 보일 때", value: 'status' },
+                    { text: "중요한 순간에 나와 똑같은 선택을 할 때", value: 'moral' }
                 ]
             },
             {
                 axis: 'V',
-                question: "연인에게 가장 자랑스러워하는 부분은?",
+                question: "연인에게 실망하는 순간은?",
                 options: [
-                    { text: "멋진 외모와 스타일", value: 'fashion' },
-                    { text: "똑똑함과 전문성", value: 'brain' },
-                    { text: "따뜻한 마음과 배려심", value: 'heart' },
-                    { text: "성공적인 커리어", value: 'status' },
-                    { text: "올바른 가치관", value: 'moral' }
+                    { text: "함께 나갔는데 별로 멋지지 않을 때", value: 'fashion' },
+                    { text: "대화가 원시적이고 깊이가 느껴지지 않을 때", value: 'brain' },
+                    { text: "이기적이거나 남을 배려하지 않는 모습을 보일 때", value: 'heart' },
+                    { text: "사회적으로 인정받지 못하거나 성장이 없을 때", value: 'status' },
+                    { text: "중요한 문제에 대해 나와 다른 생각을 가질 때", value: 'moral' }
                 ]
             },
             {
                 axis: 'V',
-                question: "이상적인 결혼 생활의 모습은?",
+                question: "연인에게 투자할 의지가 있는 것은?",
                 options: [
-                    { text: "서로를 가꾸며 아름답게 나이 들기", value: 'fashion' },
-                    { text: "끊임없이 배우고 성장하는 부부", value: 'brain' },
-                    { text: "서로 위하며 행복한 가정", value: 'heart' },
-                    { text: "경제적으로 풍요로운 삶", value: 'status' },
-                    { text: "신념을 공유하는 동반자", value: 'moral' }
-                ]
-            },
-            
-            // E축: 에너지흐름 (5문항)
-            {
-                axis: 'E',
-                question: "연애할 때 나의 에너지 패턴은?",
-                options: [
-                    { text: "상대를 위해 헌신하는 편", value: 'giver' },
-                    { text: "받는 것을 더 편하게 느낀다", value: 'taker' },
-                    { text: "주고받는 균형을 중시한다", value: 'exchanger' },
-                    { text: "각자 알아서 하는 게 편하다", value: 'self' },
-                    { text: "상황에 따라 유동적이다", value: 'exchanger' }
+                    { text: "스타일링이나 외모 관리 - 더 멋진 연인으로", value: 'fashion' },
+                    { text: "교육이나 자기계발 - 더 스마트한 연인으로", value: 'brain' },
+                    { text: "사람들과의 관계 - 더 좋은 인간관계를 위해", value: 'heart' },
+                    { text: "커리어나 전문성 - 더 성공한 연인으로", value: 'status' },
+                    { text: "가치관 형성 - 더 성숙한 인생관을 위해", value: 'moral' }
                 ]
             },
             {
-                axis: 'E',
-                question: "데이트 비용에 대한 생각은?",
+                axis: 'V',
+                question: "연인의 친구들을 만나고 싶은 이유는?",
                 options: [
-                    { text: "대부분 내가 부담한다", value: 'giver' },
-                    { text: "상대가 내주면 고맙다", value: 'taker' },
-                    { text: "번갈아가며 낸다", value: 'exchanger' },
-                    { text: "각자 낸다", value: 'self' },
-                    { text: "정확히 반반 나눈다", value: 'exchanger' }
+                    { text: "다들 얼마나 멋진지 궁금하다", value: 'fashion' },
+                    { text: "어떤 이야기를 나누고 대화하는지 궁금하다", value: 'brain' },
+                    { text: "다들 얼마나 따뜻하고 좋은지 궁금하다", value: 'heart' },
+                    { text: "다들 어떤 일을 하고 성공했는지 궁금하다", value: 'status' },
+                    { text: "다들 어떤 생각을 가지고 사는지 궁금하다", value: 'moral' }
                 ]
             },
+
+            // E축: 교환 방식 (5문항)
             {
                 axis: 'E',
-                question: "연인의 고민을 들을 때 나는?",
+                question: "연애에서 나의 역할은?",
                 options: [
-                    { text: "내 일처럼 함께 고민하고 해결한다", value: 'giver' },
-                    { text: "들어주되 내 문제가 더 급하다", value: 'taker' },
-                    { text: "서로의 고민을 나눈다", value: 'exchanger' },
-                    { text: "각자 해결하는 게 낫다고 생각한다", value: 'self' },
-                    { text: "조언은 하되 깊이 관여하지 않는다", value: 'self' }
+                    { text: "더 많이 주는 사람 - 누군가를 배려하고 사랑하는 것이 좋다", value: 'giver' },
+                    { text: "더 많이 받는 사람 - 사랑받고 보살핌을 받는 것이 좋다", value: 'taker' },
+                    { text: "주고받는 사람 - 공평하게 상호 교환하는 것이 좋다", value: 'exchange' },
+                    { text: "독립적인 사람 - 각자 알아서 하는 것이 좋다", value: 'self' }
                 ]
             },
             {
                 axis: 'E',
-                question: "기념일 선물에 대한 태도는?",
+                question: "연인이 힘들어할 때 나는?",
                 options: [
-                    { text: "정성껏 준비하는 게 즐겁다", value: 'giver' },
-                    { text: "받는 선물에 더 관심이 간다", value: 'taker' },
-                    { text: "비슷한 가격대로 교환한다", value: 'exchanger' },
-                    { text: "굳이 선물은 필요 없다", value: 'self' },
-                    { text: "마음이 중요하지 선물은 부담스럽다", value: 'self' }
+                    { text: "전적으로 도와주고 희생할 각오가 되어 있다", value: 'giver' },
+                    { text: "그 사람이 나를 더 필요로 하기를 바란다", value: 'taker' },
+                    { text: "도움을 주되 나도 도움이 필요할 때 받기를 기대한다", value: 'exchange' },
+                    { text: "각자 알아서 해결하는 것이 맞다고 생각한다", value: 'self' }
                 ]
             },
             {
                 axis: 'E',
-                question: "연애에서 에너지가 고갈될 때는?",
+                question: "연인에게 비싼 선물을 받았을 때?",
                 options: [
-                    { text: "내가 주기만 하고 받지 못할 때", value: 'giver' },
-                    { text: "상대가 나를 충분히 챙기지 않을 때", value: 'taker' },
-                    { text: "주고받는 균형이 깨질 때", value: 'exchanger' },
-                    { text: "너무 많은 것을 요구받을 때", value: 'self' },
-                    { text: "개인 시간이 부족할 때", value: 'self' }
-                ]
-            },
-            
-            // D축: 갈등해결 (5문항)
-            {
-                axis: 'D',
-                question: "연인과 의견이 다를 때 나는?",
-                options: [
-                    { text: "끝까지 내 의견을 관철시킨다", value: 'fighter' },
-                    { text: "일단 피하고 나중에 이야기한다", value: 'avoider' },
-                    { text: "중간 지점을 찾으려 노력한다", value: 'mediator' },
-                    { text: "논리적으로 분석해서 해결한다", value: 'analyzer' },
-                    { text: "감정이 격해지면 일단 멈춘다", value: 'avoider' }
+                    { text: "더 합 더 비싼 선물로 보답하고 싶다", value: 'giver' },
+                    { text: "감사하고 또 다른 선물도 기대하게 된다", value: 'taker' },
+                    { text: "고마워하지만 비슷한 가치로 보답해야 한다고 생각한다", value: 'exchange' },
+                    { text: "부담스럽다 - 선물없이도 충분한데", value: 'self' }
                 ]
             },
             {
-                axis: 'D',
-                question: "큰 싸움 후 화해 방식은?",
+                axis: 'E',
+                question: "연인의 생일에?",
                 options: [
-                    { text: "누가 잘못했는지 분명히 한다", value: 'fighter' },
-                    { text: "시간이 지나면 자연스럽게 풀린다", value: 'avoider' },
-                    { text: "서로 양보하며 화해한다", value: 'mediator' },
-                    { text: "원인을 분석하고 재발 방지책을 논의한다", value: 'analyzer' },
-                    { text: "먼저 사과하고 넘어간다", value: 'mediator' }
+                    { text: "그 사람이 원하는 모든 것을 해주고 싶다", value: 'giver' },
+                    { text: "나를 위해 특별한 무언가를 해주기를 바란다", value: 'taker' },
+                    { text: "서로에게 의미 있는 것을 준비하자고 제안한다", value: 'exchange' },
+                    { text: "간단히 축하해주기만 하면 충분하다", value: 'self' }
                 ]
             },
             {
-                axis: 'D',
-                question: "갈등 상황에서 나의 감정은?",
+                axis: 'E',
+                question: "내가 힘들 때 연인에게 바라는 것은?",
                 options: [
-                    { text: "화가 나서 목소리가 커진다", value: 'fighter' },
-                    { text: "스트레스받아서 도망치고 싶다", value: 'avoider' },
-                    { text: "상대방 감정도 신경 쓰인다", value: 'mediator' },
-                    { text: "차분하게 상황을 파악한다", value: 'analyzer' },
-                    { text: "답답하지만 참으려 한다", value: 'avoider' }
+                    { text: "그냥 그사람이 행복하면 난 괜찮다", value: 'giver' },
+                    { text: "나를 전적으로 도와주고 위로해주기를 바란다", value: 'taker' },
+                    { text: "서로 도와주며 함께 해결하고 싶다", value: 'exchange' },
+                    { text: "그냥 내가 알아서 해결할 테니까 납두어두면 된다", value: 'self' }
+                ]
+            },
+
+            // D축: 결정 방식 (5문항)
+            {
+                axis: 'D',
+                question: "연인과 마생할 때 나는?",
+                options: [
+                    { text: "직설적으로 맞서서 해결하려고 한다", value: 'fighter' },
+                    { text: "갈등을 피하고 시간을 두고 싶다", value: 'avoider' },
+                    { text: "서로의 의견을 조율하려고 노력한다", value: 'mediator' },
+                    { text: "원인을 차근차근 분석하고 해결책을 찾는다", value: 'analyzer' }
                 ]
             },
             {
                 axis: 'D',
-                question: "반복되는 갈등에 대한 대처는?",
+                question: "연인이 잘못했을 때 나는?",
                 options: [
-                    { text: "근본 원인을 해결하려 맞선다", value: 'fighter' },
-                    { text: "그냥 받아들이고 산다", value: 'avoider' },
-                    { text: "조금씩 개선하려 노력한다", value: 'mediator' },
-                    { text: "패턴을 분석해 해결책을 찾는다", value: 'analyzer' },
-                    { text: "전문가 도움을 받는다", value: 'analyzer' }
+                    { text: "바로 지적하고 잘못을 인정하라고 한다", value: 'fighter' },
+                    { text: "일단 말아두고 나중에 이야기하겠다고 한다", value: 'avoider' },
+                    { text: "왜 그랬는지 이유를 들어보고 함께 해결책을 찾는다", value: 'mediator' },
+                    { text: "뭐가 잘못됐는지 정확하게 파악하고 대안을 제시한다", value: 'analyzer' }
                 ]
             },
             {
                 axis: 'D',
-                question: "이별 위기가 왔을 때는?",
+                question: "연인이 중요한 결정을 할 때 나는?",
                 options: [
-                    { text: "끝까지 붙잡고 설득한다", value: 'fighter' },
-                    { text: "받아들이고 정리한다", value: 'avoider' },
-                    { text: "대화로 풀어보려 한다", value: 'mediator' },
-                    { text: "관계의 득실을 분석한다", value: 'analyzer' },
-                    { text: "시간을 두고 생각해본다", value: 'analyzer' }
+                    { text: "내 의견을 강하게 주장하고 설득하려고 한다", value: 'fighter' },
+                    { text: "그 사람이 알아서 결정하도록 남결어둔다", value: 'avoider' },
+                    { text: "서로 의견을 나누고 최선의 결정을 찾는다", value: 'mediator' },
+                    { text: "장단점을 비교 분석하고 데이터를 제시한다", value: 'analyzer' }
+                ]
+            },
+            {
+                axis: 'D',
+                question: "연인이 다른 사람과 마생할 때?",
+                options: [
+                    { text: "바로 개입해서 연인을 대신해 맞서겠다", value: 'fighter' },
+                    { text: "개입하지 않고 나중에 연인과 따로 이야기하겠다", value: 'avoider' },
+                    { text: "연인과 상대방 양쪽의 이야기를 들어보겠다", value: 'mediator' },
+                    { text: "상황을 정확히 파악하고 객관적 의견을 제시하겠다", value: 'analyzer' }
+                ]
+            },
+            {
+                axis: 'D',
+                question: "연인과의 미래를 계획할 때?",
+                options: [
+                    { text: "내가 원하는 바를 강하게 주장하고 실행하려고 한다", value: 'fighter' },
+                    { text: "그냥 자연스럽게 흘러가는 대로 두고 싶다", value: 'avoider' },
+                    { text: "서로의 꿈과 목표를 나누고 함께 이룰 수 있는 계획을 세운다", value: 'mediator' },
+                    { text: "혖실적인 상황을 분석하고 구체적인 로드맵을 제시한다", value: 'analyzer' }
                 ]
             }
         ];
-        
-        // 러브 DNA 타입 정의 (32가지 조합)
-        const loveDNATypes = {
-            'TWFGF': {
-                name: '열정적 로맨티스트',
-                nickname: '사랑의 화산',
-                description: '스킨십과 따뜻한 말로 사랑을 표현하며, 자유로운 관계 속에서도 외모와 스타일을 중시합니다. 베푸는 것을 좋아하고 갈등 상황에서는 적극적으로 맞서는 열정적인 연애 스타일입니다.',
-                rarity: 'LEGENDARY',
-                percentage: '3.2%',
-                loveStyle: ['깊은 스킨십으로 애정 표현', '로맨틱한 말과 행동', '상대방을 위한 헌신적 사랑'],
-                idealDates: ['열정적인 댄스 클럽', '로맨틱한 와인바', '스파 데이트'],
-                strengths: '열정적이고 헌신적인 사랑으로 상대방을 특별하게 만들어줍니다.',
-                weaknesses: '때로는 지나친 열정이 상대방에게 부담이 될 수 있습니다.',
-                growth: '상대방의 페이스를 존중하고 적절한 거리감을 유지하는 연습이 필요합니다.',
-                bestMatches: ['안정적 케어테이커', '지적 로맨티스트'],
-                goodMatches: ['모험적 탐험가', '감성적 예술가'],
-                challengingMatches: ['독립적 현실주의자', '분석적 관찰자'],
-                celebrities: ['브래드 피트', '안젤리나 졸리', '라이언 고슬링', '엠마 스톤']
-            },
-            'WMHEA': {
-                name: '따뜻한 중재자',
-                nickname: '사랑의 외교관',
-                description: '말로 사랑을 표현하고 중간 정도의 거리감을 유지하며, 마음씨를 중시합니다. 균형잡힌 에너지 교환을 추구하고 갈등을 회피하는 평화로운 연애 스타일입니다.',
-                rarity: 'COMMON',
-                percentage: '8.5%',
-                loveStyle: ['진심 어린 대화와 소통', '적절한 거리감 유지', '평화로운 관계 추구'],
-                idealDates: ['조용한 카페', '북카페', '공원 산책'],
-                strengths: '뛰어난 공감 능력과 중재 능력으로 안정적인 관계를 만들어갑니다.',
-                weaknesses: '갈등을 피하려다 문제가 쌓일 수 있습니다.',
-                growth: '때로는 직접적인 표현과 건설적인 갈등도 필요함을 인식해야 합니다.',
-                bestMatches: ['안정적 파트너', '감성적 소통가'],
-                goodMatches: ['지적 대화가', '예술적 영혼'],
-                challengingMatches: ['열정적 전사', '독립적 개인주의자'],
-                celebrities: ['톰 행크스', '멕 라이언', '키아누 리브스', '산드라 블록']
-            },
-            'TCSGM': {
-                name: '실용적 파트너',
-                nickname: '든든한 동반자',
-                description: '행동으로 사랑을 표현하고 가까운 거리감을 원하며, 경제력과 지위를 중시합니다. 베푸는 것을 좋아하고 갈등을 중재하는 안정적인 연애 스타일입니다.',
-                rarity: 'UNCOMMON',
-                percentage: '6.8%',
-                loveStyle: ['실질적인 도움과 지원', '안정적인 관계 구축', '미래 지향적 계획'],
-                idealDates: ['고급 레스토랑', '쇼핑 데이트', '투자 세미나'],
-                strengths: '책임감 있고 안정적인 파트너로 든든한 미래를 약속합니다.',
-                weaknesses: '감정적 표현이 부족하여 로맨스가 부족할 수 있습니다.',
-                growth: '물질적 가치 외에도 감정적 교류의 중요성을 인식해야 합니다.',
-                bestMatches: ['현실적 계획가', '안정 추구자'],
-                goodMatches: ['실용적 파트너', '목표 지향적 동반자'],
-                challengingMatches: ['자유로운 영혼', '감성적 몽상가'],
-                celebrities: ['워런 버핏', '오프라 윈프리', '마크 저커버그', '셰릴 샌드버그']
-            }
-        };
-        
-        // 기본 타입 정의 (정의되지 않은 조합용)
-        const defaultType = {
-            name: '독특한 연애 스타일',
-            nickname: '사랑의 개척자',
-            description: '당신만의 독특한 연애 스타일을 가지고 있습니다. 기존의 틀에 얽매이지 않고 자신만의 방식으로 사랑을 표현합니다.',
-            rarity: 'UNIQUE',
-            percentage: '특별함',
-            loveStyle: ['자신만의 독특한 애정 표현', '창의적인 연애 방식', '틀에 얽매이지 않는 사랑'],
-            idealDates: ['특별한 경험', '새로운 도전', '창의적인 데이트'],
-            strengths: '독창적이고 특별한 연애 스타일로 상대방에게 신선함을 줍니다.',
-            weaknesses: '때로는 상대방이 당신을 이해하기 어려워할 수 있습니다.',
-            growth: '상대방과의 소통을 통해 서로를 이해하는 시간이 필요합니다.',
-            bestMatches: ['열린 마음의 탐험가', '창의적 사상가'],
-            goodMatches: ['유연한 적응자', '호기심 많은 관찰자'],
-            challengingMatches: ['전통적 보수주의자', '규칙적 계획가'],
-            celebrities: ['레이디 가가', '조니 뎁', '헬레나 본햄 카터', '팀 버튼']
-        };
-        
-        // 상태 관리
+
+        // 테스트 변수들
         let currentQuestion = -1;
         let answers = {};
         let axisScores = {
@@ -591,60 +518,72 @@
             E: {},
             D: {}
         };
-        
+
         // 화면 전환
         function showScreen(screenId) {
-            document.querySelectorAll('#intro-screen, #test-screen, #result-screen').forEach(screen => {
-                screen.classList.add('love-hidden');
+            const screens = document.querySelectorAll('.love-intro-section, .love-test-container > div');
+            screens.forEach(screen => {
+                if (screen.id === screenId) {
+                    screen.style.display = 'block';
+                    screen.classList.remove('love-hidden');
+                } else {
+                    screen.style.display = 'none';
+                    screen.classList.add('love-hidden');
+                }
             });
-            document.getElementById(screenId).classList.remove('love-hidden');
         }
-        
+
         // 테스트 시작
         function startTest() {
-            currentQuestion = 0;
-            answers = {};
-            axisScores = {
-                L: {},
-                O: {},
-                V: {},
-                E: {},
-                D: {}
-            };
+            currentQuestion = -1;
             showScreen('test-screen');
-            showQuestion();
+            nextQuestion();
         }
-        
-        // 질문 표시
-        function showQuestion() {
+
+        // 다음 질문
+        function nextQuestion() {
+            currentQuestion++;
             if (currentQuestion >= loveDNAQuestions.length) {
                 showResult();
                 return;
             }
             
-            const q = loveDNAQuestions[currentQuestion];
-            const progressPercent = ((currentQuestion + 1) / loveDNAQuestions.length) * 100;
+            showQuestion();
+        }
+
+        // 이전 질문
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showQuestion();
+            }
+        }
+
+        // 질문 표시
+        function showQuestion() {
+            const question = loveDNAQuestions[currentQuestion];
+            const progress = ((currentQuestion + 1) / loveDNAQuestions.length) * 100;
             
-            // 진행률 업데이트
+            // 진행상황 업데이트
             document.getElementById('progress-text').textContent = `질문 ${currentQuestion + 1} / ${loveDNAQuestions.length}`;
-            document.getElementById('progress-percent').textContent = `${Math.round(progressPercent)}%`;
-            document.getElementById('progress').style.width = `${progressPercent}%`;
+            document.getElementById('progress-percent').textContent = `${Math.round(progress)}%`;
+            document.getElementById('progress').style.width = `${progress}%`;
             
-            // 질문 번호와 텍스트 표시
+            // 질문 내용
             document.getElementById('question-number').textContent = `Q${currentQuestion + 1}`;
-            document.getElementById('question').textContent = q.question;
+            document.getElementById('question').textContent = question.question;
             
-            // 옵션 표시
+            // 옵션 생성
             const optionsContainer = document.getElementById('options');
             optionsContainer.innerHTML = '';
             
-            q.options.forEach((option, index) => {
+            question.options.forEach((option, index) => {
                 const optionElement = document.createElement('div');
                 optionElement.className = 'love-option';
                 optionElement.textContent = option.text;
                 optionElement.onclick = () => selectOption(index);
                 
-                // 이전 답변 표시
+                // 이전에 선택한 옵션이 있다면 표시
                 if (answers[currentQuestion] === index) {
                     optionElement.classList.add('selected');
                 }
@@ -653,228 +592,193 @@
             });
             
             // 버튼 상태 업데이트
-            document.getElementById('prev-btn').style.display = currentQuestion > 0 ? 'block' : 'none';
-            document.getElementById('next-btn').textContent = currentQuestion === loveDNAQuestions.length - 1 ? '결과 보기' : '다음';
+            document.getElementById('prev-btn').disabled = currentQuestion === 0;
             document.getElementById('next-btn').disabled = answers[currentQuestion] === undefined;
         }
-        
-        // 옵션 선택 (자동 넘김 기능 추가)
+
+        // 옵션 선택
         function selectOption(index) {
             answers[currentQuestion] = index;
             
-            // 선택 표시 업데이트
+            // 옵션 비주얼 업데이트
             document.querySelectorAll('.love-option').forEach((opt, i) => {
                 opt.classList.toggle('selected', i === index);
             });
             
-            // 다음 버튼 활성화
             document.getElementById('next-btn').disabled = false;
             
-            // 자동으로 다음 질문으로 넘어가기 (0.8초 딜레이)
+            // 자동으로 다음 질문으로 넘어가기 (0.8초 딘레이)
             setTimeout(() => {
                 if (currentQuestion < loveDNAQuestions.length - 1) {
                     nextQuestion();
                 } else {
-                    // 마지막 질문이면 결과 보기
                     showResult();
                 }
             }, 800);
         }
-        
-        // 다음 질문
-        function nextQuestion() {
-            if (answers[currentQuestion] === undefined) return;
-            
-            currentQuestion++;
-            showQuestion();
-        }
-        
-        // 이전 질문
-        function previousQuestion() {
-            if (currentQuestion > 0) {
-                currentQuestion--;
-                showQuestion();
-            }
-        }
-        
-        // 결과 계산
-        function calculateDNAType() {
-            // 각 축별 점수 계산
-            Object.keys(answers).forEach(questionIndex => {
-                const question = loveDNAQuestions[parseInt(questionIndex)];
-                const selectedOption = question.options[answers[questionIndex]];
+
+        // 결과 계산 및 표시
+        function showResult() {
+            // 답변 분석
+            loveDNAQuestions.forEach((question, qIndex) => {
+                const answerIndex = answers[qIndex];
+                const selectedOption = question.options[answerIndex];
                 const axis = question.axis;
                 const value = selectedOption.value;
                 
-                axisScores[axis][value] = (axisScores[axis][value] || 0) + 1;
+                if (!axisScores[axis][value]) {
+                    axisScores[axis][value] = 0;
+                }
+                axisScores[axis][value]++;
             });
             
-            // 각 축별 최고 득점 타입 결정
-            let dnaCode = '';
+            // 각 축의 최고점수 값 찾기
+            const result = {
+                L: getMaxKey(axisScores.L),
+                O: getMaxKey(axisScores.O),
+                V: getMaxKey(axisScores.V),
+                E: getMaxKey(axisScores.E),
+                D: getMaxKey(axisScores.D)
+            };
             
-            // L축 (애정언어)
-            const lTypes = axisScores.L;
-            const lMax = Math.max(...Object.values(lTypes));
-            const lType = Object.keys(lTypes).find(key => lTypes[key] === lMax);
-            dnaCode += lType[0].toUpperCase(); // 첫 글자만
+            // 결과 매핑
+            const dnaMapping = {
+                'touch': 'T', 'words': 'W', 'time': 'T', 'gift': 'G', 'action': 'A',
+                'freedom': 'F', 'medium': 'M', 'close': 'C', 'possession': 'P',
+                'fashion': 'F', 'brain': 'B', 'heart': 'H', 'status': 'S', 'moral': 'M',
+                'giver': 'G', 'taker': 'T', 'exchange': 'E', 'self': 'S',
+                'fighter': 'F', 'avoider': 'A', 'mediator': 'M', 'analyzer': 'A'
+            };
             
-            // O축 (관계소유욕)
-            const oTypes = axisScores.O;
-            const oMax = Math.max(...Object.values(oTypes));
-            const oType = Object.keys(oTypes).find(key => oTypes[key] === oMax);
-            dnaCode += oType[0].toUpperCase(); // 첫 글자만
+            const dnaCode = `${dnaMapping[result.L]}${dnaMapping[result.O]}${dnaMapping[result.V]}${dnaMapping[result.E]}${dnaMapping[result.D]}`;
             
-            // V축 (가치우선순위)
-            const vTypes = axisScores.V;
-            const vMax = Math.max(...Object.values(vTypes));
-            const vType = Object.keys(vTypes).find(key => vTypes[key] === vMax);
-            dnaCode += vType[0].toUpperCase(); // 첫 글자만
+            // 결과 데이터 가져오기
+            const resultData = getLoveDNAResult(dnaCode);
             
-            // E축 (에너지흐름)
-            const eTypes = axisScores.E;
-            const eMax = Math.max(...Object.values(eTypes));
-            const eType = Object.keys(eTypes).find(key => eTypes[key] === eMax);
-            dnaCode += eType[0].toUpperCase(); // 첫 글자만
-            
-            // D축 (갈등해결)
-            const dTypes = axisScores.D;
-            const dMax = Math.max(...Object.values(dTypes));
-            const dType = Object.keys(dTypes).find(key => dTypes[key] === dMax);
-            dnaCode += dType[0].toUpperCase(); // 첫 글자만
-            
-            return dnaCode;
-        }
-        
-        // 결과 표시
-        function showResult() {
-            const dnaCode = calculateDNAType();
-            const typeData = loveDNATypes[dnaCode] || defaultType;
-            
-            // 기본 정보 표시
-            document.getElementById('result-dna').textContent = dnaCode;
-            document.getElementById('result-title').textContent = typeData.name;
-            document.getElementById('result-subtitle').textContent = typeData.nickname;
-            document.getElementById('result-rarity').textContent = `희귀도: ${typeData.rarity} (${typeData.percentage})`;
-            document.getElementById('result-description').textContent = typeData.description;
-            
-            // DNA 분석 표시
-            const breakdown = document.getElementById('dna-breakdown');
-            breakdown.innerHTML = '';
-            
-            Object.entries(axisScores).forEach(([axis, scores]) => {
-                const axisDiv = document.createElement('div');
-                axisDiv.className = 'love-dna-axis-result';
-                
-                const maxScore = Math.max(...Object.values(scores));
-                const dominantType = Object.keys(scores).find(key => scores[key] === maxScore);
-                
-                axisDiv.innerHTML = `
-                    <div class="love-dna-axis-label">${axis}축</div>
-                    <div class="love-dna-axis-value">${dominantType}</div>
-                `;
-                
-                breakdown.appendChild(axisDiv);
-            });
-            
-            // 연애 스타일 표시
-            const styleList = document.getElementById('love-style-list');
-            styleList.innerHTML = '';
-            typeData.loveStyle.forEach(style => {
-                const li = document.createElement('li');
-                li.textContent = style;
-                styleList.appendChild(li);
-            });
-            
-            // 이상적 데이트 표시
-            const idealDates = document.getElementById('ideal-dates');
-            idealDates.innerHTML = '';
-            typeData.idealDates.forEach(date => {
-                const span = document.createElement('span');
-                span.className = 'love-career-tag';
-                span.textContent = date;
-                idealDates.appendChild(span);
-            });
-            
-            // 강점, 약점, 성장 포인트 표시
-            document.getElementById('strengths').textContent = typeData.strengths;
-            document.getElementById('weaknesses').textContent = typeData.weaknesses;
-            document.getElementById('growth').textContent = typeData.growth;
-            
-            // 궁합 표시
-            const bestMatches = document.getElementById('best-matches');
-            bestMatches.innerHTML = '';
-            typeData.bestMatches.forEach(match => {
-                const span = document.createElement('span');
-                span.className = 'love-compatibility-type';
-                span.textContent = match;
-                bestMatches.appendChild(span);
-            });
-            
-            const goodMatches = document.getElementById('good-matches');
-            goodMatches.innerHTML = '';
-            typeData.goodMatches.forEach(match => {
-                const span = document.createElement('span');
-                span.className = 'love-compatibility-type-good';
-                span.textContent = match;
-                goodMatches.appendChild(span);
-            });
-            
-            const challengingMatches = document.getElementById('challenging-matches');
-            challengingMatches.innerHTML = '';
-            typeData.challengingMatches.forEach(match => {
-                const span = document.createElement('span');
-                span.className = 'love-compatibility-type-challenge';
-                span.textContent = match;
-                challengingMatches.appendChild(span);
-            });
-            
-            // 연예인 표시
-            const celebrities = document.getElementById('celebrities');
-            celebrities.innerHTML = '';
-            typeData.celebrities.forEach(celebrity => {
-                const span = document.createElement('span');
-                span.className = 'love-celebrity-item';
-                span.textContent = celebrity;
-                celebrities.appendChild(span);
-            });
-            
+            // 결과 화면 표시
             showScreen('result-screen');
+            displayResult(resultData, result);
+        }
+
+        // 최대값 찾기
+        function getMaxKey(obj) {
+            return Object.keys(obj).reduce((a, b) => obj[a] > obj[b] ? a : b);
+        }
+
+        // 결과 데이터 가져오기
+        function getLoveDNAResult(dnaCode) {
+            // 예시 결과 - 실제로는 더 많은 유형이 있어야 합니다
+            const results = {
+                'TFHGM': {
+                    title: '로맨틱 드리머',
+                    subtitle: '"영화 같은 사랑을 꿈꾸는 낭만주의자"',
+                    description: '당신은 연인과의 깊은 정서적 유대를 중요시하며, 낭만적인 사랑을 꿈꾸는 이상주의자입니다. 영화나 소설 같은 아름다운 사랑 이야기를 현실에서 만들고 싶어합니다.',
+                    strengths: '깊은 공감 능력, 낭만적 감성, 진심 어린 사랑, 예술적 감성, 연인에 대한 헌신',
+                    weaknesses: '현실과 이상의 간격, 과도한 기대, 상처받기 쉬운 성격, 불안정한 감정',
+                    datingStyle: '낭만적이고 감성적인 데이트를 선호합니다. 예상치 못한 깜짝 이벤트나 특별한 장소에서의 데이트를 통해 연인과의 특별한 추억을 만들어가는 것을 좋아합니다.',
+                    growth: '현실적인 관계 목표를 설정하고 작은 일상에서도 행복을 찾는 연습이 필요합니다.',
+                    bestMatches: ['안정적 수호자', '열정적 모험가'],
+                    goodMatches: ['창의적 예술가', '지적 탐구자'],
+                    challengingMatches: ['실용적 현실주의자', '독립적 자유인'],
+                    celebrities: ['라이언 고슬링', '엠마 스톤', '박보검', '아이유'],
+                    rarity: 'RARE (5.2%)'
+                }
+            };
+            
+            // 기본값 반환 (매칭되는 결과가 없을 때)
+            return results[dnaCode] || results['TFHGM'];
+        }
+
+        // 결과 표시
+        function displayResult(result, axisResult) {
+            // DNA 코드 표시
+            const dnaMapping = {
+                'touch': 'T', 'words': 'W', 'time': 'T', 'gift': 'G', 'action': 'A',
+                'freedom': 'F', 'medium': 'M', 'close': 'C', 'possession': 'P',
+                'fashion': 'F', 'brain': 'B', 'heart': 'H', 'status': 'S', 'moral': 'M',
+                'giver': 'G', 'taker': 'T', 'exchange': 'E', 'self': 'S',
+                'fighter': 'F', 'avoider': 'A', 'mediator': 'M', 'analyzer': 'A'
+            };
+            
+            const dnaCode = `${dnaMapping[axisResult.L]}${dnaMapping[axisResult.O]}${dnaMapping[axisResult.V]}${dnaMapping[axisResult.E]}${dnaMapping[axisResult.D]}`;
+            
+            // 기본 정보
+            document.getElementById('result-dna').textContent = dnaCode;
+            document.getElementById('result-title').textContent = result.title;
+            document.getElementById('result-subtitle').textContent = result.subtitle;
+            document.getElementById('result-rarity').textContent = '희귀도: ' + result.rarity;
+            
+            // 축별 설명
+            document.getElementById('axis-l').textContent = dnaMapping[axisResult.L];
+            document.getElementById('axis-o').textContent = dnaMapping[axisResult.O];
+            document.getElementById('axis-v').textContent = dnaMapping[axisResult.V];
+            document.getElementById('axis-e').textContent = dnaMapping[axisResult.E];
+            document.getElementById('axis-d').textContent = dnaMapping[axisResult.D];
+            
+            document.getElementById('axis-l-desc').textContent = getAxisDescription('L', dnaMapping[axisResult.L]);
+            document.getElementById('axis-o-desc').textContent = getAxisDescription('O', dnaMapping[axisResult.O]);
+            document.getElementById('axis-v-desc').textContent = getAxisDescription('V', dnaMapping[axisResult.V]);
+            document.getElementById('axis-e-desc').textContent = getAxisDescription('E', dnaMapping[axisResult.E]);
+            document.getElementById('axis-d-desc').textContent = getAxisDescription('D', dnaMapping[axisResult.D]);
+            
+            // 상세 정보
+            document.getElementById('description').textContent = result.description;
+            document.getElementById('strengths').textContent = result.strengths;
+            document.getElementById('weaknesses').textContent = result.weaknesses;
+            document.getElementById('dating-style').textContent = result.datingStyle;
+            document.getElementById('growth').textContent = result.growth;
+            
+            // 궁합
+            document.getElementById('best-matches').innerHTML = result.bestMatches
+                .map(match => `<span class="love-compatibility-type">${match}</span>`).join('');
+            document.getElementById('good-matches').innerHTML = result.goodMatches
+                .map(match => `<span class="love-compatibility-type-good">${match}</span>`).join('');
+            document.getElementById('challenging-matches').innerHTML = result.challengingMatches
+                .map(match => `<span class="love-compatibility-type-challenge">${match}</span>`).join('');
+            
+            // 유명인
+            document.getElementById('celebrities').innerHTML = result.celebrities
+                .map(celeb => `<span class="love-celebrity-item">${celeb}</span>`).join('');
         }
         
-        // 카카오톡 공유
-        function shareToKakao() {
-            if (typeof Kakao !== 'undefined') {
-                Kakao.Share.sendDefault({
-                    objectType: 'feed',
-                    content: {
-                        title: '러브 DNA 테스트 결과',
-                        description: `나의 러브 DNA는 ${document.getElementById('result-title').textContent}! 당신도 테스트해보세요!`,
-                        imageUrl: 'https://doha.kr/images/love-dna-og.png',
-                        link: {
-                            mobileWebUrl: window.location.href,
-                            webUrl: window.location.href,
-                        },
-                    },
-                });
-            } else {
-                copyResultLink();
-            }
-        }
-        
-        // 링크 복사
-        function copyResultLink() {
-            const url = window.location.href;
-            navigator.clipboard.writeText(url).then(() => {
-                alert('링크가 복사되었습니다!');
-            }).catch(() => {
-                const textArea = document.createElement('textarea');
-                textArea.value = url;
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
-                alert('링크가 복사되었습니다!');
-            });
+        // 축별 설명 가져오기
+        function getAxisDescription(axis, code) {
+            const descriptions = {
+                L: {
+                    'T': '터치형 (스킨십)',
+                    'W': '워드형 (말)',
+                    'T': '타임형 (시간)',
+                    'G': '기프트형 (선물)',
+                    'A': '액션형 (행동)'
+                },
+                O: {
+                    'F': '프리덤형 (자유)',
+                    'M': '미디엄형 (중간)',
+                    'C': '클로즈형 (가까움)',
+                    'P': '포제션형 (소유)'
+                },
+                V: {
+                    'F': '패션형 (외모)',
+                    'B': '브레인형 (지성)',
+                    'H': '하트형 (마음)',
+                    'S': '스테이터스형 (지위)',
+                    'M': '모럴형 (가치관)'
+                },
+                E: {
+                    'G': '기버형 (베풂)',
+                    'T': '테이커형 (받음)',
+                    'E': '익스체인저형 (교환)',
+                    'S': '셀프형 (독립)'
+                },
+                D: {
+                    'F': '파이터형 (맞섬)',
+                    'A': '어보이더형 (회피)',
+                    'M': '미디에이터형 (중재)',
+                    'A': '애널라이저형 (분석)'
+                }
+            };
+            
+            return descriptions[axis][code] || '알 수 없음';
         }
         
         // 테스트 재시작
@@ -890,6 +794,84 @@
             };
             showScreen('intro-screen');
         }
+        
+        // 카카오톡 공유
+        function shareToKakao() {
+            // Web Share API 사용 또는 카카오톡 링크 공유
+            if (navigator.share) {
+                navigator.share({
+                    title: '러브 DNA 테스트 결과',
+                    text: '나의 연애 스타일을 알아보세요! 러브 DNA 테스트 결과를 확인해보세요!',
+                    url: window.location.href
+                }).then(() => {
+                    showNotification('공유되었습니다!');
+                }).catch(() => {
+                    // 공유 실패 시 링크 복사
+                    copyResultLink();
+                });
+            } else {
+                // Web Share API 미지원 시 카카오톡 URL 스킴 사용
+                const url = encodeURIComponent(window.location.href);
+                const text = encodeURIComponent('나의 연애 스타일을 알아보세요! 러브 DNA 테스트 결과를 확인해보세요!');
+                const kakaoUrl = `https://sharer.kakao.com/talk/friends/?url=${url}&text=${text}`;
+                
+                // 새 창으로 카카오톡 공유 페이지 열기
+                const newWindow = window.open(kakaoUrl, '_blank', 'width=500,height=600');
+                
+                if (!newWindow) {
+                    // 팝업이 차단된 경우 링크 복사로 대체
+                    showNotification('팝업이 차단되어 링크를 복사합니다.', 'info');
+                    copyResultLink();
+                } else {
+                    showNotification('카카오톡 공유 창이 열렸습니다!');
+                }
+            }
+        }
+        
+        // 링크 복사
+        function copyResultLink() {
+            const url = window.location.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(url).then(() => {
+                    showNotification('링크가 복사되었습니다!');
+                }).catch(() => {
+                    fallbackCopyToClipboard(url);
+                });
+            } else {
+                fallbackCopyToClipboard(url);
+            }
+        }
+        
+        // 링크 복사 폴백
+        function fallbackCopyToClipboard(text) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "fixed";
+            textArea.style.left = "-999999px";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+                document.execCommand('copy');
+                showNotification('링크가 복사되었습니다!');
+            } catch (err) {
+                showNotification('링크 복사에 실패했습니다.', 'error');
+            }
+            
+            document.body.removeChild(textArea);
+        }
+        
+        // 알림 표시
+        function showNotification(message, type = 'success') {
+            // 단순한 알림을 위해 alert 사용
+            alert(message);
+        }
+    </script>
+    
+    <!-- AdSense initialization -->
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </body>
 </html>

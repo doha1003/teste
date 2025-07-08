@@ -1,0 +1,138 @@
+/* Love DNA 테스트 수정 CSS */
+
+/* 공유 섹션 수정 */
+.love-share-section {
+    background: white;
+    border-radius: 20px;
+    padding: 32px;
+    margin: 24px 0;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.love-share-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 24px;
+}
+
+.love-share-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+}
+
+.love-share-btn {
+    flex: 1;
+    min-width: 200px;
+    max-width: 280px;
+    padding: 16px 24px;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.love-share-btn-kakao {
+    background: #FEE500;
+    color: #000;
+}
+
+.love-share-btn-kakao:hover {
+    background: #E6CE00;
+    transform: translateY(-2px);
+}
+
+.love-share-btn-copy {
+    background: #f0f0f0;
+    color: #333;
+}
+
+.love-share-btn-copy:hover {
+    background: #e0e0e0;
+    transform: translateY(-2px);
+}
+
+/* 액션 버튼 수정 - 중앙 정렬 */
+.love-action-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center; /* 중앙 정렬로 변경 */
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.love-btn {
+    flex: 1;
+    min-width: 180px;
+    max-width: 250px;
+    padding: 16px 24px;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.love-btn-primary {
+    background: linear-gradient(135deg, #ff6b9d, #c44569);
+    color: white;
+    border: 2px solid transparent;
+}
+
+.love-btn-primary:hover {
+    background: linear-gradient(135deg, #ff5583, #b03a5b);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 107, 157, 0.4);
+}
+
+.love-btn-secondary {
+    background: white;
+    color: #ff6b9d;
+    border: 2px solid #ff6b9d;
+}
+
+.love-btn-secondary:hover {
+    background: #ff6b9d;
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* 모바일 반응형 */
+@media (max-width: 768px) {
+    .love-share-buttons {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .love-share-btn {
+        min-width: auto;
+        max-width: 100%;
+    }
+    
+    .love-action-buttons {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .love-btn {
+        min-width: auto;
+        max-width: 100%;
+    }
+}
