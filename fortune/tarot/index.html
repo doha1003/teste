@@ -19,12 +19,11 @@
     
     <!-- External CSS -->
     <link rel="stylesheet" href="/css/styles.css">
-    <link rel="stylesheet" href="/css/fortune.css">
     
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
 </head>
-<body>
+<body class="fortune-page">
     <!-- 네비게이션 바 -->
     <div id="navbar-placeholder"></div>
     
@@ -38,71 +37,28 @@
         </div>
     </section>
     
-    <!-- 타로 리딩 섹션 -->
+    <!-- 서비스 준비 중 안내 -->
     <section class="tarot-section">
         <div class="container">
-            <form id="tarotForm" class="tarot-form fade-in">
-                <h2 style="text-align: center; margin-bottom: 32px;">타로 리딩 시작하기</h2>
-                
-                <div class="form-group">
-                    <label for="question">질문을 입력하세요</label>
-                    <textarea 
-                        id="question" 
-                        name="question" 
-                        class="form-control" 
-                        rows="4" 
-                        required 
-                        placeholder="타로에게 묻고 싶은 질문을 구체적으로 적어주세요. 예: 현재 연애 관계가 어떻게 발전할까요?"
-                    ></textarea>
-                    <small style="color: var(--gray-600); margin-top: 4px; display: block;">
-                        구체적인 질문일수록 더 명확한 답을 얻을 수 있습니다
-                    </small>
+            <div class="service-notice">
+                <div class="notice-icon">🃏</div>
+                <h2>AI 타로 리딩 서비스 준비 중</h2>
+                <p>
+                    정확하고 의미 있는 AI 타로 카드 해석 서비스를 준비하고 있습니다.<br>
+                    곧 신비로운 타로의 메시지를 만나보실 수 있습니다.
+                </p>
+                <div class="coming-soon-features">
+                    <h3>준비 중인 기능</h3>
+                    <ul>
+                        <li>🤖 실제 AI 기반 타로 카드 해석</li>
+                        <li>🎴 다양한 스프레드 (원카드, 쓰리카드, 켈틱크로스)</li>
+                        <li>🔮 개인 맞춤형 상세 리딩</li>
+                        <li>📚 메이저/마이너 아르카나 전체 지원</li>
+                    </ul>
                 </div>
-                
-                <div class="form-group">
-                    <label>스프레드 선택</label>
-                    <div class="spread-options">
-                        <label class="radio-card">
-                            <input type="radio" name="spread" value="oneCard" required checked>
-                            <div class="radio-card-content">
-                                <span class="spread-icon">🎴</span>
-                                <span class="spread-name">원 카드</span>
-                                <span class="spread-desc">빠른 통찰</span>
-                            </div>
-                        </label>
-                        
-                        <label class="radio-card">
-                            <input type="radio" name="spread" value="threeCard" required>
-                            <div class="radio-card-content">
-                                <span class="spread-icon">🎴🎴🎴</span>
-                                <span class="spread-name">쓰리 카드</span>
-                                <span class="spread-desc">과거-현재-미래</span>
-                            </div>
-                        </label>
-                        
-                        <label class="radio-card">
-                            <input type="radio" name="spread" value="celtic" required>
-                            <div class="radio-card-content">
-                                <span class="spread-icon">🌟</span>
-                                <span class="spread-name">켈틱 크로스</span>
-                                <span class="spread-desc">심층 분석</span>
-                            </div>
-                        </label>
-                    </div>
-                </div>
-                
-                <div id="spreadDescription" class="spread-description" style="display: none;">
-                    <!-- 스프레드 설명이 여기에 표시됩니다 -->
-                </div>
-                
-                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 24px;">
-                    🔮 타로 리딩 시작
-                </button>
-            </form>
-            
-            <!-- 타로 결과 영역 -->
-            <div id="tarotResult" class="tarot-result" style="display: none;">
-                <!-- 결과가 여기에 표시됩니다 -->
+                <a href="/fortune/" class="btn btn-primary">
+                    다른 운세 서비스 보기
+                </a>
             </div>
         </div>
     </section>
@@ -113,11 +69,10 @@
             <div class="info-box">
                 <h3>AI 타로 리딩 안내</h3>
                 <ul>
-                    <li>타로 카드는 현재 상황에 대한 통찰과 가이드를 제공합니다.</li>
+                    <li>실제 AI 기술을 활용한 정확한 타로 카드 해석을 준비 중입니다.</li>
                     <li>질문은 구체적일수록 더 명확한 답변을 받을 수 있습니다.</li>
+                    <li>다양한 스프레드를 통해 상황에 맞는 리딩을 제공할 예정입니다.</li>
                     <li>카드의 해석은 참고용이며, 최종 결정은 본인이 내리셔야 합니다.</li>
-                    <li>메이저 아르카나 22장을 사용하여 리딩을 진행합니다.</li>
-                    <li>같은 질문도 시기에 따라 다른 카드가 나올 수 있습니다.</li>
                 </ul>
             </div>
         </div>
@@ -134,13 +89,181 @@
              data-full-width-responsive="true"></ins>
     </div>
     
-    
     <!-- 푸터 -->
     <div id="footer-placeholder"></div>
     
     <!-- External JavaScript -->
     <script src="/js/main.js"></script>
-    <script src="/js/tarot.js"></script>
+    
+    <style>
+        .fortune-page .page-header {
+            background: linear-gradient(135deg, rgba(147, 51, 234, 0.05) 0%, rgba(236, 72, 153, 0.05) 100%);
+            padding: 80px 0 60px;
+            text-align: center;
+        }
+        
+        .fortune-page .page-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--gray-900);
+        }
+        
+        .fortune-page .page-subtitle {
+            font-size: 1.125rem;
+            color: var(--gray-600);
+        }
+        
+        .tarot-section {
+            padding: 60px 0;
+            background: white;
+        }
+        
+        .service-notice {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+            background: white;
+            padding: 60px 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 2px solid var(--gray-200);
+        }
+        
+        .notice-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+        
+        .service-notice h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--gray-900);
+        }
+        
+        .service-notice > p {
+            font-size: 1.125rem;
+            line-height: 1.6;
+            color: var(--gray-600);
+            margin-bottom: 40px;
+        }
+        
+        .coming-soon-features {
+            background: var(--gray-50);
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            text-align: left;
+        }
+        
+        .coming-soon-features h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--gray-900);
+            text-align: center;
+        }
+        
+        .coming-soon-features ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .coming-soon-features li {
+            padding: 8px 0;
+            font-size: 1rem;
+            color: var(--gray-700);
+        }
+        
+        .info-section {
+            padding: 60px 0;
+            background: var(--gray-50);
+        }
+        
+        .info-box {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+        }
+        
+        .info-box h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--gray-900);
+        }
+        
+        .info-box ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .info-box li {
+            padding: 8px 0;
+            padding-left: 20px;
+            position: relative;
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--gray-700);
+        }
+        
+        .info-box li::before {
+            content: '🃏';
+            position: absolute;
+            left: 0;
+            top: 8px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #9333ea 0%, #ec4899 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(147, 51, 234, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(147, 51, 234, 0.4);
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            .fortune-page .page-header {
+                padding: 60px 0 40px;
+            }
+            
+            .fortune-page .page-title {
+                font-size: 2rem;
+            }
+            
+            .service-notice {
+                padding: 40px 20px;
+                margin: 0 20px;
+            }
+            
+            .service-notice h2 {
+                font-size: 1.75rem;
+            }
+            
+            .info-box {
+                padding: 30px 20px;
+                margin: 0 20px;
+            }
+        }
+    </style>
     
     <!-- AdSense initialization -->
     <script>
