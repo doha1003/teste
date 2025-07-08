@@ -19,6 +19,7 @@
     
     <!-- External CSS -->
     <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/fortune.css">
     
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
@@ -55,6 +56,15 @@
                     ></textarea>
                 </div>
                 
+                <div class="form-group">
+                    <label for="spreadType">스프레드 선택</label>
+                    <select id="spreadType" name="spreadType" class="form-control">
+                        <option value="oneCard">원 카드 (1장) - 간단한 질문</option>
+                        <option value="threeCard">쓰리 카드 (3장) - 과거/현재/미래</option>
+                        <option value="celtic">켈틱 크로스 (10장) - 상세한 분석</option>
+                    </select>
+                </div>
+                
                 <button type="button" onclick="startTarotReading()" class="btn btn-primary" style="width: 100%; margin-top: 24px;">
                     🔮 타로 리딩 시작
                 </button>
@@ -77,6 +87,7 @@
                     <li>질문은 구체적일수록 더 명확한 답변을 받을 수 있습니다.</li>
                     <li>카드의 해석은 참고용이며, 최종 결정은 본인이 내리셔야 합니다.</li>
                     <li>메이저 아르카나 22장을 사용하여 리딩을 진행합니다.</li>
+                    <li>AI가 실제로 분석하여 개인화된 해석을 제공합니다.</li>
                 </ul>
             </div>
         </div>
@@ -98,6 +109,7 @@
     
     <!-- External JavaScript -->
     <script src="/js/main.js"></script>
+    <script src="/js/gemini-api.js"></script>
     
     <script>
         // 메이저 아르카나 22장 카드 데이터
@@ -126,8 +138,17 @@
             { id: 21, name: "The World", korean: "세계", meaning: "완성, 성취, 통합", reversed: "미완성, 좌절, 부족함" }
         ];
         
-        function startTarotReading() {
+        // 스프레드 타입 정의
+        const spreads = {
+            oneCard: { name: "원 카드", count: 1, positions: ["현재 상황"] },
+            threeCard: { name: "쓰리 카드", count: 3, positions: ["과거", "현재", "미래"] },
+            celtic: { name: "켈틱 크로스", count: 10, positions: ["현재 상황", "도전/십자가", "먼 과거", "가까운 과거", "가능한 미래", "가까운 미래", "자신", "외부 영향", "희망과 두려움", "최종 결과"] }
+        };
+        
+        async function startTarotReading() {
             const question = document.getElementById('question').value.trim();
+            const spreadType = document.getElementById('spreadType').value;
+            
             if (!question) {
                 alert('질문을 입력해주세요.');
                 return;
@@ -136,33 +157,56 @@
             // 폼 숨기기
             document.getElementById('tarotForm').style.display = 'none';
             
-            // 로딩 표시
+            // 로딩 표시 (애니메이션 없음)
             const resultDiv = document.getElementById('tarotResult');
             resultDiv.style.display = 'block';
             resultDiv.innerHTML = `
-                <div class="loading" style="text-align: center; padding: 40px;">
-                    <div class="loading-spinner"></div>
-                    <p style="margin-top: 20px;">타로 카드를 섞고 있습니다...</p>
+                <div class="tarot-ai-analyzing">
+                    🔮 AI가 타로 카드를 분석하고 있습니다...
+                    <div style="margin-top: 20px; font-size: 0.9rem; opacity: 0.7;">
+                        질문: "${question}"
+                    </div>
                 </div>
             `;
             
-            // 카드 뽑기
-            setTimeout(() => {
-                const card = drawCard(question);
-                displayTarotResult(question, card);
-            }, 2000);
+            try {
+                // 카드 뽑기
+                const cards = drawCards(question, spreadType);
+                
+                // 실제 AI 분석 시도
+                const aiAnalysis = await generateTarotAnalysisWithAI(question, cards, spreadType);
+                
+                // 결과 표시
+                displayTarotResult(question, cards, spreadType, aiAnalysis);
+                
+            } catch (error) {
+                console.error('타로 분석 오류:', error);
+                // 오류 시 기본 해석 사용
+                const cards = drawCards(question, spreadType);
+                const fallbackAnalysis = generateFallbackAnalysis(question, cards, spreadType);
+                displayTarotResult(question, cards, spreadType, fallbackAnalysis);
+            }
         }
         
-        function drawCard(question) {
+        function drawCards(question, spreadType) {
+            const spread = spreads[spreadType];
+            const cards = [];
+            
             // 질문을 기반으로 시드 생성
             const seed = generateSeed(question);
-            const cardIndex = Math.floor(seededRandom(seed) * majorArcana.length);
-            const isReversed = seededRandom(seed * 2) < 0.3; // 30% 확률로 역방향
             
-            return {
-                ...majorArcana[cardIndex],
-                reversed: isReversed
-            };
+            for (let i = 0; i < spread.count; i++) {
+                const cardIndex = Math.floor(seededRandom(seed + i) * majorArcana.length);
+                const isReversed = seededRandom(seed + i + 100) < 0.25; // 25% 확률로 역방향
+                
+                cards.push({
+                    ...majorArcana[cardIndex],
+                    reversed: isReversed,
+                    position: spread.positions[i]
+                });
+            }
+            
+            return cards;
         }
         
         function generateSeed(text) {
@@ -180,61 +224,66 @@
             return x - Math.floor(x);
         }
         
-        function displayTarotResult(question, card) {
-            const resultDiv = document.getElementById('tarotResult');
+        // 실제 AI 분석 함수
+        async function generateTarotAnalysisWithAI(question, cards, spreadType) {
+            const spread = spreads[spreadType];
+            const cardDescriptions = cards.map(card => 
+                `${card.position}: ${card.korean}(${card.name}) ${card.reversed ? '역방향' : '정방향'}`
+            ).join(', ');
             
-            // 해석 생성
-            const interpretation = generateInterpretation(card, question);
+            const prompt = `당신은 전문 타로 리더입니다. 다음 질문과 뽑힌 카드들을 바탕으로 상세한 타로 리딩을 해주세요.
+
+질문: "${question}"
+스프레드: ${spread.name}
+뽑힌 카드들: ${cardDescriptions}
+
+다음 형식으로 응답해주세요:
+{
+  "overall": "전체적인 메시지 (100-200자)",
+  "cardAnalysis": [
+    {
+      "position": "포지션명",
+      "interpretation": "해당 카드의 상세한 해석 (80-120자)"
+    }
+  ],
+  "advice": "구체적인 조언 (100-150자)",
+  "futureGuidance": "미래에 대한 가이드 (80-120자)"
+}
+
+카드의 의미를 질문과 연결하여 개인화된 해석을 제공하고, 실용적인 조언을 포함해주세요.`;
+
+            try {
+                const aiResponse = await callGeminiAPI(prompt);
+                
+                if (aiResponse) {
+                    const cleanResponse = aiResponse.replace(/```json|```/g, '').trim();
+                    const parsed = JSON.parse(cleanResponse);
+                    return parsed;
+                }
+            } catch (error) {
+                console.error('AI 분석 파싱 오류:', error);
+            }
             
-            resultDiv.innerHTML = `
-                <div class="tarot-result-container">
-                    <h2 style="text-align: center; margin-bottom: 30px;">🔮 타로 리딩 결과</h2>
-                    
-                    <div class="question-display">
-                        <h3>📝 질문</h3>
-                        <p>"${question}"</p>
-                    </div>
-                    
-                    <div class="card-display">
-                        <div class="card-container ${card.reversed ? 'reversed' : ''}">
-                            <div class="card-image">
-                                <div class="card-number">${card.id}</div>
-                                <div class="card-symbol">🃏</div>
-                                <div class="card-name">${card.korean}</div>
-                                <div class="card-english">${card.name}</div>
-                            </div>
-                            ${card.reversed ? '<div class="reversed-label">역방향</div>' : ''}
-                        </div>
-                    </div>
-                    
-                    <div class="interpretation">
-                        <h3>🔍 카드 해석</h3>
-                        <div class="card-meaning">
-                            <h4>기본 의미</h4>
-                            <p>${card.reversed ? card.reversed : card.meaning}</p>
-                        </div>
-                        
-                        <div class="personal-message">
-                            <h4>개인 메시지</h4>
-                            <p>${interpretation}</p>
-                        </div>
-                    </div>
-                    
-                    <div class="advice">
-                        <h3>💡 조언</h3>
-                        <p>${generateAdvice(card)}</p>
-                    </div>
-                    
-                    <div style="text-align: center; margin-top: 40px;">
-                        <button onclick="location.reload()" class="btn btn-secondary">
-                            다시 점보기
-                        </button>
-                    </div>
-                </div>
-            `;
+            return null;
         }
         
-        function generateInterpretation(card, question) {
+        function generateFallbackAnalysis(question, cards, spreadType) {
+            const spread = spreads[spreadType];
+            
+            const cardAnalysis = cards.map(card => ({
+                position: card.position,
+                interpretation: generateCardInterpretation(card, question)
+            }));
+            
+            return {
+                overall: `${spread.name} 리딩에서 나타난 메시지는 변화와 성장의 에너지입니다. 카드들이 당신의 질문에 대한 깊은 통찰을 제공하고 있습니다.`,
+                cardAnalysis: cardAnalysis,
+                advice: "카드의 메시지를 마음에 새기고, 직관을 믿으며 행동하시기 바랍니다. 모든 변화는 성장의 기회입니다.",
+                futureGuidance: "긍정적인 마음가짐으로 다가올 변화를 받아들이세요. 당신의 내적 지혜가 올바른 길을 알려줄 것입니다."
+            };
+        }
+        
+        function generateCardInterpretation(card, question) {
             const interpretations = {
                 0: "새로운 시작을 앞두고 있습니다. 용기를 내어 첫 발을 내딛으세요.",
                 1: "당신에게는 원하는 것을 이룰 수 있는 능력이 있습니다. 자신감을 가지세요.",
@@ -260,36 +309,129 @@
                 21: "목표 달성이 가까워졌습니다. 끝까지 최선을 다하세요."
             };
             
-            return interpretations[card.id] || "카드가 당신에게 특별한 메시지를 전하고 있습니다.";
+            let interpretation = interpretations[card.id] || "카드가 당신에게 특별한 메시지를 전하고 있습니다.";
+            
+            if (card.reversed) {
+                interpretation += " 다만 역방향으로 나타나 신중한 접근이 필요합니다.";
+            }
+            
+            return interpretation;
         }
         
-        function generateAdvice(card) {
-            const advices = {
-                0: "두려움을 버리고 새로운 도전을 시작하세요. 실패를 두려워하지 마세요.",
-                1: "자신의 능력을 믿고 계획을 실행에 옮기세요. 망설이지 마세요.",
-                2: "명상이나 조용한 시간을 통해 내면의 목소리를 들어보세요.",
-                3: "창조적인 활동이나 예술 활동을 해보세요. 새로운 프로젝트를 시작하세요.",
-                4: "규칙적인 생활과 체계적인 접근이 필요합니다. 계획을 세우세요.",
-                5: "멘토나 선배의 조언을 구하세요. 전통적인 방법을 고려해보세요.",
-                6: "마음과 이성의 균형을 맞추어 결정하세요. 서두르지 마세요.",
-                7: "목표를 향해 집중하고 노력하세요. 의지력을 발휘하세요.",
-                8: "내적 힘을 기르고 용기를 내세요. 인내심을 가지세요.",
-                9: "혼자만의 시간을 가지고 깊이 생각해보세요. 성찰이 필요합니다.",
-                10: "변화에 적응하고 새로운 기회를 받아들이세요.",
-                11: "공정하고 객관적인 판단을 하세요. 편견을 버리세요.",
-                12: "급하게 결정하지 말고 상황을 지켜보세요. 참을성이 필요합니다.",
-                13: "과거에 얽매이지 말고 새로운 시작을 준비하세요.",
-                14: "극단적인 선택을 피하고 중간 지점을 찾으세요.",
-                15: "나쁜 습관이나 의존성에서 벗어나세요. 자유를 찾으세요.",
-                16: "급작스런 변화에 대비하세요. 유연성을 가지세요.",
-                17: "희망을 품고 꿈을 키우세요. 치유의 시간을 가지세요.",
-                18: "혼란스러운 상황에서 진실을 찾으세요. 차분히 대처하세요.",
-                19: "성공을 자축하되 겸손함을 잃지 마세요. 긍정적으로 생각하세요.",
-                20: "과거를 정리하고 용서하세요. 새로운 시작을 준비하세요.",
-                21: "목표 달성을 위해 마지막까지 최선을 다하세요."
-            };
+        function displayTarotResult(question, cards, spreadType, analysis) {
+            const spread = spreads[spreadType];
+            const resultDiv = document.getElementById('tarotResult');
             
-            return advices[card.id] || "카드의 메시지를 마음에 새기고 실천하세요.";
+            let cardDisplayHTML = '';
+            
+            if (spread.count === 1) {
+                // 원 카드 레이아웃
+                cardDisplayHTML = `
+                    <div class="single-card-layout">
+                        <div class="card-container ${cards[0].reversed ? 'reversed' : ''}">
+                            <div class="card-visual">
+                                <div class="card-symbol">🃏</div>
+                                <div class="card-name">${cards[0].korean}</div>
+                                <div class="card-english">${cards[0].name}</div>
+                                ${cards[0].reversed ? '<div class="reversed-badge">역방향</div>' : ''}
+                            </div>
+                        </div>
+                        <div class="card-interpretation">
+                            <h4>${cards[0].position}</h4>
+                            <p>${analysis.cardAnalysis[0].interpretation}</p>
+                        </div>
+                    </div>
+                `;
+            } else if (spread.count === 3) {
+                // 쓰리 카드 레이아웃
+                cardDisplayHTML = `
+                    <div class="three-card-layout">
+                        ${cards.map((card, index) => `
+                            <div class="card-position">
+                                <div class="card-container ${card.reversed ? 'reversed' : ''}">
+                                    <div class="card-visual">
+                                        <div class="card-symbol">🃏</div>
+                                        <div class="card-name">${card.korean}</div>
+                                        <div class="card-english">${card.name}</div>
+                                        ${card.reversed ? '<div class="reversed-badge">역방향</div>' : ''}
+                                    </div>
+                                </div>
+                                <div class="position-label">${card.position}</div>
+                                <div class="card-interpretation">
+                                    <p>${analysis.cardAnalysis[index].interpretation}</p>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            } else {
+                // 켈틱 크로스 레이아웃
+                cardDisplayHTML = `
+                    <div class="celtic-cross-layout">
+                        <div class="celtic-grid">
+                            ${cards.map((card, index) => `
+                                <div class="celtic-position position-${index + 1}">
+                                    <div class="mini-card ${card.reversed ? 'reversed' : ''}">
+                                        <div class="mini-symbol">🃏</div>
+                                        <div class="mini-name">${card.korean}</div>
+                                        ${card.reversed ? '<div class="mini-reversed">R</div>' : ''}
+                                    </div>
+                                    <div class="position-label">${card.position}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div class="celtic-interpretations">
+                            ${cards.map((card, index) => `
+                                <div class="celtic-interpretation">
+                                    <h4>${index + 1}. ${card.position}</h4>
+                                    <p><strong>${card.korean}</strong> - ${analysis.cardAnalysis[index].interpretation}</p>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            
+            resultDiv.innerHTML = `
+                <div class="tarot-result-container">
+                    <h2 style="text-align: center; margin-bottom: 30px;">🔮 타로 리딩 결과</h2>
+                    
+                    <div class="question-display">
+                        <h3>📝 질문</h3>
+                        <p>"${question}"</p>
+                    </div>
+                    
+                    <div class="cards-display">
+                        <h3>🃏 뽑힌 카드 (${spread.name})</h3>
+                        ${cardDisplayHTML}
+                    </div>
+                    
+                    <div class="overall-message">
+                        <h3>🔍 전체 메시지</h3>
+                        <p>${analysis.overall}</p>
+                    </div>
+                    
+                    <div class="advice-section">
+                        <h3>💡 조언</h3>
+                        <p>${analysis.advice}</p>
+                    </div>
+                    
+                    <div class="future-guidance">
+                        <h3>🌟 미래 가이드</h3>
+                        <p>${analysis.futureGuidance}</p>
+                    </div>
+                    
+                    <div class="ai-disclaimer">
+                        <small>※ 본 타로 리딩은 AI가 분석한 참고용 정보입니다. doha.kr 독자적인 해석을 제공합니다.</small>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 40px;">
+                        <button onclick="location.reload()" class="btn btn-secondary">
+                            다시 점보기
+                        </button>
+                    </div>
+                </div>
+            `;
         }
     </script>
     
@@ -353,8 +495,20 @@
             box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
         }
         
+        /* AI 분석 텍스트 스타일 (애니메이션 없음) */
+        .tarot-ai-analyzing {
+            text-align: center;
+            padding: 60px 20px;
+            font-size: 1.1rem;
+            color: #9333ea;
+            font-weight: 500;
+            background: #f8f9fa;
+            border-radius: 12px;
+            margin: 20px;
+        }
+        
         .tarot-result-container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             background: white;
             padding: 40px;
@@ -374,11 +528,102 @@
             color: var(--gray-800);
         }
         
-        .card-display {
-            text-align: center;
+        .cards-display {
             margin-bottom: 30px;
         }
         
+        .cards-display h3 {
+            margin-bottom: 20px;
+            color: var(--gray-800);
+        }
+        
+        /* 원 카드 레이아웃 */
+        .single-card-layout {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        /* 쓰리 카드 레이아웃 */
+        .three-card-layout {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        
+        .card-position {
+            text-align: center;
+        }
+        
+        .position-label {
+            font-weight: 600;
+            color: var(--gray-700);
+            margin: 10px 0;
+        }
+        
+        /* 켈틱 크로스 레이아웃 */
+        .celtic-cross-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .celtic-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .celtic-position {
+            text-align: center;
+        }
+        
+        .mini-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+        }
+        
+        .mini-symbol {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+        
+        .mini-name {
+            font-weight: 600;
+        }
+        
+        .mini-reversed {
+            background: rgba(255, 255, 255, 0.3);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            margin-top: 5px;
+        }
+        
+        .celtic-interpretations {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        
+        .celtic-interpretation {
+            background: var(--gray-50);
+            padding: 20px;
+            border-radius: 12px;
+        }
+        
+        .celtic-interpretation h4 {
+            color: var(--gray-800);
+            margin-bottom: 10px;
+        }
+        
+        /* 카드 컨테이너 */
         .card-container {
             display: inline-block;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -386,7 +631,6 @@
             border-radius: 16px;
             color: white;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            transform: scale(1);
             transition: transform 0.3s ease;
         }
         
@@ -398,18 +642,12 @@
             transform: rotate(180deg);
         }
         
-        .card-image {
+        .card-visual {
             text-align: center;
         }
         
-        .card-number {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-        
         .card-symbol {
-            font-size: 4rem;
+            font-size: 3rem;
             margin-bottom: 15px;
         }
         
@@ -424,7 +662,7 @@
             opacity: 0.8;
         }
         
-        .reversed-label {
+        .reversed-badge {
             background: rgba(255, 255, 255, 0.2);
             padding: 5px 15px;
             border-radius: 20px;
@@ -432,40 +670,32 @@
             margin-top: 10px;
         }
         
-        .interpretation, .advice {
-            margin-bottom: 30px;
+        .card-interpretation {
+            margin-top: 20px;
         }
         
-        .interpretation h3, .advice h3 {
-            color: var(--gray-800);
-            margin-bottom: 20px;
-        }
-        
-        .card-meaning, .personal-message {
+        .overall-message, .advice-section, .future-guidance {
             background: var(--gray-50);
             padding: 20px;
             border-radius: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .overall-message h3, .advice-section h3, .future-guidance h3 {
+            color: var(--gray-800);
             margin-bottom: 15px;
         }
         
-        .card-meaning h4, .personal-message h4 {
-            color: var(--gray-700);
-            margin-bottom: 10px;
+        .ai-disclaimer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--gray-200);
         }
         
-        .loading-spinner {
-            width: 50px;
-            height: 50px;
-            border: 3px solid var(--gray-200);
-            border-top: 3px solid var(--primary-500);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .ai-disclaimer small {
+            color: var(--gray-600);
+            font-size: 0.85rem;
         }
         
         .info-section {
@@ -558,16 +788,24 @@
                 margin: 0 20px;
             }
             
+            .three-card-layout {
+                grid-template-columns: 1fr;
+            }
+            
+            .celtic-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .celtic-interpretations {
+                grid-template-columns: 1fr;
+            }
+            
             .card-container {
                 padding: 20px;
             }
             
-            .card-number {
-                font-size: 1.5rem;
-            }
-            
             .card-symbol {
-                font-size: 3rem;
+                font-size: 2rem;
             }
             
             .card-name {
