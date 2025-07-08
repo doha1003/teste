@@ -28,11 +28,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- External CSS -->
-    <link rel="stylesheet" href="/css/styles.css">
-    <link rel="stylesheet" href="/css/global-text-fix.css">
-    <link rel="stylesheet" href="/css/emoji-fix.css">
-    
     <!-- Favicon -->
     <link rel="icon" href="/images/placeholder-favicon.svg" type="image/svg+xml">
     
@@ -40,7 +35,29 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
     
     <style>
-        /* 전역 레이아웃 초기화 */
+        /* CSS 변수 정의 */
+        :root {
+            --primary-color: #6366f1;
+            --primary-dark: #4c51bf;
+            --primary-light: #818cf8;
+            --secondary-color: #8b5cf6;
+            --gray-50: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-300: #cbd5e1;
+            --gray-400: #94a3b8;
+            --gray-500: #64748b;
+            --gray-600: #475569;
+            --gray-700: #334155;
+            --gray-800: #1e293b;
+            --gray-900: #0f172a;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* 전역 초기화 */
         * {
             margin: 0;
             padding: 0;
@@ -49,8 +66,10 @@
         
         body {
             font-family: 'Noto Sans KR', sans-serif;
-            background: #f8fafc;
+            background-color: var(--gray-50);
+            color: var(--gray-900);
             line-height: 1.6;
+            overflow-x: hidden;
         }
         
         /* 메인 컨테이너 */
@@ -60,36 +79,30 @@
             padding: 40px 20px;
         }
         
-        /* 헤더 섹션 완전 재정렬 */
+        /* 헤더 섹션 */
         .text-counter-header {
             text-align: center;
             margin-bottom: 48px;
-            padding: 40px 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 20px;
-            color: white;
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            animation: fadeInDown 0.6s ease;
         }
         
         .text-counter-header h1 {
-            font-size: clamp(28px, 4vw, 42px);
+            font-size: 42px;
             font-weight: 700;
             margin-bottom: 16px;
-            color: white !important;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-            /* 이모지 표시 보장 */
-            font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
         .text-counter-header p {
-            font-size: clamp(16px, 2.5vw, 20px);
-            color: rgba(255, 255, 255, 0.9);
+            font-size: 20px;
+            color: var(--gray-600);
             margin-bottom: 0;
-            font-weight: 400;
-            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
         
-        /* 메인 레이아웃 그리드 완전 재구성 */
+        /* 메인 그리드 레이아웃 */
         .counter-main {
             display: grid;
             grid-template-columns: 2fr 1fr;
@@ -98,55 +111,44 @@
             align-items: start;
         }
         
-        /* 입력 섹션 */
+        /* 텍스트 입력 섹션 */
         .text-input-section {
             background: white;
             border-radius: 20px;
             padding: 32px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-            border: 1px solid #e2e8f0;
-            height: fit-content;
+            box-shadow: var(--shadow-lg);
+            animation: fadeInLeft 0.6s ease;
         }
         
         .text-input-section h2 {
             font-size: 24px;
             font-weight: 600;
             margin-bottom: 20px;
-            color: #1e293b;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .text-input-section h2::before {
-            content: "✍️";
-            font-size: 24px;
+            color: var(--gray-800);
         }
         
         #textInput {
             width: 100%;
             min-height: 320px;
             padding: 20px;
-            border: 2px solid #e2e8f0;
-            border-radius: 16px;
+            border: 2px solid var(--gray-200);
+            border-radius: 12px;
             font-size: 16px;
             line-height: 1.6;
             resize: vertical;
             font-family: 'Noto Sans KR', sans-serif;
-            transition: all 0.3s ease;
-            color: #1e293b;
-            background: #ffffff;
+            transition: border-color 0.3s ease;
+            background-color: var(--gray-50);
         }
         
         #textInput:focus {
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+            border-color: var(--primary-color);
+            background-color: white;
         }
         
         #textInput::placeholder {
-            color: #94a3b8;
-            line-height: 1.8;
+            color: var(--gray-400);
         }
         
         /* 액션 버튼 */
@@ -160,63 +162,56 @@
         .btn {
             padding: 14px 20px;
             border: none;
-            border-radius: 12px;
+            border-radius: 10px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             text-decoration: none;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
             font-size: 15px;
-            font-family: 'Noto Sans KR', sans-serif;
         }
         
         .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
             color: white;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
         }
         
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
         }
         
         .btn-secondary {
-            background: #f1f5f9;
-            color: #475569;
-            border: 2px solid #e2e8f0;
+            background: var(--gray-100);
+            color: var(--gray-700);
+            border: 1px solid var(--gray-200);
         }
         
         .btn-secondary:hover {
-            background: #e2e8f0;
-            border-color: #cbd5e1;
+            background: var(--gray-200);
             transform: translateY(-1px);
         }
         
-        /* 통계 섹션 완전 재디자인 */
+        /* 통계 섹션 */
         .counter-stats {
             background: white;
             border-radius: 20px;
             padding: 32px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-            border: 1px solid #e2e8f0;
+            box-shadow: var(--shadow-lg);
             position: sticky;
             top: 20px;
+            animation: fadeInRight 0.6s ease;
         }
         
         .counter-stats h2 {
             font-size: 24px;
             font-weight: 600;
             margin-bottom: 24px;
-            color: #1e293b;
+            color: var(--gray-800);
             text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
         }
         
         .stat-item {
@@ -224,92 +219,109 @@
             justify-content: space-between;
             align-items: center;
             padding: 20px 0;
-            border-bottom: 1px solid #f1f5f9;
-            transition: all 0.3s ease;
+            border-bottom: 1px solid var(--gray-100);
         }
         
         .stat-item:last-child {
             border-bottom: none;
         }
         
-        .stat-item:hover {
-            background: #f8fafc;
-            margin: 0 -16px;
-            padding: 20px 16px;
-            border-radius: 12px;
-        }
-        
         .stat-label {
             font-weight: 500;
-            color: #64748b;
+            color: var(--gray-600);
             font-size: 15px;
         }
         
         .stat-value {
             font-size: 28px;
-            font-weight: 800;
-            color: #667eea;
-            text-shadow: 0 2px 4px rgba(102, 126, 234, 0.1);
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
-        /* 기능 섹션 */
+        /* 기능 섹션 - 레이아웃 수정 */
         .features-section {
             background: white;
             border-radius: 20px;
-            padding: 40px;
+            padding: 48px;
             margin-bottom: 48px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-            border: 1px solid #e2e8f0;
+            box-shadow: var(--shadow-lg);
+            animation: fadeInUp 0.6s ease;
         }
         
         .features-section h2 {
             font-size: 32px;
             font-weight: 700;
-            margin-bottom: 32px;
-            color: #1e293b;
+            margin-bottom: 40px;
+            color: var(--gray-800);
             text-align: center;
-            font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", 'Noto Sans KR', sans-serif;
         }
         
         .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 32px;
+            width: 100%;
         }
         
         .feature-item {
             text-align: center;
-            padding: 32px 24px;
+            padding: 32px;
             border-radius: 16px;
-            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-            border: 1px solid #e2e8f0;
+            background: var(--gray-50);
+            border: 1px solid var(--gray-200);
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 0;
         }
         
         .feature-item:hover {
             transform: translateY(-5px);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow-xl);
+            border-color: transparent;
+        }
+        
+        .feature-item:hover::before {
+            opacity: 0.1;
         }
         
         .feature-icon {
-            font-size: 56px;
+            font-size: 48px;
             margin-bottom: 20px;
             display: block;
-            font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
-            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+            position: relative;
+            z-index: 1;
         }
         
         .feature-title {
             font-size: 20px;
             font-weight: 600;
             margin-bottom: 12px;
-            color: #1e293b;
+            color: var(--gray-800);
+            position: relative;
+            z-index: 1;
         }
         
         .feature-desc {
-            color: #64748b;
+            color: var(--gray-600);
             line-height: 1.7;
-            font-weight: 400;
+            position: relative;
+            z-index: 1;
         }
         
         /* 광고 영역 */
@@ -318,25 +330,70 @@
             max-width: 1200px;
             padding: 32px;
             text-align: center;
-            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            background: white;
             border-radius: 20px;
-            border: 1px solid #e2e8f0;
+            box-shadow: var(--shadow-md);
         }
         
         .ad-label {
             font-size: 12px;
-            color: #94a3b8;
+            color: var(--gray-500);
             margin-bottom: 16px;
             text-transform: uppercase;
             letter-spacing: 1px;
             font-weight: 600;
         }
         
-        /* 완벽한 반응형 디자인 */
+        /* 애니메이션 */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* 반응형 디자인 */
         @media (max-width: 1024px) {
             .counter-main {
                 grid-template-columns: 1fr;
-                gap: 32px;
+                gap: 24px;
             }
             
             .counter-stats {
@@ -349,11 +406,39 @@
                 padding: 20px 16px;
             }
             
-            .text-counter-header {
-                margin-bottom: 32px;
-                padding: 32px 20px;
+            .text-counter-header h1 {
+                font-size: 32px;
             }
             
+            .text-counter-header p {
+                font-size: 18px;
+            }
+            
+            .text-input-section,
+            .counter-stats,
+            .features-section {
+                padding: 24px;
+            }
+            
+            #textInput {
+                min-height: 240px;
+            }
+            
+            .action-buttons {
+                grid-template-columns: 1fr;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            
+            .feature-item {
+                padding: 24px;
+            }
+        }
+        
+        @media (max-width: 480px) {
             .text-counter-header h1 {
                 font-size: 28px;
             }
@@ -363,85 +448,25 @@
             }
             
             .text-input-section,
-            .counter-stats {
-                padding: 24px;
-            }
-            
-            #textInput {
-                min-height: 240px;
-                padding: 16px;
-            }
-            
-            .action-buttons {
-                grid-template-columns: 1fr;
-                gap: 12px;
-            }
-            
+            .counter-stats,
             .features-section {
-                padding: 32px 24px;
-            }
-            
-            .features-grid {
-                grid-template-columns: 1fr;
-                gap: 24px;
-            }
-            
-            .feature-item {
-                padding: 24px 20px;
-            }
-            
-            .ad-container {
-                margin: 40px auto;
-                padding: 24px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .text-counter-container {
-                padding: 16px 12px;
-            }
-            
-            .text-counter-header {
-                padding: 24px 16px;
-                margin-bottom: 24px;
-            }
-            
-            .text-input-section,
-            .counter-stats {
                 padding: 20px;
-            }
-            
-            .features-section {
-                padding: 24px 16px;
             }
             
             .stat-value {
                 font-size: 24px;
             }
-        }
-        
-        /* 로딩 애니메이션 */
-        .fade-in {
-            animation: fadeIn 0.6s ease-out;
-        }
-        
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
+            
+            .feature-icon {
+                font-size: 40px;
             }
-            to {
-                opacity: 1;
-                transform: translateY(0);
+            
+            .feature-title {
+                font-size: 18px;
             }
-        }
-        
-        /* 접근성 개선 */
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
+            
+            .feature-desc {
+                font-size: 14px;
             }
         }
     </style>
@@ -452,14 +477,14 @@
     
     <div class="text-counter-container">
         <!-- 헤더 섹션 -->
-        <div class="text-counter-header fade-in">
+        <div class="text-counter-header">
             <h1>📝 텍스트 글자수 세기</h1>
             <p>텍스트의 글자수, 단어수, 문단수를 실시간으로 계산해보세요</p>
         </div>
         
         <!-- 메인 카운터 섹션 -->
         <div class="counter-main">
-            <div class="text-input-section fade-in">
+            <div class="text-input-section">
                 <h2>텍스트 입력</h2>
                 <textarea 
                     id="textInput" 
@@ -482,7 +507,7 @@
                 </div>
             </div>
             
-            <div class="counter-stats fade-in">
+            <div class="counter-stats">
                 <h2>📊 통계</h2>
                 
                 <div class="stat-item">
@@ -513,7 +538,7 @@
         </div>
         
         <!-- 기능 소개 섹션 -->
-        <div class="features-section fade-in">
+        <div class="features-section">
             <h2>✨ 주요 기능</h2>
             <div class="features-grid">
                 <div class="feature-item">
@@ -598,7 +623,6 @@
                 document.execCommand('copy');
                 alert('텍스트가 클립보드에 복사되었습니다!');
             } catch (err) {
-                // 모던 브라우저 대응
                 navigator.clipboard.writeText(textArea.value).then(() => {
                     alert('텍스트가 클립보드에 복사되었습니다!');
                 }).catch(() => {
@@ -632,22 +656,9 @@
             window.URL.revokeObjectURL(url);
         }
         
-        // 페이지 로드 시 초기 카운터 업데이트 및 애니메이션
+        // 페이지 로드 시 초기 카운터 업데이트
         document.addEventListener('DOMContentLoaded', function() {
             updateCounters();
-            
-            // 페이드인 애니메이션 적용
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('fade-in');
-                    }
-                });
-            });
-            
-            document.querySelectorAll('.fade-in').forEach(el => {
-                observer.observe(el);
-            });
         });
     </script>
     
