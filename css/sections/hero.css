@@ -1,4 +1,4 @@
-/* Hero Section - Complete Redesign with Vibrant Colors */
+/* Hero Section - Optimized Layout and Spacing */
 
 .hero {
     min-height: 100vh;
@@ -10,7 +10,7 @@
     background: linear-gradient(135deg, #ff6b6b 0%, #feca57 25%, #48dbfb 50%, #ff9ff3 75%, #54a0ff 100%);
     background-size: 400% 400%;
     animation: gradientShift 15s ease infinite;
-    padding: 80px 20px;
+    padding: 60px 20px;
 }
 
 @keyframes gradientShift {
@@ -97,7 +97,7 @@
     position: relative;
     z-index: 2;
     text-align: center;
-    max-width: 1000px;
+    max-width: 900px;
     margin: 0 auto;
     color: white;
 }
@@ -106,16 +106,16 @@
 .hero-badge {
     display: inline-flex;
     align-items: center;
-    gap: 10px;
-    padding: 14px 28px;
+    gap: 8px;
+    padding: 12px 24px;
     background: rgba(255, 255, 255, 0.25);
     backdrop-filter: blur(20px);
     border: 2px solid rgba(255, 255, 255, 0.3);
     border-radius: 50px;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 700;
     color: white;
-    margin-bottom: 36px;
+    margin-bottom: 24px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
     transition: all 0.4s ease;
     text-transform: uppercase;
@@ -130,7 +130,7 @@
 
 .hero-badge::before {
     content: '🚀';
-    font-size: 18px;
+    font-size: 16px;
     animation: pulse 2s infinite;
 }
 
@@ -139,16 +139,17 @@
     50% { transform: scale(1.1); }
 }
 
-/* Hero Title */
+/* Hero Title - 줄바꿈 최적화 */
 .hero-title {
-    font-size: clamp(3.5rem, 9vw, 6rem);
+    font-size: clamp(2.8rem, 7vw, 5rem);
     font-weight: 900;
-    line-height: 1.1;
-    margin-bottom: 28px;
+    line-height: 1.2; /* 줄 높이 최적화 */
+    margin-bottom: 20px; /* 간격 줄임 */
     color: white;
     text-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
-    letter-spacing: -0.03em;
+    letter-spacing: -0.02em;
     position: relative;
+    word-break: keep-all; /* 한글 줄바꿈 최적화 */
 }
 
 .hero-title span {
@@ -160,6 +161,7 @@
     text-shadow: none;
     filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
     animation: titleGlow 3s ease-in-out infinite alternate;
+    display: inline-block; /* 줄바꿈 제어 */
 }
 
 @keyframes titleGlow {
@@ -171,45 +173,46 @@
     }
 }
 
-/* Hero Subtitle */
+/* Hero Subtitle - 간격 최적화 */
 .hero-subtitle {
-    font-size: clamp(1.2rem, 3.5vw, 1.6rem);
+    font-size: clamp(1.1rem, 3vw, 1.4rem);
     color: rgba(255, 255, 255, 0.95);
-    margin-bottom: 52px;
-    max-width: 750px;
+    margin-bottom: 36px; /* 간격 줄임 */
+    max-width: 700px;
     margin-left: auto;
     margin-right: auto;
     font-weight: 500;
-    line-height: 1.7;
+    line-height: 1.6; /* 줄 높이 최적화 */
     text-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+    word-break: keep-all; /* 한글 줄바꿈 최적화 */
 }
 
-/* Hero Buttons - 각각 다른 색상 */
+/* Hero Buttons - 각각 다른 색상, 간격 최적화 */
 .hero-buttons {
     display: flex;
     flex-wrap: wrap;
-    gap: 24px;
+    gap: 20px; /* 간격 줄임 */
     justify-content: center;
     align-items: center;
-    margin-bottom: 60px;
+    margin-bottom: 40px; /* 간격 줄임 */
 }
 
 /* Button Base Styles */
 .hero-buttons .btn {
     display: inline-flex;
     align-items: center;
-    gap: 14px;
-    padding: 20px 36px;
-    border-radius: 18px;
+    gap: 12px;
+    padding: 18px 32px; /* 패딩 최적화 */
+    border-radius: 16px;
     font-weight: 800;
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     text-decoration: none;
     border: none;
     cursor: pointer;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(20px);
     transform: translateY(0);
     text-transform: uppercase;
@@ -232,12 +235,12 @@
 }
 
 .hero-buttons .btn:hover {
-    transform: translateY(-6px) scale(1.05);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    transform: translateY(-4px) scale(1.03);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
 }
 
 .hero-buttons .btn span {
-    font-size: 1.3em;
+    font-size: 1.2em;
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
 }
 
@@ -246,13 +249,13 @@
     background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
     color: white;
     border: 3px solid rgba(255, 255, 255, 0.4);
-    box-shadow: 0 10px 30px rgba(0, 210, 255, 0.4);
+    box-shadow: 0 8px 25px rgba(0, 210, 255, 0.4);
 }
 
 .hero-buttons .btn:nth-child(1):hover {
     background: linear-gradient(135deg, #00bfff 0%, #2563eb 100%);
     border-color: rgba(255, 255, 255, 0.6);
-    box-shadow: 0 20px 50px rgba(0, 210, 255, 0.5);
+    box-shadow: 0 15px 40px rgba(0, 210, 255, 0.5);
 }
 
 /* 실용도구 버튼 - 밝은 녹색 */
@@ -260,13 +263,13 @@
     background: linear-gradient(135deg, #00f260 0%, #0575e6 100%);
     color: white;
     border: 3px solid rgba(255, 255, 255, 0.4);
-    box-shadow: 0 10px 30px rgba(0, 242, 96, 0.4);
+    box-shadow: 0 8px 25px rgba(0, 242, 96, 0.4);
 }
 
 .hero-buttons .btn:nth-child(2):hover {
     background: linear-gradient(135deg, #00e650 0%, #047bd8 100%);
     border-color: rgba(255, 255, 255, 0.6);
-    box-shadow: 0 20px 50px rgba(0, 242, 96, 0.5);
+    box-shadow: 0 15px 40px rgba(0, 242, 96, 0.5);
 }
 
 /* AI 운세 버튼 - 밝은 보라/핑크 */
@@ -274,27 +277,27 @@
     background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
     color: white;
     border: 3px solid rgba(255, 255, 255, 0.4);
-    box-shadow: 0 10px 30px rgba(255, 107, 157, 0.4);
+    box-shadow: 0 8px 25px rgba(255, 107, 157, 0.4);
 }
 
 .hero-buttons .btn:nth-child(3):hover {
     background: linear-gradient(135deg, #ff5582 0%, #b03759 100%);
     border-color: rgba(255, 255, 255, 0.6);
-    box-shadow: 0 20px 50px rgba(255, 107, 157, 0.5);
+    box-shadow: 0 15px 40px rgba(255, 107, 157, 0.5);
 }
 
 /* Scroll Indicator */
 .scroll-indicator {
     position: absolute;
-    bottom: 40px;
+    bottom: 30px; /* 위치 조정 */
     left: 50%;
     transform: translateX(-50%);
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     color: rgba(255, 255, 255, 0.9);
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 700;
     z-index: 3;
     animation: bounce 2.5s infinite;
@@ -304,12 +307,12 @@
 .scroll-indicator-text {
     text-transform: uppercase;
     letter-spacing: 1px;
-    font-size: 13px;
+    font-size: 12px;
 }
 
 .scroll-indicator-arrow {
-    width: 28px;
-    height: 28px;
+    width: 24px;
+    height: 24px;
     border-right: 3px solid rgba(255, 255, 255, 0.9);
     border-bottom: 3px solid rgba(255, 255, 255, 0.9);
     transform: rotate(45deg);
@@ -321,10 +324,10 @@
         transform: translateX(-50%) translateY(0);
     }
     40% {
-        transform: translateX(-50%) translateY(-10px);
+        transform: translateX(-50%) translateY(-8px);
     }
     60% {
-        transform: translateX(-50%) translateY(-5px);
+        transform: translateX(-50%) translateY(-4px);
     }
 }
 
@@ -333,18 +336,18 @@
         transform: rotate(45deg) translateY(0);
     }
     40% {
-        transform: rotate(45deg) translateY(-6px);
+        transform: rotate(45deg) translateY(-4px);
     }
     60% {
-        transform: rotate(45deg) translateY(-3px);
+        transform: rotate(45deg) translateY(-2px);
     }
 }
 
-/* Responsive Design */
+/* Responsive Design - 모바일 최적화 */
 @media (max-width: 768px) {
     .hero {
         min-height: 100vh;
-        padding: 60px 15px;
+        padding: 40px 15px; /* 패딩 줄임 */
     }
     
     .hero-content {
@@ -352,73 +355,105 @@
     }
     
     .hero-badge {
-        padding: 12px 24px;
-        font-size: 14px;
-        margin-bottom: 28px;
+        padding: 10px 20px;
+        font-size: 13px;
+        margin-bottom: 20px; /* 간격 줄임 */
     }
     
     .hero-title {
-        font-size: 2.8rem;
-        margin-bottom: 24px;
+        font-size: 2.4rem; /* 크기 최적화 */
+        margin-bottom: 16px; /* 간격 줄임 */
+        line-height: 1.3; /* 줄 높이 조정 */
     }
     
     .hero-subtitle {
-        font-size: 1.15rem;
-        margin-bottom: 40px;
+        font-size: 1.05rem;
+        margin-bottom: 28px; /* 간격 줄임 */
         padding: 0 10px;
+        line-height: 1.5;
     }
     
     .hero-buttons {
         flex-direction: column;
-        gap: 18px;
-        margin-bottom: 50px;
+        gap: 16px; /* 간격 줄임 */
+        margin-bottom: 32px;
     }
     
     .hero-buttons .btn {
         width: 100%;
-        max-width: 340px;
-        padding: 18px 32px;
-        font-size: 1.05rem;
+        max-width: 320px;
+        padding: 16px 28px;
+        font-size: 1rem;
     }
     
     .scroll-indicator {
-        bottom: 30px;
+        bottom: 20px;
     }
     
     .scroll-indicator-text {
-        font-size: 12px;
+        font-size: 11px;
     }
     
     .scroll-indicator-arrow {
-        width: 24px;
-        height: 24px;
+        width: 20px;
+        height: 20px;
     }
 }
 
 @media (max-width: 480px) {
     .hero {
-        padding: 50px 12px;
+        padding: 30px 12px;
     }
     
     .hero-title {
-        font-size: 2.4rem;
+        font-size: 2rem; /* 더 작은 화면에서 크기 조정 */
+        margin-bottom: 12px;
     }
     
     .hero-subtitle {
-        font-size: 1.05rem;
+        font-size: 1rem;
+        margin-bottom: 24px;
     }
     
     .hero-buttons .btn {
-        padding: 16px 28px;
-        font-size: 1rem;
-        max-width: 300px;
+        padding: 14px 24px;
+        font-size: 0.95rem;
+        max-width: 280px;
+    }
+    
+    .hero-badge {
+        padding: 8px 16px;
+        font-size: 12px;
+        margin-bottom: 16px;
+    }
+}
+
+/* 큰 화면에서 최적화 */
+@media (min-width: 1200px) {
+    .hero-content {
+        max-width: 1000px;
+    }
+    
+    .hero-title {
+        font-size: 5.5rem;
+        margin-bottom: 24px;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.5rem;
+        margin-bottom: 40px;
+    }
+    
+    .hero-buttons {
+        gap: 24px;
+        margin-bottom: 50px;
     }
 }
 
 /* Animation Classes */
 .fade-in {
     opacity: 0;
-    transform: translateY(40px);
+    transform: translateY(30px);
     transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -428,15 +463,15 @@
 }
 
 .stagger-1 {
-    transition-delay: 0.3s;
+    transition-delay: 0.2s;
 }
 
 .stagger-2 {
-    transition-delay: 0.6s;
+    transition-delay: 0.4s;
 }
 
 .stagger-3 {
-    transition-delay: 0.9s;
+    transition-delay: 0.6s;
 }
 
 /* Accessibility */
