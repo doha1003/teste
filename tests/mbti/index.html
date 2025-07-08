@@ -296,6 +296,29 @@
             transform: scaleX(1);
         }
         
+        /* CTA 버튼 개선 */
+        .cta-button {
+            background: white;
+            color: #3b82f6 !important;
+            font-size: 20px;
+            font-weight: 700;
+            padding: 16px 48px;
+            border-radius: 50px;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border: 2px solid white;
+        }
+        
+        .cta-button:hover {
+            background: #f8fafc;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+            color: #2563eb !important;
+            text-decoration: none;
+        }
+        
         /* FAQ 스타일 */
         .faq-container {
             max-width: 800px;
@@ -372,6 +395,11 @@
             }
             
             .test-start-btn {
+                font-size: 18px;
+                padding: 14px 32px;
+            }
+            
+            .cta-button {
                 font-size: 18px;
                 padding: 14px 32px;
             }
@@ -706,11 +734,11 @@
     <!-- CTA 섹션 -->
     <section class="cta">
         <div class="container">
-            <h2 style="font-size: 36px; font-weight: 700; margin-bottom: 16px;">지금 바로 내 성격 유형을 알아보세요!</h2>
-            <p style="font-size: 20px; margin-bottom: 32px; opacity: 0.9;">
+            <h2 style="font-size: 36px; font-weight: 700; margin-bottom: 16px; color: white;">지금 바로 내 성격 유형을 알아보세요!</h2>
+            <p style="font-size: 20px; margin-bottom: 32px; opacity: 0.9; color: white;">
                 24개 문항, 10분이면 충분합니다. 완전 무료!
             </p>
-            <a href="test.html" style="background: white; color: var(--primary-color); font-size: 20px; font-weight: 700; padding: 16px 48px; border-radius: 50px; text-decoration: none; display: inline-block; transition: all 0.3s;">무료 검사 시작하기</a>
+            <a href="test.html" class="cta-button">무료 검사 시작하기</a>
         </div>
     </section>
     
