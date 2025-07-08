@@ -1,0 +1,131 @@
+/* 텍스트 카운터 버튼 겹침 수정 */
+
+.text-counter-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.text-counter-box {
+    background: white;
+    border-radius: 16px;
+    padding: 40px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.text-counter-textarea {
+    width: 100%;
+    min-height: 400px;
+    padding: 20px;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    font-size: 16px;
+    font-family: 'Noto Sans KR', sans-serif;
+    resize: vertical;
+    box-sizing: border-box;
+}
+
+.text-counter-textarea:focus {
+    outline: none;
+    border-color: #6366f1;
+}
+
+/* 버튼 영역 분리 */
+.text-counter-controls {
+    margin-top: 30px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.text-counter-btn {
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex: 1;
+    min-width: 120px;
+}
+
+.text-counter-btn.copy {
+    background: #6366f1;
+    color: white;
+}
+
+.text-counter-btn.copy:hover {
+    background: #4f46e5;
+}
+
+.text-counter-btn.paste {
+    background: #10b981;
+    color: white;
+}
+
+.text-counter-btn.paste:hover {
+    background: #059669;
+}
+
+.text-counter-btn.clear {
+    background: #ef4444;
+    color: white;
+}
+
+.text-counter-btn.clear:hover {
+    background: #dc2626;
+}
+
+/* 통계 영역 */
+.text-counter-stats {
+    margin-top: 30px;
+    padding: 24px;
+    background: #f9fafb;
+    border-radius: 12px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-value {
+    font-size: 32px;
+    font-weight: 700;
+    color: #6366f1;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.stat-label {
+    font-size: 14px;
+    color: #6b7280;
+    font-weight: 500;
+}
+
+/* 모바일 반응형 */
+@media (max-width: 768px) {
+    .text-counter-box {
+        padding: 24px 16px;
+    }
+    
+    .text-counter-textarea {
+        min-height: 300px;
+        font-size: 14px;
+    }
+    
+    .text-counter-controls {
+        flex-direction: column;
+    }
+    
+    .text-counter-btn {
+        width: 100%;
+    }
+    
+    .text-counter-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

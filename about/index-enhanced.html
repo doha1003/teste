@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>doha.kr 소개 - 일상을 더 재미있게 만드는 공간</title>
+    <meta name="description" content="doha.kr은 심리테스트, 실용도구, AI 운세를 제공하는 종합 라이프스타일 플랫폼입니다. 우리의 이야기를 만나보세요.">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="doha.kr 소개">
+    <meta property="og:description" content="일상을 더 재미있고 의미있게 만드는 doha.kr의 이야기">
+    <meta property="og:image" content="https://doha.kr/images/og-default.png">
+    <meta property="og:url" content="https://doha.kr/about/">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/styles.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/images/placeholder-favicon.svg" type="image/svg+xml">
+    
+    <style>
+        .about-hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .about-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: rotate 30s linear infinite;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .about-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+        
+        .story-section {
+            margin-bottom: 80px;
+        }
+        
+        .story-section h2 {
+            font-size: 36px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+        
+        .story-content {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #4b5563;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .mission-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .mission-card {
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            padding: 40px;
+            border-radius: 16px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .mission-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .mission-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .mission-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 16px;
+        }
+        
+        .mission-desc {
+            color: #6b7280;
+            line-height: 1.6;
+        }
+        
+        .timeline {
+            position: relative;
+            padding: 40px 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #e5e7eb;
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding: 20px 40px;
+            width: 50%;
+            box-sizing: border-box;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            text-align: right;
+            padding-right: 60px;
+        }
+        
+        .timeline-item:nth-child(even) {
+            left: 50%;
+            padding-left: 60px;
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #6366f1;
+            border-radius: 50%;
+            top: 25px;
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-dot {
+            right: -10px;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-dot {
+            left: -10px;
+        }
+        
+        .timeline-content {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        
+        .timeline-date {
+            font-size: 14px;
+            color: #6366f1;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .team-section {
+            background: #f9fafb;
+            padding: 80px 0;
+            margin: 80px -20px;
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .team-member {
+            text-align: center;
+        }
+        
+        .member-avatar {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: white;
+        }
+        
+        .member-name {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+        
+        .member-role {
+            color: #6b7280;
+            font-size: 16px;
+        }
+        
+        @media (max-width: 768px) {
+            .timeline-item {
+                width: 100%;
+                padding-left: 40px !important;
+                padding-right: 20px !important;
+                text-align: left !important;
+            }
+            
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+            
+            .timeline::before {
+                left: 20px;
+            }
+            
+            .timeline-dot {
+                left: 10px !important;
+                right: auto !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 네비게이션 바 -->
+    <div id="navbar-placeholder"></div>
+    
+    <!-- 히어로 섹션 -->
+    <section class="about-hero">
+        <div class="container">
+            <h1 class="hero-title fade-in">doha.kr의 이야기</h1>
+            <p class="hero-subtitle fade-in stagger-1">
+                일상에 즐거움과 의미를 더하는 디지털 놀이터
+            </p>
+        </div>
+    </section>
+    
+    <!-- 스토리 섹션 -->
+    <div class="about-content">
+        <section class="story-section fade-in">
+            <h2>우리가 만드는 변화</h2>
+            <div class="story-content">
+                <p>
+                    doha.kr은 2024년, "일상을 더 재미있게"라는 단순하지만 강력한 비전으로 시작되었습니다.
+                    우리는 매일 반복되는 일상 속에서 작은 즐거움과 의미를 발견할 수 있도록 돕고자 합니다.
+                </p>
+                <p>
+                    심리테스트를 통해 자신을 더 깊이 이해하고, 실용적인 도구들로 일상의 불편함을 해결하며,
+                    AI 운세로 하루의 시작을 더 특별하게 만들어 드립니다. 이 모든 서비스는 사용자 여러분의
+                    삶에 긍정적인 변화를 만들어내는 것을 목표로 합니다.
+                </p>
+            </div>
+        </section>
+        
+        <!-- 미션 섹션 -->
+        <section class="story-section fade-in">
+            <h2>우리의 약속</h2>
+            <div class="mission-cards">
+                <div class="mission-card fade-in stagger-1">
+                    <div class="mission-icon">🎯</div>
+                    <h3 class="mission-title">정확성</h3>
+                    <p class="mission-desc">
+                        과학적 이론과 데이터에 기반한
+                        신뢰할 수 있는 결과를 제공합니다
+                    </p>
+                </div>
+                <div class="mission-card fade-in stagger-2">
+                    <div class="mission-icon">🚀</div>
+                    <h3 class="mission-title">혁신성</h3>
+                    <p class="mission-desc">
+                        최신 기술을 활용하여 사용자에게
+                        새로운 경험을 선사합니다
+                    </p>
+                </div>
+                <div class="mission-card fade-in stagger-3">
+                    <div class="mission-icon">💝</div>
+                    <h3 class="mission-title">친근함</h3>
+                    <p class="mission-desc">
+                        누구나 쉽고 편하게 이용할 수 있는
+                        친근한 서비스를 만들어갑니다
+                    </p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 타임라인 섹션 -->
+        <section class="story-section fade-in">
+            <h2>우리의 여정</h2>
+            <div class="timeline">
+                <div class="timeline-item fade-in stagger-1">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">2024년 1월</div>
+                        <h4>doha.kr 탄생</h4>
+                        <p>첫 번째 심리테스트 서비스 런칭</p>
+                    </div>
+                </div>
+                <div class="timeline-item fade-in stagger-2">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">2024년 6월</div>
+                        <h4>서비스 확장</h4>
+                        <p>실용도구 섹션 추가 및 사용자 10만 돌파</p>
+                    </div>
+                </div>
+                <div class="timeline-item fade-in stagger-3">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">2024년 10월</div>
+                        <h4>AI 운세 출시</h4>
+                        <p>인공지능 기반 개인 맞춤형 운세 서비스 시작</p>
+                    </div>
+                </div>
+                <div class="timeline-item fade-in stagger-4">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">2025년 1월</div>
+                        <h4>새로운 도약</h4>
+                        <p>월간 방문자 50만 달성 및 글로벌 진출 준비</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <!-- 팀 섹션 -->
+    <section class="team-section">
+        <div class="container">
+            <h2 class="section-title fade-in">함께하는 사람들</h2>
+            <p class="section-subtitle fade-in stagger-1">
+                doha.kr을 만들어가는 열정적인 팀을 소개합니다
+            </p>
+            <div class="team-grid">
+                <div class="team-member fade-in stagger-1">
+                    <div class="member-avatar">👨‍💻</div>
+                    <h3 class="member-name">김도하</h3>
+                    <p class="member-role">대표 & 개발자</p>
+                </div>
+                <div class="team-member fade-in stagger-2">
+                    <div class="member-avatar">👩‍🎨</div>
+                    <h3 class="member-name">이서연</h3>
+                    <p class="member-role">디자인 리드</p>
+                </div>
+                <div class="team-member fade-in stagger-3">
+                    <div class="member-avatar">👨‍🔬</div>
+                    <h3 class="member-name">박준영</h3>
+                    <p class="member-role">AI 엔지니어</p>
+                </div>
+                <div class="team-member fade-in stagger-4">
+                    <div class="member-avatar">👩‍💼</div>
+                    <h3 class="member-name">최민지</h3>
+                    <p class="member-role">콘텐츠 매니저</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA 섹션 -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-box">
+                <h2 class="cta-title">함께 만들어가요</h2>
+                <p class="cta-description">
+                    doha.kr은 사용자 여러분과 함께 성장합니다.<br>
+                    여러분의 의견과 제안을 언제나 기다리고 있습니다.
+                </p>
+                <a href="/contact/" class="cta-button">문의하기</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 푸터 -->
+    <div id="footer-placeholder"></div>
+    
+    <!-- JavaScript -->
+    <script src="/js/main.js"></script>
+</body>
+</html>
