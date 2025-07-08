@@ -211,7 +211,7 @@ function showQuestion() {
     updateNavigation();
 }
 
-// 옵션 선택 함수
+// 옵션 선택 함수 - 자동으로 다음 질문으로 이동
 function selectOption(optionIndex) {
     const question = questions[currentQuestion];
     answers[currentQuestion] = optionIndex;
@@ -224,6 +224,13 @@ function selectOption(optionIndex) {
     
     // 다음 버튼 활성화
     document.getElementById('next-btn').disabled = false;
+    
+    // 마지막 질문이 아닌 경우 0.3초 후 자동으로 다음 질문으로 이동
+    if (currentQuestion < questions.length - 1) {
+        setTimeout(() => {
+            nextQuestion();
+        }, 300);
+    }
 }
 
 // 다음 질문 함수
