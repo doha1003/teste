@@ -20,6 +20,7 @@
     
     <!-- External CSS -->
     <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/pages/text-counter-fix.css">
     
     <!-- Favicon -->
     <link rel="icon" href="/images/placeholder-favicon.svg" type="image/svg+xml">
@@ -142,37 +143,6 @@
         }
         .text-input::placeholder {
             color: var(--gray-400);
-        }
-        /* 도구 버튼들 */
-        .tool-buttons {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            display: flex;
-            gap: 8px;
-        }
-        .tool-btn {
-            padding: 8px 16px;
-            border: none;
-            border-radius: 6px;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .tool-btn {
-            background: var(--gray-100);
-            color: var(--gray-700);
-        }
-        .tool-btn:hover {
-            background: var(--gray-200);
-        }
-        .tool-btn.primary {
-            background: var(--primary-color);
-            color: white;
-        }
-        .tool-btn.primary:hover {
-            background: #2563eb;
         }
         /* 결과 카드 그리드 */
         .results-grid {
@@ -368,11 +338,6 @@
             .result-value {
                 font-size: 24px;
             }
-            .tool-buttons {
-                position: static;
-                margin-bottom: 12px;
-                flex-wrap: wrap;
-            }
         }
         /* 애니메이션 */
         @keyframes countUp {
@@ -411,17 +376,6 @@
         <div class="tool-section">
             <!-- 텍스트 입력 영역 -->
             <div class="text-input-wrapper">
-                <div class="tool-buttons">
-                    <button class="tool-btn" onclick="clearText()">
-                        <span>🗑️</span> 지우기
-                    </button>
-                    <button class="tool-btn" onclick="copyText()">
-                        <span>📋</span> 복사
-                    </button>
-                    <button class="tool-btn primary" onclick="pasteText()">
-                        <span>📄</span> 붙여넣기
-                    </button>
-                </div>
                 <textarea 
                     id="textInput" 
                     class="text-input" 
@@ -432,6 +386,19 @@
 실시간으로 계산되므로 입력하는 즉시 결과를 확인할 수 있습니다."
                     oninput="updateCount()"
                 ></textarea>
+            </div>
+            
+            <!-- 버튼 영역 - 텍스트 영역과 분리 -->
+            <div class="text-counter-controls">
+                <button class="control-btn" onclick="clearText()">
+                    <span>🗑️</span> 지우기
+                </button>
+                <button class="control-btn" onclick="copyText()">
+                    <span>📋</span> 복사
+                </button>
+                <button class="control-btn primary" onclick="pasteText()">
+                    <span>📄</span> 붙여넣기
+                </button>
             </div>
             
             <!-- 설정 패널 -->
