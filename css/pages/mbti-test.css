@@ -50,12 +50,14 @@ body {
     font-weight: 700;
     margin-bottom: 16px;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    color: white; /* 명시적으로 흰색 지정 */
 }
 
 .mbti-test-header p {
     font-size: 18px;
-    opacity: 0.9;
+    opacity: 0.95;
     margin: 0;
+    color: white; /* 명시적으로 흰색 지정 */
 }
 
 .mbti-test-content {
@@ -69,6 +71,7 @@ body {
 .mbti-intro-section {
     padding: 60px 40px;
     text-align: center;
+    background: white; /* 명시적으로 흰색 배경 지정 */
 }
 
 .mbti-intro-title {
@@ -93,6 +96,7 @@ body {
 .mbti-progress-container {
     padding: 30px 40px 20px;
     border-bottom: 1px solid var(--mbti-gray-200);
+    background: white; /* 명시적으로 흰색 배경 지정 */
 }
 
 .mbti-progress-info {
@@ -149,6 +153,7 @@ body {
 /* 질문 화면 */
 .mbti-question-container {
     padding: 40px;
+    background: white; /* 명시적으로 흰색 배경 지정 */
 }
 
 .mbti-question-card {
@@ -173,7 +178,7 @@ body {
 .mbti-question-text {
     font-size: 20px;
     font-weight: 600;
-    color: var(--mbti-gray-800);
+    color: var(--mbti-gray-800); /* 충분한 대비를 위해 진한 회색 */
     line-height: 1.5;
     margin-bottom: 20px;
 }
@@ -192,7 +197,7 @@ body {
     cursor: pointer;
     transition: all 0.3s ease;
     font-size: 16px;
-    color: var(--mbti-gray-700);
+    color: var(--mbti-gray-800); /* 진한 회색으로 가독성 향상 */
     position: relative;
     overflow: hidden;
 }
@@ -213,6 +218,7 @@ body {
     background: white;
     transform: translateY(-2px);
     box-shadow: 0 8px 25px rgba(99, 102, 241, 0.15);
+    color: var(--mbti-gray-900); /* 호버 시 더욱 진한 색상 */
 }
 
 .mbti-option:hover::before {
@@ -222,7 +228,7 @@ body {
 .mbti-option.selected {
     border-color: var(--mbti-primary);
     background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-    color: var(--mbti-primary);
+    color: var(--mbti-primary-dark); /* 선택된 옵션은 진한 파란색 */
     font-weight: 600;
     box-shadow: 0 8px 25px rgba(99, 102, 241, 0.2);
 }
@@ -233,6 +239,7 @@ body {
     justify-content: space-between;
     align-items: center;
     gap: 16px;
+    background: white; /* 명시적으로 흰색 배경 지정 */
 }
 
 /* 버튼 스타일 */
@@ -262,11 +269,12 @@ body {
 .mbti-btn-primary:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 25px rgba(99, 102, 241, 0.6);
+    color: white; /* 호버 시에도 흰색 유지 */
 }
 
 .mbti-btn-secondary {
     background: white;
-    color: var(--mbti-gray-600);
+    color: var(--mbti-gray-700); /* 충분한 대비를 위한 진한 회색 */
     border: 2px solid var(--mbti-gray-300);
 }
 
@@ -564,6 +572,7 @@ body {
 .mbti-kakao-share:hover {
     background: #FDD835;
     transform: translateY(-2px);
+    color: #000; /* 호버 시에도 검은색 유지 */
 }
 
 .mbti-link-copy {
@@ -574,6 +583,7 @@ body {
 .mbti-link-copy:hover {
     background: var(--mbti-gray-300);
     transform: translateY(-2px);
+    color: var(--mbti-gray-800); /* 호버 시 더 진한 색상 */
 }
 
 /* 반응형 디자인 */
@@ -590,29 +600,39 @@ body {
     
     .mbti-test-header h1 {
         font-size: 28px;
+        color: white; /* 모바일에서도 흰색 유지 */
+    }
+    
+    .mbti-test-header p {
+        color: white; /* 모바일에서도 흰색 유지 */
     }
     
     .mbti-intro-section,
     .mbti-question-container,
     .mbti-result-content {
         padding: 30px 24px;
+        background: white; /* 모바일에서도 흰색 배경 유지 */
     }
     
     .mbti-progress-container {
         padding: 20px 24px 15px;
+        background: white; /* 모바일에서도 흰색 배경 유지 */
     }
     
     .mbti-question-text {
         font-size: 18px;
+        color: var(--mbti-gray-800); /* 모바일에서도 충분한 대비 */
     }
     
     .mbti-option {
         padding: 16px;
         font-size: 15px;
+        color: var(--mbti-gray-800); /* 모바일에서도 충분한 대비 */
     }
     
     .mbti-navigation {
         flex-direction: column;
+        background: white; /* 모바일에서도 흰색 배경 유지 */
     }
     
     .mbti-btn {
@@ -656,6 +676,7 @@ body {
 .mbti-loading {
     text-align: center;
     padding: 60px 40px;
+    background: white; /* 명시적으로 흰색 배경 지정 */
 }
 
 .mbti-loading-spinner {
