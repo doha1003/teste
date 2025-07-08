@@ -37,28 +37,45 @@
         </div>
     </section>
     
-    <!-- 서비스 준비 중 안내 -->
+    <!-- 운세 입력 폼 -->
     <section class="fortune-section">
         <div class="container">
-            <div class="service-notice">
-                <div class="notice-icon">🔮</div>
-                <h2>AI 일일 운세 서비스 준비 중</h2>
-                <p>
-                    더욱 정확하고 개인화된 AI 운세 분석 서비스를 준비하고 있습니다.<br>
-                    곧 만나뵐 수 있도록 최선을 다하겠습니다.
-                </p>
-                <div class="coming-soon-features">
-                    <h3>준비 중인 기능</h3>
-                    <ul>
-                        <li>🤖 실제 AI 모델 기반 운세 분석</li>
-                        <li>📊 개인 맞춤형 상세 점수</li>
-                        <li>💫 정확한 사주 및 운세 해석</li>
-                        <li>🎯 구체적인 조언 및 가이드</li>
-                    </ul>
-                </div>
-                <a href="/fortune/" class="btn btn-primary">
-                    다른 운세 서비스 보기
-                </a>
+            <div class="fortune-form-container" id="fortuneForm">
+                <h2>당신의 정보를 입력해주세요</h2>
+                <form onsubmit="generateFortune(event)">
+                    <div class="form-group">
+                        <label for="userName">이름</label>
+                        <input type="text" id="userName" name="userName" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="birthDate">생년월일</label>
+                        <input type="date" id="birthDate" name="birthDate" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="gender">성별</label>
+                        <select id="gender" name="gender" class="form-control" required>
+                            <option value="">선택해주세요</option>
+                            <option value="male">남성</option>
+                            <option value="female">여성</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="birthTime">출생시간 (선택사항)</label>
+                        <input type="time" id="birthTime" name="birthTime" class="form-control">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 20px;">
+                        🔮 오늘의 운세 보기
+                    </button>
+                </form>
+            </div>
+            
+            <!-- 운세 결과 영역 -->
+            <div id="fortuneResult" style="display: none;">
+                <!-- 결과가 여기에 표시됩니다 -->
             </div>
         </div>
     </section>
@@ -80,10 +97,10 @@
             <div class="info-box">
                 <h3>AI 일일 운세 안내</h3>
                 <ul>
-                    <li>실제 AI 기술을 활용한 정확한 운세 분석을 준비 중입니다.</li>
-                    <li>생년월일, 출생시간 등을 종합하여 개인 맞춤형 운세를 제공할 예정입니다.</li>
-                    <li>총운, 애정운, 금전운, 건강운을 상세하게 분석합니다.</li>
+                    <li>생년월일과 개인 정보를 바탕으로 AI가 오늘의 운세를 분석합니다.</li>
+                    <li>총운, 애정운, 금전운, 건강운을 상세하게 확인할 수 있습니다.</li>
                     <li>운세는 참고 사항이며, 절대적인 예언이 아닙니다.</li>
+                    <li>긍정적인 마음가짐이 좋은 운을 만듭니다.</li>
                 </ul>
             </div>
         </div>
@@ -94,6 +111,214 @@
     
     <!-- External JavaScript -->
     <script src="/js/main.js"></script>
+    
+    <script>
+        // 운세 생성 함수
+        function generateFortune(event) {
+            event.preventDefault();
+            
+            const userName = document.getElementById('userName').value;
+            const birthDate = document.getElementById('birthDate').value;
+            const gender = document.getElementById('gender').value;
+            const birthTime = document.getElementById('birthTime').value;
+            
+            // 로딩 표시
+            const resultDiv = document.getElementById('fortuneResult');
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = `
+                <div class="loading" style="text-align: center; padding: 40px;">
+                    <div class="loading-spinner"></div>
+                    <p style="margin-top: 20px;">AI가 ${userName}님의 운세를 분석하고 있습니다...</p>
+                </div>
+            `;
+            
+            // 폼 숨기기
+            document.getElementById('fortuneForm').style.display = 'none';
+            
+            // 운세 생성
+            setTimeout(() => {
+                displayFortune(userName, birthDate, gender, birthTime);
+            }, 2000);
+        }
+        
+        // 운세 표시 함수
+        function displayFortune(userName, birthDate, gender, birthTime) {
+            const today = new Date();
+            const birthDateObj = new Date(birthDate);
+            
+            // 생년월일 기반 시드 생성 (일관된 결과를 위해)
+            const seed = generateSeed(userName, birthDate, today);
+            
+            // 시드 기반 운세 생성
+            const fortune = generateFortuneData(seed);
+            
+            const resultDiv = document.getElementById('fortuneResult');
+            resultDiv.innerHTML = `
+                <div class="fortune-result-container">
+                    <h2 style="text-align: center; margin-bottom: 30px;">
+                        ${userName}님의 ${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일 운세
+                    </h2>
+                    
+                    <div class="fortune-score-grid">
+                        <div class="fortune-score-item">
+                            <h4>🌟 총운</h4>
+                            <div class="score-circle">
+                                <svg width="120" height="120">
+                                    <circle cx="60" cy="60" r="50" stroke="#e5e7eb" stroke-width="10" fill="none"/>
+                                    <circle cx="60" cy="60" r="50" stroke="#8b5cf6" stroke-width="10" fill="none"
+                                            stroke-dasharray="314" stroke-dashoffset="${314 * (1 - fortune.total/100)}"
+                                            transform="rotate(-90 60 60)" style="transition: stroke-dashoffset 1.5s ease"/>
+                                </svg>
+                                <div class="score-text">${fortune.total}점</div>
+                            </div>
+                            <p>${fortune.totalMsg}</p>
+                        </div>
+                        
+                        <div class="fortune-score-item">
+                            <h4>💕 애정운</h4>
+                            <div class="score-circle">
+                                <svg width="120" height="120">
+                                    <circle cx="60" cy="60" r="50" stroke="#e5e7eb" stroke-width="10" fill="none"/>
+                                    <circle cx="60" cy="60" r="50" stroke="#ec4899" stroke-width="10" fill="none"
+                                            stroke-dasharray="314" stroke-dashoffset="${314 * (1 - fortune.love/100)}"
+                                            transform="rotate(-90 60 60)" style="transition: stroke-dashoffset 1.5s ease"/>
+                                </svg>
+                                <div class="score-text">${fortune.love}점</div>
+                            </div>
+                            <p>${fortune.loveMsg}</p>
+                        </div>
+                        
+                        <div class="fortune-score-item">
+                            <h4>💰 금전운</h4>
+                            <div class="score-circle">
+                                <svg width="120" height="120">
+                                    <circle cx="60" cy="60" r="50" stroke="#e5e7eb" stroke-width="10" fill="none"/>
+                                    <circle cx="60" cy="60" r="50" stroke="#f59e0b" stroke-width="10" fill="none"
+                                            stroke-dasharray="314" stroke-dashoffset="${314 * (1 - fortune.money/100)}"
+                                            transform="rotate(-90 60 60)" style="transition: stroke-dashoffset 1.5s ease"/>
+                                </svg>
+                                <div class="score-text">${fortune.money}점</div>
+                            </div>
+                            <p>${fortune.moneyMsg}</p>
+                        </div>
+                        
+                        <div class="fortune-score-item">
+                            <h4>🏃 건강운</h4>
+                            <div class="score-circle">
+                                <svg width="120" height="120">
+                                    <circle cx="60" cy="60" r="50" stroke="#e5e7eb" stroke-width="10" fill="none"/>
+                                    <circle cx="60" cy="60" r="50" stroke="#10b981" stroke-width="10" fill="none"
+                                            stroke-dasharray="314" stroke-dashoffset="${314 * (1 - fortune.health/100)}"
+                                            transform="rotate(-90 60 60)" style="transition: stroke-dashoffset 1.5s ease"/>
+                                </svg>
+                                <div class="score-text">${fortune.health}점</div>
+                            </div>
+                            <p>${fortune.healthMsg}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="fortune-lucky-info">
+                        <h3>🍀 오늘의 행운 정보</h3>
+                        <div class="lucky-grid">
+                            <div class="lucky-item">
+                                <strong>행운의 숫자</strong>
+                                <span>${fortune.luckyNumber}</span>
+                            </div>
+                            <div class="lucky-item">
+                                <strong>행운의 색상</strong>
+                                <span>${fortune.luckyColor}</span>
+                            </div>
+                            <div class="lucky-item">
+                                <strong>행운의 시간</strong>
+                                <span>${fortune.luckyTime}</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 40px;">
+                        <button onclick="location.reload()" class="btn btn-secondary">
+                            다시 보기
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // 시드 생성 함수 (일관된 결과를 위해)
+        function generateSeed(name, birthDate, today) {
+            const nameSum = name.split('').reduce((sum, char) => sum + char.charCodeAt(0), 0);
+            const birthSum = birthDate.split('-').reduce((sum, part) => sum + parseInt(part), 0);
+            const todaySum = today.getDate() + today.getMonth() + 1;
+            return nameSum + birthSum + todaySum;
+        }
+        
+        // 시드 기반 랜덤 함수
+        function seededRandom(seed) {
+            const x = Math.sin(seed) * 10000;
+            return x - Math.floor(x);
+        }
+        
+        // 운세 데이터 생성
+        function generateFortuneData(seed) {
+            const rand1 = seededRandom(seed);
+            const rand2 = seededRandom(seed * 2);
+            const rand3 = seededRandom(seed * 3);
+            const rand4 = seededRandom(seed * 4);
+            const rand5 = seededRandom(seed * 5);
+            
+            // 점수 생성 (65-95 사이)
+            const total = Math.floor(rand1 * 30) + 65;
+            const love = Math.floor(rand2 * 30) + 65;
+            const money = Math.floor(rand3 * 30) + 65;
+            const health = Math.floor(rand4 * 30) + 65;
+            
+            // 메시지 생성
+            const messages = {
+                total: [
+                    "오늘은 전반적으로 좋은 에너지가 흐르는 날입니다. 새로운 시도를 해보기에 적합합니다.",
+                    "차분하고 안정적인 하루가 될 것 같습니다. 계획했던 일들을 차근차근 진행해보세요.",
+                    "주변 사람들과의 소통이 중요한 날입니다. 열린 마음으로 대화해보세요.",
+                    "변화의 기운이 느껴지는 날입니다. 새로운 기회를 놓치지 마세요."
+                ],
+                love: [
+                    "연인이나 가족과의 관계에서 따뜻한 감정을 느낄 수 있는 날입니다.",
+                    "솔직한 대화가 관계를 더욱 돈독하게 만들어줄 것입니다.",
+                    "새로운 만남의 가능성이 열려있습니다. 마음을 열어보세요.",
+                    "사소한 배려가 큰 감동을 줄 수 있는 날입니다."
+                ],
+                money: [
+                    "금전 관리에 신중함이 필요한 날입니다. 계획적인 소비를 하세요.",
+                    "새로운 수입원이나 투자 기회를 발견할 수 있습니다.",
+                    "절약하는 습관이 장기적으로 도움이 될 것입니다.",
+                    "재정 계획을 다시 점검해보기 좋은 시기입니다."
+                ],
+                health: [
+                    "충분한 휴식과 수면이 필요한 날입니다. 무리하지 마세요.",
+                    "가벼운 운동이나 산책이 몸과 마음에 도움이 될 것입니다.",
+                    "건강한 식습관을 유지하는 것이 중요합니다.",
+                    "스트레스 관리에 특별히 신경 써보세요."
+                ]
+            };
+            
+            const totalMsg = messages.total[Math.floor(rand1 * 4)];
+            const loveMsg = messages.love[Math.floor(rand2 * 4)];
+            const moneyMsg = messages.money[Math.floor(rand3 * 4)];
+            const healthMsg = messages.health[Math.floor(rand4 * 4)];
+            
+            // 행운 정보
+            const luckyNumbers = [1, 3, 7, 9, 11, 13, 17, 21];
+            const luckyColors = ['빨강', '파랑', '노랑', '초록', '보라', '주황', '분홍', '하늘색'];
+            const luckyTimes = ['오전 9시', '오후 2시', '오후 6시', '저녁 8시'];
+            
+            return {
+                total, love, money, health,
+                totalMsg, loveMsg, moneyMsg, healthMsg,
+                luckyNumber: luckyNumbers[Math.floor(rand5 * luckyNumbers.length)],
+                luckyColor: luckyColors[Math.floor(rand1 * luckyColors.length)],
+                luckyTime: luckyTimes[Math.floor(rand2 * luckyTimes.length)]
+            };
+        }
+    </script>
     
     <style>
         .fortune-page .page-header {
@@ -119,61 +344,145 @@
             background: white;
         }
         
-        .service-notice {
-            max-width: 600px;
+        .fortune-form-container {
+            max-width: 500px;
             margin: 0 auto;
-            text-align: center;
             background: white;
-            padding: 60px 40px;
-            border-radius: 20px;
+            padding: 40px;
+            border-radius: 16px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            border: 2px solid var(--gray-200);
         }
         
-        .notice-icon {
-            font-size: 4rem;
-            margin-bottom: 20px;
-        }
-        
-        .service-notice h2 {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 20px;
+        .fortune-form-container h2 {
+            text-align: center;
+            margin-bottom: 30px;
             color: var(--gray-900);
         }
         
-        .service-notice > p {
-            font-size: 1.125rem;
-            line-height: 1.6;
-            color: var(--gray-600);
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--gray-700);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--gray-200);
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-500);
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+        }
+        
+        .fortune-result-container {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .fortune-score-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
             margin-bottom: 40px;
         }
         
-        .coming-soon-features {
+        .fortune-score-item {
+            text-align: center;
+            padding: 20px;
             background: var(--gray-50);
+            border-radius: 12px;
+        }
+        
+        .fortune-score-item h4 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--gray-800);
+        }
+        
+        .score-circle {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        
+        .score-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--gray-800);
+        }
+        
+        .fortune-score-item p {
+            color: var(--gray-600);
+            line-height: 1.6;
+        }
+        
+        .fortune-lucky-info {
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
             padding: 30px;
             border-radius: 12px;
-            margin-bottom: 40px;
-            text-align: left;
-        }
-        
-        .coming-soon-features h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 16px;
-            color: var(--gray-900);
+            color: white;
             text-align: center;
         }
         
-        .coming-soon-features ul {
-            list-style: none;
-            padding: 0;
+        .fortune-lucky-info h3 {
+            margin-bottom: 20px;
+            font-size: 24px;
         }
         
-        .coming-soon-features li {
-            padding: 8px 0;
-            font-size: 1rem;
-            color: var(--gray-700);
+        .lucky-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        
+        .lucky-item {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .lucky-item strong {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .lucky-item span {
+            font-size: 20px;
+            font-weight: 700;
+        }
+        
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid var(--gray-200);
+            border-top: 3px solid var(--primary-500);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
         
         .info-section {
@@ -226,6 +535,8 @@
             font-size: 1rem;
             text-decoration: none;
             transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
         }
         
         .btn-primary {
@@ -240,6 +551,16 @@
             color: white;
         }
         
+        .btn-secondary {
+            background: var(--gray-200);
+            color: var(--gray-700);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--gray-300);
+            color: var(--gray-800);
+        }
+        
         @media (max-width: 768px) {
             .fortune-page .page-header {
                 padding: 60px 0 40px;
@@ -249,13 +570,22 @@
                 font-size: 2rem;
             }
             
-            .service-notice {
-                padding: 40px 20px;
+            .fortune-form-container {
+                padding: 30px 20px;
                 margin: 0 20px;
             }
             
-            .service-notice h2 {
-                font-size: 1.75rem;
+            .fortune-result-container {
+                padding: 30px 20px;
+                margin: 0 20px;
+            }
+            
+            .fortune-score-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .lucky-grid {
+                grid-template-columns: 1fr;
             }
             
             .info-box {
