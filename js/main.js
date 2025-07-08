@@ -53,7 +53,7 @@ function showServices(category, event) {
     });
 }
 
-// 스크롤 애니메이션
+// 스크롤 애니메이션 - 인라인 스타일 제거하여 CSS 애니메이션과 충돌 방지
 function handleScrollAnimation() {
     const elements = document.querySelectorAll('.fade-in');
     
@@ -63,8 +63,9 @@ function handleScrollAnimation() {
         
         if (isVisible && !element.classList.contains('animated')) {
             element.classList.add('animated');
-            element.style.opacity = '1';
-            element.style.transform = 'translateY(0)';
+            // 인라인 스타일 제거 - CSS에서 처리하도록 함
+            // element.style.opacity = '1';
+            // element.style.transform = 'translateY(0)';
         }
     });
 }
@@ -391,7 +392,8 @@ const animationStyles = `
     }
 }
 
-.animated {
+/* animated 클래스가 추가되면 CSS 애니메이션이 작동하도록 함 */
+.fade-in.animated {
     opacity: 1 !important;
     transform: translateY(0) !important;
 }
