@@ -12,10 +12,11 @@
     <meta property="og:image" content="https://doha.kr/images/mbti-og.png">
     <meta property="og:url" content="https://doha.kr/tests/mbti/test.html">
     
-    <!-- External CSS - Fixed absolute paths -->
-    <link rel="stylesheet" href="https://doha.kr/css/styles.css">
-    <link rel="stylesheet" href="https://doha.kr/css/test-common.css">
-    <link rel="stylesheet" href="https://doha.kr/css/mbti-result-fix.css">
+    <!-- External CSS - 올바른 순서로 로드하여 색상 대비 개선 -->
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/global-text-fix.css">
+    <link rel="stylesheet" href="/css/test-common.css">
+    <link rel="stylesheet" href="/css/mbti-result-fix.css">
     
     <!-- Favicon -->
     <link rel="icon" href="/images/placeholder-favicon.svg" type="image/svg+xml">
@@ -38,6 +39,8 @@
             --gray-500: #6b7280;
             --gray-600: #4b5563;
             --gray-700: #374151;
+            --gray-800: #1f2937;  /* 더 진한 색상 추가 */
+            --gray-900: #111827;   /* 가장 진한 색상 추가 */
             --gray-400: #9ca3af;
             --gray-100: #f3f4f6;
             --space-2: 0.5rem;
@@ -54,6 +57,15 @@
             --font-medium: 500;
         }
         
+        /* 색상 대비 개선 */
+        .test-header h1 {
+            color: var(--gray-900) !important;
+        }
+        
+        .test-header p {
+            color: var(--gray-800) !important;
+        }
+        
         /* MBTI 테스트 전용 스타일 */
         .test-info {
             background: white;
@@ -61,6 +73,14 @@
             padding: var(--space-10);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
             text-align: center;
+        }
+        
+        .test-info h2 {
+            color: var(--gray-900) !important;
+        }
+        
+        .test-info p {
+            color: var(--gray-800) !important;
         }
         
         .test-features {
@@ -85,14 +105,24 @@
         
         .feature-label {
             font-size: 0.875rem;
-            color: var(--gray-600);
+            color: var(--gray-800); /* 대비 강화 */
         }
         
         /* 진행률 스타일 개선 */
         .progress-step {
             font-size: 0.875rem;
-            color: var(--gray-500);
+            color: var(--gray-800); /* 대비 강화 */
             margin-bottom: 0.25rem;
+        }
+        
+        .progress-info {
+            color: var(--gray-800) !important; /* 대비 강화 */
+        }
+        
+        /* 질문 텍스트 색상 개선 */
+        .question-text {
+            color: var(--gray-900) !important;
+            font-weight: 600;
         }
         
         /* 5단계 답변 옵션 스타일 */
@@ -107,6 +137,23 @@
         .answer-option {
             position: relative;
             padding-left: 2rem;
+            color: var(--gray-800) !important; /* 대비 강화 */
+            cursor: pointer;
+            padding: 1rem 1rem 1rem 2rem;
+            border-radius: 8px;
+            border: 2px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+        
+        .answer-option:hover {
+            background-color: #f9fafb;
+            border-color: var(--primary-500);
+        }
+        
+        .answer-option.selected {
+            background-color: var(--primary-50);
+            border-color: var(--primary-500);
+            color: var(--gray-900) !important;
         }
         
         .answer-option::before {
@@ -151,10 +198,38 @@
         }
         
         /* 결과 페이지 스타일 */
+        .result-header .result-type {
+            color: var(--gray-900) !important;
+        }
+        
+        .result-header .result-title {
+            color: var(--gray-900) !important;
+        }
+        
+        .result-header .result-subtitle {
+            color: var(--gray-800) !important;
+        }
+        
+        .result-header .result-rarity {
+            color: var(--gray-700) !important;
+        }
+        
         .personality-description {
             font-size: 1.125rem;
             line-height: 1.8;
-            color: var(--gray-700);
+            color: var(--gray-800) !important; /* 대비 강화 */
+        }
+        
+        .section-title {
+            color: var(--gray-900) !important;
+        }
+        
+        .trait-label {
+            color: var(--gray-800) !important;
+        }
+        
+        .trait-value {
+            color: var(--gray-900) !important;
         }
         
         .celebrities-grid {
@@ -185,7 +260,7 @@
             padding: var(--space-2) var(--space-4);
             border-radius: var(--radius-full);
             font-size: 0.875rem;
-            color: var(--gray-700);
+            color: var(--gray-800); /* 대비 강화 */
         }
         
         .compatibility-section {
@@ -202,7 +277,7 @@
         
         .compatibility-label {
             font-weight: var(--font-medium);
-            color: var(--gray-700);
+            color: var(--gray-800); /* 대비 강화 */
             min-width: 80px;
         }
         
@@ -219,6 +294,18 @@
             border-radius: var(--radius-md);
             font-size: 0.875rem;
             font-weight: var(--font-medium);
+        }
+        
+        /* 결과 리스트 색상 개선 */
+        #strengthsList ul li,
+        #weaknessesList ul li,
+        #growthPoints p {
+            color: var(--gray-800) !important;
+        }
+        
+        /* 공유 섹션 색상 개선 */
+        .share-title {
+            color: var(--gray-900) !important;
         }
         
         /* 반응형 디자인 */
