@@ -137,11 +137,11 @@ function parseFortuneResponse(response, name, todayGanzhi) {
         };
         
         // 점수 추출
-        const overallMatch = response.match(/종합운세[:\s]*(\d+)/i);
-        const loveMatch = response.match(/애정운[:\s]*(\d+)/i);
-        const moneyMatch = response.match(/금전운[:\s]*(\d+)/i);
-        const healthMatch = response.match(/건강운[:\s]*(\d+)/i);
-        const workMatch = response.match(/사업운[:\s]*(\d+)/i);
+        const overallMatch = response.match(/종합운세[\s]*[:：]?\s*(\d+)/i);
+        const loveMatch = response.match(/애정운[\s]*[:：]?\s*(\d+)/i);
+        const moneyMatch = response.match(/금전운[\s]*[:：]?\s*(\d+)/i);
+        const healthMatch = response.match(/건강운[\s]*[:：]?\s*(\d+)/i);
+        const workMatch = response.match(/사업운[\s]*[:：]?\s*(\d+)/i);
         
         result.scores = {
             overall: overallMatch ? parseInt(overallMatch[1]) : 75,
@@ -155,19 +155,19 @@ function parseFortuneResponse(response, name, todayGanzhi) {
         const sections = response.split(/\*\*[^*]+\*\*/);
         
         // 각 섹션 파싱
-        const overallSection = response.match(/\*\*종합운세\*\*[:\s]*\d+[^\*]*(.*?)(?=\*\*|$)/s);
-        const loveSection = response.match(/\*\*애정운\*\*[:\s]*\d+[^\*]*(.*?)(?=\*\*|$)/s);
-        const moneySection = response.match(/\*\*금전운\*\*[:\s]*\d+[^\*]*(.*?)(?=\*\*|$)/s);
-        const healthSection = response.match(/\*\*건강운\*\*[:\s]*\d+[^\*]*(.*?)(?=\*\*|$)/s);
-        const workSection = response.match(/\*\*사업운\*\*[:\s]*\d+[^\*]*(.*?)(?=\*\*|$)/s);
-        const luckSection = response.match(/\*\*개운법\*\*[:\s]*(.*?)(?=\*\*|$)/s);
+        const overallSection = response.match(/\*\*종합운세\*\*[\s\S]*?(\d+점[\s\S]*?)(?=\*\*|$)/);
+        const loveSection = response.match(/\*\*애정운\*\*[\s\S]*?(\d+점[\s\S]*?)(?=\*\*|$)/);
+        const moneySection = response.match(/\*\*금전운\*\*[\s\S]*?(\d+점[\s\S]*?)(?=\*\*|$)/);
+        const healthSection = response.match(/\*\*건강운\*\*[\s\S]*?(\d+점[\s\S]*?)(?=\*\*|$)/);
+        const workSection = response.match(/\*\*사업운\*\*[\s\S]*?(\d+점[\s\S]*?)(?=\*\*|$)/);
+        const luckSection = response.match(/\*\*개운법\*\*[\s\S]*?([\s\S]+?)$/);
         
         result.descriptions = {
-            overall: overallSection ? overallSection[1].trim() : "오늘은 전체적으로 안정된 운세를 보입니다.",
-            love: loveSection ? loveSection[1].trim() : "애정 관계에서 평온한 시기입니다.",
-            money: moneySection ? moneySection[1].trim() : "재물운이 안정적입니다.",
-            health: healthSection ? healthSection[1].trim() : "건강 상태가 양호합니다.",
-            work: workSection ? workSection[1].trim() : "업무에서 꾸준한 성과가 있을 것입니다."
+            overall: overallSection ? overallSection[1].replace(/^\d+점?\s*/, '').trim() : "오늘은 전체적으로 안정된 운세를 보입니다.",
+            love: loveSection ? loveSection[1].replace(/^\d+점?\s*/, '').trim() : "애정 관계에서 평온한 시기입니다.",
+            money: moneySection ? moneySection[1].replace(/^\d+점?\s*/, '').trim() : "재물운이 안정적입니다.",
+            health: healthSection ? healthSection[1].replace(/^\d+점?\s*/, '').trim() : "건강 상태가 양호합니다.",
+            work: workSection ? workSection[1].replace(/^\d+점?\s*/, '').trim() : "업무에서 꾸준한 성과가 있을 것입니다."
         };
         
         // 개운법 파싱
