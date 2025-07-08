@@ -100,25 +100,31 @@
 
             <!-- 결과 화면 -->
             <div id="result-screen" class="teto-result-container teto-hidden">
-                <div class="teto-collection-card">
-                    <div class="teto-card-rarity" id="card-rarity">LEGENDARY</div>
+                <div class="teto-collection-card animate-card">
+                    <div class="teto-card-rarity animate-rarity" id="card-rarity">LEGENDARY</div>
                     <div class="teto-card-inner">
-                        <div class="teto-card-avatar" id="card-avatar">🦋</div>
-                        <div class="teto-result-type" id="result-type"></div>
-                        <div class="teto-result-description" id="result-description"></div>
-                        <div class="teto-card-stats" id="card-stats"></div>
+                        <div class="teto-card-avatar animate-avatar" id="card-avatar">🦋</div>
+                        <div class="teto-result-type animate-title" id="result-type"></div>
+                        <div class="teto-result-description animate-description" id="result-description"></div>
+                        <div class="teto-card-stats animate-stats" id="card-stats"></div>
                     </div>
                 </div>
                 
-                <div class="teto-traits-section">
-                    <h2 class="teto-section-title">주요 성격 특성</h2>
+                <div class="teto-traits-section animate-traits">
+                    <h2 class="teto-section-title">🌟 주요 성격 특성</h2>
                     <div class="teto-result-traits" id="result-traits"></div>
                 </div>
                 
-                <div class="teto-compatibility" id="compatibility"></div>
+                <div class="teto-compatibility animate-compatibility" id="compatibility"></div>
+                
+                <!-- 상세 분석 섹션 -->
+                <div class="teto-detailed-analysis animate-analysis">
+                    <h2 class="teto-section-title">📊 성격 유형 상세 분석</h2>
+                    <div class="teto-analysis-content" id="detailed-analysis"></div>
+                </div>
                 
                 <!-- 카카오톡 공유하기 섹션 -->
-                <div class="teto-share-section">
+                <div class="teto-share-section animate-share">
                     <div class="teto-share-title">내 성격 유형을 친구들과 공유해보세요!</div>
                     <div class="teto-share-buttons">
                         <button class="teto-share-button teto-kakao-share" onclick="shareKakao()">
@@ -143,7 +149,7 @@
                          data-full-width-responsive="true"></ins>
                 </div>
                 
-                <div class="teto-navigation">
+                <div class="teto-navigation animate-navigation">
                     <a href="/tests/teto-egen/" class="teto-btn teto-btn-secondary">상세 분석 보기</a>
                     <button class="teto-btn teto-btn-primary" onclick="restartTest()">다시 테스트하기</button>
                 </div>
@@ -239,7 +245,7 @@
             }
         ];
 
-        // 결과 데이터
+        // 결과 데이터 (강화된 버전)
         const resultTypes = {
             "teto_male": {
                 type: "테토남",
@@ -258,6 +264,12 @@
                     "추진력": 88,
                     "독립성": 92,
                     "소통력": 85
+                },
+                detailed: {
+                    strength: "강한 리더십과 결정력으로 어려운 상황에서도 방향을 제시할 수 있습니다.",
+                    weakness: "때로는 너무 직설적인 표현으로 타인에게 부담을 줄 수 있습니다.",
+                    advice: "타인의 감정을 더 세심하게 배려하면서 소통하면 더욱 훌륭한 리더가 될 수 있습니다.",
+                    career: ["CEO/임원", "프로젝트 매니저", "컨설턴트", "영업 관리자", "스타트업 창업자"]
                 }
             },
             "teto_female": {
@@ -277,6 +289,12 @@
                     "추진력": 90,
                     "창의성": 87,
                     "표현력": 89
+                },
+                detailed: {
+                    strength: "확고한 신념과 추진력으로 목표를 달성하는 뛰어난 실행력을 가지고 있습니다.",
+                    weakness: "완벽주의적 성향으로 스스로에게 과도한 압박을 가할 수 있습니다.",
+                    advice: "때로는 완벽함보다 균형을 추구하며, 주변의 도움을 받아들이는 것도 중요합니다.",
+                    career: ["마케팅 디렉터", "크리에이티브 디렉터", "벤처 투자자", "패션 디자이너", "미디어 프로듀서"]
                 }
             },
             "egen_male": {
@@ -296,6 +314,12 @@
                     "안정성": 91,
                     "배려심": 94,
                     "조화력": 88
+                },
+                detailed: {
+                    strength: "뛰어난 공감능력과 섬세함으로 주변 사람들에게 위로와 안정을 제공합니다.",
+                    weakness: "갈등 상황을 피하려는 성향으로 때로는 자신의 의견을 제대로 표현하지 못할 수 있습니다.",
+                    advice: "자신의 생각과 감정을 더 적극적으로 표현하면서도 타인을 배려하는 균형을 찾아보세요.",
+                    career: ["상담사", "심리치료사", "교사", "사회복지사", "인사 담당자"]
                 }
             },
             "egen_female": {
@@ -315,6 +339,12 @@
                     "직관력": 92,
                     "적응력": 89,
                     "친화력": 95
+                },
+                detailed: {
+                    strength: "탁월한 감성지능과 직관력으로 사람들의 마음을 잘 이해하고 소통할 수 있습니다.",
+                    weakness: "타인의 감정에 너무 민감하여 감정적 소진을 경험할 수 있습니다.",
+                    advice: "자신의 감정적 경계를 설정하고, 때로는 자기 자신을 우선시하는 것도 필요합니다.",
+                    career: ["카운슬러", "예술가", "작가", "이벤트 플래너", "브랜드 매니저"]
                 }
             }
         };
@@ -380,7 +410,7 @@
             }
         }
 
-        // 옵션 선택
+        // 옵션 선택 (자동 넘김 기능 수정)
         function selectOption(optionIndex) {
             document.querySelectorAll('.teto-option').forEach(opt => opt.classList.remove('selected'));
             document.querySelectorAll('.teto-option')[optionIndex].classList.add('selected');
@@ -393,12 +423,15 @@
             
             document.getElementById('next-btn').style.visibility = 'visible';
             
-            // 마지막 문제가 아니면 자동으로 다음 문제로 이동
-            if (currentQuestion < testQuestions.length - 1) {
-                setTimeout(() => {
-                    nextQuestion();
-                }, 300);
-            }
+            // 모든 질문에서 자동으로 다음으로 이동 (마지막 질문 포함)
+            setTimeout(() => {
+                currentQuestion++;
+                if (currentQuestion >= testQuestions.length) {
+                    showResult();
+                } else {
+                    showQuestion();
+                }
+            }, 800);
         }
 
         // 다음 질문
@@ -421,7 +454,7 @@
             }
         }
 
-        // 결과 표시
+        // 결과 표시 (애니메이션 강화)
         function showResult() {
             let tetoScore = 0;
             let egenScore = 0;
@@ -441,16 +474,20 @@
             document.getElementById('test-screen').classList.add('teto-hidden');
             document.getElementById('result-screen').classList.remove('teto-hidden');
             
+            // 기본 정보 설정
             document.getElementById('card-avatar').textContent = result.avatar;
             document.getElementById('result-type').textContent = result.type;
             document.getElementById('result-description').textContent = result.description;
             document.getElementById('card-rarity').textContent = result.rarity;
             document.getElementById('card-rarity').className = `teto-card-rarity ${result.rarity}`;
 
-            // 스탯 표시
+            // 스탯 표시 (애니메이션 포함)
             const statsHtml = Object.entries(result.stats).map(([key, value]) => 
                 `<div class="teto-stat-item">
                     <div class="teto-stat-label">${key}</div>
+                    <div class="teto-stat-bar">
+                        <div class="teto-stat-fill" style="width: ${value}%"></div>
+                    </div>
                     <div class="teto-stat-value">${value}</div>
                 </div>`
             ).join('');
@@ -467,9 +504,50 @@
 
             // 궁합 정보
             document.getElementById('compatibility').innerHTML = `
-                <h3>관계 호환성 분석</h3>
+                <h3>💕 관계 호환성 분석</h3>
                 <p>${result.compatibility}</p>
             `;
+
+            // 상세 분석 추가
+            document.getElementById('detailed-analysis').innerHTML = `
+                <div class="teto-analysis-item">
+                    <h4>💪 주요 강점</h4>
+                    <p>${result.detailed.strength}</p>
+                </div>
+                <div class="teto-analysis-item">
+                    <h4>⚠️ 주의할 점</h4>
+                    <p>${result.detailed.weakness}</p>
+                </div>
+                <div class="teto-analysis-item">
+                    <h4>🌱 성장 조언</h4>
+                    <p>${result.detailed.advice}</p>
+                </div>
+                <div class="teto-analysis-item">
+                    <h4>💼 추천 직업</h4>
+                    <div class="teto-career-tags">
+                        ${result.detailed.career.map(career => `<span class="teto-career-tag">${career}</span>`).join('')}
+                    </div>
+                </div>
+            `;
+
+            // 애니메이션 트리거
+            setTimeout(() => {
+                document.querySelectorAll('.animate-card, .animate-rarity, .animate-avatar, .animate-title, .animate-description, .animate-stats').forEach((el, index) => {
+                    setTimeout(() => {
+                        el.style.opacity = '1';
+                        el.style.transform = 'translateY(0)';
+                    }, index * 200);
+                });
+            }, 100);
+
+            setTimeout(() => {
+                document.querySelectorAll('.animate-traits, .animate-compatibility, .animate-analysis, .animate-share, .animate-navigation').forEach((el, index) => {
+                    setTimeout(() => {
+                        el.style.opacity = '1';
+                        el.style.transform = 'translateY(0)';
+                    }, index * 300);
+                });
+            }, 1000);
 
             // 광고 로드 - 결과 표시 후 지연 로드
             setTimeout(() => {
@@ -483,7 +561,7 @@
                         adContainer.style.display = 'none';
                     }
                 }
-            }, 1000);
+            }, 2000);
         }
 
         // 카카오톡 공유하기
@@ -570,5 +648,73 @@
             }, 100);
         });
     </script>
+
+    <!-- 애니메이션 CSS -->
+    <style>
+        /* 결과 화면 애니메이션 */
+        .animate-card, .animate-rarity, .animate-avatar, .animate-title, 
+        .animate-description, .animate-stats, .animate-traits, 
+        .animate-compatibility, .animate-analysis, .animate-share, 
+        .animate-navigation {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease-out;
+        }
+
+        /* 스탯 바 애니메이션 */
+        .teto-stat-fill {
+            animation: fillBar 1.5s ease-out forwards;
+            animation-delay: 1s;
+            width: 0 !important;
+        }
+
+        @keyframes fillBar {
+            to {
+                width: var(--target-width) !important;
+            }
+        }
+
+        /* 카드 호버 효과 */
+        .teto-trait-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .teto-trait-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        /* 스탯 바 스타일 개선 */
+        .teto-stat-bar {
+            background: #f0f0f0;
+            border-radius: 10px;
+            height: 8px;
+            margin: 5px 0;
+            overflow: hidden;
+        }
+
+        .teto-stat-fill {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100%;
+            border-radius: 10px;
+        }
+
+        /* 커리어 태그 스타일 */
+        .teto-career-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .teto-career-tag {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+    </style>
 </body>
 </html>
