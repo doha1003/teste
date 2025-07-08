@@ -1,10 +1,9 @@
 /* 운세 메인 페이지 전용 스타일 */
 /* fortune/index.html에서 사용됩니다 */
 
-/* 이모티콘 전역 수정 - 최우선 적용 */
-.fortune-page * {
-    -webkit-text-stroke: 0 !important;
-    text-stroke: 0 !important;
+/* 이모티콘 렌더링 최적화 - 전체 페이지 적용 */
+.fortune-page {
+    font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
 }
 
 .fortune-page .fortune-hero {
@@ -41,14 +40,12 @@
     padding: 0 20px;
 }
 
-/* 히어로 섹션 제목 이모티콘 수정 */
 .fortune-page .fortune-hero h1 {
     font-size: 2.5rem;
     font-weight: 700;
     line-height: 1.3;
     margin-bottom: 20px;
     color: var(--gray-900);
-    font-family: "Noto Sans KR", "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif !important;
 }
 
 .fortune-page .fortune-hero h1 .gradient-text {
@@ -80,10 +77,6 @@
     box-shadow: 0 4px 15px rgba(147, 51, 234, 0.3);
 }
 
-.fortune-page .fortune-cta span {
-    font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif !important;
-}
-
 .fortune-page .fortune-cta:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 25px rgba(147, 51, 234, 0.4);
@@ -95,24 +88,12 @@
     background: white;
 }
 
-/* 섹션 제목 이모티콘 수정 - 인라인 이모티콘 처리 */
 .fortune-page .section-title {
-    font-family: "Noto Sans KR", sans-serif !important;
     font-weight: 700;
     font-size: 2rem;
     text-align: center;
     margin-bottom: 16px;
     color: var(--gray-900);
-}
-
-/* 섹션 제목 내 이모티콘을 위한 span 처리 */
-.fortune-page .section-title::before {
-    content: '🌟 ';
-    font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif !important;
-    font-style: normal !important;
-    font-weight: normal !important;
-    filter: none !important;
-    text-shadow: none !important;
 }
 
 .fortune-page .section-subtitle {
@@ -151,29 +132,12 @@
     border-color: var(--primary-500);
 }
 
-/* 이모티콘 아이콘 수정 - 충돌 방지를 위한 강제 스타일 */
+/* 이모티콘 아이콘 최적화 */
 .fortune-page .fortune-card-icon {
-    font-size: 3rem !important;
-    margin-bottom: 16px !important;
-    display: block !important;
-    line-height: 1.2 !important;
-    font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif !important;
-    font-style: normal !important;
-    font-weight: normal !important;
-    text-rendering: auto !important;
-    -webkit-font-smoothing: antialiased !important;
-    -moz-osx-font-smoothing: grayscale !important;
-    font-feature-settings: normal !important;
-    text-decoration: none !important;
-    color: initial !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    text-shadow: none !important;
-    filter: none !important;
-    transform: none !important;
-    -webkit-text-fill-color: initial !important;
-    -webkit-text-stroke: 0 !important;
-    text-stroke: 0 !important;
+    font-size: 3rem;
+    margin-bottom: 16px;
+    display: block;
+    line-height: 1.2;
 }
 
 .fortune-page .fortune-card h3 {
@@ -212,125 +176,100 @@
     background: #f59e0b;
 }
 
-.fortune-page .fortune-stats {
+.fortune-page .service-highlights {
+    padding: 60px 0;
     background: var(--gray-50);
-    padding: 60px 0;
-    text-align: center;
 }
 
-/* 통계 섹션 제목 이모티콘 처리 */
-.fortune-page .fortune-stats .section-title::before {
-    content: '📊 ';
-}
-
-.fortune-page .stats-grid {
+.fortune-page .highlights-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 40px;
-    max-width: 800px;
-    margin: 40px auto 0;
-    padding: 0 20px;
-}
-
-.fortune-page .stat-item {
-    padding: 20px;
-}
-
-.fortune-page .stat-number {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: var(--primary-600);
-    display: block;
-    margin-bottom: 8px;
-}
-
-.fortune-page .stat-label {
-    font-size: 1rem;
-    color: var(--gray-600);
-}
-
-.fortune-page .fortune-testimonials {
-    padding: 60px 0;
-    background: white;
-}
-
-/* 후기 섹션 제목 이모티콘 처리 */
-.fortune-page .fortune-testimonials .section-title::before {
-    content: '💬 ';
-}
-
-.fortune-page .testimonials-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 30px;
     max-width: 1000px;
     margin: 40px auto 0;
     padding: 0 20px;
 }
 
-.fortune-page .testimonial {
-    background: var(--gray-50);
+.fortune-page .highlight-card {
+    background: white;
     padding: 30px;
     border-radius: 16px;
-    border-left: 4px solid var(--primary-500);
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+    transition: all 0.3s ease;
 }
 
-.fortune-page .testimonial-text {
-    font-style: italic;
-    line-height: 1.7;
-    margin-bottom: 16px;
-    color: var(--gray-700);
+.fortune-page .highlight-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
-.fortune-page .testimonial-author {
+/* 특징 아이콘 최적화 */
+.fortune-page .highlight-icon {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+    display: block;
+    line-height: 1.2;
+}
+
+.fortune-page .highlight-title {
+    font-size: 1.25rem;
     font-weight: 600;
+    margin-bottom: 12px;
+    color: var(--gray-900);
+}
+
+.fortune-page .highlight-desc {
+    color: var(--gray-600);
+    line-height: 1.6;
+}
+
+.fortune-page .cta {
+    padding: 60px 0;
+    background: linear-gradient(135deg, #9333ea 0%, #ec4899 100%);
+    color: white;
+    text-align: center;
+}
+
+.fortune-page .cta-box {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.fortune-page .cta-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+.fortune-page .cta-description {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    margin-bottom: 32px;
+    opacity: 0.95;
+}
+
+.fortune-page .cta-button {
+    display: inline-block;
+    padding: 14px 32px;
+    background: white;
+    color: var(--primary-600);
+    text-decoration: none;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.fortune-page .cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
     color: var(--primary-600);
 }
 
-/* 특징 섹션 제목 이모티콘 처리 */
-.fortune-page .service-highlights .section-title::before {
-    content: '✨ ';
-}
-
-/* 특징 아이콘 수정 - 충돌 방지 */
-.fortune-page .highlight-icon {
-    font-size: 3.5em !important;
-    margin-bottom: 20px !important;
-    display: block !important;
-    line-height: 1.2 !important;
-    filter: none !important;
-    text-shadow: none !important;
-    font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif !important;
-    font-style: normal !important;
-    font-weight: normal !important;
-    text-rendering: auto !important;
-    -webkit-font-smoothing: antialiased !important;
-    -moz-osx-font-smoothing: grayscale !important;
-    font-feature-settings: normal !important;
-    text-decoration: none !important;
-    color: initial !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    transform: none !important;
-    -webkit-text-fill-color: initial !important;
-    -webkit-text-stroke: 0 !important;
-    text-stroke: 0 !important;
-}
-
-/* CTA 섹션 제목 이모티콘 수정 */
-.fortune-page .cta-title {
-    font-family: "Noto Sans KR", sans-serif !important;
-}
-
-.fortune-page .cta-title::before {
-    content: '🔮 ';
-    font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif !important;
-    font-style: normal !important;
-    font-weight: normal !important;
-    filter: none !important;
-    text-shadow: none !important;
-}
-
+/* 반응형 디자인 */
 @media (max-width: 768px) {
     .fortune-page .fortune-hero {
         padding: 60px 0 40px;
@@ -353,20 +292,20 @@
         padding: 24px;
     }
     
-    .fortune-page .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 30px;
-    }
-    
-    .fortune-page .testimonials-grid {
-        grid-template-columns: 1fr;
+    .fortune-page .highlights-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
     }
     
     .fortune-page .highlight-icon {
-        font-size: 3em !important;
+        font-size: 3rem;
     }
     
     .fortune-page .section-title {
+        font-size: 1.75rem;
+    }
+    
+    .fortune-page .cta-title {
         font-size: 1.75rem;
     }
 }
