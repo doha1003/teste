@@ -1,0 +1,300 @@
+/* =========================================================================
+   CRITICAL FIXES - 2025-01-08
+   전체 사이트 긴급 수정사항 통합
+   ========================================================================= */
+
+/* 1. 메인페이지 CTA 색상 수정 - 기존 디자인 복원 */
+.cta {
+    background: #f7f9fc !important;
+}
+
+.cta-box {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    color: white !important;
+}
+
+.cta-title {
+    color: white !important;
+    -webkit-text-fill-color: white !important;
+}
+
+.cta-description {
+    color: rgba(255, 255, 255, 0.95) !important;
+}
+
+.cta-button {
+    background: white !important;
+    color: #667eea !important;
+}
+
+.cta-button:hover {
+    background: #f0f4ff !important;
+    transform: translateY(-2px);
+}
+
+/* 2. 메인 히어로 섹션 색상 수정 */
+.hero {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%) !important;
+}
+
+.hero-title {
+    color: #1a202c !important;
+}
+
+.hero-title span {
+    color: #6366f1 !important;
+}
+
+.hero-subtitle {
+    color: #4a5568 !important;
+}
+
+/* 3. 버튼 투명도 및 색상 문제 수정 */
+.btn {
+    background: #667eea !important;
+    color: white !important;
+    opacity: 1 !important;
+    border: none !important;
+}
+
+.btn:hover {
+    background: #5a67d8 !important;
+    opacity: 1 !important;
+}
+
+.hero-buttons .btn {
+    background: #667eea !important;
+    color: white !important;
+}
+
+.hero-buttons .btn:nth-child(2) {
+    background: #10b981 !important;
+}
+
+.hero-buttons .btn:nth-child(3) {
+    background: #8b5cf6 !important;
+}
+
+/* 4. 버튼 텍스트 가독성 강화 */
+button, .button, .btn, a.btn {
+    font-weight: 600 !important;
+    text-shadow: none !important;
+}
+
+/* 5. Love DNA 테스트 CSS 복구 */
+.love-dna-container {
+    max-width: 900px !important;
+    margin: 0 auto !important;
+    padding: 20px !important;
+}
+
+.love-test-header {
+    background: linear-gradient(135deg, #ff6b9d 0%, #feca57 100%) !important;
+    padding: 40px 20px !important;
+    text-align: center !important;
+    color: white !important;
+}
+
+.love-question-container {
+    background: white !important;
+    padding: 40px !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1) !important;
+    margin: 20px 0 !important;
+}
+
+/* 6. 글자수 세기 버튼 겹침 문제 수정 */
+.tool-buttons {
+    position: relative !important;
+    z-index: 10 !important;
+    margin-bottom: 10px !important;
+    display: flex !important;
+    gap: 10px !important;
+    flex-wrap: wrap !important;
+}
+
+.text-input-wrapper {
+    position: relative !important;
+}
+
+.text-input {
+    padding-top: 60px !important; /* 버튼 공간 확보 */
+}
+
+/* 7. MBTI 페이지 CTA 버튼 색상 수정 */
+.mbti-cta .cta-button {
+    background: white !important;
+    color: #667eea !important;
+    border: 2px solid white !important;
+}
+
+.mbti-cta .cta-button:hover {
+    background: #f0f4ff !important;
+    color: #5a67d8 !important;
+}
+
+/* 8. Love DNA 메인페이지 레이아웃 수정 */
+.love-dna-axes {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    gap: 20px !important;
+    justify-content: space-between !important;
+    overflow-x: auto !important;
+}
+
+.love-axis-card {
+    flex: 1 !important;
+    min-width: 180px !important;
+}
+
+/* Love DNA CTA 색상 수정 */
+.love-dna-cta .cta-button {
+    background: white !important;
+    color: #ff6b9d !important;
+}
+
+.love-dna-cta .cta-box {
+    background: linear-gradient(135deg, #ff6b9d 0%, #feca57 100%) !important;
+}
+
+.love-dna-cta .cta-title,
+.love-dna-cta .cta-description {
+    color: white !important;
+    -webkit-text-fill-color: white !important;
+}
+
+/* 9. 전체 사이트 버튼 기본 스타일 강화 */
+.tab-button {
+    background: #e2e8f0 !important;
+    color: #2d3748 !important;
+}
+
+.tab-button.active {
+    background: #667eea !important;
+    color: white !important;
+}
+
+.tab-button:hover:not(.active) {
+    background: #cbd5e0 !important;
+}
+
+/* 10. 모바일 반응형 수정 */
+@media (max-width: 768px) {
+    .love-dna-axes {
+        flex-wrap: wrap !important;
+    }
+    
+    .love-axis-card {
+        min-width: calc(50% - 10px) !important;
+    }
+    
+    .tool-buttons {
+        justify-content: center !important;
+    }
+    
+    .text-input {
+        padding-top: 80px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .love-axis-card {
+        min-width: 100% !important;
+    }
+}
+
+/* 11. 포커스 상태 개선 */
+button:focus,
+.btn:focus,
+a:focus {
+    outline: 3px solid #667eea !important;
+    outline-offset: 2px !important;
+}
+
+/* 12. 애니메이션 부드러움 개선 */
+* {
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* 13. 그림자 효과 통일 */
+.card,
+.service-card,
+.feature-card,
+.highlight-card {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+}
+
+.card:hover,
+.service-card:hover,
+.feature-card:hover,
+.highlight-card:hover {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12) !important;
+}
+
+/* 14. 텍스트 가독성 개선 */
+p, .description, .subtitle {
+    line-height: 1.7 !important;
+    color: #4a5568 !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #1a202c !important;
+    font-weight: 700 !important;
+}
+
+/* 15. 링크 스타일 통일 */
+a:not(.btn):not(.button) {
+    color: #667eea !important;
+    text-decoration: none !important;
+}
+
+a:not(.btn):not(.button):hover {
+    color: #5a67d8 !important;
+    text-decoration: underline !important;
+}
+
+/* 16. 이미지 최적화 */
+img {
+    max-width: 100% !important;
+    height: auto !important;
+}
+
+/* 17. 폼 요소 스타일 개선 */
+input, textarea, select {
+    border: 2px solid #e2e8f0 !important;
+    border-radius: 8px !important;
+    padding: 12px 16px !important;
+    font-size: 16px !important;
+    transition: all 0.3s ease !important;
+}
+
+input:focus, textarea:focus, select:focus {
+    border-color: #667eea !important;
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1) !important;
+}
+
+/* 18. 모달/팝업 배경 */
+.modal-backdrop,
+.overlay {
+    background: rgba(0, 0, 0, 0.5) !important;
+}
+
+/* 19. 로딩 상태 스타일 */
+.loading {
+    opacity: 0.6 !important;
+    pointer-events: none !important;
+}
+
+/* 20. 에러 상태 스타일 */
+.error {
+    color: #e53e3e !important;
+    border-color: #e53e3e !important;
+}
+
+.success {
+    color: #38a169 !important;
+    border-color: #38a169 !important;
+}
+
+/* 중요: 모든 수정사항은 !important로 우선순위 보장 */
