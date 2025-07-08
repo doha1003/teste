@@ -225,5 +225,20 @@
     <!-- External JavaScript -->
     <script src="/js/main.js"></script>
     <script src="/js/mbti-test.js"></script>
+    
+    <!-- Kakao SDK 초기화 -->
+    <script>
+        // 페이지 로드 후 카카오 SDK 초기화
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof Kakao !== 'undefined' && !Kakao.isInitialized()) {
+                try {
+                    Kakao.init('8b5c6e8f97ec3d51a6f784b8b4b5ed99');
+                    console.log('Kakao SDK 초기화 성공');
+                } catch (error) {
+                    console.error('Kakao SDK 초기화 실패:', error);
+                }
+            }
+        });
+    </script>
 </body>
 </html>
