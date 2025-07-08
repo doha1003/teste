@@ -3,478 +3,189 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MBTI 성격유형 검사 - 정밀 분석 버전 | doha.kr</title>
-    <meta name="description" content="24개의 심층적인 시나리오 문항과 5단계 답변으로 정확하게 분석하는 MBTI 성격유형 검사. 16가지 성격 유형 중 당신의 유형을 찾아보세요.">
+    <title>MBTI 성격유형 검사 - 16가지 성격 유형 테스트 | doha.kr</title>
+    <meta name="description" content="24개의 심층적인 문항으로 정확하게 분석하는 MBTI 성격유형 검사. 16가지 성격 유형 중 당신의 유형을 찾아보세요.">
     
     <!-- Open Graph -->
     <meta property="og:title" content="MBTI 성격유형 검사 - 나는 어떤 유형일까?">
-    <meta property="og:description" content="시나리오 기반 질문과 5단계 정밀 답변으로 분석하는 MBTI 성격유형 검사">
+    <meta property="og:description" content="24개의 심층적인 문항으로 정확하게 분석하는 MBTI 성격유형 검사">
     <meta property="og:image" content="https://doha.kr/images/mbti-og.png">
     <meta property="og:url" content="https://doha.kr/tests/mbti/test.html">
     
-    <!-- External CSS - 올바른 순서로 로드하여 색상 대비 개선 -->
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- External CSS -->
     <link rel="stylesheet" href="/css/styles.css">
-    <link rel="stylesheet" href="/css/global-text-fix.css">
-    <link rel="stylesheet" href="/css/test-common.css">
-    <link rel="stylesheet" href="/css/mbti-result-fix.css">
+    <link rel="stylesheet" href="/css/pages/mbti-test.css">
     
     <!-- Favicon -->
     <link rel="icon" href="/images/placeholder-favicon.svg" type="image/svg+xml">
     
-    <!-- Google AdSense - Single initialization -->
+    <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
     
     <!-- Kakao JavaScript SDK -->
     <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.4.0/kakao.min.js" integrity="sha384-mXVrIX2T/Kszp6Z0aEWaA8Nm7J6/ZeWXbL8UpGRjKwWe56Srd/iyNmWMBhcItAjH" crossorigin="anonymous"></script>
-    
-    <style>
-        /* CSS Variables for consistent theming */
-        :root {
-            --primary-600: #2563eb;
-            --primary-500: #3b82f6;
-            --primary-100: #dbeafe;
-            --primary-50: #eff6ff;
-            --primary-700: #1d4ed8;
-            --primary-800: #1e40af;
-            --gray-500: #6b7280;
-            --gray-600: #4b5563;
-            --gray-700: #374151;
-            --gray-800: #1f2937;  /* 더 진한 색상 추가 */
-            --gray-900: #111827;   /* 가장 진한 색상 추가 */
-            --gray-400: #9ca3af;
-            --gray-100: #f3f4f6;
-            --space-2: 0.5rem;
-            --space-3: 0.75rem;
-            --space-4: 1rem;
-            --space-6: 1.5rem;
-            --space-8: 2rem;
-            --space-10: 2.5rem;
-            --radius-lg: 0.5rem;
-            --radius-md: 0.375rem;
-            --radius-full: 9999px;
-            --radius-3xl: 1.5rem;
-            --font-bold: 700;
-            --font-medium: 500;
-        }
-        
-        /* 색상 대비 개선 */
-        .test-header h1 {
-            color: var(--gray-900) !important;
-        }
-        
-        .test-header p {
-            color: var(--gray-800) !important;
-        }
-        
-        /* MBTI 테스트 전용 스타일 */
-        .test-info {
-            background: white;
-            border-radius: var(--radius-3xl);
-            padding: var(--space-10);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-        
-        .test-info h2 {
-            color: var(--gray-900) !important;
-        }
-        
-        .test-info p {
-            color: var(--gray-800) !important;
-        }
-        
-        .test-features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: var(--space-4);
-            margin: var(--space-8) 0;
-        }
-        
-        .feature-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: var(--space-2);
-        }
-        
-        .feature-number {
-            font-size: 2rem;
-            font-weight: var(--font-bold);
-            color: var(--primary-600);
-        }
-        
-        .feature-label {
-            font-size: 0.875rem;
-            color: var(--gray-800); /* 대비 강화 */
-        }
-        
-        /* 진행률 스타일 개선 */
-        .progress-step {
-            font-size: 0.875rem;
-            color: var(--gray-800); /* 대비 강화 */
-            margin-bottom: 0.25rem;
-        }
-        
-        .progress-info {
-            color: var(--gray-800) !important; /* 대비 강화 */
-        }
-        
-        /* 질문 텍스트 색상 개선 */
-        .question-text {
-            color: var(--gray-900) !important;
-            font-weight: 600;
-        }
-        
-        /* 5단계 답변 옵션 스타일 */
-        .answer-scale {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        .answer-option {
-            position: relative;
-            padding-left: 2rem;
-            color: var(--gray-800) !important; /* 대비 강화 */
-            cursor: pointer;
-            padding: 1rem 1rem 1rem 2rem;
-            border-radius: 8px;
-            border: 2px solid #e5e7eb;
-            transition: all 0.3s ease;
-        }
-        
-        .answer-option:hover {
-            background-color: #f9fafb;
-            border-color: var(--primary-500);
-        }
-        
-        .answer-option.selected {
-            background-color: var(--primary-50);
-            border-color: var(--primary-500);
-            color: var(--gray-900) !important;
-        }
-        
-        .answer-option::before {
-            content: '';
-            position: absolute;
-            left: 0.75rem;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--gray-400);
-            transition: all 0.2s ease;
-        }
-        
-        .answer-option.strongly-agree::before {
-            background: var(--primary-700);
-            width: 12px;
-            height: 12px;
-        }
-        
-        .answer-option.agree::before {
-            background: var(--primary-500);
-            width: 10px;
-            height: 10px;
-        }
-        
-        .answer-option.neutral::before {
-            background: var(--gray-500);
-        }
-        
-        .answer-option.disagree::before {
-            background: var(--primary-500);
-            width: 10px;
-            height: 10px;
-        }
-        
-        .answer-option.strongly-disagree::before {
-            background: var(--primary-700);
-            width: 12px;
-            height: 12px;
-        }
-        
-        /* 결과 페이지 스타일 */
-        .result-header .result-type {
-            color: var(--gray-900) !important;
-        }
-        
-        .result-header .result-title {
-            color: var(--gray-900) !important;
-        }
-        
-        .result-header .result-subtitle {
-            color: var(--gray-800) !important;
-        }
-        
-        .result-header .result-rarity {
-            color: var(--gray-700) !important;
-        }
-        
-        .personality-description {
-            font-size: 1.125rem;
-            line-height: 1.8;
-            color: var(--gray-800) !important; /* 대비 강화 */
-        }
-        
-        .section-title {
-            color: var(--gray-900) !important;
-        }
-        
-        .trait-label {
-            color: var(--gray-800) !important;
-        }
-        
-        .trait-value {
-            color: var(--gray-900) !important;
-        }
-        
-        .celebrities-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: var(--space-3);
-            margin-top: var(--space-4);
-        }
-        
-        .celebrity-item {
-            background: var(--primary-50);
-            padding: var(--space-3);
-            border-radius: var(--radius-lg);
-            text-align: center;
-            font-weight: var(--font-medium);
-            color: var(--primary-800);
-        }
-        
-        .careers-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: var(--space-2);
-            margin-top: var(--space-4);
-        }
-        
-        .career-tag {
-            background: var(--gray-100);
-            padding: var(--space-2) var(--space-4);
-            border-radius: var(--radius-full);
-            font-size: 0.875rem;
-            color: var(--gray-800); /* 대비 강화 */
-        }
-        
-        .compatibility-section {
-            display: grid;
-            gap: var(--space-4);
-            margin-top: var(--space-4);
-        }
-        
-        .compatibility-item {
-            display: flex;
-            align-items: center;
-            gap: var(--space-3);
-        }
-        
-        .compatibility-label {
-            font-weight: var(--font-medium);
-            color: var(--gray-800); /* 대비 강화 */
-            min-width: 80px;
-        }
-        
-        .compatibility-types {
-            display: flex;
-            gap: var(--space-2);
-            flex-wrap: wrap;
-        }
-        
-        .type-tag {
-            background: var(--primary-100);
-            color: var(--primary-800);
-            padding: var(--space-1) var(--space-3);
-            border-radius: var(--radius-md);
-            font-size: 0.875rem;
-            font-weight: var(--font-medium);
-        }
-        
-        /* 결과 리스트 색상 개선 */
-        #strengthsList ul li,
-        #weaknessesList ul li,
-        #growthPoints p {
-            color: var(--gray-800) !important;
-        }
-        
-        /* 공유 섹션 색상 개선 */
-        .share-title {
-            color: var(--gray-900) !important;
-        }
-        
-        /* 반응형 디자인 */
-        @media (max-width: 768px) {
-            .test-info {
-                padding: var(--space-6);
-            }
-        }
-    </style>
 </head>
 <body>
+    <!-- 네비게이션 -->
     <div id="navbar-placeholder"></div>
     
-    <div class="test-container">
-        <div class="test-header">
+    <div class="mbti-test-container">
+        <div class="mbti-test-header">
             <h1>MBTI 성격유형 검사</h1>
-            <p>당신의 진짜 성격을 찾아보세요</p>
+            <p>24개 문항으로 알아보는 나의 성격 유형</p>
         </div>
         
-        <div class="test-content">
-            <!-- 시작 화면 -->
-            <div class="test-info" id="testInfo">
-                <h2>정밀 MBTI 성격유형 검사</h2>
-                <p>실제 상황 시나리오와 5단계 세밀한 답변으로<br>더욱 정확한 당신의 성격유형을 분석합니다</p>
-                
-                <div class="test-features">
-                    <div class="feature-item">
-                        <div class="feature-number">24</div>
-                        <div class="feature-label">심층 문항</div>
-                    </div>
-                    <div class="feature-item">
-                        <div class="feature-number">5</div>
-                        <div class="feature-label">단계 답변</div>
-                    </div>
-                    <div class="feature-item">
-                        <div class="feature-number">16</div>
-                        <div class="feature-label">성격 유형</div>
-                    </div>
-                    <div class="feature-item">
-                        <div class="feature-number">10</div>
-                        <div class="feature-label">분 소요</div>
-                    </div>
+        <div class="mbti-test-content">
+            <!-- 테스트 시작 화면 -->
+            <div id="intro-screen" class="mbti-intro-section">
+                <h2 class="mbti-intro-title">MBTI 성격유형을 알아보세요!</h2>
+                <p class="mbti-intro-text">
+                    24개의 간단한 질문을 통해 당신의 MBTI 성격유형을 분석해드립니다.<br>
+                    정확한 결과를 위해 솔직하게 답변해주세요.
+                </p>
+                <div class="mbti-intro-button-wrapper">
+                    <button class="mbti-btn mbti-btn-primary mbti-start-button" onclick="startTest()">
+                        테스트 시작하기
+                    </button>
                 </div>
-                
-                <button class="start-button" onclick="startTest()">검사 시작하기</button>
+            </div>
+            
+            <!-- 진행률 표시 -->
+            <div id="progress-screen" class="mbti-progress-container" style="display: none;">
+                <div class="mbti-progress-info">
+                    <span class="mbti-progress-text">문항 <span id="currentQuestion">1</span>/24</span>
+                    <span class="mbti-progress-percent" id="progressPercent">4%</span>
+                </div>
+                <div class="mbti-progress-bar">
+                    <div class="mbti-progress-fill" id="progressFill"></div>
+                </div>
             </div>
             
             <!-- 질문 화면 -->
-            <div class="question-container hidden" id="questionContainer">
-                <div class="progress-container">
-                    <div class="progress-step" id="progressStep">STEP 1</div>
-                    <div class="progress-info">
-                        <span>문항 <span id="currentQuestion">1</span>/24</span>
-                        <span id="progressPercent">4%</span>
+            <div id="question-screen" class="mbti-question-container" style="display: none;">
+                <div class="mbti-question-card">
+                    <div class="mbti-question-number">
+                        <span id="questionNumber">Q1</span>
                     </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="progressFill"></div>
-                    </div>
+                    <div class="mbti-question-text" id="questionText"></div>
                 </div>
                 
-                <div class="question-text" id="questionText"></div>
+                <div class="mbti-options" id="optionsContainer"></div>
                 
-                <div class="answers-container answer-scale" id="answersContainer"></div>
-                
-                <div class="navigation">
-                    <button class="btn btn-secondary" id="prevBtn" onclick="previousQuestion()" style="visibility: hidden;">이전</button>
-                    <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()" style="visibility: hidden;">다음</button>
+                <div class="mbti-navigation">
+                    <button class="mbti-btn mbti-btn-secondary" id="prevBtn" onclick="previousQuestion()" style="visibility: hidden;">
+                        이전
+                    </button>
+                    <button class="mbti-btn mbti-btn-primary" id="nextBtn" onclick="nextQuestion()" style="visibility: hidden;">
+                        다음
+                    </button>
                 </div>
             </div>
         </div>
     </div>
     
     <!-- 결과 화면 -->
-    <div class="result-container hidden" id="resultContainer">
-        <div class="result-header">
-            <div class="result-type" id="resultType"></div>
-            <div class="result-title" id="resultTitle"></div>
-            <div class="result-subtitle" id="resultSubtitle"></div>
-            <div class="result-rarity" id="resultRarity"></div>
+    <div class="mbti-result-container" id="resultContainer" style="display: none;">
+        <div class="mbti-result-header">
+            <div class="mbti-result-type" id="resultType"></div>
+            <div class="mbti-result-title" id="resultTitle"></div>
+            <div class="mbti-result-subtitle" id="resultSubtitle"></div>
+            <div class="mbti-result-rarity" id="resultRarity"></div>
         </div>
         
-        <div class="result-content">
+        <div class="mbti-result-content">
             <!-- 성격 설명 -->
-            <div class="result-section">
-                <h3 class="section-title">
-                    <span class="section-icon">🎭</span>
+            <div class="mbti-result-section">
+                <h3 class="mbti-section-title">
+                    <span class="mbti-section-icon">🎭</span>
                     성격 특징
                 </h3>
-                <div class="personality-description" id="personalityDescription"></div>
+                <div class="mbti-personality-description" id="personalityDescription"></div>
             </div>
             
             <!-- 성향 분석 -->
-            <div class="result-section">
-                <h3 class="section-title">
-                    <span class="section-icon">📊</span>
+            <div class="mbti-result-section">
+                <h3 class="mbti-section-title">
+                    <span class="mbti-section-icon">📊</span>
                     성향 분석
                 </h3>
-                <div class="traits-grid" id="traitsGrid"></div>
+                <div class="mbti-traits-grid" id="traitsGrid"></div>
             </div>
             
             <!-- 유명인 -->
-            <div class="result-section">
-                <h3 class="section-title">
-                    <span class="section-icon">⭐</span>
+            <div class="mbti-result-section">
+                <h3 class="mbti-section-title">
+                    <span class="mbti-section-icon">⭐</span>
                     같은 유형의 유명인
                 </h3>
-                <div class="celebrities-grid" id="celebritiesGrid"></div>
+                <div class="mbti-celebrities-grid" id="celebritiesGrid"></div>
             </div>
             
             <!-- 추천 직업 -->
-            <div class="result-section">
-                <h3 class="section-title">
-                    <span class="section-icon">💼</span>
+            <div class="mbti-result-section">
+                <h3 class="mbti-section-title">
+                    <span class="mbti-section-icon">💼</span>
                     추천 직업
                 </h3>
-                <div class="careers-list" id="careersList"></div>
+                <div class="mbti-careers-list" id="careersList"></div>
             </div>
             
             <!-- 연애 궁합 -->
-            <div class="result-section">
-                <h3 class="section-title">
-                    <span class="section-icon">💕</span>
+            <div class="mbti-result-section">
+                <h3 class="mbti-section-title">
+                    <span class="mbti-section-icon">💕</span>
                     연애 궁합
                 </h3>
-                <div class="compatibility-section" id="compatibilitySection"></div>
+                <div class="mbti-compatibility-section" id="compatibilitySection"></div>
             </div>
             
             <!-- 강점과 약점 -->
-            <div class="result-section">
-                <h3 class="section-title">
-                    <span class="section-icon">💪</span>
+            <div class="mbti-result-section">
+                <h3 class="mbti-section-title">
+                    <span class="mbti-section-icon">💪</span>
                     강점
                 </h3>
                 <div id="strengthsList"></div>
             </div>
             
-            <div class="result-section">
-                <h3 class="section-title">
-                    <span class="section-icon">🎯</span>
+            <div class="mbti-result-section">
+                <h3 class="mbti-section-title">
+                    <span class="mbti-section-icon">🎯</span>
                     약점
                 </h3>
                 <div id="weaknessesList"></div>
             </div>
             
             <!-- 추가 정보 -->
-            <div class="result-section">
-                <h3 class="section-title">
-                    <span class="section-icon">🌱</span>
+            <div class="mbti-result-section">
+                <h3 class="mbti-section-title">
+                    <span class="mbti-section-icon">🌱</span>
                     성장 포인트
                 </h3>
                 <div id="growthPoints"></div>
             </div>
             
             <!-- 공유하기 -->
-            <div class="share-section">
-                <h3 class="share-title">결과 공유하기</h3>
-                <div class="share-buttons">
-                    <button class="share-button kakao-share" id="kakaoShare">
+            <div class="mbti-share-section">
+                <h3 class="mbti-share-title">결과 공유하기</h3>
+                <div class="mbti-share-buttons">
+                    <button class="mbti-share-button mbti-kakao-share" id="kakaoShare">
                         <span>💬</span> 카카오톡
                     </button>
-                    <button class="share-button link-copy" onclick="copyLink()">
+                    <button class="mbti-share-button mbti-link-copy" onclick="copyLink()">
                         <span>🔗</span> 링크 복사
                     </button>
                 </div>
             </div>
             
-            <div class="navigation">
-                <a href="/tests/mbti/" class="btn btn-secondary">테스트 소개 보기</a>
-                <a href="/tests/mbti/test.html" class="btn btn-primary retry-button">다시 검사하기</a>
+            <div class="mbti-navigation">
+                <a href="/tests/mbti/" class="mbti-btn mbti-btn-secondary">테스트 소개 보기</a>
+                <a href="/tests/mbti/test.html" class="mbti-btn mbti-btn-primary mbti-retry-button">다시 검사하기</a>
             </div>
         </div>
     </div>
@@ -482,12 +193,11 @@
     <div id="footer-placeholder"></div>
     
     <script>
-        // 단일 AdSense 초기화 방지
+        // AdSense 초기화 방지 플래그
         let adsenseInitialized = false;
         
-        // Kakao SDK 초기화 - 개선된 버전
+        // Kakao SDK 초기화
         document.addEventListener('DOMContentLoaded', function() {
-            // Kakao SDK 초기화 딜레이
             setTimeout(function() {
                 if (typeof Kakao !== 'undefined') {
                     try {
@@ -502,7 +212,7 @@
             }, 500);
             
             // AdSense 초기화 (한번만)
-            if (!adsenseInitialized && window.adsbygoogle) {
+            if (!adsenseInitialized && typeof adsbygoogle !== 'undefined') {
                 try {
                     (adsbygoogle = window.adsbygoogle || []).push({});
                     adsenseInitialized = true;
@@ -1103,45 +813,37 @@
         
         // 테스트 시작
         function startTest() {
-            document.getElementById('testInfo').style.display = 'none';
-            document.getElementById('questionContainer').classList.remove('hidden');
+            document.getElementById('intro-screen').style.display = 'none';
+            document.getElementById('progress-screen').style.display = 'block';
+            document.getElementById('question-screen').style.display = 'block';
             showQuestion();
         }
         
         // 질문 표시
         function showQuestion() {
             const question = questions[currentQuestion];
+            document.getElementById('questionNumber').textContent = `Q${currentQuestion + 1}`;
             document.getElementById('questionText').textContent = question.text;
             document.getElementById('currentQuestion').textContent = currentQuestion + 1;
-            document.getElementById('progressStep').textContent = `STEP ${currentQuestion + 1}`;
             
             const progress = ((currentQuestion + 1) / questions.length) * 100;
             document.getElementById('progressPercent').textContent = Math.round(progress) + '%';
             document.getElementById('progressFill').style.width = progress + '%';
             
-            const answersContainer = document.getElementById('answersContainer');
-            answersContainer.innerHTML = '';
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
             
             question.answers.forEach((answer, index) => {
-                const answerElement = document.createElement('div');
-                answerElement.className = 'answer-option';
-                answerElement.textContent = answer.text;
+                const optionElement = document.createElement('div');
+                optionElement.className = 'mbti-option';
+                optionElement.textContent = answer.text;
+                optionElement.onclick = () => selectAnswer(index);
                 
-                // 답변 스케일에 따른 클래스 추가
-                if (answer.value === 2) answerElement.classList.add('strongly-agree');
-                else if (answer.value === 1) answerElement.classList.add('agree');
-                else if (answer.value === 0) answerElement.classList.add('neutral');
-                else if (answer.value === -1) answerElement.classList.add('disagree');
-                else if (answer.value === -2) answerElement.classList.add('strongly-disagree');
-                
-                answerElement.onclick = () => selectAnswer(index);
-                
-                // 이전에 선택한 답변이 있으면 표시
                 if (answers[currentQuestion] === index) {
-                    answerElement.classList.add('selected');
+                    optionElement.classList.add('selected');
                 }
                 
-                answersContainer.appendChild(answerElement);
+                optionsContainer.appendChild(optionElement);
             });
             
             // 네비게이션 버튼 표시/숨김
@@ -1165,20 +867,13 @@
             answers[currentQuestion] = index;
             
             // UI 업데이트
-            const options = document.querySelectorAll('.answer-option');
+            const options = document.querySelectorAll('.mbti-option');
             options.forEach((option, i) => {
                 option.classList.toggle('selected', i === index);
             });
             
-            // 버튼 표시
+            // 다음 버튼 표시
             document.getElementById('nextBtn').style.visibility = 'visible';
-            
-            // 마지막 문제가 아니면 자동으로 다음 문제로
-            if (currentQuestion < questions.length - 1) {
-                setTimeout(() => {
-                    nextQuestion();
-                }, 300);
-            }
         }
         
         // 다음 질문
@@ -1214,8 +909,10 @@
             const result = mbtiResults[type];
             
             // 결과 표시
-            document.querySelector('.test-container').style.display = 'none';
-            document.getElementById('resultContainer').classList.remove('hidden');
+            document.querySelector('.mbti-test-container').style.display = 'none';
+            document.getElementById('progress-screen').style.display = 'none';
+            document.getElementById('question-screen').style.display = 'none';
+            document.getElementById('resultContainer').style.display = 'block';
             
             // 기본 정보
             document.getElementById('resultType').textContent = type;
@@ -1234,43 +931,43 @@
             ];
             
             traitsGrid.innerHTML = traitData.map(trait => `
-                <div class="trait-item">
-                    <div class="trait-label">${trait.label}</div>
-                    <div class="trait-value">${trait.value}</div>
+                <div class="mbti-trait-item">
+                    <div class="mbti-trait-label">${trait.label}</div>
+                    <div class="mbti-trait-value">${trait.value}</div>
                 </div>
             `).join('');
             
             // 유명인
             const celebritiesGrid = document.getElementById('celebritiesGrid');
             celebritiesGrid.innerHTML = result.celebrities.map(celeb => 
-                `<div class="celebrity-item">${celeb}</div>`
+                `<div class="mbti-celebrity-item">${celeb}</div>`
             ).join('');
             
             // 추천 직업
             const careersList = document.getElementById('careersList');
             careersList.innerHTML = result.careers.map(career => 
-                `<span class="career-tag">${career}</span>`
+                `<span class="mbti-career-tag">${career}</span>`
             ).join('');
             
             // 연애 궁합
             const compatibilitySection = document.getElementById('compatibilitySection');
             compatibilitySection.innerHTML = `
-                <div class="compatibility-item">
-                    <div class="compatibility-label">최고의 궁합</div>
-                    <div class="compatibility-types">
-                        ${result.compatibility.best.map(type => `<span class="type-tag">${type}</span>`).join('')}
+                <div class="mbti-compatibility-item">
+                    <div class="mbti-compatibility-label">최고의 궁합</div>
+                    <div class="mbti-compatibility-types">
+                        ${result.compatibility.best.map(type => `<span class="mbti-type-tag">${type}</span>`).join('')}
                     </div>
                 </div>
-                <div class="compatibility-item">
-                    <div class="compatibility-label">좋은 궁합</div>
-                    <div class="compatibility-types">
-                        ${result.compatibility.good.map(type => `<span class="type-tag">${type}</span>`).join('')}
+                <div class="mbti-compatibility-item">
+                    <div class="mbti-compatibility-label">좋은 궁합</div>
+                    <div class="mbti-compatibility-types">
+                        ${result.compatibility.good.map(type => `<span class="mbti-type-tag">${type}</span>`).join('')}
                     </div>
                 </div>
-                <div class="compatibility-item">
-                    <div class="compatibility-label">도전적 궁합</div>
-                    <div class="compatibility-types">
-                        ${result.compatibility.challenging.map(type => `<span class="type-tag">${type}</span>`).join('')}
+                <div class="mbti-compatibility-item">
+                    <div class="mbti-compatibility-label">도전적 궁합</div>
+                    <div class="mbti-compatibility-types">
+                        ${result.compatibility.challenging.map(type => `<span class="mbti-type-tag">${type}</span>`).join('')}
                     </div>
                 </div>
             `;
