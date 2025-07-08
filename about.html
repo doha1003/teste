@@ -147,6 +147,27 @@
                 left: 16px;
             }
         }
+        
+        /* Responsive AdSense Styles */
+        .ad-container {
+            min-height: 250px;
+            margin: 40px auto;
+            max-width: 1200px;
+            padding: 0 20px;
+            text-align: center;
+        }
+        
+        .ad-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+        
+        .adsbygoogle {
+            min-height: 90px;
+            width: 100%;
+        }
     </style>
 </head>
 <body>
@@ -236,11 +257,14 @@
     <div class="ad-container">
         <div class="ad-label">광고</div>
         <ins class="adsbygoogle"
-             style="display:block"
+             style="display:block; min-height: 90px;"
              data-ad-client="ca-pub-7905640648499222"
-             data-ad-slot="1234567890"
+             data-ad-slot="8765432109"
              data-ad-format="auto"
              data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
     </div>
     
     <!-- 푸터 -->
@@ -248,10 +272,5 @@
     
     <!-- External JavaScript -->
     <script src="/js/main.js"></script>
-    
-    <!-- AdSense initialization -->
-    <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
 </body>
 </html>
