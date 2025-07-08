@@ -10,7 +10,7 @@
     <!-- Open Graph -->
     <meta property="og:title" content="BMI 계산기 - 나의 건강 상태는?">
     <meta property="og:description" content="간단하게 키와 몸무게로 BMI를 계산하고 건강 상태를 확인해보세요!">
-    <meta property="og:image" content="https://doha.kr/images/bmi-og.png">
+    <meta property="og:image" content="https://doha.kr/images/og-default.png">
     <meta property="og:url" content="https://doha.kr/tools/bmi-calculator.html">
     
     <!-- Google Fonts -->
@@ -18,8 +18,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
-    <!-- CSS Files -->
-    <link rel="stylesheet" href="/css/main.css">
+    <!-- External CSS -->
+    <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="/css/pages/bmi-calculator.css">
     
     <!-- Favicon -->
@@ -29,6 +29,9 @@
     
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
+    
+    <!-- Kakao JavaScript SDK -->
+    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.4.0/kakao.min.js" integrity="sha384-mXVrIX2T/Kszp6Z0aEWaA8Nm7J6/ZeWXbL8UpGRjKwWe56Srd/iyNmWMBhcItAjH" crossorigin="anonymous"></script>
     
     <!-- Structured Data -->
     <script type="application/ld+json">
@@ -48,49 +51,24 @@
         },
         "featureList": [
             "실시간 BMI 계산",
-            "건강 상태 분석",
+            "건강 상태 분석", 
             "표준 체중 제시",
-            "BMI 차트 시각화",
-            "건강 관리 조언"
+            "맞춤형 건강 조언"
         ]
     }
     </script>
 </head>
 <body>
     <!-- 네비게이션 -->
-    <nav class="navbar">
-        <div class="navbar-container">
-            <a href="/" class="logo">doha.kr</a>
-            <ul class="nav-menu" id="nav-menu">
-                <li><a href="/" class="nav-link">홈</a></li>
-                <li><a href="/tests/" class="nav-link">심리테스트</a></li>
-                <li><a href="/tools/" class="nav-link">실용도구</a></li>
-                <li><a href="/contact/" class="nav-link">문의</a></li>
-                <li><a href="/about/" class="nav-link">소개</a></li>
-            </ul>
-            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </div>
-    </nav>
+    <div id="navbar-placeholder"></div>
     
     <!-- 헤더 -->
     <header class="bmi-header">
-        <div class="bmi-floating-icons">
-            <span class="floating-icon">🏃‍♀️</span>
-            <span class="floating-icon">💪</span>
-            <span class="floating-icon">🍎</span>
-            <span class="floating-icon">⚖️</span>
-            <span class="floating-icon">❤️</span>
-        </div>
         <div class="bmi-header-content">
-            <div class="bmi-header-badge">🏥 건강 체크 도구</div>
             <h1 class="bmi-header-title">BMI 계산기</h1>
             <p class="bmi-header-subtitle">
-                체질량지수(BMI)를 계산하여 당신의 건강 상태를 확인해보세요.<br>
-                전문가가 제공하는 맞춤형 건강 관리 조언까지 한번에!
+                체질량지수(BMI)를 계산하여 건강 상태를 확인하세요.<br>
+                표준 체중 범위와 맞춤형 건강 조언을 제공합니다.
             </p>
         </div>
     </header>
@@ -102,7 +80,7 @@
             <div class="bmi-calculator-grid">
                 <!-- 입력 영역 -->
                 <div class="bmi-input-section">
-                    <h2>정보 입력</h2>
+                    <h2 style="font-size: 24px; margin-bottom: 24px; color: var(--gray-800);">정보 입력</h2>
                     
                     <div class="bmi-input-group">
                         <label class="bmi-input-label">성별</label>
@@ -145,78 +123,24 @@
                     <button class="bmi-calculate-btn" onclick="calculateBMI()">
                         BMI 계산하기
                     </button>
-                    
-                    <!-- 입력 영역 추가 정보 -->
-                    <div class="bmi-input-info">
-                        <h3>계산 전 알아두세요</h3>
-                        <div class="bmi-info-grid">
-                            <div class="bmi-info-item">
-                                <span class="bmi-info-icon">⚡</span>
-                                <span>계산 결과는 즉시 확인할 수 있습니다</span>
-                            </div>
-                            <div class="bmi-info-item">
-                                <span class="bmi-info-icon">🎯</span>
-                                <span>WHO 아시아-태평양 기준을 적용합니다</span>
-                            </div>
-                            <div class="bmi-info-item">
-                                <span class="bmi-info-icon">👨‍⚕️</span>
-                                <span>개인 맞춤 건강 조언을 제공받으세요</span>
-                            </div>
-                            <div class="bmi-info-item">
-                                <span class="bmi-info-icon">📈</span>
-                                <span>BMI 차트에서 내 위치를 확인하세요</span>
-                            </div>
-                            <div class="bmi-info-item">
-                                <span class="bmi-info-icon">🔒</span>
-                                <span>입력한 정보는 저장되지 않습니다</span>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 
                 <!-- 결과 영역 -->
                 <div class="bmi-result-section hidden" id="resultSection">
-                    <h2>계산 결과</h2>
-                    
-                    <div class="bmi-result-card">
-                        <div class="bmi-value" id="bmiValue">0</div>
-                        <div class="bmi-status" id="bmiStatus">-</div>
-                        <div class="bmi-description" id="bmiDescription">
-                            키와 몸무게를 입력하고 계산 버튼을 클릭하세요.
-                        </div>
-                        
-                        <div class="bmi-weight-info">
-                            <div class="bmi-weight-card">
-                                <div class="bmi-weight-card-label">표준 체중</div>
-                                <div class="bmi-weight-card-value" id="standardWeight">-</div>
-                            </div>
-                            <div class="bmi-weight-card">
-                                <div class="bmi-weight-card-label">체중 차이</div>
-                                <div class="bmi-weight-card-value" id="weightDiff">-</div>
-                            </div>
-                        </div>
+                    <div class="bmi-value" id="bmiValue">0</div>
+                    <div class="bmi-status" id="bmiStatus">-</div>
+                    <div class="bmi-description" id="bmiDescription">
+                        키와 몸무게를 입력하고 계산 버튼을 클릭하세요.
                     </div>
                     
-                    <!-- 빠른 건강 팁 -->
-                    <div class="bmi-quick-tips">
-                        <h3>빠른 건강 팁</h3>
-                        <div class="bmi-tips-grid" id="quickTips">
-                            <div class="bmi-tip-item">
-                                <span class="bmi-tip-icon">🥗</span>
-                                <span>균형잡힌 식단이 건강한 체중 유지의 핵심입니다</span>
-                            </div>
-                            <div class="bmi-tip-item">
-                                <span class="bmi-tip-icon">🚶‍♀️</span>
-                                <span>하루 30분 이상 꾸준한 운동을 실천해보세요</span>
-                            </div>
-                            <div class="bmi-tip-item">
-                                <span class="bmi-tip-icon">💧</span>
-                                <span>하루 8잔 이상의 물을 마시는 것이 좋습니다</span>
-                            </div>
-                            <div class="bmi-tip-item">
-                                <span class="bmi-tip-icon">😴</span>
-                                <span>충분한 수면은 건강한 체중 관리에 필수적입니다</span>
-                            </div>
+                    <div class="bmi-weight-info">
+                        <div class="bmi-weight-card">
+                            <div class="bmi-weight-card-label">표준 체중</div>
+                            <div class="bmi-weight-card-value" id="standardWeight">-</div>
+                        </div>
+                        <div class="bmi-weight-card">
+                            <div class="bmi-weight-card-label">체중 차이</div>
+                            <div class="bmi-weight-card-value" id="weightDiff">-</div>
                         </div>
                     </div>
                 </div>
@@ -331,56 +255,7 @@
     </div>
     
     <!-- 푸터 -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>doha.kr</h3>
-                <p style="color: var(--gray-400); margin-top: 8px;">
-                    일상을 더 재미있게 만드는 공간<br>
-                    심리테스트와 실용도구의 만남
-                </p>
-                <div class="footer-social">
-                    <a href="mailto:contact@doha.kr" class="social-link" aria-label="이메일">📧</a>
-                </div>
-            </div>
-            
-            <div class="footer-section">
-                <h3>서비스</h3>
-                <ul class="footer-links">
-                    <li><a href="/">홈</a></li>
-                    <li><a href="/tests/">심리테스트</a></li>
-                    <li><a href="/tools/">실용도구</a></li>
-                    <li><a href="/about/">사이트 소개</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-section">
-                <h3>인기 콘텐츠</h3>
-                <ul class="footer-links">
-                    <li><a href="/tests/teto-egen/start.html">테토-에겐 테스트</a></li>
-                    <li><a href="/tests/mbti/">MBTI 테스트</a></li>
-                    <li><a href="/tools/text-counter.html">글자수 세기</a></li>
-                    <li><a href="/tools/bmi-calculator.html">BMI 계산기</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-section">
-                <h3>고객지원</h3>
-                <ul class="footer-links">
-                    <li><a href="/contact/">문의하기</a></li>
-                    <li><a href="/faq/">자주 묻는 질문</a></li>
-                </ul>
-            </div>
-        </div>
-        
-        <div class="footer-bottom">
-            <div class="footer-legal">
-                <a href="/privacy/">개인정보처리방침</a>
-                <a href="/terms/">이용약관</a>
-            </div>
-            <p>&copy; 2025 doha.kr. All rights reserved.</p>
-        </div>
-    </footer>
+    <div id="footer-placeholder"></div>
     
     <!-- External JavaScript -->
     <script src="/js/main.js"></script>
@@ -428,22 +303,22 @@
             let status, statusColor, description, personalizedAdvice;
             if (bmi < 18.5) {
                 status = '체중 관리가 필요해요';
-                statusColor = 'var(--bmi-secondary)';
+                statusColor = 'var(--primary-color)';
                 description = '조금 더 건강한 체중을 위해 영양가 있는 식사에 신경 써보세요. 천천히 건강하게 늘려나가면 됩니다! 💪';
                 personalizedAdvice = getUnderweightAdvice(gender, age);
             } else if (bmi < 23) {
                 status = '완벽해요! ✨';
-                statusColor = 'var(--bmi-success)';
+                statusColor = 'var(--success-color)';
                 description = '정말 멋진 체중을 유지하고 계시네요! 지금의 건강한 습관을 계속 이어가시면 됩니다. 👏';
                 personalizedAdvice = getNormalAdvice(gender, age);
             } else if (bmi < 25) {
                 status = '조금 관리가 필요해요';
-                statusColor = 'var(--bmi-warning)';
+                statusColor = 'var(--accent-color)';
                 description = '걱정하지 마세요! 작은 변화부터 시작하면 충분히 개선할 수 있어요. 함께 건강한 습관을 만들어나가요. 🌟';
                 personalizedAdvice = getOverweightAdvice(gender, age);
             } else if (bmi < 30) {
                 status = '건강 관리에 신경써주세요';
-                statusColor = 'var(--bmi-danger)';
+                statusColor = 'var(--error-color)';
                 description = '혼자서 힘들어하지 마세요. 전문가의 도움을 받으면 더 안전하고 효과적으로 건강을 되찾을 수 있어요. 🤝';
                 personalizedAdvice = getObeseAdvice(gender, age);
             } else {
@@ -464,7 +339,7 @@
                 weightDifference > 0 ? `+${Math.round(weightDifference * 10) / 10}kg` : 
                 `${Math.round(weightDifference * 10) / 10}kg`;
             document.getElementById('weightDiff').style.color = 
-                Math.abs(weightDifference) < 5 ? 'var(--bmi-success)' : 'var(--bmi-danger)';
+                Math.abs(weightDifference) < 5 ? 'var(--success-color)' : 'var(--error-color)';
             
             // 차트 포인터 위치 계산
             let pointerPosition;
@@ -725,7 +600,7 @@
             };
         }
         
-        // Enter 키로 계산하기
+        // 엔터키로 계산하기
         document.addEventListener('DOMContentLoaded', function() {
             const inputs = document.querySelectorAll('.bmi-input-field');
             inputs.forEach(input => {
