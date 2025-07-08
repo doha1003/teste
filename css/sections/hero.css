@@ -1,25 +1,19 @@
-/* Hero Section - Optimized Layout and Spacing */
+/* =============================================================================
+   HERO SECTION - Professional Design with Consistent Grid & Spacing
+   ============================================================================= */
 
 .hero {
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
+    background: var(--gradient-hero);
     position: relative;
     overflow: hidden;
-    background: linear-gradient(135deg, #ff6b6b 0%, #feca57 25%, #48dbfb 50%, #ff9ff3 75%, #54a0ff 100%);
-    background-size: 400% 400%;
-    animation: gradientShift 15s ease infinite;
-    padding: 60px 20px;
+    padding: var(--space-4xl) 0;
 }
 
-@keyframes gradientShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
-/* Animated Background Shapes */
+/* === ANIMATED BACKGROUND SHAPES === */
 .hero-shapes {
     position: absolute;
     top: 0;
@@ -27,196 +21,197 @@
     width: 100%;
     height: 100%;
     pointer-events: none;
-    z-index: 1;
+    z-index: 0;
 }
 
 .shape {
     position: absolute;
     border-radius: 50%;
-    opacity: 0.15;
-    animation: float 20s infinite ease-in-out;
-    backdrop-filter: blur(2px);
+    background: rgba(255, 255, 255, 0.1);
+    animation: floatShapes 20s ease-in-out infinite;
 }
 
 .shape-1 {
     width: 300px;
     height: 300px;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.1) 100%);
-    top: 5%;
-    left: 5%;
-    animation-delay: -5s;
-    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+    top: 10%;
+    left: 10%;
+    animation-delay: 0s;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
 }
 
 .shape-2 {
     width: 200px;
     height: 200px;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.08) 100%);
-    top: 65%;
-    right: 10%;
-    animation-delay: -10s;
-    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    top: 60%;
+    right: 15%;
+    animation-delay: 5s;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.03));
 }
 
 .shape-3 {
     width: 150px;
     height: 150px;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.06) 100%);
-    bottom: 15%;
-    left: 15%;
-    animation-delay: -15s;
+    bottom: 20%;
+    left: 20%;
+    animation-delay: 10s;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02));
 }
 
 .shape-4 {
-    width: 180px;
-    height: 180px;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.07) 100%);
-    top: 25%;
-    right: 25%;
-    animation-delay: -8s;
-    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    width: 250px;
+    height: 250px;
+    top: 30%;
+    right: 40%;
+    animation-delay: 15s;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
 }
 
-@keyframes float {
+@keyframes floatShapes {
     0%, 100% {
-        transform: translateY(0px) rotate(0deg) scale(1);
+        transform: translateY(0px) translateX(0px) scale(1);
+        opacity: 0.7;
     }
     25% {
-        transform: translateY(-20px) rotate(90deg) scale(1.1);
+        transform: translateY(-30px) translateX(20px) scale(1.1);
+        opacity: 0.9;
     }
     50% {
-        transform: translateY(15px) rotate(180deg) scale(0.9);
+        transform: translateY(-60px) translateX(-10px) scale(0.9);
+        opacity: 0.5;
     }
     75% {
-        transform: translateY(-10px) rotate(270deg) scale(1.05);
+        transform: translateY(-20px) translateX(30px) scale(1.05);
+        opacity: 0.8;
     }
 }
 
-/* Hero Content */
+/* === HERO CONTENT === */
 .hero-content {
-    position: relative;
-    z-index: 2;
-    text-align: center;
-    max-width: 900px;
+    max-width: 1200px;
     margin: 0 auto;
-    color: white;
-}
-
-/* Hero Badge */
-.hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 12px 24px;
-    background: rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(20px);
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    border-radius: 50px;
-    font-size: 14px;
-    font-weight: 700;
-    color: white;
-    margin-bottom: 24px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    transition: all 0.4s ease;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.hero-badge:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
-    background: rgba(255, 255, 255, 0.3);
-}
-
-.hero-badge::before {
-    content: '🚀';
-    font-size: 16px;
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-}
-
-/* Hero Title - 줄바꿈 최적화 */
-.hero-title {
-    font-size: clamp(2.8rem, 7vw, 5rem);
-    font-weight: 900;
-    line-height: 1.2; /* 줄 높이 최적화 */
-    margin-bottom: 20px; /* 간격 줄임 */
-    color: white;
-    text-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
-    letter-spacing: -0.02em;
+    padding: 0 var(--space-lg);
+    text-align: center;
     position: relative;
-    word-break: keep-all; /* 한글 줄바꿈 최적화 */
+    z-index: 1;
+}
+
+/* === HERO BADGE === */
+.hero-badge {
+    display: inline-block;
+    padding: var(--space-sm) var(--space-lg);
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: var(--radius-full);
+    color: white;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: var(--space-xl);
+    box-shadow: var(--shadow-lg);
+    animation: badgePulse 3s ease-in-out infinite;
+}
+
+@keyframes badgePulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: var(--shadow-lg);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: var(--shadow-xl);
+    }
+}
+
+/* === HERO TITLE === */
+.hero-title {
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    font-weight: 900;
+    line-height: 1.1;
+    color: white;
+    margin-bottom: var(--space-xl);
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    letter-spacing: -0.03em;
 }
 
 .hero-title span {
-    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 30%, #e2e8f0 60%, #cbd5e1 100%);
+    background: linear-gradient(135deg, var(--warning-300), var(--warning-100));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     font-weight: 900;
     text-shadow: none;
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
-    animation: titleGlow 3s ease-in-out infinite alternate;
-    display: inline-block; /* 줄바꿈 제어 */
+    position: relative;
 }
 
-@keyframes titleGlow {
-    from {
-        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+.hero-title span::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(135deg, var(--warning-400), var(--warning-200));
+    border-radius: var(--radius-full);
+    animation: underlineGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes underlineGlow {
+    0% {
+        opacity: 0.7;
+        transform: scaleX(0.8);
     }
-    to {
-        filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.4)) drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+    100% {
+        opacity: 1;
+        transform: scaleX(1);
     }
 }
 
-/* Hero Subtitle - 간격 최적화 */
+/* === HERO SUBTITLE === */
 .hero-subtitle {
-    font-size: clamp(1.1rem, 3vw, 1.4rem);
-    color: rgba(255, 255, 255, 0.95);
-    margin-bottom: 36px; /* 간격 줄임 */
+    font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+    font-weight: 400;
+    line-height: 1.7;
+    color: white;
+    opacity: 0.95;
+    margin-bottom: var(--space-2xl);
     max-width: 700px;
     margin-left: auto;
     margin-right: auto;
-    font-weight: 500;
-    line-height: 1.6; /* 줄 높이 최적화 */
-    text-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
-    word-break: keep-all; /* 한글 줄바꿈 최적화 */
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Hero Buttons - 각각 다른 색상, 간격 최적화 */
+/* === HERO BUTTONS === */
 .hero-buttons {
     display: flex;
-    flex-wrap: wrap;
-    gap: 20px; /* 간격 줄임 */
+    gap: var(--space-lg);
     justify-content: center;
     align-items: center;
-    margin-bottom: 40px; /* 간격 줄임 */
+    flex-wrap: wrap;
+    margin-bottom: var(--space-4xl);
 }
 
-/* Button Base Styles */
 .hero-buttons .btn {
     display: inline-flex;
     align-items: center;
-    gap: 12px;
-    padding: 18px 32px; /* 패딩 최적화 */
-    border-radius: 16px;
-    font-weight: 800;
-    font-size: 1.1rem;
+    gap: var(--space-sm);
+    padding: var(--space-lg) var(--space-xl);
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: var(--radius-xl);
+    color: white;
+    font-size: 1.125rem;
+    font-weight: 600;
     text-decoration: none;
-    border: none;
-    cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all var(--transition-base);
     position: relative;
     overflow: hidden;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(20px);
-    transform: translateY(0);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+    min-width: 180px;
+    justify-content: center;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 .hero-buttons .btn::before {
@@ -227,286 +222,216 @@
     width: 100%;
     height: 100%;
     background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-    transition: left 0.6s ease;
+    transition: left 0.6s;
+}
+
+.hero-buttons .btn span {
+    font-size: 1.3em;
+    margin-right: var(--space-xs);
+}
+
+.hero-buttons .btn:hover {
+    transform: translateY(-3px);
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: var(--shadow-xl);
 }
 
 .hero-buttons .btn:hover::before {
     left: 100%;
 }
 
-.hero-buttons .btn:hover {
-    transform: translateY(-4px) scale(1.03);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+.hero-buttons .btn:active {
+    transform: translateY(-1px);
 }
 
-.hero-buttons .btn span {
-    font-size: 1.2em;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
-}
-
-/* 심리테스트 버튼 - 밝은 파란색 */
-.hero-buttons .btn:nth-child(1) {
-    background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
-    color: white;
-    border: 3px solid rgba(255, 255, 255, 0.4);
-    box-shadow: 0 8px 25px rgba(0, 210, 255, 0.4);
-}
-
-.hero-buttons .btn:nth-child(1):hover {
-    background: linear-gradient(135deg, #00bfff 0%, #2563eb 100%);
-    border-color: rgba(255, 255, 255, 0.6);
-    box-shadow: 0 15px 40px rgba(0, 210, 255, 0.5);
-}
-
-/* 실용도구 버튼 - 밝은 녹색 */
-.hero-buttons .btn:nth-child(2) {
-    background: linear-gradient(135deg, #00f260 0%, #0575e6 100%);
-    color: white;
-    border: 3px solid rgba(255, 255, 255, 0.4);
-    box-shadow: 0 8px 25px rgba(0, 242, 96, 0.4);
-}
-
-.hero-buttons .btn:nth-child(2):hover {
-    background: linear-gradient(135deg, #00e650 0%, #047bd8 100%);
-    border-color: rgba(255, 255, 255, 0.6);
-    box-shadow: 0 15px 40px rgba(0, 242, 96, 0.5);
-}
-
-/* AI 운세 버튼 - 밝은 보라/핑크 */
-.hero-buttons .btn:nth-child(3) {
-    background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
-    color: white;
-    border: 3px solid rgba(255, 255, 255, 0.4);
-    box-shadow: 0 8px 25px rgba(255, 107, 157, 0.4);
-}
-
-.hero-buttons .btn:nth-child(3):hover {
-    background: linear-gradient(135deg, #ff5582 0%, #b03759 100%);
-    border-color: rgba(255, 255, 255, 0.6);
-    box-shadow: 0 15px 40px rgba(255, 107, 157, 0.5);
-}
-
-/* Scroll Indicator */
+/* === SCROLL INDICATOR === */
 .scroll-indicator {
     position: absolute;
-    bottom: 30px; /* 위치 조정 */
+    bottom: var(--space-2xl);
     left: 50%;
     transform: translateX(-50%);
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 13px;
-    font-weight: 700;
-    z-index: 3;
-    animation: bounce 2.5s infinite;
-    cursor: pointer;
+    gap: var(--space-sm);
+    color: white;
+    animation: scrollBounce 2s ease-in-out infinite;
 }
 
 .scroll-indicator-text {
+    font-size: 0.875rem;
+    font-weight: 500;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    font-size: 12px;
+    letter-spacing: 0.05em;
+    opacity: 0.8;
 }
 
 .scroll-indicator-arrow {
-    width: 24px;
-    height: 24px;
-    border-right: 3px solid rgba(255, 255, 255, 0.9);
-    border-bottom: 3px solid rgba(255, 255, 255, 0.9);
-    transform: rotate(45deg);
-    animation: arrow-bounce 2.5s infinite;
+    width: 2px;
+    height: 30px;
+    background: white;
+    border-radius: var(--radius-full);
+    position: relative;
+    opacity: 0.7;
 }
 
-@keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {
+.scroll-indicator-arrow::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 8px solid white;
+}
+
+@keyframes scrollBounce {
+    0%, 100% {
         transform: translateX(-50%) translateY(0);
     }
-    40% {
-        transform: translateX(-50%) translateY(-8px);
-    }
-    60% {
-        transform: translateX(-50%) translateY(-4px);
+    50% {
+        transform: translateX(-50%) translateY(10px);
     }
 }
 
-@keyframes arrow-bounce {
-    0%, 20%, 50%, 80%, 100% {
-        transform: rotate(45deg) translateY(0);
-    }
-    40% {
-        transform: rotate(45deg) translateY(-4px);
-    }
-    60% {
-        transform: rotate(45deg) translateY(-2px);
-    }
-}
-
-/* Responsive Design - 모바일 최적화 */
-@media (max-width: 768px) {
+/* === RESPONSIVE DESIGN === */
+@media (max-width: 1024px) {
     .hero {
-        min-height: 100vh;
-        padding: 40px 15px; /* 패딩 줄임 */
+        min-height: 90vh;
+        padding: var(--space-3xl) 0;
     }
     
     .hero-content {
-        max-width: 100%;
+        padding: 0 var(--space-md);
+    }
+}
+
+@media (max-width: 768px) {
+    .hero {
+        min-height: 85vh;
+        padding: var(--space-2xl) 0;
     }
     
     .hero-badge {
-        padding: 10px 20px;
-        font-size: 13px;
-        margin-bottom: 20px; /* 간격 줄임 */
+        font-size: 0.8rem;
+        padding: var(--space-xs) var(--space-md);
+        margin-bottom: var(--space-lg);
     }
     
     .hero-title {
-        font-size: 2.4rem; /* 크기 최적화 */
-        margin-bottom: 16px; /* 간격 줄임 */
-        line-height: 1.3; /* 줄 높이 조정 */
+        font-size: 2.75rem;
+        margin-bottom: var(--space-lg);
     }
     
     .hero-subtitle {
-        font-size: 1.05rem;
-        margin-bottom: 28px; /* 간격 줄임 */
-        padding: 0 10px;
-        line-height: 1.5;
+        font-size: 1.125rem;
+        margin-bottom: var(--space-xl);
+        padding: 0 var(--space-sm);
     }
     
     .hero-buttons {
         flex-direction: column;
-        gap: 16px; /* 간격 줄임 */
-        margin-bottom: 32px;
+        gap: var(--space-md);
+        align-items: stretch;
+        max-width: 300px;
+        margin: 0 auto var(--space-2xl);
     }
     
     .hero-buttons .btn {
         width: 100%;
-        max-width: 320px;
-        padding: 16px 28px;
+        padding: var(--space-md) var(--space-lg);
         font-size: 1rem;
+        min-width: auto;
     }
     
     .scroll-indicator {
-        bottom: 20px;
-    }
-    
-    .scroll-indicator-text {
-        font-size: 11px;
-    }
-    
-    .scroll-indicator-arrow {
-        width: 20px;
-        height: 20px;
+        bottom: var(--space-lg);
     }
 }
 
 @media (max-width: 480px) {
     .hero {
-        padding: 30px 12px;
+        padding: var(--space-xl) 0;
+    }
+    
+    .hero-content {
+        padding: 0 var(--space-sm);
     }
     
     .hero-title {
-        font-size: 2rem; /* 더 작은 화면에서 크기 조정 */
-        margin-bottom: 12px;
+        font-size: 2.25rem;
     }
     
     .hero-subtitle {
         font-size: 1rem;
-        margin-bottom: 24px;
     }
     
     .hero-buttons .btn {
-        padding: 14px 24px;
-        font-size: 0.95rem;
-        max-width: 280px;
-    }
-    
-    .hero-badge {
-        padding: 8px 16px;
-        font-size: 12px;
-        margin-bottom: 16px;
+        padding: var(--space-sm) var(--space-md);
+        font-size: 0.9375rem;
     }
 }
 
-/* 큰 화면에서 최적화 */
-@media (min-width: 1200px) {
-    .hero-content {
-        max-width: 1000px;
-    }
-    
-    .hero-title {
-        font-size: 5.5rem;
-        margin-bottom: 24px;
-    }
-    
-    .hero-subtitle {
-        font-size: 1.5rem;
-        margin-bottom: 40px;
-    }
-    
-    .hero-buttons {
-        gap: 24px;
-        margin-bottom: 50px;
-    }
-}
-
-/* Animation Classes */
-.fade-in {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.fade-in.animated {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.stagger-1 {
-    transition-delay: 0.2s;
-}
-
-.stagger-2 {
-    transition-delay: 0.4s;
-}
-
-.stagger-3 {
-    transition-delay: 0.6s;
-}
-
-/* Accessibility */
+/* === ACCESSIBILITY === */
 @media (prefers-reduced-motion: reduce) {
-    .shape,
-    .scroll-indicator,
-    .scroll-indicator-arrow,
-    .hero-badge::before {
+    .hero-shapes .shape,
+    .hero-badge,
+    .hero-title span::after,
+    .scroll-indicator {
         animation: none;
     }
     
     .hero {
-        animation: none;
-        background: linear-gradient(135deg, #ff6b6b 0%, #54a0ff 100%);
-    }
-    
-    .hero-buttons .btn:hover {
-        transform: none;
+        background: var(--primary-600);
     }
 }
 
-/* High contrast mode */
+/* === HIGH CONTRAST MODE === */
 @media (prefers-contrast: high) {
     .hero {
-        background: #000;
+        background: #000080;
+    }
+    
+    .hero-badge,
+    .hero-buttons .btn {
+        background: rgba(255, 255, 255, 0.9);
+        color: #000000;
+        border-color: #ffffff;
     }
     
     .hero-title,
     .hero-subtitle,
-    .hero-badge {
-        color: #fff;
+    .scroll-indicator {
+        color: #ffffff;
+        text-shadow: none;
+    }
+}
+
+/* === PRINT STYLES === */
+@media print {
+    .hero {
+        min-height: auto;
+        background: none;
+        padding: var(--space-lg) 0;
+    }
+    
+    .hero-shapes,
+    .hero-badge,
+    .scroll-indicator {
+        display: none;
+    }
+    
+    .hero-title,
+    .hero-subtitle {
+        color: #000000;
         text-shadow: none;
     }
     
-    .hero-buttons .btn {
-        border: 3px solid #fff;
+    .hero-buttons {
+        display: none;
     }
 }
