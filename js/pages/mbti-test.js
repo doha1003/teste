@@ -659,7 +659,7 @@ function showQuestion() {
     document.getElementById('nextBtn').style.visibility = answers[currentQuestion] !== undefined ? 'visible' : 'hidden';
 }
 
-// 답변 선택
+// 답변 선택 - 자동으로 다음 질문으로 이동
 function selectAnswer(index) {
     const question = questions[currentQuestion];
     const answer = question.answers[index];
@@ -680,8 +680,15 @@ function selectAnswer(index) {
         option.classList.toggle('selected', i === index);
     });
     
-    // 다음 버튼 표시
-    document.getElementById('nextBtn').style.visibility = 'visible';
+    // 0.3초 후 자동으로 다음 질문으로 이동
+    setTimeout(() => {
+        currentQuestion++;
+        if (currentQuestion >= questions.length) {
+            showResult();
+        } else {
+            showQuestion();
+        }
+    }, 300);
 }
 
 // 다음 질문
