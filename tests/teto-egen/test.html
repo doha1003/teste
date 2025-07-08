@@ -36,609 +36,96 @@
     <!-- External CSS -->
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="/css/test-common.css">
-    
-    <style>
-        /* 테스트 컨테이너 기본 스타일 */
-        .test-container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            min-height: 80vh;
-        }
-        
-        .test-header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        
-        .test-header h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 16px;
-        }
-        
-        .test-header p {
-            font-size: 1.125rem;
-            color: #6b7280;
-        }
-        
-        /* 공통 숨김 클래스 */
-        .hidden {
-            display: none !important;
-        }
-        
-        /* 성별 선택 스타일 */
-        .gender-selection {
-            background: white;
-            border-radius: 1.5rem;
-            padding: 3rem;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        .gender-title {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #1f2937;
-            margin-bottom: 1rem;
-        }
-        
-        .gender-subtitle {
-            font-size: 1.125rem;
-            color: #6b7280;
-            margin-bottom: 2rem;
-            line-height: 1.6;
-        }
-        
-        .gender-options {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-        
-        .gender-option {
-            background: #f9fafb;
-            border: 3px solid transparent;
-            border-radius: 1rem;
-            padding: 2rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .gender-option:hover {
-            background: #eff6ff;
-            border-color: #93c5fd;
-            transform: translateY(-4px);
-        }
-        
-        .gender-option.selected {
-            background: #dbeafe;
-            border-color: #3b82f6;
-        }
-        
-        .gender-icon {
-            font-size: 3rem;
-            margin-bottom: 0.5rem;
-            display: block;
-        }
-        
-        .gender-label {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: #1f2937;
-        }
-        
-        .gender-desc {
-            font-size: 0.875rem;
-            color: #6b7280;
-            margin-top: 0.25rem;
-        }
-        
-        /* 테스트 화면 스타일 */
-        .question-container {
-            background: white;
-            border-radius: 1.5rem;
-            padding: 3rem;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-        }
-        
-        .progress-container {
-            margin-bottom: 2rem;
-        }
-        
-        .progress-step {
-            font-size: 0.875rem;
-            color: #6b7280;
-            margin-bottom: 0.5rem;
-        }
-        
-        .progress-info {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 1rem;
-            font-weight: 600;
-            color: #374151;
-        }
-        
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: #e5e7eb;
-            border-radius: 4px;
-            overflow: hidden;
-        }
-        
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
-            transition: width 0.3s ease;
-            border-radius: 4px;
-        }
-        
-        .question {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #1f2937;
-            margin-bottom: 2rem;
-            line-height: 1.4;
-        }
-        
-        .options {
-            margin-bottom: 2rem;
-        }
-        
-        .option {
-            background: #f9fafb;
-            border: 2px solid transparent;
-            border-radius: 1rem;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1.125rem;
-            line-height: 1.5;
-        }
-        
-        .option:hover {
-            background: #eff6ff;
-            border-color: #93c5fd;
-            transform: translateY(-2px);
-        }
-        
-        .option.selected {
-            background: #dbeafe;
-            border-color: #3b82f6;
-            color: #1e40af;
-        }
-        
-        .navigation {
-            display: flex;
-            justify-content: space-between;
-            gap: 1rem;
-        }
-        
-        /* 버튼 스타일 */
-        .btn {
-            padding: 12px 32px;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-            display: inline-block;
-            text-align: center;
-            border: none;
-            font-size: 16px;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-            color: white;
-        }
-        
-        .btn-primary:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
-        }
-        
-        .btn-primary:disabled {
-            background: #d1d5db;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-        
-        .btn-secondary {
-            background: #f3f4f6;
-            color: #374151;
-        }
-        
-        .btn-secondary:hover {
-            background: #e5e7eb;
-        }
-        
-        .start-button {
-            padding: 16px 48px;
-            font-size: 18px;
-            border-radius: 50px;
-        }
-        
-        /* 결과 화면 스타일 */
-        .result-container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .collection-card {
-            background: white;
-            border-radius: 1.5rem;
-            padding: 2rem;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-            margin-bottom: 2rem;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .card-rarity {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
-            color: #333;
-            padding: 0.5rem 1rem;
-            border-radius: 2rem;
-            font-weight: 700;
-            font-size: 0.875rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-        
-        .card-rarity.LEGENDARY {
-            background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%);
-            color: white;
-        }
-        
-        .card-rarity.EPIC {
-            background: linear-gradient(135deg, #a855f7 0%, #c084fc 100%);
-            color: white;
-        }
-        
-        .card-rarity.RARE {
-            background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
-            color: white;
-        }
-        
-        .card-rarity.MYTHIC {
-            background: linear-gradient(135deg, #ec4899 0%, #f472b6 100%);
-            color: white;
-        }
-        
-        .card-inner {
-            text-align: center;
-        }
-        
-        .card-avatar {
-            font-size: 5rem;
-            margin-bottom: 1rem;
-            animation: bounce 2s infinite;
-        }
-        
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        
-        .result-type {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #1f2937;
-            margin-bottom: 1rem;
-        }
-        
-        .result-description {
-            font-size: 1.125rem;
-            color: #4b5563;
-            line-height: 1.6;
-            margin-bottom: 2rem;
-        }
-        
-        .card-stats {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-        
-        .stat-item {
-            background: #f9fafb;
-            padding: 1rem;
-            border-radius: 0.75rem;
-            text-align: center;
-        }
-        
-        .stat-label {
-            font-size: 0.875rem;
-            color: #6b7280;
-            margin-bottom: 0.25rem;
-        }
-        
-        .stat-value {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #3b82f6;
-        }
-        
-        .traits-section {
-            margin-bottom: 2rem;
-        }
-        
-        .section-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #1f2937;
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-        
-        .result-traits {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1rem;
-        }
-        
-        .trait-card {
-            background: white;
-            border: 1px solid #e5e7eb;
-            border-radius: 1rem;
-            padding: 1.5rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-        }
-        
-        .trait-title {
-            font-size: 1.125rem;
-            font-weight: 600;
-            color: #1f2937;
-            margin-bottom: 0.5rem;
-        }
-        
-        .trait-desc {
-            color: #6b7280;
-            line-height: 1.5;
-        }
-        
-        .compatibility {
-            background: #eff6ff;
-            border-radius: 1rem;
-            padding: 1.5rem;
-            margin-top: 2rem;
-        }
-        
-        .compatibility h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: #1e40af;
-            margin-bottom: 0.75rem;
-        }
-        
-        .compatibility p {
-            color: #3730a3;
-            line-height: 1.6;
-        }
-        
-        /* 공유 섹션 */
-        .share-section {
-            background: white;
-            border-radius: 1rem;
-            padding: 2rem;
-            margin: 2rem 0;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-        }
-        
-        .share-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: #1f2937;
-            margin-bottom: 1.5rem;
-        }
-        
-        .share-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-        
-        .share-button {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 12px 24px;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-        }
-        
-        .kakao-share {
-            background: #fee500;
-            color: #3c1e1e;
-        }
-        
-        .kakao-share:hover {
-            background: #fdd835;
-            transform: translateY(-2px);
-        }
-        
-        .link-copy {
-            background: #f3f4f6;
-            color: #374151;
-        }
-        
-        .link-copy:hover {
-            background: #e5e7eb;
-            transform: translateY(-2px);
-        }
-        
-        /* 광고 영역 - 개선된 스타일 */
-        .ad-container {
-            margin: 2rem 0;
-            text-align: center;
-            min-height: 100px; /* 최소 높이 보장 */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 1rem;
-        }
-        
-        .ad-label {
-            font-size: 12px;
-            color: #9ca3af;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        /* 광고 컨테이너 가시성 확보 */
-        .adsbygoogle {
-            display: block !important;
-            min-width: 320px;
-            width: 100%;
-            max-width: 100%;
-        }
-        
-        /* 모바일 반응형 */
-        @media (max-width: 640px) {
-            .gender-options {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-            
-            .card-stats {
-                grid-template-columns: 1fr;
-            }
-            
-            .result-traits {
-                grid-template-columns: 1fr;
-            }
-            
-            .share-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .share-button {
-                width: 100%;
-                max-width: 200px;
-                justify-content: center;
-            }
-            
-            .navigation {
-                flex-direction: column;
-            }
-            
-            .btn {
-                width: 100%;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="/css/pages/teto-egen-test.css">
 </head>
 <body>
     <!-- 네비게이션 -->
     <div id="navbar-placeholder"></div>
 
-    <div class="test-container">
-        <div class="test-header">
+    <div class="teto-test-container">
+        <div class="teto-test-header">
             <h1>테토-에겐 성격 유형 분석</h1>
             <p>10가지 질문으로 알아보는 나의 성격 유형</p>
         </div>
 
         <div class="test-content">
             <!-- 성별 선택 화면 -->
-            <div id="gender-screen" class="gender-selection">
-                <h2 class="gender-title">성별을 선택해주세요</h2>
-                <p class="gender-subtitle">
+            <div id="gender-screen" class="teto-gender-selection">
+                <h2 class="teto-gender-title">성별을 선택해주세요</h2>
+                <p class="teto-gender-subtitle">
                     정확한 분석을 위해 성별을 선택해주세요.<br>
                     성별에 따른 미묘한 차이를 반영하여 더욱 정교한 결과를 제공합니다.
                 </p>
                 
-                <div class="gender-options">
-                    <div class="gender-option" onclick="selectGender('male')">
-                        <span class="gender-icon">👨</span>
-                        <div class="gender-label">남성</div>
-                        <div class="gender-desc">Male</div>
+                <div class="teto-gender-options">
+                    <div class="teto-gender-option" onclick="selectGender('male')">
+                        <span class="teto-gender-icon">👨</span>
+                        <div class="teto-gender-label">남성</div>
+                        <div class="teto-gender-desc">Male</div>
                     </div>
                     
-                    <div class="gender-option" onclick="selectGender('female')">
-                        <span class="gender-icon">👩</span>
-                        <div class="gender-label">여성</div>
-                        <div class="gender-desc">Female</div>
+                    <div class="teto-gender-option" onclick="selectGender('female')">
+                        <span class="teto-gender-icon">👩</span>
+                        <div class="teto-gender-label">여성</div>
+                        <div class="teto-gender-desc">Female</div>
                     </div>
                 </div>
                 
-                <button class="btn btn-primary start-button" id="start-test-btn" onclick="startTestAfterGender()" disabled>
+                <button class="teto-btn teto-btn-primary teto-start-button" id="start-test-btn" onclick="startTestAfterGender()" disabled>
                     테스트 시작하기
                 </button>
             </div>
 
             <!-- 테스트 화면 -->
-            <div id="test-screen" class="question-container hidden">
-                <div class="progress-container">
-                    <div class="progress-step" id="progress-step">STEP 1</div>
-                    <div class="progress-info">
+            <div id="test-screen" class="teto-question-container teto-hidden">
+                <div class="teto-progress-container">
+                    <div class="teto-progress-step" id="progress-step">STEP 1</div>
+                    <div class="teto-progress-info">
                         <span id="progress-text">질문 1 / 10</span>
                         <span id="progress-percent">10%</span>
                     </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="progress"></div>
+                    <div class="teto-progress-bar">
+                        <div class="teto-progress-fill" id="progress"></div>
                     </div>
                 </div>
                 
-                <div class="question" id="question"></div>
-                <div class="options" id="options"></div>
+                <div class="teto-question" id="question"></div>
+                <div class="teto-options" id="options"></div>
 
-                <div class="navigation">
-                    <button class="btn btn-secondary" id="prev-btn" onclick="previousQuestion()" style="visibility: hidden;">이전</button>
-                    <button class="btn btn-primary" id="next-btn" onclick="nextQuestion()" style="visibility: hidden;">다음</button>
+                <div class="teto-navigation">
+                    <button class="teto-btn teto-btn-secondary" id="prev-btn" onclick="previousQuestion()" style="visibility: hidden;">이전</button>
+                    <button class="teto-btn teto-btn-primary" id="next-btn" onclick="nextQuestion()" style="visibility: hidden;">다음</button>
                 </div>
             </div>
 
             <!-- 결과 화면 -->
-            <div id="result-screen" class="result-container hidden">
-                <div class="collection-card">
-                    <div class="card-rarity" id="card-rarity">LEGENDARY</div>
-                    <div class="card-inner">
-                        <div class="card-avatar" id="card-avatar">🦋</div>
-                        <div class="result-type" id="result-type"></div>
-                        <div class="result-description" id="result-description"></div>
-                        <div class="card-stats" id="card-stats"></div>
+            <div id="result-screen" class="teto-result-container teto-hidden">
+                <div class="teto-collection-card">
+                    <div class="teto-card-rarity" id="card-rarity">LEGENDARY</div>
+                    <div class="teto-card-inner">
+                        <div class="teto-card-avatar" id="card-avatar">🦋</div>
+                        <div class="teto-result-type" id="result-type"></div>
+                        <div class="teto-result-description" id="result-description"></div>
+                        <div class="teto-card-stats" id="card-stats"></div>
                     </div>
                 </div>
                 
-                <div class="traits-section">
-                    <h2 class="section-title">주요 성격 특성</h2>
-                    <div class="result-traits" id="result-traits"></div>
+                <div class="teto-traits-section">
+                    <h2 class="teto-section-title">주요 성격 특성</h2>
+                    <div class="teto-result-traits" id="result-traits"></div>
                 </div>
                 
-                <div class="compatibility" id="compatibility"></div>
+                <div class="teto-compatibility" id="compatibility"></div>
                 
                 <!-- 카카오톡 공유하기 섹션 -->
-                <div class="share-section">
-                    <div class="share-title">내 성격 유형을 친구들과 공유해보세요!</div>
-                    <div class="share-buttons">
-                        <button class="share-button kakao-share" onclick="shareKakao()">
+                <div class="teto-share-section">
+                    <div class="teto-share-title">내 성격 유형을 친구들과 공유해보세요!</div>
+                    <div class="teto-share-buttons">
+                        <button class="teto-share-button teto-kakao-share" onclick="shareKakao()">
                             <span>💬</span>
                             카카오톡 공유
                         </button>
-                        <button class="share-button link-copy" onclick="copyLink()">
+                        <button class="teto-share-button teto-link-copy" onclick="copyLink()">
                             <span>🔗</span>
                             링크 복사
                         </button>
@@ -646,8 +133,8 @@
                 </div>
                 
                 <!-- 광고 영역 - 결과 표시 후 로드 -->
-                <div class="ad-container" id="ad-container" style="display: none;">
-                    <div class="ad-label">광고</div>
+                <div class="teto-ad-container" id="ad-container" style="display: none;">
+                    <div class="teto-ad-label">광고</div>
                     <ins class="adsbygoogle"
                          style="display:block"
                          data-ad-client="ca-pub-7905640648499222"
@@ -656,9 +143,9 @@
                          data-full-width-responsive="true"></ins>
                 </div>
                 
-                <div class="navigation">
-                    <a href="/tests/teto-egen/" class="btn btn-secondary">상세 분석 보기</a>
-                    <button class="btn btn-primary" onclick="restartTest()">다시 테스트하기</button>
+                <div class="teto-navigation">
+                    <a href="/tests/teto-egen/" class="teto-btn teto-btn-secondary">상세 분석 보기</a>
+                    <button class="teto-btn teto-btn-primary" onclick="restartTest()">다시 테스트하기</button>
                 </div>
             </div>
         </div>
@@ -837,12 +324,12 @@
             selectedGender = gender;
             
             // 모든 옵션에서 selected 클래스 제거
-            document.querySelectorAll('.gender-option').forEach(option => {
+            document.querySelectorAll('.teto-gender-option').forEach(option => {
                 option.classList.remove('selected');
             });
             
             // 선택된 옵션에 selected 클래스 추가
-            event.target.closest('.gender-option').classList.add('selected');
+            event.target.closest('.teto-gender-option').classList.add('selected');
             
             // 시작 버튼 활성화
             document.getElementById('start-test-btn').disabled = false;
@@ -855,8 +342,8 @@
                 return;
             }
             
-            document.getElementById('gender-screen').classList.add('hidden');
-            document.getElementById('test-screen').classList.remove('hidden');
+            document.getElementById('gender-screen').classList.add('teto-hidden');
+            document.getElementById('test-screen').classList.remove('teto-hidden');
             showQuestion();
         }
 
@@ -875,7 +362,7 @@
 
                 q.options.forEach((option, index) => {
                     const optionDiv = document.createElement('div');
-                    optionDiv.className = 'option';
+                    optionDiv.className = 'teto-option';
                     optionDiv.textContent = option.text;
                     optionDiv.onclick = () => selectOption(index);
                     
@@ -895,8 +382,8 @@
 
         // 옵션 선택
         function selectOption(optionIndex) {
-            document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
-            document.querySelectorAll('.option')[optionIndex].classList.add('selected');
+            document.querySelectorAll('.teto-option').forEach(opt => opt.classList.remove('selected'));
+            document.querySelectorAll('.teto-option')[optionIndex].classList.add('selected');
 
             selectedAnswerIndex = optionIndex;
             answers[currentQuestion] = {
@@ -951,29 +438,29 @@
             const resultKey = `${dominantType}_${selectedGender}`;
             const result = resultTypes[resultKey];
 
-            document.getElementById('test-screen').classList.add('hidden');
-            document.getElementById('result-screen').classList.remove('hidden');
+            document.getElementById('test-screen').classList.add('teto-hidden');
+            document.getElementById('result-screen').classList.remove('teto-hidden');
             
             document.getElementById('card-avatar').textContent = result.avatar;
             document.getElementById('result-type').textContent = result.type;
             document.getElementById('result-description').textContent = result.description;
             document.getElementById('card-rarity').textContent = result.rarity;
-            document.getElementById('card-rarity').className = `card-rarity ${result.rarity}`;
+            document.getElementById('card-rarity').className = `teto-card-rarity ${result.rarity}`;
 
             // 스탯 표시
             const statsHtml = Object.entries(result.stats).map(([key, value]) => 
-                `<div class="stat-item">
-                    <div class="stat-label">${key}</div>
-                    <div class="stat-value">${value}</div>
+                `<div class="teto-stat-item">
+                    <div class="teto-stat-label">${key}</div>
+                    <div class="teto-stat-value">${value}</div>
                 </div>`
             ).join('');
             document.getElementById('card-stats').innerHTML = statsHtml;
 
             // 특성 카드 생성
             const traitsHtml = result.traits.map(trait => 
-                `<div class="trait-card">
-                    <div class="trait-title">${trait.title}</div>
-                    <div class="trait-desc">${trait.desc}</div>
+                `<div class="teto-trait-card">
+                    <div class="teto-trait-title">${trait.title}</div>
+                    <div class="teto-trait-desc">${trait.desc}</div>
                 </div>`
             ).join('');
             document.getElementById('result-traits').innerHTML = traitsHtml;
@@ -1057,11 +544,11 @@
             answers = [];
             selectedAnswerIndex = null;
             
-            document.getElementById('result-screen').classList.add('hidden');
-            document.getElementById('gender-screen').classList.remove('hidden');
+            document.getElementById('result-screen').classList.add('teto-hidden');
+            document.getElementById('gender-screen').classList.remove('teto-hidden');
             
             // 성별 선택 초기화
-            document.querySelectorAll('.gender-option').forEach(option => {
+            document.querySelectorAll('.teto-gender-option').forEach(option => {
                 option.classList.remove('selected');
             });
             document.getElementById('start-test-btn').disabled = true;
