@@ -196,6 +196,43 @@
     transform: translateY(-1px);
 }
 
+/* 로딩 애니메이션 */
+.loading {
+    text-align: center;
+    padding: 40px;
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 3px solid #f3f4f6;
+    border-top: 3px solid #8b5cf6;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* 로딩 텍스트는 회전하지 않음 - 중요! */
+.loading p {
+    animation: none !important;
+    transform: none !important;
+    color: #6b7280;
+    font-size: 1.0625rem;
+}
+
+/* 다른 AI 분석 로딩 텍스트들도 회전 방지 */
+.daily-ai-analyzing,
+.tarot-ai-analyzing,
+.saju-ai-analyzing {
+    animation: none !important;
+    transform: none !important;
+}
+
 /* 반응형 디자인 */
 @media (max-width: 768px) {
     .zodiac-grid {
