@@ -87,7 +87,7 @@
                     <li>질문은 구체적일수록 더 명확한 답변을 받을 수 있습니다.</li>
                     <li>카드의 해석은 참고용이며, 최종 결정은 본인이 내리셔야 합니다.</li>
                     <li>메이저 아르카나 22장을 사용하여 리딩을 진행합니다.</li>
-                    <li>AI가 실제로 분석하여 개인화된 해석을 제공합니다.</li>
+                    <li>AI가 질문에 맞춰 개인화된 해석을 제공합니다.</li>
                 </ul>
             </div>
         </div>
@@ -157,15 +157,13 @@
             // 폼 숨기기
             document.getElementById('tarotForm').style.display = 'none';
             
-            // 로딩 표시 (애니메이션 없음)
+            // 로딩 표시
             const resultDiv = document.getElementById('tarotResult');
             resultDiv.style.display = 'block';
             resultDiv.innerHTML = `
                 <div class="tarot-ai-analyzing">
-                    🔮 AI가 타로 카드를 분석하고 있습니다...
-                    <div style="margin-top: 20px; font-size: 0.9rem; opacity: 0.7;">
-                        질문: "${question}"
-                    </div>
+                    🔮 AI가 당신의 질문을 분석하고 타로 카드를 해석하고 있습니다...<br>
+                    <small style="opacity: 0.7; margin-top: 10px; display: block;">질문: "${question}"</small>
                 </div>
             `;
             
@@ -173,7 +171,7 @@
                 // 카드 뽑기
                 const cards = drawCards(question, spreadType);
                 
-                // 실제 AI 분석 시도
+                // AI 분석 시도
                 const aiAnalysis = await generateTarotAnalysisWithAI(question, cards, spreadType);
                 
                 // 결과 표시
@@ -181,10 +179,10 @@
                 
             } catch (error) {
                 console.error('타로 분석 오류:', error);
-                // 오류 시 기본 해석 사용
+                // 오류 시 질문 기반 개선된 해석 사용
                 const cards = drawCards(question, spreadType);
-                const fallbackAnalysis = generateFallbackAnalysis(question, cards, spreadType);
-                displayTarotResult(question, cards, spreadType, fallbackAnalysis);
+                const improvedAnalysis = generateQuestionBasedAnalysis(question, cards, spreadType);
+                displayTarotResult(question, cards, spreadType, improvedAnalysis);
             }
         }
         
@@ -228,7 +226,7 @@
         async function generateTarotAnalysisWithAI(question, cards, spreadType) {
             const spread = spreads[spreadType];
             const cardDescriptions = cards.map(card => 
-                `${card.position}: ${card.korean}(${card.name}) ${card.reversed ? '역방향' : '정방향'}`
+                `${card.position}: ${card.korean}(${card.name}) ${card.reversed ? '역방향' : '정방향'} - 기본의미: ${card.reversed ? card.reversed : card.meaning}`
             ).join(', ');
             
             const prompt = `당신은 전문 타로 리더입니다. 다음 질문과 뽑힌 카드들을 바탕으로 상세한 타로 리딩을 해주세요.
@@ -237,20 +235,20 @@
 스프레드: ${spread.name}
 뽑힌 카드들: ${cardDescriptions}
 
-다음 형식으로 응답해주세요:
+반드시 질문의 내용과 연결하여 해석하고, 다음 JSON 형식으로 응답해주세요:
 {
-  "overall": "전체적인 메시지 (100-200자)",
+  "overall": "질문과 관련된 전체적인 메시지 (100-200자)",
   "cardAnalysis": [
     {
       "position": "포지션명",
-      "interpretation": "해당 카드의 상세한 해석 (80-120자)"
+      "interpretation": "질문 맥락에서의 해당 카드 해석 (80-120자)"
     }
   ],
-  "advice": "구체적인 조언 (100-150자)",
-  "futureGuidance": "미래에 대한 가이드 (80-120자)"
+  "advice": "질문자에게 구체적인 조언 (100-150자)",
+  "futureGuidance": "질문과 관련된 미래 가이드 (80-120자)"
 }
 
-카드의 의미를 질문과 연결하여 개인화된 해석을 제공하고, 실용적인 조언을 포함해주세요.`;
+질문의 주제(연애, 직업, 인간관계 등)에 맞춰 카드의 의미를 해석하고 실용적인 조언을 포함해주세요.`;
 
             try {
                 const aiResponse = await callGeminiAPI(prompt);
@@ -267,55 +265,120 @@
             return null;
         }
         
-        function generateFallbackAnalysis(question, cards, spreadType) {
+        // 질문 기반 개선된 분석 (AI 실패 시)
+        function generateQuestionBasedAnalysis(question, cards, spreadType) {
             const spread = spreads[spreadType];
+            
+            // 질문에서 키워드 추출
+            const questionKeywords = extractQuestionKeywords(question);
             
             const cardAnalysis = cards.map(card => ({
                 position: card.position,
-                interpretation: generateCardInterpretation(card, question)
+                interpretation: generateContextualInterpretation(card, question, questionKeywords)
             }));
             
             return {
-                overall: `${spread.name} 리딩에서 나타난 메시지는 변화와 성장의 에너지입니다. 카드들이 당신의 질문에 대한 깊은 통찰을 제공하고 있습니다.`,
+                overall: generateQuestionBasedOverall(question, cards, questionKeywords),
                 cardAnalysis: cardAnalysis,
-                advice: "카드의 메시지를 마음에 새기고, 직관을 믿으며 행동하시기 바랍니다. 모든 변화는 성장의 기회입니다.",
-                futureGuidance: "긍정적인 마음가짐으로 다가올 변화를 받아들이세요. 당신의 내적 지혜가 올바른 길을 알려줄 것입니다."
+                advice: generateQuestionBasedAdvice(question, cards, questionKeywords),
+                futureGuidance: generateQuestionBasedGuidance(question, cards, questionKeywords)
             };
         }
         
-        function generateCardInterpretation(card, question) {
-            const interpretations = {
-                0: "새로운 시작을 앞두고 있습니다. 용기를 내어 첫 발을 내딛으세요.",
-                1: "당신에게는 원하는 것을 이룰 수 있는 능력이 있습니다. 자신감을 가지세요.",
-                2: "직감을 믿으세요. 내면의 목소리가 올바른 길을 알려줄 것입니다.",
-                3: "풍요로운 시기가 다가오고 있습니다. 창조적인 에너지를 발휘하세요.",
-                4: "안정과 질서가 필요한 시기입니다. 계획을 세우고 실행하세요.",
-                5: "전통적인 방법이나 조언을 구하는 것이 도움이 될 것입니다.",
-                6: "중요한 선택의 기로에 서 있습니다. 마음의 소리를 들으세요.",
-                7: "의지력으로 어려움을 극복할 수 있습니다. 포기하지 마세요.",
-                8: "내적 힘을 발휘할 때입니다. 용기와 인내가 필요합니다.",
-                9: "혼자만의 시간을 통해 답을 찾을 수 있습니다. 성찰이 필요합니다.",
-                10: "운명의 변화가 다가오고 있습니다. 기회를 놓치지 마세요.",
-                11: "공정하고 균형 잡힌 판단이 필요합니다. 진실을 직시하세요.",
-                12: "새로운 관점이 필요합니다. 기다림의 시간을 견디세요.",
-                13: "변화와 재생의 시기입니다. 과거를 놓아주세요.",
-                14: "조화와 균형을 찾아야 합니다. 극단을 피하세요.",
-                15: "유혹이나 속박에서 벗어나야 합니다. 자유를 찾으세요.",
-                16: "갑작스런 변화가 있을 수 있습니다. 준비를 갖추세요.",
-                17: "희망과 치유의 시기입니다. 꿈을 포기하지 마세요.",
-                18: "혼란스러운 상황입니다. 차분히 진실을 찾으세요.",
-                19: "성공과 기쁨이 가득한 시기입니다. 긍정적으로 생각하세요.",
-                20: "과거를 정리하고 새로운 시작을 준비하세요.",
-                21: "목표 달성이 가까워졌습니다. 끝까지 최선을 다하세요."
+        function extractQuestionKeywords(question) {
+            const keywords = {
+                love: ['연애', '사랑', '연인', '남친', '여친', '결혼', '이별', '썸', '짝사랑'],
+                career: ['직업', '일', '회사', '사업', '취업', '이직', '승진', '동료', '상사'],
+                money: ['돈', '재정', '투자', '사업', '경제', '수입', '지출', '부채'],
+                family: ['가족', '부모', '자식', '형제', '친척', '집안'],
+                health: ['건강', '병', '치료', '의료', '몸', '정신'],
+                study: ['공부', '시험', '학교', '대학', '성적', '학습'],
+                friendship: ['친구', '우정', '인간관계', '사회생활']
             };
             
-            let interpretation = interpretations[card.id] || "카드가 당신에게 특별한 메시지를 전하고 있습니다.";
-            
-            if (card.reversed) {
-                interpretation += " 다만 역방향으로 나타나 신중한 접근이 필요합니다.";
+            const foundKeywords = [];
+            for (const [category, words] of Object.entries(keywords)) {
+                if (words.some(word => question.includes(word))) {
+                    foundKeywords.push(category);
+                }
             }
             
-            return interpretation;
+            return foundKeywords.length > 0 ? foundKeywords : ['general'];
+        }
+        
+        function generateContextualInterpretation(card, question, keywords) {
+            const cardMeaning = card.reversed ? card.reversed : card.meaning;
+            
+            const contextualInterpretations = {
+                love: {
+                    '바보': card.reversed ? '연애에서 성급한 결정을 피하세요.' : '새로운 만남이나 관계의 시작을 의미합니다.',
+                    '마법사': card.reversed ? '상대방을 조종하려 하지 마세요.' : '적극적인 어프로치가 성공할 것입니다.',
+                    '여교황': card.reversed ? '감정을 숨기지 말고 솔직해지세요.' : '직감을 믿고 마음의 소리를 들어보세요.',
+                    '연인': card.reversed ? '관계에 갈등이 있을 수 있습니다.' : '진정한 사랑을 찾거나 관계가 발전할 것입니다.',
+                    '죽음': card.reversed ? '과거에 매달리지 말고 앞으로 나아가세요.' : '관계의 새로운 단계나 변화가 필요합니다.'
+                },
+                career: {
+                    '마법사': card.reversed ? '능력을 과시하기보다 겸손해지세요.' : '당신의 능력과 기술이 인정받을 것입니다.',
+                    '황제': card.reversed ? '독단적인 결정은 피하세요.' : '리더십을 발휘하여 목표를 달성할 것입니다.',
+                    '전차': card.reversed ? '계획을 재검토하고 방향을 수정하세요.' : '강한 의지로 어려움을 극복할 것입니다.',
+                    '운명의 바퀴': card.reversed ? '현재의 어려움은 일시적입니다.' : '좋은 기회가 찾아올 것입니다.',
+                    '세계': card.reversed ? '목표 달성을 위해 더 노력이 필요합니다.' : '큰 성취와 성공을 이룰 것입니다.'
+                }
+            };
+            
+            // 키워드에 맞는 해석이 있다면 사용
+            for (const keyword of keywords) {
+                if (contextualInterpretations[keyword] && contextualInterpretations[keyword][card.korean]) {
+                    return contextualInterpretations[keyword][card.korean];
+                }
+            }
+            
+            // 기본 해석에 질문 맥락 추가
+            const questionContext = keywords.includes('love') ? '연애와 관련하여' :
+                                  keywords.includes('career') ? '직업적인 측면에서' :
+                                  keywords.includes('money') ? '금전적인 면에서' : '현재 상황에서';
+            
+            return `${questionContext} ${cardMeaning.toLowerCase()}의 에너지가 강하게 나타납니다.`;
+        }
+        
+        function generateQuestionBasedOverall(question, cards, keywords) {
+            const mainTheme = keywords[0] || 'general';
+            const cardCount = cards.length;
+            
+            const overallMessages = {
+                love: `연애와 관련된 질문에 대해 ${cardCount}장의 카드가 답변하고 있습니다. 전반적으로 감정과 관계의 흐름에 주목해야 할 시기입니다.`,
+                career: `직업과 관련된 고민에 대해 카드들이 명확한 방향을 제시하고 있습니다. 당신의 능력과 노력이 결실을 맺을 것입니다.`,
+                money: `재정 상황에 대한 질문에 카드들이 신중한 접근을 권하고 있습니다. 현명한 판단이 필요한 시기입니다.`,
+                general: `당신의 질문에 대해 카드들이 다각도의 통찰을 제공하고 있습니다. 변화와 성장의 기회가 있습니다.`
+            };
+            
+            return overallMessages[mainTheme];
+        }
+        
+        function generateQuestionBasedAdvice(question, cards, keywords) {
+            const mainTheme = keywords[0] || 'general';
+            
+            const adviceMessages = {
+                love: '마음을 열고 솔직한 소통을 하세요. 서둘러 결론내지 말고 충분한 시간을 가지며 관계를 발전시키세요.',
+                career: '당신의 전문성을 키우고 새로운 기회에 적극적으로 도전하세요. 동료들과의 협력도 중요합니다.',
+                money: '충동적인 결정보다는 신중한 계획을 세우세요. 장기적인 관점에서 투자와 지출을 고려하세요.',
+                general: '직감을 믿되 현실적인 계획도 함께 세우세요. 균형잡힌 접근이 최선의 결과를 가져올 것입니다.'
+            };
+            
+            return adviceMessages[mainTheme];
+        }
+        
+        function generateQuestionBasedGuidance(question, cards, keywords) {
+            const mainTheme = keywords[0] || 'general';
+            
+            const guidanceMessages = {
+                love: '진정한 마음의 연결을 찾게 될 것입니다. 인내심을 가지고 기다리세요.',
+                career: '노력한 만큼의 성과를 얻을 것입니다. 지속적인 발전이 기대됩니다.',
+                money: '안정적인 재정 상태를 만들어갈 수 있을 것입니다. 현명한 선택이 도움이 됩니다.',
+                general: '내면의 성장과 함께 외적인 변화도 따라올 것입니다. 긍정적인 마음을 유지하세요.'
+            };
+            
+            return guidanceMessages[mainTheme];
         }
         
         function displayTarotResult(question, cards, spreadType, analysis) {
@@ -422,7 +485,7 @@
                     </div>
                     
                     <div class="ai-disclaimer">
-                        <small>※ 본 타로 리딩은 AI가 분석한 참고용 정보입니다. doha.kr 독자적인 해석을 제공합니다.</small>
+                        <small>※ 본 타로 리딩은 AI가 당신의 질문을 분석하여 제공하는 개인화된 해석입니다.</small>
                     </div>
                     
                     <div style="text-align: center; margin-top: 40px;">
@@ -495,7 +558,7 @@
             box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
         }
         
-        /* AI 분석 텍스트 스타일 (애니메이션 없음) */
+        /* AI 분석 텍스트 스타일 */
         .tarot-ai-analyzing {
             text-align: center;
             padding: 60px 20px;
