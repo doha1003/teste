@@ -392,116 +392,9 @@ function showResult() {
     });
     
     showScreen('result-screen');
-    
-    // 결과 카드 이미지 생성 (잠시 후 DOM이 업데이트된 후)
-    setTimeout(() => {
-        generateResultCardImage();
-    }, 100);
 }
 
-// 결과 카드를 캔버스로 그리기
-function generateResultCardImage() {
-    const canvas = document.createElement('canvas');
-    canvas.width = 1200;
-    canvas.height = 630;
-    const ctx = canvas.getContext('2d');
-    
-    // 배경 그라데이션
-    const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-    if (currentTypeData.type.includes('테토')) {
-        gradient.addColorStop(0, '#FFE0F0');
-        gradient.addColorStop(1, '#E0E0FF');
-    } else {
-        gradient.addColorStop(0, '#E0FFE0');
-        gradient.addColorStop(1, '#FFE0E0');
-    }
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
-    // 카드 배경
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
-    roundRect(ctx, 50, 50, canvas.width - 100, canvas.height - 100, 20, true, false);
-    
-    // 이모지
-    ctx.font = '120px Arial';
-    ctx.textAlign = 'center';
-    ctx.fillText(currentTypeData.emoji, canvas.width / 2, 180);
-    
-    // 타입
-    ctx.fillStyle = '#333';
-    ctx.font = 'bold 48px Noto Sans KR';
-    ctx.fillText(currentTypeData.type, canvas.width / 2, 250);
-    
-    // 타이틀
-    ctx.font = '36px Noto Sans KR';
-    ctx.fillStyle = '#666';
-    ctx.fillText(currentTypeData.title, canvas.width / 2, 300);
-    
-    // 서브타이틀
-    ctx.font = '24px Noto Sans KR';
-    ctx.fillStyle = '#888';
-    ctx.fillText(`"${currentTypeData.subtitle}"`, canvas.width / 2, 340);
-    
-    // 설명 (여러 줄로 나누기)
-    ctx.font = '20px Noto Sans KR';
-    ctx.fillStyle = '#555';
-    const words = currentTypeData.description.split(' ');
-    let line = '';
-    let y = 400;
-    const maxWidth = canvas.width - 200;
-    
-    for (let n = 0; n < words.length; n++) {
-        const testLine = line + words[n] + ' ';
-        const metrics = ctx.measureText(testLine);
-        const testWidth = metrics.width;
-        if (testWidth > maxWidth && n > 0) {
-            ctx.fillText(line, canvas.width / 2, y);
-            line = words[n] + ' ';
-            y += 28;
-        } else {
-            line = testLine;
-        }
-    }
-    ctx.fillText(line, canvas.width / 2, y);
-    
-    // doha.kr 워터마크
-    ctx.font = '18px Noto Sans KR';
-    ctx.fillStyle = '#aaa';
-    ctx.textAlign = 'right';
-    ctx.fillText('doha.kr - 테토-에겐 성격유형 테스트', canvas.width - 70, canvas.height - 70);
-    
-    // 이미지 데이터 URL 저장
-    window.resultCardImage = canvas.toDataURL('image/png');
-}
-
-// 둥근 사각형 그리기 함수
-function roundRect(ctx, x, y, width, height, radius, fill, stroke) {
-    if (typeof stroke === 'undefined') stroke = true;
-    if (typeof radius === 'undefined') radius = 5;
-    if (typeof radius === 'number') {
-        radius = {tl: radius, tr: radius, br: radius, bl: radius};
-    } else {
-        var defaultRadius = {tl: 0, tr: 0, br: 0, bl: 0};
-        for (var side in defaultRadius) {
-            radius[side] = radius[side] || defaultRadius[side];
-        }
-    }
-    ctx.beginPath();
-    ctx.moveTo(x + radius.tl, y);
-    ctx.lineTo(x + width - radius.tr, y);
-    ctx.quadraticCurveTo(x + width, y, x + width, y + radius.tr);
-    ctx.lineTo(x + width, y + height - radius.br);
-    ctx.quadraticCurveTo(x + width, y + height, x + width - radius.br, y + height);
-    ctx.lineTo(x + radius.bl, y + height);
-    ctx.quadraticCurveTo(x, y + height, x, y + height - radius.bl);
-    ctx.lineTo(x, y + radius.tl);
-    ctx.quadraticCurveTo(x, y, x + radius.tl, y);
-    ctx.closePath();
-    if (fill) ctx.fill();
-    if (stroke) ctx.stroke();
-}
-
-// 카카오톡 공유 (개선된 버전)
+// 카카오톡 공유 (간단하고 안정적인 버전)
 function shareToKakao() {
     if (typeof Kakao !== 'undefined' && currentTypeData) {
         // 상세한 설명 텍스트 생성
@@ -510,40 +403,19 @@ function shareToKakao() {
 ${currentTypeData.description}
 
 💪 강점: ${currentTypeData.strengths}
-📈 성장포인트: ${currentTypeData.growth}
 💑 최고의 궁합: ${currentTypeData.bestMatches.join(', ')}
-⭐ 같은 유형 연예인: ${currentTypeData.celebrities.slice(0, 3).join(', ')}
-
-나의 성격 유형 자세히 보기 👇`;
+⭐ 같은 유형 연예인: ${currentTypeData.celebrities.slice(0, 3).join(', ')}`;
         
-        // 카카오톡 공유 옵션
-        const shareOptions = {
+        Kakao.Share.sendDefault({
             objectType: 'feed',
             content: {
                 title: `🎯 나는 ${currentTypeData.type} - ${currentTypeData.title}!`,
                 description: detailedDescription,
-                imageUrl: window.resultCardImage || 'https://doha.kr/images/teto-egen-result.png',
+                imageUrl: 'https://doha.kr/images/og-default.png',
                 link: {
                     mobileWebUrl: window.location.href,
                     webUrl: window.location.href,
                 },
-            },
-            itemContent: {
-                profileText: 'doha.kr',
-                profileImageUrl: 'https://doha.kr/images/logo.svg',
-                titleImageUrl: window.resultCardImage || 'https://doha.kr/images/teto-egen-result.png',
-                titleImageText: currentTypeData.type,
-                titleImageCategory: `희귀도 ${currentTypeData.percentage}`,
-                items: [
-                    {
-                        item: '성격특징',
-                        itemOp: currentTypeData.traits.slice(0, 2).join(', ')
-                    },
-                    {
-                        item: '추천취미',
-                        itemOp: currentTypeData.hobbies.slice(0, 3).join(', ')
-                    }
-                ]
             },
             buttons: [
                 {
@@ -552,47 +424,12 @@ ${currentTypeData.description}
                         mobileWebUrl: 'https://doha.kr/tests/teto-egen/',
                         webUrl: 'https://doha.kr/tests/teto-egen/'
                     }
-                },
-                {
-                    title: '결과 자세히 보기',
-                    link: {
-                        mobileWebUrl: window.location.href,
-                        webUrl: window.location.href
-                    }
                 }
             ]
-        };
-        
-        // 이미지가 있으면 이미지 타입으로, 없으면 텍스트 타입으로
-        if (window.resultCardImage) {
-            Kakao.Share.uploadImage({
-                file: [dataURLtoBlob(window.resultCardImage)]
-            }).then(function(response) {
-                shareOptions.content.imageUrl = response.infos.original.url;
-                Kakao.Share.sendDefault(shareOptions);
-            }).catch(function(error) {
-                // 이미지 업로드 실패시 기본 공유
-                Kakao.Share.sendDefault(shareOptions);
-            });
-        } else {
-            Kakao.Share.sendDefault(shareOptions);
-        }
+        });
     } else {
         copyResultLink();
     }
-}
-
-// dataURL을 Blob으로 변환
-function dataURLtoBlob(dataURL) {
-    const arr = dataURL.split(',');
-    const mime = arr[0].match(/:(.*?);/)[1];
-    const bstr = atob(arr[1]);
-    let n = bstr.length;
-    const u8arr = new Uint8Array(n);
-    while (n--) {
-        u8arr[n] = bstr.charCodeAt(n);
-    }
-    return new Blob([u8arr], { type: mime });
 }
 
 // 링크 복사
@@ -619,7 +456,6 @@ function restartTest() {
     tetoScore = 0;
     egenScore = 0;
     currentTypeData = null;
-    window.resultCardImage = null;
     
     // 성별 선택 초기화
     document.querySelectorAll('.teto-gender-btn').forEach(btn => {
