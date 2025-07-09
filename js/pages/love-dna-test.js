@@ -387,22 +387,14 @@ function selectOption(index) {
     
     document.getElementById('next-btn').disabled = false;
     
-    // 마지막 질문이 아닐 때만 자동으로 다음 질문으로
-    if (currentQuestion < loveDNAQuestions.length - 1) {
-        setTimeout(() => {
-            nextQuestion();
-        }, 800);
-    }
+    // 자동으로 다음 질문으로 넘어가기 (0.8초 딜레이)
+    setTimeout(() => {
+        nextQuestion();
+    }, 800);
 }
 
 // 결과 계산 및 표시
 function showResult() {
-    // 모든 질문에 답했는지 확인
-    if (Object.keys(answers).length < loveDNAQuestions.length) {
-        alert('모든 질문에 답해주세요!');
-        return;
-    }
-    
     // 답변 분석
     loveDNAQuestions.forEach((question, qIndex) => {
         const answerIndex = answers[qIndex];
@@ -558,8 +550,7 @@ function getAxisDescription(axis, code) {
         D: {
             'F': '파이터형 (맞섬)',
             'A': '어보이더형 (회피)',
-            'M': '미디에이터형 (중재)',
-            'A': '애널라이저형 (분석)'
+            'M': '미디에이터형 (중재)'
         }
     };
     
