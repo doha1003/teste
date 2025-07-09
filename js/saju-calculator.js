@@ -1,5 +1,17 @@
 // 사주팔자 계산 전용 라이브러리
 // 만세력 기반 정확한 사주팔자 계산
+// SQL 데이터베이스 기반 정확한 일주 계산
+
+// 만세력 데이터 로드
+const manseryeokScript = document.createElement('script');
+manseryeokScript.src = '/js/manseryeok-data.js';
+document.head.appendChild(manseryeokScript);
+
+// 최적화된 만세력 데이터도 로드
+const lunarScript = document.createElement('script');
+lunarScript.src = '/js/lunar-calendar-optimized.js';
+lunarScript.type = 'module';
+document.head.appendChild(lunarScript);
 
 // 천간 (10개)
 const HEAVENLY_STEMS = ['갑', '을', '병', '정', '무', '기', '경', '신', '임', '계'];
@@ -25,7 +37,7 @@ const SEASONAL_DIVISIONS = {
     12: { start: 6, name: '소한' }  // 1월 6일경 소한
 };
 
-// 오행 정보
+// 오행 관계
 const FIVE_ELEMENTS = {
     '갑': '목', '을': '목',
     '병': '화', '정': '화',
@@ -34,14 +46,7 @@ const FIVE_ELEMENTS = {
     '임': '수', '계': '수'
 };
 
-// 십이지지 오행
-const BRANCH_ELEMENTS = {
-    '자': '수', '축': '토', '인': '목', '묘': '목',
-    '진': '토', '사': '화', '오': '화', '미': '토',
-    '신': '금', '유': '금', '술': '토', '해': '수'
-};
-
-// 십신 계산
+// 십신 정보
 const TEN_GODS = {
     '비견': '자신과 같은 오행',
     '겁재': '자신과 같은 오행(음양 다름)',
@@ -87,8 +92,23 @@ class SajuCalculator {
         };
     }
 
-    // 연주 계산
+    // 연주 계산 (정확한 만세력 데이터 사용)
     calculateYearPillar(year) {
+        // 만세력 데이터에서 직접 가져오기
+        if (typeof YEAR_PILLARS !== 'undefined' && YEAR_PILLARS[year]) {
+            const yearData = YEAR_PILLARS[year];
+            const stemIndex = HEAVENLY_STEMS.indexOf(yearData.stem);
+            const branchIndex = EARTHLY_BRANCHES.indexOf(yearData.branch);
+            
+            return {
+                stem: yearData.stem,
+                branch: yearData.branch,
+                stemIndex,
+                branchIndex
+            };
+        }
+        
+        // Fallback: 기존 계산 방식
         const yearDiff = year - this.baseYear;
         const stemIndex = (this.baseYearStem + yearDiff) % 10;
         const branchIndex = (this.baseYearBranch + yearDiff) % 12;
@@ -101,24 +121,55 @@ class SajuCalculator {
         };
     }
 
-    // 월주 계산
+    // 월주 계산 (정확한 절기 고려)
     calculateMonthPillar(year, month, day) {
         const yearPillar = this.calculateYearPillar(year);
+        const yearStem = yearPillar.stem;
         
         // 절기에 따른 월주 조정
-        const seasonal = SEASONAL_DIVISIONS[month];
         let adjustedMonth = month;
         
-        if (seasonal && day < seasonal.start) {
-            adjustedMonth = month - 1;
-            if (adjustedMonth <= 0) adjustedMonth = 12;
+        // 절기 확인 (실제 절기 데이터가 있으면 사용)
+        if (typeof SOLAR_TERMS_2025 !== 'undefined' && year === 2025) {
+            // 2025년 절기 데이터 사용
+            const targetDate = new Date(year, month - 1, day);
+            const terms = Object.entries(SOLAR_TERMS_2025);
+            
+            for (let i = 0; i < terms.length; i++) {
+                const [termName, termDate] = terms[i];
+                const nextTermDate = i < terms.length - 1 ? terms[i + 1][1] : new Date(2026, 0, 1);
+                
+                if (targetDate >= termDate && targetDate < nextTermDate) {
+                    // 절기에 따른 월 결정
+                    adjustedMonth = Math.floor(i / 2) + 1;
+                    if (adjustedMonth > 12) adjustedMonth = 1;
+                    break;
+                }
+            }
+        } else {
+            // 대략적인 절기 기준
+            const seasonalDiv = SEASONAL_DIVISIONS[month - 1] || SEASONAL_DIVISIONS[11];
+            if (day < seasonalDiv.start) {
+                adjustedMonth = month - 1;
+                if (adjustedMonth < 1) adjustedMonth = 12;
+            }
         }
-
-        // 월주 계산 공식
-        const monthStemBase = (yearPillar.stemIndex % 5) * 2;
-        const monthStemIndex = (monthStemBase + adjustedMonth - 1) % 10;
+        
+        // 월간 계산 (연간에 따라 결정)
+        const yearStemIndex = HEAVENLY_STEMS.indexOf(yearStem);
+        let monthStemIndex;
+        
+        if (yearStemIndex % 5 === 0) monthStemIndex = 2; // 갑,기년 - 병인월부터
+        else if (yearStemIndex % 5 === 1) monthStemIndex = 4; // 을,경년 - 무인월부터
+        else if (yearStemIndex % 5 === 2) monthStemIndex = 6; // 병,신년 - 경인월부터
+        else if (yearStemIndex % 5 === 3) monthStemIndex = 8; // 정,임년 - 임인월부터
+        else monthStemIndex = 0; // 무,계년 - 갑인월부터
+        
+        monthStemIndex = (monthStemIndex + adjustedMonth - 1) % 10;
+        
+        // 월지는 고정 (인월부터 시작)
         const monthBranchIndex = (adjustedMonth + 1) % 12;
-
+        
         return {
             stem: HEAVENLY_STEMS[monthStemIndex],
             branch: EARTHLY_BRANCHES[monthBranchIndex],
@@ -127,391 +178,206 @@ class SajuCalculator {
         };
     }
 
-    // 일주 계산 (가장 복잡한 부분)
+    // 일주 계산 (정확한 만세력 데이터 사용)
     calculateDayPillar(year, month, day) {
-        // 기준일(1900년 1월 1일)부터의 총 일수 계산
-        const baseDate = new Date(1900, 0, 1);
+        // 만세력 데이터에서 정확한 일주 계산
+        if (typeof calculateAccurateDayPillar === 'function') {
+            return calculateAccurateDayPillar(year, month, day);
+        }
+        
+        // 최적화된 만세력 데이터 사용
+        if (typeof window.calculateDayPillar === 'function') {
+            const result = window.calculateDayPillar(year, month, day);
+            if (result) {
+                const stemIndex = HEAVENLY_STEMS.indexOf(result.stem);
+                const branchIndex = EARTHLY_BRANCHES.indexOf(result.branch);
+                return {
+                    stem: result.stem,
+                    branch: result.branch,
+                    stemIndex,
+                    branchIndex
+                };
+            }
+        }
+        
+        // Fallback: 기준일 기반 계산
+        // 1991년 10월 3일 = 병오일 (丙午日) 확인된 기준
+        const referenceDate = new Date(1991, 9, 3); // 월은 0부터 시작
         const targetDate = new Date(year, month - 1, day);
-        const diffTime = targetDate.getTime() - baseDate.getTime();
-        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-
-        // 1900년 1월 1일은 경자일
-        const dayStemIndex = (6 + diffDays) % 10; // 경=6 기준
-        const dayBranchIndex = (0 + diffDays) % 12; // 자=0 기준
-
+        
+        // 날짜 차이 계산
+        const dayDiff = Math.floor((targetDate - referenceDate) / (1000 * 60 * 60 * 24));
+        
+        // 기준일의 간지 인덱스
+        const refStemIndex = 2;   // 병(丙)
+        const refBranchIndex = 6; // 오(午)
+        
+        // 새로운 간지 계산
+        const stemIndex = ((refStemIndex + dayDiff) % 10 + 10) % 10;
+        const branchIndex = ((refBranchIndex + dayDiff) % 12 + 12) % 12;
+        
         return {
-            stem: HEAVENLY_STEMS[dayStemIndex],
-            branch: EARTHLY_BRANCHES[dayBranchIndex],
-            stemIndex: dayStemIndex,
-            branchIndex: dayBranchIndex
+            stem: HEAVENLY_STEMS[stemIndex],
+            branch: EARTHLY_BRANCHES[branchIndex],
+            stemIndex,
+            branchIndex
         };
     }
 
     // 시주 계산
     calculateHourPillar(dayPillar, hour) {
-        // 시간을 지지로 변환
-        const hourBranch = Math.floor(hour / 2) % 12;
+        const dayStem = dayPillar.stem;
+        const dayStemIndex = HEAVENLY_STEMS.indexOf(dayStem);
         
-        // 시주 천간 계산 (일주에 따라 결정)
-        const hourStemBase = (dayPillar.stemIndex % 5) * 2;
-        const hourStemIndex = (hourStemBase + hourBranch) % 10;
-
+        // 시간별 지지 (0시부터 2시간 단위)
+        const hourBranchIndex = Math.floor((hour + 1) % 24 / 2);
+        
+        // 일간에 따른 시간 계산
+        let hourStemIndex;
+        if (dayStemIndex % 5 === 0) hourStemIndex = 0; // 갑,기일
+        else if (dayStemIndex % 5 === 1) hourStemIndex = 2; // 을,경일
+        else if (dayStemIndex % 5 === 2) hourStemIndex = 4; // 병,신일
+        else if (dayStemIndex % 5 === 3) hourStemIndex = 6; // 정,임일
+        else hourStemIndex = 8; // 무,계일
+        
+        hourStemIndex = (hourStemIndex + hourBranchIndex) % 10;
+        
         return {
             stem: HEAVENLY_STEMS[hourStemIndex],
-            branch: EARTHLY_BRANCHES[hourBranch],
+            branch: EARTHLY_BRANCHES[hourBranchIndex],
             stemIndex: hourStemIndex,
-            branchIndex: hourBranch
+            branchIndex: hourBranchIndex
         };
     }
 
     // 십신 계산
-    calculateTenGods(dayMaster, otherStem) {
-        const dayElement = FIVE_ELEMENTS[dayMaster.stem];
-        const otherElement = FIVE_ELEMENTS[otherStem];
+    calculateTenGod(myStem, targetStem) {
+        const myElement = FIVE_ELEMENTS[myStem];
+        const targetElement = FIVE_ELEMENTS[targetStem];
+        const myStemIndex = HEAVENLY_STEMS.indexOf(myStem);
+        const targetStemIndex = HEAVENLY_STEMS.indexOf(targetStem);
+        const isMyYang = myStemIndex % 2 === 0;
+        const isTargetYang = targetStemIndex % 2 === 0;
         
-        const dayYinYang = dayMaster.stemIndex % 2; // 0=양, 1=음
-        const otherYinYang = HEAVENLY_STEMS.indexOf(otherStem) % 2;
-
-        // 오행 관계 계산
-        const elementRelation = this.getElementRelation(dayElement, otherElement);
-        const isSameYinYang = dayYinYang === otherYinYang;
-
-        return this.getTenGodName(elementRelation, isSameYinYang);
-    }
-
-    // 오행 관계 계산
-    getElementRelation(dayElement, otherElement) {
-        const generateCycle = { '목': '화', '화': '토', '토': '금', '금': '수', '수': '목' };
-        const destructCycle = { '목': '토', '토': '수', '수': '화', '화': '금', '금': '목' };
-
-        if (dayElement === otherElement) return 'same';
-        if (generateCycle[dayElement] === otherElement) return 'generate';
-        if (generateCycle[otherElement] === dayElement) return 'generated';
-        if (destructCycle[dayElement] === otherElement) return 'destroy';
-        if (destructCycle[otherElement] === dayElement) return 'destroyed';
+        if (myElement === targetElement) {
+            if (myStem === targetStem) return '비견';
+            return isMyYang === isTargetYang ? '비견' : '겁재';
+        }
         
-        return 'neutral';
-    }
-
-    // 십신명 결정
-    getTenGodName(relation, isSameYinYang) {
-        switch (relation) {
-            case 'same':
-                return isSameYinYang ? '비견' : '겁재';
-            case 'generate':
-                return isSameYinYang ? '식신' : '상관';
-            case 'destroy':
-                return isSameYinYang ? '편재' : '정재';
-            case 'destroyed':
-                return isSameYinYang ? '편관' : '정관';
-            case 'generated':
-                return isSameYinYang ? '편인' : '정인';
-            default:
-                return '기타';
-        }
-    }
-
-    // 사주팔자 완전 계산
-    calculateSaju(birthYear, birthMonth, birthDay, birthHour = 12, isLunar = false) {
-        let year = birthYear;
-        let month = birthMonth;
-        let day = birthDay;
-
-        // 음력이면 양력으로 변환
-        if (isLunar) {
-            const solar = this.lunarToSolar(year, month, day);
-            year = solar.year;
-            month = solar.month;
-            day = solar.day;
-        }
-
-        // 사주팔자 계산
-        const yearPillar = this.calculateYearPillar(year);
-        const monthPillar = this.calculateMonthPillar(year, month, day);
-        const dayPillar = this.calculateDayPillar(year, month, day);
-        const hourPillar = this.calculateHourPillar(dayPillar, birthHour);
-
-        // 십신 계산
-        const tenGods = {
-            year: this.calculateTenGods(dayPillar, yearPillar.stem),
-            month: this.calculateTenGods(dayPillar, monthPillar.stem),
-            day: '일주(본인)',
-            hour: this.calculateTenGods(dayPillar, hourPillar.stem)
+        // 오행 관계에 따른 십신 판단
+        const relations = {
+            '목': { generate: '화', control: '토', generated: '수', controlled: '금' },
+            '화': { generate: '토', control: '금', generated: '목', controlled: '수' },
+            '토': { generate: '금', control: '수', generated: '화', controlled: '목' },
+            '금': { generate: '수', control: '목', generated: '토', controlled: '화' },
+            '수': { generate: '목', control: '화', generated: '금', controlled: '토' }
         };
+        
+        if (relations[myElement].generate === targetElement) {
+            return isMyYang === isTargetYang ? '식신' : '상관';
+        }
+        if (relations[myElement].control === targetElement) {
+            return isMyYang === isTargetYang ? '편재' : '정재';
+        }
+        if (relations[myElement].controlled === targetElement) {
+            return isMyYang === isTargetYang ? '편관' : '정관';
+        }
+        if (relations[myElement].generated === targetElement) {
+            return isMyYang === isTargetYang ? '편인' : '정인';
+        }
+        
+        return '비견';
+    }
 
-        // 오행 분석
-        const elements = this.analyzeElements([
-            yearPillar.stem, monthPillar.stem, dayPillar.stem, hourPillar.stem
-        ]);
-
+    // 오행 분석
+    analyzeElements(saju) {
+        const elements = {
+            '목': 0, '화': 0, '토': 0, '금': 0, '수': 0
+        };
+        
+        // 천간 오행
+        elements[FIVE_ELEMENTS[saju.yearPillar.stem]]++;
+        elements[FIVE_ELEMENTS[saju.monthPillar.stem]]++;
+        elements[FIVE_ELEMENTS[saju.dayPillar.stem]]++;
+        elements[FIVE_ELEMENTS[saju.hourPillar.stem]]++;
+        
+        // 지지 오행 (복잡한 계산 - 단순화)
+        const branchElements = {
+            '자': ['수'], '축': ['토', '금', '수'], '인': ['목', '화', '토'],
+            '묘': ['목'], '진': ['토', '목', '수'], '사': ['화', '토', '금'],
+            '오': ['화', '토'], '미': ['토', '목', '화'], '신': ['금', '수', '토'],
+            '유': ['금'], '술': ['토', '금', '화'], '해': ['수', '목']
+        };
+        
+        [saju.yearPillar.branch, saju.monthPillar.branch, saju.dayPillar.branch, saju.hourPillar.branch]
+            .forEach(branch => {
+                branchElements[branch].forEach(element => {
+                    elements[element] += 0.5;
+                });
+            });
+        
+        // 가장 많은/적은 오행 찾기
+        let maxElement = '목';
+        let minElement = '목';
+        let maxCount = elements['목'];
+        let minCount = elements['목'];
+        
+        Object.entries(elements).forEach(([element, count]) => {
+            if (count > maxCount) {
+                maxCount = count;
+                maxElement = element;
+            }
+            if (count < minCount) {
+                minCount = count;
+                minElement = element;
+            }
+        });
+        
         return {
+            elements,
+            strongest: maxElement,
+            weakest: minElement,
+            balance: maxCount - minCount < 3 ? '균형' : '불균형'
+        };
+    }
+
+    // 전체 사주 계산
+    calculateSaju(year, month, day, hour, isLunar = false) {
+        let solarDate = { year, month, day };
+        
+        if (isLunar) {
+            // 음력을 양력으로 변환 필요
+            console.log('음력 변환은 아직 구현되지 않았습니다.');
+        }
+        
+        const yearPillar = this.calculateYearPillar(solarDate.year);
+        const monthPillar = this.calculateMonthPillar(solarDate.year, solarDate.month, solarDate.day);
+        const dayPillar = this.calculateDayPillar(solarDate.year, solarDate.month, solarDate.day);
+        const hourPillar = this.calculateHourPillar(dayPillar, hour);
+        
+        // 일주를 기준으로 십신 계산
+        const dayMaster = dayPillar.stem;
+        const tenGods = {
+            year: this.calculateTenGod(dayMaster, yearPillar.stem),
+            month: this.calculateTenGod(dayMaster, monthPillar.stem),
+            hour: this.calculateTenGod(dayMaster, hourPillar.stem)
+        };
+        
+        const saju = {
             yearPillar,
             monthPillar,
             dayPillar,
             hourPillar,
             tenGods,
-            elements,
-            dayMaster: dayPillar.stem,
-            dayMasterElement: FIVE_ELEMENTS[dayPillar.stem],
-            birthInfo: {
-                year, month, day, hour: birthHour,
-                isLunar
-            }
+            dayMaster
         };
-    }
-
-    // 음력을 양력으로 변환 (간단한 근사치)
-    lunarToSolar(year, month, day) {
-        // 실제로는 정확한 음력-양력 변환 테이블 필요
-        const lunarOffset = Math.floor((year - 1900) * 0.03) + Math.floor(month * 0.9) + 20;
-        let solarDay = day + lunarOffset;
-        let solarMonth = month;
-        let solarYear = year;
-
-        // 간단한 월별 일수 조정
-        const daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-        if (year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0)) {
-            daysInMonth[1] = 29; // 윤년
-        }
-
-        if (solarDay > daysInMonth[solarMonth - 1]) {
-            solarDay -= daysInMonth[solarMonth - 1];
-            solarMonth++;
-            if (solarMonth > 12) {
-                solarMonth = 1;
-                solarYear++;
-            }
-        }
-
-        return {
-            year: solarYear,
-            month: solarMonth,
-            day: solarDay
-        };
-    }
-
-    // 오행 분석
-    analyzeElements(stems) {
-        const elementCount = { '목': 0, '화': 0, '토': 0, '금': 0, '수': 0 };
         
-        stems.forEach(stem => {
-            const element = FIVE_ELEMENTS[stem];
-            elementCount[element]++;
-        });
-
-        // 가장 많은/적은 오행 찾기
-        const sortedElements = Object.entries(elementCount)
-            .sort((a, b) => b[1] - a[1]);
-
-        return {
-            counts: elementCount,
-            strongest: sortedElements[0][0],
-            weakest: sortedElements[sortedElements.length - 1][0],
-            balance: this.calculateBalance(elementCount)
-        };
-    }
-
-    // 오행 균형 계산
-    calculateBalance(elementCount) {
-        const total = Object.values(elementCount).reduce((sum, count) => sum + count, 0);
-        const average = total / 5;
-        const variance = Object.values(elementCount)
-            .reduce((sum, count) => sum + Math.pow(count - average, 2), 0) / 5;
+        // 오행 분석 추가
+        saju.elements = this.analyzeElements(saju);
         
-        return {
-            variance: Math.round(variance * 100) / 100,
-            balance: variance < 0.5 ? '균형' : variance < 1.5 ? '보통' : '불균형'
-        };
-    }
-
-    // 사주 해석 생성
-    generateInterpretation(saju) {
-        const interpretation = {
-            dayMaster: this.interpretDayMaster(saju.dayMaster),
-            personality: this.interpretPersonality(saju),
-            fortune: this.interpretFortune(saju),
-            career: this.interpretCareer(saju),
-            health: this.interpretHealth(saju),
-            relationship: this.interpretRelationship(saju)
-        };
-
-        return interpretation;
-    }
-
-    // 일주 해석
-    interpretDayMaster(dayMaster) {
-        const interpretations = {
-            '갑': '큰 나무처럼 곧고 굳건한 성격. 리더십이 강하고 정의감이 뛰어남.',
-            '을': '꽃과 같이 섬세하고 아름다운 성격. 예술적 재능과 배려심이 풍부.',
-            '병': '태양과 같이 밝고 활발한 성격. 열정적이고 사교적임.',
-            '정': '촛불과 같이 따뜻하고 온화한 성격. 봉사정신과 인내심이 강함.',
-            '무': '높은 산과 같이 안정적이고 신뢰할 수 있는 성격. 책임감이 강함.',
-            '기': '기름진 땅과 같이 포용력이 큰 성격. 현실적이고 실용적임.',
-            '경': '쇠와 같이 강하고 예리한 성격. 의지가 강하고 결단력이 있음.',
-            '신': '보석과 같이 세련되고 품격 있는 성격. 완벽주의 성향이 강함.',
-            '임': '바다와 같이 포용력이 크고 유연한 성격. 지혜롭고 통찰력이 뛰어남.',
-            '계': '이슬과 같이 순수하고 깨끗한 성격. 섬세하고 직관력이 뛰어남.'
-        };
-
-        return interpretations[dayMaster] || '특별한 기운을 가진 분입니다.';
-    }
-
-    // 성격 해석
-    interpretPersonality(saju) {
-        const dayElement = FIVE_ELEMENTS[saju.dayMaster];
-        const strongElement = saju.elements.strongest;
-        
-        let personality = '';
-        
-        if (dayElement === strongElement) {
-            personality = '자신의 본성이 강하게 드러나는 타입입니다. ';
-        } else {
-            personality = `${strongElement} 기운의 영향을 많이 받는 타입입니다. `;
-        }
-
-        // 십신 분석 추가
-        const tenGodCounts = Object.values(saju.tenGods).reduce((acc, god) => {
-            acc[god] = (acc[god] || 0) + 1;
-            return acc;
-        }, {});
-
-        const dominantGod = Object.entries(tenGodCounts)
-            .sort((a, b) => b[1] - a[1])[0][0];
-
-        personality += this.getTenGodPersonality(dominantGod);
-
-        return personality;
-    }
-
-    // 십신별 성격 해석
-    getTenGodPersonality(tenGod) {
-        const personalities = {
-            '비견': '독립적이고 자주적인 성격입니다.',
-            '겁재': '협력적이고 사교적인 성격입니다.',
-            '식신': '창의적이고 예술적인 성격입니다.',
-            '상관': '표현력이 뛰어나고 개성이 강합니다.',
-            '편재': '활동적이고 적극적인 성격입니다.',
-            '정재': '신중하고 안정을 추구하는 성격입니다.',
-            '편관': '도전적이고 역동적인 성격입니다.',
-            '정관': '책임감이 강하고 질서를 중시합니다.',
-            '편인': '직관적이고 신비로운 면이 있습니다.',
-            '정인': '학구적이고 지적인 성격입니다.'
-        };
-
-        return personalities[tenGod] || '균형잡힌 성격을 가지고 있습니다.';
-    }
-
-    // 운세 해석
-    interpretFortune(saju) {
-        const balance = saju.elements.balance.balance;
-        const dayElement = FIVE_ELEMENTS[saju.dayMaster];
-        
-        let fortune = '';
-        
-        if (balance === '균형') {
-            fortune = '오행이 균형잡혀 있어 안정된 운세를 보입니다. ';
-        } else if (balance === '불균형') {
-            fortune = '오행의 편차가 있어 기복이 있는 운세입니다. ';
-        }
-
-        // 계절별 운세 (간단한 예시)
-        const currentMonth = new Date().getMonth() + 1;
-        const seasonFortune = this.getSeasonFortune(dayElement, currentMonth);
-        
-        return fortune + seasonFortune;
-    }
-
-    // 계절별 운세
-    getSeasonFortune(dayElement, month) {
-        const seasons = {
-            '봄': [3, 4, 5],
-            '여름': [6, 7, 8],
-            '가을': [9, 10, 11],
-            '겨울': [12, 1, 2]
-        };
-
-        let currentSeason = '';
-        for (const [season, months] of Object.entries(seasons)) {
-            if (months.includes(month)) {
-                currentSeason = season;
-                break;
-            }
-        }
-
-        const seasonElements = {
-            '봄': '목',
-            '여름': '화',
-            '가을': '금',
-            '겨울': '수'
-        };
-
-        const seasonElement = seasonElements[currentSeason];
-        
-        if (dayElement === seasonElement) {
-            return `현재 ${currentSeason}철은 당신의 본래 기운과 잘 맞아 좋은 운세입니다.`;
-        } else {
-            const relation = this.getElementRelation(dayElement, seasonElement);
-            if (relation === 'generate') {
-                return `현재 ${currentSeason}철은 당신의 기운을 북돋아주는 시기입니다.`;
-            } else if (relation === 'destroy') {
-                return `현재 ${currentSeason}철은 조금 신중하게 행동하는 것이 좋겠습니다.`;
-            }
-        }
-        
-        return `현재 ${currentSeason}철은 평온한 운세를 보입니다.`;
-    }
-
-    // 직업 해석
-    interpretCareer(saju) {
-        const dayElement = FIVE_ELEMENTS[saju.dayMaster];
-        const strongElement = saju.elements.strongest;
-        
-        const careerByElement = {
-            '목': '교육, 출판, 환경, 농업, 섬유 관련 분야',
-            '화': '요식업, 전기, 에너지, 엔터테인먼트, 광고 분야',
-            '토': '부동산, 건설, 농업, 세라믹, 보험 분야',
-            '금': '금융, 기계, 자동차, 의료, 법률 분야',
-            '수': '운송, 물류, 화학, 통신, 수산업 분야'
-        };
-
-        return `${careerByElement[dayElement]} 또는 ${careerByElement[strongElement]}에 적성이 있습니다.`;
-    }
-
-    // 건강 해석
-    interpretHealth(saju) {
-        const dayElement = FIVE_ELEMENTS[saju.dayMaster];
-        const weakElement = saju.elements.weakest;
-        
-        const healthByElement = {
-            '목': '간, 담낭, 근육, 신경계',
-            '화': '심장, 소장, 혈관, 정신',
-            '토': '위, 비장, 소화기, 근육',
-            '금': '폐, 대장, 호흡기, 피부',
-            '수': '신장, 방광, 생식기, 골수'
-        };
-
-        return `${healthByElement[dayElement]} 건강에 특히 신경쓰시고, ${healthByElement[weakElement]} 부분을 보강하시면 좋겠습니다.`;
-    }
-
-    // 인간관계 해석
-    interpretRelationship(saju) {
-        const tenGods = Object.values(saju.tenGods);
-        const hasJeongja = tenGods.includes('정재');
-        const hasGeopjae = tenGods.includes('겁재');
-        
-        let relationship = '';
-        
-        if (hasJeongja) {
-            relationship += '배우자와의 인연이 깊고 안정적인 관계를 유지할 수 있습니다. ';
-        }
-        
-        if (hasGeopjae) {
-            relationship += '친구들과의 우정이 돈독하고 협력적인 관계를 잘 만들어갑니다. ';
-        }
-        
-        return relationship || '균형잡힌 인간관계를 유지하시는 분입니다.';
+        return saju;
     }
 }
 
-// 전역 인스턴스 생성
+// 전역 사용을 위한 인스턴스 생성
 const sajuCalculator = new SajuCalculator();
