@@ -25,6 +25,9 @@
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
     
+    <!-- Kakao SDK -->
+    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.4.0/kakao.min.js" integrity="sha384-mXVrIX2T/Kszp6Z0aEWaA8Nm7J6/ZeWXbL8UpGRjKwWe56Srd/iyNmWMBhcItAjH" crossorigin="anonymous"></script>
+    
     <!-- 향상된 만세력 시스템 로드 -->
     <script src="/js/lunar-calendar-compact.js"></script>
     <script src="/js/lunar-calendar-loader.js"></script>
@@ -139,6 +142,12 @@
     <script>
         // 향상된 사주 계산기 인스턴스 생성
         let sajuCalculator = null;
+        let currentFortuneData = null;
+        
+        // 카카오 SDK 초기화
+        if (window.Kakao && !window.Kakao.isInitialized()) {
+            Kakao.init('19d8ba832f94d513957adc17883c1282');
+        }
         
         // 페이지 로드 시 초기화
         document.addEventListener('DOMContentLoaded', function() {
@@ -213,6 +222,17 @@
                 // 일주 관계 분석
                 const relation = analyzeRelation(saju.dayPillar, todayPillar);
                 const fortune = generateDetailedFortune(saju, todayPillar, relation);
+                
+                // 결과 데이터 저장 (공유용)
+                currentFortuneData = {
+                    userName,
+                    birthYear,
+                    birthMonth,
+                    birthDay,
+                    saju,
+                    fortune,
+                    today
+                };
                 
                 const resultDiv = document.getElementById('fortuneResult');
                 resultDiv.innerHTML = `
@@ -756,21 +776,51 @@
             return '#ef4444';
         }
         
-        // 공유 기능
+        // 카카오톡 공유 기능 (수정됨)
         function shareFortune() {
-            const text = '나의 오늘 운세를 확인해보세요!';
-            const url = window.location.href;
-            
-            if (navigator.share) {
-                navigator.share({
-                    title: '오늘의 운세',
-                    text: text,
-                    url: url
+            if (typeof Kakao !== 'undefined' && currentFortuneData) {
+                const { userName, saju, fortune, today } = currentFortuneData;
+                const dayMaster = saju.dayPillar.stem + saju.dayPillar.branch;
+                
+                const detailedDescription = `🔮 ${userName}님의 ${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일 운세
+
+💫 총운: ${fortune.overallScore}점 | ❤️ 애정운: ${fortune.loveScore}점
+💰 금전운: ${fortune.moneyScore}점 | 🏃 건강운: ${fortune.healthScore}점
+
+⭐ 사주: ${dayMaster}일주
+🌟 ${fortune.overallFortune}
+
+🍀 행운 요소
+⏰ 시간: ${fortune.luckyTime}
+🧭 방향: ${fortune.luckyDirection}
+🎨 색상: ${fortune.luckyColor}
+🔢 숫자: ${fortune.luckyNumber}
+
+만세력 기반 정확한 사주 운세 확인하기 👇`;
+                
+                Kakao.Share.sendDefault({
+                    objectType: 'feed',
+                    content: {
+                        title: `🔮 ${userName}님의 오늘 운세 - ${dayMaster}일주`,
+                        description: detailedDescription,
+                        imageUrl: 'https://doha.kr/images/og-default.png',
+                        link: {
+                            mobileWebUrl: window.location.href,
+                            webUrl: window.location.href,
+                        },
+                    },
+                    buttons: [
+                        {
+                            title: '나도 운세 보기',
+                            link: {
+                                mobileWebUrl: 'https://doha.kr/fortune/daily/',
+                                webUrl: 'https://doha.kr/fortune/daily/'
+                            }
+                        }
+                    ]
                 });
             } else {
-                navigator.clipboard.writeText(url).then(() => {
-                    alert('링크가 복사되었습니다!');
-                });
+                copyResultLink();
             }
         }
         
@@ -786,14 +836,6 @@
             } else {
                 alert('링크 복사에 실패했습니다.');
             }
-        }
-    </script>
-    
-    <!-- Kakao SDK -->
-    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.4.0/kakao.min.js" integrity="sha384-mXVrIX2T/Kszp6Z0aEWaA8Nm7J6/ZeWXbL8UpGRjKwWe56Srd/iyNmWMBhcItAjH" crossorigin="anonymous"></script>
-    <script>
-        if (window.Kakao && !window.Kakao.isInitialized()) {
-            Kakao.init('19d8ba832f94d513957adc17883c1282');
         }
     </script>
     
