@@ -23,10 +23,10 @@
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
     
-    <!-- 만세력 데이터 먼저 로드 -->
-    <script src="/js/manseryeok-data.js"></script>
-    <script src="/js/lunar-calendar-optimized.js"></script>
-    <script src="/js/saju-calculator.js"></script>
+    <!-- 향상된 만세력 시스템 로드 -->
+    <script src="/js/lunar-calendar-compact.js"></script>
+    <script src="/js/lunar-calendar-loader.js"></script>
+    <script src="/js/saju-calculator-enhanced.js"></script>
     
     <style>
         /* 페이지 헤더 */
@@ -133,7 +133,7 @@
             box-shadow: 0 10px 30px rgba(139, 92, 246, 0.3);
         }
         
-        /* 로딩 스피너 - 텍스트 회전 방지 */
+        /* 로딩 스피너 */
         .loading {
             text-align: center;
             padding: 40px;
@@ -158,7 +158,6 @@
             margin-top: 20px;
             color: #6b7280;
             font-size: 1.0625rem;
-            /* 애니메이션 없음 - 텍스트는 회전하지 않음 */
         }
         
         /* 운세 결과 */
@@ -513,7 +512,7 @@
         <div class="container">
             <h1 class="page-title fade-in">✨ 오늘의 운세</h1>
             <p class="page-subtitle fade-in stagger-1">
-                사주팔자 기반 정확한 일일 운세 분석
+                정확한 만세력 기반 사주팔자 일일 운세 분석
             </p>
         </div>
     </section>
@@ -588,7 +587,7 @@
                         <label for="isLunar">음력 생일입니다</label>
                     </div>
                     
-                    <button type="submit" class="btn-submit">오늘의 운세 보기</button>
+                    <button type="submit" class="btn-submit">✨ 정확한 만세력 운세 보기</button>
                 </form>
             </div>
             
@@ -617,8 +616,19 @@
     <script src="/js/main.js"></script>
     
     <script>
+        // 향상된 사주 계산기 인스턴스 생성
+        let sajuCalculator = null;
+        
         // 페이지 로드 시 초기화
         document.addEventListener('DOMContentLoaded', function() {
+            // 향상된 사주 계산기 초기화
+            if (typeof SajuCalculatorEnhanced !== 'undefined') {
+                sajuCalculator = new SajuCalculatorEnhanced();
+                console.log('향상된 사주 계산기 로드 완료');
+            } else {
+                console.log('향상된 사주 계산기 로드 실패, 기본 계산기 사용');
+            }
+            
             // 연도 옵션 추가
             const yearSelect = document.getElementById('birthYear');
             const currentYear = new Date().getFullYear();
@@ -670,230 +680,255 @@
             resultDiv.innerHTML = `
                 <div class="loading">
                     <div class="loading-spinner"></div>
-                    <p>만세력으로 ${userName}님의 사주를 분석하고 있습니다...</p>
+                    <p>🔮 정확한 만세력으로 ${userName}님의 사주를 분석하고 있습니다...</p>
                 </div>
             `;
             
             // 폼 숨기기
             document.getElementById('fortuneForm').style.display = 'none';
             
-            // 운세 생성
+            // 운세 생성 (향상된 계산기 사용)
             setTimeout(() => {
                 displayDailyFortune(userName, birthYear, birthMonth, birthDay, birthTime, isLunar);
             }, 2000);
         }
         
         // 일일 운세 표시 함수
-        function displayDailyFortune(userName, birthYear, birthMonth, birthDay, birthTime, isLunar) {
-            // 사주 계산 객체가 전역에 있는지 확인
-            if (typeof SajuCalculator === 'undefined') {
-                console.error('SajuCalculator가 로드되지 않았습니다.');
-                alert('페이지 로딩 중 오류가 발생했습니다. 새로고침 후 다시 시도해주세요.');
-                location.reload();
-                return;
+        async function displayDailyFortune(userName, birthYear, birthMonth, birthDay, birthTime, isLunar) {
+            try {
+                // 향상된 사주 계산기 사용
+                if (!sajuCalculator) {
+                    throw new Error('사주 계산기가 초기화되지 않았습니다.');
+                }
+                
+                // 사주 계산 (향상된 만세력 데이터 사용)
+                const saju = await sajuCalculator.calculateSaju(
+                    birthYear, 
+                    birthMonth, 
+                    birthDay, 
+                    birthTime >= 0 ? birthTime : 12, 
+                    isLunar
+                );
+                
+                // 오늘 날짜
+                const today = new Date();
+                const todayPillar = sajuCalculator.calculateDayPillar(
+                    today.getFullYear(), 
+                    today.getMonth() + 1, 
+                    today.getDate()
+                );
+                
+                // 사주 해석 생성
+                const interpretation = sajuCalculator.generateInterpretation(saju);
+                
+                // 일주 관계 분석
+                const relation = analyzeRelation(saju.dayPillar, todayPillar);
+                const fortune = generateDetailedFortune(saju, todayPillar, relation);
+                
+                const resultDiv = document.getElementById('fortuneResult');
+                resultDiv.innerHTML = `
+                    <div class="fortune-result-container">
+                        <h2 style="text-align: center; margin-bottom: 30px;">
+                            🔮 ${userName}님의 ${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일 운세
+                        </h2>
+                        
+                        <div class="saju-brief">
+                            <h3>📅 사주팔자 (四柱八字)</h3>
+                            <div class="pillars-row">
+                                <div class="pillar-item">
+                                    <div class="pillar-label">연주 (年柱)</div>
+                                    <div class="pillar-chars">
+                                        <span class="stem">${saju.yearPillar.stem}</span>
+                                        <span class="branch">${saju.yearPillar.branch}</span>
+                                    </div>
+                                    <div class="pillar-ten-god">${saju.tenGods.year}</div>
+                                </div>
+                                
+                                <div class="pillar-item">
+                                    <div class="pillar-label">월주 (月柱)</div>
+                                    <div class="pillar-chars">
+                                        <span class="stem">${saju.monthPillar.stem}</span>
+                                        <span class="branch">${saju.monthPillar.branch}</span>
+                                    </div>
+                                    <div class="pillar-ten-god">${saju.tenGods.month}</div>
+                                </div>
+                                
+                                <div class="pillar-item highlight">
+                                    <div class="pillar-label">일주 (日柱) ⭐</div>
+                                    <div class="pillar-chars">
+                                        <span class="stem">${saju.dayPillar.stem}</span>
+                                        <span class="branch">${saju.dayPillar.branch}</span>
+                                    </div>
+                                    <div class="pillar-ten-god">일주(본인)</div>
+                                </div>
+                                
+                                <div class="pillar-item ${birthTime < 0 ? 'unknown' : ''}">
+                                    <div class="pillar-label">시주 (時柱)</div>
+                                    <div class="pillar-chars">
+                                        <span class="stem">${birthTime >= 0 ? saju.hourPillar.stem : '?'}</span>
+                                        <span class="branch">${birthTime >= 0 ? saju.hourPillar.branch : '?'}</span>
+                                    </div>
+                                    <div class="pillar-ten-god">${birthTime >= 0 ? saju.tenGods.hour : '미상'}</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="today-pillar">
+                            <h3>🌅 오늘의 일진</h3>
+                            <div class="today-info">
+                                <span class="today-stem">${todayPillar.stem}</span>
+                                <span class="today-branch">${todayPillar.branch}</span>
+                                <span class="today-day">일 (${todayPillar.stem}${todayPillar.branch}日)</span>
+                            </div>
+                        </div>
+                        
+                        <div class="fortune-scores">
+                            <div class="score-card">
+                                <div class="score-icon">💫</div>
+                                <div class="score-label">총운</div>
+                                <div class="score-value" style="color: ${getScoreColor(fortune.overallScore)}">${fortune.overallScore}</div>
+                                <div class="score-bar">
+                                    <div class="score-fill" style="width: ${fortune.overallScore}%; background: ${getScoreColor(fortune.overallScore)}"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="score-card">
+                                <div class="score-icon">❤️</div>
+                                <div class="score-label">애정운</div>
+                                <div class="score-value" style="color: ${getScoreColor(fortune.loveScore)}">${fortune.loveScore}</div>
+                                <div class="score-bar">
+                                    <div class="score-fill" style="width: ${fortune.loveScore}%; background: ${getScoreColor(fortune.loveScore)}"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="score-card">
+                                <div class="score-icon">💰</div>
+                                <div class="score-label">금전운</div>
+                                <div class="score-value" style="color: ${getScoreColor(fortune.moneyScore)}">${fortune.moneyScore}</div>
+                                <div class="score-bar">
+                                    <div class="score-fill" style="width: ${fortune.moneyScore}%; background: ${getScoreColor(fortune.moneyScore)}"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="score-card">
+                                <div class="score-icon">🏃</div>
+                                <div class="score-label">건강운</div>
+                                <div class="score-value" style="color: ${getScoreColor(fortune.healthScore)}">${fortune.healthScore}</div>
+                                <div class="score-bar">
+                                    <div class="score-fill" style="width: ${fortune.healthScore}%; background: ${getScoreColor(fortune.healthScore)}"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="fortune-details">
+                            <div class="fortune-category">
+                                <h4>💫 총운</h4>
+                                <p>${fortune.overallFortune}</p>
+                            </div>
+                            
+                            <div class="fortune-category">
+                                <h4>❤️ 애정운</h4>
+                                <p>${fortune.loveFortune}</p>
+                                <div class="fortune-advice">
+                                    <strong>💡 조언:</strong> ${fortune.loveAdvice}
+                                </div>
+                            </div>
+                            
+                            <div class="fortune-category">
+                                <h4>💰 금전운</h4>
+                                <p>${fortune.moneyFortune}</p>
+                                <div class="fortune-advice">
+                                    <strong>💡 조언:</strong> ${fortune.moneyAdvice}
+                                </div>
+                            </div>
+                            
+                            <div class="fortune-category">
+                                <h4>💼 직업운</h4>
+                                <p>${fortune.careerFortune}</p>
+                                <div class="fortune-advice">
+                                    <strong>💡 조언:</strong> ${fortune.careerAdvice}
+                                </div>
+                            </div>
+                            
+                            <div class="fortune-category">
+                                <h4>🏃 건강운</h4>
+                                <p>${fortune.healthFortune}</p>
+                                <div class="fortune-advice">
+                                    <strong>💡 조언:</strong> ${fortune.healthAdvice}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="lucky-elements">
+                            <h3>🌟 오늘의 행운 요소</h3>
+                            <div class="lucky-items">
+                                <div class="lucky-box">
+                                    <div class="lucky-icon">⏰</div>
+                                    <div class="lucky-label">행운의 시간</div>
+                                    <div class="lucky-value">${fortune.luckyTime}</div>
+                                </div>
+                                <div class="lucky-box">
+                                    <div class="lucky-icon">🧭</div>
+                                    <div class="lucky-label">행운의 방향</div>
+                                    <div class="lucky-value">${fortune.luckyDirection}</div>
+                                </div>
+                                <div class="lucky-box">
+                                    <div class="lucky-icon">🎨</div>
+                                    <div class="lucky-label">행운의 색상</div>
+                                    <div class="lucky-value">${fortune.luckyColor}</div>
+                                </div>
+                                <div class="lucky-box">
+                                    <div class="lucky-icon">🔢</div>
+                                    <div class="lucky-label">행운의 숫자</div>
+                                    <div class="lucky-value">${fortune.luckyNumber}</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="daily-advice-section">
+                            <h3>📝 오늘의 조언</h3>
+                            <div class="advice-content">
+                                <p class="main-advice">${fortune.advice}</p>
+                                <div class="advice-details">
+                                    <div class="advice-item">
+                                        <strong>✅ 오늘 하면 좋은 일</strong>
+                                        ${fortune.doAdvice}
+                                    </div>
+                                    <div class="advice-item">
+                                        <strong>❌ 오늘 피해야 할 일</strong>
+                                        ${fortune.dontAdvice}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="action-buttons">
+                            <button onclick="location.reload()" class="btn btn-primary">다시 보기</button>
+                            <button onclick="shareFortune()" class="btn btn-secondary">공유하기</button>
+                        </div>
+                    </div>
+                `;
+                
+                resultDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                
+            } catch (error) {
+                console.error('운세 계산 중 오류:', error);
+                const resultDiv = document.getElementById('fortuneResult');
+                resultDiv.innerHTML = `
+                    <div class="fortune-result-container">
+                        <h2 style="text-align: center; color: #e74c3c;">오류가 발생했습니다</h2>
+                        <p style="text-align: center; margin-top: 20px;">
+                            운세 계산 중 오류가 발생했습니다. 페이지를 새로고침하여 다시 시도해주세요.
+                        </p>
+                        <div style="text-align: center; margin-top: 20px;">
+                            <button onclick="location.reload()" class="btn btn-primary">다시 시도</button>
+                        </div>
+                    </div>
+                `;
             }
-            
-            const sajuCalculator = new SajuCalculator();
-            
-            // 사주 계산 (만세력 데이터 사용)
-            const saju = sajuCalculator.calculateSaju(birthYear, birthMonth, birthDay, birthTime >= 0 ? birthTime : 12, isLunar);
-            
-            // 오늘 날짜
-            const today = new Date();
-            const todayPillar = sajuCalculator.calculateDayPillar(today.getFullYear(), today.getMonth() + 1, today.getDate());
-            
-            // 일주 관계 분석
-            const relation = analyzeRelation(saju.dayPillar, todayPillar);
-            const fortune = generateDetailedFortune(saju, todayPillar, relation);
-            
-            const resultDiv = document.getElementById('fortuneResult');
-            resultDiv.innerHTML = `
-                <div class="fortune-result-container">
-                    <h2 style="text-align: center; margin-bottom: 30px;">
-                        ${userName}님의 ${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일 운세
-                    </h2>
-                    
-                    <div class="saju-brief">
-                        <h3>📅 사주팔자 (四柱八字)</h3>
-                        <div class="pillars-row">
-                            <div class="pillar-item">
-                                <div class="pillar-label">연주 (年柱)</div>
-                                <div class="pillar-chars">
-                                    <span class="stem">${saju.yearPillar.stem}</span>
-                                    <span class="branch">${saju.yearPillar.branch}</span>
-                                </div>
-                                <div class="pillar-ten-god">${saju.tenGods.year}</div>
-                            </div>
-                            
-                            <div class="pillar-item">
-                                <div class="pillar-label">월주 (月柱)</div>
-                                <div class="pillar-chars">
-                                    <span class="stem">${saju.monthPillar.stem}</span>
-                                    <span class="branch">${saju.monthPillar.branch}</span>
-                                </div>
-                                <div class="pillar-ten-god">${saju.tenGods.month}</div>
-                            </div>
-                            
-                            <div class="pillar-item highlight">
-                                <div class="pillar-label">일주 (日柱) ⭐</div>
-                                <div class="pillar-chars">
-                                    <span class="stem">${saju.dayPillar.stem}</span>
-                                    <span class="branch">${saju.dayPillar.branch}</span>
-                                </div>
-                                <div class="pillar-ten-god">일주(본인)</div>
-                            </div>
-                            
-                            <div class="pillar-item ${birthTime < 0 ? 'unknown' : ''}">
-                                <div class="pillar-label">시주 (時柱)</div>
-                                <div class="pillar-chars">
-                                    <span class="stem">${birthTime >= 0 ? saju.hourPillar.stem : '?'}</span>
-                                    <span class="branch">${birthTime >= 0 ? saju.hourPillar.branch : '?'}</span>
-                                </div>
-                                <div class="pillar-ten-god">${birthTime >= 0 ? saju.tenGods.hour : '미상'}</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="today-pillar">
-                        <h3>🌅 오늘의 일진</h3>
-                        <div class="today-info">
-                            <span class="today-stem">${todayPillar.stem}</span>
-                            <span class="today-branch">${todayPillar.branch}</span>
-                            <span class="today-day">일 (${todayPillar.stem}${todayPillar.branch}日)</span>
-                        </div>
-                    </div>
-                    
-                    <div class="fortune-scores">
-                        <div class="score-card">
-                            <div class="score-icon">💫</div>
-                            <div class="score-label">총운</div>
-                            <div class="score-value" style="color: ${getScoreColor(fortune.overallScore)}">${fortune.overallScore}</div>
-                            <div class="score-bar">
-                                <div class="score-fill" style="width: ${fortune.overallScore}%; background: ${getScoreColor(fortune.overallScore)}"></div>
-                            </div>
-                        </div>
-                        
-                        <div class="score-card">
-                            <div class="score-icon">❤️</div>
-                            <div class="score-label">애정운</div>
-                            <div class="score-value" style="color: ${getScoreColor(fortune.loveScore)}">${fortune.loveScore}</div>
-                            <div class="score-bar">
-                                <div class="score-fill" style="width: ${fortune.loveScore}%; background: ${getScoreColor(fortune.loveScore)}"></div>
-                            </div>
-                        </div>
-                        
-                        <div class="score-card">
-                            <div class="score-icon">💰</div>
-                            <div class="score-label">금전운</div>
-                            <div class="score-value" style="color: ${getScoreColor(fortune.moneyScore)}">${fortune.moneyScore}</div>
-                            <div class="score-bar">
-                                <div class="score-fill" style="width: ${fortune.moneyScore}%; background: ${getScoreColor(fortune.moneyScore)}"></div>
-                            </div>
-                        </div>
-                        
-                        <div class="score-card">
-                            <div class="score-icon">🏃</div>
-                            <div class="score-label">건강운</div>
-                            <div class="score-value" style="color: ${getScoreColor(fortune.healthScore)}">${fortune.healthScore}</div>
-                            <div class="score-bar">
-                                <div class="score-fill" style="width: ${fortune.healthScore}%; background: ${getScoreColor(fortune.healthScore)}"></div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="fortune-details">
-                        <div class="fortune-category">
-                            <h4>💫 총운</h4>
-                            <p>${fortune.overallFortune}</p>
-                        </div>
-                        
-                        <div class="fortune-category">
-                            <h4>❤️ 애정운</h4>
-                            <p>${fortune.loveFortune}</p>
-                            <div class="fortune-advice">
-                                <strong>💡 조언:</strong> ${fortune.loveAdvice}
-                            </div>
-                        </div>
-                        
-                        <div class="fortune-category">
-                            <h4>💰 금전운</h4>
-                            <p>${fortune.moneyFortune}</p>
-                            <div class="fortune-advice">
-                                <strong>💡 조언:</strong> ${fortune.moneyAdvice}
-                            </div>
-                        </div>
-                        
-                        <div class="fortune-category">
-                            <h4>💼 직업운</h4>
-                            <p>${fortune.careerFortune}</p>
-                            <div class="fortune-advice">
-                                <strong>💡 조언:</strong> ${fortune.careerAdvice}
-                            </div>
-                        </div>
-                        
-                        <div class="fortune-category">
-                            <h4>🏃 건강운</h4>
-                            <p>${fortune.healthFortune}</p>
-                            <div class="fortune-advice">
-                                <strong>💡 조언:</strong> ${fortune.healthAdvice}
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="lucky-elements">
-                        <h3>🌟 오늘의 행운 요소</h3>
-                        <div class="lucky-items">
-                            <div class="lucky-box">
-                                <div class="lucky-icon">⏰</div>
-                                <div class="lucky-label">행운의 시간</div>
-                                <div class="lucky-value">${fortune.luckyTime}</div>
-                            </div>
-                            <div class="lucky-box">
-                                <div class="lucky-icon">🧭</div>
-                                <div class="lucky-label">행운의 방향</div>
-                                <div class="lucky-value">${fortune.luckyDirection}</div>
-                            </div>
-                            <div class="lucky-box">
-                                <div class="lucky-icon">🎨</div>
-                                <div class="lucky-label">행운의 색상</div>
-                                <div class="lucky-value">${fortune.luckyColor}</div>
-                            </div>
-                            <div class="lucky-box">
-                                <div class="lucky-icon">🔢</div>
-                                <div class="lucky-label">행운의 숫자</div>
-                                <div class="lucky-value">${fortune.luckyNumber}</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="daily-advice-section">
-                        <h3>📝 오늘의 조언</h3>
-                        <div class="advice-content">
-                            <p class="main-advice">${fortune.advice}</p>
-                            <div class="advice-details">
-                                <div class="advice-item">
-                                    <strong>✅ 오늘 하면 좋은 일</strong>
-                                    ${fortune.doAdvice}
-                                </div>
-                                <div class="advice-item">
-                                    <strong>❌ 오늘 피해야 할 일</strong>
-                                    ${fortune.dontAdvice}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="action-buttons">
-                        <button onclick="location.reload()" class="btn btn-primary">다시 보기</button>
-                        <button onclick="shareFortune()" class="btn btn-secondary">공유하기</button>
-                    </div>
-                </div>
-            `;
-            
-            resultDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
         
-        // 관계 분석 함수
+        // 관계 분석 함수 (기존 코드 유지)
         function analyzeRelation(dayPillar, todayPillar) {
             const relations = {
                 stemRelation: analyzeStemRelation(dayPillar.stem, todayPillar.stem),
@@ -917,7 +952,6 @@
             const element1 = stemElements[stem1];
             const element2 = stemElements[stem2];
             
-            // 오행 관계
             const relations = {
                 '목': { generate: '화', control: '토', generated: '수', controlled: '금' },
                 '화': { generate: '토', control: '금', generated: '목', controlled: '수' },
@@ -951,7 +985,6 @@
         
         // 특수 관계 찾기
         function findSpecialRelation(branch1, branch2) {
-            // 육합
             const combinations = {
                 '자': '축', '축': '자',
                 '인': '해', '해': '인',
@@ -961,7 +994,6 @@
                 '오': '미', '미': '오'
             };
             
-            // 충
             const clashes = {
                 '자': '오', '오': '자',
                 '축': '미', '미': '축',
@@ -971,7 +1003,6 @@
                 '사': '해', '해': '사'
             };
             
-            // 형
             const punishments = {
                 '인': ['사', '신'], '사': ['인', '신'], '신': ['인', '사'],
                 '축': ['술', '미'], '술': ['축', '미'], '미': ['축', '술']
@@ -994,11 +1025,9 @@
         
         // 상세 운세 생성
         function generateDetailedFortune(saju, todayPillar, relation) {
-            // 기본 점수 계산
             const baseScore = 65;
             let overallScore = baseScore;
             
-            // 관계에 따른 점수 조정
             if (relation.stemRelation === 'generate' || relation.stemRelation === 'generated') {
                 overallScore += 10;
             } else if (relation.stemRelation === 'control' || relation.stemRelation === 'controlled') {
@@ -1013,26 +1042,20 @@
                 overallScore -= 10;
             }
             
-            // 점수 범위 조정
             overallScore = Math.max(20, Math.min(95, overallScore));
             
-            // 세부 운세 점수
             const loveScore = Math.max(20, Math.min(95, overallScore + Math.floor(Math.random() * 20 - 10)));
             const moneyScore = Math.max(20, Math.min(95, overallScore + Math.floor(Math.random() * 20 - 10)));
             const healthScore = Math.max(20, Math.min(95, overallScore + Math.floor(Math.random() * 20 - 10)));
             const careerScore = Math.max(20, Math.min(95, overallScore + Math.floor(Math.random() * 20 - 10)));
             
-            // 운세 메시지 생성
             const overallFortune = generateOverallMessage(saju, overallScore, relation);
             const loveFortune = generateLoveMessage(saju, loveScore, relation);
             const moneyFortune = generateMoneyMessage(saju, moneyScore, relation);
             const careerFortune = generateCareerMessage(saju, careerScore, relation);
             const healthFortune = generateHealthMessage(saju, healthScore, relation);
             
-            // 행운 요소 생성
             const luckyElements = generateLuckyElements(saju, todayPillar);
-            
-            // 조언 생성
             const advice = generateAdvice(saju, todayPillar, relation);
             
             return {
@@ -1054,108 +1077,56 @@
             };
         }
         
-        // 각종 메시지 생성 함수들
-        function generateOverallMessage(saju, score, relation) {
+        // 메시지 생성 함수들 (기존 코드 유지하되 간략화)
+        function generateOverallMessage(saju, score) {
             const dayMaster = saju.dayPillar.stem + saju.dayPillar.branch;
-            let message = `${dayMaster}일주인 당신의 오늘 운세는 `;
-            
             if (score >= 80) {
-                message += '매우 좋습니다! ';
-                if (relation.specialRelation.type === '육합') {
-                    message += '육합의 조화로운 기운이 당신을 감싸고 있어, 모든 일이 순조롭게 진행될 것입니다. ';
-                }
-                message += '평소 미뤄왔던 중요한 일을 시작하기에 최적의 날입니다.';
+                return `${dayMaster}일주인 당신의 오늘 운세는 매우 좋습니다! 평소 미뤄왔던 중요한 일을 시작하기에 최적의 날입니다.`;
             } else if (score >= 60) {
-                message += '평균 이상입니다. ';
-                message += '큰 변화보다는 안정적인 흐름 속에서 차근차근 일을 진행하는 것이 좋겠습니다.';
+                return `${dayMaster}일주인 당신의 오늘 운세는 평균 이상입니다. 안정적인 흐름 속에서 차근차근 일을 진행하는 것이 좋겠습니다.`;
             } else {
-                message += '다소 주의가 필요합니다. ';
-                if (relation.specialRelation.type === '충') {
-                    message += '충의 변화 에너지가 강하므로 예상치 못한 상황에 대비하세요. ';
-                }
-                message += '무리하지 말고 신중하게 행동하는 것이 중요합니다.';
+                return `${dayMaster}일주인 당신의 오늘 운세는 다소 주의가 필요합니다. 무리하지 말고 신중하게 행동하는 것이 중요합니다.`;
             }
-            
-            return message;
         }
         
-        function generateLoveMessage(saju, score, relation) {
-            const element = FIVE_ELEMENTS[saju.dayPillar.stem];
-            let message = '';
-            
+        function generateLoveMessage(saju, score) {
             if (score >= 80) {
-                message = `애정운이 매우 좋은 날입니다. ${element}의 매력이 빛을 발하여 이성에게 좋은 인상을 줄 수 있습니다. `;
-                message += '연인이 있다면 깊은 대화를 나누기 좋고, 싱글이라면 새로운 만남의 기회가 있을 수 있습니다.';
+                return '애정운이 매우 좋은 날입니다. 연인이 있다면 깊은 대화를 나누기 좋고, 싱글이라면 새로운 만남의 기회가 있을 수 있습니다.';
             } else if (score >= 60) {
-                message = '평온한 애정운입니다. 서로를 이해하고 배려하는 마음이 중요한 시기입니다. ';
-                message += '작은 선물이나 따뜻한 말 한마디가 관계를 더욱 돈독하게 만들 것입니다.';
+                return '평온한 애정운입니다. 서로를 이해하고 배려하는 마음이 중요한 시기입니다.';
             } else {
-                message = '애정 관계에서 약간의 긴장이 있을 수 있습니다. ';
-                message += '감정적으로 예민해질 수 있으니 상대방의 입장을 이해하려고 노력하세요.';
+                return '애정 관계에서 약간의 긴장이 있을 수 있습니다. 상대방의 입장을 이해하려고 노력하세요.';
             }
-            
-            return message;
         }
         
-        function generateMoneyMessage(saju, score, relation) {
-            let message = '';
-            
+        function generateMoneyMessage(saju, score) {
             if (score >= 80) {
-                message = '금전운이 상승하는 날입니다. 투자나 사업에서 좋은 기회를 포착할 수 있습니다. ';
-                message += '다만 과욕은 금물이니 적절한 선에서 만족하는 것이 중요합니다.';
+                return '금전운이 상승하는 날입니다. 투자나 사업에서 좋은 기회를 포착할 수 있습니다.';
             } else if (score >= 60) {
-                message = '안정적인 금전 흐름이 예상됩니다. 계획적인 소비와 저축을 실천하기 좋은 날입니다. ';
-                message += '충동구매는 피하고 필요한 것만 구입하세요.';
+                return '안정적인 금전 흐름이 예상됩니다. 계획적인 소비와 저축을 실천하기 좋은 날입니다.';
             } else {
-                message = '금전적으로 신중해야 하는 날입니다. 큰 지출이나 투자는 미루는 것이 좋겠습니다. ';
-                message += '예상치 못한 지출이 발생할 수 있으니 여유 자금을 확보해두세요.';
+                return '금전적으로 신중해야 하는 날입니다. 큰 지출이나 투자는 미루는 것이 좋겠습니다.';
             }
-            
-            return message;
         }
         
-        function generateCareerMessage(saju, score, relation) {
-            let message = '';
-            
+        function generateCareerMessage(saju, score) {
             if (score >= 80) {
-                message = '직장에서의 성과가 돋보이는 날입니다. 상사나 동료들에게 능력을 인정받을 수 있습니다. ';
-                message += '새로운 프로젝트나 중요한 업무를 맡기에 좋은 시기입니다.';
+                return '직장에서의 성과가 돋보이는 날입니다. 새로운 프로젝트나 중요한 업무를 맡기에 좋은 시기입니다.';
             } else if (score >= 60) {
-                message = '평소와 같은 업무 흐름이 이어집니다. 묵묵히 자신의 일에 집중하면 좋은 결과를 얻을 수 있습니다. ';
-                message += '동료들과의 협력이 중요한 날입니다.';
+                return '평소와 같은 업무 흐름이 이어집니다. 묵묵히 자신의 일에 집중하면 좋은 결과를 얻을 수 있습니다.';
             } else {
-                message = '업무상 약간의 어려움이 있을 수 있습니다. 실수를 줄이기 위해 꼼꼼히 확인하세요. ';
-                message += '중요한 결정은 다음으로 미루는 것이 현명합니다.';
+                return '업무상 약간의 어려움이 있을 수 있습니다. 중요한 결정은 다음으로 미루는 것이 현명합니다.';
             }
-            
-            return message;
         }
         
-        function generateHealthMessage(saju, score, relation) {
-            const element = FIVE_ELEMENTS[saju.dayPillar.stem];
-            const organMap = {
-                '목': '간과 담',
-                '화': '심장과 혈관',
-                '토': '비장과 소화기',
-                '금': '폐와 호흡기',
-                '수': '신장과 방광'
-            };
-            
-            const organ = organMap[element];
-            let message = '';
-            
+        function generateHealthMessage(saju, score) {
             if (score >= 80) {
-                message = `건강 상태가 매우 좋은 날입니다. ${organ} 기능이 활발하여 전반적인 컨디션이 최상입니다. `;
-                message += '운동이나 야외 활동을 즐기기에 좋은 날입니다.';
+                return '건강 상태가 매우 좋은 날입니다. 운동이나 야외 활동을 즐기기에 좋은 날입니다.';
             } else if (score >= 60) {
-                message = `평소와 비슷한 건강 상태를 유지하고 있습니다. ${organ}에 좋은 음식을 섭취하면 도움이 됩니다. `;
-                message += '규칙적인 생활 습관을 유지하세요.';
+                return '평소와 비슷한 건강 상태를 유지하고 있습니다. 규칙적인 생활 습관을 유지하세요.';
             } else {
-                message = `컨디션이 다소 떨어질 수 있는 날입니다. ${organ}에 특히 주의가 필요합니다. `;
-                message += '무리한 활동은 피하고 충분한 휴식을 취하세요.';
+                return '컨디션이 다소 떨어질 수 있는 날입니다. 무리한 활동은 피하고 충분한 휴식을 취하세요.';
             }
-            
-            return message;
         }
         
         // 조언 생성 함수들
@@ -1202,58 +1173,39 @@
         // 행운 요소 생성
         function generateLuckyElements(saju, todayPillar) {
             const dayMaster = saju.dayPillar.stem;
-            const todayElement = FIVE_ELEMENTS[todayPillar.stem];
             
-            // 시간
             const timeMap = {
-                '갑': '묘시 (05:00-07:00)',
-                '을': '묘시 (05:00-07:00)',
-                '병': '오시 (11:00-13:00)',
-                '정': '사시 (09:00-11:00)',
-                '무': '진시 (07:00-09:00)',
-                '기': '미시 (13:00-15:00)',
-                '경': '신시 (15:00-17:00)',
-                '신': '유시 (17:00-19:00)',
-                '임': '자시 (23:00-01:00)',
-                '계': '해시 (21:00-23:00)'
+                '갑': '묘시 (05:00-07:00)', '을': '묘시 (05:00-07:00)',
+                '병': '오시 (11:00-13:00)', '정': '사시 (09:00-11:00)',
+                '무': '진시 (07:00-09:00)', '기': '미시 (13:00-15:00)',
+                '경': '신시 (15:00-17:00)', '신': '유시 (17:00-19:00)',
+                '임': '자시 (23:00-01:00)', '계': '해시 (21:00-23:00)'
             };
             
-            // 방향
             const directionMap = {
-                '목': '동쪽',
-                '화': '남쪽',
-                '토': '중앙',
-                '금': '서쪽',
-                '수': '북쪽'
+                '목': '동쪽', '화': '남쪽', '토': '중앙', '금': '서쪽', '수': '북쪽'
             };
             
-            // 색상
             const colorMap = {
-                '목': '초록색, 청록색',
-                '화': '빨간색, 보라색',
-                '토': '노란색, 갈색',
-                '금': '흰색, 은색',
-                '수': '검은색, 파란색'
+                '목': '초록색, 청록색', '화': '빨간색, 보라색', '토': '노란색, 갈색',
+                '금': '흰색, 은색', '수': '검은색, 파란색'
             };
             
-            // 숫자
             const numberMap = {
-                '갑': '3, 8',
-                '을': '3, 8',
-                '병': '2, 7',
-                '정': '2, 7',
-                '무': '5, 10',
-                '기': '5, 10',
-                '경': '4, 9',
-                '신': '4, 9',
-                '임': '1, 6',
-                '계': '1, 6'
+                '갑': '3, 8', '을': '3, 8', '병': '2, 7', '정': '2, 7',
+                '무': '5, 10', '기': '5, 10', '경': '4, 9', '신': '4, 9',
+                '임': '1, 6', '계': '1, 6'
+            };
+            
+            const FIVE_ELEMENTS = {
+                '갑': '목', '을': '목', '병': '화', '정': '화', '무': '토',
+                '기': '토', '경': '금', '신': '금', '임': '수', '계': '수'
             };
             
             return {
                 luckyTime: timeMap[dayMaster],
                 luckyDirection: directionMap[FIVE_ELEMENTS[dayMaster]],
-                luckyColor: colorMap[todayElement],
+                luckyColor: colorMap[FIVE_ELEMENTS[dayMaster]],
                 luckyNumber: numberMap[dayMaster]
             };
         }
@@ -1261,13 +1213,14 @@
         // 조언 생성
         function generateAdvice(saju, todayPillar, relation) {
             const dayMaster = saju.dayPillar.stem;
+            const FIVE_ELEMENTS = {
+                '갑': '목', '을': '목', '병': '화', '정': '화', '무': '토',
+                '기': '토', '경': '금', '신': '금', '임': '수', '계': '수'
+            };
             const element = FIVE_ELEMENTS[dayMaster];
             
             let mainAdvice = '';
-            let doAdvice = '';
-            let dontAdvice = '';
             
-            // 메인 조언
             if (relation.specialRelation.type === '육합') {
                 mainAdvice = `오늘은 육합의 조화로운 기운이 가득한 날입니다. ${dayMaster}일주인 당신의 장점이 최대한 발휘될 수 있으니, 평소 미뤄왔던 중요한 일을 진행해보세요.`;
             } else if (relation.specialRelation.type === '충') {
@@ -1276,7 +1229,6 @@
                 mainAdvice = `${element}의 특성을 살려 차분하고 신중하게 하루를 보내세요. 큰 변화보다는 일상의 소중함을 느끼며 내적 성장에 집중하는 것이 좋겠습니다.`;
             }
             
-            // 해야 할 일
             const doList = {
                 '목': '새로운 프로젝트 시작',
                 '화': '프레젠테이션이나 발표',
@@ -1285,9 +1237,6 @@
                 '수': '학습과 연구'
             };
             
-            doAdvice = doList[element];
-            
-            // 피해야 할 일
             const dontList = {
                 '목': '고집스러운 태도',
                 '화': '과도한 열정',
@@ -1296,12 +1245,10 @@
                 '수': '책임 회피'
             };
             
-            dontAdvice = dontList[element];
-            
             return {
                 advice: mainAdvice,
-                doAdvice,
-                dontAdvice
+                doAdvice: doList[element],
+                dontAdvice: dontList[element]
             };
         }
         
@@ -1325,43 +1272,16 @@
                     url: url
                 });
             } else {
-                // 카카오톡 공유
-                if (window.Kakao && window.Kakao.isInitialized()) {
-                    Kakao.Share.sendDefault({
-                        objectType: 'feed',
-                        content: {
-                            title: '오늘의 운세',
-                            description: text,
-                            imageUrl: 'https://doha.kr/images/og-default.png',
-                            link: {
-                                mobileWebUrl: url,
-                                webUrl: url
-                            }
-                        }
-                    });
-                } else {
-                    // 링크 복사
-                    navigator.clipboard.writeText(url).then(() => {
-                        alert('링크가 복사되었습니다!');
-                    });
-                }
+                navigator.clipboard.writeText(url).then(() => {
+                    alert('링크가 복사되었습니다!');
+                });
             }
         }
-        
-        // 오행 상수
-        const FIVE_ELEMENTS = {
-            '갑': '목', '을': '목',
-            '병': '화', '정': '화',
-            '무': '토', '기': '토',
-            '경': '금', '신': '금',
-            '임': '수', '계': '수'
-        };
     </script>
     
     <!-- Kakao SDK -->
     <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.4.0/kakao.min.js" integrity="sha384-mXVrIX2T/Kszp6Z0aEWaA8Nm7J6/ZeWXbL8UpGRjKwWe56Srd/iyNmWMBhcItAjH" crossorigin="anonymous"></script>
     <script>
-        // Kakao SDK 초기화
         if (window.Kakao && !window.Kakao.isInitialized()) {
             Kakao.init('8b5c6e8f97ec3d51a6f784b8b4b5ed99');
         }
