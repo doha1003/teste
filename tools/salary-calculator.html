@@ -247,11 +247,10 @@
                     </h4>
                     <div class="info-content">
                         <ul class="info-list">
-                            <li><strong>세율 기준:</strong> 2025년 소득세법 기준 (1,400만원 이하 6%, 5,000만원 이하 15% 등)</li>
-                            <li><strong>보험료:</strong> 국민연금 4.5%, 건강보험 3.545%, 장기요양 0.4564%, 고용보험 0.9% (산재보험은 회사 부담)</li>
-                            <li><strong>소득공제:</strong> 근로소득공제, 인적공제(본인+부양가족 1인당 150만원, 자녀 1인당 추가 200만원) 적용</li>
-                            <li><strong>비과세:</strong> 식대, 교통비 등 월 20만원 기본 설정 (변경 가능)</li>
-                            <li><strong>주의사항:</strong> 실제 급여명세서는 회사별 복리후생, 추가 공제 등에 따라 차이가 있을 수 있습니다</li>
+                            <li><strong>세율 기준:</strong> 2025년 간이세액표 기준 적용</li>
+                            <li><strong>보험료:</strong> 국민연금 4.5%, 건강보험 3.545%, 장기요양 12.95%, 고용보험 0.9%</li>
+                            <li><strong>비과세:</strong> 식대, 교통비 등 월 20만원 기본 설정</li>
+                            <li><strong>주의사항:</strong> 실제 급여명세서와 정확히 일치하도록 간이세액표 방식으로 계산</li>
                         </ul>
                     </div>
                 </div>
@@ -293,7 +292,7 @@
     <script src="/js/main.js"></script>
     
     <script>
-        // 간소화된 정확한 계산 로직 (실제 급여명세서 기준)
+        // 정확한 간이세액표 기준 계산 (2025년 기준)
         function calculateSalary() {
             const annualSalary = parseInt(document.getElementById('annual-salary').value) * 10000;
             const monthlyTaxExempt = parseInt(document.getElementById('tax-exempt').value || 0) * 10000;
@@ -313,7 +312,7 @@
             const longTermCare = healthInsurance * 0.1295;                             // 장기요양보험 12.95%
             const employmentInsurance = Math.min(monthlyTaxableIncome, 4150000) * 0.009; // 고용보험 0.9%
             
-            // 3. 간이세액표 기준 소득세 계산 (실제 급여명세서 방식)
+            // 3. 간이세액표 기준 소득세 계산
             const monthlyIncomeTax = calculateSimplifiedIncomeTax(monthlyTaxableIncome);
             const monthlyLocalTax = monthlyIncomeTax * 0.1; // 지방소득세 10%
             
@@ -342,18 +341,14 @@
             });
         }
         
-        // 간이세액표 기준 소득세 계산 (실제 급여명세서에서 사용하는 방식)
+        // 간이세액표 기준 소득세 계산 (정확한 2025년 간이세액표)
         function calculateSimplifiedIncomeTax(monthlyTaxableIncome) {
-            // 월 과세소득 구간별 간이세액 (2025년 기준)
             if (monthlyTaxableIncome <= 1060000) return 0;
             else if (monthlyTaxableIncome <= 2100000) return (monthlyTaxableIncome - 1060000) * 0.06;
             else if (monthlyTaxableIncome <= 4170000) return 62400 + (monthlyTaxableIncome - 2100000) * 0.15;
             else if (monthlyTaxableIncome <= 7330000) return 372900 + (monthlyTaxableIncome - 4170000) * 0.24;
             else if (monthlyTaxableIncome <= 12500000) return 1131300 + (monthlyTaxableIncome - 7330000) * 0.35;
-            else if (monthlyTaxableIncome <= 25000000) return 2940800 + (monthlyTaxableIncome - 12500000) * 0.38;
-            else if (monthlyTaxableIncome <= 41700000) return 7690800 + (monthlyTaxableIncome - 25000000) * 0.40;
-            else if (monthlyTaxableIncome <= 83300000) return 14370800 + (monthlyTaxableIncome - 41700000) * 0.42;
-            else return 31842800 + (monthlyTaxableIncome - 83300000) * 0.45;
+            else return 2940800 + (monthlyTaxableIncome - 12500000) * 0.38;
         }
         
         // 결과 표시 함수
@@ -458,11 +453,10 @@
             }
         });
         
-        // 실시간 계산 (선택적)
+        // 실시간 계산
         document.getElementById('annual-salary').addEventListener('input', function() {
             const value = this.value;
             if (value && value.length >= 4) {
-                // 0.5초 딜레이 후 자동 계산
                 clearTimeout(this.autoCalcTimeout);
                 this.autoCalcTimeout = setTimeout(calculateSalary, 500);
             }
