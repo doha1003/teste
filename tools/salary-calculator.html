@@ -57,11 +57,25 @@
             <p class="salary-subtitle">2025년 최신 세율과 4대보험료율을 적용한 정확한 계산</p>
         </div>
         
+        <!-- 광고 영역 1 -->
+        <div class="ad-container">
+            <div class="ad-label">광고</div>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-7905640648499222"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+        
         <!-- 계산기 메인 -->
         <div class="salary-calculator-main">
             <!-- 입력 섹션 -->
             <div class="salary-input-section">
-                <h3 class="section-title">📊 연봉 정보 입력</h3>
+                <h3 class="section-title">
+                    <span class="title-emoji">📊</span>
+                    <span class="title-text">연봉 정보 입력</span>
+                </h3>
                 <div class="input-group">
                     <label for="annual-salary" class="input-label">연봉 (만원)</label>
                     <input type="number" id="annual-salary" class="salary-input" placeholder="예: 5000" min="1000" max="100000" step="100">
@@ -100,7 +114,10 @@
             
             <!-- 결과 섹션 -->
             <div class="salary-result-section" id="result-section" style="display: none;">
-                <h3 class="section-title">💸 실수령액 결과</h3>
+                <h3 class="section-title">
+                    <span class="title-emoji">💸</span>
+                    <span class="title-text">실수령액 결과</span>
+                </h3>
                 
                 <!-- 핵심 결과 -->
                 <div class="result-summary">
@@ -116,9 +133,23 @@
                     </div>
                 </div>
                 
+                <!-- 광고 영역 2 -->
+                <div class="ad-container">
+                    <div class="ad-label">광고</div>
+                    <ins class="adsbygoogle"
+                         style="display:block"
+                         data-ad-client="ca-pub-7905640648499222"
+                         data-ad-slot="2345678901"
+                         data-ad-format="auto"
+                         data-full-width-responsive="true"></ins>
+                </div>
+                
                 <!-- 월급 상세 breakdown -->
                 <div class="breakdown-section">
-                    <h4 class="breakdown-title">📋 월급 상세 내역</h4>
+                    <h4 class="breakdown-title">
+                        <span class="title-emoji">📋</span>
+                        <span class="title-text">월급 상세 내역</span>
+                    </h4>
                     <div class="breakdown-table">
                         <div class="breakdown-row header">
                             <div class="breakdown-label">항목</div>
@@ -180,7 +211,10 @@
                 
                 <!-- 비교 정보 -->
                 <div class="comparison-section">
-                    <h4 class="comparison-title">📊 실수령 비율 분석</h4>
+                    <h4 class="comparison-title">
+                        <span class="title-emoji">📊</span>
+                        <span class="title-text">실수령 비율 분석</span>
+                    </h4>
                     <div class="comparison-cards">
                         <div class="comparison-card">
                             <div class="comparison-label">공제율</div>
@@ -207,7 +241,10 @@
                 
                 <!-- 안내 정보 -->
                 <div class="info-section">
-                    <h4 class="info-title">ℹ️ 계산 기준 안내</h4>
+                    <h4 class="info-title">
+                        <span class="title-emoji">ℹ️</span>
+                        <span class="title-text">계산 기준 안내</span>
+                    </h4>
                     <div class="info-content">
                         <ul class="info-list">
                             <li><strong>세율 기준:</strong> 2025년 소득세법 기준 (1,400만원 이하 6%, 5,000만원 이하 15% 등)</li>
@@ -223,7 +260,10 @@
         
         <!-- 공유 버튼 -->
         <div class="share-section" id="share-section" style="display: none;">
-            <h4 class="share-title">📤 결과 공유하기</h4>
+            <h4 class="share-title">
+                <span class="title-emoji">📤</span>
+                <span class="title-text">결과 공유하기</span>
+            </h4>
             <div class="share-buttons">
                 <button class="share-btn share-kakao" onclick="shareToKakao()">
                     💬 카카오톡 공유
@@ -232,6 +272,17 @@
                     🔗 링크 복사
                 </button>
             </div>
+        </div>
+        
+        <!-- 광고 영역 3 -->
+        <div class="ad-container">
+            <div class="ad-label">광고</div>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-7905640648499222"
+                 data-ad-slot="3456789012"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
         </div>
     </div>
     
@@ -491,5 +542,83 @@
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
+    
+    <style>
+        /* 이모티콘 표시 문제 해결 */
+        .title-emoji {
+            display: inline-block !important;
+            font-size: 1.2em !important;
+            margin-right: 8px !important;
+            vertical-align: middle !important;
+            font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif !important;
+        }
+        
+        .title-text {
+            display: inline-block !important;
+            vertical-align: middle !important;
+        }
+        
+        .section-title {
+            display: flex !important;
+            align-items: center !important;
+            gap: 8px !important;
+        }
+        
+        .breakdown-title,
+        .comparison-title,
+        .info-title,
+        .share-title {
+            display: flex !important;
+            align-items: center !important;
+            gap: 8px !important;
+        }
+        
+        /* 광고 영역 스타일 */
+        .ad-container {
+            margin: 40px 0;
+            text-align: center;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .ad-label {
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .adsbygoogle {
+            min-height: 280px;
+            background: #fff;
+            border-radius: 8px;
+        }
+        
+        /* 회사 부담 행 스타일 */
+        .breakdown-row.company-burden {
+            background: #e3f2fd !important;
+            color: #1976d2 !important;
+            font-style: italic;
+        }
+        
+        .breakdown-row.company-burden .breakdown-amount {
+            font-weight: 600;
+            color: #1976d2 !important;
+        }
+        
+        @media (max-width: 768px) {
+            .ad-container {
+                margin: 20px 0;
+                padding: 15px;
+            }
+            
+            .adsbygoogle {
+                min-height: 250px;
+            }
+        }
+    </style>
 </body>
 </html>
