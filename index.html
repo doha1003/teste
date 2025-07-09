@@ -193,6 +193,13 @@
                     <span class="service-badge" style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); color: white;">HOT</span>
                 </a>
                 
+                <a href="/fortune/saju/" class="service-card" data-category="fortune">
+                    <span class="service-emoji">🎴</span>
+                    <h3 class="service-name">AI 사주팔자</h3>
+                    <p class="service-desc">생년월일시로 AI가 분석하는 상세한 사주팔자 풀이</p>
+                    <span class="service-badge" style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); color: white;">인기</span>
+                </a>
+                
                 <a href="/fortune/zodiac/" class="service-card" data-category="fortune">
                     <span class="service-emoji">♈</span>
                     <h3 class="service-name">별자리 운세</h3>
@@ -226,7 +233,7 @@
                     <div class="stat-label">모든 서비스 이용</div>
                 </div>
                 <div class="stat-item fade-in stagger-2">
-                    <div class="stat-number">10개</div>
+                    <div class="stat-number" id="service-count">0개</div>
                     <div class="stat-label">다양한 서비스</div>
                 </div>
                 <div class="stat-item fade-in stagger-3">
@@ -272,6 +279,33 @@
     
     <!-- External JavaScript -->
     <script src="/js/main.js"></script>
+    
+    <!-- Service Counter Script -->
+    <script>
+        // 실시간으로 서비스 개수 카운트
+        document.addEventListener('DOMContentLoaded', function() {
+            // 활성화된 서비스 카드만 카운트 (disabled 클래스가 없는 것)
+            const activeServices = document.querySelectorAll('.service-card:not(.disabled)').length;
+            const countElement = document.getElementById('service-count');
+            
+            if (countElement) {
+                // 애니메이션 효과로 숫자 카운트
+                let currentCount = 0;
+                const targetCount = activeServices;
+                const increment = Math.ceil(targetCount / 20);
+                const duration = 50; // 50ms 간격
+                
+                const countAnimation = setInterval(() => {
+                    currentCount += increment;
+                    if (currentCount >= targetCount) {
+                        currentCount = targetCount;
+                        clearInterval(countAnimation);
+                    }
+                    countElement.textContent = currentCount + '개';
+                }, duration);
+            }
+        });
+    </script>
     
     <!-- AdSense initialization -->
     <script>
