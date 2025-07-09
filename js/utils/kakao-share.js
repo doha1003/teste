@@ -3,9 +3,8 @@
  * doha.kr - 모든 페이지에서 사용할 수 있는 카카오톡 공유 유틸리티
  */
 
-// 카카오 앱 키 (중앙 관리) - 새로운 유효한 키 필요
-// TODO: 카카오 개발자 사이트에서 doha.kr 도메인용 새 앱 생성 후 JavaScript 키로 교체
-const KAKAO_APP_KEY = 'YOUR_NEW_KAKAO_APP_KEY_HERE';
+// 카카오 앱 키 (중앙 관리) - 현재 사용 중인 유효한 키
+const KAKAO_APP_KEY = '19d8ba832f94d513957adc17883c1282';
 
 // 카카오 SDK 초기화 상태
 let kakaoInitialized = false;
@@ -26,12 +25,6 @@ function initializeKakaoSDK() {
     }
 
     try {
-        // 앱키가 설정되지 않은 경우 초기화 건너뛰기
-        if (KAKAO_APP_KEY === 'YOUR_NEW_KAKAO_APP_KEY_HERE') {
-            console.warn('카카오 앱키가 설정되지 않았습니다. 카카오톡 공유 기능이 비활성화됩니다.');
-            return false;
-        }
-
         Kakao.init(KAKAO_APP_KEY);
         kakaoInitialized = true;
         console.log('Kakao SDK 초기화 성공');
@@ -49,7 +42,7 @@ function initializeKakaoSDK() {
         
         // 오류 코드 4011 처리 (잘못된 앱 키)
         if (error.message && error.message.includes('4011')) {
-            console.error('카카오 앱키가 유효하지 않습니다. 새로운 앱키로 교체가 필요합니다.');
+            alert('카카오톡 공유 기능에 문제가 있습니다. 관리자에게 문의해주세요.\n(오류 코드: 4011 - 앱 키 오류)');
         }
         
         return false;
@@ -69,7 +62,7 @@ function initializeKakaoSDK() {
 function shareToKakao(options) {
     // SDK 초기화 확인
     if (!initializeKakaoSDK()) {
-        console.log('카카오 SDK를 사용할 수 없습니다. 링크 복사 기능으로 대체합니다.');
+        console.error('카카오 SDK 초기화 실패로 공유할 수 없습니다.');
         showShareFallback(options.webUrl);
         return;
     }
@@ -115,9 +108,9 @@ function shareToKakao(options) {
         if (error.code === -606) {
             alert('카카오톡이 설치되어 있지 않습니다.');
         } else if (error.code === 4011) {
-            alert('카카오톡 공유 기능이 일시적으로 사용할 수 없습니다.\n링크 복사 기능을 이용해주세요.');
+            alert('카카오톡 공유 기능에 문제가 있습니다.\n앱 키를 확인해주세요.');
         } else {
-            alert('카카오톡 공유 중 오류가 발생했습니다.\n링크 복사 기능을 이용해주세요.');
+            alert('카카오톡 공유 중 오류가 발생했습니다.');
         }
         
         // 폴백: 링크 복사
