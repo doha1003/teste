@@ -77,9 +77,9 @@
                     <span class="title-text">연봉 정보 입력</span>
                 </h3>
                 <div class="input-group">
-                    <label for="annual-salary" class="input-label">연봉 (만원)</label>
-                    <input type="number" id="annual-salary" class="salary-input" placeholder="예: 4000" min="1000" max="100000" step="100">
-                    <span class="input-unit">만원</span>
+                    <label for="annual-salary" class="input-label">연봉 (원)</label>
+                    <input type="number" id="annual-salary" class="salary-input" placeholder="예: 40000000" min="10000000" max="1000000000" step="1000000">
+                    <span class="input-unit">원</span>
                 </div>
                 
                 <div class="input-group">
@@ -93,7 +93,7 @@
                     <label class="input-label">부양가족 (본인 포함)</label>
                     <div class="family-input-group">
                         <div class="family-item">
-                            <label for="total-family" class="family-label">총 부양가족 수</label>
+                            <label for="total-family" class="family-label">총 부양가족 수 (본인 포함)</label>
                             <input type="number" id="total-family" class="family-input" min="1" max="10" value="1">
                             <span class="family-unit">명</span>
                             <small class="family-help">본인 포함 총 인원수</small>
@@ -294,7 +294,7 @@
     <script>
         // 정확한 간이세액표 기준 계산 (2025년 기준)
         function calculateSalary() {
-            const annualSalary = parseInt(document.getElementById('annual-salary').value) * 10000;
+            const annualSalary = parseInt(document.getElementById('annual-salary').value);
             const monthlyTaxExempt = parseInt(document.getElementById('tax-exempt').value || 0) * 10000;
             
             if (!annualSalary || annualSalary < 10000000) {
@@ -456,10 +456,23 @@
         // 실시간 계산
         document.getElementById('annual-salary').addEventListener('input', function() {
             const value = this.value;
-            if (value && value.length >= 4) {
+            if (value && value.length >= 8) {
                 clearTimeout(this.autoCalcTimeout);
                 this.autoCalcTimeout = setTimeout(calculateSalary, 500);
             }
+        });
+        
+        // 숫자 입력 시 천 단위 콤마 표시
+        document.getElementById('annual-salary').addEventListener('input', function() {
+            let value = this.value.replace(/[^0-9]/g, '');
+            if (value) {
+                this.value = parseInt(value).toLocaleString();
+            }
+        });
+        
+        // 계산 시 콤마 제거
+        document.getElementById('annual-salary').addEventListener('blur', function() {
+            this.value = this.value.replace(/,/g, '');
         });
     </script>
     
