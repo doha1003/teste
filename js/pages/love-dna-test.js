@@ -301,6 +301,14 @@ function showScreen(screenId) {
 // 테스트 시작
 function startTest() {
     currentQuestion = -1;
+    answers = {};
+    axisScores = {
+        L: {},
+        O: {},
+        V: {},
+        E: {},
+        D: {}
+    };
     showScreen('test-screen');
     nextQuestion();
 }
@@ -359,6 +367,13 @@ function showQuestion() {
     // 버튼 상태 업데이트
     document.getElementById('prev-btn').disabled = currentQuestion === 0;
     document.getElementById('next-btn').disabled = answers[currentQuestion] === undefined;
+    
+    // 마지막 질문이면 다음 버튼 텍스트 변경
+    if (currentQuestion === loveDNAQuestions.length - 1) {
+        document.getElementById('next-btn').textContent = '결과 보기';
+    } else {
+        document.getElementById('next-btn').textContent = '다음';
+    }
 }
 
 // 옵션 선택
@@ -372,29 +387,35 @@ function selectOption(index) {
     
     document.getElementById('next-btn').disabled = false;
     
-    // 자동으로 다음 질문으로 넘어가기 (0.8초 딘레이)
-    setTimeout(() => {
-        if (currentQuestion < loveDNAQuestions.length - 1) {
+    // 마지막 질문이 아닐 때만 자동으로 다음 질문으로
+    if (currentQuestion < loveDNAQuestions.length - 1) {
+        setTimeout(() => {
             nextQuestion();
-        } else {
-            showResult();
-        }
-    }, 800);
+        }, 800);
+    }
 }
 
 // 결과 계산 및 표시
 function showResult() {
+    // 모든 질문에 답했는지 확인
+    if (Object.keys(answers).length < loveDNAQuestions.length) {
+        alert('모든 질문에 답해주세요!');
+        return;
+    }
+    
     // 답변 분석
     loveDNAQuestions.forEach((question, qIndex) => {
         const answerIndex = answers[qIndex];
-        const selectedOption = question.options[answerIndex];
-        const axis = question.axis;
-        const value = selectedOption.value;
-        
-        if (!axisScores[axis][value]) {
-            axisScores[axis][value] = 0;
+        if (answerIndex !== undefined) {
+            const selectedOption = question.options[answerIndex];
+            const axis = question.axis;
+            const value = selectedOption.value;
+            
+            if (!axisScores[axis][value]) {
+                axisScores[axis][value] = 0;
+            }
+            axisScores[axis][value]++;
         }
-        axisScores[axis][value]++;
     });
     
     // 각 축의 최고점수 값 찾기
@@ -512,7 +533,6 @@ function getAxisDescription(axis, code) {
         L: {
             'T': '터치형 (스킨십)',
             'W': '워드형 (말)',
-            'T': '타임형 (시간)',
             'G': '기프트형 (선물)',
             'A': '액션형 (행동)'
         },
@@ -543,7 +563,7 @@ function getAxisDescription(axis, code) {
         }
     };
     
-    return descriptions[axis][code] || '알 수 없음';
+    return descriptions[axis] && descriptions[axis][code] || '알 수 없음';
 }
 
 // 테스트 재시작
