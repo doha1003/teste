@@ -1,0 +1,484 @@
+/* =============================================================================
+   LOVE DNA TEST - COMPONENTS MODULE
+   컴포넌트 관련 CSS (버튼, 카드, 진행바, 옵션 등)
+   ============================================================================= */
+
+/* 시작 버튼 */
+.love-start-button {
+    background: linear-gradient(135deg, #ff6b9d, #c44569);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 18px 40px;
+    font-size: 1.25rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(255, 107, 157, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.love-start-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.6s;
+}
+
+.love-start-button:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 12px 35px rgba(255, 107, 157, 0.4);
+    background: linear-gradient(135deg, #ff5583, #b03a5b);
+}
+
+.love-start-button:hover::before {
+    left: 100%;
+}
+
+.love-start-button:active {
+    transform: translateY(-1px) scale(1.02);
+}
+
+/* 진행바 컨테이너 */
+.love-progress-container {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 32px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.love-progress-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.love-progress-text {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.love-progress-bar {
+    width: 100%;
+    height: 12px;
+    background: #e9ecef;
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+}
+
+.love-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #ff6b9d, #c44569);
+    border-radius: 6px;
+    transition: width 0.5s ease;
+    position: relative;
+}
+
+.love-progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: progressShine 2s ease-in-out infinite;
+}
+
+@keyframes progressShine {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* 옵션 스타일 */
+.love-option {
+    background: white;
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #333;
+    position: relative;
+    overflow: hidden;
+}
+
+.love-option::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, #ff6b9d, #c44569);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.love-option::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.9);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.love-option:hover {
+    border-color: #ff6b9d;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(255, 107, 157, 0.2);
+}
+
+.love-option:hover::before {
+    opacity: 1;
+}
+
+.love-option:hover::after {
+    opacity: 1;
+}
+
+.love-option.selected {
+    border-color: #ff6b9d;
+    background: linear-gradient(135deg, #ff6b9d, #c44569);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(255, 107, 157, 0.3);
+}
+
+.love-option.selected::before,
+.love-option.selected::after {
+    opacity: 0;
+}
+
+/* 네비게이션 */
+.love-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 40px;
+    gap: 16px;
+}
+
+/* 버튼 기본 스타일 */
+.love-btn {
+    flex: 1;
+    min-width: 120px;
+    max-width: 200px;
+    padding: 14px 24px;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    position: relative;
+    overflow: hidden;
+}
+
+.love-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+.love-btn-primary {
+    background: linear-gradient(135deg, #ff6b9d, #c44569);
+    color: white;
+    border: 2px solid transparent;
+}
+
+.love-btn-primary:hover:not(:disabled) {
+    background: linear-gradient(135deg, #ff5583, #b03a5b);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(255, 107, 157, 0.3);
+}
+
+.love-btn-secondary {
+    background: white;
+    color: #ff6b9d;
+    border: 2px solid #ff6b9d;
+}
+
+.love-btn-secondary:hover:not(:disabled) {
+    background: #ff6b9d;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(255, 107, 157, 0.2);
+}
+
+/* 결과 DNA 코드 */
+.love-result-dna {
+    font-size: 3rem;
+    font-weight: 900;
+    letter-spacing: 0.5rem;
+    margin-bottom: 16px;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.love-result-title {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 12px;
+    line-height: 1.2;
+}
+
+.love-result-subtitle {
+    font-size: 1.25rem;
+    font-weight: 400;
+    opacity: 0.9;
+    margin-bottom: 20px;
+    font-style: italic;
+}
+
+.love-result-rarity {
+    font-size: 1rem;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 8px 16px;
+    border-radius: 20px;
+    display: inline-block;
+}
+
+/* 축 아이템 */
+.love-axis-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.love-axis-label {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #666;
+    min-width: 120px;
+}
+
+.love-axis-code {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: #ff6b9d;
+    min-width: 40px;
+    text-align: center;
+}
+
+.love-axis-description {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #333;
+    flex: 1;
+}
+
+/* 결과 카드 타이틀 */
+.love-description-title,
+.love-strengths-title,
+.love-weaknesses-title,
+.love-dating-title,
+.love-growth-title,
+.love-compatibility-title,
+.love-celebrity-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #333;
+}
+
+.love-description-title { color: #ff6b9d; }
+.love-strengths-title { color: #28a745; }
+.love-weaknesses-title { color: #dc3545; }
+.love-dating-title { color: #8b5cf6; }
+.love-growth-title { color: #17a2b8; }
+.love-compatibility-title { color: #fd7e14; }
+.love-celebrity-title { color: #ffc107; }
+
+/* 궁합 타입 */
+.love-compatibility-best {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #28a745;
+    margin-bottom: 8px;
+}
+
+.love-compatibility-good {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #17a2b8;
+    margin-bottom: 8px;
+}
+
+.love-compatibility-challenge {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #dc3545;
+    margin-bottom: 8px;
+}
+
+.love-compatibility-type {
+    background: #28a745;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.love-compatibility-type-good {
+    background: #17a2b8;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.love-compatibility-type-challenge {
+    background: #dc3545;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+/* 유명인 아이템 */
+.love-celebrity-item {
+    background: linear-gradient(135deg, #ffc107, #ff8c00);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    display: inline-block;
+}
+
+/* 공유 버튼 */
+.love-share-btn {
+    flex: 1;
+    min-width: 160px;
+    max-width: 220px;
+    padding: 14px 20px;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.love-share-btn-kakao {
+    background: #FEE500;
+    color: #000;
+}
+
+.love-share-btn-kakao:hover {
+    background: #E6CE00;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(254, 229, 0, 0.3);
+}
+
+.love-share-btn-copy {
+    background: #f8f9fa;
+    color: #333;
+    border: 2px solid #e9ecef;
+}
+
+.love-share-btn-copy:hover {
+    background: #e9ecef;
+    border-color: #dee2e6;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* 모바일 반응형 */
+@media (max-width: 768px) {
+    .love-navigation {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .love-btn {
+        max-width: 100%;
+    }
+    
+    .love-share-buttons {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .love-share-btn {
+        max-width: 100%;
+    }
+    
+    .love-action-buttons {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .love-result-dna {
+        font-size: 2.5rem;
+        letter-spacing: 0.3rem;
+    }
+    
+    .love-axis-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 8px;
+    }
+    
+    .love-axis-label {
+        min-width: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .love-option {
+        padding: 16px;
+        font-size: 0.9rem;
+    }
+    
+    .love-result-dna {
+        font-size: 2rem;
+        letter-spacing: 0.2rem;
+    }
+    
+    .love-result-title {
+        font-size: 1.5rem;
+    }
+    
+    .love-result-subtitle {
+        font-size: 1rem;
+    }
+    
+    .love-axis-code {
+        font-size: 1.25rem;
+    }
+}
