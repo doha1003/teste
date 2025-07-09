@@ -160,9 +160,9 @@
                             <div class="breakdown-amount" id="employment-insurance">0원</div>
                             <div class="breakdown-rate">0.9%</div>
                         </div>
-                        <div class="breakdown-row insurance">
+                        <div class="breakdown-row company-burden">
                             <div class="breakdown-label">⚠️ 산재보험</div>
-                            <div class="breakdown-amount" id="industrial-insurance">0원</div>
+                            <div class="breakdown-amount">회사 부담</div>
                             <div class="breakdown-rate">0.7%</div>
                         </div>
                         <div class="breakdown-row total-deduction">
@@ -200,7 +200,7 @@
                         <div class="comparison-card">
                             <div class="comparison-label">보험료</div>
                             <div class="comparison-value" id="insurance-burden">0%</div>
-                            <div class="comparison-desc">4대보험료 총 비율</div>
+                            <div class="comparison-desc">3대보험료 총 비율</div>
                         </div>
                     </div>
                 </div>
@@ -211,7 +211,7 @@
                     <div class="info-content">
                         <ul class="info-list">
                             <li><strong>세율 기준:</strong> 2025년 소득세법 기준 (1,400만원 이하 6%, 5,000만원 이하 15% 등)</li>
-                            <li><strong>4대보험료:</strong> 국민연금 4.5%, 건강보험 3.545%, 장기요양 0.4564%, 고용보험 0.9%, 산재보험 0.7%</li>
+                            <li><strong>보험료:</strong> 국민연금 4.5%, 건강보험 3.545%, 장기요양 0.4564%, 고용보험 0.9% (산재보험은 회사 부담)</li>
                             <li><strong>소득공제:</strong> 근로소득공제, 인적공제(본인+부양가족 1인당 150만원, 자녀 1인당 추가 200만원) 적용</li>
                             <li><strong>비과세:</strong> 식대, 교통비 등 월 20만원 기본 설정 (변경 가능)</li>
                             <li><strong>주의사항:</strong> 실제 급여명세서는 회사별 복리후생, 추가 공제 등에 따라 차이가 있을 수 있습니다</li>
@@ -281,7 +281,7 @@
             return 0;
         }
         
-        // 4대보험료 계산 (2025년 기준)
+        // 3대보험료 계산 (2025년 기준) - 산재보험 제외
         function calculateInsurance(monthlyIncome) {
             // 국민연금 (상한: 월 574만원, 2025년 기준)
             const pensionBase = Math.min(monthlyIncome, 5740000);
@@ -297,15 +297,13 @@
             const employmentBase = Math.min(monthlyIncome, 4150000);
             const employmentInsurance = employmentBase * 0.009;
             
-            // 산재보험 (상한 없음, 회사가 부담하지만 계산에 포함)
-            const industrialInsurance = monthlyIncome * 0.007;
+            // 산재보험은 회사 부담이므로 계산에서 제외
             
             return {
                 pension: pension,
                 healthInsurance: healthInsurance,
                 longTermCare: longTermCare,
-                employmentInsurance: employmentInsurance,
-                industrialInsurance: industrialInsurance
+                employmentInsurance: employmentInsurance
             };
         }
         
@@ -342,18 +340,17 @@
             const incomeTax = calculateIncomeTax(taxableIncome);
             const localTax = incomeTax * 0.1; // 지방소득세
             
-            // 4대보험료 계산 (월 과세소득 기준)
+            // 3대보험료 계산 (월 과세소득 기준) - 산재보험 제외
             const monthlyInsurance = calculateInsurance(monthlyTaxableIncome);
             
             // 월별 세금 및 보험료
             const monthlyIncomeTax = incomeTax / 12;
             const monthlyLocalTax = localTax / 12;
             
-            // 총 월 공제액
+            // 총 월 공제액 (산재보험 제외)
             const monthlyTotalDeduction = monthlyIncomeTax + monthlyLocalTax + 
                 monthlyInsurance.pension + monthlyInsurance.healthInsurance + 
-                monthlyInsurance.longTermCare + monthlyInsurance.employmentInsurance + 
-                monthlyInsurance.industrialInsurance;
+                monthlyInsurance.longTermCare + monthlyInsurance.employmentInsurance;
             
             // 실수령액
             const monthlyNetIncome = monthlyTaxableIncome - monthlyTotalDeduction;
@@ -390,17 +387,15 @@
             document.getElementById('health-insurance').textContent = formatCurrency(calc.monthlyInsurance.healthInsurance);
             document.getElementById('long-term-care').textContent = formatCurrency(calc.monthlyInsurance.longTermCare);
             document.getElementById('employment-insurance').textContent = formatCurrency(calc.monthlyInsurance.employmentInsurance);
-            document.getElementById('industrial-insurance').textContent = formatCurrency(calc.monthlyInsurance.industrialInsurance);
             document.getElementById('total-deduction').textContent = formatCurrency(calc.monthlyTotalDeduction);
             document.getElementById('net-income').textContent = formatCurrency(calc.monthlyNetIncome);
             
-            // 비율 정보
+            // 비율 정보 (산재보험 제외)
             const deductionRate = (calc.monthlyTotalDeduction / calc.monthlyTaxableIncome * 100);
             const takeHomeRate = (calc.monthlyNetIncome / calc.monthlyTaxableIncome * 100);
             const taxBurden = ((calc.monthlyIncomeTax + calc.monthlyLocalTax) / calc.monthlyTaxableIncome * 100);
             const insuranceBurden = ((calc.monthlyInsurance.pension + calc.monthlyInsurance.healthInsurance + 
-                calc.monthlyInsurance.longTermCare + calc.monthlyInsurance.employmentInsurance + 
-                calc.monthlyInsurance.industrialInsurance) / calc.monthlyTaxableIncome * 100);
+                calc.monthlyInsurance.longTermCare + calc.monthlyInsurance.employmentInsurance) / calc.monthlyTaxableIncome * 100);
             
             document.getElementById('deduction-rate').textContent = deductionRate.toFixed(1) + '%';
             document.getElementById('take-home-rate').textContent = takeHomeRate.toFixed(1) + '%';
