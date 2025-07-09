@@ -25,6 +25,9 @@
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
     
+    <!-- Kakao SDK -->
+    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.4.0/kakao.min.js" integrity="sha384-mXVrIX2T/Kszp6Z0aEWaA8Nm7J6/ZeWXbL8UpGRjKwWe56Srd/iyNmWMBhcItAjH" crossorigin="anonymous"></script>
+    
     <!-- 향상된 만세력 시스템 로드 -->
     <script src="/js/lunar-calendar-compact.js"></script>
     <script src="/js/lunar-calendar-loader.js"></script>
@@ -168,6 +171,12 @@
     <script>
         // 향상된 사주 계산기 인스턴스
         let sajuCalculator = null;
+        let currentSajuData = null;
+        
+        // 카카오 SDK 초기화
+        if (window.Kakao && !window.Kakao.isInitialized()) {
+            Kakao.init('19d8ba832f94d513957adc17883c1282');
+        }
         
         // 페이지 로드 시 초기화
         document.addEventListener('DOMContentLoaded', function() {
@@ -222,6 +231,19 @@
                 
                 const saju = await sajuCalculator.calculateSaju(birthYear, birthMonth, birthDay, birthTime, isLunar);
                 const interpretation = sajuCalculator.generateInterpretation(saju);
+                
+                // 결과 데이터 저장 (공유용)
+                currentSajuData = {
+                    userName,
+                    gender,
+                    birthYear,
+                    birthMonth,
+                    birthDay,
+                    birthTime,
+                    isLunar,
+                    saju,
+                    interpretation
+                };
                 
                 const resultDiv = document.getElementById('sajuResult');
                 resultDiv.innerHTML = `
@@ -342,10 +364,21 @@
                             <p>${interpretation.relationship}</p>
                         </div>
                         
-                        <div style="text-align: center; margin-top: 40px;">
-                            <button onclick="location.reload()" class="fortune-btn fortune-btn-secondary">
-                                다시 분석하기
-                            </button>
+                        <div class="fortune-share">
+                            <h3 class="fortune-share-title">결과 공유하기</h3>
+                            <div class="fortune-share-buttons">
+                                <button class="fortune-share-btn fortune-share-kakao" onclick="shareSaju()">
+                                    💬 카카오톡 공유
+                                </button>
+                                <button class="fortune-share-btn fortune-share-copy" onclick="copyResultLink()">
+                                    🔗 링크 복사
+                                </button>
+                            </div>
+                            <div style="text-align: center; margin-top: 20px;">
+                                <button onclick="location.reload()" class="fortune-btn fortune-btn-secondary">
+                                    다시 분석하기
+                                </button>
+                            </div>
                         </div>
                     </div>
                 `;
@@ -366,6 +399,67 @@
                         </div>
                     </div>
                 `;
+            }
+        }
+        
+        // 카카오톡 공유 함수
+        function shareSaju() {
+            if (typeof Kakao !== 'undefined' && currentSajuData) {
+                const { userName, saju, interpretation } = currentSajuData;
+                const dayMaster = saju.dayPillar.stem + saju.dayPillar.branch;
+                
+                const sajuString = `${saju.yearPillar.stem}${saju.yearPillar.branch} ${saju.monthPillar.stem}${saju.monthPillar.branch} ${saju.dayPillar.stem}${saju.dayPillar.branch} ${saju.hourPillar.stem}${saju.hourPillar.branch}`;
+                
+                const detailedDescription = `🔮 ${userName}님의 사주팔자 분석 결과
+
+📅 사주: ${sajuString}
+⭐ 일주(본인): ${dayMaster}일주 (${saju.dayMasterElement})
+🌟 가장 강한 오행: ${saju.elements.strongest}
+🌟 가장 약한 오행: ${saju.elements.weakest}
+
+🧠 성격: ${interpretation.personality.substring(0, 100)}...
+
+💼 직업 적성: ${interpretation.career.substring(0, 100)}...
+
+만세력 기반 정확한 AI 사주팔자 분석 👇`;
+                
+                Kakao.Share.sendDefault({
+                    objectType: 'feed',
+                    content: {
+                        title: `🔮 ${userName}님의 사주팔자 - ${dayMaster}일주`,
+                        description: detailedDescription,
+                        imageUrl: 'https://doha.kr/images/saju-og.png',
+                        link: {
+                            mobileWebUrl: window.location.href,
+                            webUrl: window.location.href,
+                        },
+                    },
+                    buttons: [
+                        {
+                            title: '나도 사주팔자 보기',
+                            link: {
+                                mobileWebUrl: 'https://doha.kr/fortune/saju/',
+                                webUrl: 'https://doha.kr/fortune/saju/'
+                            }
+                        }
+                    ]
+                });
+            } else {
+                copyResultLink();
+            }
+        }
+        
+        // 링크 복사
+        function copyResultLink() {
+            const url = window.location.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(url).then(() => {
+                    alert('링크가 복사되었습니다!');
+                }).catch(() => {
+                    alert('링크 복사에 실패했습니다.');
+                });
+            } else {
+                alert('링크 복사에 실패했습니다.');
             }
         }
     </script>
