@@ -22,6 +22,12 @@
     
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
+    
+    <!-- 향상된 만세력 시스템 로드 -->
+    <script src="/js/lunar-calendar-compact.js"></script>
+    <script src="/js/lunar-calendar-loader.js"></script>
+    <script src="/js/saju-calculator-enhanced.js"></script>
+    <script src="/js/gemini-api.js"></script>
 </head>
 <body class="saju-page">
     <!-- 네비게이션 바 -->
@@ -105,7 +111,7 @@
                     </div>
                     
                     <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 30px;">
-                        🔮 사주팔자 분석하기
+                        🔮 정확한 만세력 사주팔자 분석하기
                     </button>
                 </form>
             </div>
@@ -132,9 +138,9 @@
     <section class="info-section">
         <div class="container">
             <div class="info-box">
-                <h3>AI 사주팔자 분석 안내</h3>
+                <h3>🔮 정확한 만세력 AI 사주팔자 분석 안내</h3>
                 <ul>
-                    <li>만세력 기반 정확한 사주팔자 계산으로 연주, 월주, 일주, 시주를 산출합니다.</li>
+                    <li>1841년부터 2110년까지 정확한 만세력 데이터베이스를 기반으로 사주팔자를 계산합니다.</li>
                     <li>십신 분석을 통해 성격, 적성, 인간관계를 파악합니다.</li>
                     <li>오행 균형 분석으로 건강, 운세, 개선점을 제시합니다.</li>
                     <li>AI가 전통 사주학과 현대적 해석을 결합하여 상세한 분석을 제공합니다.</li>
@@ -149,10 +155,22 @@
     
     <!-- External JavaScript -->
     <script src="/js/main.js"></script>
-    <script src="/js/saju-calculator.js"></script>
-    <script src="/js/gemini-api.js"></script>
     
     <script>
+        // 향상된 사주 계산기 인스턴스
+        let sajuCalculator = null;
+        
+        // 페이지 로드 시 초기화
+        document.addEventListener('DOMContentLoaded', function() {
+            // 향상된 사주 계산기 초기화
+            if (typeof SajuCalculatorEnhanced !== 'undefined') {
+                sajuCalculator = new SajuCalculatorEnhanced();
+                console.log('향상된 사주 계산기 로드 완료');
+            } else {
+                console.log('향상된 사주 계산기 로드 실패');
+            }
+        });
+        
         // 사주 생성 함수
         function generateSaju(event) {
             event.preventDefault();
@@ -171,7 +189,7 @@
             resultDiv.innerHTML = `
                 <div class="loading" style="text-align: center; padding: 40px;">
                     <div class="loading-spinner"></div>
-                    <p style="margin-top: 20px;">🔮 AI가 ${userName}님의 사주팔자를 분석하고 있습니다...</p>
+                    <p style="margin-top: 20px;">🔮 정확한 만세력으로 ${userName}님의 사주팔자를 분석하고 있습니다...</p>
                 </div>
             `;
             
@@ -180,144 +198,165 @@
             
             // 사주 계산 및 표시
             setTimeout(() => {
-                const saju = sajuCalculator.calculateSaju(birthYear, birthMonth, birthDay, birthTime, isLunar);
-                displaySajuResult(userName, gender, saju);
+                displaySajuResult(userName, gender, birthYear, birthMonth, birthDay, birthTime, isLunar);
             }, 2000);
         }
         
         // 사주 결과 표시
-        function displaySajuResult(userName, gender, saju) {
-            const interpretation = sajuCalculator.generateInterpretation(saju);
-            const today = new Date();
-            
-            const resultDiv = document.getElementById('sajuResult');
-            resultDiv.innerHTML = `
-                <div class="saju-result-container">
-                    <div class="saju-header">
-                        <h2>${userName}님의 사주팔자</h2>
-                        <p class="birth-info">
-                            ${saju.birthInfo.year}년 ${saju.birthInfo.month}월 ${saju.birthInfo.day}일 
-                            ${saju.birthInfo.hour}시 ${saju.birthInfo.isLunar ? '(음력)' : '(양력)'}
+        async function displaySajuResult(userName, gender, birthYear, birthMonth, birthDay, birthTime, isLunar) {
+            try {
+                // 향상된 사주 계산기로 계산
+                if (!sajuCalculator) {
+                    throw new Error('사주 계산기가 초기화되지 않았습니다.');
+                }
+                
+                const saju = await sajuCalculator.calculateSaju(birthYear, birthMonth, birthDay, birthTime, isLunar);
+                const interpretation = sajuCalculator.generateInterpretation(saju);
+                
+                const resultDiv = document.getElementById('sajuResult');
+                resultDiv.innerHTML = `
+                    <div class="saju-result-container">
+                        <div class="saju-header">
+                            <h2>🔮 ${userName}님의 사주팔자</h2>
+                            <p class="birth-info">
+                                ${saju.birthInfo.year}년 ${saju.birthInfo.month}월 ${saju.birthInfo.day}일 
+                                ${birthTime}시 ${saju.birthInfo.isLunar ? '(음력)' : '(양력)'}
+                            </p>
+                        </div>
+                        
+                        <div class="saju-pillars">
+                            <h3>사주팔자 (四柱八字)</h3>
+                            <div class="pillars-grid">
+                                <div class="pillar-item">
+                                    <div class="pillar-title">연주 (年柱)</div>
+                                    <div class="pillar-chars">
+                                        <span class="stem">${saju.yearPillar.stem}</span>
+                                        <span class="branch">${saju.yearPillar.branch}</span>
+                                    </div>
+                                    <div class="pillar-god">${saju.tenGods.year}</div>
+                                </div>
+                                
+                                <div class="pillar-item">
+                                    <div class="pillar-title">월주 (月柱)</div>
+                                    <div class="pillar-chars">
+                                        <span class="stem">${saju.monthPillar.stem}</span>
+                                        <span class="branch">${saju.monthPillar.branch}</span>
+                                    </div>
+                                    <div class="pillar-god">${saju.tenGods.month}</div>
+                                </div>
+                                
+                                <div class="pillar-item main-pillar">
+                                    <div class="pillar-title">일주 (日柱)</div>
+                                    <div class="pillar-chars">
+                                        <span class="stem main-stem">${saju.dayPillar.stem}</span>
+                                        <span class="branch main-branch">${saju.dayPillar.branch}</span>
+                                    </div>
+                                    <div class="pillar-god">일주(본인)</div>
+                                </div>
+                                
+                                <div class="pillar-item">
+                                    <div class="pillar-title">시주 (時柱)</div>
+                                    <div class="pillar-chars">
+                                        <span class="stem">${saju.hourPillar.stem}</span>
+                                        <span class="branch">${saju.hourPillar.branch}</span>
+                                    </div>
+                                    <div class="pillar-god">${saju.tenGods.hour}</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="day-master-info">
+                            <h3>일주 (日主) 분석</h3>
+                            <div class="day-master-card">
+                                <div class="day-master-main">
+                                    <span class="day-master-char">${saju.dayMaster}</span>
+                                    <span class="day-master-element">${saju.dayMasterElement}(${saju.dayMasterElement})</span>
+                                </div>
+                                <p class="day-master-desc">${interpretation.dayMaster}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="elements-analysis">
+                            <h3>오행 분석</h3>
+                            <div class="elements-grid">
+                                <div class="element-item">
+                                    <span class="element-name">목(木)</span>
+                                    <span class="element-count">${saju.elements.counts.목}</span>
+                                </div>
+                                <div class="element-item">
+                                    <span class="element-name">화(火)</span>
+                                    <span class="element-count">${saju.elements.counts.화}</span>
+                                </div>
+                                <div class="element-item">
+                                    <span class="element-name">토(土)</span>
+                                    <span class="element-count">${saju.elements.counts.토}</span>
+                                </div>
+                                <div class="element-item">
+                                    <span class="element-name">금(金)</span>
+                                    <span class="element-count">${saju.elements.counts.금}</span>
+                                </div>
+                                <div class="element-item">
+                                    <span class="element-name">수(水)</span>
+                                    <span class="element-count">${saju.elements.counts.수}</span>
+                                </div>
+                            </div>
+                            <div class="elements-summary">
+                                <p><strong>가장 강한 오행:</strong> ${saju.elements.strongest}(${saju.elements.strongest})</p>
+                                <p><strong>가장 약한 오행:</strong> ${saju.elements.weakest}(${saju.elements.weakest})</p>
+                                <p><strong>오행 균형:</strong> ${saju.elements.balance.description}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="interpretation-sections">
+                            <div class="interpretation-item">
+                                <h4>🧠 성격 분석</h4>
+                                <p>${interpretation.personality}</p>
+                            </div>
+                            
+                            <div class="interpretation-item">
+                                <h4>🌟 운세 분석</h4>
+                                <p>${interpretation.fortune}</p>
+                            </div>
+                            
+                            <div class="interpretation-item">
+                                <h4>💼 직업 적성</h4>
+                                <p>${interpretation.career}</p>
+                            </div>
+                            
+                            <div class="interpretation-item">
+                                <h4>💪 건강 관리</h4>
+                                <p>${interpretation.health}</p>
+                            </div>
+                            
+                            <div class="interpretation-item">
+                                <h4>👥 인간관계</h4>
+                                <p>${interpretation.relationship}</p>
+                            </div>
+                        </div>
+                        
+                        <div style="text-align: center; margin-top: 40px;">
+                            <button onclick="location.reload()" class="btn btn-secondary">
+                                다시 분석하기
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+            } catch (error) {
+                console.error('사주 계산 중 오류:', error);
+                const resultDiv = document.getElementById('sajuResult');
+                resultDiv.innerHTML = `
+                    <div class="saju-result-container">
+                        <h2 style="text-align: center; color: #e74c3c;">오류가 발생했습니다</h2>
+                        <p style="text-align: center; margin-top: 20px;">
+                            사주 분석 중 오류가 발생했습니다. 페이지를 새로고침하여 다시 시도해주세요.
                         </p>
-                    </div>
-                    
-                    <div class="saju-pillars">
-                        <h3>사주팔자 (四柱八字)</h3>
-                        <div class="pillars-grid">
-                            <div class="pillar-item">
-                                <div class="pillar-title">연주 (年柱)</div>
-                                <div class="pillar-chars">
-                                    <span class="stem">${saju.yearPillar.stem}</span>
-                                    <span class="branch">${saju.yearPillar.branch}</span>
-                                </div>
-                                <div class="pillar-god">${saju.tenGods.year}</div>
-                            </div>
-                            
-                            <div class="pillar-item">
-                                <div class="pillar-title">월주 (月柱)</div>
-                                <div class="pillar-chars">
-                                    <span class="stem">${saju.monthPillar.stem}</span>
-                                    <span class="branch">${saju.monthPillar.branch}</span>
-                                </div>
-                                <div class="pillar-god">${saju.tenGods.month}</div>
-                            </div>
-                            
-                            <div class="pillar-item main-pillar">
-                                <div class="pillar-title">일주 (日柱)</div>
-                                <div class="pillar-chars">
-                                    <span class="stem main-stem">${saju.dayPillar.stem}</span>
-                                    <span class="branch main-branch">${saju.dayPillar.branch}</span>
-                                </div>
-                                <div class="pillar-god">${saju.tenGods.day}</div>
-                            </div>
-                            
-                            <div class="pillar-item">
-                                <div class="pillar-title">시주 (時柱)</div>
-                                <div class="pillar-chars">
-                                    <span class="stem">${saju.hourPillar.stem}</span>
-                                    <span class="branch">${saju.hourPillar.branch}</span>
-                                </div>
-                                <div class="pillar-god">${saju.tenGods.hour}</div>
-                            </div>
+                        <div style="text-align: center; margin-top: 20px;">
+                            <button onclick="location.reload()" class="btn btn-primary">다시 시도</button>
                         </div>
                     </div>
-                    
-                    <div class="day-master-info">
-                        <h3>일주 (日主) 분석</h3>
-                        <div class="day-master-card">
-                            <div class="day-master-main">
-                                <span class="day-master-char">${saju.dayMaster}</span>
-                                <span class="day-master-element">${saju.dayMasterElement}(${saju.dayMasterElement})</span>
-                            </div>
-                            <p class="day-master-desc">${interpretation.dayMaster}</p>
-                        </div>
-                    </div>
-                    
-                    <div class="elements-analysis">
-                        <h3>오행 분석</h3>
-                        <div class="elements-grid">
-                            <div class="element-item">
-                                <span class="element-name">목(木)</span>
-                                <span class="element-count">${saju.elements.counts.목}</span>
-                            </div>
-                            <div class="element-item">
-                                <span class="element-name">화(火)</span>
-                                <span class="element-count">${saju.elements.counts.화}</span>
-                            </div>
-                            <div class="element-item">
-                                <span class="element-name">토(土)</span>
-                                <span class="element-count">${saju.elements.counts.토}</span>
-                            </div>
-                            <div class="element-item">
-                                <span class="element-name">금(金)</span>
-                                <span class="element-count">${saju.elements.counts.금}</span>
-                            </div>
-                            <div class="element-item">
-                                <span class="element-name">수(水)</span>
-                                <span class="element-count">${saju.elements.counts.수}</span>
-                            </div>
-                        </div>
-                        <div class="elements-summary">
-                            <p><strong>가장 강한 오행:</strong> ${saju.elements.strongest}(${saju.elements.strongest})</p>
-                            <p><strong>가장 약한 오행:</strong> ${saju.elements.weakest}(${saju.elements.weakest})</p>
-                            <p><strong>오행 균형:</strong> ${saju.elements.balance.balance}</p>
-                        </div>
-                    </div>
-                    
-                    <div class="interpretation-sections">
-                        <div class="interpretation-item">
-                            <h4>🧠 성격 분석</h4>
-                            <p>${interpretation.personality}</p>
-                        </div>
-                        
-                        <div class="interpretation-item">
-                            <h4>🌟 운세 분석</h4>
-                            <p>${interpretation.fortune}</p>
-                        </div>
-                        
-                        <div class="interpretation-item">
-                            <h4>💼 직업 적성</h4>
-                            <p>${interpretation.career}</p>
-                        </div>
-                        
-                        <div class="interpretation-item">
-                            <h4>💪 건강 관리</h4>
-                            <p>${interpretation.health}</p>
-                        </div>
-                        
-                        <div class="interpretation-item">
-                            <h4>👥 인간관계</h4>
-                            <p>${interpretation.relationship}</p>
-                        </div>
-                    </div>
-                    
-                    <div style="text-align: center; margin-top: 40px;">
-                        <button onclick="location.reload()" class="btn btn-secondary">
-                            다시 분석하기
-                        </button>
-                    </div>
-                </div>
-            `;
+                `;
+            }
         }
     </script>
     
@@ -612,12 +651,6 @@
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
-        }
-        
-        /* 로딩 텍스트는 회전하지 않음 */
-        .loading p {
-            animation: none !important;
-            transform: none !important;
         }
         
         .info-section {
