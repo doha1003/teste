@@ -2,7 +2,7 @@
 
 // Kakao SDK 초기화
 if (typeof Kakao !== 'undefined') {
-    Kakao.init('8b5c6e8f97ec3d51a6f784b8b4b5ed99');
+    Kakao.init('19d8ba832f94d513957adc17883c1282');
 }
 
 // MBTI 질문 데이터
