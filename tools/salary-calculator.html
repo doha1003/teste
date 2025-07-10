@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>연봉 실수령액 계산기 - doha.kr</title>
-    <meta name="description" content="연봉, 세금 공제, 국민연금, 건강보험료 등을 모두 계산하여 실제로 받는 월급과 연봉을 확인하세요. 정확한 실수령액 계산기입니다.">
-    <meta name="keywords" content="연봉계산기, 실수령액, 세금계산, 월급계산, 소득세, 지방소득세, 국민연금, 건강보험료">
+    <title>연봉 실수령액 계산기 - 2025년 최신 세율 | doha.kr</title>
+    <meta name="description" content="2025년 최신 간이세액표 적용! 연봉, 세금, 4대보험료를 정확하게 계산하여 실제 월급을 확인하세요.">
+    <meta name="keywords" content="연봉계산기, 실수령액, 세금계산, 월급계산, 소득세, 지방소득세, 국민연금, 건강보험료, 2025년">
     
     <!-- Open Graph -->
-    <meta property="og:title" content="연봉 실수령액 계산기 - doha.kr">
-    <meta property="og:description" content="세금 공제 후 실제로 받는 월급과 연봉을 정확히 계산해보세요.">
+    <meta property="og:title" content="연봉 실수령액 계산기 - 2025년 최신">
+    <meta property="og:description" content="2025년 최신 세율로 정확한 실수령액을 계산해보세요.">
     <meta property="og:image" content="https://doha.kr/images/og-image.svg">
     <meta property="og:url" content="https://doha.kr/tools/salary-calculator.html">
     
@@ -84,6 +84,19 @@
         .form-group select:focus {
             outline: none;
             border-color: #6366f1;
+        }
+        
+        .input-wrapper {
+            position: relative;
+        }
+        
+        .input-unit {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+            font-weight: 500;
         }
         
         .form-row {
@@ -226,6 +239,17 @@
             line-height: 1.5;
         }
         
+        .year-badge {
+            display: inline-block;
+            background: #ef4444;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+        
         @media (max-width: 768px) {
             .salary-calculator-container {
                 padding: 1rem;
@@ -255,22 +279,25 @@
     
     <div class="salary-calculator-container">
         <div class="calculator-header">
-            <h1>💰 연봉 실수령액 계산기</h1>
-            <p>세금 공제 후 실제로 받는 월급과 연봉을 정확히 계산해보세요.<br>
-            소득세, 지방소득세, 국민연금, 건강보험료 등을 모두 반영합니다.</p>
+            <h1>💰 연봉 실수령액 계산기 <span class="year-badge">2025년</span></h1>
+            <p>2025년 최신 간이세액표 기준으로 정확한 실수령액을 계산해드립니다.<br>
+            세금과 4대보험료를 모두 반영한 실제 월급을 확인하세요.</p>
         </div>
         
         <form class="calculator-form" id="salaryForm">
             <div class="form-group">
-                <label for="annualSalary">연봉 (세전)</label>
-                <input type="number" id="annualSalary" placeholder="예: 40000000" required>
+                <label for="annualSalary">연봉 (만원 단위)</label>
+                <div class="input-wrapper">
+                    <input type="number" id="annualSalary" placeholder="예: 4000" value="4000" required>
+                    <span class="input-unit">만원</span>
+                </div>
             </div>
             
             <div class="form-row">
                 <div class="form-group">
                     <label for="familyCount">부양가족 수</label>
                     <select id="familyCount">
-                        <option value="1">본인만 (1명)</option>
+                        <option value="1" selected>본인만 (1명)</option>
                         <option value="2">2명</option>
                         <option value="3">3명</option>
                         <option value="4">4명</option>
@@ -282,7 +309,7 @@
                 <div class="form-group">
                     <label for="childCount">20세 이하 자녀 수</label>
                     <select id="childCount">
-                        <option value="0">없음</option>
+                        <option value="0" selected>없음</option>
                         <option value="1">1명</option>
                         <option value="2">2명</option>
                         <option value="3">3명</option>
@@ -296,7 +323,7 @@
         
         <div class="result-container" id="resultContainer">
             <div class="result-header">
-                <h2>계산 결과</h2>
+                <h2>💸 2025년 기준 계산 결과</h2>
                 <p id="resultSummary"></p>
             </div>
             
@@ -315,7 +342,7 @@
             </div>
             
             <div class="deduction-details">
-                <h3 class="deduction-title">📊 공제 내역</h3>
+                <h3 class="deduction-title">📊 공제 내역 (2025년 기준)</h3>
                 <div class="deduction-grid">
                     <div class="deduction-item">
                         <div class="deduction-item-name">소득세</div>
@@ -351,9 +378,12 @@
             <div class="info-box">
                 <h3>⚠️ 안내사항</h3>
                 <p>
-                    이 계산기는 2024년 세법 기준 간이세액표를 적용하여 계산되며, 실제 급여명세서와 다를 수 있습니다. 
-                    정확한 계산을 위해서는 회사의 급여 담당자나 세무사와 상담하시기 바랍니다.
-                    비과세 항목 및 추가 소득공제는 반영되지 않았습니다.
+                    이 계산기는 2025년 간이세액표와 4대보험 요율을 기준으로 계산됩니다.<br>
+                    • 국민연금: 4.5% (상한액 적용)<br>
+                    • 건강보험: 3.545% (2025년 기준)<br>
+                    • 장기요양: 건강보험료의 12.95%<br>
+                    • 고용보험: 0.9%<br>
+                    • 비과세: 월 20만원 기본 적용
                 </p>
             </div>
         </div>
@@ -381,14 +411,17 @@
         document.getElementById('salaryForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const annualSalary = parseInt(document.getElementById('annualSalary').value);
+            const annualSalaryManwon = parseInt(document.getElementById('annualSalary').value);
             const familyCount = parseInt(document.getElementById('familyCount').value);
             const childCount = parseInt(document.getElementById('childCount').value);
             
-            if (!annualSalary || annualSalary <= 0) {
+            if (!annualSalaryManwon || annualSalaryManwon <= 0) {
                 alert('연봉을 올바르게 입력해주세요.');
                 return;
             }
+            
+            // 만원 단위를 원 단위로 변환
+            const annualSalary = annualSalaryManwon * 10000;
             
             // 계산 실행
             const result = calculateSalary(annualSalary, familyCount, childCount);
@@ -400,15 +433,15 @@
         function calculateSalary(annualSalary, familyCount, childCount) {
             const monthlySalary = annualSalary / 12;
             
-            // 4대보험 계산 (2024년 기준)
-            // 국민연금: 4.5% (상한선: 월 590만원)
-            const pensionBase = Math.min(monthlySalary, 5900000);
+            // 2025년 4대보험 요율
+            // 국민연금: 4.5% (상한: 627,150원, 하한: 37,170원)
+            const pensionBase = Math.min(Math.max(monthlySalary, 370000), 5900000);
             const nationalPension = Math.round(pensionBase * 0.045);
             
-            // 건강보험료: 3.545% (2024년 기준)
+            // 건강보험료: 3.545% (2025년)
             const healthInsurance = Math.round(monthlySalary * 0.03545);
             
-            // 장기요양보험료: 건강보험료의 12.95% (2024년 기준)
+            // 장기요양보험료: 건강보험료의 12.95% (2025년)
             const longTermCare = Math.round(healthInsurance * 0.1295);
             
             // 고용보험료: 0.9%
@@ -417,13 +450,13 @@
             // 4대보험 합계
             const totalInsurance = nationalPension + healthInsurance + longTermCare + employmentInsurance;
             
-            // 과세표준 (월급여 - 비과세(20만원) - 4대보험)
+            // 과세표준 (월급여 - 비과세 20만원 - 4대보험)
             const monthlyTaxBase = monthlySalary - 200000 - totalInsurance;
             
-            // 간이세액표 기준 소득세 계산
+            // 2025년 간이세액표 기준 소득세 계산
             let monthlyIncomeTax = 0;
             
-            // 간이세액표 적용 (부양가족 1명 기준)
+            // 간이세액표 적용 (부양가족 1명 기준 - 80% 선택)
             if (familyCount === 1) {
                 if (monthlyTaxBase <= 1470000) {
                     monthlyIncomeTax = 0;
