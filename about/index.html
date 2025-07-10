@@ -12,11 +12,13 @@
     <meta property="og:image" content="https://doha.kr/images/og-image.svg">
     <meta property="og:url" content="https://doha.kr/about/">
     
-    <!-- External CSS -->
-    <link rel="stylesheet" href="../css/styles.css">
+    <!-- External CSS - 절대 경로로 수정 -->
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/components/navbar.css">
+    <link rel="stylesheet" href="/css/components/mobile-responsive.css">
     
     <!-- Favicon -->
-    <link rel="icon" href="../images/logo.svg" type="image/svg+xml">
+    <link rel="icon" href="/images/logo.svg" type="image/svg+xml">
     
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
@@ -107,7 +109,7 @@
         .section h2 {
             font-size: 2.2rem;
             margin-bottom: 24px;
-            color: #1a202c;
+            color: var(--text-primary);
             position: relative;
             padding-left: 20px;
         }
@@ -120,300 +122,39 @@
             transform: translateY(-50%);
             width: 4px;
             height: 40px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--primary-color);
             border-radius: 2px;
         }
         
         .section p {
             font-size: 1.1rem;
             line-height: 1.8;
-            color: #4a5568;
+            color: var(--text-secondary);
             margin-bottom: 20px;
         }
         
-        .highlight-box {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 32px;
-            border-radius: 16px;
-            margin: 32px 0;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .highlight-box::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 100%;
-            height: 100%;
-            background: rgba(255,255,255,0.1);
-            border-radius: 50%;
-            animation: pulse 4s ease-in-out infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { transform: scale(0.8); opacity: 0.5; }
-            50% { transform: scale(1.2); opacity: 0.2; }
-        }
-        
-        .highlight-text {
-            font-size: 1.3rem;
-            font-weight: 600;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 32px;
-            margin-top: 40px;
-        }
-        
-        .feature-card {
-            background: white;
-            border-radius: 16px;
-            padding: 32px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            border: 1px solid #e2e8f0;
-            transition: all 0.3s ease;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
-        }
-        
-        .feature-icon {
-            font-size: 3rem;
-            margin-bottom: 16px;
-            display: block;
-        }
-        
-        .feature-title {
-            font-size: 1.4rem;
-            font-weight: 600;
-            color: #2d3748;
-            margin-bottom: 12px;
-        }
-        
-        .feature-desc {
-            color: #718096;
-            line-height: 1.6;
-        }
-        
-        .timeline {
-            position: relative;
-            padding-left: 40px;
-            margin-top: 32px;
-        }
-        
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 8px;
-            top: 0;
-            bottom: 0;
-            width: 3px;
-            background: linear-gradient(to bottom, #667eea, #764ba2);
-            border-radius: 2px;
-        }
-        
-        .timeline-item {
-            position: relative;
-            margin-bottom: 40px;
-            background: #f8f9fa;
-            padding: 24px;
-            border-radius: 12px;
-            margin-left: 20px;
-            border-left: 3px solid #667eea;
-        }
-        
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -48px;
-            top: 24px;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border: 4px solid white;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
-        
-        .timeline-date {
-            font-size: 0.9rem;
-            color: #667eea;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-        
-        .timeline-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #2d3748;
-            margin-bottom: 8px;
-        }
-        
-        .timeline-desc {
-            color: #718096;
-            line-height: 1.6;
-        }
-        
-        .value-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 32px;
-            margin-top: 40px;
-        }
-        
-        .value-card {
-            padding: 40px 32px;
-            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
-            border-radius: 20px;
-            text-align: center;
-            border: 1px solid #e2e8f0;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .value-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-        
-        .value-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.12);
-        }
-        
-        .value-icon {
-            font-size: 4rem;
-            margin-bottom: 20px;
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
-        }
-        
-        .value-title {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: #2d3748;
-            margin-bottom: 16px;
-        }
-        
-        .value-desc {
-            color: #718096;
-            line-height: 1.7;
-            font-size: 1.05rem;
-        }
-        
-        .team-section {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            border-radius: 20px;
-            padding: 48px;
-            margin-top: 40px;
-        }
-        
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-top: 40px;
-        }
-        
-        .team-member {
-            text-align: center;
-            background: white;
-            padding: 32px;
-            border-radius: 16px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-            transition: transform 0.3s ease;
-        }
-        
-        .team-member:hover {
-            transform: translateY(-8px);
-        }
-        
-        .team-avatar {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            margin: 0 auto 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3.5rem;
-            color: white;
-            box-shadow: 0 8px 24px rgba(102,126,234,0.3);
-        }
-        
-        .team-name {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #2d3748;
-            margin-bottom: 8px;
-        }
-        
-        .team-role {
-            color: #718096;
-            font-weight: 500;
-        }
-        
-        /* Service category styles */
-        .service-category {
-            margin: 32px 0;
-            padding: 24px;
-            background: #f8f9fa;
-            border-radius: 12px;
-            border-left: 4px solid var(--category-color, #667eea);
-        }
-        
-        .service-category h3 {
-            margin: 0 0 16px 0;
-            color: var(--category-color, #667eea);
-            font-size: 1.3rem;
-            font-weight: 700;
-        }
-        
-        .service-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        
-        .service-item {
-            margin-bottom: 16px;
-            padding: 16px 20px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
-        }
-        
-        .service-item:hover {
-            transform: translateX(8px);
-            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-        }
-        
-        .service-name {
-            font-weight: 600;
-            color: #2d3748;
-            margin-bottom: 4px;
-        }
-        
-        .service-desc {
-            color: #718096;
-            font-size: 0.95rem;
+        /* 반응형 디자인 */
+        @media (max-width: 768px) {
+            .content {
+                margin: 60px auto;
+                padding: 0 15px;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .section {
+                padding: 32px 24px;
+            }
+            
+            .section h2 {
+                font-size: 1.8rem;
+            }
         }
         
         /* Responsive AdSense Styles */
@@ -435,25 +176,6 @@
         .adsbygoogle {
             min-height: 90px;
             width: 100%;
-        }
-        
-        /* Responsive design */
-        @media (max-width: 768px) {
-            .hero-title {
-                font-size: 2.5rem;
-            }
-            
-            .hero-subtitle {
-                font-size: 1.2rem;
-            }
-            
-            .section {
-                padding: 32px 24px;
-            }
-            
-            .section h2 {
-                font-size: 1.8rem;
-            }
         }
     </style>
 </head>
@@ -483,15 +205,9 @@
             </p>
             <p>
                 우리는 심리학적 통찰, 실용적 도구, 그리고 AI 기술을 결합하여 사용자 한 분 한 분의 삶에 
-                <strong>긍정적인 변화</strong>를 만들어내고자 합니다. 모든 서비스는 <span style="color: #667eea; font-weight: 600;">100% 무료</span>로 제공되며, 
+                <strong>긍정적인 변화</strong>를 만들어내고자 합니다. 모든 서비스는 <span style="color: var(--primary-color); font-weight: 600;">100% 무료</span>로 제공되며, 
                 가입 없이도 누구나 자유롭게 이용할 수 있습니다.
             </p>
-            
-            <div class="highlight-box">
-                <div class="highlight-text">
-                    "사용자들이 doha.kr에서 새로운 자신을 발견하고 있습니다"
-                </div>
-            </div>
         </div>
         
         <!-- 제공 서비스 섹션 -->
@@ -499,194 +215,43 @@
             <h2>🎯 제공 서비스</h2>
             <p>doha.kr의 3가지 핵심 서비스 카테고리를 통해 다양한 경험을 제공합니다:</p>
             
-            <div class="service-category" style="--category-color: #667eea;">
-                <h3>🧠 심리테스트 - 나를 알아가는 여정</h3>
-                <ul class="service-list">
-                    <li class="service-item">
-                        <div class="service-name">MBTI 성격유형 검사</div>
-                        <div class="service-desc">24개 정교한 질문을 통한 16가지 성격 유형 분석 • 상세한 결과 리포트 • 연애 궁합 분석</div>
-                    </li>
-                    <li class="service-item">
-                        <div class="service-name">테토-에겐 성격 테스트</div>
-                        <div class="service-desc">한국형 성격 유형 분석 • 성별별 맞춤 결과 • 레어도 시스템 • 상세 특성 분석</div>
-                    </li>
-                    <li class="service-item">
-                        <div class="service-name">러브 DNA 테스트</div>
-                        <div class="service-desc">5축 연애 스타일 분석 (L.O.V.E.D) • 개인별 연애 패턴 • 궁합 분석 • 연애 조언</div>
-                    </li>
-                </ul>
-            </div>
+            <h3 style="color: var(--primary-color); margin: 2rem 0 1rem;">🧠 심리테스트 - 나를 알아가는 여정</h3>
+            <ul style="margin-left: 1.5rem; color: var(--text-secondary);">
+                <li><strong>MBTI 성격유형 검사</strong> - 24개 정교한 질문을 통한 16가지 성격 유형 분석</li>
+                <li><strong>테토-에겐 성격 테스트</strong> - 한국형 성격 유형 분석, 레어도 시스템</li>
+                <li><strong>러브 DNA 테스트</strong> - 5축 연애 스타일 분석 (L.O.V.E.D)</li>
+            </ul>
             
-            <div class="service-category" style="--category-color: #10b981;">
-                <h3>🛠️ 실용도구 - 일상의 편리함</h3>
-                <ul class="service-list">
-                    <li class="service-item">
-                        <div class="service-name">글자수 세기</div>
-                        <div class="service-desc">실시간 글자수 계산 • 자소서/리포트 최적화 • 복사/붙여넣기/초기화 기능</div>
-                    </li>
-                    <li class="service-item">
-                        <div class="service-name">BMI 계산기</div>
-                        <div class="service-desc">정확한 체질량지수 계산 • 건강 상태 평가 • 개선 방안 제시</div>
-                    </li>
-                    <li class="service-item">
-                        <div class="service-name">연봉 실수령액 계산기 <span style="color: #f56565; font-size: 0.8rem;">(준비중)</span></div>
-                        <div class="service-desc">세전/세후 연봉 계산 • 각종 공제 항목 반영 • 월별 실수령액 분석</div>
-                    </li>
-                </ul>
-            </div>
+            <h3 style="color: #10b981; margin: 2rem 0 1rem;">🛠️ 실용도구 - 일상의 편리함</h3>
+            <ul style="margin-left: 1.5rem; color: var(--text-secondary);">
+                <li><strong>글자수 세기</strong> - 실시간 글자수 계산, 자소서/리포트 최적화</li>
+                <li><strong>BMI 계산기</strong> - 정확한 체질량지수 계산, 건강 상태 평가</li>
+                <li><strong>연봉 실수령액 계산기</strong> - 세전/세후 연봉 계산, 각종 공제 반영</li>
+            </ul>
             
-            <div class="service-category" style="--category-color: #8b5cf6;">
-                <h3>🔮 AI 운세 - 미래를 엿보다</h3>
-                <ul class="service-list">
-                    <li class="service-item">
-                        <div class="service-name">AI 오늘의 운세</div>
-                        <div class="service-desc">개인 맞춤형 일일 운세 • 연애/직장/건강/재물운 • AI 분석 기반 조언</div>
-                    </li>
-                    <li class="service-item">
-                        <div class="service-name">AI 타로 카드 리딩</div>
-                        <div class="service-desc">질문 기반 타로 분석 • 상세한 해석 • 미래 가이드</div>
-                    </li>
-                    <li class="service-item">
-                        <div class="service-name">별자리별 운세</div>
-                        <div class="service-desc">12궁도 맞춤 운세 • 별자리별 특성 분석</div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        
-        <!-- 발자취 섹션 -->
-        <div class="section">
-            <h2>🏃‍♂️ 우리의 성장 스토리</h2>
-            <p>2025년 7월부터 시작된 doha.kr의 실제 여정:</p>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-date">2025년 7월</div>
-                    <div class="timeline-title">doha.kr 프로젝트 시작 🚀</div>
-                    <div class="timeline-desc">
-                        "더 재미있고 유용한 웹사이트를 만들자"는 목표로 첫 발을 내딛었습니다. 
-                        MBTI 테스트를 시작으로 사용자들의 관심을 받기 시작했습니다.
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-date">2025년 8월</div>
-                    <div class="timeline-title">테토-에겐 테스트 출시 ✨</div>
-                    <div class="timeline-desc">
-                        한국인의 정서에 맞는 독창적인 성격 테스트를 개발했습니다. 
-                        레어도 시스템과 카드 수집 요소를 도입했습니다.
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-date">2025년 9월</div>
-                    <div class="timeline-title">실용도구 카테고리 신설 🛠️</div>
-                    <div class="timeline-desc">
-                        재미뿐만 아니라 실용성도 추구하며 글자수 세기, BMI 계산기 등 
-                        일상에 도움이 되는 도구들을 추가했습니다.
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-date">2025년 10월</div>
-                    <div class="timeline-title">AI 운세 서비스 런칭 🔮</div>
-                    <div class="timeline-desc">
-                        AI 기술을 활용한 개인 맞춤형 운세 서비스를 선보였습니다. 
-                        타로, 별자리 등 다양한 운세 콘텐츠로 확장했습니다.
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-date">2025년 11월</div>
-                    <div class="timeline-title">러브 DNA 테스트 출시 💕</div>
-                    <div class="timeline-desc">
-                        5축 연애 스타일 분석이라는 혁신적인 접근으로 연애에 대한 
-                        새로운 관점을 제시했습니다.
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-date">2025년 12월</div>
-                    <div class="timeline-title">서비스 안정화 및 품질 향상 📈</div>
-                    <div class="timeline-desc">
-                        사용자 피드백을 바탕으로 모든 서비스의 품질을 높이고, 
-                        더욱 정확하고 유용한 결과를 제공하도록 개선했습니다.
-                    </div>
-                </div>
-            </div>
+            <h3 style="color: #8b5cf6; margin: 2rem 0 1rem;">🔮 AI 운세 - 미래를 엿보다</h3>
+            <ul style="margin-left: 1.5rem; color: var(--text-secondary);">
+                <li><strong>AI 오늘의 운세</strong> - 개인 맞춤형 일일 운세, AI 분석 기반</li>
+                <li><strong>AI 타로 카드 리딩</strong> - 질문 기반 타로 분석, 상세한 해석</li>
+                <li><strong>별자리별 운세</strong> - 12궁도 맞춤 운세, 별자리별 특성 분석</li>
+            </ul>
         </div>
         
         <!-- 핵심 가치 섹션 -->
         <div class="section">
             <h2>💎 핵심 가치</h2>
-            <p>doha.kr이 추구하는 가치와 철학:</p>
-            <div class="value-grid">
-                <div class="value-card">
-                    <div class="value-icon">🎯</div>
-                    <div class="value-title">정확성</div>
-                    <div class="value-desc">
-                        심리학 이론과 검증된 방법론에 기반한 신뢰할 수 있는 분석을 제공합니다.
-                    </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 2rem;">
+                <div style="padding: 1.5rem; background: #f8f9fa; border-radius: 12px; border-left: 4px solid var(--primary-color);">
+                    <h3 style="margin: 0 0 1rem; color: var(--primary-color);">🎯 정확성</h3>
+                    <p style="margin: 0; color: var(--text-secondary);">심리학 이론과 검증된 방법론에 기반한 신뢰할 수 있는 분석을 제공합니다.</p>
                 </div>
-                <div class="value-card">
-                    <div class="value-icon">🆓</div>
-                    <div class="value-title">완전 무료</div>
-                    <div class="value-desc">
-                        모든 서비스를 가입 없이 완전 무료로 이용할 수 있습니다. 
-                        숨겨진 비용이나 프리미엄 요금제는 없습니다.
-                    </div>
+                <div style="padding: 1.5rem; background: #f8f9fa; border-radius: 12px; border-left: 4px solid #10b981;">
+                    <h3 style="margin: 0 0 1rem; color: #10b981;">🆓 완전 무료</h3>
+                    <p style="margin: 0; color: var(--text-secondary);">모든 서비스를 가입 없이 완전 무료로 이용할 수 있습니다.</p>
                 </div>
-                <div class="value-card">
-                    <div class="value-icon">🔒</div>
-                    <div class="value-title">개인정보 보호</div>
-                    <div class="value-desc">
-                        사용자의 개인정보를 수집하지 않으며, 모든 데이터는 안전하게 처리됩니다.
-                    </div>
-                </div>
-                <div class="value-card">
-                    <div class="value-icon">💡</div>
-                    <div class="value-title">지속적 개선</div>
-                    <div class="value-desc">
-                        사용자 피드백을 적극 반영하여 끊임없이 발전하는 서비스를 제공합니다.
-                    </div>
-                </div>
-                <div class="value-card">
-                    <div class="value-icon">🌍</div>
-                    <div class="value-title">접근성</div>
-                    <div class="value-desc">
-                        모바일, 태블릿, PC 등 모든 기기에서 최적화된 경험을 제공합니다.
-                    </div>
-                </div>
-                <div class="value-card">
-                    <div class="value-icon">🤝</div>
-                    <div class="value-title">사용자 중심</div>
-                    <div class="value-desc">
-                        사용자의 편의와 만족을 최우선으로 하는 서비스 설계를 추구합니다.
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- 팀 소개 섹션 -->
-        <div class="team-section">
-            <h2 style="text-align: center; margin-bottom: 24px;">👥 함께하는 사람들</h2>
-            <p style="text-align: center; color: #718096; font-size: 1.1rem; margin-bottom: 0;">
-                doha.kr은 다양한 분야의 전문성을 가진 사람들이 함께 만들어가는 플랫폼입니다.
-            </p>
-            <div class="team-grid">
-                <div class="team-member">
-                    <div class="team-avatar">🎨</div>
-                    <div class="team-name">디자인</div>
-                    <div class="team-role">직관적이고 아름다운 사용자 경험 설계</div>
-                </div>
-                <div class="team-member">
-                    <div class="team-avatar">💻</div>
-                    <div class="team-name">개발</div>
-                    <div class="team-role">안정적이고 빠른 웹 서비스 구현</div>
-                </div>
-                <div class="team-member">
-                    <div class="team-avatar">📝</div>
-                    <div class="team-name">콘텐츠 기획</div>
-                    <div class="team-role">재미있고 유익한 콘텐츠 기획 및 제작</div>
-                </div>
-                <div class="team-member">
-                    <div class="team-avatar">🤖</div>
-                    <div class="team-name">AI 개발</div>
-                    <div class="team-role">개인화된 AI 서비스 개발</div>
+                <div style="padding: 1.5rem; background: #f8f9fa; border-radius: 12px; border-left: 4px solid #8b5cf6;">
+                    <h3 style="margin: 0 0 1rem; color: #8b5cf6;">🔒 개인정보 보호</h3>
+                    <p style="margin: 0; color: var(--text-secondary);">사용자의 개인정보를 수집하지 않으며, 모든 데이터는 안전하게 처리됩니다.</p>
                 </div>
             </div>
         </div>
@@ -695,61 +260,22 @@
         <div class="section">
             <h2>🚀 앞으로의 계획</h2>
             <p>
-                doha.kr은 사용자의 삶에 <strong>실질적인 도움</strong>이 되는 서비스를 지속적으로 개발하고 있습니다. 
-                앞으로 준비하고 있는 계획들을 소개합니다:
+                doha.kr은 사용자의 삶에 <strong>실질적인 도움</strong>이 되는 서비스를 지속적으로 개발하고 있습니다.
             </p>
+            <ul style="margin-left: 1.5rem; color: var(--text-secondary); line-height: 1.8;">
+                <li>더욱 전문적이고 정교한 심리 분석 도구 추가</li>
+                <li>게임화 요소 도입 (배지 수집, 레벨 시스템)</li>
+                <li>건전한 커뮤니티 공간 구축</li>
+                <li>전용 모바일 앱 개발</li>
+                <li>일상생활에 도움되는 실용도구 확장</li>
+                <li>개인 맞춤형 서비스 고도화</li>
+            </ul>
             
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">🧬</div>
-                    <div class="feature-title">심리 분석 고도화</div>
-                    <div class="feature-desc">
-                        더욱 전문적이고 정교한 심리 분석 도구들을 추가할 예정입니다.
-                    </div>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🎮</div>
-                    <div class="feature-title">게임화 요소</div>
-                    <div class="feature-desc">
-                        테스트 완료 시 배지 수집, 레벨 시스템 등 재미 요소를 더한 경험을 제공합니다.
-                    </div>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">💬</div>
-                    <div class="feature-title">커뮤니티 기능</div>
-                    <div class="feature-desc">
-                        같은 성격 유형의 사람들끼리 소통할 수 있는 건전한 커뮤니티 공간을 만들어갑니다.
-                    </div>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📱</div>
-                    <div class="feature-title">모바일 앱</div>
-                    <div class="feature-desc">
-                        더욱 편리한 이용을 위한 전용 모바일 앱을 개발할 계획입니다.
-                    </div>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🛠️</div>
-                    <div class="feature-title">실용도구 확장</div>
-                    <div class="feature-desc">
-                        일상생활에 도움이 되는 더 많은 실용적인 도구들을 추가할 예정입니다.
-                    </div>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🎯</div>
-                    <div class="feature-title">개인 맞춤 서비스</div>
-                    <div class="feature-desc">
-                        사용자 개인의 특성에 맞춘 더욱 정교한 맞춤형 서비스를 제공합니다.
-                    </div>
-                </div>
-            </div>
-            
-            <div style="margin-top: 32px; padding: 24px; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 12px; border-left: 4px solid #667eea;">
-                <h3 style="margin: 0 0 16px 0; color: #667eea; font-size: 1.2rem;">💌 여러분의 목소리를 들려주세요!</h3>
-                <p style="margin: 0; color: #4a5568; line-height: 1.6;">
+            <div style="margin-top: 2rem; padding: 1.5rem; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 12px; border-left: 4px solid var(--primary-color);">
+                <h3 style="margin: 0 0 1rem; color: var(--primary-color);">💌 여러분의 목소리를 들려주세요!</h3>
+                <p style="margin: 0; color: var(--text-secondary); line-height: 1.6;">
                     doha.kr을 더욱 발전시키기 위한 <strong>제안, 아이디어, 피드백</strong>을 언제든지 환영합니다. 
-                    사용자 여러분의 소중한 의견이 더 나은 서비스를 만드는 원동력이 됩니다. 
-                    <a href="/contact/" style="color: #667eea; font-weight: 600; text-decoration: none;">문의하기 →</a>
+                    <a href="/contact/" style="color: var(--primary-color); font-weight: 600; text-decoration: none;">문의하기 →</a>
                 </p>
             </div>
         </div>
@@ -773,6 +299,6 @@
     <div id="footer-placeholder"></div>
     
     <!-- External JavaScript -->
-    <script src="../js/main.js"></script>
+    <script src="/js/main.js"></script>
 </body>
 </html>
