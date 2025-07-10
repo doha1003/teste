@@ -15,7 +15,7 @@ const STATIC_ASSETS = [
     '/css/critical.css',
     '/js/app.min.js',
     '/images/logo.svg',
-    '/images/favicon.svg',
+    '/images/placeholder-favicon.svg',
     '/manifest.json',
     '/offline.html',
     // Critical pages
