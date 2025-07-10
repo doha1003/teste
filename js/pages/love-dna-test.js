@@ -283,6 +283,7 @@ let axisScores = {
     E: {},
     D: {}
 };
+let currentResult = null; // 현재 결과 저장
 
 // 화면 전환
 function showScreen(screenId) {
@@ -433,6 +434,13 @@ function showResult() {
     // 결과 데이터 가져오기
     const resultData = getLoveDNAResult(dnaCode);
     
+    // 현재 결과 저장
+    currentResult = {
+        dnaCode: dnaCode,
+        title: resultData.title,
+        subtitle: resultData.subtitle
+    };
+    
     // 결과 화면 표시
     showScreen('result-screen');
     displayResult(resultData, result);
@@ -573,43 +581,53 @@ function restartTest() {
 
 // 카카오톡 공유
 function shareToKakao() {
-    // Web Share API 사용 또는 카카오톡 링크 공유
-    if (navigator.share) {
-        navigator.share({
-            title: '러브 DNA 테스트 결과',
-            text: '나의 연애 스타일을 알아보세요! 러브 DNA 테스트 결과를 확인해보세요!',
-            url: window.location.href
-        }).then(() => {
-            showNotification('공유되었습니다!');
-        }).catch(() => {
-            // 공유 실패 시 링크 복사
-            copyResultLink();
-        });
-    } else {
-        // Web Share API 미지원 시 카카오톡 URL 스킴 사용
-        const url = encodeURIComponent(window.location.href);
-        const text = encodeURIComponent('나의 연애 스타일을 알아보세요! 러브 DNA 테스트 결과를 확인해보세요!');
-        const kakaoUrl = `https://sharer.kakao.com/talk/friends/?url=${url}&text=${text}`;
-        
-        // 새 창으로 카카오톡 공유 페이지 열기
-        const newWindow = window.open(kakaoUrl, '_blank', 'width=500,height=600');
-        
-        if (!newWindow) {
-            // 팝업이 차단된 경우 링크 복사로 대체
-            showNotification('팝업이 차단되어 링크를 복사합니다.', 'info');
-            copyResultLink();
-        } else {
-            showNotification('카카오톡 공유 창이 열렸습니다!');
+    // Kakao SDK가 초기화되었는지 확인
+    if (typeof Kakao !== 'undefined' && Kakao.isInitialized()) {
+        if (!currentResult) {
+            alert('테스트 결과가 없습니다. 먼저 테스트를 완료해주세요.');
+            return;
         }
+        
+        try {
+            Kakao.Share.sendDefault({
+                objectType: 'feed',
+                content: {
+                    title: `💕 나의 러브 DNA는 ${currentResult.dnaCode}`,
+                    description: `${currentResult.title} - ${currentResult.subtitle}\n\n당신의 러브 DNA는 무엇인가요? 지금 테스트해보세요!`,
+                    imageUrl: 'https://doha.kr/images/love-dna-og.png',
+                    link: {
+                        mobileWebUrl: 'https://doha.kr/tests/love-dna/',
+                        webUrl: 'https://doha.kr/tests/love-dna/'
+                    }
+                },
+                buttons: [
+                    {
+                        title: '나도 테스트하기',
+                        link: {
+                            mobileWebUrl: 'https://doha.kr/tests/love-dna/',
+                            webUrl: 'https://doha.kr/tests/love-dna/'
+                        }
+                    }
+                ]
+            });
+        } catch (error) {
+            console.error('카카오톡 공유 오류:', error);
+            // 실패 시 링크 복사로 대체
+            copyResultLink();
+        }
+    } else {
+        console.error('Kakao SDK가 초기화되지 않았습니다.');
+        // Kakao SDK가 없으면 링크 복사로 대체
+        copyResultLink();
     }
 }
 
 // 링크 복사
 function copyResultLink() {
-    const url = window.location.href;
+    const url = 'https://doha.kr/tests/love-dna/';
     if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(url).then(() => {
-            showNotification('링크가 복사되었습니다!');
+            alert('링크가 복사되었습니다!');
         }).catch(() => {
             fallbackCopyToClipboard(url);
         });
@@ -630,16 +648,10 @@ function fallbackCopyToClipboard(text) {
     
     try {
         document.execCommand('copy');
-        showNotification('링크가 복사되었습니다!');
+        alert('링크가 복사되었습니다!');
     } catch (err) {
-        showNotification('링크 복사에 실패했습니다.', 'error');
+        alert('링크 복사에 실패했습니다.');
     }
     
     document.body.removeChild(textArea);
-}
-
-// 알림 표시
-function showNotification(message, type = 'success') {
-    // 단순한 알림을 위해 alert 사용
-    alert(message);
 }
