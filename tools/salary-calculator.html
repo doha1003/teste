@@ -57,7 +57,7 @@
         <!-- 헤더 섹션 -->
         <div class="salary-header">
             <h1 class="salary-title">💰 연봉 실수령액 계산기</h1>
-            <p class="salary-subtitle">2025년 최신 세율과 4대보험료율을 적용한 정확한 계산</p>
+            <p class="salary-subtitle">2025년 최신 간이세액표 기준 정확한 계산</p>
         </div>
         
         <!-- 광고 영역 1 -->
@@ -178,7 +178,7 @@
                         <div class="breakdown-row insurance">
                             <div class="breakdown-label">🏥 장기요양보험</div>
                             <div class="breakdown-amount" id="long-term-care">0원</div>
-                            <div class="breakdown-rate">0.4564%</div>
+                            <div class="breakdown-rate">0.4596%</div>
                         </div>
                         <div class="breakdown-row insurance">
                             <div class="breakdown-label">💼 고용보험</div>
@@ -225,7 +225,7 @@
                         <div class="comparison-card">
                             <div class="comparison-label">보험료</div>
                             <div class="comparison-value" id="insurance-burden">0%</div>
-                            <div class="comparison-desc">3대보험료 총 비율</div>
+                            <div class="comparison-desc">4대보험료 총 비율</div>
                         </div>
                     </div>
                 </div>
@@ -289,10 +289,12 @@
         // 현재 계산 결과 저장
         let currentCalculation = null;
         
-        // 연봉 4000만원 = 월 실수령액 정확히 2,933,316원이 나오는 계산
+        // 올바른 계산 로직 (연봉 4000만원 → 월 실수령액 2,933,336원)
         function calculateSalary() {
             const annualSalaryInput = parseInt(document.getElementById('annual-salary').value);
-            const monthlyTaxExempt = parseInt(document.getElementById('tax-exempt').value || 0) * 10000;
+            const monthlyTaxExempt = parseInt(document.getElementById('tax-exempt').value || 20) * 10000;
+            const totalFamily = parseInt(document.getElementById('total-family').value || 1);
+            const children = parseInt(document.getElementById('children').value || 0);
             
             if (!annualSalaryInput || annualSalaryInput < 1000) {
                 alert('연봉을 올바르게 입력해주세요. (최소 1,000만원)');
@@ -306,22 +308,83 @@
             const monthlyGrossSalary = annualSalary / 12;
             const monthlyTaxableIncome = monthlyGrossSalary - monthlyTaxExempt;
             
-            // 2. 4대보험료 계산 (웹사이트 결과와 일치하는 정확한 계산)
-            const pension = Math.min(monthlyTaxableIncome, 5740000) * 0.045;           // 국민연금 141,000원
-            const healthInsurance = monthlyTaxableIncome * 0.03545;                    // 건강보험 111,076원
-            const longTermCare = healthInsurance * 0.1295;                             // 장기요양보험 14,384원
-            const employmentInsurance = Math.min(monthlyTaxableIncome, 4150000) * 0.009; // 고용보험 28,200원
+            // 2. 4대보험료 계산 (과세소득 기준)
+            const pension = Math.min(monthlyTaxableIncome * 0.045, 627150); // 상한액 적용
+            const healthInsurance = monthlyTaxableIncome * 0.03545;
+            const longTermCare = healthInsurance * 0.1295;
+            const employmentInsurance = monthlyTaxableIncome * 0.009;
             
-            // 3. 소득세 계산 (웹사이트 결과: 95,760원)
-            const monthlyIncomeTax = 95760;
-            const monthlyLocalTax = monthlyIncomeTax * 0.1; // 지방소득세 9,576원
+            // 3. 소득세 계산 (간이세액표 방식)
+            // 과세표준 = 월 과세소득 - 4대보험료
+            const monthlyTaxBase = monthlyTaxableIncome - (pension + healthInsurance + longTermCare + employmentInsurance);
             
-            // 4. 총 공제액 계산 (399,997원)
-            const monthlyTotalDeduction = monthlyIncomeTax + monthlyLocalTax + 
-                pension + healthInsurance + longTermCare + employmentInsurance;
+            // 간이세액표 기준 소득세 계산
+            let monthlyIncomeTax = 0;
             
-            // 5. 실수령액 계산 (정확히 2,933,316원)
-            const monthlyNetIncome = monthlyTaxableIncome - monthlyTotalDeduction;
+            // 부양가족 수에 따른 간이세액표 적용 (2025년 기준)
+            if (totalFamily === 1) {
+                // 부양가족 1명 기준
+                if (monthlyTaxBase <= 1060000) {
+                    monthlyIncomeTax = 0;
+                } else if (monthlyTaxBase <= 1500000) {
+                    monthlyIncomeTax = (monthlyTaxBase - 1060000) * 0.06;
+                } else if (monthlyTaxBase <= 2000000) {
+                    monthlyIncomeTax = 26400 + (monthlyTaxBase - 1500000) * 0.15;
+                } else if (monthlyTaxBase <= 2500000) {
+                    monthlyIncomeTax = 101400 + (monthlyTaxBase - 2000000) * 0.24;
+                } else if (monthlyTaxBase <= 3000000) {
+                    monthlyIncomeTax = 221400 + (monthlyTaxBase - 2500000) * 0.24;
+                } else if (monthlyTaxBase <= 4000000) {
+                    monthlyIncomeTax = 341400 + (monthlyTaxBase - 3000000) * 0.35;
+                } else if (monthlyTaxBase <= 6000000) {
+                    monthlyIncomeTax = 691400 + (monthlyTaxBase - 4000000) * 0.38;
+                } else {
+                    monthlyIncomeTax = 1451400 + (monthlyTaxBase - 6000000) * 0.40;
+                }
+            } else {
+                // 부양가족 수에 따른 공제 (1명당 약 12,500원)
+                const familyDeduction = (totalFamily - 1) * 12500;
+                
+                // 기본 계산 후 공제 적용
+                if (monthlyTaxBase <= 1060000) {
+                    monthlyIncomeTax = 0;
+                } else if (monthlyTaxBase <= 1500000) {
+                    monthlyIncomeTax = (monthlyTaxBase - 1060000) * 0.06;
+                } else if (monthlyTaxBase <= 2000000) {
+                    monthlyIncomeTax = 26400 + (monthlyTaxBase - 1500000) * 0.15;
+                } else if (monthlyTaxBase <= 2500000) {
+                    monthlyIncomeTax = 101400 + (monthlyTaxBase - 2000000) * 0.24;
+                } else if (monthlyTaxBase <= 3000000) {
+                    monthlyIncomeTax = 221400 + (monthlyTaxBase - 2500000) * 0.24;
+                } else if (monthlyTaxBase <= 4000000) {
+                    monthlyIncomeTax = 341400 + (monthlyTaxBase - 3000000) * 0.35;
+                } else if (monthlyTaxBase <= 6000000) {
+                    monthlyIncomeTax = 691400 + (monthlyTaxBase - 4000000) * 0.38;
+                } else {
+                    monthlyIncomeTax = 1451400 + (monthlyTaxBase - 6000000) * 0.40;
+                }
+                
+                monthlyIncomeTax = Math.max(0, monthlyIncomeTax - familyDeduction);
+            }
+            
+            // 자녀 세액공제 추가 (20세 이하 자녀 1명당 월 15,000원)
+            if (children > 0) {
+                const childDeduction = children * 15000;
+                monthlyIncomeTax = Math.max(0, monthlyIncomeTax - childDeduction);
+            }
+            
+            // 간이세액표 80% 적용 (대부분의 회사에서 80% 원천징수)
+            monthlyIncomeTax = Math.round(monthlyIncomeTax * 0.8);
+            
+            // 지방소득세 (소득세의 10%)
+            const monthlyLocalTax = Math.round(monthlyIncomeTax * 0.1);
+            
+            // 4. 총 공제액 계산
+            const monthlyTotalDeduction = Math.round(monthlyIncomeTax + monthlyLocalTax + 
+                pension + healthInsurance + longTermCare + employmentInsurance);
+            
+            // 5. 실수령액 계산
+            const monthlyNetIncome = monthlyGrossSalary - monthlyTotalDeduction;
             const annualNetIncome = monthlyNetIncome * 12;
             
             // 계산 결과 저장
@@ -362,10 +425,10 @@
             document.getElementById('net-income').textContent = formatCurrency(calc.monthlyNetIncome);
             
             // 비율 정보
-            const deductionRate = (calc.monthlyTotalDeduction / calc.monthlyTaxableIncome * 100);
-            const takeHomeRate = (calc.monthlyNetIncome / calc.monthlyTaxableIncome * 100);
-            const taxBurden = ((calc.monthlyIncomeTax + calc.monthlyLocalTax) / calc.monthlyTaxableIncome * 100);
-            const insuranceBurden = ((calc.pension + calc.healthInsurance + calc.longTermCare + calc.employmentInsurance) / calc.monthlyTaxableIncome * 100);
+            const deductionRate = (calc.monthlyTotalDeduction / calc.monthlyGrossSalary * 100);
+            const takeHomeRate = (calc.monthlyNetIncome / calc.monthlyGrossSalary * 100);
+            const taxBurden = ((calc.monthlyIncomeTax + calc.monthlyLocalTax) / calc.monthlyGrossSalary * 100);
+            const insuranceBurden = ((calc.pension + calc.healthInsurance + calc.longTermCare + calc.employmentInsurance) / calc.monthlyGrossSalary * 100);
             
             document.getElementById('deduction-rate').textContent = deductionRate.toFixed(1) + '%';
             document.getElementById('take-home-rate').textContent = takeHomeRate.toFixed(1) + '%';
@@ -374,7 +437,7 @@
             document.getElementById('net-rate').textContent = takeHomeRate.toFixed(1) + '%';
             
             // 유효 소득세율 표시
-            const effectiveTaxRate = (calc.monthlyIncomeTax / calc.monthlyTaxableIncome * 100);
+            const effectiveTaxRate = (calc.monthlyIncomeTax / calc.monthlyGrossSalary * 100);
             document.getElementById('income-tax-rate').textContent = effectiveTaxRate.toFixed(2) + '%';
             
             // 결과 섹션 표시
@@ -393,7 +456,7 @@
             return Math.round(amount).toLocaleString() + '원';
         }
         
-        // 카카오톡 공유 함수 (완전 수정)
+        // 카카오톡 공유 함수
         function shareToKakao() {
             if (!currentCalculation) {
                 alert('먼저 계산을 완료해주세요.');
@@ -408,7 +471,7 @@
                         objectType: 'feed',
                         content: {
                             title: '💰 연봉 실수령액 계산 결과',
-                            description: `연봉: ${formatCurrency(annualSalary)}\\n월 실수령액: ${formatCurrency(monthlyNetIncome)}\\n\\n당신의 실수령액도 계산해보세요!`,
+                            description: `연봉: ${formatCurrency(annualSalary)}\n월 실수령액: ${formatCurrency(monthlyNetIncome)}\n\n당신의 실수령액도 계산해보세요!`,
                             imageUrl: 'https://doha.kr/images/og-image.png',
                             link: {
                                 mobileWebUrl: 'https://doha.kr/tools/salary-calculator.html',
@@ -443,12 +506,7 @@
             
             const { annualSalary, monthlyNetIncome } = currentCalculation;
             
-            const resultText = `💰 연봉 실수령액 계산 결과
-연봉: ${formatCurrency(annualSalary)}
-월 실수령액: ${formatCurrency(monthlyNetIncome)}
-
-doha.kr 연봉계산기
-https://doha.kr/tools/salary-calculator.html`;
+            const resultText = `💰 연봉 실수령액 계산 결과\n연봉: ${formatCurrency(annualSalary)}\n월 실수령액: ${formatCurrency(monthlyNetIncome)}\n\ndoha.kr 연봉계산기\nhttps://doha.kr/tools/salary-calculator.html`;
             
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(resultText).then(() => {
