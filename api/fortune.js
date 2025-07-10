@@ -24,16 +24,16 @@ export default async function handler(req, res) {
     }
 
     try {
-        const { type, data } = req.body;
+        const { type, data, prompt } = req.body;
         const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
-        let prompt = '';
+        let aiPrompt = '';
         
         switch(type) {
             case 'daily':
                 const { name, birthDate, gender, birthTime } = data;
                 const today = new Date().toLocaleDateString('ko-KR');
-                prompt = `
+                aiPrompt = `
 당신은 한국 최고의 사주 전문가입니다. 다음 정보를 바탕으로 오늘의 운세를 전문적으로 분석해주세요.
 
 이름: ${name}
@@ -66,7 +66,7 @@ ${birthTime ? `출생시간: ${birthTime}` : ''}
                     libra: '천칭자리', scorpio: '전갈자리', sagittarius: '사수자리',
                     capricorn: '염소자리', aquarius: '물병자리', pisces: '물고기자리'
                 };
-                prompt = `
+                aiPrompt = `
 당신은 전문 점성술사입니다. ${zodiacKorean[zodiac]}의 오늘 운세를 상세히 분석해주세요.
 
 종합운: [오늘의 전체적인 운세를 3-4문장으로 상세히]
@@ -83,7 +83,7 @@ ${birthTime ? `출생시간: ${birthTime}` : ''}
                 
             case 'saju':
                 const sajuData = data;
-                prompt = `
+                aiPrompt = `
 당신은 한국의 사주명리학 전문가입니다. 다음 사주팔자를 분석해주세요.
 
 ${sajuData.yearPillar} ${sajuData.monthPillar} ${sajuData.dayPillar} ${sajuData.hourPillar}
@@ -101,14 +101,25 @@ ${sajuData.yearPillar} ${sajuData.monthPillar} ${sajuData.dayPillar} ${sajuData.
 각 항목을 2-3문장으로 상세히 설명해주세요.
 `;
                 break;
+                
+            case 'general':
+                // 일반적인 프롬프트 처리 (zodiac-animal.js에서 사용)
+                aiPrompt = prompt || data.prompt || '';
+                break;
+                
+            default:
+                return res.status(400).json({
+                    success: false,
+                    error: `지원하지 않는 타입입니다: ${type}`
+                });
         }
 
-        const result = await model.generateContent(prompt);
+        const result = await model.generateContent(aiPrompt);
         const response = await result.response;
         const text = response.text();
         
         // 응답 파싱
-        const parsedData = parseFortuneResponse(text, type);
+        const parsedData = type === 'general' ? text : parseFortuneResponse(text, type);
         
         res.status(200).json({
             success: true,
