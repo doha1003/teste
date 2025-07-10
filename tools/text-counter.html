@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>글자수 세기 - 자소서, 리포트 글자수 계산기 | doha.kr</title>
-    <meta name="description" content="자기소개서, 리포트, 논문 작성 시 필수! 공백 포함/제외, 바이트 계산, 원고지 환산까지 한번에 확인하세요.">
+    <meta name="description" content="자기소개서, 리포트, 논문 작성 시 필수! 공백 포함/제외, 바이트 계산, 원고지 환산까지 한번에 확인하세요. 실시간으로 글자수를 계산하여 정확한 통계를 제공합니다. 한글, 영문, 숫자, 특수문자를 구분하여 세부적인 분석이 가능하며, 200자 원고지 기준 환산 기능도 지원합니다. 대학 입시 자소서, 취업 지원서, 공모전 응모작, SNS 게시물 작성 시 글자수 제한을 쉽게 확인할 수 있습니다. 단어수, 문장수, 문단수까지 종합적인 텍스트 분석 도구로 활용하세요. 무료로 제공되며 회원가입 없이 바로 사용 가능합니다.">
     <meta name="keywords" content="글자수세기, 글자수계산기, 자소서글자수, 문자수세기, 바이트계산, 원고지계산">
     
     <!-- Open Graph -->
@@ -26,6 +26,12 @@
     <link rel="icon" href="/images/placeholder-favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/images/logo.svg">
     <link rel="manifest" href="/manifest.json">
+    
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://t1.kakaocdn.net https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://pagead2.googlesyndication.com;">
+    
+    <!-- DOMPurify for XSS protection -->
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js" integrity="sha384-MLR0KLjmcCXl3i8YmUrWQrKKS8kWZgRe0o8u2OY4qA5hfgV0pYJnWMiVKKI0LqRh" crossorigin="anonymous"></script>
     
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
@@ -384,7 +390,9 @@
 자기소개서, 리포트, 논문, SNS 글 등 어떤 텍스트든 정확하게 글자수를 계산해드립니다.
 
 실시간으로 계산되므로 입력하는 즉시 결과를 확인할 수 있습니다."
-                    oninput="updateCount()"
+                    oninput="handleTextInput()"
+                    aria-label="텍스트 입력 영역"
+                    maxlength="100000"
                 ></textarea>
             </div>
             
@@ -527,7 +535,7 @@
         
         <!-- 광고 영역 -->
         <div class="ad-container">
-            <div class="ad-label">광고</div>
+            <div class="ad-label" aria-label="광고 영역">광고</div>
             <ins class="adsbygoogle"
                  style="display:block"
                  data-ad-client="ca-pub-7905640648499222"
@@ -649,10 +657,47 @@
     
     <!-- Text Counter JavaScript -->
     <script>
+        // 디바운싱을 위한 타이머 변수
+        let debounceTimer;
+        
+        // 입력값 검증 함수
+        function validateInput(text) {
+            // 최대 길이 체크 (100,000자)
+            if (text.length > 100000) {
+                return text.substring(0, 100000);
+            }
+            // XSS 방지를 위한 sanitization
+            return DOMPurify.sanitize(text, { ALLOWED_TAGS: [] });
+        }
+        
+        // HTML 이스케이프 함수
+        function escapeHtml(unsafe) {
+            return unsafe
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+        
+        // 디바운싱된 입력 핸들러
+        function handleTextInput() {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => {
+                updateCount();
+            }, 100); // 100ms 디바운스
+        }
+        
         // 텍스트 카운터 기능
         function updateCount() {
             const textInput = document.getElementById('textInput');
-            const text = textInput.value;
+            let text = textInput.value;
+            
+            // 입력값 검증
+            text = validateInput(text);
+            if (text !== textInput.value) {
+                textInput.value = text;
+            }
             
             // 기본 계산
             const totalChars = text.length;
@@ -689,8 +734,10 @@
         
         // 유틸리티 함수들
         function clearText() {
-            document.getElementById('textInput').value = '';
-            updateCount();
+            if (confirm('입력한 텍스트를 모두 지우시겠습니까?')) {
+                document.getElementById('textInput').value = '';
+                updateCount();
+            }
         }
         
         function copyText() {
@@ -700,13 +747,18 @@
             alert('텍스트가 복사되었습니다!');
         }
         
-        function pasteText() {
-            navigator.clipboard.readText().then(text => {
-                document.getElementById('textInput').value = text;
+        async function pasteText() {
+            try {
+                const text = await navigator.clipboard.readText();
+                const validatedText = validateInput(text);
+                document.getElementById('textInput').value = validatedText;
                 updateCount();
-            }).catch(err => {
-                alert('클립보드에서 텍스트를 가져올 수 없습니다.');
-            });
+                if (text.length > 100000) {
+                    alert('텍스트가 100,000자를 초과하여 잘렸습니다.');
+                }
+            } catch (err) {
+                alert('클립보드에서 텍스트를 가져올 수 없습니다. 브라우저 권한을 확인해주세요.');
+            }
         }
         
         // FAQ 토글 기능
