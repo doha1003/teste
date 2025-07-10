@@ -30,6 +30,38 @@ async function callFortuneAPI(type, data) {
     }
 }
 
+// 띠별 운세를 위한 callGeminiAPI 함수 (zodiac-animal.js에서 사용)
+async function callGeminiAPI(prompt) {
+    try {
+        const response = await fetch(API_ENDPOINT, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ 
+                type: 'general',
+                prompt: prompt
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        
+        if (result.success) {
+            return result.data;
+        } else {
+            console.error('Gemini API Error:', result.error);
+            return null;
+        }
+    } catch (error) {
+        console.error('Gemini API 호출 오류:', error);
+        return null;
+    }
+}
+
 // 일일 운세 AI 생성
 async function generateDailyFortuneWithAI(name, birthDate, gender, birthTime = null) {
     const result = await callFortuneAPI('daily', {
