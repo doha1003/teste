@@ -19,16 +19,553 @@
     
     <!-- External CSS -->
     <link rel="stylesheet" href="/css/styles.css">
-    <link rel="stylesheet" href="/css/fortune/fortune-base.css">
-    <link rel="stylesheet" href="/css/fortune/fortune-loading-fix.css">
     
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
     
     <!-- Kakao SDK -->
     <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.4.0/kakao.min.js" integrity="sha384-mXVrIX2T/Kszp6Z0aEWaA8Nm7J6/ZeWXbL8UpGRjKwWe56Srd/iyNmWMBhcItAjH" crossorigin="anonymous"></script>
+    
+    <style>
+        /* 사주팔자 페이지 전용 스타일 */
+        .page-header {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(124, 58, 237, 0.1) 100%);
+            padding: 80px 0 60px;
+            text-align: center;
+        }
+        
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #1a1a1a;
+        }
+        
+        .page-subtitle {
+            font-size: 1.125rem;
+            color: #6b7280;
+            line-height: 1.6;
+        }
+        
+        .saju-section {
+            padding: 60px 0;
+            background: white;
+        }
+        
+        .saju-form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .saju-form-container h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #1a1a1a;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #374151;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #8b5cf6;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+        }
+        
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .checkbox-label input[type="checkbox"] {
+            margin-right: 8px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: #e5e7eb;
+            color: #374151;
+        }
+        
+        .btn-secondary:hover {
+            background: #d1d5db;
+            color: #1f2937;
+        }
+        
+        /* 사주 결과 컨테이너 */
+        .saju-result-container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .saju-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        
+        .saju-header h2 {
+            font-size: 2rem;
+            color: #1a1a1a;
+            margin-bottom: 10px;
+        }
+        
+        .birth-info {
+            color: #6b7280;
+            font-size: 1.1rem;
+        }
+        
+        /* 사주팔자 그리드 */
+        .saju-pillars {
+            margin-bottom: 40px;
+        }
+        
+        .saju-pillars h3 {
+            color: #1a1a1a;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+        
+        .pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+        
+        .pillar-item {
+            background: #f9fafb;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .pillar-item.main-pillar {
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            color: white;
+            border-color: #8b5cf6;
+        }
+        
+        .pillar-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            opacity: 0.8;
+        }
+        
+        .pillar-chars {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .stem, .branch {
+            font-size: 2rem;
+            font-weight: 700;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        
+        .main-pillar .stem, .main-pillar .branch {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .pillar-god {
+            font-size: 0.9rem;
+            font-weight: 600;
+            opacity: 0.9;
+        }
+        
+        /* 일주 분석 */
+        .day-master-info {
+            margin-bottom: 40px;
+        }
+        
+        .day-master-info h3 {
+            color: #1a1a1a;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+        
+        .day-master-card {
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 16px;
+            text-align: center;
+        }
+        
+        .day-master-main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .day-master-char {
+            font-size: 3rem;
+            font-weight: 700;
+            background: rgba(255, 255, 255, 0.2);
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .day-master-element {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .day-master-desc {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+        
+        /* 오행 분석 */
+        .elements-analysis {
+            margin-bottom: 40px;
+        }
+        
+        .elements-analysis h3 {
+            color: #1a1a1a;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+        
+        .elements-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .element-item {
+            background: #f9fafb;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .element-name {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #374151;
+        }
+        
+        .element-count {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #8b5cf6;
+        }
+        
+        .elements-summary {
+            background: #f9fafb;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .elements-summary p {
+            margin-bottom: 8px;
+            color: #374151;
+        }
+        
+        .elements-summary p:last-child {
+            margin-bottom: 0;
+        }
+        
+        /* 해석 섹션들 */
+        .interpretation-sections {
+            margin-bottom: 40px;
+        }
+        
+        .interpretation-item {
+            background: #f9fafb;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .interpretation-item h4 {
+            color: #1a1a1a;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        
+        .interpretation-item p {
+            color: #374151;
+            line-height: 1.6;
+            margin: 0;
+        }
+        
+        /* 특별 스타일링 */
+        .interpretation-item.strengths {
+            border-left: 4px solid #10b981;
+        }
+        
+        .interpretation-item.strengths h4 {
+            color: #10b981;
+        }
+        
+        .interpretation-item.weaknesses {
+            border-left: 4px solid #ef4444;
+        }
+        
+        .interpretation-item.weaknesses h4 {
+            color: #ef4444;
+        }
+        
+        .interpretation-item.growth {
+            border-left: 4px solid #3b82f6;
+        }
+        
+        .interpretation-item.growth h4 {
+            color: #3b82f6;
+        }
+        
+        /* 로딩 스타일 */
+        .saju-ai-analyzing {
+            text-align: center;
+            padding: 40px;
+            color: #8b5cf6;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .fortune-loading-info {
+            margin-top: 15px;
+            font-size: 1rem;
+            color: #6b7280;
+            font-weight: normal;
+        }
+        
+        /* 공유 및 액션 */
+        .saju-actions {
+            margin-bottom: 30px;
+        }
+        
+        .share-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .share-section h3 {
+            color: #1a1a1a;
+            margin-bottom: 20px;
+        }
+        
+        .share-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .share-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+        
+        .share-btn.kakao {
+            background: #fee500;
+            color: #3c1e1e;
+        }
+        
+        .share-btn.kakao:hover {
+            background: #fdd835;
+            transform: translateY(-2px);
+        }
+        
+        .share-btn.copy {
+            background: #e5e7eb;
+            color: #374151;
+        }
+        
+        .share-btn.copy:hover {
+            background: #d1d5db;
+            color: #1f2937;
+            transform: translateY(-2px);
+        }
+        
+        .ai-disclaimer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+        }
+        
+        .ai-disclaimer small {
+            color: #6b7280;
+            font-size: 0.85rem;
+        }
+        
+        .info-section {
+            padding: 60px 0;
+            background: #f9fafb;
+        }
+        
+        .info-box {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+        }
+        
+        .info-box h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #1a1a1a;
+        }
+        
+        .info-box ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .info-box li {
+            padding: 8px 0;
+            padding-left: 20px;
+            position: relative;
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #374151;
+        }
+        
+        .info-box li::before {
+            content: '🔮';
+            position: absolute;
+            left: 0;
+            top: 8px;
+        }
+        
+        /* 반응형 디자인 */
+        @media (max-width: 768px) {
+            .saju-form-container, .saju-result-container {
+                padding: 30px 20px;
+                margin: 20px;
+            }
+            
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .pillars-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .elements-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .day-master-main {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .day-master-char {
+                width: 60px;
+                height: 60px;
+                font-size: 2rem;
+            }
+            
+            .share-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .share-btn {
+                width: 200px;
+            }
+            
+            .info-box {
+                padding: 30px 20px;
+                margin: 0 20px;
+            }
+        }
+    </style>
 </head>
-<body class="fortune-page">
+<body>
     <!-- 네비게이션 바 -->
     <div id="navbar-placeholder"></div>
     
@@ -500,467 +1037,6 @@
             }
         }
     </script>
-    
-    <style>
-        /* 사주팔자 페이지 전용 스타일 */
-        .saju-section {
-            padding: 60px 0;
-            background: white;
-        }
-        
-        .saju-form-container {
-            max-width: 600px;
-            margin: 0 auto;
-            background: white;
-            padding: 40px;
-            border-radius: var(--fortune-radius-large);
-            box-shadow: var(--fortune-shadow);
-        }
-        
-        .saju-form-container h2 {
-            text-align: center;
-            margin-bottom: 30px;
-            color: var(--fortune-text-primary);
-        }
-        
-        .form-row {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: var(--fortune-text-secondary);
-        }
-        
-        .form-control {
-            width: 100%;
-            padding: 12px 16px;
-            border: 2px solid var(--fortune-border);
-            border-radius: var(--fortune-radius);
-            font-size: 16px;
-            transition: all 0.3s ease;
-        }
-        
-        .form-control:focus {
-            outline: none;
-            border-color: var(--fortune-primary);
-            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
-        }
-        
-        .checkbox-label {
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-        }
-        
-        .checkbox-label input[type="checkbox"] {
-            margin-right: 8px;
-        }
-        
-        /* 사주 결과 컨테이너 */
-        .saju-result-container {
-            max-width: 900px;
-            margin: 40px auto;
-            background: white;
-            padding: 40px;
-            border-radius: var(--fortune-radius-large);
-            box-shadow: var(--fortune-shadow);
-        }
-        
-        .saju-header {
-            text-align: center;
-            margin-bottom: 40px;
-            padding-bottom: 20px;
-            border-bottom: 2px solid var(--fortune-border);
-        }
-        
-        .saju-header h2 {
-            font-size: 2rem;
-            color: var(--fortune-text-primary);
-            margin-bottom: 10px;
-        }
-        
-        .birth-info {
-            color: var(--fortune-text-secondary);
-            font-size: 1.1rem;
-        }
-        
-        /* 사주팔자 그리드 */
-        .saju-pillars {
-            margin-bottom: 40px;
-        }
-        
-        .saju-pillars h3 {
-            color: var(--fortune-text-primary);
-            margin-bottom: 20px;
-            font-size: 1.5rem;
-        }
-        
-        .pillars-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-        }
-        
-        .pillar-item {
-            background: var(--fortune-bg-light);
-            padding: 20px;
-            border-radius: var(--fortune-radius);
-            text-align: center;
-            border: 2px solid transparent;
-            transition: all 0.3s ease;
-        }
-        
-        .pillar-item.main-pillar {
-            background: var(--fortune-gradient);
-            color: white;
-            border-color: var(--fortune-primary);
-        }
-        
-        .pillar-title {
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 15px;
-            opacity: 0.8;
-        }
-        
-        .pillar-chars {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-bottom: 15px;
-        }
-        
-        .stem, .branch {
-            font-size: 2rem;
-            font-weight: 700;
-        }
-        
-        .main-pillar .stem, .main-pillar .branch {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 8px 12px;
-            border-radius: 8px;
-        }
-        
-        .pillar-god {
-            font-size: 0.9rem;
-            font-weight: 600;
-            opacity: 0.9;
-        }
-        
-        /* 일주 분석 */
-        .day-master-info {
-            margin-bottom: 40px;
-        }
-        
-        .day-master-info h3 {
-            color: var(--fortune-text-primary);
-            margin-bottom: 20px;
-            font-size: 1.5rem;
-        }
-        
-        .day-master-card {
-            background: var(--fortune-gradient);
-            color: white;
-            padding: 30px;
-            border-radius: var(--fortune-radius-large);
-            text-align: center;
-        }
-        
-        .day-master-main {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-        
-        .day-master-char {
-            font-size: 3rem;
-            font-weight: 700;
-            background: rgba(255, 255, 255, 0.2);
-            width: 80px;
-            height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-        }
-        
-        .day-master-element {
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
-        
-        .day-master-desc {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            margin: 0;
-        }
-        
-        /* 오행 분석 */
-        .elements-analysis {
-            margin-bottom: 40px;
-        }
-        
-        .elements-analysis h3 {
-            color: var(--fortune-text-primary);
-            margin-bottom: 20px;
-            font-size: 1.5rem;
-        }
-        
-        .elements-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-        
-        .element-item {
-            background: var(--fortune-bg-light);
-            padding: 20px;
-            border-radius: var(--fortune-radius);
-            text-align: center;
-        }
-        
-        .element-name {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: var(--fortune-text-secondary);
-        }
-        
-        .element-count {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--fortune-primary);
-        }
-        
-        .elements-summary {
-            background: var(--fortune-bg-light);
-            padding: 20px;
-            border-radius: var(--fortune-radius);
-        }
-        
-        .elements-summary p {
-            margin-bottom: 8px;
-            color: var(--fortune-text-secondary);
-        }
-        
-        .elements-summary p:last-child {
-            margin-bottom: 0;
-        }
-        
-        /* 해석 섹션들 */
-        .interpretation-sections {
-            margin-bottom: 40px;
-        }
-        
-        .interpretation-item {
-            background: var(--fortune-bg-light);
-            padding: 25px;
-            border-radius: var(--fortune-radius);
-            margin-bottom: 20px;
-        }
-        
-        .interpretation-item h4 {
-            color: var(--fortune-text-primary);
-            margin-bottom: 15px;
-            font-size: 1.2rem;
-        }
-        
-        .interpretation-item p {
-            color: var(--fortune-text-secondary);
-            line-height: 1.6;
-            margin: 0;
-        }
-        
-        /* 특별 스타일링 */
-        .interpretation-item.strengths {
-            border-left: 4px solid #10b981;
-        }
-        
-        .interpretation-item.strengths h4 {
-            color: #10b981;
-        }
-        
-        .interpretation-item.weaknesses {
-            border-left: 4px solid #ef4444;
-        }
-        
-        .interpretation-item.weaknesses h4 {
-            color: #ef4444;
-        }
-        
-        .interpretation-item.growth {
-            border-left: 4px solid #3b82f6;
-        }
-        
-        .interpretation-item.growth h4 {
-            color: #3b82f6;
-        }
-        
-        /* 공유 및 액션 */
-        .saju-actions {
-            margin-bottom: 30px;
-        }
-        
-        .share-section {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        
-        .share-section h3 {
-            color: var(--fortune-text-primary);
-            margin-bottom: 20px;
-        }
-        
-        .share-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-        
-        .share-btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: var(--fortune-radius);
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1rem;
-        }
-        
-        .share-btn.kakao {
-            background: #fee500;
-            color: #3c1e1e;
-        }
-        
-        .share-btn.kakao:hover {
-            background: #fdd835;
-            transform: translateY(-2px);
-        }
-        
-        .share-btn.copy {
-            background: var(--fortune-border);
-            color: var(--fortune-text-secondary);
-        }
-        
-        .share-btn.copy:hover {
-            background: #d1d5db;
-            color: var(--fortune-text-primary);
-            transform: translateY(-2px);
-        }
-        
-        .ai-disclaimer {
-            text-align: center;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid var(--fortune-border);
-        }
-        
-        .ai-disclaimer small {
-            color: var(--fortune-text-secondary);
-            font-size: 0.85rem;
-        }
-        
-        .info-section {
-            padding: 60px 0;
-            background: var(--fortune-bg-light);
-        }
-        
-        .info-box {
-            max-width: 800px;
-            margin: 0 auto;
-            background: white;
-            padding: 40px;
-            border-radius: var(--fortune-radius-large);
-            box-shadow: var(--fortune-shadow);
-        }
-        
-        .info-box h3 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 20px;
-            color: var(--fortune-text-primary);
-        }
-        
-        .info-box ul {
-            list-style: none;
-            padding: 0;
-        }
-        
-        .info-box li {
-            padding: 8px 0;
-            padding-left: 20px;
-            position: relative;
-            font-size: 1rem;
-            line-height: 1.6;
-            color: var(--fortune-text-secondary);
-        }
-        
-        .info-box li::before {
-            content: '🔮';
-            position: absolute;
-            left: 0;
-            top: 8px;
-        }
-        
-        /* 반응형 디자인 */
-        @media (max-width: 768px) {
-            .saju-form-container, .saju-result-container {
-                padding: 30px 20px;
-                margin: 20px;
-            }
-            
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-            
-            .pillars-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .elements-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-            
-            .day-master-main {
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            .day-master-char {
-                width: 60px;
-                height: 60px;
-                font-size: 2rem;
-            }
-            
-            .share-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .share-btn {
-                width: 200px;
-            }
-            
-            .info-box {
-                padding: 30px 20px;
-                margin: 0 20px;
-            }
-        }
-    </style>
     
     <!-- AdSense initialization -->
     <script>
