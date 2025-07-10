@@ -27,41 +27,279 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- External CSS -->
+    <!-- External CSS - 절대 경로로 수정 -->
     <link rel="stylesheet" href="/css/styles.css">
-    <link rel="stylesheet" href="/css/pages/contact.css">
+    <link rel="stylesheet" href="/css/components/navbar.css">
+    <link rel="stylesheet" href="/css/components/mobile-responsive.css">
     
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
+    
+    <style>
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 100px 20px 80px;
+            text-align: center;
+        }
+        
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .content {
+            max-width: 1200px;
+            margin: 80px auto;
+            padding: 0 20px;
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .contact-section {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+        }
+        
+        .contact-section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        .contact-info-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 12px;
+        }
+        
+        .contact-info-icon {
+            font-size: 2rem;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+        
+        .contact-info-content h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0 0 0.5rem 0;
+        }
+        
+        .contact-info-content p {
+            color: var(--text-secondary);
+            margin: 0.25rem 0;
+            line-height: 1.6;
+        }
+        
+        .contact-info-content a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .contact-form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-form-label {
+            display: block;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .contact-form-input,
+        .contact-form-textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .contact-form-input:focus,
+        .contact-form-textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+        
+        .contact-form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        
+        .contact-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .contact-btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .contact-btn-primary:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+        
+        .contact-form-note {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-top: 1rem;
+            text-align: center;
+        }
+        
+        .faq-section {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            margin-top: 3rem;
+        }
+        
+        .faq-item {
+            border-bottom: 1px solid #e2e8f0;
+            margin-bottom: 1rem;
+        }
+        
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+            font-weight: 600;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .faq-question:hover {
+            color: var(--primary-color);
+        }
+        
+        .faq-arrow {
+            transition: transform 0.3s ease;
+        }
+        
+        .faq-item.active .faq-arrow {
+            transform: rotate(180deg);
+        }
+        
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        
+        .faq-item.active .faq-answer {
+            max-height: 200px;
+            padding-bottom: 1.5rem;
+        }
+        
+        /* 반응형 디자인 */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .contact-section,
+            .faq-section {
+                padding: 1.5rem;
+            }
+            
+            .contact-info-item {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .contact-info-icon {
+                margin: 0 0 1rem 0;
+            }
+        }
+        
+        /* 광고 스타일 */
+        .ad-container {
+            min-height: 250px;
+            margin: 40px auto;
+            max-width: 1200px;
+            padding: 0 20px;
+            text-align: center;
+        }
+        
+        .ad-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+        
+        .adsbygoogle {
+            min-height: 90px;
+            width: 100%;
+        }
+    </style>
 </head>
-<body class="contact-page">
+<body>
     <!-- 네비게이션 바 -->
-    <nav class="contact-navbar">
-        <div class="contact-navbar-container">
-            <a href="/" class="contact-logo">doha.kr</a>
-            <ul class="contact-nav-menu">
-                <li><a href="/" class="contact-nav-link">홈</a></li>
-                <li><a href="/tests/" class="contact-nav-link">심리테스트</a></li>
-                <li><a href="/fortune/" class="contact-nav-link">운세</a></li>
-                <li><a href="/tools/" class="contact-nav-link">실용도구</a></li>
-                <li><a href="/contact/" class="contact-nav-link">문의</a></li>
-                <li><a href="/about/" class="contact-nav-link">소개</a></li>
-            </ul>
-        </div>
-    </nav>
+    <div id="navbar-placeholder"></div>
     
     <!-- 헤더 섹션 -->
-    <header class="contact-header">
-        <div class="contact-header-content">
-            <h1 class="contact-header-title">문의하기</h1>
-            <p class="contact-header-subtitle">
+    <header class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">문의하기</h1>
+            <p class="hero-subtitle">
                 궁금한 점이나 제안사항이 있으신가요? 언제든지 연락주세요!
             </p>
         </div>
     </header>
     
     <!-- 메인 컨텐츠 -->
-    <div class="contact-container">
+    <div class="content">
         <!-- 컨택트 그리드 -->
         <div class="contact-grid">
             <!-- 컨택트 정보 -->
@@ -131,8 +369,8 @@
         </div>
         
         <!-- 광고 영역 -->
-        <div class="contact-ad-container">
-            <div class="contact-ad-label">광고</div>
+        <div class="ad-container">
+            <div class="ad-label">광고</div>
             <ins class="adsbygoogle"
                  style="display:block"
                  data-ad-client="ca-pub-7905640648499222"
@@ -142,60 +380,60 @@
         </div>
         
         <!-- FAQ 섹션 -->
-        <div class="contact-section">
+        <div class="faq-section">
             <h2 class="contact-section-title">자주 묻는 질문</h2>
             
-            <div class="contact-faq-item">
-                <div class="contact-faq-question">
+            <div class="faq-item">
+                <div class="faq-question">
                     doha.kr은 무료로 이용할 수 있나요?
-                    <span class="contact-faq-arrow">▼</span>
+                    <span class="faq-arrow">▼</span>
                 </div>
-                <div class="contact-faq-answer">
+                <div class="faq-answer">
                     네, doha.kr의 모든 서비스는 완전 무료입니다. 회원가입도 필요없이 
                     모든 심리테스트와 실용도구를 자유롭게 이용하실 수 있습니다.
                 </div>
             </div>
             
-            <div class="contact-faq-item">
-                <div class="contact-faq-question">
+            <div class="faq-item">
+                <div class="faq-question">
                     심리테스트 결과는 얼마나 정확한가요?
-                    <span class="contact-faq-arrow">▼</span>
+                    <span class="faq-arrow">▼</span>
                 </div>
-                <div class="contact-faq-answer">
+                <div class="faq-answer">
                     저희 심리테스트는 재미와 자기이해를 목적으로 제작되었습니다. 
                     전문적인 심리 상담이나 진단을 대체할 수 없으며, 심각한 문제가 있으신 경우 
                     전문가의 도움을 받으시기를 권장합니다.
                 </div>
             </div>
             
-            <div class="contact-faq-item">
-                <div class="contact-faq-question">
+            <div class="faq-item">
+                <div class="faq-question">
                     제휴나 광고 문의는 어떻게 하나요?
-                    <span class="contact-faq-arrow">▼</span>
+                    <span class="faq-arrow">▼</span>
                 </div>
-                <div class="contact-faq-answer">
+                <div class="faq-answer">
                     제휴 및 광고 관련 문의는 youtubdoha@gmail.com으로 
                     자세한 제안서와 함께 보내주시면 검토 후 연락드리겠습니다.
                 </div>
             </div>
             
-            <div class="contact-faq-item">
-                <div class="contact-faq-question">
+            <div class="faq-item">
+                <div class="faq-question">
                     새로운 기능이나 테스트를 제안하고 싶어요.
-                    <span class="contact-faq-arrow">▼</span>
+                    <span class="faq-arrow">▼</span>
                 </div>
-                <div class="contact-faq-answer">
+                <div class="faq-answer">
                     사용자분들의 의견을 언제나 환영합니다! 위의 문의 폼이나 이메일로 
                     아이디어를 보내주시면 적극적으로 검토하여 반영하도록 노력하겠습니다.
                 </div>
             </div>
             
-            <div class="contact-faq-item">
-                <div class="contact-faq-question">
+            <div class="faq-item">
+                <div class="faq-question">
                     개인정보는 어떻게 보호되나요?
-                    <span class="contact-faq-arrow">▼</span>
+                    <span class="faq-arrow">▼</span>
                 </div>
-                <div class="contact-faq-answer">
+                <div class="faq-answer">
                     저희는 최소한의 개인정보만 수집하며, 수집된 정보는 안전하게 보호됩니다. 
                     자세한 내용은 <a href="/privacy/" style="color: var(--primary-color); text-decoration: underline;">개인정보처리방침</a>을 참고해주세요.
                 </div>
@@ -211,13 +449,13 @@
     
     <script>
         // FAQ 토글
-        document.querySelectorAll('.contact-faq-question').forEach(question => {
+        document.querySelectorAll('.faq-question').forEach(question => {
             question.addEventListener('click', () => {
                 const faqItem = question.parentElement;
                 faqItem.classList.toggle('active');
                 
                 // 다른 FAQ 항목 닫기
-                document.querySelectorAll('.contact-faq-item').forEach(item => {
+                document.querySelectorAll('.faq-item').forEach(item => {
                     if (item !== faqItem) {
                         item.classList.remove('active');
                     }
