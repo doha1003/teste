@@ -2,7 +2,14 @@
 
 ## 프로젝트 설정
 
-### Vercel 배포 설정
+### GitHub Pages 배포 설정
+
+1. GitHub 저장소 Settings → Pages
+2. Source: Deploy from a branch
+3. Branch: main / (root)
+4. Custom domain: doha.kr 설정
+
+### Vercel 서버리스 함수 설정 (API용)
 
 1. [Vercel](https://vercel.com)에 GitHub 계정으로 로그인
 2. New Project → Import Git Repository → doha1003/teste 선택
@@ -36,7 +43,7 @@
 
 - Frontend: HTML, CSS, JavaScript
 - AI: Google Gemini API
-- Hosting: Vercel (서버리스 함수 포함)
+- Hosting: GitHub Pages (정적 사이트), Vercel (서버리스 API)
 - Analytics: Google AdSense
 
 ## 로컬 개발
