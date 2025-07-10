@@ -377,7 +377,7 @@ function showQuestion() {
     }
 }
 
-// 옵션 선택
+// 옵션 선택 - 자동 다음 질문 이동 제거
 function selectOption(index) {
     answers[currentQuestion] = index;
     
@@ -387,11 +387,6 @@ function selectOption(index) {
     });
     
     document.getElementById('next-btn').disabled = false;
-    
-    // 자동으로 다음 질문으로 넘어가기 (0.8초 딜레이)
-    setTimeout(() => {
-        nextQuestion();
-    }, 800);
 }
 
 // 결과 계산 및 표시
