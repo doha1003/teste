@@ -746,6 +746,7 @@
     
     <!-- External JavaScript -->
     <script src="/js/main.js"></script>
+    <script src="/js/security.js"></script>
     
     <!-- FAQ 기능 JavaScript -->
     <script>
@@ -777,7 +778,9 @@
             
             // 검색 기능
             searchInput.addEventListener('input', function() {
-                const searchTerm = this.value.toLowerCase();
+                // XSS 방지를 위한 sanitization
+                const sanitizedValue = Security.sanitizeInput(this.value, 'text');
+                const searchTerm = sanitizedValue.toLowerCase();
                 filterFAQs(searchTerm, 'all');
             });
             

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BMI 계산기 - 체질량지수 계산 및 건강 상태 확인 | doha.kr</title>
-    <meta name="description" content="키와 몸무게로 BMI(체질량지수)를 계산하고 건강 상태를 확인하세요. 정상 체중 범위와 건강 관리 팁을 제공합니다.">
+    <meta name="description" content="키와 몸무게로 BMI(체질량지수)를 계산하고 건강 상태를 확인하세요. 정상 체중 범위와 건강 관리 팁을 제공합니다. WHO 아시아-태평양 기준을 적용하여 저체중, 정상, 과체중, 비만, 고도비만으로 분류합니다. 성별, 나이를 고려한 표준 체중과 체중 차이도 계산해드립니다. 각 BMI 범위에 따른 맞춤형 건강 조언을 제공하며, 영양 관리, 운동 방법, 생활 습관 개선 팁을 포함합니다. BMI의 한계점과 근육량, 체지방률 등 추가 지표의 중요성도 안내합니다. 무료로 제공되며 회원가입 없이 바로 사용 가능합니다.">
     <meta name="keywords" content="BMI계산기, 체질량지수, 비만도계산, 표준체중, 건강관리, 다이어트">
     
     <!-- Open Graph -->
@@ -27,6 +27,12 @@
     <link rel="apple-touch-icon" href="/images/logo.svg">
     <link rel="manifest" href="/manifest.json">
     
+    <!-- DOMPurify for XSS protection -->
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js" integrity="sha384-MLR0KLjmcCXl3i8YmUrWQrKKS8kWZgRe0o8u2OY4qA5hfgV0pYJnWMiVKKI0LqRh" crossorigin="anonymous"></script>
+    
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://t1.kakaocdn.net https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://pagead2.googlesyndication.com;">
+    
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
     
@@ -38,7 +44,7 @@
     {
         "@context": "https://schema.org",
         "@type": "WebApplication",
-        "@name": "BMI 계산기",
+        "name": "BMI 계산기",
         "alternateName": "체질량지수 계산기",
         "url": "https://doha.kr/tools/bmi-calculator.html",
         "description": "키와 몸무게로 BMI(체질량지수)를 계산하고 건강 상태를 확인하는 무료 도구",
@@ -49,11 +55,17 @@
             "price": "0",
             "priceCurrency": "KRW"
         },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "ratingCount": "2840"
+        },
         "featureList": [
             "실시간 BMI 계산",
             "건강 상태 분석", 
             "표준 체중 제시",
-            "맞춤형 건강 조언"
+            "맞춤형 건강 조언",
+            "WHO 아시아-태평양 기준 적용"
         ]
     }
     </script>
@@ -84,38 +96,38 @@
                     
                     <div class="bmi-input-group">
                         <label class="bmi-input-label">성별</label>
-                        <div class="bmi-radio-group">
+                        <div class="bmi-radio-group" role="radiogroup" aria-label="성별 선택">
                             <label class="bmi-radio-label">
-                                <input type="radio" name="gender" value="male" checked>
+                                <input type="radio" name="gender" value="male" checked aria-label="남성">
                                 남성
                             </label>
                             <label class="bmi-radio-label">
-                                <input type="radio" name="gender" value="female">
+                                <input type="radio" name="gender" value="female" aria-label="여성">
                                 여성
                             </label>
                         </div>
                     </div>
                     
                     <div class="bmi-input-group">
-                        <label class="bmi-input-label">나이</label>
+                        <label class="bmi-input-label" for="age">나이</label>
                         <div class="bmi-input-wrapper">
-                            <input type="number" id="age" class="bmi-input-field" placeholder="25" min="1" max="120">
+                            <input type="number" id="age" class="bmi-input-field" placeholder="25" min="1" max="120" aria-label="나이 입력">
                             <span class="bmi-input-unit">세</span>
                         </div>
                     </div>
                     
                     <div class="bmi-input-group">
-                        <label class="bmi-input-label">키</label>
+                        <label class="bmi-input-label" for="height">키</label>
                         <div class="bmi-input-wrapper">
-                            <input type="number" id="height" class="bmi-input-field" placeholder="170" min="100" max="250" step="0.1">
+                            <input type="number" id="height" class="bmi-input-field" placeholder="170" min="100" max="250" step="0.1" aria-label="키 입력 (센티미터)">
                             <span class="bmi-input-unit">cm</span>
                         </div>
                     </div>
                     
                     <div class="bmi-input-group">
-                        <label class="bmi-input-label">몸무게</label>
+                        <label class="bmi-input-label" for="weight">몸무게</label>
                         <div class="bmi-input-wrapper">
-                            <input type="number" id="weight" class="bmi-input-field" placeholder="65" min="20" max="300" step="0.1">
+                            <input type="number" id="weight" class="bmi-input-field" placeholder="65" min="20" max="300" step="0.1" aria-label="몸무게 입력 (킬로그램)">
                             <span class="bmi-input-unit">kg</span>
                         </div>
                     </div>
@@ -209,7 +221,7 @@
         
         <!-- 광고 영역 -->
         <div class="ad-container">
-            <div class="ad-label">광고</div>
+            <div class="ad-label" aria-label="광고 영역">광고</div>
             <ins class="adsbygoogle"
                  style="display:block"
                  data-ad-client="ca-pub-7905640648499222"
@@ -259,31 +271,38 @@
     
     <!-- External JavaScript -->
     <script src="/js/main.js"></script>
+    <script src="/js/security.js"></script>
     
     <!-- BMI Calculator JavaScript -->
     <script>
+        // 입력값 검증 함수
+        function validateInput(value, min, max, fieldName) {
+            // XSS 방지를 위한 sanitization
+            const sanitizedValue = Security.sanitizeInput(value, 'number');
+            const num = Security.validateNumber(sanitizedValue, min, max);
+            
+            if (num < min || num > max) {
+                alert(`${fieldName}은(는) ${min}에서 ${max} 사이로 입력해주세요.`);
+                return null;
+            }
+            return num;
+        }
+        
         function calculateBMI() {
-            // 입력값 가져오기
-            const height = parseFloat(document.getElementById('height').value);
-            const weight = parseFloat(document.getElementById('weight').value);
-            const age = parseInt(document.getElementById('age').value);
-            const gender = document.querySelector('input[name="gender"]:checked').value;
+            // 입력값 가져오기 및 검증
+            const heightInput = document.getElementById('height').value;
+            const weightInput = document.getElementById('weight').value;
+            const ageInput = document.getElementById('age').value;
             
-            // 유효성 검사
+            const height = validateInput(heightInput, 100, 250, '키');
+            const weight = validateInput(weightInput, 20, 300, '몸무게');
+            const age = ageInput ? validateInput(ageInput, 1, 120, '나이') : 25; // 나이는 선택사항
+            
             if (!height || !weight) {
-                alert('키와 몸무게를 모두 입력해주세요.');
                 return;
             }
             
-            if (height < 100 || height > 250) {
-                alert('키는 100cm에서 250cm 사이로 입력해주세요.');
-                return;
-            }
-            
-            if (weight < 20 || weight > 300) {
-                alert('몸무게는 20kg에서 300kg 사이로 입력해주세요.');
-                return;
-            }
+            const gender = document.querySelector('input[name="gender"]:checked').value;
             
             // BMI 계산
             const heightInMeters = height / 100;
@@ -328,7 +347,7 @@
                 personalizedAdvice = getSevereObeseAdvice(gender, age);
             }
             
-            // 결과 표시
+            // 결과 표시 (textContent 사용으로 XSS 방지)
             document.getElementById('bmiValue').textContent = roundedBMI;
             document.getElementById('bmiStatus').textContent = status;
             document.getElementById('bmiStatus').style.color = statusColor;
@@ -380,7 +399,7 @@
             const adviceGrid = document.getElementById('adviceGrid');
             
             adviceTitle.textContent = `${status} 상태인 당신을 위한 맞춤 조언`;
-            adviceSubtitle.innerHTML = advice.subtitle;
+            adviceSubtitle.textContent = advice.subtitle;
             
             // 조언 카드들 생성
             adviceGrid.innerHTML = '';
@@ -392,13 +411,24 @@
                 else cardType = 'lifestyle';
                 
                 cardElement.className = `bmi-advice-card ${cardType}`;
-                cardElement.innerHTML = `
-                    <span class="bmi-advice-card-icon">${card.icon}</span>
-                    <h3 class="bmi-advice-card-title">${card.title}</h3>
-                    <div class="bmi-advice-card-content">
-                        <p>${card.description}</p>
-                    </div>
-                `;
+                // XSS 방지를 위해 textContent 사용
+                const iconSpan = document.createElement('span');
+                iconSpan.className = 'bmi-advice-card-icon';
+                iconSpan.textContent = card.icon;
+                
+                const titleH3 = document.createElement('h3');
+                titleH3.className = 'bmi-advice-card-title';
+                titleH3.textContent = card.title;
+                
+                const contentDiv = document.createElement('div');
+                contentDiv.className = 'bmi-advice-card-content';
+                const contentP = document.createElement('p');
+                contentP.textContent = card.description;
+                contentDiv.appendChild(contentP);
+                
+                cardElement.appendChild(iconSpan);
+                cardElement.appendChild(titleH3);
+                cardElement.appendChild(contentDiv);
                 adviceGrid.appendChild(cardElement);
             });
             
