@@ -19,553 +19,13 @@
     
     <!-- External CSS -->
     <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/fortune/fortune-loading-fix.css">
+    <link rel="stylesheet" href="/css/fortune/mobile-input-fix.css">
     
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
-    
-    <!-- Kakao SDK -->
-    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.4.0/kakao.min.js" integrity="sha384-mXVrIX2T/Kszp6Z0aEWaA8Nm7J6/ZeWXbL8UpGRjKwWe56Srd/iyNmWMBhcItAjH" crossorigin="anonymous"></script>
-    
-    <style>
-        /* 사주팔자 페이지 전용 스타일 */
-        .page-header {
-            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(124, 58, 237, 0.1) 100%);
-            padding: 80px 0 60px;
-            text-align: center;
-        }
-        
-        .page-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 16px;
-            color: #1a1a1a;
-        }
-        
-        .page-subtitle {
-            font-size: 1.125rem;
-            color: #6b7280;
-            line-height: 1.6;
-        }
-        
-        .saju-section {
-            padding: 60px 0;
-            background: white;
-        }
-        
-        .saju-form-container {
-            max-width: 600px;
-            margin: 0 auto;
-            background: white;
-            padding: 40px;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        .saju-form-container h2 {
-            text-align: center;
-            margin-bottom: 30px;
-            color: #1a1a1a;
-        }
-        
-        .form-row {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #374151;
-        }
-        
-        .form-control {
-            width: 100%;
-            padding: 12px 16px;
-            border: 2px solid #e5e7eb;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: all 0.3s ease;
-        }
-        
-        .form-control:focus {
-            outline: none;
-            border-color: #8b5cf6;
-            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
-        }
-        
-        .checkbox-label {
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-        }
-        
-        .checkbox-label input[type="checkbox"] {
-            margin-right: 8px;
-        }
-        
-        .btn {
-            display: inline-block;
-            padding: 14px 32px;
-            border-radius: 12px;
-            font-weight: 600;
-            font-size: 1rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
-            color: white;
-            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4);
-            color: white;
-        }
-        
-        .btn-secondary {
-            background: #e5e7eb;
-            color: #374151;
-        }
-        
-        .btn-secondary:hover {
-            background: #d1d5db;
-            color: #1f2937;
-        }
-        
-        /* 사주 결과 컨테이너 */
-        .saju-result-container {
-            max-width: 900px;
-            margin: 40px auto;
-            background: white;
-            padding: 40px;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        .saju-header {
-            text-align: center;
-            margin-bottom: 40px;
-            padding-bottom: 20px;
-            border-bottom: 2px solid #e5e7eb;
-        }
-        
-        .saju-header h2 {
-            font-size: 2rem;
-            color: #1a1a1a;
-            margin-bottom: 10px;
-        }
-        
-        .birth-info {
-            color: #6b7280;
-            font-size: 1.1rem;
-        }
-        
-        /* 사주팔자 그리드 */
-        .saju-pillars {
-            margin-bottom: 40px;
-        }
-        
-        .saju-pillars h3 {
-            color: #1a1a1a;
-            margin-bottom: 20px;
-            font-size: 1.5rem;
-        }
-        
-        .pillars-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-        }
-        
-        .pillar-item {
-            background: #f9fafb;
-            padding: 20px;
-            border-radius: 12px;
-            text-align: center;
-            border: 2px solid transparent;
-            transition: all 0.3s ease;
-        }
-        
-        .pillar-item.main-pillar {
-            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
-            color: white;
-            border-color: #8b5cf6;
-        }
-        
-        .pillar-title {
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 15px;
-            opacity: 0.8;
-        }
-        
-        .pillar-chars {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-bottom: 15px;
-        }
-        
-        .stem, .branch {
-            font-size: 2rem;
-            font-weight: 700;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-        }
-        
-        .main-pillar .stem, .main-pillar .branch {
-            background: rgba(255, 255, 255, 0.2);
-        }
-        
-        .pillar-god {
-            font-size: 0.9rem;
-            font-weight: 600;
-            opacity: 0.9;
-        }
-        
-        /* 일주 분석 */
-        .day-master-info {
-            margin-bottom: 40px;
-        }
-        
-        .day-master-info h3 {
-            color: #1a1a1a;
-            margin-bottom: 20px;
-            font-size: 1.5rem;
-        }
-        
-        .day-master-card {
-            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
-            color: white;
-            padding: 30px;
-            border-radius: 16px;
-            text-align: center;
-        }
-        
-        .day-master-main {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-        
-        .day-master-char {
-            font-size: 3rem;
-            font-weight: 700;
-            background: rgba(255, 255, 255, 0.2);
-            width: 80px;
-            height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-        }
-        
-        .day-master-element {
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
-        
-        .day-master-desc {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            margin: 0;
-        }
-        
-        /* 오행 분석 */
-        .elements-analysis {
-            margin-bottom: 40px;
-        }
-        
-        .elements-analysis h3 {
-            color: #1a1a1a;
-            margin-bottom: 20px;
-            font-size: 1.5rem;
-        }
-        
-        .elements-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-        
-        .element-item {
-            background: #f9fafb;
-            padding: 20px;
-            border-radius: 8px;
-            text-align: center;
-        }
-        
-        .element-name {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: #374151;
-        }
-        
-        .element-count {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #8b5cf6;
-        }
-        
-        .elements-summary {
-            background: #f9fafb;
-            padding: 20px;
-            border-radius: 8px;
-        }
-        
-        .elements-summary p {
-            margin-bottom: 8px;
-            color: #374151;
-        }
-        
-        .elements-summary p:last-child {
-            margin-bottom: 0;
-        }
-        
-        /* 해석 섹션들 */
-        .interpretation-sections {
-            margin-bottom: 40px;
-        }
-        
-        .interpretation-item {
-            background: #f9fafb;
-            padding: 25px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-        }
-        
-        .interpretation-item h4 {
-            color: #1a1a1a;
-            margin-bottom: 15px;
-            font-size: 1.2rem;
-        }
-        
-        .interpretation-item p {
-            color: #374151;
-            line-height: 1.6;
-            margin: 0;
-        }
-        
-        /* 특별 스타일링 */
-        .interpretation-item.strengths {
-            border-left: 4px solid #10b981;
-        }
-        
-        .interpretation-item.strengths h4 {
-            color: #10b981;
-        }
-        
-        .interpretation-item.weaknesses {
-            border-left: 4px solid #ef4444;
-        }
-        
-        .interpretation-item.weaknesses h4 {
-            color: #ef4444;
-        }
-        
-        .interpretation-item.growth {
-            border-left: 4px solid #3b82f6;
-        }
-        
-        .interpretation-item.growth h4 {
-            color: #3b82f6;
-        }
-        
-        /* 로딩 스타일 */
-        .saju-ai-analyzing {
-            text-align: center;
-            padding: 40px;
-            color: #8b5cf6;
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
-        
-        .fortune-loading-info {
-            margin-top: 15px;
-            font-size: 1rem;
-            color: #6b7280;
-            font-weight: normal;
-        }
-        
-        /* 공유 및 액션 */
-        .saju-actions {
-            margin-bottom: 30px;
-        }
-        
-        .share-section {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        
-        .share-section h3 {
-            color: #1a1a1a;
-            margin-bottom: 20px;
-        }
-        
-        .share-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-        
-        .share-btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1rem;
-        }
-        
-        .share-btn.kakao {
-            background: #fee500;
-            color: #3c1e1e;
-        }
-        
-        .share-btn.kakao:hover {
-            background: #fdd835;
-            transform: translateY(-2px);
-        }
-        
-        .share-btn.copy {
-            background: #e5e7eb;
-            color: #374151;
-        }
-        
-        .share-btn.copy:hover {
-            background: #d1d5db;
-            color: #1f2937;
-            transform: translateY(-2px);
-        }
-        
-        .ai-disclaimer {
-            text-align: center;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #e5e7eb;
-        }
-        
-        .ai-disclaimer small {
-            color: #6b7280;
-            font-size: 0.85rem;
-        }
-        
-        .info-section {
-            padding: 60px 0;
-            background: #f9fafb;
-        }
-        
-        .info-box {
-            max-width: 800px;
-            margin: 0 auto;
-            background: white;
-            padding: 40px;
-            border-radius: 16px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
-        }
-        
-        .info-box h3 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 20px;
-            color: #1a1a1a;
-        }
-        
-        .info-box ul {
-            list-style: none;
-            padding: 0;
-        }
-        
-        .info-box li {
-            padding: 8px 0;
-            padding-left: 20px;
-            position: relative;
-            font-size: 1rem;
-            line-height: 1.6;
-            color: #374151;
-        }
-        
-        .info-box li::before {
-            content: '🔮';
-            position: absolute;
-            left: 0;
-            top: 8px;
-        }
-        
-        /* 반응형 디자인 */
-        @media (max-width: 768px) {
-            .saju-form-container, .saju-result-container {
-                padding: 30px 20px;
-                margin: 20px;
-            }
-            
-            .page-title {
-                font-size: 2rem;
-            }
-            
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-            
-            .pillars-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .elements-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-            
-            .day-master-main {
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            .day-master-char {
-                width: 60px;
-                height: 60px;
-                font-size: 2rem;
-            }
-            
-            .share-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .share-btn {
-                width: 200px;
-            }
-            
-            .info-box {
-                padding: 30px 20px;
-                margin: 0 20px;
-            }
-        }
-    </style>
 </head>
-<body>
+<body class="saju-page">
     <!-- 네비게이션 바 -->
     <div id="navbar-placeholder"></div>
     
@@ -681,7 +141,6 @@
                     <li>오행 균형 분석으로 건강, 운세, 개선점을 제시합니다.</li>
                     <li>AI가 전통 사주학과 현대적 해석을 결합하여 상세한 분석을 제공합니다.</li>
                     <li>출생시간이 정확할수록 더 정밀한 분석이 가능합니다.</li>
-                    <li>16개 분야의 전문적이고 상세한 해석을 제공합니다.</li>
                 </ul>
             </div>
         </div>
@@ -692,18 +151,10 @@
     
     <!-- External JavaScript -->
     <script src="/js/main.js"></script>
-    <script src="/js/security.js"></script>
     <script src="/js/saju-calculator.js"></script>
     <script src="/js/gemini-api.js"></script>
     
     <script>
-        // 카카오 SDK 초기화
-        if (window.Kakao && !window.Kakao.isInitialized()) {
-            Kakao.init('19d8ba832f94d513957adc17883c1282');
-        }
-        
-        let currentSajuData = null;
-        
         // 사주 생성 함수
         function generateSaju(event) {
             event.preventDefault();
@@ -716,15 +167,13 @@
             const birthTime = parseInt(document.getElementById('birthTime').value);
             const isLunar = document.getElementById('isLunar').checked;
             
-            // 로딩 표시 (애니메이션 없음)
+            // 로딩 표시
             const resultDiv = document.getElementById('sajuResult');
             resultDiv.style.display = 'block';
             resultDiv.innerHTML = `
                 <div class="saju-ai-analyzing">
-                    🔮 AI가 ${userName}님의 사주팔자를 분석하고 있습니다...
-                    <div class="fortune-loading-info">
-                        복잡한 만세력 계산과 16개 분야 전문 해석 진행 중
-                    </div>
+                    <div class="fortune-loading-spinner"></div>
+                    <div class="fortune-loading-text">🔮 AI가 ${userName}님의 사주팔자를 분석하고 있습니다<span class="fortune-loading-dots"></span></div>
                 </div>
             `;
             
@@ -733,311 +182,591 @@
             
             // 사주 계산 및 표시
             setTimeout(() => {
-                displaySajuResult(userName, gender, birthYear, birthMonth, birthDay, birthTime, isLunar);
-            }, 3000);
-        }
-        
-        // 사주 결과 표시 (대폭 확장)
-        function displaySajuResult(userName, gender, birthYear, birthMonth, birthDay, birthTime, isLunar) {
-            try {
-                // 사주 계산 (기존 계산기 사용)
                 const saju = sajuCalculator.calculateSaju(birthYear, birthMonth, birthDay, birthTime, isLunar);
-                const interpretation = sajuCalculator.generateDetailedInterpretation(saju, gender);
-                
-                // 결과 데이터 저장 (공유용)
-                currentSajuData = {
-                    userName, gender, birthYear, birthMonth, birthDay, birthTime, isLunar, saju, interpretation
-                };
-                
-                const resultDiv = document.getElementById('sajuResult');
-                resultDiv.innerHTML = `
-                    <div class="saju-result-container">
-                        <div class="saju-header">
-                            <h2>${userName}님의 사주팔자 전문 분석</h2>
-                            <p class="birth-info">
-                                ${saju.birthInfo.year}년 ${saju.birthInfo.month}월 ${saju.birthInfo.day}일 
-                                ${saju.birthInfo.hour}시 ${saju.birthInfo.isLunar ? '(음력)' : '(양력)'}
-                            </p>
-                        </div>
-                        
-                        <!-- 사주팔자 -->
-                        <div class="saju-pillars">
-                            <h3>🔮 사주팔자 (四柱八字)</h3>
-                            <div class="pillars-grid">
-                                <div class="pillar-item">
-                                    <div class="pillar-title">연주 (年柱)</div>
-                                    <div class="pillar-chars">
-                                        <span class="stem">${saju.yearPillar.stem}</span>
-                                        <span class="branch">${saju.yearPillar.branch}</span>
-                                    </div>
-                                    <div class="pillar-god">${saju.tenGods.year}</div>
-                                </div>
-                                
-                                <div class="pillar-item">
-                                    <div class="pillar-title">월주 (月柱)</div>
-                                    <div class="pillar-chars">
-                                        <span class="stem">${saju.monthPillar.stem}</span>
-                                        <span class="branch">${saju.monthPillar.branch}</span>
-                                    </div>
-                                    <div class="pillar-god">${saju.tenGods.month}</div>
-                                </div>
-                                
-                                <div class="pillar-item main-pillar">
-                                    <div class="pillar-title">일주 (日柱)</div>
-                                    <div class="pillar-chars">
-                                        <span class="stem main-stem">${saju.dayPillar.stem}</span>
-                                        <span class="branch main-branch">${saju.dayPillar.branch}</span>
-                                    </div>
-                                    <div class="pillar-god">일주(본인)</div>
-                                </div>
-                                
-                                <div class="pillar-item">
-                                    <div class="pillar-title">시주 (時柱)</div>
-                                    <div class="pillar-chars">
-                                        <span class="stem">${saju.hourPillar.stem}</span>
-                                        <span class="branch">${saju.hourPillar.branch}</span>
-                                    </div>
-                                    <div class="pillar-god">${saju.tenGods.hour}</div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- 일주 분석 -->
-                        <div class="day-master-info">
-                            <h3>⭐ 일주 (日主) 분석</h3>
-                            <div class="day-master-card">
-                                <div class="day-master-main">
-                                    <span class="day-master-char">${saju.dayMaster}</span>
-                                    <span class="day-master-element">${saju.dayMasterElement}(${saju.dayMasterElement})</span>
-                                </div>
-                                <p class="day-master-desc">${interpretation.dayMaster}</p>
-                            </div>
-                        </div>
-                        
-                        <!-- 오행 분석 -->
-                        <div class="elements-analysis">
-                            <h3>🌟 오행 분석</h3>
-                            <div class="elements-grid">
-                                <div class="element-item">
-                                    <span class="element-name">목(木)</span>
-                                    <span class="element-count">${saju.elements.counts.목}</span>
-                                </div>
-                                <div class="element-item">
-                                    <span class="element-name">화(火)</span>
-                                    <span class="element-count">${saju.elements.counts.화}</span>
-                                </div>
-                                <div class="element-item">
-                                    <span class="element-name">토(土)</span>
-                                    <span class="element-count">${saju.elements.counts.토}</span>
-                                </div>
-                                <div class="element-item">
-                                    <span class="element-name">금(金)</span>
-                                    <span class="element-count">${saju.elements.counts.금}</span>
-                                </div>
-                                <div class="element-item">
-                                    <span class="element-name">수(水)</span>
-                                    <span class="element-count">${saju.elements.counts.수}</span>
-                                </div>
-                            </div>
-                            <div class="elements-summary">
-                                <p><strong>가장 강한 오행:</strong> ${saju.elements.strongest}(${saju.elements.strongest})</p>
-                                <p><strong>가장 약한 오행:</strong> ${saju.elements.weakest}(${saju.elements.weakest})</p>
-                                <p><strong>오행 균형:</strong> ${saju.elements.balance.description}</p>
-                            </div>
-                        </div>
-                        
-                        <!-- 16개 분야 전문 해석 -->
-                        <div class="interpretation-sections">
-                            <div class="interpretation-item">
-                                <h4>🧠 성격 분석</h4>
-                                <p>${interpretation.personality}</p>
-                            </div>
-                            
-                            <div class="interpretation-item">
-                                <h4>🌟 운세 분석</h4>
-                                <p>${interpretation.fortune}</p>
-                            </div>
-                            
-                            <div class="interpretation-item">
-                                <h4>💼 직업 적성</h4>
-                                <p>${interpretation.career}</p>
-                            </div>
-                            
-                            <div class="interpretation-item">
-                                <h4>💪 건강 관리</h4>
-                                <p>${interpretation.health}</p>
-                            </div>
-                            
-                            <div class="interpretation-item">
-                                <h4>👥 인간관계</h4>
-                                <p>${interpretation.relationship}</p>
-                            </div>
-                            
-                            <div class="interpretation-item">
-                                <h4>💰 재물운</h4>
-                                <p>${interpretation.wealth}</p>
-                            </div>
-                            
-                            <div class="interpretation-item">
-                                <h4>🎭 생애 주기</h4>
-                                <p>${interpretation.lifeCycle}</p>
-                            </div>
-                            
-                            <div class="interpretation-item">
-                                <h4>💕 궁합 분석</h4>
-                                <p>${interpretation.compatibility}</p>
-                            </div>
-                            
-                            <div class="interpretation-item">
-                                <h4>📅 연도별 운세</h4>
-                                <p>${interpretation.yearlyFortune}</p>
-                            </div>
-                            
-                            <div class="interpretation-item">
-                                <h4>🗓️ 월별 운세</h4>
-                                <p>${interpretation.monthlyFortune}</p>
-                            </div>
-                            
-                            <div class="interpretation-item">
-                                <h4>🍀 행운 아이템</h4>
-                                <p>${interpretation.luckyItems}</p>
-                            </div>
-                            
-                            <div class="interpretation-item">
-                                <h4>⚠️ 주의사항</h4>
-                                <p>${interpretation.cautions}</p>
-                            </div>
-                            
-                            <div class="interpretation-item strengths">
-                                <h4>✅ 장점</h4>
-                                <p>${interpretation.strengths}</p>
-                            </div>
-                            
-                            <div class="interpretation-item weaknesses">
-                                <h4>❌ 개선할 점</h4>
-                                <p>${interpretation.weaknesses}</p>
-                            </div>
-                            
-                            <div class="interpretation-item growth">
-                                <h4>🚀 성장 포인트</h4>
-                                <p>${interpretation.growthPoints}</p>
-                            </div>
-                            
-                            <div class="interpretation-item">
-                                <h4>🔍 십신 해석</h4>
-                                <p>${interpretation.tenGodsAnalysis}</p>
-                            </div>
-                        </div>
-                        
-                        <!-- 공유 및 재분석 -->
-                        <div class="saju-actions">
-                            <div class="share-section">
-                                <h3>결과 공유하기</h3>
-                                <div class="share-buttons">
-                                    <button class="share-btn kakao" onclick="shareSaju()">
-                                        💬 카카오톡 공유
-                                    </button>
-                                    <button class="share-btn copy" onclick="copyResultLink()">
-                                        🔗 링크 복사
-                                    </button>
-                                </div>
-                            </div>
-                            
-                            <div style="text-align: center; margin-top: 30px;">
-                                <button onclick="location.reload()" class="btn btn-secondary" style="padding: 14px 32px;">
-                                    다시 분석하기
-                                </button>
-                            </div>
-                        </div>
-                        
-                        <div class="ai-disclaimer">
-                            <small>※ 본 사주팔자 분석은 AI가 만세력과 전통 사주학을 기반으로 해석한 참고용 정보입니다. doha.kr 독자적인 16개 분야 전문 해석을 제공합니다.</small>
-                        </div>
-                    </div>
-                `;
-                
-            } catch (error) {
-                console.error('사주 계산 중 오류:', error);
-                const resultDiv = document.getElementById('sajuResult');
-                resultDiv.innerHTML = `
-                    <div class="saju-result-container">
-                        <div class="saju-header">
-                            <h2 style="color: #e74c3c;">오류가 발생했습니다</h2>
-                            <p class="birth-info">
-                                사주 분석 중 오류가 발생했습니다. 페이지를 새로고침하여 다시 시도해주세요.
-                            </p>
-                        </div>
-                        <div style="text-align: center; margin-top: 20px;">
-                            <button onclick="location.reload()" class="btn btn-primary">다시 시도</button>
-                        </div>
-                    </div>
-                `;
-            }
+                displaySajuResult(userName, gender, saju);
+            }, 2000);
         }
         
-        // 카카오톡 공유 함수
-        function shareSaju() {
-            if (typeof Kakao !== 'undefined' && currentSajuData) {
-                const { userName, saju, interpretation } = currentSajuData;
-                const dayMaster = saju.dayPillar.stem + saju.dayPillar.branch;
-                
-                const sajuString = `${saju.yearPillar.stem}${saju.yearPillar.branch} ${saju.monthPillar.stem}${saju.monthPillar.branch} ${saju.dayPillar.stem}${saju.dayPillar.branch} ${saju.hourPillar.stem}${saju.hourPillar.branch}`;
-                
-                const detailedDescription = `🔮 ${userName}님의 사주팔자 16개 분야 전문 분석 결과
-                
-📅 사주: ${sajuString}
-⭐ 일주(본인): ${dayMaster}일주 (${saju.dayMasterElement})
-🌟 가장 강한 오행: ${saju.elements.strongest}
-🌟 가장 약한 오행: ${saju.elements.weakest}
-
-🧠 성격: ${interpretation.personality.substring(0, 80)}...
-
-💼 직업 적성: ${interpretation.career.substring(0, 80)}...
-
-💰 재물운: ${interpretation.wealth.substring(0, 80)}...
-
-만세력 기반 정확한 AI 사주팔자 분석 👇`;
-                
-                Kakao.Share.sendDefault({
-                    objectType: 'feed',
-                    content: {
-                        title: `🔮 ${userName}님의 사주팔자 - ${dayMaster}일주`,
-                        description: detailedDescription,
-                        imageUrl: 'https://doha.kr/images/saju-og.png',
-                        link: {
-                            mobileWebUrl: window.location.href,
-                            webUrl: window.location.href,
-                        },
-                    },
-                    buttons: [
-                        {
-                            title: '나도 사주팔자 보기',
-                            link: {
-                                mobileWebUrl: 'https://doha.kr/fortune/saju/',
-                                webUrl: 'https://doha.kr/fortune/saju/'
-                            }
-                        }
-                    ]
-                });
-            } else {
-                copyResultLink();
-            }
-        }
-        
-        // 링크 복사
-        function copyResultLink() {
-            const url = window.location.href;
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(url).then(() => {
-                    alert('링크가 복사되었습니다!');
-                }).catch(() => {
-                    alert('링크 복사에 실패했습니다.');
-                });
-            } else {
-                alert('링크 복사에 실패했습니다.');
-            }
+        // 사주 결과 표시
+        function displaySajuResult(userName, gender, saju) {
+            const interpretation = sajuCalculator.generateInterpretation(saju);
+            const today = new Date();
+            
+            const resultDiv = document.getElementById('sajuResult');
+            resultDiv.innerHTML = `
+                <div class="saju-result-container">
+                    <div class="saju-header">
+                        <h2>${userName}님의 사주팔자</h2>
+                        <p class="birth-info">
+                            ${saju.birthInfo.year}년 ${saju.birthInfo.month}월 ${saju.birthInfo.day}일 
+                            ${saju.birthInfo.hour}시 ${saju.birthInfo.isLunar ? '(음력)' : '(양력)'}
+                        </p>
+                    </div>
+                    
+                    <div class="saju-pillars">
+                        <h3>사주팔자 (四柱八字)</h3>
+                        <div class="pillars-grid">
+                            <div class="pillar-item">
+                                <div class="pillar-title">연주 (年柱)</div>
+                                <div class="pillar-chars">
+                                    <span class="stem">${saju.yearPillar.stem}</span>
+                                    <span class="branch">${saju.yearPillar.branch}</span>
+                                </div>
+                                <div class="pillar-god">${saju.tenGods.year}</div>
+                            </div>
+                            
+                            <div class="pillar-item">
+                                <div class="pillar-title">월주 (月柱)</div>
+                                <div class="pillar-chars">
+                                    <span class="stem">${saju.monthPillar.stem}</span>
+                                    <span class="branch">${saju.monthPillar.branch}</span>
+                                </div>
+                                <div class="pillar-god">${saju.tenGods.month}</div>
+                            </div>
+                            
+                            <div class="pillar-item main-pillar">
+                                <div class="pillar-title">일주 (日柱)</div>
+                                <div class="pillar-chars">
+                                    <span class="stem main-stem">${saju.dayPillar.stem}</span>
+                                    <span class="branch main-branch">${saju.dayPillar.branch}</span>
+                                </div>
+                                <div class="pillar-god">${saju.tenGods.day}</div>
+                            </div>
+                            
+                            <div class="pillar-item">
+                                <div class="pillar-title">시주 (時柱)</div>
+                                <div class="pillar-chars">
+                                    <span class="stem">${saju.hourPillar.stem}</span>
+                                    <span class="branch">${saju.hourPillar.branch}</span>
+                                </div>
+                                <div class="pillar-god">${saju.tenGods.hour}</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="day-master-info">
+                        <h3>일주 (日主) 분석</h3>
+                        <div class="day-master-card">
+                            <div class="day-master-main">
+                                <span class="day-master-char">${saju.dayMaster}</span>
+                                <span class="day-master-element">${saju.dayMasterElement}(${saju.dayMasterElement})</span>
+                            </div>
+                            <p class="day-master-desc">${interpretation.dayMaster}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="elements-analysis">
+                        <h3>오행 분석</h3>
+                        <div class="elements-grid">
+                            <div class="element-item">
+                                <span class="element-name">목(木)</span>
+                                <span class="element-count">${saju.elements.counts.목}</span>
+                            </div>
+                            <div class="element-item">
+                                <span class="element-name">화(火)</span>
+                                <span class="element-count">${saju.elements.counts.화}</span>
+                            </div>
+                            <div class="element-item">
+                                <span class="element-name">토(土)</span>
+                                <span class="element-count">${saju.elements.counts.토}</span>
+                            </div>
+                            <div class="element-item">
+                                <span class="element-name">금(金)</span>
+                                <span class="element-count">${saju.elements.counts.금}</span>
+                            </div>
+                            <div class="element-item">
+                                <span class="element-name">수(水)</span>
+                                <span class="element-count">${saju.elements.counts.수}</span>
+                            </div>
+                        </div>
+                        <div class="elements-summary">
+                            <p><strong>가장 강한 오행:</strong> ${saju.elements.strongest}(${saju.elements.strongest})</p>
+                            <p><strong>가장 약한 오행:</strong> ${saju.elements.weakest}(${saju.elements.weakest})</p>
+                            <p><strong>오행 균형:</strong> ${saju.elements.balance.balance}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="interpretation-sections">
+                        <div class="interpretation-item">
+                            <h4>🧠 성격 분석</h4>
+                            <p>${interpretation.personality}</p>
+                        </div>
+                        
+                        <div class="interpretation-item">
+                            <h4>🌟 운세 분석</h4>
+                            <p>${interpretation.fortune}</p>
+                        </div>
+                        
+                        <div class="interpretation-item">
+                            <h4>💼 직업 적성</h4>
+                            <p>${interpretation.career}</p>
+                        </div>
+                        
+                        <div class="interpretation-item">
+                            <h4>💪 건강 관리</h4>
+                            <p>${interpretation.health}</p>
+                        </div>
+                        
+                        <div class="interpretation-item">
+                            <h4>👥 인간관계</h4>
+                            <p>${interpretation.relationship}</p>
+                        </div>
+                        
+                        <div class="interpretation-item">
+                            <h4>💰 재물운</h4>
+                            <p>${interpretation.wealth}</p>
+                        </div>
+                        
+                        <div class="interpretation-item">
+                            <h4>🔄 생애 주기</h4>
+                            <p>${interpretation.lifeCycle}</p>
+                        </div>
+                        
+                        <div class="interpretation-item">
+                            <h4>💕 궁합 분석</h4>
+                            <p>${interpretation.compatibility}</p>
+                        </div>
+                        
+                        <div class="interpretation-item">
+                            <h4>📅 연도별 운세</h4>
+                            <p>${interpretation.yearlyFortune}</p>
+                        </div>
+                        
+                        <div class="interpretation-item">
+                            <h4>📆 월별 운세</h4>
+                            <p>${interpretation.monthlyFortune}</p>
+                        </div>
+                        
+                        <div class="interpretation-item">
+                            <h4>🍀 행운 아이템</h4>
+                            <p>${interpretation.luckyItems}</p>
+                        </div>
+                        
+                        <div class="interpretation-item">
+                            <h4>⚠️ 주의사항</h4>
+                            <p>${interpretation.cautions}</p>
+                        </div>
+                        
+                        <div class="interpretation-item strength-item">
+                            <h4>✨ 장점</h4>
+                            <p>${interpretation.strengths}</p>
+                        </div>
+                        
+                        <div class="interpretation-item weakness-item">
+                            <h4>🔧 개선할 점</h4>
+                            <p>${interpretation.weaknesses}</p>
+                        </div>
+                        
+                        <div class="interpretation-item growth-item">
+                            <h4>🌱 성장 포인트</h4>
+                            <p>${interpretation.growthPoints}</p>
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 40px;">
+                        <button onclick="location.reload()" class="btn btn-secondary">
+                            다시 분석하기
+                        </button>
+                    </div>
+                </div>
+            `;
         }
     </script>
+    
+    <style>
+        .saju-page .page-header {
+            background: linear-gradient(135deg, rgba(139, 69, 19, 0.05) 0%, rgba(218, 165, 32, 0.05) 100%);
+            padding: 80px 0 60px;
+            text-align: center;
+        }
+        
+        .saju-page .page-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--gray-900);
+        }
+        
+        .saju-page .page-subtitle {
+            font-size: 1.125rem;
+            color: var(--gray-600);
+        }
+        
+        .saju-section {
+            padding: 60px 0;
+            background: white;
+        }
+        
+        .saju-form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .saju-form-container h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--gray-900);
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--gray-700);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--gray-200);
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #8B4513;
+            box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.1);
+        }
+        
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .checkbox-label input[type="checkbox"] {
+            margin-right: 8px;
+        }
+        
+        .saju-result-container {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .saju-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .saju-header h2 {
+            font-size: 2rem;
+            color: var(--gray-900);
+            margin-bottom: 10px;
+        }
+        
+        .birth-info {
+            color: var(--gray-600);
+            font-size: 1.1rem;
+        }
+        
+        .saju-pillars {
+            margin-bottom: 40px;
+        }
+        
+        .saju-pillars h3 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--gray-800);
+        }
+        
+        .pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+        
+        .pillar-item {
+            background: var(--gray-50);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        
+        .pillar-item.main-pillar {
+            background: linear-gradient(135deg, #8B4513 0%, #DAA520 100%);
+            color: white;
+        }
+        
+        .pillar-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            opacity: 0.8;
+        }
+        
+        .pillar-chars {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+        
+        .stem, .branch {
+            font-size: 28px;
+            font-weight: 700;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        
+        .main-stem, .main-branch {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .pillar-god {
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .day-master-info {
+            margin-bottom: 40px;
+        }
+        
+        .day-master-card {
+            background: linear-gradient(135deg, #8B4513 0%, #DAA520 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        
+        .day-master-main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .day-master-char {
+            font-size: 48px;
+            font-weight: 700;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+        }
+        
+        .day-master-element {
+            font-size: 24px;
+            font-weight: 600;
+        }
+        
+        .day-master-desc {
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        
+        .elements-analysis {
+            margin-bottom: 40px;
+        }
+        
+        .elements-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .element-item {
+            background: var(--gray-50);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .element-name {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--gray-700);
+        }
+        
+        .element-count {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+        
+        .elements-summary {
+            background: var(--gray-50);
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .elements-summary p {
+            margin-bottom: 8px;
+            color: var(--gray-700);
+        }
+        
+        .interpretation-sections {
+            display: grid;
+            gap: 20px;
+        }
+        
+        .interpretation-item {
+            background: var(--gray-50);
+            padding: 25px;
+            border-radius: 12px;
+        }
+        
+        .interpretation-item h4 {
+            color: var(--gray-800);
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        
+        .interpretation-item p {
+            color: var(--gray-700);
+            line-height: 1.6;
+        }
+        
+        .strength-item {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(34, 197, 94, 0.05) 100%);
+            border-left: 4px solid #22c55e;
+        }
+        
+        .weakness-item {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(239, 68, 68, 0.05) 100%);
+            border-left: 4px solid #ef4444;
+        }
+        
+        .growth-item {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0.05) 100%);
+            border-left: 4px solid #3b82f6;
+        }
+        
+        
+        .info-section {
+            padding: 60px 0;
+            background: var(--gray-50);
+        }
+        
+        .info-box {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+        }
+        
+        .info-box h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--gray-900);
+        }
+        
+        .info-box ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .info-box li {
+            padding: 8px 0;
+            padding-left: 20px;
+            position: relative;
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--gray-700);
+        }
+        
+        .info-box li::before {
+            content: '🔮';
+            position: absolute;
+            left: 0;
+            top: 8px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #8B4513 0%, #DAA520 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(139, 69, 19, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(139, 69, 19, 0.4);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: var(--gray-200);
+            color: var(--gray-700);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--gray-300);
+            color: var(--gray-800);
+        }
+        
+        @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+            }
+            
+            .pillars-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .elements-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .saju-form-container {
+                padding: 30px 20px;
+                margin: 0 20px;
+            }
+            
+            .saju-result-container {
+                padding: 30px 20px;
+                margin: 0 20px;
+            }
+        }
+    </style>
     
     <!-- AdSense initialization -->
     <script>
