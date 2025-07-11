@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>심리테스트 | doha.kr</title>
+    <meta name="description" content="재미있는 심리테스트로 나를 알아보세요! 테토-에겐 테스트, MBTI 검사 등 다양한 무료 성격 분석 테스트를 제공합니다.">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="doha.kr">
+    
+    <!-- Security Headers -->
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:;">
+    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), accelerometer=(), gyroscope=()">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="심리테스트 | doha.kr">
+    <meta property="og:description" content="재미있는 심리테스트로 나를 알아보세요!">
+    <meta property="og:image" content="https://doha.kr/images/og-image.png">
+    <meta property="og:url" content="https://doha.kr/tests/">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" href="/css/styles.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/images/placeholder-favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/images/logo.svg">
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "테토-에겐 테스트란 무엇인가요?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "테토-에겐 테스트는 당신의 성격이 테토형인지 에겐형인지 알아보는 독특한 성격 분석 테스트입니다. 10가지 질문으로 당신의 진짜 성격을 발견할 수 있습니다."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "MBTI 성격유형 검사는 어떻게 진행되나요?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "MBTI 검사는 16가지 성격 유형 중 당신의 유형을 찾아주는 과학적으로 검증된 테스트입니다. 60문항의 질문에 답하며, 약 10분 정도 소요됩니다."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "심리테스트는 무료인가요?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "네, doha.kr의 모든 심리테스트는 완전히 무료로 제공됩니다. 가입이나 결제 없이 누구나 이용할 수 있습니다."
+                }
+            }
+        ]
+    }
+    </script>
+    
+    <style>
+        /* Page-specific styles */
+        /* CSS 변수 정의 */
+        /* 네비게이션 바 */
+        /* 헤더 섹션 */
+        .header {
+            background: white;
+            padding: 80px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 20% 80%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(30px, -30px) rotate(120deg); }
+            66% { transform: translate(-20px, 20px) rotate(240deg); }
+        }
+        .header-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        .header-title {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+        }
+        .header-subtitle {
+            font-size: 20px;
+            color: #6b7280;
+            margin-bottom: 32px;
+            line-height: 1.5;
+        }
+        /* 컨테이너 */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+        /* 테스트 그리드 */
+        .tests-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 32px;
+            margin-bottom: 60px;
+        }
+        .test-card {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+        }
+        .test-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+            transform-origin: left;
+        }
+        .test-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .test-card:hover::before {
+            transform: scaleX(1);
+        }
+        .test-icon {
+            font-size: 64px;
+            margin-bottom: 24px;
+            display: block;
+        }
+        .test-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #111827;
+        }
+        .test-description {
+            line-height: 1.6;
+            margin-bottom: 24px;
+            color: #6b7280;
+        }
+        .test-stats {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .test-stat {
+            padding: 8px 12px;
+            background: #f3f4f6;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #6b7280;
+        }
+        .test-button {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            display: inline-block;
+            text-decoration: none;
+            transition: all 0.2s;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .test-button:hover {
+            transform: translateY(-2px);
+        }
+        /* 광고 컨테이너 */
+        .ad-container {
+            max-width: 1280px;
+            margin: 40px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+        .ad-label {
+            font-size: 12px;
+            color: #9ca3af;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        /* 푸터 */
+        /* 반응형 디자인 */
+        @media (max-width: 768px) {
+            .header-title {
+                font-size: 36px;
+            }
+            .header-subtitle {
+                font-size: 18px;
+            }
+            .tests-grid {
+                grid-template-columns: 1fr;
+            }
+            .test-card {
+                padding: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 네비게이션 바 -->
+    <div id="navbar-placeholder"></div>
+    
+    <!-- 헤더 섹션 -->
+    <header class="header">
+        <div class="header-content">
+            <h1 class="header-title">심리테스트</h1>
+            <p class="header-subtitle">
+                재미있는 심리테스트로 나를 알아보세요!
+            </p>
+        </div>
+    </header>
+    
+    <!-- 메인 컨텐츠 -->
+    <div class="container">
+        <div class="tests-grid">
+            <!-- 테토-에겐 테스트 -->
+            <a href="/tests/teto-egen/" class="test-card">
+                <span class="test-icon">🦋</span>
+                <h2 class="test-title">테토-에겐 테스트</h2>
+                <p class="test-description">
+                    당신의 성격이 테토형인지 에겐형인지 알아보는 독특한 성격 분석 테스트입니다. 
+                    10가지 질문으로 당신의 진짜 성격을 발견하세요.
+                </p>
+                <div class="test-stats">
+                    <span class="test-stat">⏰ 5분 소요</span>
+                    <span class="test-stat">❓ 10문항</span>
+                    <span class="test-stat">🔥 인기</span>
+                </div>
+                <span class="test-button">테스트 시작하기</span>
+            </a>
+            
+            <!-- MBTI 테스트 -->
+            <a href="/tests/mbti/" class="test-card">
+                <span class="test-icon">🎭</span>
+                <h2 class="test-title">MBTI 성격유형 검사</h2>
+                <p class="test-description">
+                    16가지 성격 유형 중 나는 어떤 유형일까요? 과학적으로 검증된 
+                    MBTI 검사로 당신의 성격을 정확히 분석해보세요.
+                </p>
+                <div class="test-stats">
+                    <span class="test-stat">⏰ 10분 소요</span>
+                    <span class="test-stat">❓ 24문항</span>
+                    <span class="test-stat">✨ 정확</span>
+                </div>
+                <span class="test-button">테스트 시작하기</span>
+            </a>
+            
+            <!-- 러브 DNA 테스트 -->
+            <a href="/tests/love-dna/" class="test-card">
+                <span class="test-icon">💕</span>
+                <h2 class="test-title">러브 DNA 테스트</h2>
+                <p class="test-description">
+                    L-O-V-E-D 5축 분석으로 당신만의 연애 스타일을 발견하세요. 
+                    32가지 러브 DNA 유형 중 나는 어떤 연애 스타일일까요?
+                </p>
+                <div class="test-stats">
+                    <span class="test-stat">⏰ 8분 소요</span>
+                    <span class="test-stat">❓ 25문항</span>
+                    <span class="test-stat">🔥 NEW</span>
+                </div>
+                <span class="test-button">테스트 시작하기</span>
+            </a>
+        </div>
+        
+        <!-- 광고 영역 -->
+        <div class="ad-container">
+            <div class="ad-label">광고</div>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-7905640648499222"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </div>
+    
+    <!-- 푸터 -->
+    <div id="footer-placeholder"></div>
+    
+    <!-- External JavaScript -->
+    <script src="/js/main.js"></script>
+    
+    <!-- AdSense initialization -->
+    <script>
+        // 애드센스 광고 로드
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</body>
+</html>

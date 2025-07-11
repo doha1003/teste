@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MBTI 성격유형 검사 - 16가지 성격 유형 무료 테스트 | doha.kr</title>
+    <meta name="description" content="정확한 MBTI 성격유형 검사로 16가지 성격 중 나의 유형을 찾아보세요. INFP, ENFP, INTJ 등 각 유형별 특징과 장단점, 직업 추천까지 제공합니다.">
+    <meta name="keywords" content="MBTI, MBTI검사, MBTI테스트, 성격유형검사, 16personalities, INFP, ENFP, INTJ, ENTJ, 무료MBTI">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="MBTI 성격유형 검사 - 나는 어떤 유형일까?">
+    <meta property="og:description" content="60개 문항으로 정확하게 분석하는 MBTI 성격유형 검사. 16가지 성격 유형 중 당신의 유형을 찾아보세요.">
+    <meta property="og:image" content="https://doha.kr/images/og-default.png">
+    <meta property="og:url" content="https://doha.kr/tests/mbti/">
+    
+    <!-- Schema.org structured data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Quiz",
+        "name": "MBTI 성격유형 검사",
+        "description": "Myers-Briggs Type Indicator 기반의 16가지 성격유형 분석 테스트",
+        "educationalLevel": "All",
+        "numberOfQuestions": 60,
+        "timeRequired": "PT15M",
+        "provider": {
+            "@type": "Organization",
+            "name": "doha.kr"
+        }
+    }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/pages/mbti-intro.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/images/placeholder-favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/images/logo.svg">
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
+    
+    <!-- Kakao JavaScript SDK -->
+    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.4.0/kakao.min.js" integrity="sha384-mXVrIX2T/Kszp6Z0aEWaA8Nm7J6/ZeWXbL8UpGRjKwWe56Srd/iyNmWMBhcItAjH" crossorigin="anonymous"></script>
+</head>
+<body class="mbti-page">
+    <!-- 네비게이션 -->
+    <div id="navbar-placeholder"></div>
+    
+    <!-- 히어로 섹션 -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">🌟 전 세계 1억명이 선택한 성격 검사</div>
+            <h1 class="hero-title">MBTI 성격유형 검사</h1>
+            <p class="hero-subtitle">
+                Myers-Briggs Type Indicator® 기반의 정확한 성격 분석<br>
+                당신만의 고유한 성격 유형을 발견하세요
+            </p>
+            
+            <div class="mbti-types-preview">
+                <span class="type-badge">INTJ</span>
+                <span class="type-badge">INFP</span>
+                <span class="type-badge">ENFP</span>
+                <span class="type-badge">ENTJ</span>
+                <span class="type-badge">ISFJ</span>
+                <span class="type-badge">ESFP</span>
+                <span class="type-badge">ISTJ</span>
+                <span class="type-badge">...</span>
+            </div>
+            
+            <a href="test.html" class="test-start-btn">지금 테스트 시작하기</a>
+        </div>
+    </section>
+    
+    <!-- MBTI 소개 섹션 -->
+    <section class="intro">
+        <div class="container">
+            <div class="content-wrapper">
+                <h2 class="section-title">MBTI란 무엇인가요?</h2>
+                <p class="intro-text">
+                    MBTI(Myers-Briggs Type Indicator)는 캐서린 쿡 브릭스와 그녀의 딸 이사벨 브릭스 마이어스가 칼 융의 심리학적 유형론을 바탕으로 개발한 <span class="highlight">성격 유형 분류 도구</span>입니다.
+                </p>
+                <p class="intro-text">
+                    이 도구는 사람들이 세상을 인식하고 결정을 내리는 방식의 차이를 이해하는 데 도움을 주며, 전 세계 수백만 명이 자신의 성격을 이해하고 개인적 성장을 위해 활용하고 있습니다.
+                </p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 4가지 선호 지표 섹션 -->
+    <section class="dimensions">
+        <div class="container">
+            <h2 class="section-title">4가지 성격 차원</h2>
+            <div class="dimensions-grid">
+                <div class="dimension-card">
+                    <div class="dimension-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%)">👥</div>
+                    <h3 class="dimension-title">에너지 방향</h3>
+                    <div class="dimension-pair">
+                        <span class="dimension-type" style="background: #e8f2ff; color: #1e3a8a">외향(E)</span>
+                        <span class="dimension-type" style="background: #fef3c7; color: #92400e">내향(I)</span>
+                    </div>
+                    <p class="dimension-description">에너지를 외부 세계에서 얻는지, 내부 세계에서 얻는지를 나타냅니다.</p>
+                </div>
+                
+                <div class="dimension-card">
+                    <div class="dimension-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%)">👁️</div>
+                    <h3 class="dimension-title">인식 기능</h3>
+                    <div class="dimension-pair">
+                        <span class="dimension-type" style="background: #fef3c7; color: #92400e">감각(S)</span>
+                        <span class="dimension-type" style="background: #e8f2ff; color: #1e3a8a">직관(N)</span>
+                    </div>
+                    <p class="dimension-description">정보를 구체적으로 받아들이는지, 직관적으로 받아들이는지를 나타냅니다.</p>
+                </div>
+                
+                <div class="dimension-card">
+                    <div class="dimension-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)">🧠</div>
+                    <h3 class="dimension-title">판단 기능</h3>
+                    <div class="dimension-pair">
+                        <span class="dimension-type" style="background: #e8f2ff; color: #1e3a8a">사고(T)</span>
+                        <span class="dimension-type" style="background: #fef3c7; color: #92400e">감정(F)</span>
+                    </div>
+                    <p class="dimension-description">논리적으로 판단하는지, 감정적 가치로 판단하는지를 나타냅니다.</p>
+                </div>
+                
+                <div class="dimension-card">
+                    <div class="dimension-icon" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)">📋</div>
+                    <h3 class="dimension-title">생활 양식</h3>
+                    <div class="dimension-pair">
+                        <span class="dimension-type" style="background: #e8f2ff; color: #1e3a8a">판단(J)</span>
+                        <span class="dimension-type" style="background: #fef3c7; color: #92400e">인식(P)</span>
+                    </div>
+                    <p class="dimension-description">계획적이고 체계적인지, 유연하고 적응적인지를 나타냅니다.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 16가지 성격 유형 섹션 -->
+    <section class="types">
+        <div class="container">
+            <h2 class="section-title">16가지 성격 유형</h2>
+            
+            <div class="types-categories">
+                <!-- 분석가 그룹 -->
+                <div class="type-category">
+                    <h3 class="category-title">
+                        <span class="category-color" style="background: #8b5cf6"></span>
+                        분석가 (NT)
+                    </h3>
+                    <div class="types-grid">
+                        <div class="type-card" style="background: linear-gradient(135deg, #fef3e2 0%, #fcd34d 20%); color: #92400e">
+                            <div class="type-code">INTJ</div>
+                            <div class="type-nickname">건축가</div>
+                            <div class="type-summary">상상력이 풍부하고 전략적인 사고를 하는 완벽주의자</div>
+                        </div>
+                        <div class="type-card" style="background: linear-gradient(135deg, #f3e8ff 0%, #c084fc 20%); color: #7c3aed">
+                            <div class="type-code">INTP</div>
+                            <div class="type-nickname">논리술사</div>
+                            <div class="type-summary">혁신적이고 독창적인 아이디어를 추구하는 사색가</div>
+                        </div>
+                        <div class="type-card" style="background: linear-gradient(135deg, #ecfccb 0%, #65a30d 20%); color: #365314">
+                            <div class="type-code">ENTJ</div>
+                            <div class="type-nickname">통솔자</div>
+                            <div class="type-summary">대담하고 상상력이 풍부한 강력한 의지의 지도자</div>
+                        </div>
+                        <div class="type-card" style="background: linear-gradient(135deg, #f0f9ff 0%, #3b82f6 20%); color: #1e3a8a">
+                            <div class="type-code">ENTP</div>
+                            <div class="type-nickname">변론가</div>
+                            <div class="type-summary">지적 도전을 즐기는 영리하고 호기심이 많은 사상가</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 외교관 그룹 -->
+                <div class="type-category">
+                    <h3 class="category-title">
+                        <span class="category-color" style="background: #10b981"></span>
+                        외교관 (NF)
+                    </h3>
+                    <div class="types-grid">
+                        <div class="type-card" style="background: linear-gradient(135deg, #ecfdf5 0%, #10b981 20%); color: #064e3b">
+                            <div class="type-code">INFJ</div>
+                            <div class="type-nickname">옹호자</div>
+                            <div class="type-summary">선의의 옹호자이며 창의적이고 통찰력 있는 이상주의자</div>
+                        </div>
+                        <div class="type-card" style="background: linear-gradient(135deg, #fefce8 0%, #facc15 20%); color: #a16207">
+                            <div class="type-code">INFP</div>
+                            <div class="type-nickname">중재자</div>
+                            <div class="type-summary">열정적이고 창의적인 자유로운 영혼의 중재자</div>
+                        </div>
+                        <div class="type-card" style="background: linear-gradient(135deg, #fef2f2 0%, #ef4444 20%); color: #991b1b">
+                            <div class="type-code">ENFJ</div>
+                            <div class="type-nickname">주인공</div>
+                            <div class="type-summary">카리스마 있고 영감을 주는 타고난 지도자</div>
+                        </div>
+                        <div class="type-card" style="background: linear-gradient(135deg, #faf5ff 0%, #a855f7 20%); color: #581c87">
+                            <div class="type-code">ENFP</div>
+                            <div class="type-nickname">활동가</div>
+                            <div class="type-summary">열정적이고 창의적인 사회적 자유 정신</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 관리자 그룹 -->
+                <div class="type-category">
+                    <h3 class="category-title">
+                        <span class="category-color" style="background: #3b82f6"></span>
+                        관리자 (SJ)
+                    </h3>
+                    <div class="types-grid">
+                        <div class="type-card" style="background: linear-gradient(135deg, #f0f9ff 0%, #3b82f6 20%); color: #1e3a8a">
+                            <div class="type-code">ISTJ</div>
+                            <div class="type-nickname">현실주의자</div>
+                            <div class="type-summary">사실적이고 신뢰할 수 있는 실용적인 현실주의자</div>
+                        </div>
+                        <div class="type-card" style="background: linear-gradient(135deg, #f0fdf4 0%, #22c55e 20%); color: #15803d">
+                            <div class="type-code">ISFJ</div>
+                            <div class="type-nickname">수호자</div>
+                            <div class="type-summary">따뜻하고 배려심 많은 항상 타인을 도울 준비가 된 수호자</div>
+                        </div>
+                        <div class="type-card" style="background: linear-gradient(135deg, #fffbeb 0%, #f59e0b 20%); color: #92400e">
+                            <div class="type-code">ESTJ</div>
+                            <div class="type-nickname">경영자</div>
+                            <div class="type-summary">뛰어난 관리 능력을 가진 의지가 강하고 헌신적인 경영자</div>
+                        </div>
+                        <div class="type-card" style="background: linear-gradient(135deg, #fef7f0 0%, #ea580c 20%); color: #9a3412">
+                            <div class="type-code">ESFJ</div>
+                            <div class="type-nickname">집정관</div>
+                            <div class="type-summary">배려심이 많고 사교적이며 항상 도움을 주려는 집정관</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 탐험가 그룹 -->
+                <div class="type-category">
+                    <h3 class="category-title">
+                        <span class="category-color" style="background: #f59e0b"></span>
+                        탐험가 (SP)
+                    </h3>
+                    <div class="types-grid">
+                        <div class="type-card" style="background: linear-gradient(135deg, #f8fafc 0%, #64748b 20%); color: #0f172a">
+                            <div class="type-code">ISTP</div>
+                            <div class="type-nickname">만능재주꾼</div>
+                            <div class="type-summary">대담하고 실용적인 실험 정신이 강한 만능재주꾼</div>
+                        </div>
+                        <div class="type-card" style="background: linear-gradient(135deg, #fef2f2 0%, #f87171 20%); color: #7f1d1d">
+                            <div class="type-code">ISFP</div>
+                            <div class="type-nickname">모험가</div>
+                            <div class="type-summary">유연하고 매력적인 항상 새로운 가능성을 탐색하는 예술가</div>
+                        </div>
+                        <div class="type-card" style="background: linear-gradient(135deg, #ecfccb 0%, #84cc16 20%); color: #365314">
+                            <div class="type-code">ESTP</div>
+                            <div class="type-nickname">사업가</div>
+                            <div class="type-summary">영리하고 에너지가 넘치며 인식이 뛰어난 사업가</div>
+                        </div>
+                        <div class="type-card" style="background: linear-gradient(135deg, #fefce8 0%, #eab308 20%); color: #a16207">
+                            <div class="type-code">ESFP</div>
+                            <div class="type-nickname">연예인</div>
+                            <div class="type-summary">자발적이고 열정적이며 사교적인 자유로운 영혼</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 인지 기능 섹션 -->
+    <section class="cognitive">
+        <div class="container">
+            <h2 class="section-title">MBTI의 8가지 인지 기능</h2>
+            <div class="cognitive-intro">
+                <p>MBTI는 칼 융의 인지 기능 이론을 바탕으로 합니다. 각 성격 유형은 8가지 인지 기능을 다른 순서와 강도로 사용합니다.</p>
+            </div>
+            
+            <div class="cognitive-functions">
+                <div class="function-card">
+                    <div class="function-symbol" style="color: #3b82f6">Ne</div>
+                    <div class="function-name">외향 직관</div>
+                    <div class="function-desc">가능성과 연결점을 탐색하고 새로운 아이디어를 생성</div>
+                </div>
+                <div class="function-card">
+                    <div class="function-symbol" style="color: #8b5cf6">Ni</div>
+                    <div class="function-name">내향 직관</div>
+                    <div class="function-desc">미래를 예측하고 패턴을 인식하여 통찰력 발휘</div>
+                </div>
+                <div class="function-card">
+                    <div class="function-symbol" style="color: #10b981">Se</div>
+                    <div class="function-name">외향 감각</div>
+                    <div class="function-desc">현재 순간에 집중하고 환경의 세부사항을 인식</div>
+                </div>
+                <div class="function-card">
+                    <div class="function-symbol" style="color: #f59e0b">Si</div>
+                    <div class="function-name">내향 감각</div>
+                    <div class="function-desc">과거 경험을 바탕으로 현재 상황을 비교 분석</div>
+                </div>
+                <div class="function-card">
+                    <div class="function-symbol" style="color: #06b6d4">Te</div>
+                    <div class="function-name">외향 사고</div>
+                    <div class="function-desc">효율성과 논리를 추구하며 체계적으로 조직화</div>
+                </div>
+                <div class="function-card">
+                    <div class="function-symbol" style="color: #64748b">Ti</div>
+                    <div class="function-name">내향 사고</div>
+                    <div class="function-desc">내부 논리 체계를 구축하고 정확성을 추구</div>
+                </div>
+                <div class="function-card">
+                    <div class="function-symbol" style="color: #ef4444">Fe</div>
+                    <div class="function-name">외향 감정</div>
+                    <div class="function-desc">집단의 감정을 조화시키고 타인의 니즈에 민감</div>
+                </div>
+                <div class="function-card">
+                    <div class="function-symbol" style="color: #ec4899">Fi</div>
+                    <div class="function-name">내향 감정</div>
+                    <div class="function-desc">개인의 가치와 신념을 바탕으로 진정성 추구</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 통계 섹션 -->
+    <section class="statistics">
+        <div class="container">
+            <h2 class="section-title">MBTI 통계</h2>
+            <div class="stats-grid">
+                <div class="stat-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%)">
+                    <div class="stat-number">16</div>
+                    <div class="stat-label">가지 성격 유형</div>
+                </div>
+                <div class="stat-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%)">
+                    <div class="stat-number">88%</div>
+                    <div class="stat-label">Fortune 100 기업 사용</div>
+                </div>
+                <div class="stat-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)">
+                    <div class="stat-number">75년</div>
+                    <div class="stat-label">연구 개발 역사</div>
+                </div>
+                <div class="stat-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)">
+                    <div class="stat-number">200만+</div>
+                    <div class="stat-label">연간 검사 응시자</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 광고 영역 -->
+    <div class="ad-container">
+        <div class="ad-label">광고</div>
+        <!-- 광고 코드 -->
+        <ins class="adsbygoogle"
+             style="display:block; text-align:center;"
+             data-ad-layout="in-article"
+             data-ad-format="fluid"
+             data-ad-client="ca-pub-7905640648499222"
+             data-ad-slot="3421025686"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+    
+    <!-- FAQ 섹션 -->
+    <section class="faq">
+        <div class="container">
+            <h2 class="section-title">자주 묻는 질문</h2>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        MBTI 검사는 얼마나 정확한가요?
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>MBTI는 과학적으로 검증된 심리학적 도구로, 약 90%의 일관성을 보입니다. 하지만 개인의 성장과 환경 변화에 따라 결과가 달라질 수 있으므로, 절대적인 기준보다는 자기 이해의 도구로 활용하는 것이 좋습니다.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        MBTI 유형이 바뀔 수 있나요?
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>기본적인 성격 선호는 평생 일관되게 유지되는 경향이 있습니다. 하지만 개인의 성장, 새로운 경험, 환경 변화 등에 따라 일부 기능이 발달하거나 검사 결과에 변화가 나타날 수 있습니다.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        어떤 MBTI 유형이 가장 좋은가요?
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>모든 MBTI 유형은 고유한 강점과 가치를 가지고 있으며, '가장 좋은' 유형은 존재하지 않습니다. 각 유형은 서로 다른 상황에서 서로 다른 기여를 할 수 있으며, 중요한 것은 자신의 유형을 이해하고 활용하는 것입니다.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        MBTI를 직업 선택에 활용할 수 있나요?
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>MBTI는 개인의 선호와 강점을 이해하는 데 도움이 되므로, 직업 선택의 참고 자료로 활용할 수 있습니다. 하지만 MBTI 유형만으로 직업을 제한해서는 안 되며, 개인의 관심사, 능력, 가치관 등을 종합적으로 고려해야 합니다.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA 섹션 -->
+    <section class="cta" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%)">
+        <div class="container">
+            <h2 class="cta-title">지금 바로 당신의 성격 유형을 발견하세요!</h2>
+            <p class="cta-description">
+                16가지 성격 유형 중 당신만의 고유한 특성을 찾아보세요.<br>
+                자기 이해의 첫걸음이 시작됩니다.
+            </p>
+            <div class="cta-buttons">
+                <a href="test.html" class="cta-btn cta-btn-primary" style="color: #667eea">무료 검사 시작하기</a>
+                <a href="/tests/" class="cta-btn cta-btn-secondary">다른 테스트 보기</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 푸터 -->
+    <div id="footer-placeholder"></div>
+    
+    <!-- JavaScript -->
+    <script src="/js/main.js"></script>
+    <script>
+        // FAQ 아코디언 기능
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                faqItem.classList.toggle('active');
+            });
+        });
+        
+        // 카카오 SDK 초기화 (config.js 필요)
+        if (typeof Kakao !== 'undefined' && typeof Config !== 'undefined' && Config.kakao && Config.kakao.appKey) {
+            if (Config.validateDomain()) {
+                Kakao.init(Config.kakao.appKey);
+                console.log('Kakao SDK initialized successfully');
+            } else {
+                console.warn('Domain validation failed - Kakao SDK not initialized');
+            }
+        } else {
+            console.warn('Config not loaded - Kakao SDK not initialized');
+        }
+    </script>
+</body>
+</html>

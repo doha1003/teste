@@ -1,0 +1,485 @@
+/* =============================================================================
+   FORTUNE SERVICES - BASE STYLES
+   모든 운세 서비스의 공통 스타일 (레이아웃, 로딩, 기본 컴포넌트)
+   ============================================================================= */
+
+/* 공통 변수 */
+:root {
+    --fortune-primary: #8b5cf6;
+    --fortune-secondary: #7c3aed;
+    --fortune-accent: #a855f7;
+    --fortune-gradient: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    --fortune-light: #f3f4f6;
+    --fortune-dark: #374151;
+    --fortune-shadow: 0 10px 30px rgba(139, 92, 246, 0.2);
+    --fortune-radius: 16px;
+    --fortune-spacing: 24px;
+}
+
+/* 기본 레이아웃 */
+.fortune-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    position: relative;
+}
+
+.fortune-header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 40px 0;
+    background: white;
+    border-radius: var(--fortune-radius);
+    box-shadow: var(--fortune-shadow);
+    position: relative;
+    overflow: hidden;
+}
+
+.fortune-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--fortune-gradient);
+    opacity: 0.05;
+    pointer-events: none;
+}
+
+.fortune-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    color: var(--fortune-primary);
+    margin-bottom: 16px;
+    text-shadow: 0 2px 4px rgba(139, 92, 246, 0.1);
+}
+
+.fortune-subtitle {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    color: var(--fortune-dark);
+    opacity: 0.8;
+    line-height: 1.6;
+}
+
+/* 메인 콘텐츠 */
+.fortune-main {
+    background: white;
+    border-radius: var(--fortune-radius);
+    padding: 40px;
+    box-shadow: var(--fortune-shadow);
+    margin-bottom: 40px;
+}
+
+/* 입력 섹션 */
+.fortune-input-section {
+    margin-bottom: 40px;
+}
+
+.fortune-input-group {
+    margin-bottom: 20px;
+}
+
+.fortune-label {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--fortune-dark);
+    margin-bottom: 8px;
+}
+
+.fortune-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.fortune-input:focus {
+    outline: none;
+    border-color: var(--fortune-primary);
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+}
+
+.fortune-select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 1rem;
+    background: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.fortune-select:focus {
+    outline: none;
+    border-color: var(--fortune-primary);
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+}
+
+/* 버튼 스타일 */
+.fortune-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 28px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.fortune-btn-primary {
+    background: var(--fortune-gradient);
+    color: white;
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+}
+
+.fortune-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(139, 92, 246, 0.4);
+}
+
+.fortune-btn-secondary {
+    background: white;
+    color: var(--fortune-primary);
+    border: 2px solid var(--fortune-primary);
+}
+
+.fortune-btn-secondary:hover {
+    background: var(--fortune-primary);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.fortune-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+/* 로딩 상태 - 텍스트 회전 방지 */
+.fortune-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 40px;
+    text-align: center;
+    background: white;
+    border-radius: var(--fortune-radius);
+    box-shadow: var(--fortune-shadow);
+    position: relative;
+    overflow: hidden;
+}
+
+.fortune-loading::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--fortune-gradient);
+    opacity: 0.05;
+    pointer-events: none;
+}
+
+.fortune-loading-spinner {
+    width: 60px;
+    height: 60px;
+    border: 4px solid #e5e7eb;
+    border-top: 4px solid var(--fortune-primary);
+    border-radius: 50%;
+    animation: fortuneSpinnerRotate 1s linear infinite;
+    margin-bottom: 24px;
+}
+
+@keyframes fortuneSpinnerRotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* 🚨 중요: 로딩 텍스트 회전 방지 */
+.fortune-loading p,
+.fortune-loading-text,
+.fortune-loading-message {
+    animation: none !important;
+    transform: none !important;
+    font-size: 1.1rem;
+    color: var(--fortune-dark);
+    font-weight: 500;
+    line-height: 1.6;
+    max-width: 400px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+.fortune-loading-icon {
+    font-size: 2rem;
+    margin-bottom: 16px;
+    opacity: 0.8;
+}
+
+/* 결과 섹션 */
+.fortune-result {
+    display: none;
+    background: white;
+    border-radius: var(--fortune-radius);
+    padding: 40px;
+    box-shadow: var(--fortune-shadow);
+    margin-bottom: 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+.fortune-result.show {
+    display: block;
+    animation: fortuneFadeIn 0.6s ease-out;
+}
+
+@keyframes fortuneFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fortune-result-header {
+    text-align: center;
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 2px solid #f3f4f6;
+}
+
+.fortune-result-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--fortune-primary);
+    margin-bottom: 8px;
+}
+
+.fortune-result-subtitle {
+    font-size: 1.1rem;
+    color: var(--fortune-dark);
+    opacity: 0.8;
+}
+
+.fortune-result-content {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--fortune-dark);
+    margin-bottom: 32px;
+}
+
+.fortune-result-section {
+    margin-bottom: 32px;
+    padding: 24px;
+    background: var(--fortune-light);
+    border-radius: 12px;
+    border-left: 4px solid var(--fortune-primary);
+}
+
+.fortune-result-section h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--fortune-primary);
+    margin-bottom: 16px;
+}
+
+.fortune-result-section p {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--fortune-dark);
+    margin-bottom: 0;
+}
+
+/* 카드 스타일 */
+.fortune-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 32px;
+}
+
+.fortune-card {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.fortune-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(139, 92, 246, 0.2);
+    border-color: var(--fortune-primary);
+}
+
+.fortune-card.selected {
+    border-color: var(--fortune-primary);
+    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    color: white;
+}
+
+.fortune-card-icon {
+    font-size: 2.5rem;
+    margin-bottom: 16px;
+    display: block;
+}
+
+.fortune-card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.fortune-card-desc {
+    font-size: 0.9rem;
+    opacity: 0.8;
+    line-height: 1.5;
+}
+
+/* 공유 섹션 */
+.fortune-share {
+    background: var(--fortune-light);
+    border-radius: var(--fortune-radius);
+    padding: 32px;
+    text-align: center;
+    margin-top: 32px;
+}
+
+.fortune-share-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--fortune-dark);
+    margin-bottom: 20px;
+}
+
+.fortune-share-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.fortune-share-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.fortune-share-kakao {
+    background: #FEE500;
+    color: #000;
+}
+
+.fortune-share-kakao:hover {
+    background: #E6CE00;
+    transform: translateY(-2px);
+}
+
+.fortune-share-copy {
+    background: white;
+    color: var(--fortune-dark);
+    border: 2px solid #e5e7eb;
+}
+
+.fortune-share-copy:hover {
+    border-color: var(--fortune-primary);
+    color: var(--fortune-primary);
+    transform: translateY(-2px);
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .fortune-container {
+        padding: 20px 16px;
+    }
+    
+    .fortune-header {
+        padding: 24px 20px;
+        margin-bottom: 24px;
+    }
+    
+    .fortune-main {
+        padding: 24px;
+        margin-bottom: 24px;
+    }
+    
+    .fortune-loading {
+        padding: 40px 24px;
+    }
+    
+    .fortune-result {
+        padding: 24px;
+    }
+    
+    .fortune-cards {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    
+    .fortune-share {
+        padding: 24px;
+    }
+    
+    .fortune-share-buttons {
+        flex-direction: column;
+        gap: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .fortune-container {
+        padding: 16px 12px;
+    }
+    
+    .fortune-header {
+        padding: 20px 16px;
+    }
+    
+    .fortune-main {
+        padding: 20px;
+    }
+    
+    .fortune-loading {
+        padding: 32px 20px;
+    }
+    
+    .fortune-result {
+        padding: 20px;
+    }
+    
+    .fortune-share {
+        padding: 20px;
+    }
+}

@@ -1,0 +1,96 @@
+/* 텍스트 카운터 버튼 겹침 수정 */
+
+/* 버튼 영역 분리 */
+.text-counter-controls {
+    margin-top: 30px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.control-btn {
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 120px;
+    background: #6b7280;
+    color: white;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+}
+
+.control-btn:hover {
+    background: #4b5563;
+    transform: translateY(-2px);
+}
+
+.control-btn.primary {
+    background: #6366f1;
+    color: white;
+}
+
+.control-btn.primary:hover {
+    background: #4f46e5;
+}
+
+.control-btn span {
+    font-size: 16px;
+}
+
+/* 기존 tool-buttons 스타일 제거하고 우선순위 보장 */
+.tool-buttons {
+    display: none !important;
+}
+
+/* 텍스트 입력 영역 수정 */
+.text-input-wrapper {
+    position: relative;
+    margin-bottom: 20px; /* 버튼과의 간격 축소 */
+}
+
+.text-input {
+    width: 100%;
+    min-height: 400px;
+    padding: 20px;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    font-size: 16px;
+    font-family: inherit;
+    resize: vertical;
+    transition: border-color 0.2s;
+    color: #1f2937;
+    box-sizing: border-box;
+}
+
+.text-input:focus {
+    outline: none;
+    border-color: #6366f1;
+}
+
+.text-input::placeholder {
+    color: #9ca3af;
+}
+
+/* 모바일 반응형 */
+@media (max-width: 768px) {
+    .text-counter-controls {
+        flex-direction: column;
+    }
+    
+    .control-btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .text-input {
+        min-height: 300px;
+        font-size: 14px;
+    }
+}

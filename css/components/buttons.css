@@ -1,0 +1,291 @@
+/* Button Styles */
+
+/* Base Button */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-6);
+    font-size: var(--text-base);
+    font-weight: var(--font-medium);
+    line-height: 1;
+    text-decoration: none;
+    border-radius: var(--radius-lg);
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+    user-select: none;
+}
+
+.btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Primary Button */
+.btn-primary {
+    background-color: var(--color-primary);
+    color: white;
+    border-color: var(--color-primary);
+}
+
+.btn-primary:hover:not(:disabled) {
+    background-color: var(--color-primary-dark);
+    border-color: var(--color-primary-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.35);
+}
+
+.btn-primary:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.35);
+}
+
+/* Secondary Button */
+.btn-secondary {
+    background-color: var(--color-gray-100);
+    color: var(--color-gray-700);
+    border-color: var(--color-gray-300);
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background-color: var(--color-gray-200);
+    border-color: var(--color-gray-400);
+    color: var(--color-gray-800);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Outline Button */
+.btn-outline {
+    background-color: transparent;
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.btn-outline:hover:not(:disabled) {
+    background-color: var(--color-primary);
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.35);
+}
+
+/* Ghost Button */
+.btn-ghost {
+    background-color: transparent;
+    color: var(--color-gray-600);
+    border-color: transparent;
+}
+
+.btn-ghost:hover:not(:disabled) {
+    background-color: var(--color-gray-100);
+    color: var(--color-gray-800);
+}
+
+/* Button Sizes */
+.btn-sm {
+    padding: var(--space-2) var(--space-4);
+    font-size: var(--text-sm);
+    border-radius: var(--radius-md);
+}
+
+.btn-lg {
+    padding: var(--space-4) var(--space-8);
+    font-size: var(--text-lg);
+    border-radius: var(--radius-lg);
+}
+
+.btn-xl {
+    padding: var(--space-5) var(--space-10);
+    font-size: var(--text-xl);
+    border-radius: var(--radius-xl);
+}
+
+/* Button Variants */
+.btn-success {
+    background-color: var(--color-success);
+    color: white;
+    border-color: var(--color-success);
+}
+
+.btn-success:hover:not(:disabled) {
+    background-color: #059669;
+    border-color: #059669;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
+}
+
+.btn-warning {
+    background-color: var(--color-warning);
+    color: white;
+    border-color: var(--color-warning);
+}
+
+.btn-warning:hover:not(:disabled) {
+    background-color: #d97706;
+    border-color: #d97706;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.35);
+}
+
+.btn-error {
+    background-color: var(--color-error);
+    color: white;
+    border-color: var(--color-error);
+}
+
+.btn-error:hover:not(:disabled) {
+    background-color: #dc2626;
+    border-color: #dc2626;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.35);
+}
+
+/* Button with Icon */
+.btn-icon {
+    padding: var(--space-3);
+    aspect-ratio: 1;
+}
+
+.btn-icon-left {
+    flex-direction: row;
+}
+
+.btn-icon-right {
+    flex-direction: row-reverse;
+}
+
+/* Button Group */
+.btn-group {
+    display: inline-flex;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-group .btn {
+    border-radius: 0;
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.btn-group .btn:last-child {
+    border-right: none;
+}
+
+.btn-group .btn:hover {
+    z-index: 1;
+}
+
+/* Rounded Button */
+.btn-rounded {
+    border-radius: var(--radius-full);
+}
+
+/* Block Button */
+.btn-block {
+    width: 100%;
+}
+
+/* Loading Button */
+.btn-loading {
+    color: transparent;
+    position: relative;
+    pointer-events: none;
+}
+
+.btn-loading::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 50%;
+    left: 50%;
+    margin-left: -8px;
+    margin-top: -8px;
+    border: 2px solid currentColor;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: btn-spin 0.6s linear infinite;
+}
+
+@keyframes btn-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Button Ripple Effect */
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn:active::before {
+    width: 300px;
+    height: 300px;
+}
+
+/* Floating Action Button */
+.fab {
+    position: fixed;
+    bottom: var(--space-8);
+    right: var(--space-8);
+    width: 56px;
+    height: 56px;
+    border-radius: var(--radius-full);
+    background-color: var(--color-primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-lg);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    z-index: var(--z-40);
+}
+
+.fab:hover {
+    transform: scale(1.1);
+    box-shadow: var(--shadow-xl);
+}
+
+.fab:active {
+    transform: scale(1.05);
+}
+
+/* Responsive Buttons */
+@media (max-width: 640px) {
+    .btn {
+        padding: var(--space-3) var(--space-4);
+        font-size: var(--text-sm);
+    }
+    
+    .btn-lg {
+        padding: var(--space-3) var(--space-6);
+        font-size: var(--text-base);
+    }
+    
+    .fab {
+        bottom: var(--space-4);
+        right: var(--space-4);
+        width: 48px;
+        height: 48px;
+    }
+}

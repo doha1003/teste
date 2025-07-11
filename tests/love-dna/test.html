@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>러브 DNA 테스트 - 나의 연애 스타일은? | doha.kr</title>
+    <meta name="description" content="25개 질문으로 알아보는 나만의 연애 스타일! 32가지 러브 DNA 유형 중 당신은?">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="러브 DNA 테스트 - 나의 연애 스타일은?">
+    <meta property="og:description" content="25개 질문으로 알아보는 나만의 연애 스타일! 32가지 러브 DNA 유형 중 당신은?">
+    <meta property="og:image" content="https://doha.kr/images/love-dna-og.png">
+    <meta property="og:url" content="https://doha.kr/tests/love-dna/test.html">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/pages/love-dna-test.css">
+    <link rel="stylesheet" href="/css/components/navbar.css">
+    <link rel="stylesheet" href="/css/components/mobile-responsive.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/images/placeholder-favicon.svg" type="image/svg+xml">
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
+    
+    <!-- Kakao SDK -->
+    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"></script>
+</head>
+<body>
+    <!-- 네비게이션 -->
+    <div id="navbar-placeholder"></div>
+    
+    <div class="love-test-wrapper">
+        <!-- 헤더 섹션 -->
+        <div class="love-header-section">
+            <div class="love-header-decoration">💕</div>
+            <div class="love-header-decoration">💗</div>
+            <div class="love-header-content">
+                <h1 class="love-header-title">러브 DNA 테스트</h1>
+                <p class="love-header-subtitle">당신만의 특별한 연애 유전자를 발견하세요</p>
+            </div>
+        </div>
+        
+        <!-- 테스트 컨테이너 -->
+        <div class="love-test-container">
+            <!-- 테스트 시작 화면 -->
+            <div id="intro-screen" class="love-intro-section">
+                <h2 class="love-intro-title">당신의 러브 DNA를 발견하세요!</h2>
+                <p class="love-intro-text">
+                    25개의 심층적인 질문을 통해 당신만의 독특한 연애 스타일을 분석합니다.<br>
+                    32가지 유형 중 당신의 러브 DNA를 찾아 특별한 연애 인사이트를 얻어보세요.
+                </p>
+                <button class="love-start-button" onclick="startTest()">
+                    💖 테스트 시작하기
+                </button>
+            </div>
+            
+            <!-- 테스트 진행 화면 -->
+            <div id="test-screen" class="love-hidden">
+                <div class="love-progress-container">
+                    <div class="love-progress-info">
+                        <span class="love-progress-text" id="progress-text">질문 0 / 25</span>
+                        <span class="love-progress-text" id="progress-percent">0%</span>
+                    </div>
+                    <div class="love-progress-bar">
+                        <div class="love-progress-fill" id="progress"></div>
+                    </div>
+                </div>
+                
+                <div class="love-question-container">
+                    <div class="love-question-card">
+                        <div class="love-question-number" id="question-number"></div>
+                        <div class="love-question-text" id="question"></div>
+                    </div>
+                    <div class="love-options" id="options"></div>
+                </div>
+                
+                <div class="love-navigation">
+                    <button class="love-btn love-btn-secondary" id="prev-btn" onclick="previousQuestion()">이전</button>
+                    <button class="love-btn love-btn-primary" id="next-btn" onclick="nextQuestion()">다음</button>
+                </div>
+            </div>
+            
+            <!-- 결과 화면 -->
+            <div id="result-screen" class="love-result-container love-hidden">
+                <!-- DNA 카드 -->
+                <div class="love-dna-card">
+                    <div class="love-result-dna" id="result-dna">LOVED</div>
+                    <div class="love-result-title" id="result-title">로맨틱 드리머</div>
+                    <div class="love-result-subtitle" id="result-subtitle">"영화 같은 사랑을 꿈꾸는 낭만주의자"</div>
+                    <div class="love-result-rarity" id="result-rarity">희귀도: RARE (5.2%)</div>
+                </div>
+
+                <!-- DNA 분석 -->
+                <div class="love-dna-analysis">
+                    <h3 class="love-analysis-title">🧬 DNA 분석</h3>
+                    <div class="love-dna-breakdown">
+                        <div class="love-axis-item">
+                            <span class="love-axis-label">L (Love Language)</span>
+                            <span class="love-axis-code" id="axis-l">T</span>
+                            <span class="love-axis-description" id="axis-l-desc">터치형 (스킨십)</span>
+                        </div>
+                        <div class="love-axis-item">
+                            <span class="love-axis-label">O (Openness)</span>
+                            <span class="love-axis-code" id="axis-o">F</span>
+                            <span class="love-axis-description" id="axis-o-desc">프리덤형 (자유)</span>
+                        </div>
+                        <div class="love-axis-item">
+                            <span class="love-axis-label">V (Value)</span>
+                            <span class="love-axis-code" id="axis-v">H</span>
+                            <span class="love-axis-description" id="axis-v-desc">하트형 (마음)</span>
+                        </div>
+                        <div class="love-axis-item">
+                            <span class="love-axis-label">E (Exchange)</span>
+                            <span class="love-axis-code" id="axis-e">G</span>
+                            <span class="love-axis-description" id="axis-e-desc">기버형 (베풂)</span>
+                        </div>
+                        <div class="love-axis-item">
+                            <span class="love-axis-label">D (Decision)</span>
+                            <span class="love-axis-code" id="axis-d">M</span>
+                            <span class="love-axis-description" id="axis-d-desc">미디에이터형 (중재)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 연애 스타일 분석 -->
+                <div class="love-result-analysis">
+                    <div class="love-result-analysis-card">
+                        <h4 class="love-description-title">💎 특징</h4>
+                        <p id="description">당신은 연인과의 깊은 정서적 유대를 중요시하며, 낭만적인 사랑을 꿈꾸는 이상주의자입니다. 영화나 소설 같은 아름다운 사랑 이야기를 현실에서 만들고 싶어합니다.</p>
+                    </div>
+
+                    <div class="love-result-analysis-card">
+                        <h4 class="love-strengths-title">🌟 강점</h4>
+                        <p id="strengths">깊은 공감 능력, 낭만적 감성, 진심 어린 사랑, 예술적 감성, 연인에 대한 헌신</p>
+                    </div>
+
+                    <div class="love-result-analysis-card">
+                        <h4 class="love-weaknesses-title">⚠️ 주의점</h4>
+                        <p id="weaknesses">현실과 이상의 간격, 과도한 기대, 상처받기 쉬운 성격, 불안정한 감정</p>
+                    </div>
+
+                    <div class="love-result-analysis-card">
+                        <h4 class="love-dating-title">💑 연애 스타일</h4>
+                        <p id="dating-style">낭만적이고 감성적인 데이트를 선호합니다. 예상치 못한 깜짝 이벤트나 특별한 장소에서의 데이트를 통해 연인과의 특별한 추억을 만들어가는 것을 좋아합니다.</p>
+                    </div>
+
+                    <div class="love-result-analysis-card">
+                        <h4 class="love-growth-title">🌱 성장 포인트</h4>
+                        <p id="growth">현실적인 관계 목표를 설정하고 작은 일상에서도 행복을 찾는 연습이 필요합니다.</p>
+                    </div>
+
+                    <div class="love-result-analysis-card">
+                        <h4 class="love-compatibility-title">💑 궁합</h4>
+                        <div class="love-compatibility-grid">
+                            <div class="love-compatibility-section">
+                                <h5 class="love-compatibility-best">최고의 궁합</h5>
+                                <div class="love-compatibility-types" id="best-matches">
+                                    <span class="love-compatibility-type">안정적 수호자</span>
+                                    <span class="love-compatibility-type">열정적 모험가</span>
+                                </div>
+                            </div>
+                            <div class="love-compatibility-section">
+                                <h5 class="love-compatibility-good">좋은 궁합</h5>
+                                <div class="love-compatibility-types" id="good-matches">
+                                    <span class="love-compatibility-type-good">창의적 예술가</span>
+                                    <span class="love-compatibility-type-good">지적 탐구자</span>
+                                </div>
+                            </div>
+                            <div class="love-compatibility-section">
+                                <h5 class="love-compatibility-challenge">도전적 궁합</h5>
+                                <div class="love-compatibility-types" id="challenging-matches">
+                                    <span class="love-compatibility-type-challenge">실용적 현실주의자</span>
+                                    <span class="love-compatibility-type-challenge">독립적 자유인</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="love-result-analysis-card">
+                        <h4 class="love-celebrity-title">🌟 같은 유형의 연예인</h4>
+                        <div class="love-celebrity-list" id="celebrities">
+                            <span class="love-celebrity-item">라이언 고슬링</span>
+                            <span class="love-celebrity-item">엠마 스톤</span>
+                            <span class="love-celebrity-item">박보검</span>
+                            <span class="love-celebrity-item">아이유</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 공유 섹션 -->
+                <div class="love-share-section">
+                    <h3 class="love-share-title">결과 공유하기</h3>
+                    <div class="love-share-buttons">
+                        <button class="love-share-btn love-share-btn-kakao" onclick="shareToKakao()">
+                            💬 카카오톡 공유
+                        </button>
+                        <button class="love-share-btn love-share-btn-copy" onclick="copyResultLink()">
+                            🔗 링크 복사
+                        </button>
+                    </div>
+                    
+                    <div class="love-action-buttons">
+                        <button class="love-btn love-btn-primary" onclick="restartTest()">
+                            🔄 다시 테스트하기
+                        </button>
+                        <a href="/tests/" class="love-btn love-btn-secondary">
+                            다른 테스트 보기
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 푸터 -->
+    <div id="footer-placeholder"></div>
+    
+    <!-- Scripts -->
+    <script src="/js/main.js"></script>
+    <script src="/js/pages/love-dna-test.js"></script>
+    
+    <!-- AdSense initialization -->
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    
+    <!-- Kakao SDK initialization -->
+    <script>
+        // Kakao SDK 초기화
+        if (typeof Kakao !== 'undefined') {
+            Kakao.init('19d8ba832f94d513957adc17883c1282');
+        }
+    </script>
+</body>
+</html>

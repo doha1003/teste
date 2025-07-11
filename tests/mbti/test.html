@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MBTI 성격유형 검사 - 24문항 성격 분석 | doha.kr</title>
+    <meta name="description" content="24개의 심층적인 문항으로 분석하는 MBTI 성격유형 검사. 16가지 성격 유형 중 당신의 유형을 찾아보세요.">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="MBTI 성격유형 검사 - 나는 어떤 유형일까?">
+    <meta property="og:description" content="24개 문항으로 정확하게 분석하는 MBTI 성격유형 검사. 16가지 성격 유형 중 당신의 유형을 찾아보세요.">
+    <meta property="og:image" content="https://doha.kr/images/og-default.png">
+    <meta property="og:url" content="https://doha.kr/tests/mbti/test.html">
+    
+    <!-- 파비콘 -->
+    <link rel="icon" type="image/svg+xml" href="/images/logo.svg">
+    <link rel="apple-touch-icon" href="/images/android-chrome-192x192.png">
+    
+    <!-- 폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- 기본 스타일 -->
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/pages/mbti-test.css">
+    
+    <!-- 애드센스 -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
+    
+    <!-- Kakao JavaScript SDK -->
+    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.4.0/kakao.min.js" integrity="sha384-mXVrIX2T/Kszp6Z0aEWaA8Nm7J6/ZeWXbL8UpGRjKwWe56Srd/iyNmWMBhcItAjH" crossorigin="anonymous"></script>
+</head>
+<body class="mbti-test-page">
+    <!-- 애니메이션 배경 -->
+    <div class="mbti-animated-background">
+        <div class="mbti-brain-particle" style="left: 10%; animation-delay: 0s;">🧠</div>
+        <div class="mbti-brain-particle" style="left: 20%; animation-delay: 1s;">💭</div>
+        <div class="mbti-brain-particle" style="left: 30%; animation-delay: 2s;">🎯</div>
+        <div class="mbti-brain-particle" style="left: 40%; animation-delay: 3s;">📊</div>
+        <div class="mbti-brain-particle" style="left: 50%; animation-delay: 4s;">🧩</div>
+        <div class="mbti-brain-particle" style="left: 60%; animation-delay: 5s;">💡</div>
+        <div class="mbti-brain-particle" style="left: 70%; animation-delay: 6s;">🔍</div>
+        <div class="mbti-brain-particle" style="left: 80%; animation-delay: 7s;">⚡</div>
+        <div class="mbti-brain-particle" style="left: 90%; animation-delay: 8s;">🧠</div>
+    </div>
+    
+    <!-- 네비게이션 -->
+    <div id="navbar-placeholder"></div>
+    
+    <div class="mbti-test-wrapper">
+        <!-- 헤더 섹션 -->
+        <div class="mbti-header-section">
+            <div class="mbti-header-decoration">🧠</div>
+            <div class="mbti-header-decoration">💭</div>
+            <div class="mbti-header-content">
+                <h1 class="mbti-header-title">MBTI 성격유형 검사</h1>
+                <p class="mbti-header-subtitle">당신만의 특별한 성격 유형을 발견하세요</p>
+            </div>
+        </div>
+        
+        <!-- 테스트 컨테이너 -->
+        <div class="mbti-test-container">
+            <!-- 테스트 시작 화면 -->
+            <div id="intro-screen" class="mbti-intro-section">
+                <h2 class="mbti-intro-title">당신의 MBTI 유형을 발견하세요!</h2>
+                <p class="mbti-intro-text">
+                    24개의 심층적인 질문을 통해 당신만의 독특한 성격 유형을 분석합니다.<br>
+                    16가지 유형 중 당신의 MBTI를 찾아 특별한 성격 인사이트를 얻어보세요.
+                </p>
+                <button class="mbti-start-button" onclick="startTest()">
+                    🧠 테스트 시작하기
+                </button>
+            </div>
+            
+            <!-- 테스트 진행 화면 -->
+            <div id="test-screen" class="mbti-hidden">
+                <div class="mbti-progress-container">
+                    <div class="mbti-progress-info">
+                        <span class="mbti-progress-text" id="progress-text">질문 0 / 24</span>
+                        <span class="mbti-progress-text" id="progress-percent">0%</span>
+                    </div>
+                    <div class="mbti-progress-bar">
+                        <div class="mbti-progress-fill" id="progress"></div>
+                    </div>
+                </div>
+                
+                <div class="mbti-question-container">
+                    <div class="mbti-question-card">
+                        <div class="mbti-question-number" id="question-number"></div>
+                        <div class="mbti-question-text" id="question"></div>
+                    </div>
+                    <div class="mbti-options" id="options"></div>
+                </div>
+                
+                <div class="mbti-navigation">
+                    <button class="mbti-btn mbti-btn-secondary" id="prev-btn" onclick="previousQuestion()">이전</button>
+                    <button class="mbti-btn mbti-btn-primary" id="next-btn" onclick="nextQuestion()">다음</button>
+                </div>
+            </div>
+            
+            <!-- 결과 화면 -->
+            <div id="result-screen" class="mbti-result-container mbti-hidden">
+                <!-- MBTI 카드 -->
+                <div class="mbti-type-card">
+                    <div class="mbti-result-type" id="result-type">INFP</div>
+                    <div class="mbti-result-title" id="result-title">중재자</div>
+                    <div class="mbti-result-subtitle" id="result-subtitle">"이상주의적 몽상가"</div>
+                    <div class="mbti-result-rarity" id="result-rarity">희귀도: RARE (4.4%)</div>
+                </div>
+
+                <!-- MBTI 분석 -->
+                <div class="mbti-type-analysis">
+                    <h3 class="mbti-result-detail-title">🧩 나의 MBTI 4축 분석</h3>
+                    <div id="mbti-breakdown"></div>
+                </div>
+
+                <!-- 상세 설명 -->
+                <div class="mbti-result-detail-box">
+                    <p class="mbti-result-description" id="result-description">
+                        당신은 이상주의적이고 창의적인 성격으로 깊은 가치관을 가진 타입입니다.
+                    </p>
+                    
+                    <div class="mbti-result-detail-grid">
+                        <div class="mbti-result-detail-card">
+                            <h4>💫 성격 특징</h4>
+                            <ul id="personality-traits">
+                                <li>이상주의적이고 가치 지향적</li>
+                                <li>창의적이고 독창적인 사고</li>
+                                <li>깊은 감정과 공감 능력</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="mbti-result-detail-card">
+                            <h4 class="mbti-career-title">💼 추천 직업</h4>
+                            <div class="mbti-career-tags" id="recommended-careers">
+                                <span class="mbti-career-tag">작가</span>
+                                <span class="mbti-career-tag">상담사</span>
+                                <span class="mbti-career-tag">예술가</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mbti-result-analysis-card">
+                        <h4 class="mbti-strength-title">✨ 강점</h4>
+                        <p id="strengths">깊은 공감 능력과 창의적 사고로 타인을 이해하고 새로운 아이디어를 제시합니다.</p>
+                    </div>
+
+                    <div class="mbti-result-analysis-card">
+                        <h4 class="mbti-weakness-title">⚡ 약점</h4>
+                        <p id="weaknesses">완벽주의 성향으로 스트레스를 받기 쉽고 현실적인 문제에 어려움을 겪을 수 있습니다.</p>
+                    </div>
+
+                    <div class="mbti-result-analysis-card">
+                        <h4 class="mbti-growth-title">🌱 성장 포인트</h4>
+                        <p id="growth">현실적인 목표 설정과 실행력 향상을 통해 이상을 현실로 만드는 연습이 필요합니다.</p>
+                    </div>
+
+                    <div class="mbti-result-analysis-card">
+                        <h4 class="mbti-compatibility-title">💑 궁합</h4>
+                        <div class="mbti-compatibility-grid">
+                            <div class="mbti-compatibility-section">
+                                <h5 class="mbti-compatibility-best">최고의 궁합</h5>
+                                <div class="mbti-compatibility-types" id="best-matches">
+                                    <span class="mbti-compatibility-type">ENFJ</span>
+                                    <span class="mbti-compatibility-type">ENTJ</span>
+                                </div>
+                            </div>
+                            <div class="mbti-compatibility-section">
+                                <h5 class="mbti-compatibility-good">좋은 궁합</h5>
+                                <div class="mbti-compatibility-types" id="good-matches">
+                                    <span class="mbti-compatibility-type-good">INFJ</span>
+                                    <span class="mbti-compatibility-type-good">ENFP</span>
+                                </div>
+                            </div>
+                            <div class="mbti-compatibility-section">
+                                <h5 class="mbti-compatibility-challenge">도전적 궁합</h5>
+                                <div class="mbti-compatibility-types" id="challenging-matches">
+                                    <span class="mbti-compatibility-type-challenge">ESTJ</span>
+                                    <span class="mbti-compatibility-type-challenge">ESTP</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mbti-result-analysis-card">
+                        <h4 class="mbti-celebrity-title">🌟 같은 유형의 연예인</h4>
+                        <div class="mbti-celebrity-list" id="celebrities">
+                            <span class="mbti-celebrity-item">아이유</span>
+                            <span class="mbti-celebrity-item">윤아</span>
+                            <span class="mbti-celebrity-item">조니 뎁</span>
+                            <span class="mbti-celebrity-item">윌리엄 셰익스피어</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 공유 섹션 -->
+                <div class="mbti-share-section">
+                    <h3 class="mbti-share-title">결과 공유하기</h3>
+                    <div class="mbti-share-buttons">
+                        <button class="mbti-share-btn mbti-share-btn-kakao" onclick="shareToKakao()">
+                            💬 카카오톡 공유
+                        </button>
+                        <button class="mbti-share-btn mbti-share-btn-copy" onclick="copyResultLink()">
+                            🔗 링크 복사
+                        </button>
+                    </div>
+                    
+                    <div class="mbti-action-buttons">
+                        <button class="mbti-btn mbti-btn-primary" onclick="restartTest()">
+                            🔄 다시 테스트하기
+                        </button>
+                        <a href="/tests/" class="mbti-btn mbti-btn-secondary">
+                            다른 테스트 보기
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 푸터 -->
+    <div id="footer-placeholder"></div>
+    
+    <!-- External JavaScript -->
+    <script src="/js/config.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/mbti-test.js"></script>
+    
+    <!-- Kakao SDK 초기화 -->
+    <script>
+        // 페이지 로드 후 카카오 SDK 초기화
+        document.addEventListener('DOMContentLoaded', function() {
+            // 설정 파일 로드 확인
+            if (typeof Config === 'undefined') {
+                console.error('설정 파일을 로드할 수 없습니다.');
+                return;
+            }
+            
+            // 도메인 검증
+            if (!Config.validateDomain()) {
+                console.warn('허용되지 않은 도메인에서의 접근:', window.location.hostname);
+                return;
+            }
+            
+            if (typeof Kakao !== 'undefined' && !Kakao.isInitialized()) {
+                try {
+                    // 설정 파일에서 API 키 가져오기
+                    Kakao.init(Config.kakao.appKey);
+                    console.log('Kakao SDK 초기화 성공');
+                } catch (error) {
+                    console.error('Kakao SDK 초기화 실패:', error);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

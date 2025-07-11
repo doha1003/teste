@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>소개 - doha.kr | 일상을 더 재미있게 만드는 공간</title>
+    <meta name="description" content="doha.kr은 심리테스트, 실용도구, AI 운세를 제공하는 종합 엔터테인먼트 플랫폼입니다. 우리의 미션과 비전을 소개합니다.">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="doha.kr">
+    
+    <!-- Security Headers -->
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:;">
+    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), accelerometer=(), gyroscope=()">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="doha.kr 소개">
+    <meta property="og:description" content="일상을 더 재미있게 만드는 공간, doha.kr을 소개합니다">
+    <meta property="og:image" content="https://doha.kr/images/og-image.svg">
+    <meta property="og:url" content="https://doha.kr/about/">
+    
+    <!-- External CSS - 절대 경로로 수정 -->
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/components/navbar.css">
+    <link rel="stylesheet" href="/css/components/mobile-responsive.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/images/logo.svg" type="image/svg+xml">
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
+    
+    <style>
+        /* About page specific styles */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 120px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before,
+        .hero::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .hero::before {
+            width: 300px;
+            height: 300px;
+            top: -150px;
+            right: -150px;
+            animation-delay: 0s;
+        }
+        
+        .hero::after {
+            width: 200px;
+            height: 200px;
+            bottom: -100px;
+            left: -100px;
+            animation-delay: 3s;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 24px;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.4rem;
+            opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .content {
+            max-width: 1200px;
+            margin: 80px auto;
+            padding: 0 20px;
+        }
+        
+        .section {
+            background: white;
+            border-radius: 20px;
+            padding: 48px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+            border: 1px solid rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.15);
+        }
+        
+        .section h2 {
+            font-size: 2.2rem;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+            position: relative;
+            padding-left: 20px;
+        }
+        
+        .section h2::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 40px;
+            background: var(--primary-color);
+            border-radius: 2px;
+        }
+        
+        .section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+        
+        /* 반응형 디자인 */
+        @media (max-width: 768px) {
+            .content {
+                margin: 60px auto;
+                padding: 0 15px;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .section {
+                padding: 32px 24px;
+            }
+            
+            .section h2 {
+                font-size: 1.8rem;
+            }
+        }
+        
+        /* Responsive AdSense Styles */
+        .ad-container {
+            min-height: 250px;
+            margin: 40px auto;
+            max-width: 1200px;
+            padding: 0 20px;
+            text-align: center;
+        }
+        
+        .ad-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+        
+        .adsbygoogle {
+            min-height: 90px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <!-- 네비게이션 바 -->
+    <div id="navbar-placeholder"></div>
+    
+    <!-- 히어로 섹션 -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">doha.kr을 소개합니다</h1>
+            <p class="hero-subtitle">
+                일상을 더 재미있고 의미있게 만드는<br>
+                새로운 디지털 플랫폼입니다 ✨
+            </p>
+        </div>
+    </section>
+    
+    <!-- 소개 콘텐츠 -->
+    <div class="content">
+        <!-- 미션 섹션 -->
+        <div class="section">
+            <h2>🚀 우리의 미션</h2>
+            <p>
+                <strong>doha.kr</strong>은 2025년 7월에 시작된 디지털 플랫폼으로, <em>"일상 속 작은 발견의 순간"</em>을 선사하는 것을 목표로 합니다.
+                단순히 시간을 보내는 공간이 아닌, <strong>자기 발견과 성장의 기회</strong>를 제공하는 특별한 공간입니다.
+            </p>
+            <p>
+                우리는 심리학적 통찰, 실용적 도구, 그리고 AI 기술을 결합하여 사용자 한 분 한 분의 삶에 
+                <strong>긍정적인 변화</strong>를 만들어내고자 합니다. 모든 서비스는 <span style="color: var(--primary-color); font-weight: 600;">100% 무료</span>로 제공되며, 
+                가입 없이도 누구나 자유롭게 이용할 수 있습니다.
+            </p>
+        </div>
+        
+        <!-- 제공 서비스 섹션 -->
+        <div class="section">
+            <h2>🎯 제공 서비스</h2>
+            <p>doha.kr의 3가지 핵심 서비스 카테고리를 통해 다양한 경험을 제공합니다:</p>
+            
+            <h3 style="color: var(--primary-color); margin: 2rem 0 1rem;">🧠 심리테스트 - 나를 알아가는 여정</h3>
+            <ul style="margin-left: 1.5rem; color: var(--text-secondary);">
+                <li><strong>MBTI 성격유형 검사</strong> - 24개 정교한 질문을 통한 16가지 성격 유형 분석</li>
+                <li><strong>테토-에겐 성격 테스트</strong> - 한국형 성격 유형 분석, 레어도 시스템</li>
+                <li><strong>러브 DNA 테스트</strong> - 5축 연애 스타일 분석 (L.O.V.E.D)</li>
+            </ul>
+            
+            <h3 style="color: #10b981; margin: 2rem 0 1rem;">🛠️ 실용도구 - 일상의 편리함</h3>
+            <ul style="margin-left: 1.5rem; color: var(--text-secondary);">
+                <li><strong>글자수 세기</strong> - 실시간 글자수 계산, 자소서/리포트 최적화</li>
+                <li><strong>BMI 계산기</strong> - 정확한 체질량지수 계산, 건강 상태 평가</li>
+                <li><strong>연봉 실수령액 계산기</strong> - 세전/세후 연봉 계산, 각종 공제 반영</li>
+            </ul>
+            
+            <h3 style="color: #8b5cf6; margin: 2rem 0 1rem;">🔮 AI 운세 - 미래를 엿보다</h3>
+            <ul style="margin-left: 1.5rem; color: var(--text-secondary);">
+                <li><strong>AI 오늘의 운세</strong> - 개인 맞춤형 일일 운세, AI 분석 기반</li>
+                <li><strong>AI 타로 카드 리딩</strong> - 질문 기반 타로 분석, 상세한 해석</li>
+                <li><strong>별자리별 운세</strong> - 12궁도 맞춤 운세, 별자리별 특성 분석</li>
+            </ul>
+        </div>
+        
+        <!-- 핵심 가치 섹션 -->
+        <div class="section">
+            <h2>💎 핵심 가치</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 2rem;">
+                <div style="padding: 1.5rem; background: #f8f9fa; border-radius: 12px; border-left: 4px solid var(--primary-color);">
+                    <h3 style="margin: 0 0 1rem; color: var(--primary-color);">🎯 정확성</h3>
+                    <p style="margin: 0; color: var(--text-secondary);">심리학 이론과 검증된 방법론에 기반한 신뢰할 수 있는 분석을 제공합니다.</p>
+                </div>
+                <div style="padding: 1.5rem; background: #f8f9fa; border-radius: 12px; border-left: 4px solid #10b981;">
+                    <h3 style="margin: 0 0 1rem; color: #10b981;">🆓 완전 무료</h3>
+                    <p style="margin: 0; color: var(--text-secondary);">모든 서비스를 가입 없이 완전 무료로 이용할 수 있습니다.</p>
+                </div>
+                <div style="padding: 1.5rem; background: #f8f9fa; border-radius: 12px; border-left: 4px solid #8b5cf6;">
+                    <h3 style="margin: 0 0 1rem; color: #8b5cf6;">🔒 개인정보 보호</h3>
+                    <p style="margin: 0; color: var(--text-secondary);">사용자의 개인정보를 수집하지 않으며, 모든 데이터는 안전하게 처리됩니다.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 미래 비전 섹션 -->
+        <div class="section">
+            <h2>🚀 앞으로의 계획</h2>
+            <p>
+                doha.kr은 사용자의 삶에 <strong>실질적인 도움</strong>이 되는 서비스를 지속적으로 개발하고 있습니다.
+            </p>
+            <ul style="margin-left: 1.5rem; color: var(--text-secondary); line-height: 1.8;">
+                <li>더욱 전문적이고 정교한 심리 분석 도구 추가</li>
+                <li>게임화 요소 도입 (배지 수집, 레벨 시스템)</li>
+                <li>건전한 커뮤니티 공간 구축</li>
+                <li>전용 모바일 앱 개발</li>
+                <li>일상생활에 도움되는 실용도구 확장</li>
+                <li>개인 맞춤형 서비스 고도화</li>
+            </ul>
+            
+            <div style="margin-top: 2rem; padding: 1.5rem; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 12px; border-left: 4px solid var(--primary-color);">
+                <h3 style="margin: 0 0 1rem; color: var(--primary-color);">💌 여러분의 목소리를 들려주세요!</h3>
+                <p style="margin: 0; color: var(--text-secondary); line-height: 1.6;">
+                    doha.kr을 더욱 발전시키기 위한 <strong>제안, 아이디어, 피드백</strong>을 언제든지 환영합니다. 
+                    <a href="/contact/" style="color: var(--primary-color); font-weight: 600; text-decoration: none;">문의하기 →</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 광고 영역 -->
+    <div class="ad-container">
+        <div class="ad-label">광고</div>
+        <ins class="adsbygoogle"
+             style="display:block; min-height: 90px;"
+             data-ad-client="ca-pub-7905640648499222"
+             data-ad-slot="5432167890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+    
+    <!-- 푸터 -->
+    <div id="footer-placeholder"></div>
+    
+    <!-- External JavaScript -->
+    <script src="/js/main.js"></script>
+</body>
+</html>
