@@ -1,6 +1,6 @@
-/* =========================================================================
+/* ======================================================================
    GLOBAL TEXT COLOR & CONTRAST IMPROVEMENTS
-   ========================================================================= */
+   ======================================================================= */
 
 /* CSS Variables for consistent colors */
 :root {
@@ -16,6 +16,9 @@
     
     --border-primary: #e5e7eb;
     --border-secondary: #d1d5db;
+    
+    /* CRITICAL MISSING VARIABLE - ADDED 2025-01-11 */
+    --primary-color: #2563eb !important;
 }
 
 /* Global text color improvements */
@@ -170,6 +173,44 @@ li {
 *:focus {
     outline: 3px solid #3b82f6;
     outline-offset: 2px;
+}
+
+/* CRITICAL FIXES - ADDED 2025-01-11 FOR IMMEDIATE TEXT READABILITY */
+
+/* Force dark text on problematic pages */
+.legal-page p,
+.legal-page li,
+.contact-form p,
+.contact-form li,
+.faq-answer p,
+.faq-answer li {
+    color: #374151 !important;
+}
+
+.legal-page h1,
+.legal-page h2,
+.legal-page h3,
+.contact-form h1,
+.contact-form h2,
+.contact-form h3,
+.faq-content h1,
+.faq-content h2,
+.faq-content h3 {
+    color: #111827 !important;
+}
+
+/* Fix any links that use --primary-color */
+.faq-answer a,
+.contact-form a,
+.legal-content a {
+    color: #2563eb !important;
+    text-decoration: underline !important;
+}
+
+.faq-answer a:hover,
+.contact-form a:hover,
+.legal-content a:hover {
+    color: #1d4ed8 !important;
 }
 
 /* High contrast mode support */
