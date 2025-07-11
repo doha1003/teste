@@ -17,120 +17,572 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Modular CSS -->
+    <!-- External CSS -->
     <link rel="stylesheet" href="/css/styles.css">
-    <link rel="stylesheet" href="/css/fortune/fortune-base.css">
     <link rel="stylesheet" href="/css/fortune/fortune-loading-fix.css">
+    <link rel="stylesheet" href="/css/fortune/mobile-input-fix.css">
     
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
     
-    <!-- Kakao SDK -->
-    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.4.0/kakao.min.js" integrity="sha384-mXVrIX2T/Kszp6Z0aEWaA8Nm7J6/ZeWXbL8UpGRjKwWe56Srd/iyNmWMBhcItAjH" crossorigin="anonymous"></script>
+    <!-- 만세력 데이터 먼저 로드 -->
+    <script src="/js/manseryeok-data.js"></script>
+    <script src="/js/lunar-calendar-optimized.js"></script>
+    <script src="/js/saju-calculator.js"></script>
     
-    <!-- 향상된 만세력 시스템 로드 -->
-    <script src="/js/lunar-calendar-compact.js"></script>
-    <script src="/js/lunar-calendar-loader.js"></script>
-    <script src="/js/saju-calculator-enhanced.js"></script>
+    <style>
+        /* 페이지 헤더 */
+        .page-header {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(236, 72, 153, 0.1) 100%);
+            padding: 80px 0 60px;
+            text-align: center;
+        }
+        
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #2d3436;
+        }
+        
+        .page-subtitle {
+            font-size: 1.125rem;
+            color: #636e72;
+        }
+        
+        /* 운세 섹션 */
+        .fortune-section {
+            padding: 60px 0;
+            background: white;
+        }
+        
+        .fortune-form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .fortune-form-container h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #2d3436;
+        }
+        
+        /* 폼 스타일 */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #495057;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #8b5cf6;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        
+        .form-check {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+        
+        .form-check input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
+        }
+        
+        .btn-submit {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 30px;
+        }
+        
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.3);
+        }
+        
+        
+        /* 운세 결과 */
+        .fortune-result-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* 사주 표시 */
+        .saju-brief {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+        
+        .saju-brief h3 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #2d3436;
+            font-size: 24px;
+        }
+        
+        .pillars-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+        
+        .pillar-item {
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .pillar-item.highlight {
+            border: 2px solid #8b5cf6;
+            background: rgba(139, 92, 246, 0.05);
+        }
+        
+        .pillar-label {
+            font-size: 14px;
+            color: #868e96;
+            margin-bottom: 10px;
+        }
+        
+        .pillar-chars {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        
+        .stem {
+            color: #e74c3c;
+        }
+        
+        .branch {
+            color: #3498db;
+        }
+        
+        .pillar-ten-god {
+            font-size: 14px;
+            color: #495057;
+            font-weight: 600;
+        }
+        
+        /* 오늘의 일진 */
+        .today-pillar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .today-pillar h3 {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        
+        .today-info {
+            font-size: 32px;
+            font-weight: 700;
+        }
+        
+        .today-day {
+            display: block;
+            font-size: 18px;
+            margin-top: 10px;
+            opacity: 0.9;
+        }
+        
+        /* 운세 점수 */
+        .fortune-scores {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .score-card {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        
+        .score-icon {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+        
+        .score-label {
+            font-size: 16px;
+            color: #495057;
+            margin-bottom: 10px;
+        }
+        
+        .score-value {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .score-bar {
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .score-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+            transition: width 1s ease;
+        }
+        
+        /* 상세 운세 */
+        .fortune-details {
+            margin-bottom: 30px;
+        }
+        
+        .fortune-category {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .fortune-category h4 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: #2d3436;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .fortune-category p {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #495057;
+            margin-bottom: 15px;
+        }
+        
+        .fortune-advice {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #8b5cf6;
+            font-size: 15px;
+            color: #5f3dc4;
+        }
+        
+        /* 행운 요소 */
+        .lucky-elements {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+        
+        .lucky-elements h3 {
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 24px;
+        }
+        
+        .lucky-items {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+        
+        .lucky-box {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .lucky-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        .lucky-label {
+            font-size: 14px;
+            margin-bottom: 8px;
+            opacity: 0.9;
+        }
+        
+        .lucky-value {
+            font-size: 18px;
+            font-weight: 700;
+        }
+        
+        /* 조언 섹션 */
+        .daily-advice-section {
+            background: #f3f0ff;
+            border-left: 4px solid #8b5cf6;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        
+        .daily-advice-section h3 {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: #5f3dc4;
+        }
+        
+        .main-advice {
+            font-size: 18px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: #495057;
+        }
+        
+        .advice-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        
+        .advice-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            line-height: 1.6;
+        }
+        
+        .advice-item strong {
+            color: #5f3dc4;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        /* 액션 버튼 */
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 40px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.3);
+        }
+        
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #4b5563;
+        }
+        
+        .btn-secondary:hover {
+            background: #e5e7eb;
+        }
+        
+        /* 반응형 */
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            .fortune-form-container {
+                padding: 25px;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .pillars-row {
+                grid-template-columns: repeat(2, 2fr);
+            }
+            
+            .fortune-scores {
+                grid-template-columns: 1fr;
+            }
+            
+            .lucky-items {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .advice-details {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
-<body>
+<body class="fortune-page">
     <!-- 네비게이션 바 -->
     <div id="navbar-placeholder"></div>
     
-    <!-- 운세 컨테이너 -->
-    <div class="fortune-container">
-        <!-- 헤더 -->
-        <div class="fortune-header">
-            <h1 class="fortune-title">✨ 오늘의 운세</h1>
-            <p class="fortune-subtitle">
-                정확한 만세력 기반 사주팔자 일일 운세 분석
+    <!-- 페이지 헤더 -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title fade-in">✨ 오늘의 운세</h1>
+            <p class="page-subtitle fade-in stagger-1">
+                사주팔자 기반 정확한 일일 운세 분석
             </p>
         </div>
-        
-        <!-- 운세 입력 폼 -->
-        <div class="fortune-main" id="fortuneForm">
-            <h2 style="text-align: center; margin-bottom: 30px; color: var(--fortune-dark);">당신의 정보를 입력해주세요</h2>
-            <form onsubmit="generateDailyFortune(event)">
-                <div class="fortune-input-section">
-                    <div style="display: flex; gap: 20px; margin-bottom: 20px;">
-                        <div class="fortune-input-group" style="flex: 1;">
-                            <label for="userName" class="fortune-label">이름</label>
-                            <input type="text" id="userName" name="userName" class="fortune-input" placeholder="홍길동" required>
+    </section>
+    
+    <!-- 운세 입력 폼 -->
+    <section class="fortune-section">
+        <div class="container">
+            <div class="fortune-form-container" id="fortuneForm">
+                <h2>당신의 정보를 입력해주세요</h2>
+                <form onsubmit="generateDailyFortune(event)">
+                    <div class="form-group">
+                        <label for="userName">이름</label>
+                        <input type="text" id="userName" name="userName" class="form-control" placeholder="홍길동" required>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="birthYear">생년</label>
+                            <select id="birthYear" name="birthYear" class="form-control" required>
+                                <option value="">연도 선택</option>
+                            </select>
                         </div>
                         
-                        <div class="fortune-input-group" style="flex: 1;">
-                            <label for="gender" class="fortune-label">성별</label>
-                            <select id="gender" name="gender" class="fortune-select">
-                                <option value="">선택해주세요</option>
-                                <option value="male">남성</option>
-                                <option value="female">여성</option>
+                        <div class="form-group">
+                            <label for="birthMonth">생월</label>
+                            <select id="birthMonth" name="birthMonth" class="form-control" required>
+                                <option value="">월 선택</option>
+                                <option value="1">1월</option>
+                                <option value="2">2월</option>
+                                <option value="3">3월</option>
+                                <option value="4">4월</option>
+                                <option value="5">5월</option>
+                                <option value="6">6월</option>
+                                <option value="7">7월</option>
+                                <option value="8">8월</option>
+                                <option value="9">9월</option>
+                                <option value="10">10월</option>
+                                <option value="11">11월</option>
+                                <option value="12">12월</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="birthDay">생일</label>
+                            <select id="birthDay" name="birthDay" class="form-control" required>
+                                <option value="">일 선택</option>
                             </select>
                         </div>
                     </div>
                     
-                    <div style="display: flex; gap: 20px; margin-bottom: 20px;">
-                        <div class="fortune-input-group" style="flex: 1;">
-                            <label for="birthYear" class="fortune-label">생년</label>
-                            <input type="number" id="birthYear" name="birthYear" class="fortune-input" min="1900" max="2025" placeholder="1990" required>
-                        </div>
-                        
-                        <div class="fortune-input-group" style="flex: 1;">
-                            <label for="birthMonth" class="fortune-label">생월</label>
-                            <input type="number" id="birthMonth" name="birthMonth" class="fortune-input" min="1" max="12" placeholder="1" required>
-                        </div>
-                        
-                        <div class="fortune-input-group" style="flex: 1;">
-                            <label for="birthDay" class="fortune-label">생일</label>
-                            <input type="number" id="birthDay" name="birthDay" class="fortune-input" min="1" max="31" placeholder="1" required>
-                        </div>
-                    </div>
-                    
-                    <div class="fortune-input-group">
-                        <label for="birthTime" class="fortune-label">출생시간</label>
-                        <select id="birthTime" name="birthTime" class="fortune-select">
+                    <div class="form-group">
+                        <label for="birthTime">출생시간</label>
+                        <select id="birthTime" name="birthTime" class="form-control">
                             <option value="-1">모름</option>
-                            <option value="23">자시 (23:00-00:59)</option>
-                            <option value="1">축시 (01:00-02:59)</option>
-                            <option value="3">인시 (03:00-04:59)</option>
-                            <option value="5">묘시 (05:00-06:59)</option>
-                            <option value="7">진시 (07:00-08:59)</option>
-                            <option value="9">사시 (09:00-10:59)</option>
-                            <option value="11">오시 (11:00-12:59)</option>
-                            <option value="13">미시 (13:00-14:59)</option>
-                            <option value="15">신시 (15:00-16:59)</option>
-                            <option value="17">유시 (17:00-18:59)</option>
-                            <option value="19">술시 (19:00-20:59)</option>
-                            <option value="21">해시 (21:00-22:59)</option>
+                            <option value="0">자시 (23:00-01:00)</option>
+                            <option value="2">축시 (01:00-03:00)</option>
+                            <option value="4">인시 (03:00-05:00)</option>
+                            <option value="6">묘시 (05:00-07:00)</option>
+                            <option value="8">진시 (07:00-09:00)</option>
+                            <option value="10">사시 (09:00-11:00)</option>
+                            <option value="12">오시 (11:00-13:00)</option>
+                            <option value="14">미시 (13:00-15:00)</option>
+                            <option value="16">신시 (15:00-17:00)</option>
+                            <option value="18">유시 (17:00-19:00)</option>
+                            <option value="20">술시 (19:00-21:00)</option>
+                            <option value="22">해시 (21:00-23:00)</option>
                         </select>
                     </div>
                     
-                    <div class="fortune-input-group">
-                        <label style="display: flex; align-items: center; cursor: pointer;">
-                            <input type="checkbox" id="isLunar" name="isLunar" style="margin-right: 8px;">
-                            <span class="fortune-label" style="margin-bottom: 0;">음력 생일입니다</span>
-                        </label>
+                    <div class="form-check">
+                        <input type="checkbox" id="isLunar" name="isLunar">
+                        <label for="isLunar">음력 생일입니다</label>
                     </div>
                     
-                    <button type="submit" class="fortune-btn fortune-btn-primary" style="width: 100%; margin-top: 30px;">
-                        ✨ 정확한 만세력 운세 보기
-                    </button>
-                </div>
-            </form>
+                    <button type="submit" class="btn-submit">오늘의 운세 보기</button>
+                </form>
+            </div>
+            
+            <!-- 운세 결과 -->
+            <div id="fortuneResult" style="display: none;">
+                <!-- 결과가 여기에 표시됩니다 -->
+            </div>
         </div>
-        
-        <!-- 운세 결과 -->
-        <div id="fortuneResult" style="display: none;"></div>
-        
-        <!-- 광고 영역 -->
-        <div class="ad-container" style="margin: 40px 0;">
-            <div class="ad-label">광고</div>
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-7905640648499222"
-                 data-ad-slot="1234567890"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-        </div>
+    </section>
+    
+    <!-- 광고 영역 -->
+    <div class="ad-container">
+        <div class="ad-label">광고</div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-7905640648499222"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
     </div>
     
     <!-- 푸터 -->
@@ -138,314 +590,285 @@
     
     <!-- External JavaScript -->
     <script src="/js/main.js"></script>
-    <script src="/js/security.js"></script>
     
     <script>
-        // 향상된 사주 계산기 인스턴스 생성
-        let sajuCalculator = null;
-        let currentFortuneData = null;
-        
-        // 카카오 SDK 초기화
-        if (window.Kakao && !window.Kakao.isInitialized()) {
-            Kakao.init('19d8ba832f94d513957adc17883c1282');
-        }
-        
         // 페이지 로드 시 초기화
         document.addEventListener('DOMContentLoaded', function() {
-            // 향상된 사주 계산기 초기화
-            if (typeof SajuCalculatorEnhanced !== 'undefined') {
-                sajuCalculator = new SajuCalculatorEnhanced();
-                console.log('향상된 사주 계산기 로드 완료');
-            } else {
-                console.log('향상된 사주 계산기 로드 실패, 기본 계산기 사용');
+            // 연도 옵션 추가
+            const yearSelect = document.getElementById('birthYear');
+            const currentYear = new Date().getFullYear();
+            for (let year = currentYear; year >= 1900; year--) {
+                const option = document.createElement('option');
+                option.value = year;
+                option.textContent = year + '년';
+                yearSelect.appendChild(option);
             }
+            
+            // 월 선택 시 일 옵션 업데이트
+            document.getElementById('birthMonth').addEventListener('change', updateDayOptions);
+            document.getElementById('birthYear').addEventListener('change', updateDayOptions);
         });
+        
+        // 일 옵션 업데이트
+        function updateDayOptions() {
+            const year = parseInt(document.getElementById('birthYear').value);
+            const month = parseInt(document.getElementById('birthMonth').value);
+            const daySelect = document.getElementById('birthDay');
+            
+            daySelect.innerHTML = '<option value="">일 선택</option>';
+            
+            if (year && month) {
+                const daysInMonth = new Date(year, month, 0).getDate();
+                for (let day = 1; day <= daysInMonth; day++) {
+                    const option = document.createElement('option');
+                    option.value = day;
+                    option.textContent = day + '일';
+                    daySelect.appendChild(option);
+                }
+            }
+        }
         
         // 일일 운세 생성 함수
         function generateDailyFortune(event) {
             event.preventDefault();
             
-            const userName = Security.sanitizeInput(document.getElementById('userName').value, 'text');
-            const birthYear = Security.validateNumber(document.getElementById('birthYear').value, 1900, 2025);
-            const birthMonth = Security.validateNumber(document.getElementById('birthMonth').value, 1, 12);
-            const birthDay = Security.validateNumber(document.getElementById('birthDay').value, 1, 31);
-            const birthTime = Security.validateNumber(document.getElementById('birthTime').value, 0, 23);
+            const userName = document.getElementById('userName').value;
+            const birthYear = parseInt(document.getElementById('birthYear').value);
+            const birthMonth = parseInt(document.getElementById('birthMonth').value);
+            const birthDay = parseInt(document.getElementById('birthDay').value);
+            const birthTime = parseInt(document.getElementById('birthTime').value);
             const isLunar = document.getElementById('isLunar').checked;
             
-            // 통합 로딩 표시 (텍스트 회전 방지)
+            // 로딩 표시
             const resultDiv = document.getElementById('fortuneResult');
             resultDiv.style.display = 'block';
             resultDiv.innerHTML = `
-                <div class="fortune-loading">
-                    <div class="fortune-loading-icon">🔮</div>
+                <div class="daily-ai-analyzing">
                     <div class="fortune-loading-spinner"></div>
-                    <p class="fortune-loading-text">정확한 만세력으로 ${userName}님의 사주를 분석하고 있습니다...</p>
+                    <div class="fortune-loading-text">🔮 만세력으로 ${userName}님의 사주를 분석하고 있습니다<span class="fortune-loading-dots"></span></div>
                 </div>
             `;
             
             // 폼 숨기기
             document.getElementById('fortuneForm').style.display = 'none';
             
-            // 운세 생성 (향상된 계산기 사용)
+            // 운세 생성
             setTimeout(() => {
                 displayDailyFortune(userName, birthYear, birthMonth, birthDay, birthTime, isLunar);
             }, 2000);
         }
         
         // 일일 운세 표시 함수
-        async function displayDailyFortune(userName, birthYear, birthMonth, birthDay, birthTime, isLunar) {
-            try {
-                // 향상된 사주 계산기 사용
-                if (!sajuCalculator) {
-                    throw new Error('사주 계산기가 초기화되지 않았습니다.');
-                }
-                
-                // 사주 계산 (향상된 만세력 데이터 사용)
-                const saju = await sajuCalculator.calculateSaju(
-                    birthYear, 
-                    birthMonth, 
-                    birthDay, 
-                    birthTime >= 0 ? birthTime : 12, 
-                    isLunar
-                );
-                
-                // 오늘 날짜
-                const today = new Date();
-                const todayPillar = sajuCalculator.calculateDayPillar(
-                    today.getFullYear(), 
-                    today.getMonth() + 1, 
-                    today.getDate()
-                );
-                
-                // 사주 해석 생성
-                const interpretation = sajuCalculator.generateInterpretation(saju);
-                
-                // 일주 관계 분석
-                const relation = analyzeRelation(saju.dayPillar, todayPillar);
-                const fortune = generateDetailedFortune(saju, todayPillar, relation);
-                
-                // 결과 데이터 저장 (공유용)
-                currentFortuneData = {
-                    userName,
-                    birthYear,
-                    birthMonth,
-                    birthDay,
-                    saju,
-                    fortune,
-                    today
-                };
-                
-                const resultDiv = document.getElementById('fortuneResult');
-                resultDiv.innerHTML = `
-                    <div class="fortune-result show">
-                        <div class="fortune-result-header">
-                            <h2 class="fortune-result-title">
-                                🔮 ${userName}님의 ${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일 운세
-                            </h2>
+        function displayDailyFortune(userName, birthYear, birthMonth, birthDay, birthTime, isLunar) {
+            // 사주 계산 객체가 전역에 있는지 확인
+            if (typeof SajuCalculator === 'undefined') {
+                console.error('SajuCalculator가 로드되지 않았습니다.');
+                alert('페이지 로딩 중 오류가 발생했습니다. 새로고침 후 다시 시도해주세요.');
+                location.reload();
+                return;
+            }
+            
+            const sajuCalculator = new SajuCalculator();
+            
+            // 사주 계산 (만세력 데이터 사용)
+            const saju = sajuCalculator.calculateSaju(birthYear, birthMonth, birthDay, birthTime >= 0 ? birthTime : 12, isLunar);
+            
+            // 오늘 날짜
+            const today = new Date();
+            const todayPillar = sajuCalculator.calculateDayPillar(today.getFullYear(), today.getMonth() + 1, today.getDate());
+            
+            // 일주 관계 분석
+            const relation = analyzeRelation(saju.dayPillar, todayPillar);
+            const fortune = generateDetailedFortune(saju, todayPillar, relation);
+            
+            const resultDiv = document.getElementById('fortuneResult');
+            resultDiv.innerHTML = `
+                <div class="fortune-result-container">
+                    <h2 style="text-align: center; margin-bottom: 30px;">
+                        ${userName}님의 ${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일 운세
+                    </h2>
+                    
+                    <div class="saju-brief">
+                        <h3>📅 사주팔자 (四柱八字)</h3>
+                        <div class="pillars-row">
+                            <div class="pillar-item">
+                                <div class="pillar-label">연주 (年柱)</div>
+                                <div class="pillar-chars">
+                                    <span class="stem">${saju.yearPillar.stem}</span>
+                                    <span class="branch">${saju.yearPillar.branch}</span>
+                                </div>
+                                <div class="pillar-ten-god">${saju.tenGods.year}</div>
+                            </div>
+                            
+                            <div class="pillar-item">
+                                <div class="pillar-label">월주 (月柱)</div>
+                                <div class="pillar-chars">
+                                    <span class="stem">${saju.monthPillar.stem}</span>
+                                    <span class="branch">${saju.monthPillar.branch}</span>
+                                </div>
+                                <div class="pillar-ten-god">${saju.tenGods.month}</div>
+                            </div>
+                            
+                            <div class="pillar-item highlight">
+                                <div class="pillar-label">일주 (日柱) ⭐</div>
+                                <div class="pillar-chars">
+                                    <span class="stem">${saju.dayPillar.stem}</span>
+                                    <span class="branch">${saju.dayPillar.branch}</span>
+                                </div>
+                                <div class="pillar-ten-god">일주(본인)</div>
+                            </div>
+                            
+                            <div class="pillar-item ${birthTime < 0 ? 'unknown' : ''}">
+                                <div class="pillar-label">시주 (時柱)</div>
+                                <div class="pillar-chars">
+                                    <span class="stem">${birthTime >= 0 ? saju.hourPillar.stem : '?'}</span>
+                                    <span class="branch">${birthTime >= 0 ? saju.hourPillar.branch : '?'}</span>
+                                </div>
+                                <div class="pillar-ten-god">${birthTime >= 0 ? saju.tenGods.hour : '미상'}</div>
+                            </div>
                         </div>
-                        
-                        <div class="fortune-result-section">
-                            <h3>📅 사주팔자 (四柱八字)</h3>
-                            <div class="fortune-cards">
-                                <div class="fortune-card">
-                                    <div class="fortune-card-title">연주 (年柱)</div>
-                                    <div class="fortune-card-icon" style="font-size: 24px; margin: 16px 0;">
-                                        ${saju.yearPillar.stem}${saju.yearPillar.branch}
-                                    </div>
-                                    <div class="fortune-card-desc">${saju.tenGods.year}</div>
-                                </div>
-                                
-                                <div class="fortune-card">
-                                    <div class="fortune-card-title">월주 (月柱)</div>
-                                    <div class="fortune-card-icon" style="font-size: 24px; margin: 16px 0;">
-                                        ${saju.monthPillar.stem}${saju.monthPillar.branch}
-                                    </div>
-                                    <div class="fortune-card-desc">${saju.tenGods.month}</div>
-                                </div>
-                                
-                                <div class="fortune-card selected">
-                                    <div class="fortune-card-title">일주 (日柱) ⭐</div>
-                                    <div class="fortune-card-icon" style="font-size: 24px; margin: 16px 0;">
-                                        ${saju.dayPillar.stem}${saju.dayPillar.branch}
-                                    </div>
-                                    <div class="fortune-card-desc">일주(본인)</div>
-                                </div>
-                                
-                                <div class="fortune-card ${birthTime < 0 ? 'unknown' : ''}">
-                                    <div class="fortune-card-title">시주 (時柱)</div>
-                                    <div class="fortune-card-icon" style="font-size: 24px; margin: 16px 0;">
-                                        ${birthTime >= 0 ? saju.hourPillar.stem + saju.hourPillar.branch : '??'}
-                                    </div>
-                                    <div class="fortune-card-desc">${birthTime >= 0 ? saju.tenGods.hour : '미상'}</div>
-                                </div>
+                    </div>
+                    
+                    <div class="today-pillar">
+                        <h3>🌅 오늘의 일진</h3>
+                        <div class="today-info">
+                            <span class="today-stem">${todayPillar.stem}</span>
+                            <span class="today-branch">${todayPillar.branch}</span>
+                            <span class="today-day">일 (${todayPillar.stem}${todayPillar.branch}日)</span>
+                        </div>
+                    </div>
+                    
+                    <div class="fortune-scores">
+                        <div class="score-card">
+                            <div class="score-icon">💫</div>
+                            <div class="score-label">총운</div>
+                            <div class="score-value" style="color: ${getScoreColor(fortune.overallScore)}">${fortune.overallScore}</div>
+                            <div class="score-bar">
+                                <div class="score-fill" style="width: ${fortune.overallScore}%; background: ${getScoreColor(fortune.overallScore)}"></div>
                             </div>
                         </div>
                         
-                        <div class="fortune-result-section" style="background: var(--fortune-gradient); color: white;">
-                            <h3>🌅 오늘의 일진</h3>
-                            <div style="text-align: center; font-size: 2rem; font-weight: 700; margin: 20px 0;">
-                                ${todayPillar.stem}${todayPillar.branch}일
-                            </div>
-                            <p style="text-align: center; margin: 0;">
-                                (${todayPillar.stem}${todayPillar.branch}日)
-                            </p>
-                        </div>
-                        
-                        <div class="fortune-result-section">
-                            <h3>🌟 운세 점수</h3>
-                            <div class="fortune-cards">
-                                <div class="fortune-card">
-                                    <div class="fortune-card-icon">💫</div>
-                                    <div class="fortune-card-title">총운</div>
-                                    <div class="fortune-card-desc" style="font-size: 24px; font-weight: 700; color: ${getScoreColor(fortune.overallScore)};">
-                                        ${fortune.overallScore}점
-                                    </div>
-                                </div>
-                                
-                                <div class="fortune-card">
-                                    <div class="fortune-card-icon">❤️</div>
-                                    <div class="fortune-card-title">애정운</div>
-                                    <div class="fortune-card-desc" style="font-size: 24px; font-weight: 700; color: ${getScoreColor(fortune.loveScore)};">
-                                        ${fortune.loveScore}점
-                                    </div>
-                                </div>
-                                
-                                <div class="fortune-card">
-                                    <div class="fortune-card-icon">💰</div>
-                                    <div class="fortune-card-title">금전운</div>
-                                    <div class="fortune-card-desc" style="font-size: 24px; font-weight: 700; color: ${getScoreColor(fortune.moneyScore)};">
-                                        ${fortune.moneyScore}점
-                                    </div>
-                                </div>
-                                
-                                <div class="fortune-card">
-                                    <div class="fortune-card-icon">🏃</div>
-                                    <div class="fortune-card-title">건강운</div>
-                                    <div class="fortune-card-desc" style="font-size: 24px; font-weight: 700; color: ${getScoreColor(fortune.healthScore)};">
-                                        ${fortune.healthScore}점
-                                    </div>
-                                </div>
+                        <div class="score-card">
+                            <div class="score-icon">❤️</div>
+                            <div class="score-label">애정운</div>
+                            <div class="score-value" style="color: ${getScoreColor(fortune.loveScore)}">${fortune.loveScore}</div>
+                            <div class="score-bar">
+                                <div class="score-fill" style="width: ${fortune.loveScore}%; background: ${getScoreColor(fortune.loveScore)}"></div>
                             </div>
                         </div>
                         
-                        <div class="fortune-result-section">
-                            <h3>💫 총운</h3>
+                        <div class="score-card">
+                            <div class="score-icon">💰</div>
+                            <div class="score-label">금전운</div>
+                            <div class="score-value" style="color: ${getScoreColor(fortune.moneyScore)}">${fortune.moneyScore}</div>
+                            <div class="score-bar">
+                                <div class="score-fill" style="width: ${fortune.moneyScore}%; background: ${getScoreColor(fortune.moneyScore)}"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="score-card">
+                            <div class="score-icon">🏃</div>
+                            <div class="score-label">건강운</div>
+                            <div class="score-value" style="color: ${getScoreColor(fortune.healthScore)}">${fortune.healthScore}</div>
+                            <div class="score-bar">
+                                <div class="score-fill" style="width: ${fortune.healthScore}%; background: ${getScoreColor(fortune.healthScore)}"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="fortune-details">
+                        <div class="fortune-category">
+                            <h4>💫 총운</h4>
                             <p>${fortune.overallFortune}</p>
                         </div>
                         
-                        <div class="fortune-result-section">
-                            <h3>❤️ 애정운</h3>
+                        <div class="fortune-category">
+                            <h4>❤️ 애정운</h4>
                             <p>${fortune.loveFortune}</p>
-                            <div style="background: rgba(139, 92, 246, 0.1); padding: 16px; border-radius: 8px; margin-top: 16px;">
+                            <div class="fortune-advice">
                                 <strong>💡 조언:</strong> ${fortune.loveAdvice}
                             </div>
                         </div>
                         
-                        <div class="fortune-result-section">
-                            <h3>💰 금전운</h3>
+                        <div class="fortune-category">
+                            <h4>💰 금전운</h4>
                             <p>${fortune.moneyFortune}</p>
-                            <div style="background: rgba(139, 92, 246, 0.1); padding: 16px; border-radius: 8px; margin-top: 16px;">
+                            <div class="fortune-advice">
                                 <strong>💡 조언:</strong> ${fortune.moneyAdvice}
                             </div>
                         </div>
                         
-                        <div class="fortune-result-section">
-                            <h3>💼 직업운</h3>
+                        <div class="fortune-category">
+                            <h4>💼 직업운</h4>
                             <p>${fortune.careerFortune}</p>
-                            <div style="background: rgba(139, 92, 246, 0.1); padding: 16px; border-radius: 8px; margin-top: 16px;">
+                            <div class="fortune-advice">
                                 <strong>💡 조언:</strong> ${fortune.careerAdvice}
                             </div>
                         </div>
                         
-                        <div class="fortune-result-section">
-                            <h3>🏃 건강운</h3>
+                        <div class="fortune-category">
+                            <h4>🏃 건강운</h4>
                             <p>${fortune.healthFortune}</p>
-                            <div style="background: rgba(139, 92, 246, 0.1); padding: 16px; border-radius: 8px; margin-top: 16px;">
+                            <div class="fortune-advice">
                                 <strong>💡 조언:</strong> ${fortune.healthAdvice}
                             </div>
                         </div>
-                        
-                        <div class="fortune-result-section" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white;">
-                            <h3>🌟 오늘의 행운 요소</h3>
-                            <div class="fortune-cards">
-                                <div style="background: rgba(255, 255, 255, 0.2); padding: 20px; border-radius: 8px; text-align: center; color: white;">
-                                    <div style="font-size: 32px; margin-bottom: 10px;">⏰</div>
-                                    <div style="font-size: 14px; margin-bottom: 8px; opacity: 0.9;">행운의 시간</div>
-                                    <div style="font-size: 18px; font-weight: 700;">${fortune.luckyTime}</div>
-                                </div>
-                                <div style="background: rgba(255, 255, 255, 0.2); padding: 20px; border-radius: 8px; text-align: center; color: white;">
-                                    <div style="font-size: 32px; margin-bottom: 10px;">🧭</div>
-                                    <div style="font-size: 14px; margin-bottom: 8px; opacity: 0.9;">행운의 방향</div>
-                                    <div style="font-size: 18px; font-weight: 700;">${fortune.luckyDirection}</div>
-                                </div>
-                                <div style="background: rgba(255, 255, 255, 0.2); padding: 20px; border-radius: 8px; text-align: center; color: white;">
-                                    <div style="font-size: 32px; margin-bottom: 10px;">🎨</div>
-                                    <div style="font-size: 14px; margin-bottom: 8px; opacity: 0.9;">행운의 색상</div>
-                                    <div style="font-size: 18px; font-weight: 700;">${fortune.luckyColor}</div>
-                                </div>
-                                <div style="background: rgba(255, 255, 255, 0.2); padding: 20px; border-radius: 8px; text-align: center; color: white;">
-                                    <div style="font-size: 32px; margin-bottom: 10px;">🔢</div>
-                                    <div style="font-size: 14px; margin-bottom: 8px; opacity: 0.9;">행운의 숫자</div>
-                                    <div style="font-size: 18px; font-weight: 700;">${fortune.luckyNumber}</div>
-                                </div>
+                    </div>
+                    
+                    <div class="lucky-elements">
+                        <h3>🌟 오늘의 행운 요소</h3>
+                        <div class="lucky-items">
+                            <div class="lucky-box">
+                                <div class="lucky-icon">⏰</div>
+                                <div class="lucky-label">행운의 시간</div>
+                                <div class="lucky-value">${fortune.luckyTime}</div>
+                            </div>
+                            <div class="lucky-box">
+                                <div class="lucky-icon">🧭</div>
+                                <div class="lucky-label">행운의 방향</div>
+                                <div class="lucky-value">${fortune.luckyDirection}</div>
+                            </div>
+                            <div class="lucky-box">
+                                <div class="lucky-icon">🎨</div>
+                                <div class="lucky-label">행운의 색상</div>
+                                <div class="lucky-value">${fortune.luckyColor}</div>
+                            </div>
+                            <div class="lucky-box">
+                                <div class="lucky-icon">🔢</div>
+                                <div class="lucky-label">행운의 숫자</div>
+                                <div class="lucky-value">${fortune.luckyNumber}</div>
                             </div>
                         </div>
-                        
-                        <div class="fortune-result-section">
-                            <h3>📝 오늘의 조언</h3>
-                            <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 20px;">${fortune.advice}</p>
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                                <div style="background: rgba(16, 185, 129, 0.1); padding: 15px; border-radius: 8px; border-left: 4px solid #10b981;">
-                                    <strong style="color: #10b981; display: block; margin-bottom: 5px;">✅ 오늘 하면 좋은 일</strong>
+                    </div>
+                    
+                    <div class="daily-advice-section">
+                        <h3>📝 오늘의 조언</h3>
+                        <div class="advice-content">
+                            <p class="main-advice">${fortune.advice}</p>
+                            <div class="advice-details">
+                                <div class="advice-item">
+                                    <strong>✅ 오늘 하면 좋은 일</strong>
                                     ${fortune.doAdvice}
                                 </div>
-                                <div style="background: rgba(239, 68, 68, 0.1); padding: 15px; border-radius: 8px; border-left: 4px solid #ef4444;">
-                                    <strong style="color: #ef4444; display: block; margin-bottom: 5px;">❌ 오늘 피해야 할 일</strong>
+                                <div class="advice-item">
+                                    <strong>❌ 오늘 피해야 할 일</strong>
                                     ${fortune.dontAdvice}
                                 </div>
                             </div>
                         </div>
-                        
-                        <div class="fortune-share">
-                            <h3 class="fortune-share-title">결과 공유하기</h3>
-                            <div class="fortune-share-buttons">
-                                <button class="fortune-share-btn fortune-share-kakao" onclick="shareFortune()">
-                                    💬 카카오톡 공유
-                                </button>
-                                <button class="fortune-share-btn fortune-share-copy" onclick="copyResultLink()">
-                                    🔗 링크 복사
-                                </button>
-                            </div>
-                            <div style="display: flex; gap: 16px; justify-content: center; margin-top: 20px;">
-                                <button onclick="location.reload()" class="fortune-btn fortune-btn-primary">다시 보기</button>
-                                <a href="/fortune/" class="fortune-btn fortune-btn-secondary">다른 운세 보기</a>
-                            </div>
-                        </div>
                     </div>
-                `;
-                
-                resultDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                
-            } catch (error) {
-                console.error('운세 계산 중 오류:', error);
-                const resultDiv = document.getElementById('fortuneResult');
-                resultDiv.innerHTML = `
-                    <div class="fortune-result show">
-                        <div class="fortune-result-header">
-                            <h2 class="fortune-result-title" style="color: #e74c3c;">오류가 발생했습니다</h2>
-                            <p class="fortune-result-subtitle">
-                                운세 계산 중 오류가 발생했습니다. 페이지를 새로고침하여 다시 시도해주세요.
-                            </p>
-                        </div>
-                        <div style="text-align: center; margin-top: 20px;">
-                            <button onclick="location.reload()" class="fortune-btn fortune-btn-primary">다시 시도</button>
-                        </div>
+                    
+                    <div class="action-buttons">
+                        <button onclick="location.reload()" class="btn btn-primary">다시 보기</button>
+                        <button onclick="shareFortune()" class="btn btn-secondary">공유하기</button>
                     </div>
-                `;
-            }
+                </div>
+            `;
+            
+            resultDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
         
-        // 관계 분석 함수 (기존 코드 유지)
+        // 관계 분석 함수
         function analyzeRelation(dayPillar, todayPillar) {
             const relations = {
                 stemRelation: analyzeStemRelation(dayPillar.stem, todayPillar.stem),
@@ -469,6 +892,7 @@
             const element1 = stemElements[stem1];
             const element2 = stemElements[stem2];
             
+            // 오행 관계
             const relations = {
                 '목': { generate: '화', control: '토', generated: '수', controlled: '금' },
                 '화': { generate: '토', control: '금', generated: '목', controlled: '수' },
@@ -502,6 +926,7 @@
         
         // 특수 관계 찾기
         function findSpecialRelation(branch1, branch2) {
+            // 육합
             const combinations = {
                 '자': '축', '축': '자',
                 '인': '해', '해': '인',
@@ -511,6 +936,7 @@
                 '오': '미', '미': '오'
             };
             
+            // 충
             const clashes = {
                 '자': '오', '오': '자',
                 '축': '미', '미': '축',
@@ -520,6 +946,7 @@
                 '사': '해', '해': '사'
             };
             
+            // 형
             const punishments = {
                 '인': ['사', '신'], '사': ['인', '신'], '신': ['인', '사'],
                 '축': ['술', '미'], '술': ['축', '미'], '미': ['축', '술']
@@ -542,9 +969,11 @@
         
         // 상세 운세 생성
         function generateDetailedFortune(saju, todayPillar, relation) {
+            // 기본 점수 계산
             const baseScore = 65;
             let overallScore = baseScore;
             
+            // 관계에 따른 점수 조정
             if (relation.stemRelation === 'generate' || relation.stemRelation === 'generated') {
                 overallScore += 10;
             } else if (relation.stemRelation === 'control' || relation.stemRelation === 'controlled') {
@@ -559,20 +988,26 @@
                 overallScore -= 10;
             }
             
+            // 점수 범위 조정
             overallScore = Math.max(20, Math.min(95, overallScore));
             
+            // 세부 운세 점수
             const loveScore = Math.max(20, Math.min(95, overallScore + Math.floor(Math.random() * 20 - 10)));
             const moneyScore = Math.max(20, Math.min(95, overallScore + Math.floor(Math.random() * 20 - 10)));
             const healthScore = Math.max(20, Math.min(95, overallScore + Math.floor(Math.random() * 20 - 10)));
             const careerScore = Math.max(20, Math.min(95, overallScore + Math.floor(Math.random() * 20 - 10)));
             
+            // 운세 메시지 생성
             const overallFortune = generateOverallMessage(saju, overallScore, relation);
             const loveFortune = generateLoveMessage(saju, loveScore, relation);
             const moneyFortune = generateMoneyMessage(saju, moneyScore, relation);
             const careerFortune = generateCareerMessage(saju, careerScore, relation);
             const healthFortune = generateHealthMessage(saju, healthScore, relation);
             
+            // 행운 요소 생성
             const luckyElements = generateLuckyElements(saju, todayPillar);
+            
+            // 조언 생성
             const advice = generateAdvice(saju, todayPillar, relation);
             
             return {
@@ -594,56 +1029,108 @@
             };
         }
         
-        // 메시지 생성 함수들
-        function generateOverallMessage(saju, score) {
+        // 각종 메시지 생성 함수들
+        function generateOverallMessage(saju, score, relation) {
             const dayMaster = saju.dayPillar.stem + saju.dayPillar.branch;
+            let message = `${dayMaster}일주인 당신의 오늘 운세는 `;
+            
             if (score >= 80) {
-                return `${dayMaster}일주인 당신의 오늘 운세는 매우 좋습니다! 평소 미뤄왔던 중요한 일을 시작하기에 최적의 날입니다.`;
+                message += '매우 좋습니다! ';
+                if (relation.specialRelation.type === '육합') {
+                    message += '육합의 조화로운 기운이 당신을 감싸고 있어, 모든 일이 순조롭게 진행될 것입니다. ';
+                }
+                message += '평소 미뤄왔던 중요한 일을 시작하기에 최적의 날입니다.';
             } else if (score >= 60) {
-                return `${dayMaster}일주인 당신의 오늘 운세는 평균 이상입니다. 안정적인 흐름 속에서 차근차근 일을 진행하는 것이 좋겠습니다.`;
+                message += '평균 이상입니다. ';
+                message += '큰 변화보다는 안정적인 흐름 속에서 차근차근 일을 진행하는 것이 좋겠습니다.';
             } else {
-                return `${dayMaster}일주인 당신의 오늘 운세는 다소 주의가 필요합니다. 무리하지 말고 신중하게 행동하는 것이 중요합니다.`;
+                message += '다소 주의가 필요합니다. ';
+                if (relation.specialRelation.type === '충') {
+                    message += '충의 변화 에너지가 강하므로 예상치 못한 상황에 대비하세요. ';
+                }
+                message += '무리하지 말고 신중하게 행동하는 것이 중요합니다.';
             }
+            
+            return message;
         }
         
-        function generateLoveMessage(saju, score) {
+        function generateLoveMessage(saju, score, relation) {
+            const element = FIVE_ELEMENTS[saju.dayPillar.stem];
+            let message = '';
+            
             if (score >= 80) {
-                return '애정운이 매우 좋은 날입니다. 연인이 있다면 깊은 대화를 나누기 좋고, 싱글이라면 새로운 만남의 기회가 있을 수 있습니다.';
+                message = `애정운이 매우 좋은 날입니다. ${element}의 매력이 빛을 발하여 이성에게 좋은 인상을 줄 수 있습니다. `;
+                message += '연인이 있다면 깊은 대화를 나누기 좋고, 싱글이라면 새로운 만남의 기회가 있을 수 있습니다.';
             } else if (score >= 60) {
-                return '평온한 애정운입니다. 서로를 이해하고 배려하는 마음이 중요한 시기입니다.';
+                message = '평온한 애정운입니다. 서로를 이해하고 배려하는 마음이 중요한 시기입니다. ';
+                message += '작은 선물이나 따뜻한 말 한마디가 관계를 더욱 돈독하게 만들 것입니다.';
             } else {
-                return '애정 관계에서 약간의 긴장이 있을 수 있습니다. 상대방의 입장을 이해하려고 노력하세요.';
+                message = '애정 관계에서 약간의 긴장이 있을 수 있습니다. ';
+                message += '감정적으로 예민해질 수 있으니 상대방의 입장을 이해하려고 노력하세요.';
             }
+            
+            return message;
         }
         
-        function generateMoneyMessage(saju, score) {
+        function generateMoneyMessage(saju, score, relation) {
+            let message = '';
+            
             if (score >= 80) {
-                return '금전운이 상승하는 날입니다. 투자나 사업에서 좋은 기회를 포착할 수 있습니다.';
+                message = '금전운이 상승하는 날입니다. 투자나 사업에서 좋은 기회를 포착할 수 있습니다. ';
+                message += '다만 과욕은 금물이니 적절한 선에서 만족하는 것이 중요합니다.';
             } else if (score >= 60) {
-                return '안정적인 금전 흐름이 예상됩니다. 계획적인 소비와 저축을 실천하기 좋은 날입니다.';
+                message = '안정적인 금전 흐름이 예상됩니다. 계획적인 소비와 저축을 실천하기 좋은 날입니다. ';
+                message += '충동구매는 피하고 필요한 것만 구입하세요.';
             } else {
-                return '금전적으로 신중해야 하는 날입니다. 큰 지출이나 투자는 미루는 것이 좋겠습니다.';
+                message = '금전적으로 신중해야 하는 날입니다. 큰 지출이나 투자는 미루는 것이 좋겠습니다. ';
+                message += '예상치 못한 지출이 발생할 수 있으니 여유 자금을 확보해두세요.';
             }
+            
+            return message;
         }
         
-        function generateCareerMessage(saju, score) {
+        function generateCareerMessage(saju, score, relation) {
+            let message = '';
+            
             if (score >= 80) {
-                return '직장에서의 성과가 돋보이는 날입니다. 새로운 프로젝트나 중요한 업무를 맡기에 좋은 시기입니다.';
+                message = '직장에서의 성과가 돋보이는 날입니다. 상사나 동료들에게 능력을 인정받을 수 있습니다. ';
+                message += '새로운 프로젝트나 중요한 업무를 맡기에 좋은 시기입니다.';
             } else if (score >= 60) {
-                return '평소와 같은 업무 흐름이 이어집니다. 묵묵히 자신의 일에 집중하면 좋은 결과를 얻을 수 있습니다.';
+                message = '평소와 같은 업무 흐름이 이어집니다. 묵묵히 자신의 일에 집중하면 좋은 결과를 얻을 수 있습니다. ';
+                message += '동료들과의 협력이 중요한 날입니다.';
             } else {
-                return '업무상 약간의 어려움이 있을 수 있습니다. 중요한 결정은 다음으로 미루는 것이 현명합니다.';
+                message = '업무상 약간의 어려움이 있을 수 있습니다. 실수를 줄이기 위해 꼼꼼히 확인하세요. ';
+                message += '중요한 결정은 다음으로 미루는 것이 현명합니다.';
             }
+            
+            return message;
         }
         
-        function generateHealthMessage(saju, score) {
+        function generateHealthMessage(saju, score, relation) {
+            const element = FIVE_ELEMENTS[saju.dayPillar.stem];
+            const organMap = {
+                '목': '간과 담',
+                '화': '심장과 혈관',
+                '토': '비장과 소화기',
+                '금': '폐와 호흡기',
+                '수': '신장과 방광'
+            };
+            
+            const organ = organMap[element];
+            let message = '';
+            
             if (score >= 80) {
-                return '건강 상태가 매우 좋은 날입니다. 운동이나 야외 활동을 즐기기에 좋은 날입니다.';
+                message = `건강 상태가 매우 좋은 날입니다. ${organ} 기능이 활발하여 전반적인 컨디션이 최상입니다. `;
+                message += '운동이나 야외 활동을 즐기기에 좋은 날입니다.';
             } else if (score >= 60) {
-                return '평소와 비슷한 건강 상태를 유지하고 있습니다. 규칙적인 생활 습관을 유지하세요.';
+                message = `평소와 비슷한 건강 상태를 유지하고 있습니다. ${organ}에 좋은 음식을 섭취하면 도움이 됩니다. `;
+                message += '규칙적인 생활 습관을 유지하세요.';
             } else {
-                return '컨디션이 다소 떨어질 수 있는 날입니다. 무리한 활동은 피하고 충분한 휴식을 취하세요.';
+                message = `컨디션이 다소 떨어질 수 있는 날입니다. ${organ}에 특히 주의가 필요합니다. `;
+                message += '무리한 활동은 피하고 충분한 휴식을 취하세요.';
             }
+            
+            return message;
         }
         
         // 조언 생성 함수들
@@ -690,39 +1177,58 @@
         // 행운 요소 생성
         function generateLuckyElements(saju, todayPillar) {
             const dayMaster = saju.dayPillar.stem;
+            const todayElement = FIVE_ELEMENTS[todayPillar.stem];
             
+            // 시간
             const timeMap = {
-                '갑': '묘시 (05:00-07:00)', '을': '묘시 (05:00-07:00)',
-                '병': '오시 (11:00-13:00)', '정': '사시 (09:00-11:00)',
-                '무': '진시 (07:00-09:00)', '기': '미시 (13:00-15:00)',
-                '경': '신시 (15:00-17:00)', '신': '유시 (17:00-19:00)',
-                '임': '자시 (23:00-01:00)', '계': '해시 (21:00-23:00)'
+                '갑': '묘시 (05:00-07:00)',
+                '을': '묘시 (05:00-07:00)',
+                '병': '오시 (11:00-13:00)',
+                '정': '사시 (09:00-11:00)',
+                '무': '진시 (07:00-09:00)',
+                '기': '미시 (13:00-15:00)',
+                '경': '신시 (15:00-17:00)',
+                '신': '유시 (17:00-19:00)',
+                '임': '자시 (23:00-01:00)',
+                '계': '해시 (21:00-23:00)'
             };
             
+            // 방향
             const directionMap = {
-                '목': '동쪽', '화': '남쪽', '토': '중앙', '금': '서쪽', '수': '북쪽'
+                '목': '동쪽',
+                '화': '남쪽',
+                '토': '중앙',
+                '금': '서쪽',
+                '수': '북쪽'
             };
             
+            // 색상
             const colorMap = {
-                '목': '초록색, 청록색', '화': '빨간색, 보라색', '토': '노란색, 갈색',
-                '금': '흰색, 은색', '수': '검은색, 파란색'
+                '목': '초록색, 청록색',
+                '화': '빨간색, 보라색',
+                '토': '노란색, 갈색',
+                '금': '흰색, 은색',
+                '수': '검은색, 파란색'
             };
             
+            // 숫자
             const numberMap = {
-                '갑': '3, 8', '을': '3, 8', '병': '2, 7', '정': '2, 7',
-                '무': '5, 10', '기': '5, 10', '경': '4, 9', '신': '4, 9',
-                '임': '1, 6', '계': '1, 6'
-            };
-            
-            const FIVE_ELEMENTS = {
-                '갑': '목', '을': '목', '병': '화', '정': '화', '무': '토',
-                '기': '토', '경': '금', '신': '금', '임': '수', '계': '수'
+                '갑': '3, 8',
+                '을': '3, 8',
+                '병': '2, 7',
+                '정': '2, 7',
+                '무': '5, 10',
+                '기': '5, 10',
+                '경': '4, 9',
+                '신': '4, 9',
+                '임': '1, 6',
+                '계': '1, 6'
             };
             
             return {
                 luckyTime: timeMap[dayMaster],
                 luckyDirection: directionMap[FIVE_ELEMENTS[dayMaster]],
-                luckyColor: colorMap[FIVE_ELEMENTS[dayMaster]],
+                luckyColor: colorMap[todayElement],
                 luckyNumber: numberMap[dayMaster]
             };
         }
@@ -730,14 +1236,13 @@
         // 조언 생성
         function generateAdvice(saju, todayPillar, relation) {
             const dayMaster = saju.dayPillar.stem;
-            const FIVE_ELEMENTS = {
-                '갑': '목', '을': '목', '병': '화', '정': '화', '무': '토',
-                '기': '토', '경': '금', '신': '금', '임': '수', '계': '수'
-            };
             const element = FIVE_ELEMENTS[dayMaster];
             
             let mainAdvice = '';
+            let doAdvice = '';
+            let dontAdvice = '';
             
+            // 메인 조언
             if (relation.specialRelation.type === '육합') {
                 mainAdvice = `오늘은 육합의 조화로운 기운이 가득한 날입니다. ${dayMaster}일주인 당신의 장점이 최대한 발휘될 수 있으니, 평소 미뤄왔던 중요한 일을 진행해보세요.`;
             } else if (relation.specialRelation.type === '충') {
@@ -746,6 +1251,7 @@
                 mainAdvice = `${element}의 특성을 살려 차분하고 신중하게 하루를 보내세요. 큰 변화보다는 일상의 소중함을 느끼며 내적 성장에 집중하는 것이 좋겠습니다.`;
             }
             
+            // 해야 할 일
             const doList = {
                 '목': '새로운 프로젝트 시작',
                 '화': '프레젠테이션이나 발표',
@@ -754,6 +1260,9 @@
                 '수': '학습과 연구'
             };
             
+            doAdvice = doList[element];
+            
+            // 피해야 할 일
             const dontList = {
                 '목': '고집스러운 태도',
                 '화': '과도한 열정',
@@ -762,10 +1271,12 @@
                 '수': '책임 회피'
             };
             
+            dontAdvice = dontList[element];
+            
             return {
                 advice: mainAdvice,
-                doAdvice: doList[element],
-                dontAdvice: dontList[element]
+                doAdvice,
+                dontAdvice
             };
         }
         
@@ -777,66 +1288,57 @@
             return '#ef4444';
         }
         
-        // 카카오톡 공유 기능 (수정됨)
+        // 공유 기능
         function shareFortune() {
-            if (typeof Kakao !== 'undefined' && currentFortuneData) {
-                const { userName, saju, fortune, today } = currentFortuneData;
-                const dayMaster = saju.dayPillar.stem + saju.dayPillar.branch;
-                
-                const detailedDescription = `🔮 ${userName}님의 ${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일 운세
-
-💫 총운: ${fortune.overallScore}점 | ❤️ 애정운: ${fortune.loveScore}점
-💰 금전운: ${fortune.moneyScore}점 | 🏃 건강운: ${fortune.healthScore}점
-
-⭐ 사주: ${dayMaster}일주
-🌟 ${fortune.overallFortune}
-
-🍀 행운 요소
-⏰ 시간: ${fortune.luckyTime}
-🧭 방향: ${fortune.luckyDirection}
-🎨 색상: ${fortune.luckyColor}
-🔢 숫자: ${fortune.luckyNumber}
-
-만세력 기반 정확한 사주 운세 확인하기 👇`;
-                
-                Kakao.Share.sendDefault({
-                    objectType: 'feed',
-                    content: {
-                        title: `🔮 ${userName}님의 오늘 운세 - ${dayMaster}일주`,
-                        description: detailedDescription,
-                        imageUrl: 'https://doha.kr/images/og-default.png',
-                        link: {
-                            mobileWebUrl: window.location.href,
-                            webUrl: window.location.href,
-                        },
-                    },
-                    buttons: [
-                        {
-                            title: '나도 운세 보기',
-                            link: {
-                                mobileWebUrl: 'https://doha.kr/fortune/daily/',
-                                webUrl: 'https://doha.kr/fortune/daily/'
-                            }
-                        }
-                    ]
+            const text = '나의 오늘 운세를 확인해보세요!';
+            const url = window.location.href;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: '오늘의 운세',
+                    text: text,
+                    url: url
                 });
             } else {
-                copyResultLink();
+                // 카카오톡 공유
+                if (window.Kakao && window.Kakao.isInitialized()) {
+                    Kakao.Share.sendDefault({
+                        objectType: 'feed',
+                        content: {
+                            title: '오늘의 운세',
+                            description: text,
+                            imageUrl: 'https://doha.kr/images/og-default.png',
+                            link: {
+                                mobileWebUrl: url,
+                                webUrl: url
+                            }
+                        }
+                    });
+                } else {
+                    // 링크 복사
+                    navigator.clipboard.writeText(url).then(() => {
+                        alert('링크가 복사되었습니다!');
+                    });
+                }
             }
         }
         
-        // 링크 복사
-        function copyResultLink() {
-            const url = window.location.href;
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(url).then(() => {
-                    alert('링크가 복사되었습니다!');
-                }).catch(() => {
-                    alert('링크 복사에 실패했습니다.');
-                });
-            } else {
-                alert('링크 복사에 실패했습니다.');
-            }
+        // 오행 상수
+        const FIVE_ELEMENTS = {
+            '갑': '목', '을': '목',
+            '병': '화', '정': '화',
+            '무': '토', '기': '토',
+            '경': '금', '신': '금',
+            '임': '수', '계': '수'
+        };
+    </script>
+    
+    <!-- Kakao SDK -->
+    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.4.0/kakao.min.js" integrity="sha384-mXVrIX2T/Kszp6Z0aEWaA8Nm7J6/ZeWXbL8UpGRjKwWe56Srd/iyNmWMBhcItAjH" crossorigin="anonymous"></script>
+    <script>
+        // Kakao SDK 초기화
+        if (window.Kakao && !window.Kakao.isInitialized()) {
+            Kakao.init('8b5c6e8f97ec3d51a6f784b8b4b5ed99');
         }
     </script>
     
