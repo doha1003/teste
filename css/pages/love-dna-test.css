@@ -604,4 +604,842 @@
     .love-action-buttons .love-btn {
         width: 100%;
     }
+}/* =============================================================================
+   LOVE DNA TEST - LAYOUT MODULE
+   레이아웃 관련 CSS (큰 구조, 배경, 컨테이너)
+   ============================================================================= */
+
+/* 배경 애니메이션 컨테이너 */
+.animated-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+/* 하트 파티클 */
+.heart-particle {
+    position: absolute;
+    font-size: 2rem;
+    opacity: 0.6;
+    animation: floatHearts 12s linear infinite;
+}
+
+@keyframes floatHearts {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.6;
+    }
+    90% {
+        opacity: 0.6;
+    }
+    100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* 메인 테스트 래퍼 */
+.love-test-wrapper {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #ff6b9d 0%, #ff8fab 25%, #ffa8cc 50%, #ffb3d1 75%, #ffc2dd 100%);
+    padding: 0;
+    position: relative;
+}
+
+/* 헤더 섹션 */
+.love-header-section {
+    text-align: center;
+    padding: 60px 20px 40px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.love-header-decoration {
+    position: absolute;
+    font-size: 4rem;
+    opacity: 0.3;
+    animation: pulse 3s ease-in-out infinite;
+}
+
+.love-header-decoration:first-child {
+    top: 20px;
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.love-header-decoration:nth-child(2) {
+    top: 30px;
+    right: 10%;
+    animation-delay: 1.5s;
+}
+
+.love-header-content {
+    position: relative;
+    z-index: 2;
+}
+
+.love-header-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 900;
+    color: white;
+    margin-bottom: 16px;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    letter-spacing: -0.02em;
+}
+
+.love-header-subtitle {
+    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    color: rgba(255, 255, 255, 0.95);
+    font-weight: 400;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* 테스트 컨테이너 */
+.love-test-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    position: relative;
+    z-index: 1;
+}
+
+/* 인트로 섹션 */
+.love-intro-section {
+    background: white;
+    border-radius: 24px;
+    padding: 60px 40px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    margin-bottom: 40px;
+}
+
+.love-intro-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #333;
+    margin-bottom: 24px;
+    line-height: 1.2;
+}
+
+.love-intro-text {
+    font-size: 1.125rem;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 40px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* 질문 컨테이너 */
+.love-question-container {
+    margin: 40px 0;
+}
+
+.love-question-card {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    margin-bottom: 32px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.love-question-number {
+    display: inline-block;
+    background: linear-gradient(135deg, #ff6b9d, #c44569);
+    color: white;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.love-question-text {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+    line-height: 1.4;
+    margin-bottom: 0;
+}
+
+/* 옵션 컨테이너 */
+.love-options {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 32px;
+}
+
+/* 결과 컨테이너 */
+.love-result-container {
+    background: white;
+    border-radius: 24px;
+    padding: 60px 40px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+/* DNA 카드 */
+.love-dna-card {
+    background: linear-gradient(135deg, #ff6b9d, #c44569);
+    color: white;
+    border-radius: 20px;
+    padding: 40px;
+    margin-bottom: 40px;
+    text-align: center;
+    box-shadow: 0 15px 35px rgba(255, 107, 157, 0.3);
+}
+
+/* DNA 분석 섹션 */
+.love-dna-analysis {
+    margin: 40px 0;
+    text-align: left;
+}
+
+.love-analysis-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.love-dna-breakdown {
+    display: grid;
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+/* 결과 분석 섹션 */
+.love-result-analysis {
+    display: grid;
+    gap: 24px;
+    margin: 40px 0;
+}
+
+.love-result-analysis-card {
+    background: #f8f9fa;
+    border-radius: 16px;
+    padding: 24px;
+    border-left: 4px solid #ff6b9d;
+}
+
+/* 궁합 그리드 */
+.love-compatibility-grid {
+    display: grid;
+    gap: 24px;
+    margin-top: 20px;
+}
+
+.love-compatibility-section {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.love-compatibility-types {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+/* 유명인 리스트 */
+.love-celebrity-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+/* 공유 섹션 */
+.love-share-section {
+    background: white;
+    border-radius: 20px;
+    padding: 32px;
+    margin: 24px 0;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.love-share-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 24px;
+}
+
+.love-share-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+}
+
+.love-action-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* 숨김 클래스 */
+.love-hidden {
+    display: none !important;
+}
+
+/* 모바일 기본 대응 */
+@media (max-width: 768px) {
+    .love-header-section {
+        padding: 40px 20px 30px;
+    }
+    
+    .love-test-container {
+        padding: 20px 16px;
+    }
+    
+    .love-intro-section {
+        padding: 40px 24px;
+        border-radius: 20px;
+    }
+    
+    .love-question-card {
+        padding: 24px;
+        border-radius: 16px;
+    }
+    
+    .love-result-container {
+        padding: 40px 24px;
+        border-radius: 20px;
+    }
+    
+    .love-dna-card {
+        padding: 24px;
+        border-radius: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .love-header-section {
+        padding: 30px 16px 20px;
+    }
+    
+    .love-test-container {
+        padding: 20px 12px;
+    }
+    
+    .love-intro-section {
+        padding: 30px 20px;
+    }
+    
+    .love-question-card {
+        padding: 20px;
+    }
+    
+    .love-result-container {
+        padding: 30px 20px;
+    }
+    
+    .love-dna-card {
+        padding: 20px;
+    }
+}/* =============================================================================
+   LOVE DNA TEST - COMPONENTS MODULE
+   컴포넌트 관련 CSS (버튼, 카드, 진행바, 옵션 등)
+   ============================================================================= */
+
+/* 시작 버튼 */
+.love-start-button {
+    background: linear-gradient(135deg, #ff6b9d, #c44569);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 18px 40px;
+    font-size: 1.25rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(255, 107, 157, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.love-start-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.6s;
+}
+
+.love-start-button:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 12px 35px rgba(255, 107, 157, 0.4);
+    background: linear-gradient(135deg, #ff5583, #b03a5b);
+}
+
+.love-start-button:hover::before {
+    left: 100%;
+}
+
+.love-start-button:active {
+    transform: translateY(-1px) scale(1.02);
+}
+
+/* 진행바 컨테이너 */
+.love-progress-container {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 32px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.love-progress-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.love-progress-text {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.love-progress-bar {
+    width: 100%;
+    height: 12px;
+    background: #e9ecef;
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+}
+
+.love-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #ff6b9d, #c44569);
+    border-radius: 6px;
+    transition: width 0.5s ease;
+    position: relative;
+}
+
+.love-progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: progressShine 2s ease-in-out infinite;
+}
+
+@keyframes progressShine {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* 옵션 스타일 */
+.love-option {
+    background: white;
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #333;
+    position: relative;
+    overflow: hidden;
+}
+
+.love-option::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, #ff6b9d, #c44569);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.love-option::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.9);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.love-option:hover {
+    border-color: #ff6b9d;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(255, 107, 157, 0.2);
+}
+
+.love-option:hover::before {
+    opacity: 1;
+}
+
+.love-option:hover::after {
+    opacity: 1;
+}
+
+.love-option.selected {
+    border-color: #ff6b9d;
+    background: linear-gradient(135deg, #ff6b9d, #c44569);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(255, 107, 157, 0.3);
+}
+
+.love-option.selected::before,
+.love-option.selected::after {
+    opacity: 0;
+}
+
+/* 네비게이션 */
+.love-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 40px;
+    gap: 16px;
+}
+
+/* 버튼 기본 스타일 */
+.love-btn {
+    flex: 1;
+    min-width: 120px;
+    max-width: 200px;
+    padding: 14px 24px;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    position: relative;
+    overflow: hidden;
+}
+
+.love-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+.love-btn-primary {
+    background: linear-gradient(135deg, #ff6b9d, #c44569);
+    color: white;
+    border: 2px solid transparent;
+}
+
+.love-btn-primary:hover:not(:disabled) {
+    background: linear-gradient(135deg, #ff5583, #b03a5b);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(255, 107, 157, 0.3);
+}
+
+.love-btn-secondary {
+    background: white;
+    color: #ff6b9d;
+    border: 2px solid #ff6b9d;
+}
+
+.love-btn-secondary:hover:not(:disabled) {
+    background: #ff6b9d;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(255, 107, 157, 0.2);
+}
+
+/* 결과 DNA 코드 */
+.love-result-dna {
+    font-size: 3rem;
+    font-weight: 900;
+    letter-spacing: 0.5rem;
+    margin-bottom: 16px;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.love-result-title {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 12px;
+    line-height: 1.2;
+}
+
+.love-result-subtitle {
+    font-size: 1.25rem;
+    font-weight: 400;
+    opacity: 0.9;
+    margin-bottom: 20px;
+    font-style: italic;
+}
+
+.love-result-rarity {
+    font-size: 1rem;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 8px 16px;
+    border-radius: 20px;
+    display: inline-block;
+}
+
+/* 축 아이템 */
+.love-axis-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.love-axis-label {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #666;
+    min-width: 120px;
+}
+
+.love-axis-code {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: #ff6b9d;
+    min-width: 40px;
+    text-align: center;
+}
+
+.love-axis-description {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #333;
+    flex: 1;
+}
+
+/* 결과 카드 타이틀 */
+.love-description-title,
+.love-strengths-title,
+.love-weaknesses-title,
+.love-dating-title,
+.love-growth-title,
+.love-compatibility-title,
+.love-celebrity-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #333;
+}
+
+.love-description-title { color: #ff6b9d; }
+.love-strengths-title { color: #28a745; }
+.love-weaknesses-title { color: #dc3545; }
+.love-dating-title { color: #8b5cf6; }
+.love-growth-title { color: #17a2b8; }
+.love-compatibility-title { color: #fd7e14; }
+.love-celebrity-title { color: #ffc107; }
+
+/* 궁합 타입 */
+.love-compatibility-best {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #28a745;
+    margin-bottom: 8px;
+}
+
+.love-compatibility-good {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #17a2b8;
+    margin-bottom: 8px;
+}
+
+.love-compatibility-challenge {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #dc3545;
+    margin-bottom: 8px;
+}
+
+.love-compatibility-type {
+    background: #28a745;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.love-compatibility-type-good {
+    background: #17a2b8;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.love-compatibility-type-challenge {
+    background: #dc3545;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+/* 유명인 아이템 */
+.love-celebrity-item {
+    background: linear-gradient(135deg, #ffc107, #ff8c00);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    display: inline-block;
+}
+
+/* 공유 버튼 */
+.love-share-btn {
+    flex: 1;
+    min-width: 160px;
+    max-width: 220px;
+    padding: 14px 20px;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.love-share-btn-kakao {
+    background: #FEE500;
+    color: #000;
+}
+
+.love-share-btn-kakao:hover {
+    background: #E6CE00;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(254, 229, 0, 0.3);
+}
+
+.love-share-btn-copy {
+    background: #f8f9fa;
+    color: #333;
+    border: 2px solid #e9ecef;
+}
+
+.love-share-btn-copy:hover {
+    background: #e9ecef;
+    border-color: #dee2e6;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* 모바일 반응형 */
+@media (max-width: 768px) {
+    .love-navigation {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .love-btn {
+        max-width: 100%;
+    }
+    
+    .love-share-buttons {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .love-share-btn {
+        max-width: 100%;
+    }
+    
+    .love-action-buttons {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .love-result-dna {
+        font-size: 2.5rem;
+        letter-spacing: 0.3rem;
+    }
+    
+    .love-axis-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 8px;
+    }
+    
+    .love-axis-label {
+        min-width: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .love-option {
+        padding: 16px;
+        font-size: 0.9rem;
+    }
+    
+    .love-result-dna {
+        font-size: 2rem;
+        letter-spacing: 0.2rem;
+    }
+    
+    .love-result-title {
+        font-size: 1.5rem;
+    }
+    
+    .love-result-subtitle {
+        font-size: 1rem;
+    }
+    
+    .love-axis-code {
+        font-size: 1.25rem;
+    }
 }

@@ -1,6 +1,7 @@
 /* =========================================================================
    DOHA.KR - PROFESSIONAL DESIGN SYSTEM
    Beautiful, Modern, and Cohesive CSS Framework
+   Updated: 2025-01-11 - Consolidated from 89+ CSS files to unified architecture
    ========================================================================= */
 
 /* =========================================================================
@@ -8,9 +9,36 @@
    ========================================================================= */
 :root {
     /* Primary Brand Colors */
-    /* CRITICAL MISSING VARIABLE */
     --primary-color: #2563eb;
     --primary-hover: #1d4ed8;
+    
+    /* Missing text colors */
+    /* Enhanced text colors for better contrast */
+    --text-primary: #000000 !important;
+    --text-secondary: #1f2937 !important;
+    --text-muted: #374151 !important;
+    --text-dark: #0f172a !important;
+    --text-light: #94a3b8 !important;
+    
+    /* Enhanced background variants */
+    --bg-primary: #ffffff !important;
+    --bg-secondary: #f8fafc !important;
+    --bg-muted: #f1f5f9 !important;
+    --bg-contrast: #f9fafb !important;
+    
+    /* Missing border variants */
+    --border-color: #e5e7eb;
+    --border-muted: #f3f4f6;
+    
+    /* Missing state colors */
+    --hover-color: #1d4ed8;
+    --active-color: #1e40af;
+    --focus-color: #2563eb;
+    
+    /* Compatibility with old variable names */
+    --primary: var(--primary-600);
+    --secondary: var(--secondary-600);
+    --success: var(--success-600);
     --primary-50: #eff6ff;
     --primary-100: #dbeafe;
     --primary-200: #bfdbfe;
@@ -2565,6 +2593,405 @@ select:focus-visible {
 }
 
 /* =========================================================================
+   CRITICAL FIXES - All UI Issues Resolved
+   ========================================================================= */
+
+/* 1. Main CTA Color Fixes */
+.cta {
+    background: #f7f9fc !important;
+}
+
+.cta-box {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    color: white !important;
+}
+
+.cta-title {
+    color: white !important;
+    text-shadow: 
+        0 2px 4px rgba(0, 0, 0, 0.3),
+        0 4px 8px rgba(0, 0, 0, 0.2) !important;
+}
+
+.cta-description {
+    color: rgba(255, 255, 255, 0.9) !important;
+    text-shadow: 
+        0 1px 3px rgba(0, 0, 0, 0.3),
+        0 2px 6px rgba(0, 0, 0, 0.2) !important;
+    font-weight: 500 !important;
+}
+
+.cta-button {
+    background: white !important;
+    color: #667eea !important;
+    font-weight: 600 !important;
+}
+
+.cta-button:hover {
+    background: #f0f1ff !important;
+    color: #5a67d8 !important;
+}
+
+/* 2. Hero Section Fixes */
+.hero {
+    background: linear-gradient(135deg, #667eea 0%, #9f7aea 100%) !important;
+    position: relative;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.9) 0%,
+        rgba(255, 255, 255, 0.95) 50%,
+        rgba(255, 255, 255, 0.9) 100%
+    );
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-title {
+    color: #0f172a !important;
+    font-weight: 800 !important;
+    text-shadow: 
+        0 1px 2px rgba(255, 255, 255, 0.8),
+        0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+.hero-subtitle {
+    color: #1e293b !important;
+    font-weight: 500 !important;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6) !important;
+}
+
+/* 3. Button Improvements */
+.btn {
+    opacity: 1 !important;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    color: white !important;
+    font-weight: 600 !important;
+}
+
+.btn:hover {
+    opacity: 0.9 !important;
+    transform: translateY(-2px) !important;
+}
+
+.btn-primary {
+    background: #1e40af !important;
+    color: #ffffff !important;
+    font-weight: 600 !important;
+    border: 2px solid transparent !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+}
+
+.btn-primary:hover {
+    background: #1e3a8a !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2) !important;
+}
+
+.btn-secondary {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    font-weight: 600 !important;
+    border: 2px solid #cbd5e1 !important;
+}
+
+.btn-secondary:hover {
+    background: #f8fafc !important;
+    border-color: #94a3b8 !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* 4. Text Counter Button Position Fix */
+.text-counter-container {
+    position: relative !important;
+}
+
+.text-counter-buttons {
+    margin-top: 20px !important;
+    display: flex !important;
+    gap: 10px !important;
+    justify-content: center !important;
+}
+
+.text-counter-textarea {
+    margin-bottom: 20px !important;
+    min-height: 200px !important;
+}
+
+#text-counter-page .button-group {
+    position: relative !important;
+    z-index: 10 !important;
+    margin-top: 20px !important;
+    clear: both !important;
+}
+
+#text-counter-page textarea {
+    display: block !important;
+    width: 100% !important;
+    margin-bottom: 30px !important;
+}
+
+/* 5. Love DNA Test Fixes */
+.love-dna-test-container {
+    background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%) !important;
+}
+
+.love-question-card {
+    background: white !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
+}
+
+.love-option {
+    background: #f7f9fc !important;
+    border: 2px solid transparent !important;
+    transition: all 0.3s ease !important;
+}
+
+.love-option:hover {
+    border-color: #ff6b9d !important;
+    background: #fff5f8 !important;
+}
+
+.love-option.selected {
+    background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%) !important;
+    color: white !important;
+}
+
+.love-dna-features {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    gap: 20px !important;
+    justify-content: space-between !important;
+}
+
+.love-dna-feature-item {
+    flex: 1 !important;
+    min-width: 0 !important;
+}
+
+.love-dna-cta {
+    background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%) !important;
+}
+
+.love-dna-cta .cta-title {
+    color: white !important;
+}
+
+.love-dna-cta .cta-description {
+    color: rgba(255, 255, 255, 0.95) !important;
+}
+
+.love-dna-cta .cta-button {
+    background: white !important;
+    color: #ff6b9d !important;
+}
+
+/* 6. Enhanced Text Contrast */
+.section-title {
+    color: #0f172a !important;
+    font-weight: 800 !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+}
+
+.section-subtitle {
+    color: #334155 !important;
+    font-weight: 500 !important;
+}
+
+.feature-title {
+    color: #0f172a !important;
+    font-weight: 700 !important;
+}
+
+.feature-description {
+    color: #334155 !important;
+    font-weight: 400 !important;
+    line-height: 1.7 !important;
+}
+
+/* 7. Form Improvements */
+input,
+textarea,
+select {
+    color: #0f172a !important;
+    background: #ffffff !important;
+    border: 2px solid #cbd5e1 !important;
+    font-weight: 500 !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: #64748b !important;
+    opacity: 1 !important;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: #1e40af !important;
+    box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1) !important;
+    outline: none !important;
+}
+
+label {
+    color: #0f172a !important;
+    font-weight: 600 !important;
+}
+
+/* 8. Mobile Responsive Fixes & Optimizations */
+
+/* Touch target minimum sizes */
+button, 
+.btn, 
+a[role="button"], 
+input[type="button"], 
+input[type="submit"], 
+input[type="reset"],
+.cta-button,
+.floating-badge {
+    min-height: 44px !important;
+    min-width: 44px !important;
+    touch-action: manipulation;
+}
+
+/* Mobile typography */
+@media (max-width: 768px) {
+    h1 {
+        font-size: clamp(1.8rem, 5vw, 2.5rem) !important;
+        line-height: 1.2 !important;
+        margin-bottom: 1rem !important;
+    }
+    
+    h2 {
+        font-size: clamp(1.5rem, 4vw, 2rem) !important;
+        line-height: 1.3 !important;
+        margin-bottom: 0.875rem !important;
+    }
+    
+    h3 {
+        font-size: clamp(1.25rem, 3.5vw, 1.75rem) !important;
+        line-height: 1.3 !important;
+        margin-bottom: 0.75rem !important;
+    }
+    
+    p, li {
+        font-size: clamp(0.9rem, 2.5vw, 1.1rem) !important;
+        line-height: 1.6 !important;
+    }
+    
+    .navbar {
+        padding: 0.5rem 1rem;
+    }
+    
+    .navbar-brand {
+        font-size: 1.2rem;
+    }
+    
+    .navbar-nav {
+        text-align: center;
+    }
+    
+    .navbar-nav .nav-link {
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+    }
+    
+    .container {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+    
+    section {
+        padding: 3rem 0 !important;
+    }
+    
+    .love-dna-features {
+        flex-wrap: wrap !important;
+    }
+    
+    .love-dna-feature-item {
+        flex: 1 1 45% !important;
+    }
+}
+
+@media (max-width: 640px) {
+    .love-dna-features {
+        flex-direction: column !important;
+    }
+    
+    .love-dna-feature-item {
+        flex: 1 1 100% !important;
+        margin-bottom: 15px !important;
+    }
+}
+
+/* 9. High Contrast Mode Support */
+@media (prefers-contrast: high) {
+    .hero-title {
+        color: #000000 !important;
+    }
+    
+    .hero-subtitle {
+        color: #000000 !important;
+    }
+    
+    .section-title {
+        color: #000000 !important;
+    }
+    
+    .btn-primary {
+        background: #000000 !important;
+        border: 2px solid #ffffff !important;
+    }
+    
+    .btn-secondary {
+        background: #ffffff !important;
+        border: 2px solid #000000 !important;
+        color: #000000 !important;
+    }
+}
+
+/* 10. Dark Mode Preparation */
+@media (prefers-color-scheme: dark) {
+    .hero::before {
+        background: linear-gradient(
+            to bottom,
+            rgba(15, 23, 42, 0.9) 0%,
+            rgba(15, 23, 42, 0.95) 50%,
+            rgba(15, 23, 42, 0.9) 100%
+        );
+    }
+    
+    .hero-title {
+        color: #f1f5f9 !important;
+    }
+    
+    .hero-subtitle {
+        color: #e2e8f0 !important;
+    }
+    
+    .section-title {
+        color: #f1f5f9 !important;
+    }
+    
+    .section-subtitle {
+        color: #cbd5e1 !important;
+    }
+}
+
+/* =========================================================================
    PRINT STYLES
    ========================================================================= */
 @media print {
@@ -2585,5 +3012,719 @@ select:focus-visible {
         background: white !important;
         color: black !important;
         box-shadow: none !important;
+    }
+}/* =========================================================================
+   DOHA.KR - MAIN CSS SYSTEM
+   30년차 전문 웹디자이너가 설계한 통합 CSS 시스템
+   ========================================================================= */
+
+/* =========================================================================
+   1. CSS VARIABLES - 디자인 토큰 시스템
+   ========================================================================= */
+:root {
+    /* Primary Colors */
+    --primary-color: #2563eb;
+    --primary-hover: #1d4ed8;
+    --primary-light: #3b82f6;
+    --primary-dark: #1e40af;
+    
+    /* Secondary Colors */
+    --secondary-color: #9333ea;
+    --secondary-hover: #7c3aed;
+    
+    /* Grays */
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-300: #d1d5db;
+    --gray-400: #9ca3af;
+    --gray-500: #6b7280;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
+    --gray-800: #1f2937;
+    --gray-900: #111827;
+    
+    /* Text Colors */
+    --text-primary: #111827;
+    --text-secondary: #374151;
+    --text-tertiary: #6b7280;
+    --text-light: #9ca3af;
+    
+    /* Background Colors */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f9fafb;
+    --bg-tertiary: #f3f4f6;
+    
+    /* Border Colors */
+    --border-color: #e5e7eb;
+    --border-hover: #d1d5db;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    
+    /* Spacing */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 3rem;
+    
+    /* Border Radius */
+    --radius-sm: 0.25rem;
+    --radius-md: 0.375rem;
+    --radius-lg: 0.5rem;
+    --radius-xl: 0.75rem;
+    --radius-full: 9999px;
+}
+
+/* =========================================================================
+   2. RESET & BASE STYLES
+   ========================================================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--text-primary);
+    background-color: var(--bg-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* =========================================================================
+   3. TYPOGRAPHY
+   ========================================================================= */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--text-primary);
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+}
+
+h2 {
+    font-size: 2rem;
+    margin-bottom: 1.25rem;
+}
+
+h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+p {
+    color: var(--text-secondary);
+    line-height: 1.75;
+    margin-bottom: 1rem;
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+a:hover {
+    color: var(--primary-hover);
+    text-decoration: underline;
+}
+
+/* =========================================================================
+   4. NAVIGATION
+   ========================================================================= */
+.navbar {
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border-color);
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+.nav-link {
+    color: var(--text-secondary);
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.nav-link:hover {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* Mobile Navigation */
+@media (max-width: 768px) {
+    .nav-menu {
+        position: fixed;
+        left: -100%;
+        top: 70px;
+        flex-direction: column;
+        background-color: var(--bg-primary);
+        width: 100%;
+        text-align: center;
+        transition: 0.3s;
+        box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+        padding: 2rem 0;
+    }
+
+    .nav-menu.active {
+        left: 0;
+    }
+
+    .nav-toggle {
+        display: block;
+    }
+}
+
+/* =========================================================================
+   5. BUTTONS
+   ========================================================================= */
+.btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    text-align: center;
+    border-radius: var(--radius-md);
+    transition: all 0.2s;
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+}
+
+.btn-primary {
+    background: var(--primary-color);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--primary-hover);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-secondary {
+    background: var(--gray-200);
+    color: var(--text-primary);
+}
+
+.btn-secondary:hover {
+    background: var(--gray-300);
+}
+
+/* =========================================================================
+   6. FORMS
+   ========================================================================= */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+input,
+textarea,
+select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 16px; /* Prevents zoom on iOS */
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    transition: border-color 0.2s;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* =========================================================================
+   7. CARDS
+   ========================================================================= */
+.card {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    transition: all 0.2s;
+}
+
+.card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+}
+
+/* =========================================================================
+   8. FOOTER
+   ========================================================================= */
+.footer {
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border-color);
+    padding: 3rem 0 2rem;
+    margin-top: 4rem;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* =========================================================================
+   9. UTILITY CLASSES
+   ========================================================================= */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+.mt-4 { margin-top: 2rem; }
+
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+.mb-3 { margin-bottom: 1.5rem; }
+.mb-4 { margin-bottom: 2rem; }
+
+/* =========================================================================
+   10. RESPONSIVE UTILITIES
+   ========================================================================= */
+@media (max-width: 768px) {
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.5rem; }
+    h3 { font-size: 1.25rem; }
+    
+    .container {
+        padding: 0 1rem;
+    }
+}
+
+/* =========================================================================
+   11. SPECIFIC PAGE FIXES
+   ========================================================================= */
+/* Legal Pages */
+.legal-content p,
+.legal-content li {
+    color: var(--text-secondary) !important;
+    line-height: 1.8;
+}
+
+/* FAQ Page */
+.faq-question {
+    color: var(--text-primary) !important;
+    font-weight: 600;
+}
+
+.faq-answer {
+    color: var(--text-secondary) !important;
+}
+
+/* Contact Form */
+.contact-form label {
+    color: var(--text-primary) !important;
+}
+
+/* Hero Sections */
+.hero,
+.legal-hero {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    color: white;
+    padding: 4rem 0;
+    text-align: center;
+}
+
+.hero h1,
+.legal-hero h1 {
+    color: white;
+    margin-bottom: 1rem;
+}
+
+.hero p,
+.legal-hero p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.125rem;
+}
+
+/* =========================================================================
+   12. TEXT READABILITY & MOBILE INPUT FIXES - 2025-01-11
+   ========================================================================= */
+
+/* 🔥 CRITICAL: Text contrast improvements for better readability */
+body {
+    color: var(--text-primary) !important;
+    font-weight: 400 !important;
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
+}
+
+/* Enhanced text contrast for all content */
+p, 
+.content p,
+.legal-content p,
+.legal-container p,
+.privacy-content p,
+.terms-content p,
+article p,
+.article-content p {
+    color: var(--text-primary) !important;
+    font-weight: 400 !important;
+    line-height: 1.8 !important;
+    font-size: 16px !important;
+}
+
+/* List items */
+li,
+.legal-content li,
+.legal-container li,
+ul li,
+ol li {
+    color: var(--text-primary) !important;
+    font-weight: 400 !important;
+    line-height: 1.7 !important;
+    font-size: 16px !important;
+}
+
+/* Headings enhancement */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-dark) !important;
+    font-weight: 600 !important;
+    line-height: 1.3 !important;
+}
+
+/* Legal page specific fixes */
+.legal-container p,
+.legal-container li,
+.legal-container td {
+    color: var(--text-primary) !important;
+    font-weight: 400 !important;
+    font-size: 16px !important;
+    line-height: 1.8 !important;
+}
+
+.legal-container h1 {
+    color: var(--text-dark) !important;
+    font-weight: 700 !important;
+}
+
+.legal-container h2 {
+    color: var(--text-dark) !important;
+    font-weight: 600 !important;
+}
+
+.legal-container h3 {
+    color: var(--text-primary) !important;
+    font-weight: 600 !important;
+}
+
+/* Strong text enhancement */
+strong, 
+b,
+.legal-container strong {
+    color: var(--text-dark) !important;
+    font-weight: 700 !important;
+}
+
+/* Table text */
+table,
+.legal-container table {
+    color: var(--text-primary) !important;
+}
+
+.legal-container th {
+    color: var(--text-dark) !important;
+    font-weight: 600 !important;
+}
+
+/* 🔥 CRITICAL: Mobile input field fixes for iOS Safari zoom issue */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="password"],
+input[type="number"],
+input[type="search"],
+input[type="url"],
+select,
+textarea,
+.form-control,
+.form-input {
+    /* Prevent iOS Safari zoom on focus */
+    font-size: 16px !important;
+    line-height: 1.5 !important;
+    
+    /* Enhanced readability */
+    color: var(--text-primary) !important;
+    background-color: var(--bg-primary) !important;
+    border: 2px solid var(--border-color) !important;
+    border-radius: 8px !important;
+    padding: 12px 16px !important;
+    
+    /* Accessibility improvements */
+    min-height: 44px !important; /* iOS touch target requirement */
+    width: 100% !important;
+    box-sizing: border-box !important;
+    
+    /* Typography */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+    font-weight: 400 !important;
+    
+    /* Transitions */
+    transition: all 0.3s ease !important;
+}
+
+/* Input focus states */
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus,
+input[type="search"]:focus,
+input[type="url"]:focus,
+select:focus,
+textarea:focus,
+.form-control:focus,
+.form-input:focus {
+    border-color: var(--primary-color) !important;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1) !important;
+    outline: none !important;
+    background-color: var(--bg-primary) !important;
+}
+
+/* Select dropdown enhancement */
+select,
+.form-control[name*="Year"],
+.form-control[name*="Month"],
+.form-control[name*="Day"],
+.form-control[name*="Time"] {
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e") !important;
+    background-position: right 12px center !important;
+    background-repeat: no-repeat !important;
+    background-size: 16px !important;
+    padding-right: 48px !important;
+}
+
+/* Labels enhancement */
+label,
+.form-label,
+.form-group label {
+    color: var(--text-primary) !important;
+    font-weight: 600 !important;
+    font-size: 14px !important;
+    margin-bottom: 8px !important;
+    display: block !important;
+}
+
+/* Button enhancements */
+button,
+.btn,
+.btn-primary,
+.btn-submit {
+    min-height: 44px !important; /* iOS touch target */
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    padding: 12px 24px !important;
+    border-radius: 8px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+}
+
+/* Fortune name input specific fix */
+#userName,
+input[placeholder*="홍길동"],
+input[placeholder*="이름"] {
+    font-size: 16px !important;
+    color: var(--text-primary) !important;
+    background-color: var(--bg-primary) !important;
+}
+
+/* Placeholder text */
+input::placeholder,
+textarea::placeholder,
+select::placeholder,
+.form-control::placeholder {
+    color: var(--text-muted) !important;
+    opacity: 0.7 !important;
+    font-size: 16px !important;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+    /* Ensure text remains readable on mobile */
+    body {
+        font-size: 16px !important;
+        line-height: 1.6 !important;
+    }
+    
+    p, 
+    .content p,
+    .legal-content p,
+    .legal-container p {
+        font-size: 16px !important;
+        line-height: 1.8 !important;
+    }
+    
+    /* Mobile input enhancements */
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="password"],
+    input[type="number"],
+    input[type="search"],
+    input[type="url"],
+    select,
+    textarea,
+    .form-control {
+        font-size: 16px !important; /* Prevents iOS zoom */
+        padding: 16px !important;
+        min-height: 48px !important; /* Larger touch target on mobile */
+    }
+    
+    label,
+    .form-label,
+    .form-group label {
+        font-size: 16px !important;
+        font-weight: 600 !important;
+    }
+    
+    /* Button mobile optimizations */
+    button,
+    .btn,
+    .btn-primary,
+    .btn-submit {
+        font-size: 16px !important;
+        padding: 16px 24px !important;
+        min-height: 48px !important;
+    }
+}
+
+/* 🔥 CRITICAL: Specific fixes for fortune service input */
+.fortune-form-container input,
+.fortune-form-container select,
+.fortune-form-container textarea {
+    font-size: 16px !important;
+    color: var(--text-primary) !important;
+    background-color: white !important;
+    border: 2px solid #e9ecef !important;
+    padding: 16px !important;
+    min-height: 48px !important;
+}
+
+.fortune-form-container input:focus,
+.fortune-form-container select:focus,
+.fortune-form-container textarea:focus {
+    border-color: #8b5cf6 !important;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1) !important;
+}
+
+/* Form validation states */
+input:invalid,
+select:invalid,
+textarea:invalid {
+    border-color: #ef4444 !important;
+}
+
+input:valid,
+select:valid,
+textarea:valid {
+    border-color: #10b981 !important;
+}
+
+/* Screen reader accessibility */
+.sr-only {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+/* Focus outline for accessibility */
+*:focus {
+    outline: 2px solid var(--primary-color) !important;
+    outline-offset: 2px !important;
+}
+
+/* Remove focus outline for mouse users */
+*:focus:not(:focus-visible) {
+    outline: none !important;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    * {
+        border-color: #000000 !important;
+        color: #000000 !important;
+    }
+    
+    input, select, textarea {
+        border-width: 3px !important;
+    }
+}
+
+/* Print styles */
+@media print {
+    * {
+        color: #000000 !important;
+        background: white !important;
     }
 }
