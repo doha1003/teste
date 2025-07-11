@@ -81,6 +81,21 @@
         ]
     }
     </script>
+    
+    <style>
+        /* 스크린 리더 전용 클래스 */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+    </style>
 </head>
 <body>
     <!-- 네비게이션 -->
@@ -144,7 +159,7 @@
                         </div>
                     </div>
                     
-                    <button class="bmi-calculate-btn" onclick="calculateBMI()">
+                    <button class="bmi-calculate-btn" id="calculateBtn">
                         BMI 계산하기
                     </button>
                 </div>
@@ -156,6 +171,9 @@
                     <div class="bmi-description" id="bmiDescription">
                         키와 몸무게를 입력하고 계산 버튼을 클릭하세요.
                     </div>
+                    
+                    <!-- 스크린 리더를 위한 aria-live 영역 -->
+                    <div aria-live="polite" aria-atomic="true" class="sr-only" id="bmiAnnouncement"></div>
                     
                     <div class="bmi-weight-info">
                         <div class="bmi-weight-card">
@@ -364,6 +382,10 @@
             document.getElementById('bmiStatus').textContent = status;
             document.getElementById('bmiStatus').style.color = statusColor;
             document.getElementById('bmiDescription').textContent = description;
+            
+            // 스크린 리더를 위한 결과 안내
+            const announcement = `BMI 계산 결과: ${roundedBMI}, 상태: ${status}. ${description}`;
+            document.getElementById('bmiAnnouncement').textContent = announcement;
             
             document.getElementById('standardWeight').textContent = `${Math.round(standardWeight * 10) / 10}kg`;
             document.getElementById('weightDiff').textContent = 
@@ -642,8 +664,15 @@
             };
         }
         
-        // 엔터키로 계산하기
+        // 계산 버튼 및 엔터키 이벤트 리스너
         document.addEventListener('DOMContentLoaded', function() {
+            // 계산 버튼 클릭 이벤트
+            const calculateBtn = document.getElementById('calculateBtn');
+            if (calculateBtn) {
+                calculateBtn.addEventListener('click', calculateBMI);
+            }
+            
+            // 엔터키로 계산하기
             const inputs = document.querySelectorAll('.bmi-input-field');
             inputs.forEach(input => {
                 input.addEventListener('keypress', function(e) {
