@@ -3,12 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>심리테스트 | doha.kr</title>
-    <meta name="description" content="재미있는 심리테스트로 나를 알아보세요! 테토-에겐 테스트, MBTI 검사 등 다양한 무료 성격 분석 테스트를 제공합니다.">
+    <title>무료 심리테스트 모음 - MBTI, 테토에겐, 러브DNA 성격분석 | doha.kr</title>
+    <meta name="description" content="무료 심리테스트로 나를 발견하세요! MBTI 성격유형검사, 테토-에겐 테스트, 러브DNA 연애스타일 분석 등 정확하고 재미있는 성격분석 테스트를 제공합니다. 회원가입 없이 바로 시작할 수 있으며, 친구들과 결과를 공유하고 비교해보세요.">
+    <meta name="keywords" content="심리테스트, MBTI, 테토에겐, 러브DNA, 성격테스트, 성격유형검사, 무료테스트, 심리분석, 성격분석, 연애테스트">
     <meta name="robots" content="index, follow">
     <meta name="author" content="doha.kr">
     
     <!-- Security Headers -->
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://doha.kr/tests/">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:;">
     <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
@@ -16,10 +19,22 @@
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), accelerometer=(), gyroscope=()">
     
     <!-- Open Graph -->
-    <meta property="og:title" content="심리테스트 | doha.kr">
-    <meta property="og:description" content="재미있는 심리테스트로 나를 알아보세요!">
-    <meta property="og:image" content="https://doha.kr/images/og-image.png">
+    <meta property="og:title" content="무료 심리테스트 모음 - MBTI, 테토에겐, 러브DNA">
+    <meta property="og:description" content="무료 심리테스트로 나를 발견하세요! MBTI, 테토-에겐, 러브DNA 등 정확하고 재미있는 성격분석 테스트">
+    <meta property="og:image" content="https://doha.kr/images/egen-male-card.jpg">
     <meta property="og:url" content="https://doha.kr/tests/">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ko_KR">
+    <meta property="og:site_name" content="doha.kr">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="무료 심리테스트 모음 - MBTI, 테토에겐, 러브DNA">
+    <meta name="twitter:description" content="무료 심리테스트로 나를 발견하세요! MBTI, 테토-에겐, 러브DNA 등 정확하고 재미있는 성격분석 테스트">
+    <meta name="twitter:image" content="https://doha.kr/images/egen-male-card.jpg">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://doha.kr/tests/">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -38,6 +53,48 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
     
     <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "무료 심리테스트 모음",
+        "description": "MBTI 성격유형검사, 테토-에겐 테스트, 러브DNA 연애스타일 분석 등 다양한 무료 심리테스트를 제공합니다",
+        "url": "https://doha.kr/tests/",
+        "provider": {
+            "@type": "Organization",
+            "name": "doha.kr",
+            "url": "https://doha.kr"
+        },
+        "mainEntity": [
+            {
+                "@type": "Quiz",
+                "name": "MBTI 성격유형 검사",
+                "description": "16가지 성격유형 중 나의 유형을 찾는 심리테스트",
+                "url": "https://doha.kr/tests/mbti/",
+                "numberOfQuestions": 60,
+                "timeRequired": "PT15M"
+            },
+            {
+                "@type": "Quiz",
+                "name": "테토-에겐 성격 유형 테스트",
+                "description": "테토형과 에겐형으로 나누는 독특한 성격분석 테스트",
+                "url": "https://doha.kr/tests/teto-egen/",
+                "numberOfQuestions": 10,
+                "timeRequired": "PT5M"
+            },
+            {
+                "@type": "Quiz",
+                "name": "러브 DNA 테스트",
+                "description": "25개 질문으로 알아보는 나만의 연애스타일 분석",
+                "url": "https://doha.kr/tests/love-dna/",
+                "numberOfQuestions": 25,
+                "timeRequired": "PT10M"
+            }
+        ]
+    }
+    </script>
+    
+    <!-- FAQ Structured Data -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -319,7 +376,9 @@
     <div id="footer-placeholder"></div>
     
     <!-- External JavaScript -->
-    <script src="/js/main.js"></script>
+    <script src="/js/api-config.js"></script>
+    <script src="/js/bundle.min.js" defer></script>
+    <script src="/js/main.min.js"></script>
     
     <!-- AdSense initialization -->
     <script>

@@ -19,7 +19,7 @@
     <!-- Open Graph -->
     <meta property="og:title" content="doha.kr - 일상을 더 재미있게">
     <meta property="og:description" content="재미있는 심리테스트와 실용적인 도구들을 무료로 이용하세요!">
-    <meta property="og:image" content="https://doha.kr/images/og-default.png">
+    <meta property="og:image" content="https://doha.kr/images/egen-male-card.jpg">
     <meta property="og:url" content="https://doha.kr">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="ko_KR">
@@ -29,7 +29,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="doha.kr - 일상을 더 재미있게 만드는 공간">
     <meta name="twitter:description" content="심리테스트, 실용도구, 커뮤니티가 한곳에! 테토-에겐 테스트, MBTI 검사, 연봉계산기, 글자수세기 등 다양한 무료 서비스를 제공합니다.">
-    <meta name="twitter:image" content="https://doha.kr/images/og-default.png">
+    <meta name="twitter:image" content="https://doha.kr/images/egen-male-card.jpg">
     
     <!-- Canonical URL -->
     <link rel="canonical" href="https://doha.kr/">
@@ -90,14 +90,48 @@
         "@context": "https://schema.org",
         "@type": "Organization",
         "name": "doha.kr",
+        "alternateName": "도하",
         "url": "https://doha.kr",
         "logo": "https://doha.kr/images/logo.svg",
+        "description": "심리테스트, 실용도구, AI 운세를 무료로 제공하는 종합 엔터테인먼트 플랫폼",
+        "foundingDate": "2024",
         "sameAs": [],
         "contactPoint": {
             "@type": "ContactPoint",
             "email": "contact@doha.kr",
-            "contactType": "customer service"
-        }
+            "contactType": "customer service",
+            "availableLanguage": "Korean"
+        },
+        "serviceArea": {
+            "@type": "Country",
+            "name": "대한민국"
+        },
+        "knowsAbout": [
+            "심리테스트",
+            "MBTI 성격유형 검사",
+            "실용도구",
+            "AI 운세",
+            "성격분석",
+            "연봉계산기",
+            "글자수세기",
+            "BMI계산기"
+        ]
+    }
+    </script>
+    
+    <!-- BreadcrumbList Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "홈",
+                "item": "https://doha.kr/"
+            }
+        ]
     }
     </script>
 </head>
@@ -322,7 +356,9 @@
     <div id="footer-placeholder"></div>
     
     <!-- External JavaScript -->
-    <script src="/js/main.js" defer></script>
+    <script src="/js/api-config.js"></script>
+    <script src="/js/bundle.min.js" defer></script>
+    <script src="/js/main.min.js" defer></script>
     
     <!-- Service Counter Script -->
     <script>

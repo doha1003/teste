@@ -4,7 +4,13 @@ function toggleMobileMenu() {
     const menuBtn = document.querySelector('.mobile-menu-btn');
     
     if (navMenu) {
-        navMenu.classList.toggle('active');
+        const isOpen = navMenu.classList.toggle('active');
+        
+        // ARIA 속성 업데이트
+        if (menuBtn) {
+            menuBtn.setAttribute('aria-expanded', isOpen.toString());
+            menuBtn.setAttribute('aria-label', isOpen ? '메뉴 닫기' : '메뉴 열기');
+        }
     }
     
     if (menuBtn) {

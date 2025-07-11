@@ -10,7 +10,7 @@
     <!-- Open Graph -->
     <meta property="og:title" content="글자수 세기 - 정확한 글자수 계산기">
     <meta property="og:description" content="공백 포함/제외, 바이트, 원고지 환산까지 모든 글자수 정보를 한눈에!">
-    <meta property="og:image" content="https://doha.kr/images/og-default.png">
+    <meta property="og:image" content="https://doha.kr/images/egen-male-card.jpg">
     <meta property="og:url" content="https://doha.kr/tools/text-counter.html">
     
     <!-- Google Fonts -->
@@ -28,7 +28,7 @@
     <link rel="manifest" href="/manifest.json">
     
     <!-- Content Security Policy -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://t1.kakaocdn.net https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://pagead2.googlesyndication.com;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://pagead2.googlesyndication.com https://t1.kakaocdn.net https://cdn.jsdelivr.net; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://pagead2.googlesyndication.com;">
     
     <!-- DOMPurify for XSS protection -->
     <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js" integrity="sha384-MLR0KLjmcCXl3i8YmUrWQrKKS8kWZgRe0o8u2OY4qA5hfgV0pYJnWMiVKKI0LqRh" crossorigin="anonymous"></script>
@@ -41,33 +41,67 @@
     
     <!-- Structured Data -->
     <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "WebApplication",
-        "name": "글자수 세기",
-        "alternateName": "글자수 계산기",
-        "url": "https://doha.kr/tools/text-counter.html",
-        "description": "자기소개서, 리포트, 논문 작성 시 필수! 공백 포함/제외, 바이트 계산, 원고지 환산까지 한번에 확인하세요.",
-        "applicationCategory": "UtilityApplication",
-        "operatingSystem": "Any",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "KRW"
+    [
+        {
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            "name": "글자수 세기",
+            "alternateName": "글자수 계산기",
+            "url": "https://doha.kr/tools/text-counter.html",
+            "description": "자기소개서, 리포트, 논문 작성 시 필수! 공백 포함/제외, 바이트 계산, 원고지 환산까지 한번에 확인하세요.",
+            "applicationCategory": "UtilityApplication",
+            "operatingSystem": "Any",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "KRW"
+            },
+            "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.9",
+                "ratingCount": "5230"
+            },
+            "featureList": [
+                "실시간 글자수 카운팅",
+                "공백 포함/제외 선택",
+                "단어수 및 문단수 표시",
+                "바이트 수 계산",
+                "원고지 환산"
+            ]
         },
-        "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "4.9",
-            "ratingCount": "5230"
-        },
-        "featureList": [
-            "실시간 글자수 카운팅",
-            "공백 포함/제외 선택",
-            "단어수 및 문단수 표시",
-            "바이트 수 계산",
-            "원고지 환산"
-        ]
-    }
+        {
+            "@context": "https://schema.org",
+            "@type": "HowTo",
+            "name": "글자수 세기 도구 사용법",
+            "description": "텍스트 글자수를 정확하게 계산하는 방법",
+            "totalTime": "PT2M",
+            "estimatedCost": {
+                "@type": "MonetaryAmount",
+                "currency": "KRW",
+                "value": "0"
+            },
+            "step": [
+                {
+                    "@type": "HowToStep",
+                    "name": "텍스트 입력",
+                    "text": "글자수를 세고 싶은 텍스트를 입력창에 붙여넣거나 직접 입력하세요.",
+                    "position": 1
+                },
+                {
+                    "@type": "HowToStep",
+                    "name": "옵션 설정",
+                    "text": "공백 포함/제외, 바이트 표시, 원고지 환산 등 원하는 옵션을 선택하세요.",
+                    "position": 2
+                },
+                {
+                    "@type": "HowToStep",
+                    "name": "결과 확인",
+                    "text": "실시간으로 계산된 글자수, 단어수, 문장수 등의 통계를 확인하세요.",
+                    "position": 3
+                }
+            ]
+        }
+    ]
     </script>
     
     <style>
@@ -295,6 +329,12 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            background: none;
+            border: none;
+            text-align: left;
+            width: 100%;
+            padding: 0;
+            color: inherit;
         }
         .faq-arrow {
             transition: transform 0.3s;
@@ -583,11 +623,11 @@
             <h2 class="faq-title">자주 묻는 질문</h2>
             
             <div class="faq-item">
-                <div class="faq-question">
+                <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-1">
                     공백 포함과 공백 제외의 차이는 무엇인가요?
                     <span class="faq-arrow">▼</span>
-                </div>
-                <div class="faq-answer">
+                </button>
+                <div class="faq-answer" id="faq-answer-1">
                     공백 포함은 스페이스바로 입력한 모든 공백을 글자수에 포함하여 계산합니다. 
                     공백 제외는 순수한 문자(한글, 영문, 숫자, 특수문자)만 계산합니다. 
                     일반적으로 자기소개서는 공백 포함, 논문은 공백 제외로 계산하는 경우가 많습니다.
@@ -595,11 +635,11 @@
             </div>
             
             <div class="faq-item">
-                <div class="faq-question">
+                <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-2">
                     원고지 매수는 어떻게 계산되나요?
                     <span class="faq-arrow">▼</span>
-                </div>
-                <div class="faq-answer">
+                </button>
+                <div class="faq-answer" id="faq-answer-2">
                     한국에서 표준으로 사용하는 200자 원고지를 기준으로 계산합니다. 
                     공백을 포함한 전체 글자수를 200으로 나누어 표시합니다. 
                     예를 들어, 1,000자는 5매가 됩니다.
@@ -607,11 +647,11 @@
             </div>
             
             <div class="faq-item">
-                <div class="faq-question">
+                <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-3">
                     바이트 계산이 중요한 이유는 무엇인가요?
                     <span class="faq-arrow">▼</span>
-                </div>
-                <div class="faq-answer">
+                </button>
+                <div class="faq-answer" id="faq-answer-3">
                     데이터베이스나 웹 폼에서는 글자수가 아닌 바이트 단위로 제한을 두는 경우가 많습니다. 
                     특히 한글은 영문보다 2-3배 많은 바이트를 차지하므로, 
                     시스템의 제한사항을 확인할 때 바이트 계산이 필요합니다.
@@ -619,11 +659,11 @@
             </div>
             
             <div class="faq-item">
-                <div class="faq-question">
+                <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-4">
                     단어수는 어떻게 계산하나요?
                     <span class="faq-arrow">▼</span>
-                </div>
-                <div class="faq-answer">
+                </button>
+                <div class="faq-answer" id="faq-answer-4">
                     공백이나 특수문자로 구분된 문자 그룹을 하나의 단어로 계산합니다. 
                     한글의 경우 띄어쓰기 단위로, 영문의 경우 스페이스로 구분된 단위로 계산됩니다. 
                     예: "안녕하세요 Hello World"는 3개의 단어입니다.
@@ -631,11 +671,11 @@
             </div>
             
             <div class="faq-item">
-                <div class="faq-question">
+                <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-5">
                     이 도구는 무료인가요?
                     <span class="faq-arrow">▼</span>
-                </div>
-                <div class="faq-answer">
+                </button>
+                <div class="faq-answer" id="faq-answer-5">
                     네, 완전 무료입니다. 회원가입이나 로그인 없이 누구나 자유롭게 사용할 수 있습니다. 
                     사용 횟수 제한도 없으며, 모든 기능을 무제한으로 이용하실 수 있습니다.
                 </div>
@@ -647,8 +687,10 @@
     <div id="footer-placeholder"></div>
     
     <!-- External JavaScript -->
-    <script src="/js/main.js"></script>
-    <script src="/js/security.js"></script>
+    <script src="/js/api-config.js"></script>
+    <script src="/js/bundle.min.js" defer></script>
+    <script src="/js/main.min.js"></script>
+    <script src="/js/security.min.js"></script>
     
     <!-- AdSense initialization -->
     <script>
@@ -774,11 +816,18 @@
                     // 다른 아이템들 닫기
                     faqItems.forEach(otherItem => {
                         otherItem.classList.remove('active');
+                        const otherQuestion = otherItem.querySelector('.faq-question');
+                        if (otherQuestion) {
+                            otherQuestion.setAttribute('aria-expanded', 'false');
+                        }
                     });
                     
                     // 현재 아이템 토글
                     if (!isActive) {
                         item.classList.add('active');
+                        question.setAttribute('aria-expanded', 'true');
+                    } else {
+                        question.setAttribute('aria-expanded', 'false');
                     }
                 });
             });

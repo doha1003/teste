@@ -8,10 +8,22 @@
     <meta name="keywords" content="연봉계산기, 실수령액, 세금계산, 월급계산, 소득세, 지방소득세, 국민연금, 건강보험료, 2025년">
     
     <!-- Open Graph -->
-    <meta property="og:title" content="연봉 실수령액 계산기 - 2025년 최신">
-    <meta property="og:description" content="2025년 최신 세율로 정확한 실수령액을 계산해보세요.">
-    <meta property="og:image" content="https://doha.kr/images/og-image.svg">
+    <meta property="og:title" content="연봉 실수령액 계산기 - 2025년 최신 세율 반영">
+    <meta property="og:description" content="2025년 최신 간이세액표 및 4대보험 요율을 반영한 정확한 연봉 실수령액 계산기. 세금, 보험료 모두 포함">
+    <meta property="og:image" content="https://doha.kr/images/egen-male-card.jpg">
     <meta property="og:url" content="https://doha.kr/tools/salary-calculator.html">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ko_KR">
+    <meta property="og:site_name" content="doha.kr">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="연봉 실수령액 계산기 - 2025년 최신 세율 반영">
+    <meta name="twitter:description" content="2025년 최신 간이세액표 및 4대보험 요율을 반영한 정확한 연봉 실수령액 계산기. 세금, 보험료 모두 포함">
+    <meta name="twitter:image" content="https://doha.kr/images/egen-male-card.jpg">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://doha.kr/tools/salary-calculator.html">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -31,7 +43,7 @@
     <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js" integrity="sha384-MLR0KLjmcCXl3i8YmUrWQrKKS8kWZgRe0o8u2OY4qA5hfgV0pYJnWMiVKKI0LqRh" crossorigin="anonymous"></script>
     
     <!-- Content Security Policy -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://pagead2.googlesyndication.com;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://pagead2.googlesyndication.com https://cdn.jsdelivr.net; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://pagead2.googlesyndication.com;">
     
     <!-- Structured Data -->
     <script type="application/ld+json">
@@ -256,6 +268,11 @@
             color: #dc2626;
         }
         
+        .deduction-item-value::before {
+            content: "(-) ";
+            font-weight: normal;
+        }
+        
         .info-box {
             background: #fef3c7;
             border: 1px solid #f59e0b;
@@ -440,8 +457,10 @@
     <div id="footer-placeholder"></div>
     
     <!-- External JavaScript -->
-    <script src="/js/main.js"></script>
-    <script src="/js/security.js"></script>
+    <script src="/js/api-config.js"></script>
+    <script src="/js/bundle.min.js" defer></script>
+    <script src="/js/main.min.js"></script>
+    <script src="/js/security.min.js"></script>
     
     <!-- 계산기 JavaScript -->
     <script>

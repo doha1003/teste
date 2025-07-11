@@ -1,0 +1,243 @@
+/* ======================================================================
+   GLOBAL TEXT COLOR & CONTRAST IMPROVEMENTS
+   ======================================================================= */
+
+/* CSS Variables for consistent colors */
+:root {
+    --text-primary: #111827;
+    --text-secondary: #374151;
+    --text-tertiary: #4b5563;
+    --text-muted: #6b7280;
+    --text-light: #9ca3af;
+    
+    --bg-primary: #ffffff;
+    --bg-secondary: #f9fafb;
+    --bg-tertiary: #f3f4f6;
+    
+    --border-primary: #e5e7eb;
+    --border-secondary: #d1d5db;
+    
+    /* CRITICAL MISSING VARIABLE - ADDED 2025-01-11 */
+    --primary-color: #2563eb !important;
+}
+
+/* Global text color improvements */
+body {
+    color: var(--text-primary);
+    font-weight: 400;
+}
+
+/* Heading improvements */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+/* Paragraph and text improvements */
+p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+/* Navigation improvements */
+.nav-link {
+    color: var(--text-secondary) !important;
+    font-weight: 500;
+}
+
+.nav-link:hover {
+    color: var(--text-primary) !important;
+}
+
+/* Button text improvements */
+.btn {
+    font-weight: 600;
+}
+
+/* Form improvements */
+label {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+input, textarea, select {
+    color: var(--text-primary);
+    border-color: var(--border-primary);
+}
+
+input:focus, textarea:focus, select:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Card improvements */
+.feature-card,
+.service-card,
+.highlight-card {
+    border: 1px solid var(--border-primary);
+}
+
+.feature-description,
+.service-desc,
+.highlight-desc {
+    color: var(--text-secondary) !important;
+    font-weight: 500;
+}
+
+.feature-title,
+.service-name,
+.highlight-title {
+    color: var(--text-primary) !important;
+    font-weight: 700;
+}
+
+/* Footer improvements */
+.footer {
+    color: var(--text-secondary);
+}
+
+.footer h3 {
+    color: var(--text-primary);
+}
+
+.footer-links a {
+    color: var(--text-tertiary);
+}
+
+.footer-links a:hover {
+    color: var(--text-primary);
+}
+
+/* Table improvements */
+table {
+    border-color: var(--border-primary);
+}
+
+th {
+    color: var(--text-primary);
+    background-color: var(--bg-secondary);
+    font-weight: 600;
+}
+
+td {
+    color: var(--text-secondary);
+    border-color: var(--border-primary);
+}
+
+/* Alert and notification improvements */
+.alert {
+    border-color: var(--border-primary);
+}
+
+/* Code block improvements */
+code, pre {
+    color: var(--text-primary);
+    background-color: var(--bg-tertiary);
+}
+
+/* Link improvements */
+a {
+    color: #3b82f6;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #1d4ed8;
+    text-decoration: underline;
+}
+
+/* Breadcrumb improvements */
+.breadcrumb {
+    color: var(--text-tertiary);
+}
+
+.breadcrumb a {
+    color: var(--text-secondary);
+}
+
+/* Badge improvements */
+.badge {
+    font-weight: 600;
+}
+
+/* List improvements */
+ul, ol {
+    color: var(--text-secondary);
+}
+
+li {
+    color: var(--text-secondary);
+}
+
+/* Accessibility improvements */
+*:focus {
+    outline: 3px solid #3b82f6;
+    outline-offset: 2px;
+}
+
+/* CRITICAL FIXES - ADDED 2025-01-11 FOR IMMEDIATE TEXT READABILITY */
+
+/* Force dark text on problematic pages */
+.legal-page p,
+.legal-page li,
+.contact-form p,
+.contact-form li,
+.faq-answer p,
+.faq-answer li {
+    color: #374151 !important;
+}
+
+.legal-page h1,
+.legal-page h2,
+.legal-page h3,
+.contact-form h1,
+.contact-form h2,
+.contact-form h3,
+.faq-content h1,
+.faq-content h2,
+.faq-content h3 {
+    color: #111827 !important;
+}
+
+/* Fix any links that use --primary-color */
+.faq-answer a,
+.contact-form a,
+.legal-content a {
+    color: #2563eb !important;
+    text-decoration: underline !important;
+}
+
+.faq-answer a:hover,
+.contact-form a:hover,
+.legal-content a:hover {
+    color: #1d4ed8 !important;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    :root {
+        --text-primary: #000000;
+        --text-secondary: #1f2937;
+        --text-tertiary: #374151;
+        --border-primary: #4b5563;
+        --border-secondary: #374151;
+    }
+}
+
+/* Dark mode preparation */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --text-primary: #f9fafb;
+        --text-secondary: #e5e7eb;
+        --text-tertiary: #d1d5db;
+        --text-muted: #9ca3af;
+        --text-light: #6b7280;
+        
+        --bg-primary: #111827;
+        --bg-secondary: #1f2937;
+        --bg-tertiary: #374151;
+        
+        --border-primary: #374151;
+        --border-secondary: #4b5563;
+    }
+}

@@ -8,10 +8,22 @@
     <meta name="keywords" content="BMI계산기, 체질량지수, 비만도계산, 표준체중, 건강관리, 다이어트">
     
     <!-- Open Graph -->
-    <meta property="og:title" content="BMI 계산기 - 나의 건강 상태는?">
-    <meta property="og:description" content="간단하게 키와 몸무게로 BMI를 계산하고 건강 상태를 확인해보세요!">
-    <meta property="og:image" content="https://doha.kr/images/og-default.png">
+    <meta property="og:title" content="BMI 계산기 - 체질량지수 계산 및 건강 상태 확인">
+    <meta property="og:description" content="키와 몸무게로 BMI(체질량지수)를 계산하고 WHO 기준 건강 상태를 확인하세요. 무료 BMI 계산기">
+    <meta property="og:image" content="https://doha.kr/images/egen-male-card.jpg">
     <meta property="og:url" content="https://doha.kr/tools/bmi-calculator.html">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ko_KR">
+    <meta property="og:site_name" content="doha.kr">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="BMI 계산기 - 체질량지수 계산 및 건강 상태 확인">
+    <meta name="twitter:description" content="키와 몸무게로 BMI(체질량지수)를 계산하고 WHO 기준 건강 상태를 확인하세요. 무료 BMI 계산기">
+    <meta name="twitter:image" content="https://doha.kr/images/egen-male-card.jpg">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://doha.kr/tools/bmi-calculator.html">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -31,7 +43,7 @@
     <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js" integrity="sha384-MLR0KLjmcCXl3i8YmUrWQrKKS8kWZgRe0o8u2OY4qA5hfgV0pYJnWMiVKKI0LqRh" crossorigin="anonymous"></script>
     
     <!-- Content Security Policy -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://t1.kakaocdn.net https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://pagead2.googlesyndication.com;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://pagead2.googlesyndication.com https://t1.kakaocdn.net https://cdn.jsdelivr.net; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://pagead2.googlesyndication.com;">
     
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
@@ -69,6 +81,21 @@
         ]
     }
     </script>
+    
+    <style>
+        /* 스크린 리더 전용 클래스 */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+    </style>
 </head>
 <body>
     <!-- 네비게이션 -->
@@ -132,7 +159,7 @@
                         </div>
                     </div>
                     
-                    <button class="bmi-calculate-btn" onclick="calculateBMI()">
+                    <button class="bmi-calculate-btn" id="calculateBtn">
                         BMI 계산하기
                     </button>
                 </div>
@@ -144,6 +171,9 @@
                     <div class="bmi-description" id="bmiDescription">
                         키와 몸무게를 입력하고 계산 버튼을 클릭하세요.
                     </div>
+                    
+                    <!-- 스크린 리더를 위한 aria-live 영역 -->
+                    <div aria-live="polite" aria-atomic="true" class="sr-only" id="bmiAnnouncement"></div>
                     
                     <div class="bmi-weight-info">
                         <div class="bmi-weight-card">
@@ -270,8 +300,10 @@
     <div id="footer-placeholder"></div>
     
     <!-- External JavaScript -->
-    <script src="/js/main.js"></script>
-    <script src="/js/security.js"></script>
+    <script src="/js/api-config.js"></script>
+    <script src="/js/bundle.min.js" defer></script>
+    <script src="/js/main.min.js"></script>
+    <script src="/js/security.min.js"></script>
     
     <!-- BMI Calculator JavaScript -->
     <script>
@@ -352,6 +384,10 @@
             document.getElementById('bmiStatus').textContent = status;
             document.getElementById('bmiStatus').style.color = statusColor;
             document.getElementById('bmiDescription').textContent = description;
+            
+            // 스크린 리더를 위한 결과 안내
+            const announcement = `BMI 계산 결과: ${roundedBMI}, 상태: ${status}. ${description}`;
+            document.getElementById('bmiAnnouncement').textContent = announcement;
             
             document.getElementById('standardWeight').textContent = `${Math.round(standardWeight * 10) / 10}kg`;
             document.getElementById('weightDiff').textContent = 
@@ -630,8 +666,15 @@
             };
         }
         
-        // 엔터키로 계산하기
+        // 계산 버튼 및 엔터키 이벤트 리스너
         document.addEventListener('DOMContentLoaded', function() {
+            // 계산 버튼 클릭 이벤트
+            const calculateBtn = document.getElementById('calculateBtn');
+            if (calculateBtn) {
+                calculateBtn.addEventListener('click', calculateBMI);
+            }
+            
+            // 엔터키로 계산하기
             const inputs = document.querySelectorAll('.bmi-input-field');
             inputs.forEach(input => {
                 input.addEventListener('keypress', function(e) {

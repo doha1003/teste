@@ -5,11 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>별자리 운세 - AI 운세 | doha.kr</title>
     <meta name="description" content="12개 별자리별 AI 운세. 오늘의 별자리 운세를 확인하고 행운의 조언을 받아보세요.">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="doha.kr">
+    
+    <!-- Security Headers -->
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:;">
+    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), accelerometer=(), gyroscope=()">
     
     <!-- Open Graph -->
     <meta property="og:title" content="별자리 운세 | doha.kr">
     <meta property="og:description" content="12개 별자리별 AI 운세. 오늘의 별자리 운세를 확인하고 행운의 조언을 받아보세요.">
-    <meta property="og:image" content="https://doha.kr/images/og-default.png">
+    <meta property="og:image" content="https://doha.kr/images/egen-male-card.jpg">
     <meta property="og:url" content="https://doha.kr/fortune/zodiac/">
     
     <!-- Google Fonts -->
@@ -19,7 +28,9 @@
     
     <!-- External CSS -->
     <link rel="stylesheet" href="/css/styles.css">
-    <link rel="stylesheet" href="/css/fortune.css">
+    <link rel="stylesheet" href="/css/fortune/fortune-base.css">
+    <link rel="stylesheet" href="/css/fortune/fortune-loading-fix.css">
+    <link rel="stylesheet" href="/css/fortune/mobile-input-fix.css">
     
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
@@ -145,8 +156,10 @@
     <div id="footer-placeholder"></div>
     
     <!-- External JavaScript -->
-    <script src="/js/main.js"></script>
-    <script src="/js/gemini-api.js"></script>
+    <script src="/js/api-config.js"></script>
+    <script src="/js/bundle.min.js" defer></script>
+    <script src="/js/main.min.js"></script>
+    <script src="/js/gemini-api.min.js"></script>
     
     <script>
         // 별자리 데이터
@@ -271,7 +284,7 @@
             resultDiv.innerHTML = `
                 <div class="zodiac-ai-analyzing">
                     ⭐ AI가 별자리 운세를 분석하고 있습니다...
-                    <div style="margin-top: 20px; font-size: 0.9rem; opacity: 0.7;">
+                    <div class="fortune-loading-info">
                         ${zodiacData[zodiacSign].name} 운세 분석 중
                     </div>
                 </div>
@@ -615,24 +628,7 @@ ${zodiac.name}의 특성과 2025년 을사년 에너지를 고려하여 구체�
     </script>
     
     <style>
-        .fortune-page .page-header {
-            background: linear-gradient(135deg, rgba(147, 51, 234, 0.05) 0%, rgba(236, 72, 153, 0.05) 100%);
-            padding: 80px 0 60px;
-            text-align: center;
-        }
-        
-        .fortune-page .page-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 16px;
-            color: var(--gray-900);
-        }
-        
-        .fortune-page .page-subtitle {
-            font-size: 1.125rem;
-            color: var(--gray-600);
-        }
-        
+        /* 별자리 운세 페이지 전용 스타일 */
         .zodiac-section {
             padding: 60px 0;
             background: white;
@@ -653,45 +649,46 @@ ${zodiac.name}의 특성과 2025년 을사년 에너지를 고려하여 구체�
         
         .zodiac-card {
             background: white;
-            border: 2px solid var(--gray-200);
-            border-radius: 16px;
+            border: 2px solid var(--fortune-border);
+            border-radius: var(--fortune-radius-large);
             padding: 30px 20px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+            box-shadow: var(--fortune-shadow);
         }
         
         .zodiac-card:hover {
             transform: translateY(-4px);
-            border-color: var(--primary-500);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+            border-color: var(--fortune-border-hover);
+            box-shadow: var(--fortune-shadow-hover);
         }
         
         .zodiac-symbol {
             font-size: 3rem;
             margin-bottom: 16px;
-            color: var(--primary-600);
+            color: var(--fortune-primary);
         }
         
         .zodiac-name {
             font-size: 1.25rem;
             font-weight: 600;
             margin-bottom: 8px;
-            color: var(--gray-900);
+            color: var(--fortune-text-primary);
         }
         
         .zodiac-date {
             font-size: 0.9rem;
-            color: var(--gray-600);
+            color: var(--fortune-text-secondary);
         }
         
+        /* 별자리 운세 결과 스타일 */
         .zodiac-result-container {
             max-width: 900px;
             margin: 0 auto;
             background: white;
             padding: 50px;
-            border-radius: 20px;
+            border-radius: var(--fortune-radius-large);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
         
@@ -699,19 +696,19 @@ ${zodiac.name}의 특성과 2025년 을사년 에너지를 고려하여 구체�
             text-align: center;
             margin-bottom: 50px;
             padding-bottom: 30px;
-            border-bottom: 2px solid var(--gray-100);
+            border-bottom: 2px solid var(--fortune-border);
         }
         
         .result-header h2 {
             font-size: 2.2rem;
             font-weight: 700;
-            color: var(--gray-900);
+            color: var(--fortune-text-primary);
             margin-bottom: 12px;
         }
         
         .result-date {
             font-size: 1.1rem;
-            color: var(--gray-600);
+            color: var(--fortune-text-secondary);
             margin: 0;
         }
         
@@ -723,16 +720,16 @@ ${zodiac.name}의 특성과 2025년 을사년 에너지를 고려하여 구체�
         }
         
         .zodiac-details, .zodiac-traits {
-            background: var(--gray-50);
+            background: var(--fortune-bg-light);
             padding: 30px;
-            border-radius: 16px;
+            border-radius: var(--fortune-radius-large);
         }
         
         .zodiac-details h3, .zodiac-traits h3 {
             font-size: 1.3rem;
             font-weight: 600;
             margin-bottom: 20px;
-            color: var(--gray-800);
+            color: var(--fortune-text-primary);
         }
         
         .detail-grid {
@@ -754,8 +751,8 @@ ${zodiac.name}의 특성과 2025년 을사년 에너지를 고려하여 구체�
         }
         
         .trait-tag {
-            background: var(--primary-100);
-            color: var(--primary-700);
+            background: rgba(139, 92, 246, 0.1);
+            color: var(--fortune-primary);
             padding: 8px 16px;
             border-radius: 25px;
             font-size: 0.9rem;
@@ -777,20 +774,20 @@ ${zodiac.name}의 특성과 2025년 을사년 에너지를 고려하여 구체�
             min-width: 100px;
             margin: 0;
             font-size: 1.1rem;
-            color: var(--gray-700);
+            color: var(--fortune-text-secondary);
         }
         
         .score-bar {
             flex: 1;
             height: 12px;
-            background: var(--gray-200);
+            background: var(--fortune-border);
             border-radius: 6px;
             overflow: hidden;
         }
         
         .score-fill {
             height: 100%;
-            background: linear-gradient(135deg, #9333ea 0%, #ec4899 100%);
+            background: var(--fortune-gradient);
             transition: width 1s ease;
         }
         
@@ -798,7 +795,7 @@ ${zodiac.name}의 특성과 2025년 을사년 에너지를 고려하여 구체�
             min-width: 60px;
             font-weight: 600;
             font-size: 1.1rem;
-            color: var(--gray-700);
+            color: var(--fortune-text-secondary);
         }
         
         .fortune-messages {
@@ -806,9 +803,9 @@ ${zodiac.name}의 특성과 2025년 을사년 에너지를 고려하여 구체�
         }
         
         .message-item {
-            background: var(--gray-50);
+            background: var(--fortune-bg-light);
             padding: 30px;
-            border-radius: 16px;
+            border-radius: var(--fortune-radius-large);
             margin-bottom: 20px;
         }
         
@@ -816,20 +813,20 @@ ${zodiac.name}의 특성과 2025년 을사년 에너지를 고려하여 구체�
             font-size: 1.3rem;
             font-weight: 600;
             margin-bottom: 20px;
-            color: var(--gray-800);
+            color: var(--fortune-text-primary);
         }
         
         .message-content {
             font-size: 1.05rem;
             line-height: 1.8;
-            color: var(--gray-700);
+            color: var(--fortune-text-secondary);
             white-space: pre-line;
         }
         
         .advice-section {
             background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
             padding: 40px;
-            border-radius: 16px;
+            border-radius: var(--fortune-radius-large);
             margin-bottom: 40px;
         }
         
@@ -837,13 +834,13 @@ ${zodiac.name}의 특성과 2025년 을사년 에너지를 고려하여 구체�
             font-size: 1.4rem;
             font-weight: 600;
             margin-bottom: 25px;
-            color: var(--gray-800);
+            color: var(--fortune-text-primary);
         }
         
         .advice-content {
             font-size: 1.05rem;
             line-height: 1.8;
-            color: var(--gray-700);
+            color: var(--fortune-text-secondary);
             white-space: pre-line;
         }
         
@@ -855,7 +852,7 @@ ${zodiac.name}의 특성과 2025년 을사년 에너지를 고려하여 구체�
             font-size: 1.4rem;
             font-weight: 600;
             margin-bottom: 30px;
-            color: var(--gray-800);
+            color: var(--fortune-text-primary);
         }
         
         .lucky-grid {
@@ -865,10 +862,10 @@ ${zodiac.name}의 특성과 2025년 을사년 에너지를 고려하여 구체�
         }
         
         .lucky-item {
-            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            background: var(--fortune-gradient);
             color: white;
             padding: 30px;
-            border-radius: 16px;
+            border-radius: var(--fortune-radius-large);
             text-align: center;
         }
         
@@ -892,7 +889,7 @@ ${zodiac.name}의 특성과 2025년 을사년 에너지를 고려하여 구체�
             font-size: 1.4rem;
             font-weight: 600;
             margin-bottom: 20px;
-            color: var(--gray-800);
+            color: var(--fortune-text-primary);
         }
         
         .compatibility-list {
@@ -902,8 +899,8 @@ ${zodiac.name}의 특성과 2025년 을사년 에너지를 고려하여 구체�
         }
         
         .compatibility-tag {
-            background: var(--gray-100);
-            color: var(--gray-700);
+            background: var(--fortune-border);
+            color: var(--fortune-text-secondary);
             padding: 12px 20px;
             border-radius: 25px;
             font-size: 1rem;
@@ -914,11 +911,11 @@ ${zodiac.name}의 특성과 2025년 을사년 에너지를 고려하여 구체�
             text-align: center;
             margin-bottom: 40px;
             padding-top: 30px;
-            border-top: 2px solid var(--gray-100);
+            border-top: 2px solid var(--fortune-border);
         }
         
         .ai-disclaimer small {
-            color: var(--gray-600);
+            color: var(--fortune-text-secondary);
             font-size: 0.9rem;
         }
         
@@ -928,7 +925,7 @@ ${zodiac.name}의 특성과 2025년 을사년 에너지를 고려하여 구체�
         
         .info-section {
             padding: 60px 0;
-            background: var(--gray-50);
+            background: var(--fortune-bg-light);
         }
         
         .info-box {
@@ -936,15 +933,15 @@ ${zodiac.name}의 특성과 2025년 을사년 에너지를 고려하여 구체�
             margin: 0 auto;
             background: white;
             padding: 40px;
-            border-radius: 16px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+            border-radius: var(--fortune-radius-large);
+            box-shadow: var(--fortune-shadow);
         }
         
         .info-box h3 {
             font-size: 1.5rem;
             font-weight: 600;
             margin-bottom: 20px;
-            color: var(--gray-900);
+            color: var(--fortune-text-primary);
         }
         
         .info-box ul {
@@ -958,7 +955,7 @@ ${zodiac.name}의 특성과 2025년 을사년 에너지를 고려하여 구체�
             position: relative;
             font-size: 1.05rem;
             line-height: 1.6;
-            color: var(--gray-700);
+            color: var(--fortune-text-secondary);
         }
         
         .info-box li::before {
@@ -971,7 +968,7 @@ ${zodiac.name}의 특성과 2025년 을사년 에너지를 고려하여 구체�
         .btn {
             display: inline-block;
             padding: 16px 36px;
-            border-radius: 12px;
+            border-radius: var(--fortune-radius);
             font-weight: 600;
             font-size: 1.1rem;
             text-decoration: none;
@@ -981,13 +978,13 @@ ${zodiac.name}의 특성과 2025년 을사년 에너지를 고려하여 구체�
         }
         
         .btn-secondary {
-            background: var(--gray-200);
-            color: var(--gray-700);
+            background: var(--fortune-border);
+            color: var(--fortune-text-secondary);
         }
         
         .btn-secondary:hover {
-            background: var(--gray-300);
-            color: var(--gray-800);
+            background: #d1d5db;
+            color: var(--fortune-text-primary);
         }
         
         @media (max-width: 768px) {

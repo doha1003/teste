@@ -1,51 +1,395 @@
-/* Main CSS File - Imports all modular CSS files */
+/* =========================================================================
+   DOHA.KR - Main CSS Entry Point
+   Optimized and consolidated CSS system
+   ========================================================================= */
 
-/* Base Styles - Foundation of the design system */
-@import url('./base/reset.css');
-@import url('./base/variables.css');
-@import url('./base/typography.css');
+/* Import order matters - variables first, then base, then components */
+@import url('variables.css');
+@import url('base.css');
+@import url('components.css');
 
-/* Layout Components - Major structural elements */
-@import url('./layout/header.css');
-@import url('./layout/footer.css');
+/* Ensure navbar styles work properly */
+.logo {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--primary);
+    text-decoration: none;
+}
 
-/* Section Styles - Page sections */
-@import url('./sections/hero.css');
-@import url('./sections/features.css');
-@import url('./sections/services.css');
-@import url('./sections/cta.css');
+.nav-menu {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
 
-/* Components - Reusable UI elements */
-@import url('./components/buttons.css');
-@import url('./components/cards.css');
-@import url('./components/badges.css');
+.nav-link {
+    color: var(--text-secondary);
+    font-weight: 500;
+    transition: color 0.2s;
+    text-decoration: none;
+}
 
-/* Utilities - Helper classes */
-@import url('./utilities/animations.css');
-@import url('./utilities/responsive.css');
+.nav-link:hover {
+    color: var(--primary);
+}
 
-/* Fix Files - Improvements and corrections */
-@import url('./color-contrast-fix.css');
-@import url('./global-text-fix.css');
-@import url('./hero-fix.css');
-@import url('./highlights-fix.css');
-@import url('./emoji-fix.css');
-@import url('./mbti-result-fix.css');
-@import url('./styles-fix.css');
+/* Mobile menu button */
+.mobile-menu-btn {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+}
 
-/* CRITICAL FIXES - 2025-01-08 - Resolves all major UI issues */
-@import url('./critical-fixes.css');
+.mobile-menu-btn span {
+    width: 24px;
+    height: 2px;
+    background-color: var(--text-primary);
+    transition: all 0.3s;
+}
 
-/* REMOVED: cta-enhancement.css and cta-unified.css to prevent conflicts */
-/* Now using only /sections/cta.css for clean, professional CTA design */
+@media (max-width: 768px) {
+    .mobile-menu-btn {
+        display: flex;
+    }
+    
+    .nav-menu {
+        position: fixed;
+        top: 64px;
+        left: 0;
+        right: 0;
+        background: white;
+        flex-direction: column;
+        padding: 1rem;
+        box-shadow: var(--shadow-md);
+        transform: translateX(-100%);
+        transition: transform 0.3s;
+    }
+    
+    .nav-menu.active {
+        transform: translateX(0);
+    }
+}
 
-/* Page-specific styles */
-@import url('./pages/about.css');
-@import url('./pages/bmi-calculator.css');
-@import url('./pages/love-dna-test.css');
+/* =========================================================================
+   LAYOUT STYLES
+   ========================================================================= */
 
-/* Test-specific styles */
-@import url('./test-common.css');
+/* Page sections */
+.section {
+    padding: var(--space-16) 0;
+}
+
+.section-sm {
+    padding: var(--space-8) 0;
+}
+
+.section-lg {
+    padding: var(--space-20) 0;
+}
+
+/* Hero section */
+.hero {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    color: white;
+    padding: var(--space-20) 0;
+    text-align: center;
+}
+
+.hero h1 {
+    color: white;
+    font-size: var(--text-5xl);
+    margin-bottom: var(--space-6);
+}
+
+.hero p {
+    font-size: var(--text-xl);
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto var(--space-8);
+}
+
+/* Grid layouts */
+.grid {
+    display: grid;
+    gap: var(--space-6);
+}
+
+.grid-cols-2 {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.grid-cols-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.grid-cols-4 {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+@media (max-width: 768px) {
+    .grid-cols-2,
+    .grid-cols-3,
+    .grid-cols-4 {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    .grid-cols-3,
+    .grid-cols-4 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Flex utilities */
+.flex {
+    display: flex;
+}
+
+.flex-col {
+    flex-direction: column;
+}
+
+.items-center {
+    align-items: center;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.gap-2 { gap: var(--space-2); }
+.gap-4 { gap: var(--space-4); }
+.gap-6 { gap: var(--space-6); }
+.gap-8 { gap: var(--space-8); }
+
+/* Text utilities */
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.text-sm { font-size: var(--text-sm); }
+.text-lg { font-size: var(--text-lg); }
+.text-xl { font-size: var(--text-xl); }
+.text-2xl { font-size: var(--text-2xl); }
+.text-3xl { font-size: var(--text-3xl); }
+
+.font-medium { font-weight: var(--font-medium); }
+.font-semibold { font-weight: var(--font-semibold); }
+.font-bold { font-weight: var(--font-bold); }
+
+.text-primary { color: var(--text-primary); }
+.text-secondary { color: var(--text-secondary); }
+.text-muted { color: var(--text-muted); }
+.text-white { color: white; }
+
+/* Spacing utilities */
+.m-0 { margin: 0; }
+.m-auto { margin: auto; }
+.mt-2 { margin-top: var(--space-2); }
+.mt-4 { margin-top: var(--space-4); }
+.mt-6 { margin-top: var(--space-6); }
+.mt-8 { margin-top: var(--space-8); }
+.mb-2 { margin-bottom: var(--space-2); }
+.mb-4 { margin-bottom: var(--space-4); }
+.mb-6 { margin-bottom: var(--space-6); }
+.mb-8 { margin-bottom: var(--space-8); }
+
+.p-0 { padding: 0; }
+.p-2 { padding: var(--space-2); }
+.p-4 { padding: var(--space-4); }
+.p-6 { padding: var(--space-6); }
+.p-8 { padding: var(--space-8); }
+
+/* Background utilities */
+.bg-primary { background-color: var(--bg-primary); }
+.bg-secondary { background-color: var(--bg-secondary); }
+.bg-gray-50 { background-color: var(--gray-50); }
+.bg-gray-100 { background-color: var(--gray-100); }
+
+/* Border utilities */
+.border { border: var(--border-width) solid var(--border-color); }
+.border-t { border-top: var(--border-width) solid var(--border-color); }
+.border-b { border-bottom: var(--border-width) solid var(--border-color); }
+.rounded { border-radius: var(--border-radius); }
+.rounded-lg { border-radius: var(--border-radius-lg); }
+.rounded-full { border-radius: var(--border-radius-full); }
+
+/* Shadow utilities */
+.shadow-sm { box-shadow: var(--shadow-sm); }
+.shadow { box-shadow: var(--shadow); }
+.shadow-md { box-shadow: var(--shadow-md); }
+.shadow-lg { box-shadow: var(--shadow-lg); }
+
+/* Display utilities */
+.hidden { display: none; }
+.block { display: block; }
+.inline-block { display: inline-block; }
+.inline { display: inline; }
+
+/* Width utilities */
+.w-full { width: 100%; }
+.w-auto { width: auto; }
+.max-w-sm { max-width: 24rem; }
+.max-w-md { max-width: 28rem; }
+.max-w-lg { max-width: 32rem; }
+.max-w-xl { max-width: 36rem; }
+.max-w-2xl { max-width: 42rem; }
+.max-w-3xl { max-width: 48rem; }
+.max-w-4xl { max-width: 56rem; }
+
+/* Responsive utilities */
+@media (min-width: 768px) {
+    .md\:flex { display: flex; }
+    .md\:hidden { display: none; }
+    .md\:block { display: block; }
+    .md\:grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+    .md\:grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (min-width: 1024px) {
+    .lg\:flex { display: flex; }
+    .lg\:hidden { display: none; }
+    .lg\:block { display: block; }
+    .lg\:grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+    .lg\:grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* =========================================================================
+   CRITICAL FIXES - Consolidated from all -fix.css files
+   ========================================================================= */
+
+/* CTA Section fixes */
+.cta {
+    background: var(--bg-secondary);
+}
+
+.cta-box {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    color: white;
+    padding: var(--space-12);
+    border-radius: var(--border-radius-lg);
+    text-align: center;
+}
+
+.cta-title {
+    color: white;
+    font-size: var(--text-3xl);
+    margin-bottom: var(--space-4);
+}
+
+.cta-description {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: var(--text-lg);
+    margin-bottom: var(--space-8);
+}
+
+.cta-button {
+    background: white;
+    color: var(--primary);
+    padding: var(--space-4) var(--space-8);
+    font-weight: var(--font-semibold);
+    border-radius: var(--border-radius);
+    transition: all var(--transition-base);
+}
+
+.cta-button:hover {
+    background: var(--gray-50);
+    transform: translateY(-2px);
+}
+
+/* Love DNA specific styles */
+.love-dna-test-container {
+    background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
+    min-height: 100vh;
+    padding: var(--space-8) 0;
+}
+
+.love-question-card {
+    background: white;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-lg);
+    padding: var(--space-8);
+}
+
+.love-option {
+    background: var(--bg-secondary);
+    border: 2px solid transparent;
+    padding: var(--space-4);
+    border-radius: var(--border-radius);
+    transition: all var(--transition-base);
+    cursor: pointer;
+}
+
+.love-option:hover {
+    border-color: #ff6b9d;
+    background: #fff5f8;
+}
+
+.love-option.selected {
+    background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
+    color: white;
+    border-color: transparent;
+}
+
+/* Text counter fixes */
+.text-counter-container {
+    position: relative;
+}
+
+.text-counter-buttons {
+    margin-top: var(--space-6);
+    display: flex;
+    gap: var(--space-3);
+    justify-content: center;
+}
+
+.text-counter-textarea {
+    width: 100%;
+    min-height: 200px;
+    padding: var(--space-4);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-size: var(--text-base);
+    margin-bottom: var(--space-6);
+    resize: vertical;
+}
+
+/* Features grid layout */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-6);
+}
+
+/* Mobile optimizations */
+@media (max-width: 640px) {
+    .love-dna-features {
+        flex-direction: column;
+    }
+    
+    .love-dna-feature-item {
+        margin-bottom: var(--space-4);
+    }
+    
+    .cta-box {
+        padding: var(--space-8);
+    }
+    
+    .hero h1 {
+        font-size: var(--text-4xl);
+    }
+}
 
 /* 
    Note: This modular approach allows for:
