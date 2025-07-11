@@ -27,8 +27,11 @@
     <link rel="apple-touch-icon" href="/images/logo.svg">
     <link rel="manifest" href="/manifest.json">
     
+    <!-- DOMPurify for XSS protection -->
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js" integrity="sha384-MLR0KLjmcCXl3i8YmUrWQrKKS8kWZgRe0o8u2OY4qA5hfgV0pYJnWMiVKKI0LqRh" crossorigin="anonymous"></script>
+    
     <!-- Content Security Policy -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://t1.kakaocdn.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://pagead2.googlesyndication.com;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://t1.kakaocdn.net https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://pagead2.googlesyndication.com;">
     
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
@@ -268,13 +271,17 @@
     
     <!-- External JavaScript -->
     <script src="/js/main.js"></script>
+    <script src="/js/security.js"></script>
     
     <!-- BMI Calculator JavaScript -->
     <script>
         // 입력값 검증 함수
         function validateInput(value, min, max, fieldName) {
-            const num = parseFloat(value);
-            if (isNaN(num) || num < min || num > max) {
+            // XSS 방지를 위한 sanitization
+            const sanitizedValue = Security.sanitizeInput(value, 'number');
+            const num = Security.validateNumber(sanitizedValue, min, max);
+            
+            if (num < min || num > max) {
                 alert(`${fieldName}은(는) ${min}에서 ${max} 사이로 입력해주세요.`);
                 return null;
             }

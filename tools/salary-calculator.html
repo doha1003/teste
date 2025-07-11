@@ -27,8 +27,11 @@
     <!-- Favicon -->
     <link rel="icon" href="/images/logo.svg" type="image/svg+xml">
     
+    <!-- DOMPurify for XSS protection -->
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js" integrity="sha384-MLR0KLjmcCXl3i8YmUrWQrKKS8kWZgRe0o8u2OY4qA5hfgV0pYJnWMiVKKI0LqRh" crossorigin="anonymous"></script>
+    
     <!-- Content Security Policy -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://pagead2.googlesyndication.com;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://pagead2.googlesyndication.com;">
     
     <!-- Structured Data -->
     <script type="application/ld+json">
@@ -438,6 +441,7 @@
     
     <!-- External JavaScript -->
     <script src="/js/main.js"></script>
+    <script src="/js/security.js"></script>
     
     <!-- 계산기 JavaScript -->
     <script>
@@ -453,19 +457,22 @@
         
         // 입력값 검증 함수
         function validateSalaryInput(value) {
-            const num = parseInt(value);
-            if (isNaN(num) || num < 0 || num > 1000000) {
+            // XSS 방지를 위한 sanitization
+            const sanitizedValue = Security.sanitizeInput(value, 'number');
+            const num = Security.validateNumber(sanitizedValue, 0, 1000000);
+            
+            if (num < 0 || num > 1000000) {
                 return null;
             }
-            return num;
+            return parseInt(num);
         }
         
         document.getElementById('salaryForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
             const annualSalaryManwon = validateSalaryInput(document.getElementById('annualSalary').value);
-            const familyCount = parseInt(document.getElementById('familyCount').value);
-            const childCount = parseInt(document.getElementById('childCount').value);
+            const familyCount = Security.validateNumber(document.getElementById('familyCount').value, 0, 20);
+            const childCount = Security.validateNumber(document.getElementById('childCount').value, 0, 20);
             
             if (!annualSalaryManwon) {
                 alert('연봉을 올바르게 입력해주세요. (0 ~ 1,000,000만원)');

@@ -138,6 +138,7 @@
     
     <!-- External JavaScript -->
     <script src="/js/main.js"></script>
+    <script src="/js/security.js"></script>
     
     <script>
         // 향상된 사주 계산기 인스턴스 생성
@@ -164,11 +165,11 @@
         function generateDailyFortune(event) {
             event.preventDefault();
             
-            const userName = document.getElementById('userName').value;
-            const birthYear = parseInt(document.getElementById('birthYear').value);
-            const birthMonth = parseInt(document.getElementById('birthMonth').value);
-            const birthDay = parseInt(document.getElementById('birthDay').value);
-            const birthTime = parseInt(document.getElementById('birthTime').value);
+            const userName = Security.sanitizeInput(document.getElementById('userName').value, 'text');
+            const birthYear = Security.validateNumber(document.getElementById('birthYear').value, 1900, 2025);
+            const birthMonth = Security.validateNumber(document.getElementById('birthMonth').value, 1, 12);
+            const birthDay = Security.validateNumber(document.getElementById('birthDay').value, 1, 31);
+            const birthTime = Security.validateNumber(document.getElementById('birthTime').value, 0, 23);
             const isLunar = document.getElementById('isLunar').checked;
             
             // 통합 로딩 표시 (텍스트 회전 방지)

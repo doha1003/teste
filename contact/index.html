@@ -446,6 +446,7 @@
     
     <!-- External JavaScript -->
     <script src="/js/main.js"></script>
+    <script src="/js/security.js"></script>
     
     <script>
         // FAQ 토글
@@ -467,16 +468,22 @@
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // 폼 데이터 수집
+            // 폼 데이터 수집 및 sanitization
             const formData = {
-                name: document.getElementById('name').value,
-                email: document.getElementById('email').value,
-                subject: document.getElementById('subject').value,
-                message: document.getElementById('message').value
+                name: Security.sanitizeInput(document.getElementById('name').value, 'text'),
+                email: Security.sanitizeInput(document.getElementById('email').value, 'email'),
+                subject: Security.sanitizeInput(document.getElementById('subject').value, 'text'),
+                message: Security.sanitizeInput(document.getElementById('message').value, 'text')
             };
             
-            // 이메일 링크 생성
-            const mailtoLink = `mailto:youtubdoha@gmail.com?subject=[doha.kr 문의] ${formData.subject}&body=이름: ${formData.name}%0D%0A이메일: ${formData.email}%0D%0A%0D%0A문의 내용:%0D%0A${formData.message}`;
+            // 이메일 유효성 검사
+            if (!Security.validateEmail(formData.email)) {
+                alert('올바른 이메일 주소를 입력해주세요.');
+                return;
+            }
+            
+            // 이메일 링크 생성 (encodeURIComponent로 추가 보안)
+            const mailtoLink = `mailto:youtubdoha@gmail.com?subject=${encodeURIComponent('[doha.kr 문의] ' + formData.subject)}&body=${encodeURIComponent('이름: ' + formData.name + '\n이메일: ' + formData.email + '\n\n문의 내용:\n' + formData.message)}`;
             
             // 이메일 클라이언트 열기
             window.location.href = mailtoLink;
