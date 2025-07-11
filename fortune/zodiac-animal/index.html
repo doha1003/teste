@@ -19,7 +19,9 @@
     
     <!-- External CSS -->
     <link rel="stylesheet" href="/css/styles.css">
-    <link rel="stylesheet" href="/css/fortune.css">
+    <link rel="stylesheet" href="/css/fortune/fortune-base.css">
+    <link rel="stylesheet" href="/css/fortune/fortune-loading-fix.css">
+    <link rel="stylesheet" href="/css/fortune/mobile-input-fix.css">
     
     <!-- Favicon -->
     <link rel="icon" href="/images/logo.svg" type="image/svg+xml">
@@ -27,94 +29,100 @@
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
 </head>
-<body>
+<body class="fortune-page">
     <!-- 네비게이션 -->
     <div id="navbar-placeholder"></div>
     
-    <div class="fortune-container">
-        <div class="fortune-header">
-            <h1>🐲 띠별 운세</h1>
-            <p>AI가 분석하는 12지신 띠별 오늘의 운세</p>
+    <!-- 페이지 헤더 -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title fade-in">🐲 띠별 운세</h1>
+            <p class="page-subtitle fade-in stagger-1">
+                AI가 분석하는 12지신 띠별 오늘의 운세
+            </p>
         </div>
-        
-        <div class="fortune-content">
+    </section>
+    
+    <!-- 띠별 운세 섹션 -->
+    <section class="zodiac-animal-section">
+        <div class="container">
             <!-- 날짜 표시 -->
             <div class="zodiac-date">
                 <h2 id="todayDate"></h2>
             </div>
             
             <!-- 띠 선택 그리드 -->
-            <div class="zodiac-grid">
-                <div class="zodiac-card" data-animal="rat" onclick="showAnimalFortune('rat')">
-                    <div class="zodiac-emoji">🐀</div>
-                    <div class="zodiac-name">쥐띠</div>
-                    <div class="zodiac-years">子</div>
+            <div class="zodiac-grid fortune-grid grid-6">
+                <div class="zodiac-card fortune-card" data-animal="rat" onclick="showAnimalFortune('rat')">
+                    <div class="zodiac-emoji fortune-emoji">🐀</div>
+                    <div class="zodiac-name fortune-title">쥐띠</div>
+                    <div class="zodiac-years fortune-subtitle">子</div>
                 </div>
                 
-                <div class="zodiac-card" data-animal="ox" onclick="showAnimalFortune('ox')">
-                    <div class="zodiac-emoji">🐂</div>
-                    <div class="zodiac-name">소띠</div>
-                    <div class="zodiac-years">丑</div>
+                <div class="zodiac-card fortune-card" data-animal="ox" onclick="showAnimalFortune('ox')">
+                    <div class="zodiac-emoji fortune-emoji">🐂</div>
+                    <div class="zodiac-name fortune-title">소띠</div>
+                    <div class="zodiac-years fortune-subtitle">丑</div>
                 </div>
                 
-                <div class="zodiac-card" data-animal="tiger" onclick="showAnimalFortune('tiger')">
-                    <div class="zodiac-emoji">🐅</div>
-                    <div class="zodiac-name">호랑이띠</div>
-                    <div class="zodiac-years">寅</div>
+                <div class="zodiac-card fortune-card" data-animal="tiger" onclick="showAnimalFortune('tiger')">
+                    <div class="zodiac-emoji fortune-emoji">🐅</div>
+                    <div class="zodiac-name fortune-title">호랑이띠</div>
+                    <div class="zodiac-years fortune-subtitle">寅</div>
                 </div>
                 
-                <div class="zodiac-card" data-animal="rabbit" onclick="showAnimalFortune('rabbit')">
-                    <div class="zodiac-emoji">🐇</div>
-                    <div class="zodiac-name">토끼띠</div>
-                    <div class="zodiac-years">卯</div>
+                <div class="zodiac-card fortune-card" data-animal="rabbit" onclick="showAnimalFortune('rabbit')">
+                    <div class="zodiac-emoji fortune-emoji">🐇</div>
+                    <div class="zodiac-name fortune-title">토끼띠</div>
+                    <div class="zodiac-years fortune-subtitle">卯</div>
                 </div>
                 
-                <div class="zodiac-card" data-animal="dragon" onclick="showAnimalFortune('dragon')">
-                    <div class="zodiac-emoji">🐉</div>
-                    <div class="zodiac-name">용띠</div>
-                    <div class="zodiac-years">辰</div>
+                <div class="zodiac-card fortune-card" data-animal="dragon" onclick="showAnimalFortune('dragon')">
+                    <div class="zodiac-emoji fortune-emoji">🐉</div>
+                    <div class="zodiac-name fortune-title">용띠</div>
+                    <div class="zodiac-years fortune-subtitle">辰</div>
                 </div>
                 
-                <div class="zodiac-card" data-animal="snake" onclick="showAnimalFortune('snake')">
-                    <div class="zodiac-emoji">🐍</div>
-                    <div class="zodiac-name">뱀띠</div>
-                    <div class="zodiac-years">巳</div>
+                <div class="zodiac-card fortune-card" data-animal="snake" onclick="showAnimalFortune('snake')">
+                    <div class="zodiac-emoji fortune-emoji">🐍</div>
+                    <div class="zodiac-name fortune-title">뱀띠</div>
+                    <div class="zodiac-years fortune-subtitle">巳</div>
                 </div>
                 
-                <div class="zodiac-card" data-animal="horse" onclick="showAnimalFortune('horse')">
-                    <div class="zodiac-emoji">🐎</div>
-                    <div class="zodiac-name">말띠</div>
-                    <div class="zodiac-years">午</div>
+                <div class="zodiac-card fortune-card" data-animal="horse" onclick="showAnimalFortune('horse')">
+                    <div class="zodiac-emoji fortune-emoji">🐎</div>
+                    <div class="zodiac-name fortune-title">말띠</div>
+                    <div class="zodiac-years fortune-subtitle">午</div>
                 </div>
                 
-                <div class="zodiac-card" data-animal="sheep" onclick="showAnimalFortune('sheep')">
-                    <div class="zodiac-emoji">🐑</div>
-                    <div class="zodiac-name">양띠</div>
-                    <div class="zodiac-years">未</div>
+                <div class="zodiac-card fortune-card" data-animal="sheep" onclick="showAnimalFortune('sheep')">
+                    <div class="zodiac-emoji fortune-emoji">🐑</div>
+                    <div class="zodiac-name fortune-title">양띠</div>
+                    <div class="zodiac-years fortune-subtitle">未</div>
                 </div>
                 
-                <div class="zodiac-card" data-animal="monkey" onclick="showAnimalFortune('monkey')">
-                    <div class="zodiac-emoji">🐒</div>
-                    <div class="zodiac-name">원숭이띠</div>
-                    <div class="zodiac-years">申</div>
+                <div class="zodiac-card fortune-card" data-animal="monkey" onclick="showAnimalFortune('monkey')">
+                    <div class="zodiac-emoji fortune-emoji">🐒</div>
+                    <div class="zodiac-name fortune-title">원숭이띠</div>
+                    <div class="zodiac-years fortune-subtitle">申</div>
                 </div>
                 
-                <div class="zodiac-card" data-animal="rooster" onclick="showAnimalFortune('rooster')">
-                    <div class="zodiac-emoji">🐓</div>
-                    <div class="zodiac-name">닭띠</div>
-                    <div class="zodiac-years">酉</div>
+                <div class="zodiac-card fortune-card" data-animal="rooster" onclick="showAnimalFortune('rooster')">
+                    <div class="zodiac-emoji fortune-emoji">🐓</div>
+                    <div class="zodiac-name fortune-title">닭띠</div>
+                    <div class="zodiac-years fortune-subtitle">酉</div>
                 </div>
                 
-                <div class="zodiac-card" data-animal="dog" onclick="showAnimalFortune('dog')">
-                    <div class="zodiac-emoji">🐕</div>
-                    <div class="zodiac-name">개띠</div>
-                    <div class="zodiac-years">戌</div>
+                <div class="zodiac-card fortune-card" data-animal="dog" onclick="showAnimalFortune('dog')">
+                    <div class="zodiac-emoji fortune-emoji">🐕</div>
+                    <div class="zodiac-name fortune-title">개띠</div>
+                    <div class="zodiac-years fortune-subtitle">戌</div>
                 </div>
                 
-                <div class="zodiac-card" data-animal="pig" onclick="showAnimalFortune('pig')">
-                    <div class="zodiac-emoji">🐖</div>
-                    <div class="zodiac-name">돼지띠</div>
-                    <div class="zodiac-years">亥</div>
+                <div class="zodiac-card fortune-card" data-animal="pig" onclick="showAnimalFortune('pig')">
+                    <div class="zodiac-emoji fortune-emoji">🐖</div>
+                    <div class="zodiac-name fortune-title">돼지띠</div>
+                    <div class="zodiac-years fortune-subtitle">亥</div>
                 </div>
             </div>
             
@@ -123,17 +131,17 @@
                 <!-- 결과가 여기에 표시됩니다 -->
             </div>
         </div>
-        
-        <!-- 광고 영역 -->
-        <div class="ad-container">
-            <div class="ad-label">광고</div>
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-7905640648499222"
-                 data-ad-slot="1234567890"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-        </div>
+    </section>
+    
+    <!-- 광고 영역 -->
+    <div class="fortune-ad-container">
+        <div class="fortune-ad-label">광고</div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-7905640648499222"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
     </div>
     
     <!-- 푸터 -->
@@ -143,6 +151,52 @@
     <script src="/js/main.js"></script>
     <script src="/js/gemini-api.js"></script>
     <script src="/js/zodiac-animal.js"></script>
+    
+    <style>
+        /* 띠별 운세 페이지 전용 스타일 */
+        .zodiac-animal-section {
+            padding: 60px 0;
+            background: white;
+        }
+        
+        .zodiac-date {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .zodiac-date h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--fortune-text-primary);
+            margin: 0;
+        }
+        
+        /* 운세 결과 컨테이너 스타일 */
+        .fortune-result-container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 40px;
+            background: white;
+            border-radius: var(--fortune-radius-large);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* 반응형 디자인 */
+        @media (max-width: 768px) {
+            .zodiac-animal-section {
+                padding: 40px 0;
+            }
+            
+            .zodiac-date h2 {
+                font-size: 1.3rem;
+            }
+            
+            .fortune-result-container {
+                padding: 30px 20px;
+                margin: 20px;
+            }
+        }
+    </style>
     
     <!-- AdSense initialization -->
     <script>
