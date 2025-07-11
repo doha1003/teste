@@ -1,8 +1,15 @@
 // MBTI 테스트 JavaScript - Love DNA 스타일 기반
 
-// Kakao SDK 초기화
-if (typeof Kakao !== 'undefined') {
-    Kakao.init('19d8ba832f94d513957adc17883c1282');
+// Kakao SDK 초기화 (config.js 필요)
+if (typeof Kakao !== 'undefined' && typeof Config !== 'undefined' && Config.kakao && Config.kakao.appKey) {
+    if (Config.validateDomain()) {
+        Kakao.init(Config.kakao.appKey);
+        console.log('MBTI Test: Kakao SDK initialized successfully');
+    } else {
+        console.warn('MBTI Test: Domain validation failed - Kakao SDK not initialized');
+    }
+} else {
+    console.warn('MBTI Test: Config not loaded - Kakao SDK not initialized');
 }
 
 // MBTI 질문 데이터

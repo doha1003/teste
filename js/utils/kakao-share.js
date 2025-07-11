@@ -3,8 +3,8 @@
  * doha.kr - 모든 페이지에서 사용할 수 있는 카카오톡 공유 유틸리티
  */
 
-// 카카오 앱 키 (중앙 관리) - 현재 사용 중인 유효한 키
-const KAKAO_APP_KEY = '19d8ba832f94d513957adc17883c1282';
+// 카카오 앱 키는 Config 객체에서 가져옵니다
+// config.js 파일이 먼저 로드되어야 합니다
 
 // 카카오 SDK 초기화 상태
 let kakaoInitialized = false;
@@ -19,13 +19,23 @@ function initializeKakaoSDK() {
         return false;
     }
 
+    if (typeof Config === 'undefined' || !Config.kakao || !Config.kakao.appKey) {
+        console.error('Config.js가 로드되지 않았거나 API 키가 설정되지 않았습니다.');
+        return false;
+    }
+
+    if (!Config.validateDomain()) {
+        console.warn('허용되지 않은 도메인에서 접근하고 있습니다.');
+        return false;
+    }
+
     if (kakaoInitialized || Kakao.isInitialized()) {
         console.log('Kakao SDK가 이미 초기화되었습니다.');
         return true;
     }
 
     try {
-        Kakao.init(KAKAO_APP_KEY);
+        Kakao.init(Config.kakao.appKey);
         kakaoInitialized = true;
         console.log('Kakao SDK 초기화 성공');
         

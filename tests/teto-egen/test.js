@@ -7,8 +7,13 @@ document.addEventListener('DOMContentLoaded', function() {
         if (typeof Kakao !== 'undefined') {
             if (!Kakao.isInitialized()) {
                 try {
-                    // JavaScript 키 사용 (REST API 키가 아님)
-                    Kakao.init('8b5c6e8f97ec3d51a6f784b8b4b5ed99');
+                    // config.js에서 API 키 가져오기
+                    if (typeof Config !== 'undefined' && Config.kakao && Config.kakao.appKey && Config.validateDomain()) {
+                        Kakao.init(Config.kakao.appKey);
+                    } else {
+                        console.error('Config not available or domain validation failed');
+                        return;
+                    }
                     console.log('Kakao SDK initialized:', Kakao.isInitialized());
                     
                     // 초기화 확인
@@ -390,8 +395,12 @@ function reinitializeKakao() {
             Kakao.cleanup();
         }
         try {
-            Kakao.init('8b5c6e8f97ec3d51a6f784b8b4b5ed99');
-            console.log('Kakao SDK reinitialized successfully');
+            if (typeof Config !== 'undefined' && Config.kakao && Config.kakao.appKey && Config.validateDomain()) {
+                Kakao.init(Config.kakao.appKey);
+                console.log('Kakao SDK reinitialized successfully');
+            } else {
+                console.error('Config not available for reinitialization');
+            }
         } catch (e) {
             console.error('Kakao SDK reinitialization failed:', e);
         }
