@@ -58,6 +58,32 @@ function toggleMobileMenu() {
     }
 }
 
+// 모바일 메뉴 외부 클릭 시 닫기
+function initMobileMenuHandlers() {
+    // 외부 클릭 시 메뉴 닫기
+    document.addEventListener('click', function(event) {
+        const navMenu = document.querySelector('.nav-menu');
+        const menuBtn = document.querySelector('.mobile-menu-btn');
+        
+        if (navMenu && navMenu.classList.contains('active')) {
+            if (!navMenu.contains(event.target) && !menuBtn.contains(event.target)) {
+                navMenu.classList.remove('active');
+                if (menuBtn) {
+                    menuBtn.setAttribute('aria-expanded', 'false');
+                    menuBtn.setAttribute('aria-label', '메뉴 열기');
+                    menuBtn.classList.remove('active');
+                }
+            }
+        }
+    });
+    
+    // 페이지 로드 시 메뉴가 닫혀있도록 보장
+    const navMenu = document.querySelector('.nav-menu');
+    if (navMenu) {
+        navMenu.classList.remove('active');
+    }
+}
+
 // 서비스 탭 필터링 (이벤트 파라미터 추가로 오류 수정)
 function showServices(category, event) {
     // 이벤트 객체가 없으면 전역 이벤트 사용
@@ -524,107 +550,6 @@ function injectStyles() {
     document.head.appendChild(styleElement);
 }
 
-// 컴포넌트 로더
-async function loadComponent(componentName, targetId) {
-    try {
-        const response = await fetch(`/includes/${componentName}.html`);
-        if (response.ok) {
-            const html = await response.text();
-            const target = document.getElementById(targetId);
-            if (target) {
-                target.innerHTML = html;
-            }
-        } else {
-            throw new Error(`HTTP ${response.status}`);
-        }
-    } catch (error) {
-        console.error(`Failed to load component ${componentName}:`, error);
-        
-        // Fallback content
-        const target = document.getElementById(targetId);
-        if (!target) return;
-        
-        if (componentName === 'navbar') {
-            target.innerHTML = `
-                <nav class="navbar">
-                    <div class="navbar-container">
-                        <a href="/" class="logo">doha.kr</a>
-                        <ul class="nav-menu">
-                            <li><a href="/" class="nav-link">홈</a></li>
-                            <li><a href="/tests/" class="nav-link">심리테스트</a></li>
-                            <li><a href="/tools/" class="nav-link">실용도구</a></li>
-                            <li><a href="/fortune/" class="nav-link">운세</a></li>
-                            <li><a href="/contact/" class="nav-link">문의</a></li>
-                            <li><a href="/about/" class="nav-link">소개</a></li>
-                        </ul>
-                        <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </button>
-                    </div>
-                </nav>
-            `;
-        } else if (componentName === 'footer') {
-            target.innerHTML = `
-                <footer class="footer">
-                    <div class="footer-content">
-                        <div class="footer-section">
-                            <h3>doha.kr</h3>
-                            <p style="color: var(--gray-400); margin-top: 8px;">
-                                일상을 더 재미있게 만드는 공간<br>
-                                심리테스트, 실용도구, 운세의 만남
-                            </p>
-                            <div class="footer-social">
-                                <a href="mailto:youtubdoha@gmail.com" class="social-link">📧</a>
-                            </div>
-                        </div>
-                        
-                        <div class="footer-section">
-                            <h3>서비스</h3>
-                            <ul class="footer-links">
-                                <li><a href="/">홈</a></li>
-                                <li><a href="/tests/">심리테스트</a></li>
-                                <li><a href="/tools/">실용도구</a></li>
-                                <li><a href="/fortune/">운세</a></li>
-                                <li><a href="/about/">사이트 소개</a></li>
-                            </ul>
-                        </div>
-                        
-                        <div class="footer-section">
-                            <h3>인기 콘텐츠</h3>
-                            <ul class="footer-links">
-                                <li><a href="/tests/teto-egen/">테토-에겐 테스트</a></li>
-                                <li><a href="/tests/mbti/">MBTI 테스트</a></li>
-                                <li><a href="/fortune/daily/">오늘의 운세</a></li>
-                                <li><a href="/tools/text-counter.html">글자수 세기</a></li>
-                            </ul>
-                        </div>
-                        
-                        <div class="footer-section">
-                            <h3>운세 & 고객지원</h3>
-                            <ul class="footer-links">
-                                <li><a href="/fortune/daily/">오늘의 운세</a></li>
-                                <li><a href="/fortune/tarot/">타로 카드</a></li>
-                                <li><a href="/fortune/zodiac/">별자리 운세</a></li>
-                                <li><a href="/contact/">문의하기</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    
-                    <div class="footer-bottom">
-                        <div class="footer-legal">
-                            <a href="/privacy/">개인정보처리방침</a>
-                            <a href="/terms/">이용약관</a>
-                        </div>
-                        <p>&copy; 2025 doha.kr. All rights reserved.</p>
-                    </div>
-                </footer>
-            `;
-        }
-    }
-}
-
 // 네비게이션과 푸터 컴포넌트 로드
 async function loadComponents() {
     const navTarget = document.getElementById('navbar-placeholder');
@@ -746,6 +671,9 @@ function initAdSense() {
 document.addEventListener('DOMContentLoaded', async function() {
     // 컴포넌트 로드
     await loadComponents();
+    
+    // 모바일 메뉴 핸들러 초기화
+    initMobileMenuHandlers();
     
     // 스타일 삽입
     injectStyles();

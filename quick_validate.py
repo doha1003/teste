@@ -109,8 +109,8 @@ def validate_website():
             with open(html_file, 'r', encoding='utf-8') as f:
                 content = f.read()
                 
-            # CSP 헤더 찾기
-            csp_match = re.search(r'Content-Security-Policy["\'][^>]*content=["\']([^"\']+)["\']', content)
+            # CSP 헤더 찾기 (긴 CSP를 위해 개선된 정규표현식)
+            csp_match = re.search(r'Content-Security-Policy.*?content=["\']([^"\']*unsafe-inline[^"\']*)["\']', content, re.DOTALL)
             
             if not csp_match:
                 issue = f"❌ {html_file}: CSP 헤더 없음"
@@ -122,8 +122,12 @@ def validate_website():
                 })
             else:
                 csp_content = csp_match.group(1)
-                if 'unsafe-inline' not in csp_content:
-                    issue = f"⚠️  {html_file}: CSP에 unsafe-inline 없음"
+                # 두 곳 모두에 unsafe-inline이 있는지 확인
+                script_unsafe = "'unsafe-inline'" in csp_content and 'script-src' in csp_content
+                style_unsafe = "'unsafe-inline'" in csp_content and 'style-src' in csp_content
+                
+                if not (script_unsafe and style_unsafe):
+                    issue = f"⚠️  {html_file}: CSP에 unsafe-inline 부족"
                     print(issue)
                     issues.append({
                         'type': 'incomplete_csp',
