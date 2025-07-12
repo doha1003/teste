@@ -1,3 +1,43 @@
+// 컴포넌트 로딩 함수
+async function loadComponent(componentPath, placeholderId) {
+    try {
+        const response = await fetch(componentPath);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const html = await response.text();
+        const placeholder = document.getElementById(placeholderId);
+        if (placeholder) {
+            placeholder.innerHTML = html;
+        }
+    } catch (error) {
+        console.error(`Failed to load component ${componentPath}:`, error);
+        // 폴백 처리
+        if (placeholderId === 'footer-placeholder') {
+            const placeholder = document.getElementById(placeholderId);
+            if (placeholder) {
+                placeholder.innerHTML = `
+                    <footer class="footer">
+                        <div class="container">
+                            <p>&copy; 2025 doha.kr. All rights reserved.</p>
+                        </div>
+                    </footer>
+                `;
+            }
+        }
+    }
+}
+
+// 네비게이션 로드
+async function loadNavbar() {
+    await loadComponent('/includes/navbar.html', 'navbar-placeholder');
+}
+
+// 푸터 로드
+async function loadFooter() {
+    await loadComponent('/includes/footer.html', 'footer-placeholder');
+}
+
 // 모바일 메뉴 토글
 function toggleMobileMenu() {
     const navMenu = document.querySelector('.nav-menu');
@@ -591,11 +631,11 @@ async function loadComponents() {
     const footerTarget = document.getElementById('footer-placeholder');
     
     if (navTarget) {
-        await loadComponent('navbar', 'navbar-placeholder');
+        await loadComponent('/includes/navbar.html', 'navbar-placeholder');
     }
     
     if (footerTarget) {
-        await loadComponent('footer', 'footer-placeholder');
+        await loadComponent('/includes/footer.html', 'footer-placeholder');
     }
 }
 
@@ -739,3 +779,8 @@ window.formatDate = formatDate;
 window.formatNumber = formatNumber;
 window.toggleDarkMode = toggleDarkMode;
 window.fortuneHelpers = fortuneHelpers();
+
+// 컴포넌트 로드 함수들을 전역으로 내보내기
+window.loadNavbar = loadNavbar;
+window.loadFooter = loadFooter;
+window.loadComponent = loadComponent;

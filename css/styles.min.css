@@ -1,0 +1,132 @@
+/* =========================================================================
+   STYLES.MIN.CSS - Minified Core Styles
+   doha.kr optimized core stylesheet
+   ========================================================================= */
+
+/* CSS Variables */
+:root{--primary-color:#2563eb;--primary-hover:#1d4ed8;--text-primary:#000;--text-secondary:#1f2937;--text-muted:#374151;--bg-primary:#fff;--bg-secondary:#f8fafc;--border-color:#e5e7eb;--success-color:#10b981;--warning-color:#f59e0b;--error-color:#ef4444}
+
+/* Reset */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{line-height:1.15;scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:16px;line-height:1.6;color:var(--text-primary);background:var(--bg-primary)}
+h1,h2,h3,h4,h5,h6{margin:0;font-weight:600;line-height:1.25}
+p{margin:0 0 1rem}
+a{color:inherit;text-decoration:none}
+a:hover{text-decoration:underline}
+ul,ol{list-style:none}
+img{max-width:100%;height:auto;display:block}
+button{background:none;border:none;cursor:pointer;font-family:inherit}
+
+/* Layout */
+.container{width:100%;max-width:1200px;margin:0 auto;padding:0 1rem}
+@media(min-width:640px){.container{padding:0 1.5rem}}
+@media(min-width:1024px){.container{padding:0 2rem}}
+
+/* Header */
+.header{background:var(--bg-primary);border-bottom:1px solid var(--border-color);position:sticky;top:0;z-index:100}
+.navbar{display:flex;align-items:center;justify-content:space-between;padding:1rem 0}
+.logo{font-size:1.5rem;font-weight:700;color:var(--primary-color);text-decoration:none}
+.nav-menu{display:flex;gap:2rem;align-items:center}
+.nav-link{color:var(--text-secondary);font-weight:500;transition:color 0.2s}
+.nav-link:hover{color:var(--primary-color);text-decoration:none}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:0.75rem 1.5rem;font-size:0.875rem;font-weight:500;border:1px solid transparent;border-radius:0.5rem;cursor:pointer;transition:all 0.2s;text-decoration:none;white-space:nowrap}
+.btn-primary{background:var(--primary-color);color:#fff;border-color:var(--primary-color)}
+.btn-primary:hover{background:var(--primary-hover);border-color:var(--primary-hover);text-decoration:none}
+.btn-secondary{background:transparent;color:var(--primary-color);border-color:var(--primary-color)}
+.btn-secondary:hover{background:var(--primary-color);color:#fff}
+
+/* Cards */
+.card{background:var(--bg-primary);border:1px solid var(--border-color);border-radius:0.75rem;box-shadow:0 1px 3px rgba(0,0,0,0.1);overflow:hidden;transition:box-shadow 0.2s}
+.card:hover{box-shadow:0 4px 6px rgba(0,0,0,0.1)}
+.card-body{padding:1.5rem}
+
+/* Forms */
+.form-group{margin-bottom:1.5rem}
+.form-label{display:block;margin-bottom:0.5rem;font-weight:500;color:var(--text-primary)}
+.form-input{display:block;width:100%;padding:0.75rem;font-size:1rem;border:1px solid var(--border-color);border-radius:0.5rem;background:var(--bg-primary);transition:border-color 0.2s}
+.form-input:focus{border-color:var(--primary-color);outline:none;box-shadow:0 0 0 3px rgba(37,99,235,0.1)}
+
+/* Grid */
+.grid{display:grid;gap:1rem}
+.grid-2{grid-template-columns:repeat(2,1fr)}
+.grid-3{grid-template-columns:repeat(3,1fr)}
+.grid-4{grid-template-columns:repeat(4,1fr)}
+@media(max-width:767px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}}
+
+/* Utilities */
+.text-center{text-align:center}
+.text-left{text-align:left}
+.text-right{text-align:right}
+.font-bold{font-weight:700}
+.font-medium{font-weight:500}
+.hidden{display:none}
+.block{display:block}
+.flex{display:flex}
+.items-center{align-items:center}
+.justify-center{justify-content:center}
+.justify-between{justify-content:space-between}
+.gap-1{gap:0.25rem}
+.gap-2{gap:0.5rem}
+.gap-4{gap:1rem}
+.p-4{padding:1rem}
+.px-4{padding-left:1rem;padding-right:1rem}
+.py-4{padding-top:1rem;padding-bottom:1rem}
+.m-4{margin:1rem}
+.mx-auto{margin-left:auto;margin-right:auto}
+.mb-4{margin-bottom:1rem}
+.mt-4{margin-top:1rem}
+
+/* Colors */
+.text-primary{color:var(--primary-color)}
+.text-secondary{color:var(--text-secondary)}
+.text-muted{color:var(--text-muted)}
+.bg-primary{background:var(--bg-primary)}
+.bg-secondary{background:var(--bg-secondary)}
+
+/* Mobile Navigation */
+@media(max-width:767px){
+.nav-menu{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:var(--bg-primary);flex-direction:column;padding:4rem 2rem 2rem;z-index:1000}
+.nav-menu.open{display:flex}
+.nav-toggle{display:block;background:none;border:none;font-size:1.5rem;cursor:pointer}
+.nav-toggle::before{content:'☰'}
+.nav-menu.open+.nav-toggle::before{content:'✕'}
+}
+
+/* Footer */
+.footer{background:var(--bg-secondary);border-top:1px solid var(--border-color);padding:3rem 0 1rem;margin-top:auto}
+.footer-content{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2rem;margin-bottom:2rem}
+.footer-section h3{font-size:1.125rem;font-weight:600;margin-bottom:1rem;color:var(--text-primary)}
+.footer-link{color:var(--text-secondary);transition:color 0.2s;display:block;margin-bottom:0.5rem}
+.footer-link:hover{color:var(--primary-color);text-decoration:none}
+.footer-bottom{padding-top:2rem;border-top:1px solid var(--border-color);text-align:center;color:var(--text-muted);font-size:0.875rem}
+
+/* Responsive */
+@media(max-width:767px){
+.container{padding:0 0.5rem}
+.navbar{padding:0.5rem 0}
+.btn{width:100%;margin-bottom:0.5rem}
+.footer-content{grid-template-columns:1fr;gap:1.5rem}
+}
+
+/* Performance */
+.will-change{will-change:transform,opacity}
+.gpu{transform:translateZ(0);backface-visibility:hidden}
+
+/* Dark Mode */
+@media(prefers-color-scheme:dark){
+:root{--text-primary:#f9fafb;--text-secondary:#d1d5db;--text-muted:#9ca3af;--bg-primary:#1f2937;--bg-secondary:#374151;--border-color:#4b5563}
+}
+
+/* Reduced Motion */
+@media(prefers-reduced-motion:reduce){
+*{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important}
+}
+
+/* Print */
+@media print{
+.nav-toggle,.btn,.footer{display:none!important}
+body{background:#fff!important;color:#000!important}
+}

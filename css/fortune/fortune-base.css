@@ -1,0 +1,436 @@
+/* =========================================================================
+   FORTUNE/FORTUNE-BASE.CSS - Base Fortune Section Styles
+   doha.kr fortune telling section foundation styles
+   ========================================================================= */
+
+/* Fortune Section Base Styles */
+.fortune-section {
+    padding: 4rem 2rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    position: relative;
+    overflow: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.fortune-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M30 30c0-5.5 4.5-10 10-10s10 4.5 10 10-4.5 10-10 10-10-4.5-10-10zm0 0c0 5.5-4.5 10-10 10s-10-4.5-10-10 4.5-10 10-10 10 4.5 10 10z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+    pointer-events: none;
+}
+
+.fortune-section > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Fortune Container */
+.fortune-container {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* Fortune Header */
+.fortune-header {
+    margin-bottom: 3rem;
+}
+
+.fortune-title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    line-height: 1.2;
+}
+
+.fortune-subtitle {
+    font-size: 1.25rem;
+    opacity: 0.9;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+/* Fortune Content Area */
+.fortune-content {
+    background-color: rgba(255, 255, 255, 0.95);
+    color: var(--text-primary, #1a1a1a);
+    border-radius: 1.5rem;
+    padding: 2.5rem;
+    margin: 2rem 0;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Fortune Card Grid */
+.fortune-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.fortune-card {
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 1rem;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 2px solid transparent;
+    color: var(--text-primary, #1a1a1a);
+    position: relative;
+    overflow: hidden;
+}
+
+.fortune-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.fortune-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    border-color: rgba(102, 126, 234, 0.5);
+}
+
+.fortune-card:hover::before {
+    opacity: 1;
+}
+
+.fortune-card > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Fortune Card Icon */
+.fortune-icon {
+    width: 4rem;
+    height: 4rem;
+    margin: 0 auto 1rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.fortune-card:hover .fortune-icon {
+    transform: scale(1.1) rotate(5deg);
+}
+
+/* Fortune Card Content */
+.fortune-card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--primary-color, #2563eb);
+}
+
+.fortune-card-description {
+    font-size: 0.875rem;
+    color: var(--text-secondary, #4b5563);
+    line-height: 1.5;
+    margin-bottom: 1rem;
+}
+
+/* Fortune Form */
+.fortune-form {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 1rem;
+    padding: 2rem;
+    margin: 2rem 0;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.fortune-form-group {
+    margin-bottom: 1.5rem;
+}
+
+.fortune-form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: white;
+    text-align: left;
+}
+
+.fortune-form-input {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1rem;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 0.5rem;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: var(--text-primary, #1a1a1a);
+    transition: all 0.3s ease;
+}
+
+.fortune-form-input:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.8);
+    background-color: white;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
+}
+
+.fortune-form-input::placeholder {
+    color: var(--text-muted, #6b7280);
+}
+
+/* Fortune Buttons */
+.fortune-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border: 2px solid white;
+    border-radius: 0.75rem;
+    background-color: white;
+    color: var(--primary-color, #2563eb);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    white-space: nowrap;
+    gap: 0.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.fortune-button:hover {
+    background-color: transparent;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+}
+
+.fortune-button-secondary {
+    background-color: transparent;
+    color: white;
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.fortune-button-secondary:hover {
+    background-color: white;
+    color: var(--primary-color, #2563eb);
+    border-color: white;
+}
+
+/* Fortune Result Display */
+.fortune-result {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.95) 100%);
+    color: var(--text-primary, #1a1a1a);
+    border-radius: 1.5rem;
+    padding: 3rem;
+    margin: 2rem 0;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    text-align: left;
+    position: relative;
+}
+
+.fortune-result::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    border-radius: 1.5rem 1.5rem 0 0;
+}
+
+.fortune-result-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--primary-color, #2563eb);
+}
+
+.fortune-result-content {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--text-secondary, #4b5563);
+}
+
+/* Fortune Loading State */
+.fortune-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 3rem;
+}
+
+.fortune-spinner {
+    width: 3rem;
+    height: 3rem;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top: 3px solid white;
+    border-radius: 50%;
+    animation: fortune-spin 1s linear infinite;
+}
+
+@keyframes fortune-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.fortune-loading-text {
+    font-size: 1.125rem;
+    color: white;
+    text-align: center;
+    opacity: 0.9;
+}
+
+/* Fortune Navigation */
+.fortune-nav {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: 2rem 0;
+    flex-wrap: wrap;
+}
+
+.fortune-nav-item {
+    padding: 0.75rem 1.5rem;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 0.5rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.fortune-nav-item:hover,
+.fortune-nav-item.active {
+    background-color: white;
+    color: var(--primary-color, #2563eb);
+    text-decoration: none;
+}
+
+/* Mobile Optimizations */
+@media (max-width: 767px) {
+    .fortune-section {
+        padding: 2rem 1rem;
+        min-height: auto;
+    }
+    
+    .fortune-title {
+        font-size: 2rem;
+    }
+    
+    .fortune-subtitle {
+        font-size: 1rem;
+    }
+    
+    .fortune-content {
+        padding: 2rem;
+        margin: 1rem 0;
+    }
+    
+    .fortune-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .fortune-card {
+        padding: 1.5rem;
+    }
+    
+    .fortune-icon {
+        width: 3rem;
+        height: 3rem;
+        font-size: 1.5rem;
+    }
+    
+    .fortune-form {
+        padding: 1.5rem;
+    }
+    
+    .fortune-result {
+        padding: 2rem;
+    }
+    
+    .fortune-nav {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .fortune-nav-item {
+        width: 100%;
+        text-align: center;
+        max-width: 300px;
+    }
+    
+    .fortune-button {
+        width: 100%;
+        padding: 1rem;
+    }
+}
+
+/* Dark Mode Adaptations */
+@media (prefers-color-scheme: dark) {
+    .fortune-content,
+    .fortune-card,
+    .fortune-result {
+        background-color: rgba(31, 41, 55, 0.95);
+        color: #f9fafb;
+    }
+    
+    .fortune-card-title,
+    .fortune-result-title {
+        color: #60a5fa;
+    }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    .fortune-card,
+    .fortune-icon,
+    .fortune-button,
+    .fortune-spinner {
+        transition: none;
+        animation: none;
+    }
+    
+    .fortune-card:hover {
+        transform: none;
+    }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+    .fortune-card {
+        border-width: 3px;
+        border-color: white;
+    }
+    
+    .fortune-button {
+        border-width: 3px;
+    }
+}
