@@ -55,4 +55,4 @@ vercel dev
 
 ## 라이선스
 
-© 2025 doha.kr. All rights reserved.
+© 2025 doha.kr. All rights reserved.<!-- Force GitHub Pages deployment Sat Jul 12 17:19:56 KST 2025 -->
