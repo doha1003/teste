@@ -1,0 +1,201 @@
+/* =========================================================================
+   NAVBAR CRITICAL FIX - 긴급 네비게이션 수정
+   이 파일은 styles.css의 충돌하는 navbar 스타일을 덮어씁니다
+   ========================================================================= */
+
+/* 네비게이션 바 기본 스타일 */
+.navbar {
+    background: #ffffff !important;
+    border-bottom: 1px solid #e5e7eb !important;
+    padding: 0 !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 9999 !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+    height: auto !important;
+}
+
+/* 네비게이션 컨테이너 - 두 클래스 모두 지원 */
+.navbar-container,
+.nav-container {
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+    padding: 1rem !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    height: auto !important;
+}
+
+/* 로고 스타일 */
+.logo {
+    font-size: 1.5rem !important;
+    font-weight: 700 !important;
+    color: #111827 !important;
+    text-decoration: none !important;
+    background: none !important;
+    -webkit-text-fill-color: initial !important;
+}
+
+.logo:hover {
+    color: #2563eb !important;
+    text-decoration: none !important;
+}
+
+/* 네비게이션 메뉴 */
+.nav-menu {
+    display: flex !important;
+    list-style: none !important;
+    gap: 2rem !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    align-items: center !important;
+    position: static !important;
+    transform: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    flex-direction: row !important;
+}
+
+.nav-menu li {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* 네비게이션 링크 */
+.nav-link {
+    color: #374151 !important;
+    font-weight: 500 !important;
+    padding: 0.5rem 0 !important;
+    text-decoration: none !important;
+    transition: color 0.2s !important;
+    font-size: 1rem !important;
+    display: inline-block !important;
+}
+
+.nav-link:hover {
+    color: #2563eb !important;
+    text-decoration: none !important;
+}
+
+/* 모바일 메뉴 버튼 */
+.mobile-menu-btn {
+    display: none !important;
+    background: none !important;
+    border: none !important;
+    flex-direction: column !important;
+    cursor: pointer !important;
+    padding: 0.5rem !important;
+    gap: 4px !important;
+}
+
+.mobile-menu-btn span {
+    width: 24px !important;
+    height: 3px !important;
+    background: #111827 !important;
+    border-radius: 2px !important;
+    transition: all 0.3s !important;
+    display: block !important;
+}
+
+/* 모바일 반응형 (768px 이하) */
+@media (max-width: 768px) {
+    .navbar-container,
+    .nav-container {
+        padding: 0.75rem 1rem !important;
+    }
+    
+    .nav-menu {
+        position: fixed !important;
+        left: -100% !important;
+        top: 60px !important;
+        flex-direction: column !important;
+        background-color: #ffffff !important;
+        width: 100% !important;
+        text-align: center !important;
+        transition: 0.3s !important;
+        box-shadow: 0 10px 27px rgba(0, 0, 0, 0.1) !important;
+        padding: 2rem 0 !important;
+        gap: 0 !important;
+        border-bottom: 1px solid #e5e7eb !important;
+    }
+
+    .nav-menu li {
+        margin: 0.5rem 0 !important;
+    }
+
+    .nav-menu.active {
+        left: 0 !important;
+    }
+
+    .mobile-menu-btn {
+        display: flex !important;
+    }
+
+    .mobile-menu-btn.active span:nth-child(1) {
+        transform: rotate(45deg) translate(6px, 6px) !important;
+    }
+
+    .mobile-menu-btn.active span:nth-child(2) {
+        opacity: 0 !important;
+    }
+
+    .mobile-menu-btn.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(6px, -6px) !important;
+    }
+    
+    .nav-link {
+        display: block !important;
+        padding: 0.75rem 1rem !important;
+        width: 100% !important;
+    }
+    
+    .nav-link:hover {
+        background-color: #f3f4f6 !important;
+    }
+}
+
+/* 더 작은 모바일 (480px 이하) */
+@media (max-width: 480px) {
+    .logo {
+        font-size: 1.25rem !important;
+    }
+    
+    .navbar-container,
+    .nav-container {
+        padding: 0.75rem !important;
+    }
+}
+
+/* 다크모드 대응 */
+@media (prefers-color-scheme: dark) {
+    .navbar {
+        background: #1f2937 !important;
+        border-bottom-color: #374151 !important;
+    }
+    
+    .logo {
+        color: #f9fafb !important;
+    }
+    
+    .nav-link {
+        color: #d1d5db !important;
+    }
+    
+    .nav-link:hover {
+        color: #60a5fa !important;
+    }
+    
+    .mobile-menu-btn span {
+        background: #f9fafb !important;
+    }
+    
+    .nav-menu {
+        background-color: #1f2937 !important;
+        border-bottom-color: #374151 !important;
+    }
+    
+    .nav-link:hover {
+        background-color: #374151 !important;
+    }
+}
