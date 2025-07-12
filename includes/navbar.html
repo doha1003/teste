@@ -1,7 +1,7 @@
 <nav class="navbar">
     <div class="navbar-container">
         <a href="/" class="logo">doha.kr</a>
-        <ul class="nav-menu" id="nav-menu">
+        <ul class="nav-links" id="nav-menu">
             <li><a href="/" class="nav-link">홈</a></li>
             <li><a href="/tests/" class="nav-link">심리테스트</a></li>
             <li><a href="/fortune/" class="nav-link">운세</a></li>
@@ -9,10 +9,46 @@
             <li><a href="/contact/" class="nav-link">문의</a></li>
             <li><a href="/about/" class="nav-link">소개</a></li>
         </ul>
-        <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-expanded="false" aria-controls="nav-menu" aria-label="메뉴 열기">
-            <span></span>
-            <span></span>
-            <span></span>
+        <button class="mobile-menu-toggle" onclick="toggleMobileMenu()" aria-expanded="false" aria-controls="nav-menu" aria-label="메뉴 열기">
+            ☰
         </button>
     </div>
 </nav>
+
+<script>
+function toggleMobileMenu() {
+    const navLinks = document.querySelector('.nav-links');
+    const menuToggle = document.querySelector('.mobile-menu-toggle');
+    
+    if (navLinks) {
+        navLinks.classList.toggle('active');
+        const isExpanded = navLinks.classList.contains('active');
+        menuToggle.setAttribute('aria-expanded', isExpanded);
+        menuToggle.setAttribute('aria-label', isExpanded ? '메뉴 닫기' : '메뉴 열기');
+        menuToggle.textContent = isExpanded ? '✕' : '☰';
+    }
+}
+
+// 페이지 로드 시 메뉴가 닫혀있도록 보장
+document.addEventListener('DOMContentLoaded', function() {
+    const navLinks = document.querySelector('.nav-links');
+    if (navLinks) {
+        navLinks.classList.remove('active');
+    }
+});
+
+// 클릭 외부 영역 클릭 시 메뉴 닫기
+document.addEventListener('click', function(event) {
+    const navLinks = document.querySelector('.nav-links');
+    const menuToggle = document.querySelector('.mobile-menu-toggle');
+    
+    if (navLinks && navLinks.classList.contains('active')) {
+        if (!navLinks.contains(event.target) && !menuToggle.contains(event.target)) {
+            navLinks.classList.remove('active');
+            menuToggle.setAttribute('aria-expanded', 'false');
+            menuToggle.setAttribute('aria-label', '메뉴 열기');
+            menuToggle.textContent = '☰';
+        }
+    }
+});
+</script>
