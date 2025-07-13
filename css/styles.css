@@ -3731,6 +3731,61 @@ textarea:valid {
     }
 }
 
+/* Stats Section - Critical Fix for White on White Issue */
+.stats {
+    background: var(--gradient-brand) !important;
+    padding: 80px 0 !important;
+    color: white !important;
+}
+
+.stats-grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 40px !important;
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+}
+
+.stat-item {
+    text-align: center !important;
+    padding: 20px !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-radius: 16px !important;
+    backdrop-filter: blur(20px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+.stat-number {
+    font-size: 3rem !important;
+    font-weight: 800 !important;
+    color: white !important;
+    line-height: 1 !important;
+    margin-bottom: 8px !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+}
+
+.stat-label {
+    font-size: 1.1rem !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-weight: 500 !important;
+    opacity: 1 !important;
+}
+
+@media (max-width: 768px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 20px !important;
+    }
+    
+    .stat-number {
+        font-size: 2.5rem !important;
+    }
+    
+    .stat-label {
+        font-size: 1rem !important;
+    }
+}
+
 /* Print styles */
 @media print {
     * {
