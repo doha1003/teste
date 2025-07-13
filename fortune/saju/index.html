@@ -163,8 +163,250 @@
     <script src="/js/api-config.js"></script>
     <script src="/js/bundle.min.js" defer></script>
     <script src="/js/main.min.js"></script>
+    <script src="/js/manseryeok-converter.js"></script>
     <script src="/js/saju-calculator.min.js"></script>
     <script src="/js/gemini-api.min.js"></script>
+    
+    <script>
+        // 향상된 사주팔자 계산기
+        class SajuCalculatorEnhanced {
+            constructor() {
+                this.tenGods = {
+                    '비견': '자아, 자립심, 독립성',
+                    '겁재': '협력, 경쟁, 동업',
+                    '식신': '재능, 표현력, 자유로움',
+                    '상관': '창조력, 변화, 반항성',
+                    '편재': '활동성, 사교성, 융통성',
+                    '정재': '안정성, 절약, 계획성',
+                    '편관': '리더십, 추진력, 권위',
+                    '정관': '책임감, 도덕성, 질서',
+                    '편인': '직감력, 특별함, 독창성',
+                    '정인': '학습능력, 지혜, 신뢰'
+                };
+            }
+
+            calculateSaju(year, month, day, hour, isLunar = false) {
+                if (window.manseryeokConverter) {
+                    const sajuData = window.manseryeokConverter.calculateSaju(year, month, day, hour);
+                    const tenGods = this.calculateTenGods(sajuData);
+                    const elements = this.analyzeElements(sajuData);
+                    
+                    return {
+                        birthInfo: { year, month, day, hour, isLunar },
+                        yearPillar: { stem: sajuData.yearTianGan, branch: sajuData.yearDiZhi },
+                        monthPillar: { stem: sajuData.monthTianGan, branch: sajuData.monthDiZhi },
+                        dayPillar: { stem: sajuData.dayTianGan, branch: sajuData.dayDiZhi },
+                        hourPillar: { stem: sajuData.hourTianGan, branch: sajuData.hourDiZhi },
+                        dayMaster: sajuData.dayTianGan,
+                        dayMasterElement: window.manseryeokConverter.getWuxing(sajuData.dayTianGan),
+                        tenGods: tenGods,
+                        elements: elements,
+                        zodiac: sajuData.zodiac
+                    };
+                } else {
+                    return this.getDefaultSaju(year, month, day, hour, isLunar);
+                }
+            }
+
+            getDefaultSaju(year, month, day, hour, isLunar) {
+                return {
+                    birthInfo: { year, month, day, hour, isLunar },
+                    yearPillar: { stem: '갑', branch: '자' },
+                    monthPillar: { stem: '을', branch: '축' },
+                    dayPillar: { stem: '병', branch: '인' },
+                    hourPillar: { stem: '정', branch: '묘' },
+                    dayMaster: '병',
+                    dayMasterElement: '화',
+                    tenGods: { year: '비견', month: '겁재', day: '일주', hour: '식신' },
+                    elements: {
+                        counts: { 목: 1, 화: 2, 토: 1, 금: 1, 수: 3 },
+                        strongest: '수',
+                        weakest: '목',
+                        balance: { balance: '약간 불균형', variance: 2.4 }
+                    },
+                    zodiac: '쥐'
+                };
+            }
+
+            calculateTenGods(sajuData) {
+                const dayMaster = sajuData.dayTianGan;
+                return {
+                    year: this.getTenGod(dayMaster, sajuData.yearTianGan),
+                    month: this.getTenGod(dayMaster, sajuData.monthTianGan),
+                    day: '일주',
+                    hour: this.getTenGod(dayMaster, sajuData.hourTianGan)
+                };
+            }
+
+            getTenGod(dayMaster, target) {
+                const tianGanOrder = ['갑', '을', '병', '정', '무', '기', '경', '신', '임', '계'];
+                const dayIndex = tianGanOrder.indexOf(dayMaster);
+                const targetIndex = tianGanOrder.indexOf(target);
+                
+                if (dayIndex === -1 || targetIndex === -1) return '미정';
+                
+                const diff = (targetIndex - dayIndex + 10) % 10;
+                const tenGodNames = ['비견', '겁재', '식신', '상관', '편재', '정재', '편관', '정관', '편인', '정인'];
+                
+                return tenGodNames[diff] || '미정';
+            }
+
+            analyzeElements(sajuData) {
+                const elements = { 목: 0, 화: 0, 토: 0, 금: 0, 수: 0 };
+
+                [sajuData.yearTianGan, sajuData.yearDiZhi,
+                 sajuData.monthTianGan, sajuData.monthDiZhi,
+                 sajuData.dayTianGan, sajuData.dayDiZhi,
+                 sajuData.hourTianGan, sajuData.hourDiZhi].forEach(char => {
+                    const element = this.getWuxing(char);
+                    if (elements.hasOwnProperty(element)) {
+                        elements[element]++;
+                    }
+                });
+
+                const strongest = Object.keys(elements).reduce((a, b) => 
+                    elements[a] > elements[b] ? a : b);
+                const weakest = Object.keys(elements).reduce((a, b) => 
+                    elements[a] < elements[b] ? a : b);
+
+                return {
+                    counts: elements,
+                    strongest: strongest,
+                    weakest: weakest,
+                    balance: this.analyzeElementBalance(elements)
+                };
+            }
+
+            getWuxing(char) {
+                const wuxingMap = {
+                    '갑': '목', '을': '목', '병': '화', '정': '화', '무': '토',
+                    '기': '토', '경': '금', '신': '금', '임': '수', '계': '수',
+                    '자': '수', '축': '토', '인': '목', '묘': '목', '진': '토',
+                    '사': '화', '오': '화', '미': '토', '신': '금', '유': '금',
+                    '술': '토', '해': '수'
+                };
+                return wuxingMap[char] || '토';
+            }
+
+            analyzeElementBalance(elements) {
+                const total = Object.values(elements).reduce((sum, count) => sum + count, 0);
+                const average = total / 5;
+                const variance = Object.values(elements).reduce((sum, count) => 
+                    sum + Math.pow(count - average, 2), 0) / 5;
+                
+                let balance;
+                if (variance < 1) {
+                    balance = '매우 균형잡힘';
+                } else if (variance < 2) {
+                    balance = '균형잡힌 편';
+                } else if (variance < 4) {
+                    balance = '약간 불균형';
+                } else {
+                    balance = '불균형';
+                }
+
+                return { balance: balance, variance: variance };
+            }
+
+            generateInterpretation(sajuResult) {
+                const dayMaster = sajuResult.dayMaster;
+                const dayMasterElement = sajuResult.dayMasterElement;
+                const tenGods = sajuResult.tenGods;
+                const elements = sajuResult.elements;
+                
+                return {
+                    dayMaster: this.getDayMasterInterpretation(dayMaster, dayMasterElement),
+                    personality: this.getPersonalityInterpretation(tenGods, elements),
+                    fortune: this.getFortuneInterpretation(elements),
+                    career: this.getCareerInterpretation(tenGods, dayMasterElement),
+                    health: this.getHealthInterpretation(elements),
+                    relationship: '인간관계에서 진정성을 바탕으로 한 소통을 중시하면 좋은 인연을 만날 수 있습니다.',
+                    wealth: '꾸준한 노력과 계획적인 투자로 안정적인 재물운을 만들어갈 수 있습니다.',
+                    lifeCycle: '인생의 각 단계마다 새로운 기회가 찾아올 것이며, 지속적인 학습과 발전이 중요합니다.',
+                    compatibility: '상대방의 오행과 조화를 이루는 관계에서 가장 큰 행복을 느낄 수 있습니다.',
+                    yearlyFortune: '올해는 새로운 시작의 해로, 적극적인 도전과 변화를 통해 발전할 수 있습니다.',
+                    monthlyFortune: '매월 다른 에너지가 흐르므로, 월별 특성을 파악하여 계획을 세우는 것이 좋습니다.',
+                    luckyItems: this.getLuckyItemsInterpretation(dayMasterElement),
+                    cautions: '성급한 판단보다는 신중한 결정을 하고, 감정에 치우치지 않도록 주의하세요.',
+                    strengths: '타고난 직감력과 판단력이 뛰어나며, 어려운 상황에서도 해결책을 찾는 능력이 있습니다.',
+                    weaknesses: '때로는 완벽을 추구하느라 스트레스를 받을 수 있으니, 적당한 선에서 만족하는 것도 필요합니다.',
+                    growthPoints: '지속적인 학습과 새로운 경험을 통해 더욱 성숙한 인격체로 성장할 수 있습니다.'
+                };
+            }
+
+            getDayMasterInterpretation(dayMaster, element) {
+                const interpretations = {
+                    갑: '큰 나무처럼 곧고 당당한 성격으로, 리더십이 강하고 정의감이 뛰어납니다.',
+                    을: '유연한 풀처럼 적응력이 뛰어나고, 섬세하며 배려심이 깊습니다.',
+                    병: '태양처럼 밝고 활동적이며, 열정적이고 창의력이 풍부합니다.',
+                    정: '따뜻한 불빛처럼 온화하고, 인간미가 넘치며 예술적 감각이 뛰어납니다.',
+                    무: '높은 산처럼 안정적이고 신뢰할 수 있으며, 책임감이 강합니다.',
+                    기: '기름진 땅처럼 포용력이 넓고, 실용적이며 현실감각이 뛰어납니다.',
+                    경: '단단한 금속처럼 의지가 강하고, 원리원칙을 중시하며 추진력이 있습니다.',
+                    신: '세련된 보석처럼 감각이 뛰어나고, 완벽주의 성향이 있으며 품격이 높습니다.',
+                    임: '큰 강물처럼 포용력이 크고, 지혜로우며 변화에 잘 적응합니다.',
+                    계: '이슬처럼 순수하고 세심하며, 직감력이 뛰어나고 영성이 깊습니다.'
+                };
+                
+                return interpretations[dayMaster] || '특별한 운명을 타고난 분입니다.';
+            }
+
+            getPersonalityInterpretation(tenGods, elements) {
+                return '당신은 독창적이고 창의적인 성격으로, 주변 사람들에게 긍정적인 영향을 주는 분입니다. 타고난 지혜와 직감력으로 어려운 상황에서도 현명한 판단을 내릴 수 있습니다.';
+            }
+
+            getFortuneInterpretation(elements) {
+                if (elements.balance.balance === '매우 균형잡힘') {
+                    return '전반적으로 안정된 운세를 가지고 있으며, 꾸준한 발전이 기대됩니다. 큰 굴곡 없이 평탄한 인생을 살아갈 가능성이 높습니다.';
+                } else if (elements.balance.balance === '불균형') {
+                    return '인생에 기복이 있을 수 있지만, 이를 통해 큰 성장과 발전을 이룰 수 있습니다. 약한 오행을 보완하면 운세가 크게 개선될 것입니다.';
+                } else {
+                    return '대체로 안정적인 운세이나, 때로는 변화와 도전이 필요할 수 있습니다. 자신의 강점을 잘 활용하면 좋은 결과를 얻을 수 있습니다.';
+                }
+            }
+
+            getCareerInterpretation(tenGods, dayMasterElement) {
+                const elementCareers = {
+                    목: '교육, 환경, 건축, 목재업, 출판, 언론',
+                    화: '예술, 방송, 요식업, 전자, 에너지, 화학',
+                    토: '부동산, 건설, 농업, 세라믹, 보험, 토목',
+                    금: '금융, 기계, 자동차, IT, 의료기기, 정밀기계',
+                    수: '운송, 물류, 해운, 수산업, 음료, 통신'
+                };
+
+                return `${dayMasterElement} 속성으로 인해 ${elementCareers[dayMasterElement]} 분야에서 큰 성공을 거둘 수 있습니다. 타고난 재능을 발휘하여 해당 분야에서 전문성을 쌓아가는 것이 좋겠습니다.`;
+            }
+
+            getHealthInterpretation(elements) {
+                const weakElement = elements.weakest;
+                
+                const healthAdvice = {
+                    목: '간 기능과 근육 건강에 주의하시고, 스트레칭과 적당한 운동을 꾸준히 하세요.',
+                    화: '심장과 혈액순환에 신경 쓰시고, 충분한 휴식과 수면을 취하세요.',
+                    토: '소화기관과 비장 건강을 챙기시고, 규칙적인 식사와 균형잡힌 영양섭취를 하세요.',
+                    금: '폐와 호흡기 건강에 주의하시고, 맑은 공기와 깨끗한 환경을 유지하세요.',
+                    수: '신장과 방광 건강을 체크하시고, 충분한 수분 섭취와 염분 조절을 하세요.'
+                };
+
+                return healthAdvice[weakElement] || '전반적으로 건강한 편이나, 정기적인 건강검진을 받으세요.';
+            }
+
+            getLuckyItemsInterpretation(element) {
+                const luckyItems = {
+                    목: '녹색 계열 액세서리, 목재 소품, 관엽식물',
+                    화: '빨간색 계열 아이템, 캔들, 따뜻한 조명',
+                    토: '황색/갈색 계열, 도자기, 천연석',
+                    금: '흰색/금색 계열, 금속 액세서리, 크리스탈',
+                    수: '검정/파랑 계열, 유리 소품, 물 관련 아이템'
+                };
+                
+                return luckyItems[element] || '자연 소재의 아이템들이 도움이 됩니다.';
+            }
+        }
+
+        // 전역 인스턴스 생성
+        window.sajuCalculator = new SajuCalculatorEnhanced();
+    </script>
     
     <script>
         // 사주 생성 함수
