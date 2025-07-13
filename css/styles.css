@@ -950,19 +950,24 @@ a:focus {
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%) !important;
+    background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%);
     color: white !important;
-    box-shadow: var(--shadow-lg), 0 0 20px rgba(255, 107, 107, 0.4) !important;
+    box-shadow: var(--shadow-lg), 0 0 20px rgba(255, 107, 107, 0.4);
 }
 
 .btn-primary:hover {
-    transform: translateY(-3px) !important;
-    box-shadow: var(--shadow-2xl), 0 0 30px rgba(255, 107, 107, 0.5) !important;
-    background: linear-gradient(135deg, #ff5252 0%, #ff7043 100%) !important;
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-2xl), 0 0 30px rgba(255, 107, 107, 0.5);
+    background: linear-gradient(135deg, #ff5252 0%, #ff7043 100%);
 }
 
 .btn-primary:active {
-    transform: translateY(-1px) !important;
+    transform: translateY(-1px);
+}
+
+/* Allow inline styles to override for specific buttons */
+.btn-primary[style*="background"] {
+    /* Inline styles will take precedence */
 }
 
 .btn-secondary {
@@ -3839,5 +3844,250 @@ section.stats *,
     * {
         color: #000000 !important;
         background: white !important;
+    }
+}
+
+/* 🔥 CRITICAL MOBILE INPUT FIXES - 2025-01-13 */
+/* Mobile input focus and touch optimization */
+@media (max-width: 768px) {
+    /* Ensure all form inputs are touchable and visible on mobile */
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="number"],
+    input[type="date"],
+    input[type="time"],
+    input[type="datetime-local"],
+    input[type="month"],
+    input[type="week"],
+    input[type="search"],
+    input[type="url"],
+    input[type="password"],
+    select,
+    textarea {
+        -webkit-appearance: none !important;
+        -moz-appearance: none !important;
+        appearance: none !important;
+        font-size: 16px !important;
+        padding: 16px !important;
+        min-height: 48px !important;
+        touch-action: manipulation !important;
+        -webkit-user-select: text !important;
+        user-select: text !important;
+        -webkit-tap-highlight-color: transparent !important;
+        background-color: white !important;
+        color: #333333 !important;
+        border: 2px solid #e9ecef !important;
+        border-radius: 8px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+        display: block !important;
+        position: relative !important;
+        z-index: 1 !important;
+    }
+
+    /* Fix for iOS Safari input zoom issue */
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="tel"]:focus,
+    input[type="number"]:focus,
+    input[type="date"]:focus,
+    input[type="time"]:focus,
+    input[type="datetime-local"]:focus,
+    input[type="month"]:focus,
+    input[type="week"]:focus,
+    input[type="search"]:focus,
+    input[type="url"]:focus,
+    input[type="password"]:focus,
+    select:focus,
+    textarea:focus {
+        font-size: 16px !important;
+        outline: none !important;
+        border-color: #8b5cf6 !important;
+        box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2) !important;
+        background-color: white !important;
+        color: #333333 !important;
+    }
+
+    /* Specific fix for fortune pages */
+    .fortune-form-container input,
+    .fortune-form-container select,
+    .fortune-form-container textarea,
+    .fortune-input-group input,
+    .fortune-input-group select,
+    .fortune-input-group textarea,
+    .form-container input,
+    .form-container select,
+    .form-container textarea {
+        -webkit-appearance: none !important;
+        font-size: 16px !important;
+        padding: 16px !important;
+        min-height: 48px !important;
+        background-color: white !important;
+        color: #333333 !important;
+        border: 2px solid #e9ecef !important;
+        touch-action: manipulation !important;
+        -webkit-user-select: text !important;
+        user-select: text !important;
+    }
+
+    /* Ensure labels don't overlap inputs */
+    .fortune-form-container label,
+    .fortune-input-group label,
+    .form-container label,
+    .form-group label {
+        display: block !important;
+        margin-bottom: 8px !important;
+        font-weight: 600 !important;
+        color: #333333 !important;
+    }
+
+    /* Fix for select dropdowns on iOS */
+    select {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E") !important;
+        background-repeat: no-repeat !important;
+        background-position: right 16px center !important;
+        padding-right: 40px !important;
+    }
+}
+
+/* Hero section button fixes */
+.hero-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.hero-buttons .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.hero-buttons .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Override default btn-primary for hero buttons */
+.hero-buttons .btn-primary {
+    /* Base style without forcing background */
+}
+
+/* Ensure inline styles work for hero buttons */
+.hero-buttons .btn[style*="background"] {
+    /* Inline styles will take precedence */
+}
+
+/* Ensure button text is always white */
+.hero-buttons .btn,
+.hero-buttons .btn-primary {
+    color: white !important;
+}
+
+/* Mobile responsive for hero buttons */
+@media (max-width: 768px) {
+    .hero-buttons {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 0 1rem;
+    }
+    
+    .hero-buttons .btn {
+        width: 100%;
+        justify-content: center;
+        font-size: 1rem;
+        padding: 0.875rem 1.5rem;
+    }
+}
+
+/* Additional mobile input fixes for fortune pages - 2025-01-13 */
+/* Force mobile Safari to allow input interaction */
+@supports (-webkit-touch-callout: none) {
+    /* iOS Safari specific fixes */
+    input,
+    select,
+    textarea {
+        -webkit-user-select: text !important;
+        -webkit-touch-callout: default !important;
+        user-select: text !important;
+    }
+    
+    /* Fortune page specific iOS fixes */
+    .fortune-form-container,
+    .fortune-input-group,
+    .form-container {
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+    }
+    
+    .fortune-form-container input:focus,
+    .fortune-input-group input:focus,
+    .form-container input:focus {
+        -webkit-user-modify: read-write-plaintext-only !important;
+    }
+}
+
+/* Android Chrome specific fixes */
+@media (max-width: 768px) and (pointer: coarse) {
+    input,
+    select,
+    textarea {
+        cursor: text !important;
+        pointer-events: auto !important;
+    }
+    
+    /* Ensure form containers don't block input */
+    .fortune-form-container,
+    .fortune-input-group,
+    .form-container,
+    .form-group {
+        pointer-events: none !important;
+    }
+    
+    .fortune-form-container > *,
+    .fortune-input-group > *,
+    .form-container > *,
+    .form-group > * {
+        pointer-events: auto !important;
+    }
+}
+
+/* Global mobile input accessibility */
+@media (hover: none) and (pointer: coarse) {
+    /* Touch device optimizations */
+    input,
+    select,
+    textarea,
+    button,
+    .btn {
+        -ms-touch-action: manipulation !important;
+        touch-action: manipulation !important;
+    }
+    
+    /* Increase touch target size */
+    input,
+    select,
+    button,
+    .btn {
+        min-height: 48px !important;
+        min-width: 48px !important;
+    }
+    
+    /* Remove any overlays that might block input */
+    .fortune-form-container::before,
+    .fortune-form-container::after,
+    .form-container::before,
+    .form-container::after {
+        pointer-events: none !important;
     }
 }
