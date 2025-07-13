@@ -3731,9 +3731,9 @@ textarea:valid {
     }
 }
 
-/* Stats Section - Critical Fix for White on White Issue */
+/* Stats Section - Critical Fix for White on White Issue - FORCE UPDATE */
 .stats {
-    background: var(--gradient-brand) !important;
+    background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%) !important;
     padding: 80px 0 !important;
     color: white !important;
 }
@@ -3767,6 +3767,31 @@ textarea:valid {
 .stats p,
 .stats .section-subtitle {
     color: rgba(255, 255, 255, 0.95) !important;
+}
+
+/* EMERGENCY FIX - Force all stats elements to have proper contrast */
+.stats *,
+section.stats *,
+.hero-stats *,
+.service-stats * {
+    color: white !important;
+}
+
+.stats .stat-number,
+.stats .hero-stat-number,
+.stats .service-stat-number {
+    color: white !important;
+    font-weight: 700 !important;
+    font-size: 2.5rem !important;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3) !important;
+}
+
+.stats .stat-label,
+.stats .hero-stat-label,
+.stats .service-stat-label {
+    color: rgba(255, 255, 255, 0.95) !important;
+    font-weight: 500 !important;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3) !important;
 }
 
 .stat-item {
