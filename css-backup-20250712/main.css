@@ -1,0 +1,67 @@
+/* Main CSS File - Imports all modular CSS files */
+
+/* Base Styles - Foundation of the design system */
+@import url('./base/reset.css');
+@import url('./base/variables.css');
+@import url('./base/typography.css');
+
+/* Layout Components - Major structural elements */
+@import url('./layout/header.css');
+@import url('./layout/footer.css');
+
+/* Section Styles - Page sections */
+@import url('./sections/hero.css');
+@import url('./sections/features.css');
+@import url('./sections/services.css');
+@import url('./sections/cta.css');
+
+/* Components - Reusable UI elements */
+@import url('./components/buttons.css');
+@import url('./components/cards.css');
+@import url('./components/badges.css');
+
+/* Utilities - Helper classes */
+@import url('./utilities/animations.css');
+@import url('./utilities/responsive.css');
+
+/* Fix Files - Improvements and corrections */
+@import url('./color-contrast-fix.css');
+@import url('./global-text-fix.css');
+@import url('./hero-fix.css');
+@import url('./highlights-fix.css');
+@import url('./emoji-fix.css');
+@import url('./mbti-result-fix.css');
+@import url('./styles-fix.css');
+
+/* CRITICAL FIXES - 2025-01-08 - Resolves all major UI issues */
+@import url('./critical-fixes.css');
+
+/* REMOVED: cta-enhancement.css and cta-unified.css to prevent conflicts */
+/* Now using only /sections/cta.css for clean, professional CTA design */
+
+/* Page-specific styles */
+@import url('./pages/about.css');
+@import url('./pages/bmi-calculator.css');
+@import url('./pages/love-dna-test.css');
+
+/* Test-specific styles */
+@import url('./test-common.css');
+
+/* 
+   Note: This modular approach allows for:
+   - Better organization and maintainability
+   - Easier debugging and development
+   - Selective loading if needed
+   - Clear separation of concerns
+   
+   The old styles.css file is preserved for reference
+   but is no longer loaded in production.
+   
+   Fix files are imported to maintain compatibility
+   and improve existing styles.
+   
+   Page-specific CSS files ensure no conflicts
+   between different pages and better performance.
+   
+   CTA conflicts resolved by removing duplicate files.
+*/
