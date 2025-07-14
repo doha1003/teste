@@ -4,8 +4,6 @@
    Updated: 2025-01-11 - Consolidated from 89+ CSS files to unified architecture
    ========================================================================= */
 
-/* Import mobile fixes */
-@import url('/css/mobile-fixes.css');
 
 /* =========================================================================
    CSS CUSTOM PROPERTIES - DESIGN TOKEN SYSTEM
@@ -4047,6 +4045,62 @@ section.stats *,
     }
     
     /* Ensure form containers don't block input */
+    .fortune-form-container,
+    .fortune-input-group,
+    .form-container,
+    .tool-section,
+    .text-input-wrapper {
+        pointer-events: auto !important;
+    }
+}
+
+/* Text Counter and Tools specific mobile fixes */
+.text-input,
+.salary-input,
+.bmi-input,
+.tool-section input,
+.tool-section textarea,
+.tool-section select {
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
+    font-size: 16px !important;
+    min-height: 48px !important;
+    touch-action: manipulation !important;
+    -webkit-user-select: text !important;
+    user-select: text !important;
+    background-color: white !important;
+    color: #333333 !important;
+    border: 2px solid #e9ecef !important;
+    border-radius: 8px !important;
+    padding: 16px !important;
+    box-sizing: border-box !important;
+}
+
+.text-input:focus,
+.salary-input:focus,
+.bmi-input:focus,
+.tool-section input:focus,
+.tool-section textarea:focus,
+.tool-section select:focus {
+    font-size: 16px !important;
+    outline: none !important;
+    border-color: #8b5cf6 !important;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2) !important;
+    background-color: white !important;
+    color: #333333 !important;
+}
+
+/* iOS Safari specific for text counter */
+@supports (-webkit-touch-callout: none) {
+    .text-input,
+    .tool-section input,
+    .tool-section textarea {
+        -webkit-user-modify: read-write-plaintext-only !important;
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+    }
+}
     .fortune-form-container,
     .fortune-input-group,
     .form-container,
