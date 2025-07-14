@@ -7,8 +7,33 @@
 
 > 심리테스트, AI 운세, 실용도구가 한곳에! 재미있고 유용한 무료 서비스를 제공하는 종합 엔터테인먼트 플랫폼입니다.
 
+## 🔧 웹사이트 분석 도구
+
+이 프로젝트에는 GPT-4o Vision API를 사용한 웹사이트 분석 도구가 포함되어 있습니다.
+
+### 사용법
+```bash
+# 1. OpenAI API 키 설정
+export OPENAI_API_KEY=your_api_key_here
+
+# 2. 전체 분석 파이프라인 실행
+bash run_analysis.sh
+
+# 또는 개별 실행
+npm run capture              # 웹사이트 스크린샷 캡처
+python3 analyze_image.py    # GPT-4o Vision 이미지 분석
+python3 analyze_without_image.py  # 구조 기반 개선 방안 생성
+```
+
+### 분석 결과 파일
+- `screenshot.png`: 웹사이트 전체 스크린샷
+- `analysis_result.txt`: GPT-4o Vision API 분석 결과
+- `improvement_plan.txt`: 구조 기반 개선 방안
+- `IMPROVEMENT_PLAN.md`: 단계별 상세 개선 계획서
+
 ## 📋 목차
 
+- [웹사이트 분석 도구](#-웹사이트-분석-도구)
 - [주요 기능](#-주요-기능)
 - [프로젝트 구조](#-프로젝트-구조)
 - [기술 스택](#-기술-스택)

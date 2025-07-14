@@ -1,16 +1,24 @@
 {
-  "name": "doha-kr",
+  "name": "doha-kr-analysis",
   "version": "1.0.0",
-  "description": "doha.kr - 심리테스트와 운세 서비스",
+  "description": "doha.kr 웹사이트 분석 도구",
+  "main": "capture.js",
   "scripts": {
-    "dev": "vercel dev",
-    "build": "echo 'No build required'",
-    "deploy": "vercel --prod"
+    "capture": "node capture.js",
+    "analyze": "python3 analyze_image.py",
+    "analyze-structure": "python3 analyze_without_image.py",
+    "full-analysis": "npm run capture && npm run analyze"
   },
   "dependencies": {
-    "@google/generative-ai": "^0.1.3"
+    "puppeteer": "^21.11.0"
   },
-  "devDependencies": {
-    "vercel": "^32.0.0"
-  }
+  "keywords": [
+    "puppeteer",
+    "screenshot",
+    "analysis",
+    "openai",
+    "website-optimization"
+  ],
+  "author": "doha.kr",
+  "license": "MIT"
 }
