@@ -34,6 +34,7 @@
     
     <!-- External CSS -->
     <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/pages/tools-index.css">
     
     <!-- Favicon -->
     <link rel="icon" href="/images/placeholder-favicon.svg" type="image/svg+xml">
@@ -41,7 +42,7 @@
     <link rel="manifest" href="/manifest.json">
     
     <!-- Security Headers -->
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src 'self' https:; script-src 'self' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:;">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src 'self' https:; script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://cdn.jsdelivr.net https://ep2.adtrafficquality.google; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:;">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), accelerometer=(), gyroscope=()">
@@ -86,225 +87,6 @@
     }
     </script>
     
-    <style>
-        /* Page-specific styles */
-        /* 헤더 섹션 */
-        .header {
-            background: white;
-            padding: 80px 20px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        .header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at 20% 80%, rgba(34, 197, 94, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
-            animation: float 20s ease-in-out infinite;
-        }
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            33% { transform: translate(30px, -30px) rotate(120deg); }
-            66% { transform: translate(-20px, 20px) rotate(240deg); }
-        }
-        .header-content {
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-        .header-title {
-            font-size: 48px;
-            font-weight: 700;
-            margin-bottom: 16px;
-            background: linear-gradient(135deg, #22c55e 0%, #3b82f6 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            line-height: 1.2;
-        }
-        .header-subtitle {
-            font-size: 20px;
-            color: #6b7280;
-            margin-bottom: 32px;
-            line-height: 1.5;
-        }
-        /* 컨테이너 */
-        .container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 80px 20px;
-        }
-        /* 도구 그리드 */
-        .tools-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(min(350px, 100%), 1fr));
-            gap: 32px;
-            margin-bottom: 60px;
-        }
-        .tool-card {
-            background: white;
-            border-radius: 16px;
-            padding: 32px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-            text-decoration: none;
-            color: inherit;
-        }
-        .tool-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(135deg, #22c55e 0%, #3b82f6 100%);
-            transform: scaleX(0);
-            transition: transform 0.3s;
-            transform-origin: left;
-        }
-        .tool-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-        .tool-card:hover::before {
-            transform: scaleX(1);
-        }
-        .tool-icon {
-            font-size: 64px;
-            margin-bottom: 24px;
-            display: block;
-        }
-        .tool-title {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 16px;
-            color: #111827;
-        }
-        .tool-description {
-            line-height: 1.6;
-            margin-bottom: 24px;
-            color: #6b7280;
-        }
-        .tool-stats {
-            display: flex;
-            gap: 16px;
-            margin-bottom: 24px;
-            flex-wrap: wrap;
-        }
-        .tool-stat {
-            padding: 8px 12px;
-            background: #f3f4f6;
-            border-radius: 8px;
-            font-size: 14px;
-            color: #6b7280;
-        }
-        .tool-button {
-            background: linear-gradient(135deg, #22c55e 0%, #3b82f6 100%);
-            color: white;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-weight: 600;
-            display: inline-block;
-            text-decoration: none;
-            transition: all 0.2s;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            min-height: 44px;
-            min-width: 120px;
-            text-align: center;
-        }
-        .tool-button:hover {
-            transform: translateY(-2px);
-        }
-        .coming-soon {
-            background: #f3f4f6;
-            color: #6b7280;
-            cursor: not-allowed;
-        }
-        .coming-soon:hover {
-            transform: none;
-        }
-        /* 광고 컨테이너 */
-        .ad-container {
-            max-width: 1280px;
-            margin: 40px auto;
-            padding: 0 20px;
-            text-align: center;
-        }
-        .ad-label {
-            font-size: 12px;
-            color: #9ca3af;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        /* 반응형 디자인 */
-        @media (max-width: 768px) {
-            .header {
-                padding: 60px 20px;
-            }
-            .header-title {
-                font-size: 36px;
-            }
-            .header-subtitle {
-                font-size: 18px;
-            }
-            .container {
-                padding: 60px 20px;
-            }
-            .tools-grid {
-                grid-template-columns: 1fr;
-                gap: 24px;
-            }
-            .tool-card {
-                padding: 24px;
-            }
-            .tool-icon {
-                font-size: 48px;
-            }
-            .tool-title {
-                font-size: 20px;
-            }
-            .tool-stats {
-                gap: 8px;
-            }
-            .tool-stat {
-                font-size: 12px;
-                padding: 6px 10px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .header {
-                padding: 40px 15px;
-            }
-            .header-title {
-                font-size: 28px;
-            }
-            .header-subtitle {
-                font-size: 16px;
-            }
-            .container {
-                padding: 40px 15px;
-            }
-            .tool-card {
-                padding: 20px;
-            }
-            .tool-icon {
-                font-size: 40px;
-                margin-bottom: 16px;
-            }
-            .tool-title {
-                font-size: 18px;
-            }
-        }
-    </style>
 </head>
 <body>
     <!-- 네비게이션 바 (컴포넌트 시스템 사용) -->
@@ -448,43 +230,43 @@
         </div>
         
         <!-- 도구 소개 및 활용 가이드 -->
-        <div style="background: white; padding: 60px 40px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); margin-top: 60px;">
-            <h2 style="font-size: 32px; font-weight: 700; margin-bottom: 32px; text-align: center; color: #1f2937;">doha.kr 실용도구 활용 가이드</h2>
+        <div class="guide-section">
+            <h2 class="guide-title">doha.kr 실용도구 활용 가이드</h2>
             
-            <div style="max-width: 800px; margin: 0 auto; line-height: 1.8; color: #374151;">
-                <h3 style="font-size: 24px; font-weight: 600; margin: 32px 0 16px; color: #1f2937;">🎯 우리의 도구들을 이렇게 활용해보세요</h3>
+            <div class="guide-content">
+                <h3 class="guide-section-title">🎯 우리의 도구들을 이렇게 활용해보세요</h3>
                 
-                <p style="margin-bottom: 24px;">
+                <p>
                     doha.kr의 실용도구는 일상생활과 업무에서 자주 마주치는 계산과 분석 작업을 간편하게 처리할 수 있도록 설계되었습니다. 
                     각 도구는 정확성과 사용 편의성을 최우선으로 개발되었으며, 별도의 설치나 가입 없이 웹 브라우저에서 바로 사용할 수 있습니다.
                 </p>
                 
-                <h4 style="font-size: 20px; font-weight: 600; margin: 24px 0 12px; color: #1f2937;">💰 연봉 실수령액 계산기 - 정확한 급여 계산의 필수 도구</h4>
-                <p style="margin-bottom: 20px;">
+                <h4 class="guide-subsection-title">💰 연봉 실수령액 계산기 - 정확한 급여 계산의 필수 도구</h4>
+                <p>
                     2025년 최신 세법과 4대보험 요율을 반영하여 가장 정확한 실수령액을 계산합니다. 연봉 협상이나 이직 계획 시 실제로 받게 될 월급을 미리 확인할 수 있어 현실적인 재정 계획을 세울 수 있습니다. 
                     부양가족 수와 20세 이하 자녀 수에 따른 세액공제도 정확히 반영되어, 개인 상황에 맞춘 정밀한 계산이 가능합니다.
                 </p>
                 
-                <h4 style="font-size: 20px; font-weight: 600; margin: 24px 0 12px; color: #1f2937;">📝 글자수 세기 - 문서 작성의 든든한 파트너</h4>
-                <p style="margin-bottom: 20px;">
+                <h4 class="guide-subsection-title">📝 글자수 세기 - 문서 작성의 든든한 파트너</h4>
+                <p>
                     대학교 과제, 자기소개서, 이력서, SNS 게시물 등 글자수 제한이 있는 모든 텍스트 작성 상황에서 실시간으로 글자수를 확인할 수 있습니다. 
                     한글, 영문, 숫자, 특수문자를 구분하여 계산하며, 공백 포함/제외 옵션과 바이트 계산, 200자 원고지 환산 기능까지 제공하여 다양한 용도에 맞춰 사용할 수 있습니다.
                 </p>
                 
-                <h4 style="font-size: 20px; font-weight: 600; margin: 24px 0 12px; color: #1f2937;">🏥 BMI 계산기 - 건강한 생활의 시작</h4>
-                <p style="margin-bottom: 20px;">
+                <h4 class="guide-subsection-title">🏥 BMI 계산기 - 건강한 생활의 시작</h4>
+                <p>
                     키와 몸무게를 입력하면 WHO 아시아-태평양 기준에 따른 정확한 BMI 분석 결과를 제공합니다. 
                     단순한 수치 계산을 넘어서 개인의 건강 상태에 맞춤형 조언과 생활 습관 개선 팁을 함께 제공하여, 건강한 체중 관리를 위한 실질적인 가이드 역할을 합니다.
                 </p>
                 
-                <h4 style="font-size: 20px; font-weight: 600; margin: 24px 0 12px; color: #1f2937;">🔒 개인정보 보호 및 보안</h4>
-                <p style="margin-bottom: 20px;">
+                <h4 class="guide-subsection-title">🔒 개인정보 보호 및 보안</h4>
+                <p>
                     모든 계산은 사용자의 컴퓨터에서 직접 처리되며, 입력하신 정보가 외부 서버로 전송되지 않습니다. 
                     최신 웹 보안 기술을 적용하여 안전한 사용 환경을 제공하며, 사용자의 개인정보와 프라이버시를 완벽하게 보호합니다.
                 </p>
                 
-                <h4 style="font-size: 20px; font-weight: 600; margin: 24px 0 12px; color: #1f2937;">📱 언제 어디서나 접근 가능</h4>
-                <p style="margin-bottom: 20px;">
+                <h4 class="guide-subsection-title">📱 언제 어디서나 접근 가능</h4>
+                <p>
                     모든 도구는 반응형 웹 디자인으로 제작되어 데스크톱, 태블릿, 스마트폰에서 동일하게 쾌적한 사용 경험을 제공합니다. 
                     인터넷 연결만 있다면 언제든지 필요한 계산과 분석을 빠르게 수행할 수 있어, 업무 중이나 이동 중에도 편리하게 활용할 수 있습니다.
                 </p>
