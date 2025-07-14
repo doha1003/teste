@@ -1,0 +1,116 @@
+/* Fortune Pages - 운세 페이지 공통 스타일 */
+
+.fortune-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.fortune-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.fortune-header h1 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.fortune-form {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #34495e;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e1e8ed;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #3498db;
+}
+
+.fortune-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 15px 40px;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    transition: transform 0.2s;
+}
+
+.fortune-btn:hover {
+    transform: translateY(-2px);
+}
+
+.fortune-result {
+    background: #f8f9fa;
+    padding: 30px;
+    border-radius: 12px;
+    margin-top: 30px;
+    border-left: 4px solid #3498db;
+}
+
+.fortune-result h3 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+.fortune-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 40px;
+}
+
+.fortune-card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: transform 0.3s;
+}
+
+.fortune-card:hover {
+    transform: translateY(-5px);
+}
+
+@media (max-width: 768px) {
+    .fortune-container {
+        padding: 15px;
+    }
+    
+    .fortune-form {
+        padding: 20px;
+    }
+    
+    .fortune-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+}
