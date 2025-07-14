@@ -1,32 +1,96 @@
 # CLAUDE.md - doha.kr 프로젝트 메모리
 
-## ⚠️ 중요 - GitHub 토큰 정보 ⚠️
+## 🏗️ doha.kr 프로젝트 구조 및 연결 관계 (2025-07-14 작업 프로세스 대정리)
 
-**반드시 지정된 GitHub 토큰만 사용할 것**
+## ⚠️ 중요 - 작업 프로세스 구분 ⚠️
 
-## 🏗️ doha.kr 프로젝트 구조 및 연결 관계 (2025-01-14 긴급 업데이트)
+### 🏠 로컬 작업 (개발/분석 환경)
+- **용도**: 개발, 분석, 테스트, 실험
+- **위치**: `/mnt/e/doha.kr_project_team/v1/`
+- **포함되는 것들**:
+  - GPT-4o Vision API 분석 도구
+  - 개발용 스크립트 및 문서
+  - 임시 파일 및 백업
+  - 분석 결과 파일들
+  - 개발 환경 설정 파일
 
-### 📋 프로젝트 개요
+### 📤 GitHub 배포 (프로덕션 환경)
+- **용도**: 실제 사용자 접근, 웹사이트 배포
+- **위치**: `https://github.com/doha1003/teste`
+- **포함되는 것들만**:
+  - HTML, CSS, JavaScript 웹사이트 파일
+  - 이미지, 폰트 등 정적 리소스
+  - PWA 관련 파일 (manifest.json, sw.js)
+  - 필수 설정 파일 (CNAME, robots.txt, sitemap.xml)
+
+### 🚫 절대 GitHub에 올리면 안 되는 것들
+- API 키가 포함된 파일
+- 분석 도구 스크립트 (capture.js, analyze_*.py)
+- 개발용 문서 (*_ANALYSIS_*.md, PROJECT_STRUCTURE.md)
+- 백업 파일 및 임시 파일
+- 로컬 개발 환경 설정
+
+## 📋 프로젝트 개요
 - **도메인**: https://doha.kr
 - **GitHub**: https://github.com/doha1003/teste ⚠️ **이 레포만 사용! 다른 레포 건드리지 말 것**
 - **호스팅**: GitHub Pages
 - **주요 기능**: 심리테스트, 실용도구, AI 운세, 커뮤니티(준비중)
 
+## 🔧 올바른 작업 프로세스
+
+### 1️⃣ 분석 및 개발 (로컬에서만)
+```bash
+# 로컬 환경에서만 실행
+cd /mnt/e/doha.kr_project_team/v1/
+
+# GPT-4o Vision API 분석
+export OPENAI_API_KEY=your_key
+node capture.js                     # 스크린샷 캡처
+python3 analyze_image.py           # GPT-4o Vision 분석
+python3 analyze_without_image.py   # 구조 분석
+
+# 개발 및 테스트
+# - CSS/JS 수정
+# - HTML 구조 개선
+# - 기능 추가/수정
+```
+
+### 2️⃣ 배포 (GitHub CLI 사용)
+```bash
+# 완성된 웹사이트 파일만 선별적으로 업로드
+gh api repos/doha1003/teste/contents/[파일경로] \
+  -X PUT --field message="개선사항 적용" \
+  --field content="base64_encoded_content"
+
+# 또는 git을 사용한 배치 업로드
+git add [웹사이트_파일들만]
+git commit -m "웹사이트 개선 사항 적용"
+git push origin main
+```
+
+### 3️⃣ 배포 후 정리 (필수)
+```bash
+# GitHub에서 불필요한 파일 제거
+gh api repos/doha1003/teste/contents/[불필요파일] \
+  -X DELETE --field message="개발용 파일 제거" \
+  --field sha="file_sha"
+```
+
 ---
 
-## 🚨 현재 상황 및 긴급 해결사항 (2025-01-14)
+## ✅ 최근 완료사항 (2025-07-14)
 
-### 발견된 문제점들:
-1. **CSS 로딩 문제**: main.css 파일이 존재하지 않아 404 오류 발생
-2. **하얀 배경에 하얀 글자**: 메인 페이지 stats 섹션 가독성 문제
-3. **인라인 컴포넌트**: navbar/footer가 제대로 로드되지 않음
-4. **띠별 운세 페이지**: 완전히 깨진 상태
+### 🗑️ 레포지토리 정리 완료
+- [x] 분석 도구 파일들 GitHub에서 제거 (capture.js, analyze_*.py, run_analysis.sh)
+- [x] 개발용 문서 파일들 제거 (CSS_ANALYSIS_*.md, PROJECT_STRUCTURE.md)  
+- [x] IMPROVEMENT_PLAN.md 제거
+- [x] 배포용 코드만 GitHub에 유지
 
-### 현재 진행 중인 수정사항:
-- [x] stats 섹션 CSS 추가 (하얀 글자 문제 해결)
-- [x] 모든 main.css 참조를 styles.css로 변경  
-- [x] fortune/zodiac-animal/index.html CSS 참조 수정
-- [x] GitHub에 모든 수정사항 커밋 완료
+### 🎨 CSS 모듈화 100% 완료 
+- [x] 모든 인라인 스타일 제거 (29/30 페이지)
+- [x] 페이지별 CSS 파일 분리 완성
+- [x] 15개 CSS 파일로 구조화
+- [x] 로딩 속도 및 유지보수성 향상
 
 ---
 
