@@ -1,0 +1,41 @@
+# Jekyll configuration for GitHub Pages
+# This helps with better file serving and caching
+
+# Build settings
+markdown: kramdown
+theme: null
+
+# Exclude files from processing
+exclude:
+  - README.md
+  - CNAME
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - backup/
+  - scripts/
+  - teste_fix/
+  - "*.sh"
+  - "*.md"
+  - "*.txt"
+
+# Include specific files that might be ignored
+include:
+  - _pages
+  - .htaccess
+  - css/mobile-fixes.css
+  
+# Plugins
+plugins: []
+
+# Asset Pipeline
+sass:
+  sass_dir: _sass
+  style: compressed
+
+# Force rebuild
+incremental: false
