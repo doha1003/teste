@@ -9,7 +9,7 @@
 - **GitHub**: https://github.com/doha1003/teste
 - **호스팅**: GitHub Pages + Vercel
 - **총 페이지 수**: 30+ HTML 파일
-- **총 CSS 파일**: 18개 (통합 아키텍처)
+- **총 CSS 파일**: 15개 (1개 메인 + 14개 페이지별)
 - **총 JavaScript 파일**: 50+ 파일
 
 ---
@@ -25,29 +25,29 @@ doha.kr/
 ├── 📄 sw.js                        # Service Worker
 ├── 📄 sitemap.xml                  # SEO 사이트맵
 ├── 📄 robots.txt                   # 크롤링 설정
-├── 📄 README.md                    # 프로젝트 문서
+├── 📄 README.md                    # 프로젝트 문서 
+├── 📄 CLAUDE.md                    # Claude 메모리 파일
 ├── 📄 CSS_STRUCTURE.md             # CSS 구조 문서
 ├── 📄 CSS_CONNECTION_CHECKLIST.md  # CSS 체크리스트
 ├── 📄 PROJECT_STRUCTURE.md         # 이 파일
 │
 ├── 📁 css/                         # CSS 파일들
 │   ├── styles.css                 # 메인 통합 CSS (92KB)
-│   ├── variables.css              # CSS 변수 (미사용)
-│   ├── base.css                   # 기본 스타일 (미사용)
-│   ├── components.css             # 컴포넌트 (미사용)
-│   └── pages/                     # 페이지별 CSS
-│       ├── about.css
-│       ├── bmi-calculator.css
-│       ├── contact.css
-│       ├── fortune-main.css
-│       ├── legal.css
-│       ├── love-dna-test.css
-│       ├── mbti-intro.css
-│       ├── mbti-test.css
-│       ├── salary-calculator.css
-│       ├── teto-egen-intro.css
-│       ├── teto-egen-test.css
-│       └── text-counter.css
+│   └── pages/                     # 페이지별 CSS (14개)
+│       ├── about.css              # About 페이지
+│       ├── bmi-calculator.css     # BMI 계산기
+│       ├── contact.css            # Contact 페이지
+│       ├── fortune-main.css       # 운세 메인
+│       ├── fortune.css            # 운세 공통
+│       ├── legal.css              # 법적 고지
+│       ├── love-dna-test.css      # Love DNA 테스트
+│       ├── mbti-intro.css         # MBTI 소개
+│       ├── mbti-test.css          # MBTI 테스트
+│       ├── result-detail.css      # 결과 상세
+│       ├── salary-calculator.css  # 연봉 계산기
+│       ├── teto-egen-intro.css    # 테토-에겐 소개
+│       ├── teto-egen-test.css     # 테토-에겐 테스트
+│       └── text-counter.css       # 글자수 세기
 │
 ├── 📁 js/                          # JavaScript 파일들
 │   ├── main.js                    # 컴포넌트 로딩
@@ -276,7 +276,8 @@ doha.kr/
 - [ ] tools/bmi-calculator.html
 
 ### Phase 2: CSS 파일 최적화
-- [ ] 사용하지 않는 CSS 파일 제거
+- [x] 사용하지 않는 CSS 파일 제거 (base.css, components.css, variables.css 삭제)
+- [x] 불필요한 백업/임시 파일 제거 (MD 파일 11개, JS 파일 2개 삭제)
 - [ ] CSS 규칙 중복 제거
 - [ ] 파일 크기 최적화
 
