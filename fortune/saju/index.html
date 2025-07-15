@@ -467,9 +467,68 @@
             
             // 사주 계산 및 표시
             setTimeout(() => {
-                const saju = window.sajuCalculator.calculateSaju(birthYear, birthMonth, birthDay, birthTime, isLunar);
+                // 만세력 데이터베이스를 활용한 정확한 사주 계산
+                const saju = calculateSajuWithManseryeok(birthYear, birthMonth, birthDay, birthTime, isLunar);
                 displaySajuResult(userName, gender, saju);
             }, 2000);
+        }
+        // 만세력 데이터베이스를 활용한 정확한 사주 계산
+        function calculateSajuWithManseryeok(year, month, day, hour, isLunar) {
+            // 기본 사주 계산
+            let saju = window.sajuCalculator.calculateSaju(year, month, day, hour, isLunar);
+            
+            // 만세력 데이터베이스에서 정확한 일주 확인
+            if (window.getManseryeokData) {
+                let targetYear = year, targetMonth = month, targetDay = day;
+                
+                // 음력인 경우 양력으로 변환
+                if (isLunar && window.lunarToSolar) {
+                    const solarDate = window.lunarToSolar(year, month, day);
+                    if (solarDate) {
+                        targetYear = solarDate.year;
+                        targetMonth = solarDate.month;
+                        targetDay = solarDate.day;
+                    }
+                }
+                
+                // 만세력 데이터에서 정확한 간지 가져오기
+                const manseryeokData = window.getManseryeokData(targetYear, targetMonth, targetDay);
+                if (manseryeokData) {
+                    // 정확한 일주로 교체
+                    saju.dayPillar = {
+                        stem: manseryeokData.dayGanji.charAt(0),
+                        branch: manseryeokData.dayGanji.charAt(1)
+                    };
+                    
+                    // 연주도 교체 (년간지)
+                    if (manseryeokData.yearGanji) {
+                        saju.yearPillar = {
+                            stem: manseryeokData.yearGanji.charAt(0),
+                            branch: manseryeokData.yearGanji.charAt(1)
+                        };
+                    }
+                    
+                    // 일주가 바뀌었으므로 십신 재계산
+                    saju.dayMaster = saju.dayPillar.stem;
+                    saju.dayMasterElement = window.sajuCalculator.stemElements[saju.dayMaster];
+                    saju.tenGods = window.sajuCalculator.calculateTenGods(saju.dayMaster, {
+                        year: saju.yearPillar.stem,
+                        month: saju.monthPillar.stem,
+                        day: saju.dayPillar.stem,
+                        hour: saju.hourPillar.stem
+                    });
+                    
+                    // 오행 분석 재계산
+                    saju.elements = window.sajuCalculator.analyzeElements([
+                        saju.yearPillar.stem, saju.yearPillar.branch,
+                        saju.monthPillar.stem, saju.monthPillar.branch,
+                        saju.dayPillar.stem, saju.dayPillar.branch,
+                        saju.hourPillar.stem, saju.hourPillar.branch
+                    ]);
+                }
+            }
+            
+            return saju;
         }
         
         // 사주 결과 표시
