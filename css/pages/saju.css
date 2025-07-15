@@ -224,3 +224,88 @@
         padding: 14px 20px;
     }
 }
+
+/* 사주 페이지 전용 폼 스타일 - styles.css의 !important 오버라이드 */
+.saju-page .form-control {
+    /* 기본 스타일 */
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333333;
+    background-color: #ffffff;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 12px 16px;
+    min-height: 44px;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-weight: 400;
+    transition: all 0.3s ease;
+    
+    /* 입력 활성화 */
+    pointer-events: auto;
+    user-select: text;
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    cursor: text;
+}
+
+.saju-page input[type="text"],
+.saju-page input[type="number"],
+.saju-page select,
+.saju-page textarea {
+    pointer-events: auto;
+    user-select: text;
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    cursor: text;
+    background-color: #fff;
+    color: #333;
+}
+
+.saju-page .form-control:focus {
+    border-color: #2563eb;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* 선택 필드 추가 스타일 */
+.saju-page select.form-control {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M10.293 3.293L6 7.586 1.707 3.293A1 1 0 00.293 4.707l5 5a1 1 0 001.414 0l5-5a1 1 0 10-1.414-1.414z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 36px;
+}
+
+/* 분석 버튼 스타일 */
+.saju-page .btn-analyze {
+    width: 100%;
+    margin-top: 30px;
+    font-size: 18px;
+    font-weight: 600;
+    padding: 16px 24px;
+}
+
+/* 결과 컨테이너 */
+.saju-result-container {
+    display: none;
+}
+
+.saju-result-container.show {
+    display: block;
+}
+
+/* 리셋 버튼 스타일 */
+.saju-page .btn-reset {
+    margin-top: 30px;
+}
+
+/* 프로그레스 바 동적 너비 */
+.saju-page .bar-fill[data-width] {
+    transition: width 0.8s ease;
+}
+
+/* JavaScript에서 data-width 값을 읽어 style.width로 설정 */

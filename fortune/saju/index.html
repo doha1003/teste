@@ -30,40 +30,6 @@
     <!-- Optimized CSS System -->
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="/css/pages/saju.css">
-    
-    <!-- Fix for input fields -->
-    <style>
-        /* 입력 필드 활성화 스타일 */
-        .form-control {
-            pointer-events: auto !important;
-            user-select: text !important;
-            -webkit-user-select: text !important;
-            -moz-user-select: text !important;
-            -ms-user-select: text !important;
-            cursor: text !important;
-        }
-        
-        input[type="text"],
-        input[type="number"],
-        select,
-        textarea {
-            pointer-events: auto !important;
-            user-select: text !important;
-            -webkit-user-select: text !important;
-            -moz-user-select: text !important;
-            -ms-user-select: text !important;
-            cursor: text !important;
-            background-color: #fff !important;
-            color: #333 !important;
-        }
-        
-        /* 입력 필드 포커스 스타일 */
-        .form-control:focus {
-            outline: 2px solid #4A90E2 !important;
-            outline-offset: 2px;
-            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1) !important;
-        }
-    </style>
 </head>
 <body class="saju-page">
     <!-- 네비게이션 바 -->
@@ -147,14 +113,14 @@
                         </label>
                     </div>
                     
-                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 30px;">
+                    <button type="submit" class="btn btn-primary btn-analyze">
                         🔮 사주팔자 분석하기
                     </button>
                 </form>
             </div>
             
             <!-- 사주 결과 영역 -->
-            <div id="sajuResult" style="display: none;">
+            <div id="sajuResult" class="saju-result-container">
                 <!-- 결과가 여기에 표시됩니다 -->
             </div>
         </div>
@@ -483,8 +449,9 @@
             const isLunar = document.getElementById('isLunar').checked;
             
             // 로딩 표시
-            document.getElementById('sajuResult').style.display = 'block';
-            document.getElementById('sajuResult').innerHTML = `
+            const resultContainer = document.getElementById('sajuResult');
+            resultContainer.classList.add('show');
+            resultContainer.innerHTML = `
                 <div class="fortune-loading-container">
                     <div class="fortune-loading-spinner"></div>
                     <div class="fortune-loading-text">🔮 AI가 ${userName}님의 사주팔자를 분석하고 있습니다<span class="fortune-loading-dots"></span></div>
@@ -606,7 +573,7 @@
                                 <div class="element-bar">
                                     <span class="element-name">${element}</span>
                                     <div class="bar-container">
-                                        <div class="bar-fill" style="width: ${count * 25}%"></div>
+                                        <div class="bar-fill" data-width="${count * 25}"></div>
                                     </div>
                                     <span class="element-count">${count}</span>
                                 </div>
@@ -710,19 +677,26 @@
                     </div>
                     
                     <!-- 다시하기 버튼 -->
-                    <button onclick="resetSajuForm()" class="btn btn-secondary" style="margin-top: 30px;">
+                    <button onclick="resetSajuForm()" class="btn btn-secondary btn-reset">
                         🔄 다시 분석하기
                     </button>
                 </div>
             `;
             
             document.getElementById('sajuResult').innerHTML = resultHTML;
+            
+            // 프로그레스 바 애니메이션 적용
+            setTimeout(() => {
+                document.querySelectorAll('.bar-fill[data-width]').forEach(bar => {
+                    bar.style.width = bar.getAttribute('data-width') + '%';
+                });
+            }, 100);
         }
         
         // 폼 리셋 함수
         function resetSajuForm() {
             document.getElementById('sajuForm').style.display = 'block';
-            document.getElementById('sajuResult').style.display = 'none';
+            document.getElementById('sajuResult').classList.remove('show');
             document.getElementById('sajuForm').scrollIntoView({ behavior: 'smooth' });
         }
     </script>
