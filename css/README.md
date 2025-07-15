@@ -7,7 +7,7 @@ The CSS architecture has been completely restructured from a single monolithic `
 
 ```
 css/
-├── main.css              # Main entry point that imports all modules
+├── styles.css            # Main entry point that imports all modules (consolidated)
 ├── base/                 # Foundation styles
 │   ├── reset.css        # CSS reset and normalization
 │   ├── variables.css    # CSS custom properties (colors, spacing, etc.)
