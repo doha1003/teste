@@ -39,6 +39,7 @@
     <script src="/js/manseryeok-data.js"></script>
     <script src="/js/lunar-calendar-optimized.min.js"></script>
     <script src="/js/saju-calculator.min.js"></script>
+    <script src="/js/manseryeok-database.js"></script>
     
     <!-- Optimized CSS System -->
     <link rel="stylesheet" href="/css/styles.css">
@@ -243,7 +244,7 @@
             // 오늘 날짜
             const today = new Date();
             // 오늘의 일주 계산
-            const todayPillar = window.sajuCalculator.calculateSaju(today.getFullYear(), today.getMonth() + 1, today.getDate(), 12, false).dayPillar;
+            const todayPillar = getTodayPillarFromManseryeok();
             
             // 일주 관계 분석
             const relation = analyzeRelation(saju.dayPillar, todayPillar);
@@ -901,6 +902,35 @@
         };
     </script>
     
+        // 만세력 데이터에서 오늘의 일주 가져오기
+        function getTodayPillarFromManseryeok() {
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = today.getMonth() + 1;
+            const day = today.getDate();
+            
+            // 만세력 데이터베이스에서 조회
+            if (window.getManseryeokData) {
+                const data = window.getManseryeokData(year, month, day);
+                if (data) {
+                    return {
+                        stem: data.dayGanji.charAt(0),
+                        branch: data.dayGanji.charAt(1)
+                    };
+                }
+            }
+            
+            // 폴백: 간단한 계산
+            const totalDays = Math.floor(today.getTime() / (1000 * 60 * 60 * 24));
+            const ganjiIndex = totalDays % 60;
+            const stems = ["갑", "을", "병", "정", "무", "기", "경", "신", "임", "계"];
+            const branches = ["자", "축", "인", "묘", "진", "사", "오", "미", "신", "유", "술", "해"];
+            
+            return {
+                stem: stems[ganjiIndex % 10],
+                branch: branches[ganjiIndex % 12]
+            };
+        }
     <!-- Kakao SDK -->
     <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.4.0/kakao.min.js" integrity="sha384-mXVrIX2T/Kszp6Z0aEWaA8Nm7J6/ZeWXbL8UpGRjKwWe56Srd/iyNmWMBhcItAjH" crossorigin="anonymous"></script>
     <script>
