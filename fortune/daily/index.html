@@ -237,14 +237,13 @@
                 return;
             }
             
-            const sajuCalculator = new SajuCalculator();
-            
             // 사주 계산 (만세력 데이터 사용)
-            const saju = sajuCalculator.calculateSaju(birthYear, birthMonth, birthDay, birthTime >= 0 ? birthTime : 12, isLunar);
+            const saju = window.sajuCalculator.calculateSaju(birthYear, birthMonth, birthDay, birthTime >= 0 ? birthTime : 12, isLunar);
             
             // 오늘 날짜
             const today = new Date();
-            const todayPillar = sajuCalculator.calculateDayPillar(today.getFullYear(), today.getMonth() + 1, today.getDate());
+            // 오늘의 일주 계산
+            const todayPillar = window.sajuCalculator.calculateSaju(today.getFullYear(), today.getMonth() + 1, today.getDate(), 12, false).dayPillar;
             
             // 일주 관계 분석
             const relation = analyzeRelation(saju.dayPillar, todayPillar);
