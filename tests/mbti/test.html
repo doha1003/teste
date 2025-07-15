@@ -247,8 +247,7 @@
     <div id="footer-placeholder"></div>
     
     <!-- External JavaScript -->
-    <script src="/js/api-config.js"></script>
-    <script src="/js/config.js"></script>
+    <script src="/js/doha-config.js"></script>
     <script src="/js/bundle.min.js" defer></script>
     <script src="/js/main.min.js"></script>
     <script src="/js/mbti-test.min.js"></script>
@@ -264,7 +263,7 @@
             }
             
             // 도메인 검증
-            if (!Config.validateDomain()) {
+            if (!DohaConfig.utils.validateDomain()) {
                 console.warn('허용되지 않은 도메인에서의 접근:', window.location.hostname);
                 return;
             }
@@ -272,7 +271,7 @@
             if (typeof Kakao !== 'undefined' && !Kakao.isInitialized()) {
                 try {
                     // 설정 파일에서 API 키 가져오기
-                    Kakao.init(Config.kakao.appKey);
+                    Kakao.init(DohaConfig.api.kakao.appKey);
                     console.log('Kakao SDK 초기화 성공');
                 } catch (error) {
                     console.error('Kakao SDK 초기화 실패:', error);

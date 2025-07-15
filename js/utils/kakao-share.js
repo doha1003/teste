@@ -19,12 +19,12 @@ function initializeKakaoSDK() {
         return false;
     }
 
-    if (typeof Config === 'undefined' || !Config.kakao || !Config.kakao.appKey) {
+    if (typeof Config === 'undefined' || !Config.kakao || !DohaConfig.api.kakao.appKey) {
         console.error('Config.js가 로드되지 않았거나 API 키가 설정되지 않았습니다.');
         return false;
     }
 
-    if (!Config.validateDomain()) {
+    if (!DohaConfig.utils.validateDomain()) {
         console.warn('허용되지 않은 도메인에서 접근하고 있습니다.');
         return false;
     }
@@ -35,7 +35,7 @@ function initializeKakaoSDK() {
     }
 
     try {
-        Kakao.init(Config.kakao.appKey);
+        Kakao.init(DohaConfig.api.kakao.appKey);
         kakaoInitialized = true;
         console.log('Kakao SDK 초기화 성공');
         

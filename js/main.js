@@ -728,7 +728,29 @@ window.addEventListener('load', function() {
     setTimeout(initAdSense, 1000);
 });
 
-// 전역 함수로 내보내기
+// DohaUtils 네임스페이스로 전역 함수 내보내기
+window.DohaUtils = {
+    // UI 관련
+    toggleMobileMenu,
+    showServices,
+    showNotification,
+    toggleDarkMode,
+    
+    // 공유 기능
+    shareResult,
+    
+    // 유틸리티
+    validateForm,
+    storage,
+    formatDate,
+    formatNumber,
+    
+    // 운세 헬퍼
+    fortune: fortuneHelpers()
+};
+
+// 기존 코드와의 호환성 유지 (점진적 마이그레이션)
+// 추후 제거 예정
 window.toggleMobileMenu = toggleMobileMenu;
 window.showServices = showServices;
 window.shareResult = shareResult;

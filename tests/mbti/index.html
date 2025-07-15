@@ -459,9 +459,9 @@
         });
         
         // 카카오 SDK 초기화 (config.js 필요)
-        if (typeof Kakao !== 'undefined' && typeof Config !== 'undefined' && Config.kakao && Config.kakao.appKey) {
-            if (Config.validateDomain()) {
-                Kakao.init(Config.kakao.appKey);
+        if (typeof Kakao !== 'undefined' && typeof Config !== 'undefined' && Config.kakao && DohaConfig.api.kakao.appKey) {
+            if (DohaConfig.utils.validateDomain()) {
+                Kakao.init(DohaConfig.api.kakao.appKey);
                 console.log('Kakao SDK initialized successfully');
             } else {
                 console.warn('Domain validation failed - Kakao SDK not initialized');
