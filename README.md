@@ -3,7 +3,7 @@
 [![Website](https://img.shields.io/badge/Website-doha.kr-blue)](https://doha.kr)
 [![GitHub Pages](https://img.shields.io/badge/Powered%20by-GitHub%20Pages-green)](https://pages.github.com/)
 [![Vercel](https://img.shields.io/badge/API-Vercel-black)](https://vercel.com)
-[![Last Updated](https://img.shields.io/badge/Last%20Updated-2025--07--14-brightgreen)](https://github.com/doha1003/teste)
+[![Last Updated](https://img.shields.io/badge/Last%20Updated-2025--01--16-brightgreen)](https://github.com/doha1003/teste)
 
 > 심리테스트, AI 운세, 실용도구가 한곳에! 재미있고 유용한 무료 서비스를 제공하는 종합 엔터테인먼트 플랫폼입니다.
 
@@ -77,28 +77,46 @@ doha.kr/ (총 30+ 페이지, 50+ JS 파일, 18개 CSS 파일)
 ├── 📁 api/                      # Vercel 서버리스 함수
 │   ├── fortune.js              # Gemini API 운세 생성 엔진
 │   └── saju.js                 # 만세력 연동 사주 계산 API
-├── 📁 css/                     # 통합 CSS 아키텍처
-│   ├── styles.css             # 통합 메인 스타일시트 (92KB)
-│   ├── variables.css          # CSS 변수 및 테마
-│   ├── base.css              # 기본 리셋 스타일
-│   ├── components.css        # 공통 컴포넌트
-│   └── pages/                # 페이지별 전용 CSS (12개)
-│       ├── mbti-test.css    # MBTI 테스트 전용
-│       ├── love-dna-test.css # Love DNA 테스트 전용
-│       ├── teto-egen-test.css # 테토-에겐 테스트 전용
-│       ├── fortune-main.css  # 운세 메인 페이지
-│       ├── text-counter.css  # 글자수 세기 도구
-│       ├── bmi-calculator.css # BMI 계산기
-│       └── salary-calculator.css # 연봉 계산기
-├── 📁 js/                      # JavaScript 모듈
-│   ├── main.js               # 컴포넌트 로딩 & 공통 기능
-│   ├── gemini-api.js         # Gemini API 클라이언트
-│   ├── api-config.js         # API 설정 관리
-│   ├── pages/                # 페이지별 스크립트
-│   │   ├── mbti-test.js     # MBTI 테스트 로직
-│   │   ├── love-dna-test.js # Love DNA 테스트 로직
-│   │   └── fortune.js       # 운세 공통 기능
-│   └── utils/               # 유틸리티 함수
+├── 📁 css/                     # 모듈화된 CSS 아키텍처
+│   ├── styles.css             # 메인 스타일시트 (모든 모듈 import)
+│   ├── base/                  # 기본 스타일 모듈
+│   │   ├── variables.css      # CSS 변수 및 테마
+│   │   ├── reset.css          # 기본 리셋 스타일
+│   │   └── typography.css     # 타이포그래피
+│   ├── layout/                # 레이아웃 모듈
+│   │   ├── container.css      # 컨테이너 스타일
+│   │   └── grid.css           # 그리드 시스템
+│   ├── components/            # 컴포넌트 모듈
+│   │   ├── navigation.css     # 네비게이션
+│   │   ├── buttons.css        # 버튼 스타일
+│   │   ├── cards.css          # 카드 컴포넌트
+│   │   ├── forms.css          # 폼 요소
+│   │   └── hero.css           # 히어로 섹션
+│   ├── pages/                 # 페이지별 전용 CSS
+│   │   ├── homepage.css       # 홈페이지 스타일
+│   │   ├── test-pages.css     # 테스트 페이지 공통
+│   │   ├── fortune-pages.css  # 운세 페이지 공통
+│   │   └── tools-pages.css    # 도구 페이지 공통
+│   └── utilities/             # 유틸리티 모듈
+│       ├── helpers.css        # 헬퍼 클래스
+│       ├── animations.css     # 애니메이션
+│       ├── responsive.css     # 반응형 미디어 쿼리
+│       └── print.css          # 인쇄 스타일
+├── 📁 js/                      # 모듈화된 JavaScript
+│   ├── doha-config.js         # 통합 설정 관리 (API 키, 사이트 설정)
+│   ├── core/                  # 핵심 모듈
+│   │   └── error-handler.js   # 중앙화된 오류 처리
+│   ├── ui/                    # UI 관련 모듈
+│   │   └── components.js      # 컴포넌트 로더
+│   ├── features/              # 기능별 모듈
+│   │   ├── tests/             # 심리테스트 로직
+│   │   ├── tools/             # 실용도구 로직
+│   │   └── fortune/           # 운세 기능
+│   ├── utils/                 # 유틸리티 모듈
+│   │   ├── storage.js         # 로컬 스토리지 관리
+│   │   ├── kakao-share.js     # 카카오톡 공유
+│   │   └── formatting.js      # 데이터 포맷팅
+│   └── analytics.js           # 사용자 분석 및 봇 감지
 ├── 📁 tests/                   # 심리테스트 모음
 │   ├── index.html           # 테스트 목록 페이지
 │   ├── mbti/               # MBTI 성격유형 검사

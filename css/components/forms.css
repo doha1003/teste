@@ -1,0 +1,476 @@
+/* =========================================================================
+   FORMS COMPONENT STYLES
+   ========================================================================= */
+
+/* =========================================================================
+   BASE FORM ELEMENTS
+   ========================================================================= */
+
+/* Base form element styles */
+input,
+textarea,
+select {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 16px; /* Prevents zoom on iOS */
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+    min-height: 44px; /* iOS touch target requirement */
+}
+
+/* Enhanced form controls */
+input[type="search"],
+input[type="url"],
+textarea,
+.form-control,
+.form-input {
+    /* Prevent iOS Safari zoom on focus */
+    font-size: 16px;
+    line-height: 1.5;
+    
+    /* Enhanced readability */
+    color: var(--text-primary);
+    background-color: var(--bg-primary);
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    padding: 12px 16px;
+}
+
+/* Alternative form styling */
+input.alt-style,
+textarea.alt-style,
+select.alt-style {
+    color: #0f172a;
+    background: #ffffff;
+    border: 2px solid #cbd5e1;
+    font-weight: 500;
+}
+
+/* =========================================================================
+   FOCUS STATES
+   ========================================================================= */
+
+/* Focus styles */
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* Enhanced focus styles */
+input[type="search"]:focus,
+input[type="url"]:focus,
+select:focus,
+textarea:focus,
+.form-control:focus,
+.form-input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    outline: none;
+    background-color: var(--bg-primary);
+}
+
+/* Alternative focus styles */
+input.alt-style:focus,
+textarea.alt-style:focus,
+select.alt-style:focus {
+    border-color: #1e40af;
+    box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+    outline: none !important;
+}
+
+/* Focus visible outline */
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+    outline: 2px solid var(--primary-500);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+}
+
+/* =========================================================================
+   PLACEHOLDERS
+   ========================================================================= */
+
+/* Placeholder styles */
+input::placeholder,
+textarea::placeholder,
+select::placeholder,
+.form-control::placeholder {
+    color: var(--text-muted);
+    opacity: 0.7 !important;
+    font-size: 16px;
+}
+
+/* Alternative placeholder styles */
+input.alt-style::placeholder,
+textarea.alt-style::placeholder {
+    color: #64748b;
+    opacity: 1 !important;
+}
+
+/* =========================================================================
+   SELECT DROPDOWNS
+   ========================================================================= */
+
+/* Select dropdown enhancement */
+select,
+.form-control[name*="Year"],
+.form-control[name*="Month"],
+.form-control[name*="Day"],
+.form-control[name*="Time"] {
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e") !important;
+    background-position: right 12px center !important;
+    background-repeat: no-repeat !important;
+    background-size: 16px !important;
+    padding-right: 48px !important;
+}
+
+/* =========================================================================
+   FORM LABELS
+   ========================================================================= */
+
+/* Base label styles */
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+/* Enhanced label styles */
+label,
+.form-label,
+.form-group label {
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 8px !important;
+    display: block !important;
+}
+
+/* Alternative label styles */
+label.alt-style {
+    color: #0f172a;
+    font-weight: 600;
+}
+
+/* =========================================================================
+   FORM GROUPS
+   ========================================================================= */
+
+/* Form group layout */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+/* =========================================================================
+   FORM VALIDATION STATES
+   ========================================================================= */
+
+/* Invalid states */
+input:invalid,
+select:invalid,
+textarea:invalid {
+    border-color: #ef4444;
+}
+
+/* Valid states */
+input:valid,
+select:valid,
+textarea:valid {
+    border-color: #10b981;
+}
+
+/* =========================================================================
+   CUSTOM FORM CONTROLS
+   ========================================================================= */
+
+/* Option buttons (radio/checkbox alternatives) */
+.option-btn {
+    background: white;
+    border: 2px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 16px 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+    display: block;
+    width: 100%;
+    margin-bottom: 12px;
+    position: relative;
+}
+
+.option-btn:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.option-btn.selected {
+    border-color: var(--primary-color);
+    background: rgba(99, 102, 241, 0.05);
+    box-shadow: var(--shadow-sm);
+}
+
+.option-btn.selected::before {
+    content: '✓';
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    color: var(--primary-color);
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/* Gender selection component */
+.gender-selection {
+    margin-bottom: 40px;
+}
+
+.gender-options {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.gender-option {
+    background: white;
+    border: 2px solid var(--gray-200);
+    border-radius: 16px;
+    padding: 32px 24px;
+    cursor: pointer;
+    transition: all 0.3s;
+    min-width: 180px;
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+}
+
+.gender-option:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.gender-option.selected {
+    border-color: var(--primary-color);
+    background: rgba(99, 102, 241, 0.05);
+    box-shadow: var(--shadow-md);
+}
+
+.gender-icon {
+    font-size: 4em;
+    margin-bottom: 16px;
+    display: block;
+}
+
+.gender-label {
+    font-size: 1.3em;
+    font-weight: 600;
+    color: var(--gray-900);
+}
+
+/* Multiple choice options */
+.option {
+    background: white;
+    border: 2px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-bottom: 16px;
+    position: relative;
+}
+
+.option:hover {
+    border-color: var(--primary-color);
+    background: rgba(99, 102, 241, 0.02);
+}
+
+.option.selected {
+    border-color: var(--primary-color);
+    background: rgba(99, 102, 241, 0.1);
+}
+
+.option.selected::after {
+    content: '✓';
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    color: var(--primary-color);
+    font-weight: bold;
+    font-size: 18px;
+}
+
+/* Love test options */
+.love-option {
+    background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
+    border: 2px solid #e17055;
+    border-radius: 15px;
+    padding: 20px;
+    margin: 15px 0;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+    font-weight: 600;
+    color: #2d3436;
+}
+
+.love-option:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(225, 112, 85, 0.3);
+}
+
+.love-option.selected {
+    background: linear-gradient(135deg, #fd79a8 0%, #e84393 100%);
+    border-color: #e84393;
+    color: white;
+    transform: scale(1.02);
+}
+
+/* =========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================= */
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+    /* Form elements on mobile */
+    input,
+    textarea,
+    select,
+    .form-control,
+    .form-input {
+        font-size: 16px; /* Prevent zoom on iOS */
+        padding: 16px;
+        min-height: 48px;
+    }
+    
+    /* Labels on mobile */
+    label,
+    .form-label,
+    .form-group label {
+        font-size: 16px;
+        font-weight: 600;
+    }
+    
+    /* Gender options responsive */
+    .gender-options {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .gender-option {
+        width: 100%;
+        max-width: 300px;
+    }
+    
+    /* Option buttons responsive */
+    .option-btn {
+        font-size: 16px;
+        padding: 18px 20px;
+    }
+}
+
+/* =========================================================================
+   ACCESSIBILITY
+   ========================================================================= */
+
+/* Screen reader accessibility */
+.sr-only {
+    position: absolute !important;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0;
+}
+
+/* Focus outline for accessibility */
+*:focus {
+    outline: 2px solid var(--primary-color) !important;
+    outline-offset: 2px;
+}
+
+/* Touch target minimum sizes for accessibility */
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+.option-btn,
+.gender-option,
+.option,
+.love-option {
+    min-height: 44px; /* iOS touch target requirement */
+}
+
+/* =========================================================================
+   SPECIAL FORM COMPONENTS
+   ========================================================================= */
+
+/* Text counter specific textarea */
+#text-counter-page textarea {
+    resize: vertical;
+    min-height: 200px;
+}
+
+/* =========================================================================
+   FORM STATES AND INTERACTIONS
+   ========================================================================= */
+
+/* Disabled states */
+input:disabled,
+textarea:disabled,
+select:disabled,
+.form-control:disabled,
+.form-input:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background-color: var(--gray-100);
+}
+
+/* Required field indicator */
+.form-group.required label::after,
+.form-label.required::after {
+    content: ' *';
+    color: var(--error-500);
+    font-weight: bold;
+}
+
+/* Form error states */
+.form-group.error input,
+.form-group.error textarea,
+.form-group.error select {
+    border-color: var(--error-500);
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.form-group.error .error-message {
+    color: var(--error-500);
+    font-size: 14px;
+    margin-top: 4px;
+    display: block;
+}
+
+/* Form success states */
+.form-group.success input,
+.form-group.success textarea,
+.form-group.success select {
+    border-color: var(--success-500);
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}

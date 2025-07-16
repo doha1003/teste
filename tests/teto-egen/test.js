@@ -7,11 +7,11 @@ document.addEventListener('DOMContentLoaded', function() {
         if (typeof Kakao !== 'undefined') {
             if (!Kakao.isInitialized()) {
                 try {
-                    // config.js에서 API 키 가져오기
-                    if (typeof Config !== 'undefined' && Config.kakao && Config.kakao.appKey && Config.validateDomain()) {
-                        Kakao.init(Config.kakao.appKey);
+                    // doha-config.js에서 API 키 가져오기
+                    if (typeof DohaConfig !== 'undefined' && DohaConfig.api.kakao && DohaConfig.api.kakao.appKey && DohaConfig.utils.validateDomain()) {
+                        Kakao.init(DohaConfig.api.kakao.appKey);
                     } else {
-                        console.error('Config not available or domain validation failed');
+                        console.error('DohaConfig not available or domain validation failed');
                         return;
                     }
                     console.log('Kakao SDK initialized:', Kakao.isInitialized());

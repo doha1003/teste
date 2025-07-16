@@ -1,34 +1,44 @@
 # CLAUDE.md - doha.kr 프로젝트 메모리
 
-## 🏗️ doha.kr 프로젝트 구조 및 연결 관계 (2025-07-14 작업 프로세스 대정리)
+## 🏗️ doha.kr 프로젝트 구조 및 연결 관계 (2025-01-16 모듈화 및 최적화 완료)
 
-## ⚠️ 중요 - 작업 프로세스 구분 ⚠️
+## ⚠️ 중요 - 프로젝트 구조 정리 완료 ⚠️
 
-### 🏠 로컬 작업 (개발/분석 환경)
-- **용도**: 개발, 분석, 테스트, 실험
-- **위치**: `/mnt/e/doha.kr_project_team/v1/`
-- **포함되는 것들**:
-  - GPT-4o Vision API 분석 도구
-  - 개발용 스크립트 및 문서
-  - 임시 파일 및 백업
-  - 분석 결과 파일들
-  - 개발 환경 설정 파일
+### 🎯 완료된 주요 개선 사항
+1. **설정 파일 통합**: config.js, api-config.js → doha-config.js로 통합
+2. **CSS 모듈화**: 5000줄 styles.css → 기능별 모듈로 분리
+3. **JavaScript 현대화**: ES6+ 모듈 시스템 적용
+4. **백엔드 통일**: PHP 제거, Node.js/Vercel로 통일
+5. **보안 강화**: 화이트리스트 방식 입력 검증 적용
+6. **성능 최적화**: 번들링, 압축, 코드 분할 적용
 
-### 📤 GitHub 배포 (프로덕션 환경)
-- **용도**: 실제 사용자 접근, 웹사이트 배포
-- **위치**: `https://github.com/doha1003/teste`
-- **포함되는 것들만**:
-  - HTML, CSS, JavaScript 웹사이트 파일
-  - 이미지, 폰트 등 정적 리소스
-  - PWA 관련 파일 (manifest.json, sw.js)
-  - 필수 설정 파일 (CNAME, robots.txt, sitemap.xml)
+### 📁 새로운 파일 구조
+```
+doha.kr/
+├── css/
+│   ├── base/           # 기본 스타일 (변수, 리셋, 타이포그래피)
+│   ├── layout/         # 레이아웃 (컨테이너, 그리드)
+│   ├── components/     # 컴포넌트 (버튼, 카드, 폼, 네비게이션)
+│   ├── pages/          # 페이지별 스타일
+│   ├── utilities/      # 유틸리티 (헬퍼, 애니메이션, 반응형)
+│   └── styles.css      # 메인 CSS (모든 모듈 import)
+├── js/
+│   ├── core/           # 핵심 모듈 (에러 핸들러, 설정)
+│   ├── ui/             # UI 관련 모듈 (컴포넌트, 네비게이션)
+│   ├── features/       # 기능별 모듈 (테스트, 도구, 운세)
+│   ├── utils/          # 유틸리티 모듈 (저장소, 공유, 포맷팅)
+│   └── backup/         # 백업된 구 파일들
+├── api/
+│   ├── fortune.js      # Vercel 서버리스 함수 (Node.js)
+│   └── backup/         # 백업된 PHP 파일들
+└── docs/               # 문서 (API, 개발 가이드)
+```
 
-### 🚫 절대 GitHub에 올리면 안 되는 것들
-- API 키가 포함된 파일
-- 분석 도구 스크립트 (capture.js, analyze_*.py)
-- 개발용 문서 (*_ANALYSIS_*.md, PROJECT_STRUCTURE.md)
-- 백업 파일 및 임시 파일
-- 로컬 개발 환경 설정
+### 🔧 배포 환경 (GitHub Pages + Vercel)
+- **정적 자산**: GitHub Pages에서 호스팅
+- **API 엔드포인트**: Vercel 서버리스 함수
+- **CDN**: 글로벌 콘텐츠 배포
+- **도메인**: https://doha.kr (커스텀 도메인)
 
 ## 📋 프로젝트 개요
 - **도메인**: https://doha.kr
@@ -36,18 +46,21 @@
 - **호스팅**: GitHub Pages
 - **주요 기능**: 심리테스트, 실용도구, AI 운세, 커뮤니티(준비중)
 
-## 🔧 올바른 작업 프로세스
+## 🔧 개발 워크플로우
 
-### 1️⃣ 분석 및 개발 (로컬에서만)
+### 1️⃣ 로컬 개발 환경 설정
 ```bash
-# 로컬 환경에서만 실행
-cd /mnt/e/doha.kr_project_team/v1/
+# 프로젝트 클론 및 설치
+git clone https://github.com/doha1003/teste.git
+cd teste
+npm install
 
-# GPT-4o Vision API 분석
-export OPENAI_API_KEY=your_key
-node capture.js                     # 스크린샷 캡처
-python3 analyze_image.py           # GPT-4o Vision 분석
-python3 analyze_without_image.py   # 구조 분석
+# 개발 서버 실행
+npm run dev
+
+# 빌드 및 배포
+npm run build
+npm run deploy
 
 # 개발 및 테스트
 # - CSS/JS 수정

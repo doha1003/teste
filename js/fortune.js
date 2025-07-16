@@ -39,9 +39,9 @@
         
         // Check API configuration
         checkAPIConfig: function() {
-            if (typeof APIConfig !== 'undefined') {
-                const geminiConfig = APIConfig.getConfig('gemini');
-                if (geminiConfig && geminiConfig.apiKey) {
+            if (typeof DohaConfig !== 'undefined' && DohaConfig.api && DohaConfig.api.gemini) {
+                const geminiConfig = DohaConfig.api.gemini;
+                if (geminiConfig && geminiConfig.endpoint) {
                     this.config.hasAPI = true;
                     console.log('Gemini API configured');
                 } else {
