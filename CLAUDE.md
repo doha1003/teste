@@ -227,4 +227,43 @@ git push origin master
 
 ---
 
-*마지막 업데이트: 2025-01-14 - 긴급 검수 및 수정 진행 중*
+## 🔧 MCP (Model Context Protocol) 설정
+
+### 설치된 MCP 서버들:
+- **GitHub MCP**: `@missionsquad/mcp-github` - GitHub API 통합
+- **Playwright MCP**: `@playwright/mcp` - 웹 브라우저 자동화
+
+### Claude Code MCP 설정 파일 위치:
+`C:\Users\pc\.claude\settings.json`
+
+### MCP 설정 내용:
+```json
+{
+  "mcpServers": {
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@missionsquad/mcp-github"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "[YOUR_GITHUB_TOKEN]"
+      }
+    },
+    "playwright": {
+      "command": "npx",
+      "args": ["-y", "@playwright/mcp"]
+    }
+  }
+}
+```
+
+### MCP 재시작 방법:
+1. Claude Code 완전 종료
+2. 터미널/명령 프롬프트 재시작
+3. Claude Code 재실행
+
+### MCP 활용 가능 작업:
+- **GitHub**: 레포지토리 관리, 이슈/PR 생성, 파일 업로드/다운로드
+- **Playwright**: 웹 페이지 자동화, 스크린샷, 브라우저 테스트
+
+---
+
+*마지막 업데이트: 2025-07-17 - MCP 설정 완료*
