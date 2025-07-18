@@ -1644,6 +1644,507 @@ a:hover {
 }
 
 /* ==========================================================================
+   테스트 인덱스 페이지 스타일
+   ========================================================================== */
+
+.header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: var(--spacing-4xl) 0;
+    text-align: center;
+    color: var(--text-white);
+}
+
+.header-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
+}
+
+.header-title {
+    font-size: var(--font-size-4xl);
+    font-weight: 700;
+    margin-bottom: var(--spacing-md);
+    color: var(--text-white);
+}
+
+.header-subtitle {
+    font-size: var(--font-size-lg);
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 0;
+}
+
+.tests-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: var(--spacing-xl);
+    margin: var(--spacing-3xl) 0;
+}
+
+.test-card {
+    background: var(--bg-card);
+    border-radius: 16px;
+    padding: var(--spacing-2xl);
+    text-decoration: none;
+    box-shadow: var(--shadow-md);
+    transition: all var(--animation-duration) var(--animation-timing);
+    position: relative;
+    overflow: hidden;
+    display: block;
+}
+
+.test-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--gradient-primary);
+    transform: scaleX(0);
+    transition: transform var(--animation-duration) var(--animation-timing);
+}
+
+.test-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-xl);
+}
+
+.test-card:hover::before {
+    transform: scaleX(1);
+}
+
+.test-icon {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: var(--spacing-lg);
+}
+
+.test-title {
+    font-size: var(--font-size-2xl);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-md);
+}
+
+.test-description {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-lg);
+}
+
+.test-stats {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.test-stat {
+    font-size: var(--font-size-sm);
+    color: var(--text-tertiary);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.test-button {
+    display: inline-block;
+    background: var(--gradient-primary);
+    color: var(--text-white);
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all var(--animation-duration) var(--animation-timing);
+}
+
+.test-card:hover .test-button {
+    transform: translateX(5px);
+}
+
+/* ==========================================================================
+   운세 페이지 스타일
+   ========================================================================== */
+
+.fortune-header {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    padding: var(--spacing-4xl) 0;
+    text-align: center;
+    color: var(--text-white);
+}
+
+.fortune-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-xl);
+    margin: var(--spacing-3xl) 0;
+}
+
+.fortune-card {
+    background: var(--bg-card);
+    border-radius: 16px;
+    padding: var(--spacing-xl);
+    text-align: center;
+    text-decoration: none;
+    box-shadow: var(--shadow-md);
+    transition: all var(--animation-duration) var(--animation-timing);
+    position: relative;
+    overflow: hidden;
+}
+
+.fortune-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: var(--shadow-xl);
+}
+
+.fortune-icon {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-md);
+    display: block;
+}
+
+.fortune-title {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.fortune-description {
+    color: var(--text-secondary);
+    font-size: var(--font-size-sm);
+    line-height: 1.5;
+}
+
+.fortune-badge {
+    position: absolute;
+    top: var(--spacing-md);
+    right: var(--spacing-md);
+    background: var(--gradient-accent);
+    color: var(--text-white);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: 20px;
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+}
+
+/* ==========================================================================
+   도구 페이지 스타일
+   ========================================================================== */
+
+.tools-header {
+    background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+    padding: var(--spacing-4xl) 0;
+    text-align: center;
+    color: var(--text-white);
+}
+
+.tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-xl);
+    margin: var(--spacing-3xl) 0;
+}
+
+.tool-card {
+    background: var(--bg-card);
+    border-radius: 16px;
+    padding: var(--spacing-xl);
+    text-decoration: none;
+    box-shadow: var(--shadow-md);
+    transition: all var(--animation-duration) var(--animation-timing);
+    border: 2px solid transparent;
+}
+
+.tool-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-color);
+}
+
+.tool-emoji {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: var(--spacing-md);
+}
+
+.tool-name {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.tool-desc {
+    color: var(--text-secondary);
+    font-size: var(--font-size-base);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-md);
+}
+
+.tool-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+}
+
+.tool-tag {
+    background-color: var(--bg-tertiary);
+    color: var(--text-secondary);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: 12px;
+    font-size: var(--font-size-xs);
+}
+
+/* ==========================================================================
+   개별 도구 페이지 스타일
+   ========================================================================== */
+
+.tool-container {
+    max-width: 800px;
+    margin: var(--spacing-3xl) auto;
+    padding: 0 var(--spacing-lg);
+}
+
+.tool-header {
+    text-align: center;
+    margin-bottom: var(--spacing-3xl);
+}
+
+.tool-title {
+    font-size: var(--font-size-4xl);
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-lg);
+}
+
+.tool-subtitle {
+    font-size: var(--font-size-lg);
+    color: var(--text-secondary);
+}
+
+.tool-content {
+    background: var(--bg-card);
+    border-radius: 16px;
+    padding: var(--spacing-2xl);
+    box-shadow: var(--shadow-md);
+}
+
+/* 글자수 세기 도구 */
+.text-counter-container textarea {
+    width: 100%;
+    min-height: 300px;
+    padding: var(--spacing-lg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-family: var(--font-family);
+    font-size: var(--font-size-base);
+    resize: vertical;
+}
+
+.text-counter-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-xl);
+}
+
+.stat-box {
+    background: var(--bg-tertiary);
+    padding: var(--spacing-lg);
+    border-radius: 8px;
+    text-align: center;
+}
+
+.stat-value {
+    font-size: var(--font-size-2xl);
+    font-weight: 700;
+    color: var(--primary-color);
+    display: block;
+}
+
+.stat-label {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    margin-top: var(--spacing-xs);
+}
+
+/* BMI 계산기 */
+.bmi-form {
+    display: grid;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.form-group label {
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.form-group input {
+    padding: var(--spacing-md);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: var(--font-size-base);
+    transition: border-color var(--animation-duration) var(--animation-timing);
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.calculate-btn {
+    background: var(--gradient-primary);
+    color: var(--text-white);
+    padding: var(--spacing-md) var(--spacing-xl);
+    border: none;
+    border-radius: 8px;
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--animation-duration) var(--animation-timing);
+}
+
+.calculate-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.bmi-result {
+    background: var(--bg-tertiary);
+    padding: var(--spacing-xl);
+    border-radius: 12px;
+    text-align: center;
+    margin-top: var(--spacing-xl);
+}
+
+.bmi-value {
+    font-size: var(--font-size-4xl);
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-md);
+}
+
+.bmi-category {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+}
+
+.bmi-normal {
+    color: #10b981;
+}
+
+.bmi-overweight {
+    color: #f59e0b;
+}
+
+.bmi-obese {
+    color: #ef4444;
+}
+
+.bmi-underweight {
+    color: #3b82f6;
+}
+
+/* 연봉 계산기 */
+.salary-form {
+    display: grid;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+}
+
+.salary-result {
+    display: grid;
+    gap: var(--spacing-lg);
+}
+
+.salary-card {
+    background: var(--bg-tertiary);
+    padding: var(--spacing-xl);
+    border-radius: 12px;
+}
+
+.salary-card h3 {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-md);
+}
+
+.salary-breakdown {
+    display: grid;
+    gap: var(--spacing-sm);
+}
+
+.salary-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-sm) 0;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.salary-item:last-child {
+    border-bottom: none;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.salary-label {
+    color: var(--text-secondary);
+}
+
+.salary-value {
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+/* ==========================================================================
+   반응형 - 테스트/운세/도구 페이지
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    .header-title {
+        font-size: var(--font-size-3xl);
+    }
+    
+    .tests-grid,
+    .fortune-grid,
+    .tools-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+    }
+    
+    .test-card,
+    .fortune-card,
+    .tool-card {
+        padding: var(--spacing-lg);
+    }
+    
+    .test-stats {
+        flex-wrap: wrap;
+    }
+    
+    .tool-container {
+        padding: 0 var(--spacing-md);
+    }
+    
+    .tool-title {
+        font-size: var(--font-size-3xl);
+    }
+    
+    .text-counter-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* ==========================================================================
    프린트 스타일
    ========================================================================== */
 
