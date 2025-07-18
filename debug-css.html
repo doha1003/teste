@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS 디버깅 도구</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .debug-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .status-card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .status-card h3 {
+            margin: 0 0 10px 0;
+            color: #555;
+        }
+        .success {
+            background: #d4edda;
+            border-color: #28a745;
+        }
+        .error {
+            background: #f8d7da;
+            border-color: #dc3545;
+        }
+        .warning {
+            background: #fff3cd;
+            border-color: #ffc107;
+        }
+        .css-list {
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 3px;
+        }
+        .test-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .test-button:hover {
+            background: #0056b3;
+        }
+        #log {
+            background: #222;
+            color: #0f0;
+            padding: 15px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 400px;
+            overflow-y: auto;
+            border-radius: 5px;
+            white-space: pre-wrap;
+        }
+        .element-info {
+            margin: 10px 0;
+            padding: 10px;
+            background: #f8f9fa;
+            border-left: 4px solid #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="debug-container">
+        <h1>🔍 doha.kr CSS 디버깅 도구</h1>
+        
+        <div class="status-grid">
+            <div class="status-card" id="css-status">
+                <h3>CSS 파일 로드 상태</h3>
+                <div id="css-load-info">검사 중...</div>
+            </div>
+            
+            <div class="status-card" id="class-status">
+                <h3>CSS 클래스 검사</h3>
+                <div id="class-info">검사 중...</div>
+            </div>
+            
+            <div class="status-card" id="style-status">
+                <h3>스타일 적용 상태</h3>
+                <div id="style-info">검사 중...</div>
+            </div>
+        </div>
+
+        <div style="margin: 20px 0;">
+            <button class="test-button" onclick="runFullTest()">전체 테스트 실행</button>
+            <button class="test-button" onclick="checkOverflow()">오버플로우 검사</button>
+            <button class="test-button" onclick="checkMobileMenu()">모바일 메뉴 검사</button>
+            <button class="test-button" onclick="checkCTA()">CTA 섹션 검사</button>
+            <button class="test-button" onclick="clearLog()">로그 지우기</button>
+        </div>
+
+        <h2>📋 디버그 로그</h2>
+        <div id="log"></div>
+    </div>
+
+    <script>
+        const log = (msg, type = 'info') => {
+            const logEl = document.getElementById('log');
+            const time = new Date().toLocaleTimeString();
+            const symbol = type === 'error' ? '❌' : type === 'success' ? '✅' : type === 'warning' ? '⚠️' : 'ℹ️';
+            logEl.innerHTML += `[${time}] ${symbol} ${msg}\n`;
+            logEl.scrollTop = logEl.scrollHeight;
+        };
+
+        const clearLog = () => {
+            document.getElementById('log').innerHTML = '';
+            log('로그를 지웠습니다.', 'info');
+        };
+
+        // CSS 파일 로드 상태 확인
+        const checkCSSFiles = async () => {
+            log('CSS 파일 로드 상태 확인 시작...', 'info');
+            const cssFiles = document.querySelectorAll('link[rel="stylesheet"]');
+            const statusEl = document.getElementById('css-load-info');
+            let html = '<div class="css-list">';
+            
+            for (const css of cssFiles) {
+                const href = css.href;
+                try {
+                    const response = await fetch(href, { method: 'HEAD' });
+                    const status = response.ok ? '✅ OK' : `❌ ${response.status}`;
+                    html += `${status} ${href}\n`;
+                    log(`CSS 파일: ${href} - ${status}`, response.ok ? 'success' : 'error');
+                } catch (e) {
+                    html += `❌ ERROR ${href}\n`;
+                    log(`CSS 파일 로드 실패: ${href} - ${e.message}`, 'error');
+                }
+            }
+            
+            html += '</div>';
+            statusEl.innerHTML = html;
+            
+            // CSS 규칙 수 확인
+            let totalRules = 0;
+            for (const sheet of document.styleSheets) {
+                try {
+                    totalRules += sheet.cssRules.length;
+                } catch (e) {
+                    log(`스타일시트 접근 불가: ${sheet.href}`, 'warning');
+                }
+            }
+            log(`총 CSS 규칙 수: ${totalRules}개`, 'info');
+        };
+
+        // CSS 클래스 존재 확인
+        const checkCSSClasses = () => {
+            log('CSS 클래스 검사 시작...', 'info');
+            const testClasses = ['navbar', 'hero', 'container', 'btn', 'footer', 'cta', 'mobile-menu-btn'];
+            const statusEl = document.getElementById('class-info');
+            let foundCount = 0;
+            let html = '<ul style="margin: 0; padding-left: 20px;">';
+            
+            testClasses.forEach(className => {
+                const elements = document.getElementsByClassName(className);
+                const found = elements.length > 0;
+                if (found) foundCount++;
+                html += `<li>${found ? '✅' : '❌'} .${className} (${elements.length}개)</li>`;
+                log(`클래스 .${className}: ${found ? `발견 (${elements.length}개)` : '없음'}`, found ? 'success' : 'error');
+            });
+            
+            html += '</ul>';
+            statusEl.innerHTML = html;
+            
+            const cardEl = document.getElementById('class-status');
+            cardEl.className = `status-card ${foundCount === testClasses.length ? 'success' : foundCount > 0 ? 'warning' : 'error'}`;
+        };
+
+        // 스타일 적용 확인
+        const checkStyles = () => {
+            log('스타일 적용 상태 확인...', 'info');
+            const statusEl = document.getElementById('style-info');
+            const testElements = [
+                { selector: '.navbar', property: 'background' },
+                { selector: '.hero', property: 'padding' },
+                { selector: '.btn', property: 'background' },
+                { selector: '.cta', property: 'background' },
+                { selector: '.footer', property: 'background' }
+            ];
+            
+            let html = '<div class="element-info">';
+            let successCount = 0;
+            
+            testElements.forEach(test => {
+                const el = document.querySelector(test.selector);
+                if (el) {
+                    const style = window.getComputedStyle(el);
+                    const value = style[test.property];
+                    const hasStyle = value && value !== 'none' && value !== 'rgba(0, 0, 0, 0)';
+                    if (hasStyle) successCount++;
+                    html += `<div>${hasStyle ? '✅' : '❌'} ${test.selector} - ${test.property}: ${value || 'none'}</div>`;
+                    log(`${test.selector} ${test.property}: ${value || 'none'}`, hasStyle ? 'success' : 'warning');
+                } else {
+                    html += `<div>❌ ${test.selector} - 요소를 찾을 수 없음</div>`;
+                    log(`${test.selector} 요소를 찾을 수 없음`, 'error');
+                }
+            });
+            
+            html += '</div>';
+            statusEl.innerHTML = html;
+            
+            const cardEl = document.getElementById('style-status');
+            cardEl.className = `status-card ${successCount === testElements.length ? 'success' : successCount > 0 ? 'warning' : 'error'}`;
+        };
+
+        // 오버플로우 검사
+        const checkOverflow = () => {
+            log('오버플로우 검사 시작...', 'info');
+            const elements = document.querySelectorAll('*');
+            const viewportWidth = window.innerWidth;
+            let overflowCount = 0;
+            
+            elements.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.right > viewportWidth || rect.left < 0) {
+                    overflowCount++;
+                    log(`오버플로우 발견: ${el.tagName}.${el.className} - 너비: ${rect.width}px, 위치: ${rect.left}px`, 'warning');
+                }
+            });
+            
+            log(`총 ${overflowCount}개의 오버플로우 요소 발견`, overflowCount > 0 ? 'warning' : 'success');
+        };
+
+        // 모바일 메뉴 검사
+        const checkMobileMenu = () => {
+            log('모바일 메뉴 검사 시작...', 'info');
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            if (menuBtn) {
+                const style = window.getComputedStyle(menuBtn);
+                log(`모바일 메뉴 버튼 발견`, 'success');
+                log(`display: ${style.display}`, style.display !== 'none' ? 'success' : 'error');
+                log(`visibility: ${style.visibility}`, 'info');
+                log(`opacity: ${style.opacity}`, 'info');
+                
+                // 768px 이하에서 표시되는지 확인
+                if (window.innerWidth <= 768) {
+                    if (style.display === 'none') {
+                        log('모바일 뷰에서 메뉴 버튼이 숨겨져 있음!', 'error');
+                    } else {
+                        log('모바일 뷰에서 메뉴 버튼이 정상적으로 표시됨', 'success');
+                    }
+                }
+            } else {
+                log('모바일 메뉴 버튼을 찾을 수 없음', 'error');
+            }
+        };
+
+        // CTA 섹션 검사
+        const checkCTA = () => {
+            log('CTA 섹션 검사 시작...', 'info');
+            const cta = document.querySelector('.cta');
+            if (cta) {
+                const style = window.getComputedStyle(cta);
+                log('CTA 섹션 발견', 'success');
+                log(`배경색: ${style.background}`, 'info');
+                log(`텍스트 색상: ${style.color}`, 'info');
+                log(`패딩: ${style.padding}`, 'info');
+                log(`너비: ${cta.offsetWidth}px`, 'info');
+                
+                // 배경색이 검은색인지 확인
+                if (style.backgroundColor === 'rgb(31, 41, 55)' || style.backgroundColor === 'rgb(0, 0, 0)') {
+                    log('CTA 배경이 여전히 검은색입니다!', 'error');
+                } else if (style.background.includes('gradient')) {
+                    log('CTA 배경이 그라데이션으로 설정됨', 'success');
+                }
+            } else {
+                log('CTA 섹션을 찾을 수 없음', 'error');
+            }
+        };
+
+        // 전체 테스트 실행
+        const runFullTest = async () => {
+            clearLog();
+            log('전체 테스트 시작...', 'info');
+            log('='.repeat(50), 'info');
+            
+            await checkCSSFiles();
+            log('='.repeat(50), 'info');
+            
+            checkCSSClasses();
+            log('='.repeat(50), 'info');
+            
+            checkStyles();
+            log('='.repeat(50), 'info');
+            
+            checkOverflow();
+            log('='.repeat(50), 'info');
+            
+            checkMobileMenu();
+            log('='.repeat(50), 'info');
+            
+            checkCTA();
+            log('='.repeat(50), 'info');
+            
+            log('전체 테스트 완료!', 'success');
+        };
+
+        // 페이지 로드 시 자동 실행
+        window.addEventListener('load', () => {
+            setTimeout(runFullTest, 1000);
+        });
+    </script>
+</body>
+</html>
