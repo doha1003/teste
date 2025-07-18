@@ -1,6 +1,6 @@
 /* =========================================================================
    doha.kr 통합 CSS 파일
-   빌드 시간: 2025. 7. 18. 오후 2:11:29
+   빌드 시간: 2025. 7. 18. 오후 3:01:14
    ========================================================================= */
 
 /* === css/base/variables.css === */
@@ -3233,15 +3233,30 @@ select:disabled,
 /* CTA 섹션 */
 .cta {
     padding: 6rem 0;
-    background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
     color: white;
     text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="stars" width="50" height="50" patternUnits="userSpaceOnUse"><circle cx="5" cy="5" r="1" fill="%23ffffff" opacity="0.3"/><circle cx="25" cy="25" r="1.5" fill="%23ffffff" opacity="0.2"/><circle cx="45" cy="10" r="1" fill="%23ffffff" opacity="0.3"/></pattern></defs><rect width="100" height="100" fill="url(%23stars)"/></svg>');
+    opacity: 0.5;
 }
 
 .cta-box {
     max-width: 600px;
     margin: 0 auto;
     padding: 0 1.5rem;
+    position: relative;
+    z-index: 2;
 }
 
 .cta-title {
