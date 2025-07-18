@@ -49,10 +49,7 @@
     
     
     <!-- External CSS -->
-    <link rel="stylesheet" href="/css/styles-complete.min.css?v=20250718">
-    <!-- Backup CSS -->
-    <link rel="stylesheet" href="/css/styles-complete.css" media="print" onload="this.media='all'; this.onload=null;">
-    <link rel="stylesheet" href="/css/pages/mbti-intro.css">
+    <link rel="stylesheet" href="/css/styles.css">
     
     <!-- Favicon -->
     <link rel="icon" href="/images/placeholder-favicon.svg" type="image/svg+xml">
@@ -68,7 +65,24 @@
     </head>
 <body class="mbti-page">
     <!-- 네비게이션 -->
-    <div id="navbar-placeholder"></div>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="/" class="logo">doha.kr</a>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="/" class="nav-link">홈</a></li>
+                <li><a href="/tests/" class="nav-link">심리테스트</a></li>
+                <li><a href="/fortune/" class="nav-link">운세</a></li>
+                <li><a href="/tools/" class="nav-link">실용도구</a></li>
+                <li><a href="/contact/" class="nav-link">문의</a></li>
+                <li><a href="/about/" class="nav-link">소개</a></li>
+            </ul>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-expanded="false" aria-controls="nav-menu" aria-label="메뉴 열기">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
     
     <!-- 히어로 섹션 -->
     <section class="hero">
@@ -444,13 +458,85 @@
     </section>
     
     <!-- 푸터 -->
-    <div id="footer-placeholder"></div>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>doha.kr</h3>
+                <p >
+                    일상을 더 재미있게 만드는 공간<br>
+                    심리테스트, 운세, 실용도구의 만남
+                </p>
+                <div class="footer-social">
+                    <a href="mailto:youtubdoha@gmail.com" class="social-link">📧</a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>서비스</h3>
+                <ul class="footer-links">
+                    <li><a href="/">홈</a></li>
+                    <li><a href="/tests/">심리테스트</a></li>
+                    <li><a href="/fortune/">운세</a></li>
+                    <li><a href="/tools/">실용도구</a></li>
+                    <li><a href="/about/">사이트 소개</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>인기 콘텐츠</h3>
+                <ul class="footer-links">
+                    <li><a href="/tests/teto-egen/">테토-에겐 테스트</a></li>
+                    <li><a href="/tests/mbti/">MBTI 테스트</a></li>
+                    <li><a href="/fortune/daily/">오늘의 운세</a></li>
+                    <li><a href="/tools/text-counter.html">글자수 세기</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>운세 서비스</h3>
+                <ul class="footer-links">
+                    <li><a href="/fortune/daily/">오늘의 운세</a></li>
+                    <li><a href="/fortune/zodiac/">별자리 운세</a></li>
+                    <li><a href="/fortune/zodiac-animal/">띠별 운세</a></li>
+                    <li><a href="/fortune/tarot/">AI 타로</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>고객지원</h3>
+                <ul class="footer-links">
+                    <li><a href="/contact/">문의하기</a></li>
+                    <li><a href="/faq/">자주 묻는 질문</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="footer-legal">
+                <a href="/privacy/">개인정보처리방침</a>
+                <a href="/terms/">이용약관</a>
+            </div>
+            <p>&copy; 2025 doha.kr. All rights reserved.</p>
+        </div>
+    </footer>
     
     <!-- JavaScript -->
     <script src="/js/doha-config.js"></script>
     <script src="/js/bundle.min.js" defer></script>
     <script src="/js/main.min.js"></script>
     <script>
+        // 모바일 메뉴 토글 함수
+        function toggleMobileMenu() {
+            const navMenu = document.getElementById('nav-menu');
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const isOpen = navMenu.classList.contains('active');
+            
+            navMenu.classList.toggle('active');
+            mobileMenuBtn.classList.toggle('active');
+            mobileMenuBtn.setAttribute('aria-expanded', !isOpen);
+            mobileMenuBtn.setAttribute('aria-label', isOpen ? '메뉴 열기' : '메뉴 닫기');
+        }
+        
         // FAQ 아코디언 기능
         document.querySelectorAll('.faq-question').forEach(question => {
             question.addEventListener('click', () => {

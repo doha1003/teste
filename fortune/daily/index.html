@@ -1,8 +1,25 @@
 <!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>오늘의 운세 - 사주 기반 정확한 일일운세 | doha.kr</title><meta name="description" content="정확한 만세력 사주팔자를 기반으로 분석하는 오늘의 운세. 생년월일시를 입력하여 상세한 일일 운세를 확인하세요."><meta name="robots" content="index, follow"><meta name="author" content="doha.kr"><!-- Security Headers --><meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:;"><meta http-equiv="X-Content-Type-Options" content="nosniff"><meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin"><meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), accelerometer=(), gyroscope=()"><!-- Open Graph --><meta property="og:title" content="오늘의 운세 - 사주 기반 일일운세 | doha.kr"><meta property="og:description" content="만세력 기반 정확한 사주팔자로 보는 오늘의 운세"><meta property="og:image" content="https://doha.kr/images/egen-male-card.jpg"><meta property="og:url" content="https://doha.kr/fortune/daily/"><!-- Google Fonts --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet"><!-- Google AdSense --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script><!-- 만세력 데이터 먼저 로드 --><script src="/js/doha-config.js"></script>
 <script src="/js/lunar-calendar-compact.js"></script>
 <script src="/js/saju-calculator.min.js"></script>
-<script src="/js/manseryeok-database.js"></script><!-- Optimized CSS System --><link rel="stylesheet" href="/css/final-clean.css?v=20250718"><link rel="stylesheet" href="/css/pages/fortune-common.css"></head>
-<body><body class="fortune-page"><!-- 네비게이션 바 --><div id="navbar-placeholder"></div><!-- 페이지 헤더 --><section class="page-header"><div class="container"><h1 class="page-title fade-in">✨ 오늘의 운세</h1><p class="page-subtitle fade-in stagger-1">
+<script src="/js/manseryeok-database.js"></script><!-- Optimized CSS System --><link rel="stylesheet" href="/css/styles.css"></head>
+<body><body class="fortune-page"><!-- 네비게이션 바 --><nav class="navbar">
+    <div class="navbar-container">
+        <a href="/" class="logo">doha.kr</a>
+        <ul class="nav-menu" id="nav-menu">
+            <li><a href="/" class="nav-link">홈</a></li>
+            <li><a href="/tests/" class="nav-link">심리테스트</a></li>
+            <li><a href="/fortune/" class="nav-link">운세</a></li>
+            <li><a href="/tools/" class="nav-link">실용도구</a></li>
+            <li><a href="/contact/" class="nav-link">문의</a></li>
+            <li><a href="/about/" class="nav-link">소개</a></li>
+        </ul>
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-expanded="false" aria-controls="nav-menu" aria-label="메뉴 열기">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </div>
+</nav><!-- 페이지 헤더 --><section class="page-header"><div class="container"><h1 class="page-title fade-in">✨ 오늘의 운세</h1><p class="page-subtitle fade-in stagger-1">
                 사주팔자 기반 정확한 일일 운세 분석
             </p></div></section><!-- 운세 입력 폼 --><section class="fortune-section"><div class="container"><div class="fortune-form-container" id="fortuneForm"><h2>당신의 정보를 입력해주세요</h2><form onsubmit="generateDailyFortune(event)"><div class="form-group"><label for="userName">이름</label><input type="text" id="userName" name="userName" class="form-control" placeholder="홍길동" required></div>
 <div class="form-row"><div class="form-group"><label for="birthYear">생년</label><select id="birthYear" name="birthYear" class="form-control" required><option value="">연도 선택</option></select></div>
@@ -13,10 +30,82 @@
                           data-ad-client="ca-pub-7905640648499222"
              data-ad-slot="1234567890"
              data-ad-format="auto"
-             data-full-width-responsive="true"></ins></div><!-- 푸터 --><div id="footer-placeholder"></div><!-- External JavaScript --><script src="/js/bundle.min.js" defer></script>
+             data-full-width-responsive="true"></ins></div><!-- 푸터 --><footer class="footer">
+    <div class="footer-content">
+        <div class="footer-section">
+            <h3>doha.kr</h3>
+            <p >
+                일상을 더 재미있게 만드는 공간<br>
+                심리테스트, 운세, 실용도구의 만남
+            </p>
+            <div class="footer-social">
+                <a href="mailto:youtubdoha@gmail.com" class="social-link">📧</a>
+            </div>
+        </div>
+        
+        <div class="footer-section">
+            <h3>서비스</h3>
+            <ul class="footer-links">
+                <li><a href="/">홈</a></li>
+                <li><a href="/tests/">심리테스트</a></li>
+                <li><a href="/fortune/">운세</a></li>
+                <li><a href="/tools/">실용도구</a></li>
+                <li><a href="/about/">사이트 소개</a></li>
+            </ul>
+        </div>
+        
+        <div class="footer-section">
+            <h3>인기 콘텐츠</h3>
+            <ul class="footer-links">
+                <li><a href="/tests/teto-egen/">테토-에겐 테스트</a></li>
+                <li><a href="/tests/mbti/">MBTI 테스트</a></li>
+                <li><a href="/fortune/daily/">오늘의 운세</a></li>
+                <li><a href="/tools/text-counter.html">글자수 세기</a></li>
+            </ul>
+        </div>
+        
+        <div class="footer-section">
+            <h3>운세 서비스</h3>
+            <ul class="footer-links">
+                <li><a href="/fortune/daily/">오늘의 운세</a></li>
+                <li><a href="/fortune/zodiac/">별자리 운세</a></li>
+                <li><a href="/fortune/zodiac-animal/">띠별 운세</a></li>
+                <li><a href="/fortune/tarot/">AI 타로</a></li>
+            </ul>
+        </div>
+        
+        <div class="footer-section">
+            <h3>고객지원</h3>
+            <ul class="footer-links">
+                <li><a href="/contact/">문의하기</a></li>
+                <li><a href="/faq/">자주 묻는 질문</a></li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="footer-bottom">
+        <div class="footer-legal">
+            <a href="/privacy/">개인정보처리방침</a>
+            <a href="/terms/">이용약관</a>
+        </div>
+        <p>&copy; 2025 doha.kr. All rights reserved.</p>
+    </div>
+</footer><!-- External JavaScript --><script src="/js/bundle.min.js" defer></script>
 <script src="/js/main.min.js"></script>
 <script src="/js/gemini-api.min.js"></script>
 <script>
+        // 모바일 메뉴 토글 함수
+        function toggleMobileMenu() {
+            const navMenu = document.getElementById('nav-menu');
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const isOpen = navMenu.classList.contains('active');
+            
+            navMenu.classList.toggle('active');
+            mobileMenuBtn.classList.toggle('active');
+            mobileMenuBtn.setAttribute('aria-expanded', !isOpen);
+            mobileMenuBtn.setAttribute('aria-label', isOpen ? '메뉴 열기' : '메뉴 닫기');
+        }
+        
         // 페이지 로드 시 초기화
         document.addEventListener('DOMContentLoaded', function() {
             // 연도 옵션 추가

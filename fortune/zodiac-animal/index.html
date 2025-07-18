@@ -1,48 +1,499 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>띠별 운세 - 12지신 오늘의 운세 | doha.kr</title>
+    <meta name="description" content="쥐띠부터 돼지띠까지 12지신 띠별 오늘의 운세. AI가 분석하는 정확한 띠별 운세를 확인하세요.">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="doha.kr">
+    
+    <!-- Security Headers -->
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:;">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="띠별 운세 - 12지신 오늘의 운세">
+    <meta property="og:description" content="쥐띠부터 돼지띠까지 12지신 띠별 오늘의 운세를 확인하세요.">
+    <meta property="og:image" content="https://doha.kr/images/og-default.png">
+    <meta property="og:url" content="https://doha.kr/fortune/zodiac-animal/">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body class="fortune-page">
+    <!-- 네비게이션 바 -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="/" class="logo">doha.kr</a>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="/" class="nav-link">홈</a></li>
+                <li><a href="/tests/" class="nav-link">심리테스트</a></li>
+                <li><a href="/fortune/" class="nav-link">운세</a></li>
+                <li><a href="/tools/" class="nav-link">실용도구</a></li>
+                <li><a href="/contact/" class="nav-link">문의</a></li>
+                <li><a href="/about/" class="nav-link">소개</a></li>
+            </ul>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-expanded="false" aria-controls="nav-menu" aria-label="메뉴 열기">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+    
+    <!-- 페이지 헤더 -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title fade-in">🐅 띠별 운세</h1>
+            <p class="page-subtitle fade-in stagger-1">
                 AI가 분석하는 12지신 띠별 오늘의 운세
-            </p></div></section><!-- 띠별 운세 섹션 --><section class="zodiac-animal-section"><div class="container"><!-- 날짜 표시 --><div class="zodiac-date"><h2 id="todayDate"></h2></div><!-- 띠 선택 그리드 --><div class="zodiac-grid fortune-grid grid-6"><div class="zodiac-card fortune-card" data-animal="rat" onclick="showAnimalFortune('rat')"><div class="zodiac-emoji fortune-emoji">🐀</div>
-<div class="zodiac-name fortune-title">쥐띠</div>
-<div class="zodiac-years fortune-subtitle">子</div></div>
-<div class="zodiac-card fortune-card" data-animal="ox" onclick="showAnimalFortune('ox')"><div class="zodiac-emoji fortune-emoji">🐂</div>
-<div class="zodiac-name fortune-title">소띠</div>
-<div class="zodiac-years fortune-subtitle">丑</div></div>
-<div class="zodiac-card fortune-card" data-animal="tiger" onclick="showAnimalFortune('tiger')"><div class="zodiac-emoji fortune-emoji">🐅</div>
-<div class="zodiac-name fortune-title">호랑이띠</div>
-<div class="zodiac-years fortune-subtitle">寅</div></div>
-<div class="zodiac-card fortune-card" data-animal="rabbit" onclick="showAnimalFortune('rabbit')"><div class="zodiac-emoji fortune-emoji">🐇</div>
-<div class="zodiac-name fortune-title">토끼띠</div>
-<div class="zodiac-years fortune-subtitle">卯</div></div>
-<div class="zodiac-card fortune-card" data-animal="dragon" onclick="showAnimalFortune('dragon')"><div class="zodiac-emoji fortune-emoji">🐉</div>
-<div class="zodiac-name fortune-title">용띠</div>
-<div class="zodiac-years fortune-subtitle">辰</div></div>
-<div class="zodiac-card fortune-card" data-animal="snake" onclick="showAnimalFortune('snake')"><div class="zodiac-emoji fortune-emoji">🐍</div>
-<div class="zodiac-name fortune-title">뱀띠</div>
-<div class="zodiac-years fortune-subtitle">巳</div></div>
-<div class="zodiac-card fortune-card" data-animal="horse" onclick="showAnimalFortune('horse')"><div class="zodiac-emoji fortune-emoji">🐎</div>
-<div class="zodiac-name fortune-title">말띠</div>
-<div class="zodiac-years fortune-subtitle">午</div></div>
-<div class="zodiac-card fortune-card" data-animal="sheep" onclick="showAnimalFortune('sheep')"><div class="zodiac-emoji fortune-emoji">🐑</div>
-<div class="zodiac-name fortune-title">양띠</div>
-<div class="zodiac-years fortune-subtitle">未</div></div>
-<div class="zodiac-card fortune-card" data-animal="monkey" onclick="showAnimalFortune('monkey')"><div class="zodiac-emoji fortune-emoji">🐒</div>
-<div class="zodiac-name fortune-title">원숭이띠</div>
-<div class="zodiac-years fortune-subtitle">申</div></div>
-<div class="zodiac-card fortune-card" data-animal="rooster" onclick="showAnimalFortune('rooster')"><div class="zodiac-emoji fortune-emoji">🐓</div>
-<div class="zodiac-name fortune-title">닭띠</div>
-<div class="zodiac-years fortune-subtitle">酉</div></div>
-<div class="zodiac-card fortune-card" data-animal="dog" onclick="showAnimalFortune('dog')"><div class="zodiac-emoji fortune-emoji">🐕</div>
-<div class="zodiac-name fortune-title">개띠</div>
-<div class="zodiac-years fortune-subtitle">戌</div></div>
-<div class="zodiac-card fortune-card" data-animal="pig" onclick="showAnimalFortune('pig')"><div class="zodiac-emoji fortune-emoji">🐖</div>
-<div class="zodiac-name fortune-title">돼지띠</div>
-<div class="zodiac-years fortune-subtitle">亥</div></div></div><!-- 운세 결과 --><div id="fortuneResult" class="fortune-result-container"><!-- 결과가 여기에 표시됩니다 --></div></div></section><!-- 광고 영역 --><div class="fortune-ad-container"><div class="fortune-ad-label">광고</div><ins class="adsbygoogle"
-             
+            </p>
+        </div>
+    </section>
+    
+    <!-- 띠별 운세 섹션 -->
+    <section class="zodiac-animal-section">
+        <div class="container">
+            <!-- 날짜 표시 -->
+            <div class="zodiac-date">
+                <h2 id="todayDate"></h2>
+            </div>
+            
+            <!-- 띠 선택 그리드 -->
+            <div class="zodiac-grid fortune-grid grid-6">
+                <div class="zodiac-card fortune-card" data-animal="rat" onclick="showAnimalFortune('rat')">
+                    <div class="zodiac-emoji fortune-emoji">🐀</div>
+                    <div class="zodiac-name fortune-title">쥐띠</div>
+                    <div class="zodiac-years fortune-subtitle">子</div>
+                </div>
+                <div class="zodiac-card fortune-card" data-animal="ox" onclick="showAnimalFortune('ox')">
+                    <div class="zodiac-emoji fortune-emoji">🐂</div>
+                    <div class="zodiac-name fortune-title">소띠</div>
+                    <div class="zodiac-years fortune-subtitle">丑</div>
+                </div>
+                <div class="zodiac-card fortune-card" data-animal="tiger" onclick="showAnimalFortune('tiger')">
+                    <div class="zodiac-emoji fortune-emoji">🐅</div>
+                    <div class="zodiac-name fortune-title">호랑이띠</div>
+                    <div class="zodiac-years fortune-subtitle">寅</div>
+                </div>
+                <div class="zodiac-card fortune-card" data-animal="rabbit" onclick="showAnimalFortune('rabbit')">
+                    <div class="zodiac-emoji fortune-emoji">🐇</div>
+                    <div class="zodiac-name fortune-title">토끼띠</div>
+                    <div class="zodiac-years fortune-subtitle">卯</div>
+                </div>
+                <div class="zodiac-card fortune-card" data-animal="dragon" onclick="showAnimalFortune('dragon')">
+                    <div class="zodiac-emoji fortune-emoji">🐉</div>
+                    <div class="zodiac-name fortune-title">용띠</div>
+                    <div class="zodiac-years fortune-subtitle">辰</div>
+                </div>
+                <div class="zodiac-card fortune-card" data-animal="snake" onclick="showAnimalFortune('snake')">
+                    <div class="zodiac-emoji fortune-emoji">🐍</div>
+                    <div class="zodiac-name fortune-title">뱀띠</div>
+                    <div class="zodiac-years fortune-subtitle">巳</div>
+                </div>
+                <div class="zodiac-card fortune-card" data-animal="horse" onclick="showAnimalFortune('horse')">
+                    <div class="zodiac-emoji fortune-emoji">🐎</div>
+                    <div class="zodiac-name fortune-title">말띠</div>
+                    <div class="zodiac-years fortune-subtitle">午</div>
+                </div>
+                <div class="zodiac-card fortune-card" data-animal="sheep" onclick="showAnimalFortune('sheep')">
+                    <div class="zodiac-emoji fortune-emoji">🐑</div>
+                    <div class="zodiac-name fortune-title">양띠</div>
+                    <div class="zodiac-years fortune-subtitle">未</div>
+                </div>
+                <div class="zodiac-card fortune-card" data-animal="monkey" onclick="showAnimalFortune('monkey')">
+                    <div class="zodiac-emoji fortune-emoji">🐒</div>
+                    <div class="zodiac-name fortune-title">원숭이띠</div>
+                    <div class="zodiac-years fortune-subtitle">申</div>
+                </div>
+                <div class="zodiac-card fortune-card" data-animal="rooster" onclick="showAnimalFortune('rooster')">
+                    <div class="zodiac-emoji fortune-emoji">🐓</div>
+                    <div class="zodiac-name fortune-title">닭띠</div>
+                    <div class="zodiac-years fortune-subtitle">酉</div>
+                </div>
+                <div class="zodiac-card fortune-card" data-animal="dog" onclick="showAnimalFortune('dog')">
+                    <div class="zodiac-emoji fortune-emoji">🐕</div>
+                    <div class="zodiac-name fortune-title">개띠</div>
+                    <div class="zodiac-years fortune-subtitle">戌</div>
+                </div>
+                <div class="zodiac-card fortune-card" data-animal="pig" onclick="showAnimalFortune('pig')">
+                    <div class="zodiac-emoji fortune-emoji">🐖</div>
+                    <div class="zodiac-name fortune-title">돼지띠</div>
+                    <div class="zodiac-years fortune-subtitle">亥</div>
+                </div>
+            </div>
+            
+            <!-- 운세 결과 -->
+            <div id="fortuneResult" class="fortune-result-container">
+                <!-- 결과가 여기에 표시됩니다 -->
+            </div>
+        </div>
+    </section>
+    
+    <!-- 광고 영역 -->
+    <div class="fortune-ad-container">
+        <div class="fortune-ad-label">광고</div>
+        <ins class="adsbygoogle"
              data-ad-client="ca-pub-7905640648499222"
              data-ad-slot="1234567890"
              data-ad-format="auto"
-             data-full-width-responsive="true"></ins></div><!-- 푸터 --><div id="footer-placeholder"></div><!-- External JavaScript --><script src="/js/doha-config.js"></script>
-<script src="/js/bundle.min.js" defer></script>
-<script src="/js/main.min.js"></script>
-<script src="/js/gemini-api.min.js"></script>
-<script src="/js/zodiac-animal.js"></script><!-- AdSense initialization --><script>
+             data-full-width-responsive="true"></ins>
+    </div>
+    
+    <!-- 푸터 -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>doha.kr</h3>
+                <p >
+                    일상을 더 재미있게 만드는 공간<br>
+                    심리테스트, 운세, 실용도구의 만남
+                </p>
+                <div class="footer-social">
+                    <a href="mailto:youtubdoha@gmail.com" class="social-link">📧</a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>서비스</h3>
+                <ul class="footer-links">
+                    <li><a href="/">홈</a></li>
+                    <li><a href="/tests/">심리테스트</a></li>
+                    <li><a href="/fortune/">운세</a></li>
+                    <li><a href="/tools/">실용도구</a></li>
+                    <li><a href="/about/">사이트 소개</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>인기 콘텐츠</h3>
+                <ul class="footer-links">
+                    <li><a href="/tests/teto-egen/">테토-에겐 테스트</a></li>
+                    <li><a href="/tests/mbti/">MBTI 테스트</a></li>
+                    <li><a href="/fortune/daily/">오늘의 운세</a></li>
+                    <li><a href="/tools/text-counter.html">글자수 세기</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>운세 서비스</h3>
+                <ul class="footer-links">
+                    <li><a href="/fortune/daily/">오늘의 운세</a></li>
+                    <li><a href="/fortune/zodiac/">별자리 운세</a></li>
+                    <li><a href="/fortune/zodiac-animal/">띠별 운세</a></li>
+                    <li><a href="/fortune/tarot/">AI 타로</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>고객지원</h3>
+                <ul class="footer-links">
+                    <li><a href="/contact/">문의하기</a></li>
+                    <li><a href="/faq/">자주 묻는 질문</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="footer-legal">
+                <a href="/privacy/">개인정보처리방침</a>
+                <a href="/terms/">이용약관</a>
+            </div>
+            <p>&copy; 2025 doha.kr. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <!-- External JavaScript -->
+    <script src="/js/doha-config.js"></script>
+    <script src="/js/bundle.min.js" defer></script>
+    <script src="/js/main.min.js"></script>
+    <script src="/js/gemini-api.min.js"></script>
+    <script>
+        // 모바일 메뉴 토글 함수
+        function toggleMobileMenu() {
+            const navMenu = document.getElementById('nav-menu');
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const isOpen = navMenu.classList.contains('active');
+            
+            navMenu.classList.toggle('active');
+            mobileMenuBtn.classList.toggle('active');
+            mobileMenuBtn.setAttribute('aria-expanded', !isOpen);
+            mobileMenuBtn.setAttribute('aria-label', isOpen ? '메뉴 열기' : '메뉴 닫기');
+        }
+        
+        // 오늘 날짜 표시
+        document.getElementById('todayDate').textContent = new Date().toLocaleDateString('ko-KR', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            weekday: 'long'
+        });
+        
+        // 띠 데이터
+        const animalData = {
+            rat: {
+                name: '쥐띠',
+                emoji: '🐀',
+                hanja: '子',
+                years: '1936, 1948, 1960, 1972, 1984, 1996, 2008, 2020',
+                traits: ['영리함', '적응력', '매력적', '기회포착'],
+                element: '물'
+            },
+            ox: {
+                name: '소띠',
+                emoji: '🐂',
+                hanja: '丑',
+                years: '1937, 1949, 1961, 1973, 1985, 1997, 2009, 2021',
+                traits: ['신뢰성', '인내심', '성실함', '책임감'],
+                element: '흙'
+            },
+            tiger: {
+                name: '호랑이띠',
+                emoji: '🐅',
+                hanja: '寅',
+                years: '1938, 1950, 1962, 1974, 1986, 1998, 2010, 2022',
+                traits: ['용맹함', '자신감', '리더십', '모험심'],
+                element: '나무'
+            },
+            rabbit: {
+                name: '토끼띠',
+                emoji: '🐇',
+                hanja: '卯',
+                years: '1939, 1951, 1963, 1975, 1987, 1999, 2011, 2023',
+                traits: ['온화함', '민첩함', '행운', '외교적'],
+                element: '나무'
+            },
+            dragon: {
+                name: '용띠',
+                emoji: '🐉',
+                hanja: '辰',
+                years: '1940, 1952, 1964, 1976, 1988, 2000, 2012, 2024',
+                traits: ['카리스마', '야망', '활력', '행운'],
+                element: '흙'
+            },
+            snake: {
+                name: '뱀띠',
+                emoji: '🐍',
+                hanja: '巳',
+                years: '1941, 1953, 1965, 1977, 1989, 2001, 2013, 2025',
+                traits: ['지혜', '직관력', '우아함', '신비로움'],
+                element: '불'
+            },
+            horse: {
+                name: '말띠',
+                emoji: '🐎',
+                hanja: '午',
+                years: '1942, 1954, 1966, 1978, 1990, 2002, 2014, 2026',
+                traits: ['자유로움', '열정', '독립적', '활동적'],
+                element: '불'
+            },
+            sheep: {
+                name: '양띠',
+                emoji: '🐑',
+                hanja: '未',
+                years: '1943, 1955, 1967, 1979, 1991, 2003, 2015, 2027',
+                traits: ['온순함', '예술적', '평화주의', '창의적'],
+                element: '흙'
+            },
+            monkey: {
+                name: '원숭이띠',
+                emoji: '🐒',
+                hanja: '申',
+                years: '1944, 1956, 1968, 1980, 1992, 2004, 2016, 2028',
+                traits: ['재치', '호기심', '유머', '다재다능'],
+                element: '금속'
+            },
+            rooster: {
+                name: '닭띠',
+                emoji: '🐓',
+                hanja: '酉',
+                years: '1945, 1957, 1969, 1981, 1993, 2005, 2017, 2029',
+                traits: ['정직함', '근면함', '용기', '자신감'],
+                element: '금속'
+            },
+            dog: {
+                name: '개띠',
+                emoji: '🐕',
+                hanja: '戌',
+                years: '1946, 1958, 1970, 1982, 1994, 2006, 2018, 2030',
+                traits: ['충성심', '정직함', '책임감', '신뢰성'],
+                element: '흙'
+            },
+            pig: {
+                name: '돼지띠',
+                emoji: '🐖',
+                hanja: '亥',
+                years: '1947, 1959, 1971, 1983, 1995, 2007, 2019, 2031',
+                traits: ['관대함', '성실함', '낙천적', '정직함'],
+                element: '물'
+            }
+        };
+        
+        async function showAnimalFortune(animalKey) {
+            const animal = animalData[animalKey];
+            const resultDiv = document.getElementById('fortuneResult');
+            
+            // 로딩 표시
+            resultDiv.innerHTML = `
+                <div class="fortune-loading">
+                    <div class="loading-icon">${animal.emoji}</div>
+                    <p>${animal.name}의 오늘 운세를 분석하고 있습니다...</p>
+                </div>
+            `;
+            resultDiv.style.display = 'block';
+            
+            try {
+                // AI 운세 생성
+                const fortune = await generateAnimalFortune(animalKey, animal);
+                displayAnimalFortune(animal, fortune);
+            } catch (error) {
+                console.error('운세 생성 오류:', error);
+                // 기본 운세 사용
+                const fallbackFortune = generateFallbackAnimalFortune(animal);
+                displayAnimalFortune(animal, fallbackFortune);
+            }
+        }
+        
+        async function generateAnimalFortune(animalKey, animal) {
+            const today = new Date();
+            const prompt = `당신은 전문 사주명리학자입니다. 오늘 ${today.toLocaleDateString('ko-KR')} ${animal.name}의 상세한 운세를 작성해주세요.
+
+띠: ${animal.name} (${animal.hanja})
+원소: ${animal.element}
+특성: ${animal.traits.join(', ')}
+
+다음 형식으로 응답해주세요:
+{
+  "overall": "오늘의 전체 운세 (100-150자)",
+  "love": "애정운 (80-100자)",
+  "money": "금전운 (80-100자)",
+  "work": "직장/사업운 (80-100자)",
+  "health": "건강운 (80-100자)",
+  "luckyColor": "행운의 색",
+  "luckyNumber": "행운의 숫자",
+  "luckyDirection": "행운의 방향",
+  "advice": "오늘의 조언 (100-120자)"
+}
+
+띠의 특성과 오행을 고려하여 구체적이고 긍정적인 메시지를 포함해주세요.`;
+
+            try {
+                const aiResponse = await callGeminiAPI(prompt);
+                
+                if (aiResponse) {
+                    const cleanResponse = aiResponse.replace(/```json|```/g, '').trim();
+                    const parsed = JSON.parse(cleanResponse);
+                    return parsed;
+                }
+            } catch (error) {
+                console.error('AI 운세 파싱 오류:', error);
+            }
+            
+            return null;
+        }
+        
+        function generateFallbackAnimalFortune(animal) {
+            const fortunes = {
+                overall: `${animal.name}에게 오늘은 ${animal.traits[0]}이 빛나는 날입니다. 평소의 장점을 살려 좋은 기회를 만들어보세요.`,
+                love: `진심 어린 마음이 상대방에게 전달되는 날입니다. 솔직한 대화를 나누어보세요.`,
+                money: `재정적으로 안정적인 흐름이 이어집니다. 계획적인 소비를 유지하세요.`,
+                work: `업무에서 당신의 ${animal.traits[1]}이 인정받을 수 있습니다. 적극적으로 임하세요.`,
+                health: `건강 운이 좋은 편입니다. 가벼운 운동으로 활력을 더하세요.`,
+                luckyColor: ['빨강', '파랑', '노랑', '초록', '보라'][Math.floor(Math.random() * 5)],
+                luckyNumber: Math.floor(Math.random() * 9) + 1,
+                luckyDirection: ['동', '서', '남', '북'][Math.floor(Math.random() * 4)],
+                advice: `오늘은 ${animal.traits[2]}한 당신의 모습을 보여주세요. 주변 사람들과의 조화를 중시하면 더 좋은 하루가 될 것입니다.`
+            };
+            
+            return fortunes;
+        }
+        
+        function displayAnimalFortune(animal, fortune) {
+            const resultDiv = document.getElementById('fortuneResult');
+            
+            let html = `
+                <div class="animal-fortune-result">
+                    <div class="fortune-header">
+                        <div class="animal-info">
+                            <span class="animal-emoji">${animal.emoji}</span>
+                            <div>
+                                <h3>${animal.name} (${animal.hanja})</h3>
+                                <p class="animal-years">해당 연도: ${animal.years}</p>
+                            </div>
+                        </div>
+                        <div class="animal-traits">
+                            <span class="trait-label">특성:</span>
+                            ${animal.traits.map(trait => `<span class="trait">${trait}</span>`).join('')}
+                        </div>
+                    </div>
+                    
+                    <div class="fortune-content">
+                        <div class="fortune-overall">
+                            <h4>오늘의 종합운</h4>
+                            <p>${fortune.overall}</p>
+                        </div>
+                        
+                        <div class="fortune-grid">
+                            <div class="fortune-item">
+                                <h5>💕 애정운</h5>
+                                <p>${fortune.love}</p>
+                            </div>
+                            <div class="fortune-item">
+                                <h5>💰 금전운</h5>
+                                <p>${fortune.money}</p>
+                            </div>
+                            <div class="fortune-item">
+                                <h5>💼 직장/사업운</h5>
+                                <p>${fortune.work}</p>
+                            </div>
+                            <div class="fortune-item">
+                                <h5>🏃 건강운</h5>
+                                <p>${fortune.health}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="lucky-info">
+                            <div class="lucky-item">
+                                <span class="lucky-label">행운의 색</span>
+                                <span class="lucky-value">${fortune.luckyColor}</span>
+                            </div>
+                            <div class="lucky-item">
+                                <span class="lucky-label">행운의 숫자</span>
+                                <span class="lucky-value">${fortune.luckyNumber}</span>
+                            </div>
+                            <div class="lucky-item">
+                                <span class="lucky-label">행운의 방향</span>
+                                <span class="lucky-value">${fortune.luckyDirection}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="fortune-advice">
+                            <h4>오늘의 조언</h4>
+                            <p>${fortune.advice}</p>
+                        </div>
+                    </div>
+                    
+                    <button class="back-btn" onclick="location.reload()">
+                        다른 띠 운세 보기
+                    </button>
+                </div>
+            `;
+            
+            resultDiv.innerHTML = html;
+        }
+        
+        // 애드센스 광고 로드
         (adsbygoogle = window.adsbygoogle || []).push({});
-    </script></body></html>
+    </script>
+</body>
+</html>
