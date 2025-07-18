@@ -177,8 +177,8 @@
 /* CTA 섹션 */
 .cta {
     padding: 6rem 0;
-    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
-    color: white;
+    background: linear-gradient(135deg, #f3e7ff 0%, #e7d5ff 100%);
+    color: #5b21b6;
     text-align: center;
     position: relative;
     overflow: hidden;
@@ -187,12 +187,17 @@
 .cta::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="stars" width="50" height="50" patternUnits="userSpaceOnUse"><circle cx="5" cy="5" r="1" fill="%23ffffff" opacity="0.3"/><circle cx="25" cy="25" r="1.5" fill="%23ffffff" opacity="0.2"/><circle cx="45" cy="10" r="1" fill="%23ffffff" opacity="0.3"/></pattern></defs><rect width="100" height="100" fill="url(%23stars)"/></svg>');
-    opacity: 0.5;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
+    animation: pulse 6s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(0.8); opacity: 0.5; }
+    50% { transform: scale(1.2); opacity: 0.8; }
 }
 
 .cta-box {
@@ -222,19 +227,20 @@
     align-items: center;
     gap: 0.75rem;
     padding: 1.25rem 2.5rem;
-    background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+    background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
     color: white;
     text-decoration: none;
     border-radius: 50px;
     font-weight: 600;
     font-size: 1.125rem;
-    box-shadow: 0 10px 25px rgba(245, 158, 11, 0.3);
+    box-shadow: 0 10px 25px rgba(124, 58, 237, 0.3);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .cta-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 15px 35px rgba(245, 158, 11, 0.4);
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(124, 58, 237, 0.4);
+    background: linear-gradient(135deg, #6d28d9 0%, #5b21b6 100%);
     text-decoration: none;
     color: white;
 }
