@@ -159,11 +159,11 @@
 
     // 개발 환경에서만 설정 로그 출력
     if (DohaConfig.env.isDevelopment) {
-        console.log('DohaConfig initialized:', {
-            env: DohaConfig.env,
-            site: DohaConfig.site,
-            features: DohaConfig.features
-        });
+        // console.log('DohaConfig initialized:', {
+        //     env: DohaConfig.env,
+        //     site: DohaConfig.site,
+        //     features: DohaConfig.features
+        // });
     }
 
     // 전역 객체로 등록 (하나의 통합된 설정)

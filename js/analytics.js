@@ -33,10 +33,10 @@
             this.setupEventListeners();
             this.startSessionTracking();
             
-            console.log('Analytics system initialized', {
-                sessionId: this.sessionId,
-                botDetected: this.botDetected
-            });
+            // console.log('Analytics system initialized', {
+            //     sessionId: this.sessionId,
+            //     botDetected: this.botDetected
+            // });
         },
         
         // Generate unique session ID
@@ -667,5 +667,5 @@
         Analytics.init();
     }
     
-    console.log('Analytics and bot detection system loaded successfully');
+    // console.log('Analytics and bot detection system loaded successfully');
 })();

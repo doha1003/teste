@@ -172,7 +172,7 @@ function shareResult(platform, title, url) {
 function copyToClipboard(text) {
     if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(text).catch(err => {
-            console.error('복사 실패:', err);
+            // console.error('복사 실패:', err);
             fallbackCopyToClipboard(text);
         });
     } else {
@@ -193,7 +193,7 @@ function fallbackCopyToClipboard(text) {
     try {
         document.execCommand('copy');
     } catch (err) {
-        console.error('복사 실패:', err);
+        // console.error('복사 실패:', err);
     }
     
     document.body.removeChild(textArea);
@@ -234,7 +234,7 @@ const storage = {
             localStorage.setItem(key, JSON.stringify(value));
             return true;
         } catch (e) {
-            console.error('Storage set error:', e);
+            // console.error('Storage set error:', e);
             return false;
         }
     },
@@ -244,7 +244,7 @@ const storage = {
             const item = localStorage.getItem(key);
             return item ? JSON.parse(item) : null;
         } catch (e) {
-            console.error('Storage get error:', e);
+            // console.error('Storage get error:', e);
             return null;
         }
     },
@@ -254,7 +254,7 @@ const storage = {
             localStorage.removeItem(key);
             return true;
         } catch (e) {
-            console.error('Storage remove error:', e);
+            // console.error('Storage remove error:', e);
             return false;
         }
     },
@@ -264,7 +264,7 @@ const storage = {
             localStorage.clear();
             return true;
         } catch (e) {
-            console.error('Storage clear error:', e);
+            // console.error('Storage clear error:', e);
             return false;
         }
     }
@@ -498,7 +498,7 @@ async function loadComponent(componentName, targetId) {
             throw new Error(`HTTP ${response.status}`);
         }
     } catch (error) {
-        console.error(`Failed to load component ${componentName}:`, error);
+        // console.error(`Failed to load component ${componentName}:`, error);
         
         // Fallback content
         const target = document.getElementById(targetId);
@@ -687,18 +687,18 @@ function initAdSense() {
                     (adsbygoogle = window.adsbygoogle || []).push({});
                     slot.setAttribute('data-adsbygoogle-status', 'loaded');
                 } catch (error) {
-                    console.error(`AdSense 슬롯 ${index} 로딩 오류:`, error);
+                    // console.error(`AdSense 슬롯 ${index} 로딩 오류:`, error);
                     slot.setAttribute('data-adsbygoogle-status', 'error');
                 }
             });
         } else {
-            console.warn('AdSense 스크립트가 아직 로드되지 않음');
+            // console.warn('AdSense 스크립트가 아직 로드되지 않음');
             // 나중에 다시 시도
             setTimeout(initAdSense, 2000);
         }
         
     } catch (error) {
-        console.error('AdSense 초기화 전체 오류:', error);
+        // console.error('AdSense 초기화 전체 오류:', error);
     }
 }
 

@@ -9,7 +9,7 @@
     
     // Security check
     if (typeof Security === 'undefined') {
-        console.error('Security library required for Fortune system');
+        // console.error('Security library required for Fortune system');
         return;
     }
     
@@ -31,9 +31,9 @@
             try {
                 this.setupEventListeners();
                 this.checkAPIConfig();
-                console.log('Fortune system initialized');
+                // console.log('Fortune system initialized');
             } catch (error) {
-                console.error('Fortune initialization failed:', error);
+                // console.error('Fortune initialization failed:', error);
             }
         },
         
@@ -43,9 +43,9 @@
                 const geminiConfig = DohaConfig.api.gemini;
                 if (geminiConfig && geminiConfig.endpoint) {
                     this.config.hasAPI = true;
-                    console.log('Gemini API configured');
+                    // console.log('Gemini API configured');
                 } else {
-                    console.warn('Gemini API not configured');
+                    // console.warn('Gemini API not configured');
                 }
             }
         },
@@ -154,7 +154,7 @@
                 }
                 
             } catch (error) {
-                console.error('Daily fortune error:', error);
+                // console.error('Daily fortune error:', error);
                 resultDiv.innerHTML = `<div class="error-message">${error.message}</div>`;
             } finally {
                 button.disabled = false;
@@ -247,7 +247,7 @@
                 }
                 
             } catch (error) {
-                console.error('Saju analysis error:', error);
+                // console.error('Saju analysis error:', error);
                 resultDiv.innerHTML = `<div class="error-message">${error.message}</div>`;
             } finally {
                 submitBtn.disabled = false;
@@ -332,7 +332,7 @@
                 }
                 
             } catch (error) {
-                console.error('Tarot reading error:', error);
+                // console.error('Tarot reading error:', error);
                 resultDiv.innerHTML = `<div class="error-message">${error.message}</div>`;
             } finally {
                 button.disabled = false;
@@ -404,5 +404,5 @@
     // Expose to global scope
     window.Fortune = Fortune;
     
-    console.log('Fortune system loaded successfully');
+    // console.log('Fortune system loaded successfully');
 })();

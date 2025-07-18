@@ -3,6 +3,19 @@
    Comprehensive typography styles for consistent text rendering
    ========================================================================= */
 
+/* 한글 줄바꿈 기본 설정 - 모든 요소에 적용 */
+* {
+    word-break: keep-all !important; /* 한글을 단어 단위로 줄바꿈 */
+    overflow-wrap: break-word; /* 긴 단어는 강제 줄바꿈 */
+}
+
+/* HTML과 BODY에 기본 설정 */
+html, body {
+    word-break: keep-all !important;
+    overflow-wrap: break-word;
+    line-break: strict; /* 한글 줄바꿈 규칙 엄격하게 적용 */
+}
+
 /* Headings */
 h1,
 h2,

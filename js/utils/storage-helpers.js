@@ -10,7 +10,7 @@ export const storage = {
             localStorage.setItem(key, JSON.stringify(value));
             return true;
         } catch (e) {
-            console.error('Storage set error:', e);
+            // console.error('Storage set error:', e);
             return false;
         }
     },
@@ -20,7 +20,7 @@ export const storage = {
             const item = localStorage.getItem(key);
             return item ? JSON.parse(item) : null;
         } catch (e) {
-            console.error('Storage get error:', e);
+            // console.error('Storage get error:', e);
             return null;
         }
     },
@@ -30,7 +30,7 @@ export const storage = {
             localStorage.removeItem(key);
             return true;
         } catch (e) {
-            console.error('Storage remove error:', e);
+            // console.error('Storage remove error:', e);
             return false;
         }
     },
@@ -40,7 +40,7 @@ export const storage = {
             localStorage.clear();
             return true;
         } catch (e) {
-            console.error('Storage clear error:', e);
+            // console.error('Storage clear error:', e);
             return false;
         }
     }

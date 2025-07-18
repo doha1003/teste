@@ -25,7 +25,7 @@
             this.setupGlobalErrorHandlers();
             this.setupPromiseRejectionHandler();
             this.setupResourceErrorHandlers();
-            console.log('Error handling system initialized');
+            // console.log('Error handling system initialized');
         },
         
         // Setup global error handlers
@@ -292,7 +292,7 @@
             errorInfo.retryCount = (errorInfo.retryCount || 0) + 1;
             
             setTimeout(() => {
-                console.log(`Retrying failed request (attempt ${errorInfo.retryCount})`);
+                // console.log(`Retrying failed request (attempt ${errorInfo.retryCount})`);
                 // Trigger retry logic here
             }, this.config.retryDelay * errorInfo.retryCount);
         },
@@ -414,5 +414,5 @@
     }
     
     // Log successful initialization
-    console.log('Global error handler loaded successfully');
+    // console.log('Global error handler loaded successfully');
 })();

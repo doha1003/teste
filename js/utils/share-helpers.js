@@ -28,7 +28,7 @@ export function shareResult(platform, title, url) {
 export function copyToClipboard(text) {
     if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(text).catch(err => {
-            console.error('복사 실패:', err);
+            // console.error('복사 실패:', err);
             fallbackCopyToClipboard(text);
         });
     } else {
@@ -49,7 +49,7 @@ function fallbackCopyToClipboard(text) {
     try {
         document.execCommand('copy');
     } catch (err) {
-        console.error('복사 실패:', err);
+        // console.error('복사 실패:', err);
     }
     
     document.body.removeChild(textArea);
@@ -58,12 +58,12 @@ function fallbackCopyToClipboard(text) {
 // 카카오 공유하기 (SDK 사용)
 export function shareKakao(options) {
     if (typeof Kakao === 'undefined') {
-        console.error('카카오 SDK가 로드되지 않았습니다.');
+        // console.error('카카오 SDK가 로드되지 않았습니다.');
         return;
     }
 
     if (!Kakao.isInitialized()) {
-        console.error('카카오 SDK가 초기화되지 않았습니다.');
+        // console.error('카카오 SDK가 초기화되지 않았습니다.');
         return;
     }
 
@@ -90,7 +90,7 @@ export function shareKakao(options) {
             ]
         });
     } catch (error) {
-        console.error('카카오 공유 실패:', error);
+        // console.error('카카오 공유 실패:', error);
         // 폴백으로 링크 복사
         copyToClipboard(options.url || window.location.href);
         showNotification('링크가 복사되었습니다!');

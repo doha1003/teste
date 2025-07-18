@@ -15,40 +15,40 @@ let kakaoInitialized = false;
  */
 function initializeKakaoSDK() {
     if (typeof Kakao === 'undefined') {
-        console.error('Kakao SDK가 로드되지 않았습니다.');
+        // console.error('Kakao SDK가 로드되지 않았습니다.');
         return false;
     }
 
     if (typeof Config === 'undefined' || !Config.kakao || !DohaConfig.api.kakao.appKey) {
-        console.error('Config.js가 로드되지 않았거나 API 키가 설정되지 않았습니다.');
+        // console.error('Config.js가 로드되지 않았거나 API 키가 설정되지 않았습니다.');
         return false;
     }
 
     if (!DohaConfig.utils.validateDomain()) {
-        console.warn('허용되지 않은 도메인에서 접근하고 있습니다.');
+        // console.warn('허용되지 않은 도메인에서 접근하고 있습니다.');
         return false;
     }
 
     if (kakaoInitialized || Kakao.isInitialized()) {
-        console.log('Kakao SDK가 이미 초기화되었습니다.');
+        // console.log('Kakao SDK가 이미 초기화되었습니다.');
         return true;
     }
 
     try {
         Kakao.init(DohaConfig.api.kakao.appKey);
         kakaoInitialized = true;
-        console.log('Kakao SDK 초기화 성공');
+        // console.log('Kakao SDK 초기화 성공');
         
         // 초기화 확인
         if (!Kakao.isInitialized()) {
-            console.error('Kakao SDK 초기화 확인 실패');
+            // console.error('Kakao SDK 초기화 확인 실패');
             kakaoInitialized = false;
             return false;
         }
         
         return true;
     } catch (error) {
-        console.error('Kakao SDK 초기화 오류:', error);
+        // console.error('Kakao SDK 초기화 오류:', error);
         
         // 오류 코드 4011 처리 (잘못된 앱 키)
         if (error.message && error.message.includes('4011')) {
@@ -72,14 +72,14 @@ function initializeKakaoSDK() {
 function shareToKakao(options) {
     // SDK 초기화 확인
     if (!initializeKakaoSDK()) {
-        console.error('카카오 SDK 초기화 실패로 공유할 수 없습니다.');
+        // console.error('카카오 SDK 초기화 실패로 공유할 수 없습니다.');
         showShareFallback(options.webUrl);
         return;
     }
 
     // 필수 파라미터 확인
     if (!options.title || !options.webUrl) {
-        console.error('필수 파라미터가 누락되었습니다.');
+        // console.error('필수 파라미터가 누락되었습니다.');
         return;
     }
 
@@ -112,7 +112,7 @@ function shareToKakao(options) {
     try {
         Kakao.Share.sendDefault(shareConfig);
     } catch (error) {
-        console.error('카카오톡 공유 오류:', error);
+        // console.error('카카오톡 공유 오류:', error);
         
         // 에러 처리
         if (error.code === -606) {
@@ -220,7 +220,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (typeof Kakao !== 'undefined') {
             initializeKakaoSDK();
         } else {
-            console.warn('Kakao SDK가 아직 로드되지 않았습니다.');
+            // console.warn('Kakao SDK가 아직 로드되지 않았습니다.');
         }
     }, 1000);
 });
