@@ -567,6 +567,61 @@ body {
     }
 }
 
+/* 누락된 컨트롤 클래스들 */
+.text-counter-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 24px;
+    padding: 20px;
+    background: var(--gray-50);
+    border-radius: 12px;
+    border: 1px solid var(--gray-200);
+}
+
+.control-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border: 2px solid var(--primary-600);
+    border-radius: 10px;
+    background: white;
+    color: var(--primary-600);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    min-height: 44px;
+    min-width: 120px;
+    justify-content: center;
+}
+
+.control-btn:hover {
+    background: var(--primary-600);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+.control-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(99, 102, 241, 0.2);
+}
+
+.control-btn.secondary {
+    border-color: var(--gray-400);
+    color: var(--gray-700);
+}
+
+.control-btn.secondary:hover {
+    background: var(--gray-700);
+    border-color: var(--gray-700);
+    color: white;
+}
+
 /* 애니메이션 */
 @keyframes countUp {
     from {
