@@ -2641,36 +2641,46 @@ select:disabled,
 }
 
 /* CTA section on homepage */
-.homepage .cta-section {
+.homepage .cta-section,
+.cta {
     background: var(--gradient-primary);
     padding: var(--space-20) 0;
     text-align: center;
     color: white;
 }
 
-.homepage .cta-title {
+.homepage .cta-title,
+.cta .cta-title,
+.cta h2 {
     font-size: clamp(2rem, 4vw, 3rem);
     font-weight: var(--font-bold);
     margin-bottom: var(--space-6);
+    color: white;
 }
 
-.homepage .cta-description {
+.homepage .cta-description,
+.cta .cta-description,
+.cta p {
     font-size: 1.25rem;
     margin-bottom: var(--space-8);
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
     opacity: 0.9;
+    color: white;
 }
 
-.homepage .cta-buttons {
+.homepage .cta-buttons,
+.cta .cta-buttons {
     display: flex;
     gap: var(--space-4);
     justify-content: center;
     flex-wrap: wrap;
 }
 
-.homepage .cta-btn {
+.homepage .cta-btn,
+.cta .cta-btn,
+.cta a {
     background: rgba(255, 255, 255, 0.2);
     color: white;
     padding: var(--space-4) var(--space-8);
@@ -2682,19 +2692,23 @@ select:disabled,
     backdrop-filter: blur(10px);
 }
 
-.homepage .cta-btn:hover {
+.homepage .cta-btn:hover,
+.cta .cta-btn:hover,
+.cta a:hover {
     background: rgba(255, 255, 255, 0.3);
     border-color: rgba(255, 255, 255, 0.5);
     transform: translateY(-2px);
 }
 
-.homepage .cta-btn.primary {
+.homepage .cta-btn.primary,
+.cta .cta-btn.primary {
     background: white;
     color: var(--primary-600);
     border-color: white;
 }
 
-.homepage .cta-btn.primary:hover {
+.homepage .cta-btn.primary:hover,
+.cta .cta-btn.primary:hover {
     background: var(--gray-100);
     color: var(--primary-700);
 }
