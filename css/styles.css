@@ -2106,6 +2106,479 @@ a:hover {
 }
 
 /* ==========================================================================
+   FAQ 페이지 스타일
+   ========================================================================== */
+
+.faq-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: var(--spacing-4xl) 0;
+    text-align: center;
+    color: var(--text-white);
+}
+
+.faq-container {
+    max-width: 800px;
+    margin: var(--spacing-3xl) auto;
+    padding: 0 var(--spacing-lg);
+}
+
+.faq-item {
+    background: var(--bg-card);
+    border-radius: 12px;
+    margin-bottom: var(--spacing-lg);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    transition: all var(--animation-duration) var(--animation-timing);
+}
+
+.faq-item:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.faq-question {
+    padding: var(--spacing-lg);
+    font-weight: 600;
+    color: var(--text-primary);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color var(--animation-duration) var(--animation-timing);
+}
+
+.faq-question:hover {
+    background-color: var(--bg-tertiary);
+}
+
+.faq-question::after {
+    content: '+';
+    font-size: var(--font-size-xl);
+    color: var(--primary-color);
+    transition: transform var(--animation-duration) var(--animation-timing);
+}
+
+.faq-item.active .faq-question::after {
+    transform: rotate(45deg);
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height var(--animation-duration) var(--animation-timing);
+}
+
+.faq-item.active .faq-answer {
+    max-height: 500px;
+}
+
+.faq-answer-content {
+    padding: 0 var(--spacing-lg) var(--spacing-lg);
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+/* ==========================================================================
+   연락처 페이지 스타일
+   ========================================================================== */
+
+.contact-header {
+    background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+    padding: var(--spacing-4xl) 0;
+    text-align: center;
+    color: var(--text-white);
+}
+
+.contact-container {
+    max-width: 800px;
+    margin: var(--spacing-3xl) auto;
+    padding: 0 var(--spacing-lg);
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-xl);
+    margin-bottom: var(--spacing-3xl);
+}
+
+.contact-card {
+    background: var(--bg-card);
+    border-radius: 16px;
+    padding: var(--spacing-2xl);
+    text-align: center;
+    box-shadow: var(--shadow-md);
+    transition: all var(--animation-duration) var(--animation-timing);
+}
+
+.contact-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.contact-icon {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-lg);
+    display: block;
+}
+
+.contact-title {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-md);
+}
+
+.contact-info {
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.contact-form {
+    background: var(--bg-card);
+    border-radius: 16px;
+    padding: var(--spacing-2xl);
+    box-shadow: var(--shadow-md);
+}
+
+.contact-form .form-group {
+    margin-bottom: var(--spacing-lg);
+}
+
+.contact-form textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+.submit-btn {
+    width: 100%;
+    background: var(--gradient-primary);
+    color: var(--text-white);
+    padding: var(--spacing-md);
+    border: none;
+    border-radius: 8px;
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--animation-duration) var(--animation-timing);
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+/* ==========================================================================
+   소개 페이지 스타일
+   ========================================================================== */
+
+.about-header {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    padding: var(--spacing-4xl) 0;
+    text-align: center;
+    color: var(--text-white);
+}
+
+.about-container {
+    max-width: 1000px;
+    margin: var(--spacing-3xl) auto;
+    padding: 0 var(--spacing-lg);
+}
+
+.about-section {
+    margin-bottom: var(--spacing-3xl);
+}
+
+.about-section h2 {
+    font-size: var(--font-size-2xl);
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-lg);
+    text-align: center;
+}
+
+.about-content {
+    background: var(--bg-card);
+    border-radius: 16px;
+    padding: var(--spacing-2xl);
+    box-shadow: var(--shadow-md);
+    line-height: 1.8;
+}
+
+.about-content p {
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-md);
+}
+
+.about-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-2xl);
+}
+
+.about-feature {
+    text-align: center;
+    padding: var(--spacing-lg);
+    background: var(--bg-tertiary);
+    border-radius: 12px;
+}
+
+.about-feature-icon {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-md);
+    display: block;
+}
+
+.about-feature-title {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.about-feature-desc {
+    color: var(--text-secondary);
+    font-size: var(--font-size-sm);
+}
+
+/* ==========================================================================
+   법적 페이지 스타일 (개인정보처리방침, 이용약관)
+   ========================================================================== */
+
+.legal-header {
+    background: linear-gradient(135deg, #6b7280 0%, #374151 100%);
+    padding: var(--spacing-4xl) 0;
+    text-align: center;
+    color: var(--text-white);
+}
+
+.legal-container {
+    max-width: 800px;
+    margin: var(--spacing-3xl) auto;
+    padding: 0 var(--spacing-lg);
+}
+
+.legal-content {
+    background: var(--bg-card);
+    border-radius: 16px;
+    padding: var(--spacing-2xl);
+    box-shadow: var(--shadow-md);
+}
+
+.legal-content h2 {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-lg);
+}
+
+.legal-content h3 {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-md);
+}
+
+.legal-content p {
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: var(--spacing-md);
+}
+
+.legal-content ul,
+.legal-content ol {
+    padding-left: var(--spacing-xl);
+    margin-bottom: var(--spacing-md);
+}
+
+.legal-content li {
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: var(--spacing-sm);
+}
+
+.legal-date {
+    text-align: center;
+    color: var(--text-tertiary);
+    font-size: var(--font-size-sm);
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--border-color);
+}
+
+/* ==========================================================================
+   개별 운세 페이지 스타일
+   ========================================================================== */
+
+.fortune-page-header {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    padding: var(--spacing-4xl) 0;
+    text-align: center;
+    color: var(--text-white);
+}
+
+.fortune-input-container {
+    max-width: 600px;
+    margin: var(--spacing-3xl) auto;
+    padding: 0 var(--spacing-lg);
+}
+
+.fortune-input-card {
+    background: var(--bg-card);
+    border-radius: 16px;
+    padding: var(--spacing-2xl);
+    box-shadow: var(--shadow-md);
+}
+
+.fortune-form {
+    display: grid;
+    gap: var(--spacing-lg);
+}
+
+.fortune-form .form-group label {
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-sm);
+    display: block;
+}
+
+.fortune-form select,
+.fortune-form input {
+    width: 100%;
+    padding: var(--spacing-md);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: var(--font-size-base);
+    background-color: var(--bg-primary);
+    transition: border-color var(--animation-duration) var(--animation-timing);
+}
+
+.fortune-form select:focus,
+.fortune-form input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.fortune-btn {
+    background: var(--gradient-accent);
+    color: var(--text-white);
+    padding: var(--spacing-md) var(--spacing-xl);
+    border: none;
+    border-radius: 8px;
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--animation-duration) var(--animation-timing);
+    width: 100%;
+}
+
+.fortune-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.fortune-result {
+    max-width: 800px;
+    margin: var(--spacing-3xl) auto;
+    padding: 0 var(--spacing-lg);
+}
+
+.fortune-result-card {
+    background: var(--bg-card);
+    border-radius: 16px;
+    padding: var(--spacing-2xl);
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    overflow: hidden;
+}
+
+.fortune-result-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--gradient-accent);
+}
+
+.fortune-result-title {
+    font-size: var(--font-size-2xl);
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-lg);
+    text-align: center;
+}
+
+.fortune-result-content {
+    color: var(--text-secondary);
+    line-height: 1.8;
+}
+
+.fortune-result-section {
+    margin-bottom: var(--spacing-xl);
+    padding: var(--spacing-lg);
+    background: var(--bg-tertiary);
+    border-radius: 12px;
+}
+
+.fortune-result-section h3 {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-md);
+}
+
+.fortune-result-section p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 0;
+}
+
+/* 타로 카드 스타일 */
+.tarot-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--spacing-lg);
+    margin: var(--spacing-2xl) 0;
+}
+
+.tarot-card {
+    background: var(--bg-tertiary);
+    border-radius: 8px;
+    padding: var(--spacing-lg);
+    text-align: center;
+    transition: all var(--animation-duration) var(--animation-timing);
+    cursor: pointer;
+}
+
+.tarot-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+}
+
+.tarot-card-back {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+.tarot-card-label {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+}
+
+.tarot-card.revealed {
+    background: var(--gradient-primary);
+    color: var(--text-white);
+}
+
+.tarot-card.revealed .tarot-card-label {
+    color: var(--text-white);
+}
+
+/* ==========================================================================
    반응형 - 테스트/운세/도구 페이지
    ========================================================================== */
 
