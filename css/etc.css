@@ -1,0 +1,692 @@
+/* ==========================================================================
+   doha.kr - Etc Pages CSS
+   기타 페이지(About, Contact, Privacy, Terms, FAQ) 전용 스타일
+   
+   작성 규칙:
+   - .page-etc 스코프 내에서만 작동
+   - 페이지별 구분은 data-page-name 속성 활용
+   ========================================================================== */
+
+/* ==========================================================================
+   About Page
+   ========================================================================== */
+.page-etc[data-page-name="about"] .about-header {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    padding: var(--spacing-12) 0;
+    text-align: center;
+    color: var(--color-white);
+    position: relative;
+    overflow: hidden;
+}
+
+@media (min-width: 768px) {
+    .page-etc[data-page-name="about"] .about-header {
+        padding: var(--spacing-20) 0;
+    }
+}
+
+.page-etc[data-page-name="about"] .about-header__title {
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-4);
+    position: relative;
+    z-index: 1;
+}
+
+@media (min-width: 768px) {
+    .page-etc[data-page-name="about"] .about-header__title {
+        font-size: var(--font-size-4xl);
+    }
+}
+
+.page-etc[data-page-name="about"] .about-header__subtitle {
+    font-size: var(--font-size-lg);
+    opacity: 0.9;
+    position: relative;
+    z-index: 1;
+}
+
+/* About Content */
+.page-etc[data-page-name="about"] .about-container {
+    max-width: 1000px;
+    margin: var(--spacing-12) auto;
+    padding: 0 var(--spacing-4);
+}
+
+.page-etc[data-page-name="about"] .about-section {
+    margin-bottom: var(--spacing-12);
+}
+
+.page-etc[data-page-name="about"] .about-section__title {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-gray-900);
+    margin-bottom: var(--spacing-6);
+    text-align: center;
+}
+
+.page-etc[data-page-name="about"] .about-content {
+    background-color: var(--color-white);
+    border-radius: var(--radius-2xl);
+    padding: var(--spacing-8);
+    box-shadow: var(--shadow-base);
+    margin-bottom: var(--spacing-8);
+}
+
+.page-etc[data-page-name="about"] .about-content p {
+    color: var(--color-gray-700);
+    line-height: var(--line-height-relaxed);
+    margin-bottom: var(--spacing-4);
+}
+
+.page-etc[data-page-name="about"] .about-content p:last-child {
+    margin-bottom: 0;
+}
+
+/* About Features Grid */
+.page-etc[data-page-name="about"] .about-features {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-6);
+}
+
+@media (min-width: 640px) {
+    .page-etc[data-page-name="about"] .about-features {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .page-etc[data-page-name="about"] .about-features {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.page-etc[data-page-name="about"] .about-feature {
+    background-color: var(--color-gray-50);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-6);
+    text-align: center;
+    transition: all var(--transition-base) var(--transition-timing);
+}
+
+.page-etc[data-page-name="about"] .about-feature:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+}
+
+.page-etc[data-page-name="about"] .about-feature__icon {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-4);
+    display: block;
+}
+
+.page-etc[data-page-name="about"] .about-feature__title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-900);
+    margin-bottom: var(--spacing-2);
+}
+
+.page-etc[data-page-name="about"] .about-feature__desc {
+    color: var(--color-gray-600);
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-relaxed);
+}
+
+/* About Timeline */
+.page-etc[data-page-name="about"] .about-timeline {
+    position: relative;
+    padding-left: var(--spacing-8);
+}
+
+.page-etc[data-page-name="about"] .about-timeline::before {
+    content: '';
+    position: absolute;
+    left: 12px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background-color: var(--color-gray-300);
+}
+
+.page-etc[data-page-name="about"] .about-timeline__item {
+    position: relative;
+    margin-bottom: var(--spacing-8);
+}
+
+.page-etc[data-page-name="about"] .about-timeline__item::before {
+    content: '';
+    position: absolute;
+    left: -28px;
+    top: 4px;
+    width: 16px;
+    height: 16px;
+    background-color: var(--color-success);
+    border-radius: 50%;
+    border: 3px solid var(--color-white);
+    box-shadow: var(--shadow-sm);
+}
+
+.page-etc[data-page-name="about"] .about-timeline__date {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-500);
+    margin-bottom: var(--spacing-2);
+}
+
+.page-etc[data-page-name="about"] .about-timeline__title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-900);
+    margin-bottom: var(--spacing-2);
+}
+
+.page-etc[data-page-name="about"] .about-timeline__desc {
+    color: var(--color-gray-600);
+    line-height: var(--line-height-relaxed);
+}
+
+/* ==========================================================================
+   Contact Page
+   ========================================================================== */
+.page-etc[data-page-name="contact"] .contact-header {
+    background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+    padding: var(--spacing-12) 0;
+    text-align: center;
+    color: var(--color-white);
+}
+
+@media (min-width: 768px) {
+    .page-etc[data-page-name="contact"] .contact-header {
+        padding: var(--spacing-20) 0;
+    }
+}
+
+.page-etc[data-page-name="contact"] .contact-header__title {
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-4);
+}
+
+@media (min-width: 768px) {
+    .page-etc[data-page-name="contact"] .contact-header__title {
+        font-size: var(--font-size-4xl);
+    }
+}
+
+.page-etc[data-page-name="contact"] .contact-header__subtitle {
+    font-size: var(--font-size-lg);
+    opacity: 0.9;
+}
+
+/* Contact Content */
+.page-etc[data-page-name="contact"] .contact-container {
+    max-width: 800px;
+    margin: var(--spacing-12) auto;
+    padding: 0 var(--spacing-4);
+}
+
+.page-etc[data-page-name="contact"] .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-6);
+    margin-bottom: var(--spacing-12);
+}
+
+@media (min-width: 768px) {
+    .page-etc[data-page-name="contact"] .contact-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-8);
+    }
+}
+
+.page-etc[data-page-name="contact"] .contact-card {
+    background-color: var(--color-white);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-6);
+    text-align: center;
+    box-shadow: var(--shadow-base);
+    transition: all var(--transition-base) var(--transition-timing);
+}
+
+.page-etc[data-page-name="contact"] .contact-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+}
+
+.page-etc[data-page-name="contact"] .contact-card__icon {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-4);
+    display: block;
+    color: var(--color-primary);
+}
+
+.page-etc[data-page-name="contact"] .contact-card__title {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-900);
+    margin-bottom: var(--spacing-3);
+}
+
+.page-etc[data-page-name="contact"] .contact-card__info {
+    color: var(--color-gray-600);
+    line-height: var(--line-height-relaxed);
+}
+
+.page-etc[data-page-name="contact"] .contact-card__link {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: var(--font-weight-medium);
+}
+
+.page-etc[data-page-name="contact"] .contact-card__link:hover {
+    text-decoration: underline;
+}
+
+/* Contact Form */
+.page-etc[data-page-name="contact"] .contact-form {
+    background-color: var(--color-white);
+    border-radius: var(--radius-2xl);
+    padding: var(--spacing-8);
+    box-shadow: var(--shadow-base);
+}
+
+.page-etc[data-page-name="contact"] .contact-form__title {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-900);
+    margin-bottom: var(--spacing-6);
+}
+
+.page-etc[data-page-name="contact"] .contact-form__grid {
+    display: grid;
+    gap: var(--spacing-6);
+}
+
+.page-etc[data-page-name="contact"] .contact-form__group {
+    display: flex;
+    flex-direction: column;
+}
+
+.page-etc[data-page-name="contact"] .contact-form__label {
+    font-weight: var(--font-weight-medium);
+    color: var(--color-gray-700);
+    margin-bottom: var(--spacing-2);
+}
+
+.page-etc[data-page-name="contact"] .contact-form__input,
+.page-etc[data-page-name="contact"] .contact-form__textarea {
+    padding: var(--spacing-3);
+    border: 2px solid var(--color-gray-300);
+    border-radius: var(--radius-lg);
+    font-size: var(--font-size-base);
+    transition: all var(--transition-base) var(--transition-timing);
+}
+
+.page-etc[data-page-name="contact"] .contact-form__input:focus,
+.page-etc[data-page-name="contact"] .contact-form__textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.page-etc[data-page-name="contact"] .contact-form__textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+.page-etc[data-page-name="contact"] .contact-form__submit {
+    padding: var(--spacing-4) var(--spacing-8);
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    color: var(--color-white);
+    border: none;
+    border-radius: var(--radius-lg);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    cursor: pointer;
+    transition: all var(--transition-base) var(--transition-timing);
+}
+
+.page-etc[data-page-name="contact"] .contact-form__submit:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+/* ==========================================================================
+   FAQ Page
+   ========================================================================== */
+.page-etc[data-page-name="faq"] .faq-header {
+    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    padding: var(--spacing-12) 0;
+    text-align: center;
+    color: var(--color-white);
+}
+
+@media (min-width: 768px) {
+    .page-etc[data-page-name="faq"] .faq-header {
+        padding: var(--spacing-20) 0;
+    }
+}
+
+.page-etc[data-page-name="faq"] .faq-header__title {
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-4);
+}
+
+@media (min-width: 768px) {
+    .page-etc[data-page-name="faq"] .faq-header__title {
+        font-size: var(--font-size-4xl);
+    }
+}
+
+.page-etc[data-page-name="faq"] .faq-header__subtitle {
+    font-size: var(--font-size-lg);
+    opacity: 0.9;
+}
+
+/* FAQ Content */
+.page-etc[data-page-name="faq"] .faq-container {
+    max-width: 800px;
+    margin: var(--spacing-12) auto;
+    padding: 0 var(--spacing-4);
+}
+
+.page-etc[data-page-name="faq"] .faq-category {
+    margin-bottom: var(--spacing-10);
+}
+
+.page-etc[data-page-name="faq"] .faq-category__title {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-900);
+    margin-bottom: var(--spacing-6);
+    padding-bottom: var(--spacing-3);
+    border-bottom: 2px solid var(--color-gray-200);
+}
+
+.page-etc[data-page-name="faq"] .faq-item {
+    background-color: var(--color-white);
+    border-radius: var(--radius-xl);
+    margin-bottom: var(--spacing-4);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    transition: all var(--transition-base) var(--transition-timing);
+}
+
+.page-etc[data-page-name="faq"] .faq-item:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.page-etc[data-page-name="faq"] .faq-question {
+    padding: var(--spacing-6);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-gray-900);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color var(--transition-base) var(--transition-timing);
+}
+
+.page-etc[data-page-name="faq"] .faq-question:hover {
+    background-color: var(--color-gray-50);
+}
+
+.page-etc[data-page-name="faq"] .faq-question__icon {
+    font-size: var(--font-size-xl);
+    color: var(--color-primary);
+    transition: transform var(--transition-base) var(--transition-timing);
+}
+
+.page-etc[data-page-name="faq"] .faq-item.is-open .faq-question__icon {
+    transform: rotate(180deg);
+}
+
+.page-etc[data-page-name="faq"] .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height var(--transition-slow) var(--transition-timing);
+}
+
+.page-etc[data-page-name="faq"] .faq-item.is-open .faq-answer {
+    max-height: 500px;
+}
+
+.page-etc[data-page-name="faq"] .faq-answer__content {
+    padding: 0 var(--spacing-6) var(--spacing-6);
+    color: var(--color-gray-600);
+    line-height: var(--line-height-relaxed);
+}
+
+/* ==========================================================================
+   Legal Pages (Privacy, Terms)
+   ========================================================================== */
+.page-etc[data-page-name="privacy"] .legal-header,
+.page-etc[data-page-name="terms"] .legal-header {
+    background: linear-gradient(135deg, #6b7280 0%, #374151 100%);
+    padding: var(--spacing-12) 0;
+    text-align: center;
+    color: var(--color-white);
+}
+
+@media (min-width: 768px) {
+    .page-etc[data-page-name="privacy"] .legal-header,
+    .page-etc[data-page-name="terms"] .legal-header {
+        padding: var(--spacing-20) 0;
+    }
+}
+
+.page-etc[data-page-name="privacy"] .legal-header__title,
+.page-etc[data-page-name="terms"] .legal-header__title {
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-4);
+}
+
+@media (min-width: 768px) {
+    .page-etc[data-page-name="privacy"] .legal-header__title,
+    .page-etc[data-page-name="terms"] .legal-header__title {
+        font-size: var(--font-size-4xl);
+    }
+}
+
+.page-etc[data-page-name="privacy"] .legal-header__date,
+.page-etc[data-page-name="terms"] .legal-header__date {
+    font-size: var(--font-size-base);
+    opacity: 0.8;
+}
+
+/* Legal Content */
+.page-etc[data-page-name="privacy"] .legal-container,
+.page-etc[data-page-name="terms"] .legal-container {
+    max-width: 800px;
+    margin: var(--spacing-12) auto;
+    padding: 0 var(--spacing-4);
+}
+
+.page-etc[data-page-name="privacy"] .legal-content,
+.page-etc[data-page-name="terms"] .legal-content {
+    background-color: var(--color-white);
+    border-radius: var(--radius-2xl);
+    padding: var(--spacing-8);
+    box-shadow: var(--shadow-base);
+}
+
+.page-etc[data-page-name="privacy"] .legal-content h2,
+.page-etc[data-page-name="terms"] .legal-content h2 {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-900);
+    margin-top: var(--spacing-8);
+    margin-bottom: var(--spacing-4);
+    padding-bottom: var(--spacing-3);
+    border-bottom: 2px solid var(--color-gray-200);
+}
+
+.page-etc[data-page-name="privacy"] .legal-content h2:first-child,
+.page-etc[data-page-name="terms"] .legal-content h2:first-child {
+    margin-top: 0;
+}
+
+.page-etc[data-page-name="privacy"] .legal-content h3,
+.page-etc[data-page-name="terms"] .legal-content h3 {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-gray-800);
+    margin-top: var(--spacing-6);
+    margin-bottom: var(--spacing-3);
+}
+
+.page-etc[data-page-name="privacy"] .legal-content p,
+.page-etc[data-page-name="terms"] .legal-content p {
+    color: var(--color-gray-600);
+    line-height: var(--line-height-relaxed);
+    margin-bottom: var(--spacing-4);
+}
+
+.page-etc[data-page-name="privacy"] .legal-content ul,
+.page-etc[data-page-name="terms"] .legal-content ul,
+.page-etc[data-page-name="privacy"] .legal-content ol,
+.page-etc[data-page-name="terms"] .legal-content ol {
+    padding-left: var(--spacing-8);
+    margin-bottom: var(--spacing-4);
+}
+
+.page-etc[data-page-name="privacy"] .legal-content li,
+.page-etc[data-page-name="terms"] .legal-content li {
+    color: var(--color-gray-600);
+    line-height: var(--line-height-relaxed);
+    margin-bottom: var(--spacing-2);
+}
+
+.page-etc[data-page-name="privacy"] .legal-content strong,
+.page-etc[data-page-name="terms"] .legal-content strong {
+    color: var(--color-gray-800);
+    font-weight: var(--font-weight-semibold);
+}
+
+/* Legal Table */
+.page-etc[data-page-name="privacy"] .legal-table,
+.page-etc[data-page-name="terms"] .legal-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: var(--spacing-6) 0;
+    overflow-x: auto;
+    display: block;
+}
+
+.page-etc[data-page-name="privacy"] .legal-table th,
+.page-etc[data-page-name="terms"] .legal-table th,
+.page-etc[data-page-name="privacy"] .legal-table td,
+.page-etc[data-page-name="terms"] .legal-table td {
+    padding: var(--spacing-3);
+    text-align: left;
+    border: 1px solid var(--color-gray-300);
+}
+
+.page-etc[data-page-name="privacy"] .legal-table th,
+.page-etc[data-page-name="terms"] .legal-table th {
+    background-color: var(--color-gray-100);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-800);
+}
+
+.page-etc[data-page-name="privacy"] .legal-table td,
+.page-etc[data-page-name="terms"] .legal-table td {
+    color: var(--color-gray-600);
+}
+
+/* Legal Footer */
+.page-etc[data-page-name="privacy"] .legal-footer,
+.page-etc[data-page-name="terms"] .legal-footer {
+    text-align: center;
+    margin-top: var(--spacing-12);
+    padding-top: var(--spacing-8);
+    border-top: 1px solid var(--color-gray-200);
+}
+
+.page-etc[data-page-name="privacy"] .legal-footer__text,
+.page-etc[data-page-name="terms"] .legal-footer__text {
+    color: var(--color-gray-500);
+    font-size: var(--font-size-sm);
+}
+
+/* ==========================================================================
+   Shared Components for Etc Pages
+   ========================================================================== */
+
+/* Back to Top Button */
+.page-etc .back-to-top {
+    position: fixed;
+    bottom: var(--spacing-8);
+    right: var(--spacing-8);
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    color: var(--color-white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--transition-base) var(--transition-timing);
+    box-shadow: var(--shadow-md);
+}
+
+.page-etc .back-to-top.is-visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.page-etc .back-to-top:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Breadcrumbs */
+.page-etc .breadcrumbs {
+    padding: var(--spacing-4) 0;
+    background-color: var(--color-gray-50);
+}
+
+.page-etc .breadcrumbs__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-4);
+}
+
+.page-etc .breadcrumbs__list {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+    list-style: none;
+    flex-wrap: wrap;
+}
+
+.page-etc .breadcrumbs__item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+}
+
+.page-etc .breadcrumbs__link {
+    color: var(--color-gray-600);
+    text-decoration: none;
+    transition: color var(--transition-base) var(--transition-timing);
+}
+
+.page-etc .breadcrumbs__link:hover {
+    color: var(--color-primary);
+}
+
+.page-etc .breadcrumbs__separator {
+    color: var(--color-gray-400);
+}
+
+.page-etc .breadcrumbs__current {
+    color: var(--color-gray-900);
+    font-weight: var(--font-weight-medium);
+}

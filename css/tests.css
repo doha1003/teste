@@ -1,0 +1,706 @@
+/* ==========================================================================
+   doha.kr - Tests Page CSS
+   심리테스트 카테고리 전용 스타일
+   
+   작성 규칙:
+   - .page-tests 스코프 내에서만 작동
+   - 컴포넌트는 test- 접두사 사용
+   - 테스트별 구분은 data-test-type 속성 활용
+   ========================================================================== */
+
+/* ==========================================================================
+   Page Header (Tests Index)
+   ========================================================================== */
+.page-tests .test-header {
+    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    padding: var(--spacing-12) 0;
+    text-align: center;
+    color: var(--color-white);
+    position: relative;
+    overflow: hidden;
+}
+
+@media (min-width: 768px) {
+    .page-tests .test-header {
+        padding: var(--spacing-20) 0;
+    }
+}
+
+/* Animated Background Pattern */
+.page-tests .test-header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 10px,
+        rgba(255, 255, 255, 0.03) 10px,
+        rgba(255, 255, 255, 0.03) 20px
+    );
+    animation: test-header-slide 20s linear infinite;
+}
+
+@keyframes test-header-slide {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(50px, 50px); }
+}
+
+.page-tests .test-header__content {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-4);
+}
+
+.page-tests .test-header__title {
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-4);
+}
+
+@media (min-width: 768px) {
+    .page-tests .test-header__title {
+        font-size: var(--font-size-5xl);
+    }
+}
+
+.page-tests .test-header__subtitle {
+    font-size: var(--font-size-lg);
+    opacity: 0.9;
+    line-height: var(--line-height-relaxed);
+}
+
+/* ==========================================================================
+   Tests Grid (Index Page)
+   ========================================================================== */
+.page-tests .test-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-6);
+    max-width: 1200px;
+    margin: var(--spacing-12) auto;
+    padding: 0 var(--spacing-4);
+}
+
+@media (min-width: 768px) {
+    .page-tests .test-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-8);
+    }
+}
+
+@media (min-width: 1024px) {
+    .page-tests .test-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Test Card */
+.page-tests .test-card {
+    background-color: var(--color-white);
+    border-radius: var(--radius-2xl);
+    padding: var(--spacing-8);
+    text-decoration: none;
+    box-shadow: var(--shadow-base);
+    transition: all var(--transition-base) var(--transition-timing);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.page-tests .test-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #8b5cf6 0%, #ec4899 100%);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--transition-base) var(--transition-timing);
+}
+
+.page-tests .test-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+}
+
+.page-tests .test-card:hover::before {
+    transform: scaleX(1);
+}
+
+.page-tests .test-card__icon {
+    font-size: 4rem;
+    margin-bottom: var(--spacing-6);
+    display: block;
+}
+
+.page-tests .test-card__title {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-900);
+    margin-bottom: var(--spacing-3);
+}
+
+.page-tests .test-card__description {
+    color: var(--color-gray-600);
+    line-height: var(--line-height-relaxed);
+    margin-bottom: var(--spacing-6);
+    flex: 1;
+}
+
+.page-tests .test-card__stats {
+    display: flex;
+    gap: var(--spacing-4);
+    margin-bottom: var(--spacing-6);
+    flex-wrap: wrap;
+}
+
+.page-tests .test-card__stat {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-1);
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-500);
+}
+
+.page-tests .test-card__button {
+    display: inline-block;
+    padding: var(--spacing-3) var(--spacing-6);
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    color: var(--color-white);
+    border-radius: var(--radius-full);
+    font-weight: var(--font-weight-medium);
+    text-align: center;
+    transition: all var(--transition-base) var(--transition-timing);
+}
+
+.page-tests .test-card:hover .test-card__button {
+    transform: translateX(4px);
+}
+
+/* ==========================================================================
+   Test Introduction Page
+   ========================================================================== */
+.page-tests .test-intro {
+    max-width: 800px;
+    margin: var(--spacing-12) auto;
+    padding: 0 var(--spacing-4);
+    text-align: center;
+}
+
+.page-tests .test-intro__icon {
+    font-size: 5rem;
+    margin-bottom: var(--spacing-8);
+    display: inline-block;
+    animation: test-intro-bounce 2s ease-in-out infinite;
+}
+
+@keyframes test-intro-bounce {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-20px) scale(1.1); }
+}
+
+.page-tests .test-intro__title {
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-gray-900);
+    margin-bottom: var(--spacing-6);
+}
+
+@media (min-width: 768px) {
+    .page-tests .test-intro__title {
+        font-size: var(--font-size-4xl);
+    }
+}
+
+.page-tests .test-intro__description {
+    font-size: var(--font-size-lg);
+    color: var(--color-gray-600);
+    line-height: var(--line-height-relaxed);
+    margin-bottom: var(--spacing-8);
+}
+
+.page-tests .test-intro__features {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-4);
+    margin-bottom: var(--spacing-10);
+    text-align: left;
+}
+
+@media (min-width: 640px) {
+    .page-tests .test-intro__features {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.page-tests .test-intro__feature {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-3);
+    padding: var(--spacing-4);
+    background-color: var(--color-gray-50);
+    border-radius: var(--radius-lg);
+}
+
+.page-tests .test-intro__feature-icon {
+    color: var(--color-primary);
+    font-size: var(--font-size-xl);
+    flex-shrink: 0;
+}
+
+.page-tests .test-intro__feature-text {
+    color: var(--color-gray-700);
+}
+
+.page-tests .test-intro__start-btn {
+    display: inline-block;
+    padding: var(--spacing-5) var(--spacing-10);
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    color: var(--color-white);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    text-decoration: none;
+    box-shadow: 0 4px 14px 0 rgba(99, 102, 241, 0.3);
+    transition: all var(--transition-base) var(--transition-timing);
+}
+
+.page-tests .test-intro__start-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px 0 rgba(99, 102, 241, 0.4);
+}
+
+/* ==========================================================================
+   Test Container (Actual Test)
+   ========================================================================== */
+.page-tests .test-container {
+    max-width: 800px;
+    margin: var(--spacing-8) auto;
+    padding: 0 var(--spacing-4);
+}
+
+/* Progress Bar */
+.page-tests .test-progress {
+    margin-bottom: var(--spacing-8);
+}
+
+.page-tests .test-progress__info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-3);
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-600);
+}
+
+.page-tests .test-progress__bar {
+    height: 8px;
+    background-color: var(--color-gray-200);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+}
+
+.page-tests .test-progress__fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+    border-radius: var(--radius-full);
+    transition: width var(--transition-slow) var(--transition-timing);
+}
+
+/* Question Card */
+.page-tests .test-question {
+    background-color: var(--color-white);
+    border-radius: var(--radius-2xl);
+    padding: var(--spacing-8);
+    box-shadow: var(--shadow-base);
+    margin-bottom: var(--spacing-8);
+}
+
+.page-tests .test-question__number {
+    font-size: var(--font-size-sm);
+    color: var(--color-primary);
+    font-weight: var(--font-weight-medium);
+    margin-bottom: var(--spacing-4);
+}
+
+.page-tests .test-question__text {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-gray-900);
+    line-height: var(--line-height-relaxed);
+    margin-bottom: var(--spacing-8);
+}
+
+@media (min-width: 768px) {
+    .page-tests .test-question__text {
+        font-size: var(--font-size-2xl);
+    }
+}
+
+/* Answer Options */
+.page-tests .test-options {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4);
+}
+
+.page-tests .test-option {
+    padding: var(--spacing-5) var(--spacing-6);
+    background-color: var(--color-gray-50);
+    border: 2px solid transparent;
+    border-radius: var(--radius-xl);
+    cursor: pointer;
+    transition: all var(--transition-base) var(--transition-timing);
+    text-align: left;
+}
+
+.page-tests .test-option:hover {
+    background-color: var(--color-gray-100);
+    transform: translateX(4px);
+}
+
+.page-tests .test-option.is-selected {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border-color: var(--color-primary-dark);
+}
+
+.page-tests .test-option__text {
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-relaxed);
+}
+
+@media (min-width: 768px) {
+    .page-tests .test-option__text {
+        font-size: var(--font-size-lg);
+    }
+}
+
+/* Navigation Buttons */
+.page-tests .test-navigation {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--spacing-4);
+}
+
+.page-tests .test-nav-btn {
+    padding: var(--spacing-3) var(--spacing-6);
+    border-radius: var(--radius-lg);
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+    transition: all var(--transition-base) var(--transition-timing);
+}
+
+.page-tests .test-nav-btn--prev {
+    background-color: var(--color-gray-200);
+    color: var(--color-gray-700);
+}
+
+.page-tests .test-nav-btn--prev:hover {
+    background-color: var(--color-gray-300);
+}
+
+.page-tests .test-nav-btn--next {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    color: var(--color-white);
+}
+
+.page-tests .test-nav-btn--next:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.page-tests .test-nav-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+/* ==========================================================================
+   Test Result Page
+   ========================================================================== */
+.page-tests .test-result {
+    max-width: 900px;
+    margin: var(--spacing-8) auto;
+    padding: 0 var(--spacing-4);
+}
+
+/* Result Card */
+.page-tests .test-result__card {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+    color: var(--color-white);
+    border-radius: var(--radius-2xl);
+    padding: var(--spacing-10);
+    text-align: center;
+    margin-bottom: var(--spacing-8);
+    box-shadow: var(--shadow-xl);
+}
+
+.page-tests .test-result__type {
+    font-size: var(--font-size-5xl);
+    font-weight: var(--font-weight-black);
+    margin-bottom: var(--spacing-4);
+}
+
+@media (min-width: 768px) {
+    .page-tests .test-result__type {
+        font-size: var(--font-size-6xl);
+    }
+}
+
+.page-tests .test-result__title {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--spacing-3);
+}
+
+.page-tests .test-result__subtitle {
+    font-size: var(--font-size-lg);
+    opacity: 0.9;
+}
+
+/* Result Details */
+.page-tests .test-result__details {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-6);
+    margin-bottom: var(--spacing-8);
+}
+
+@media (min-width: 768px) {
+    .page-tests .test-result__details {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.page-tests .test-result__detail-card {
+    background-color: var(--color-white);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-6);
+    box-shadow: var(--shadow-base);
+}
+
+.page-tests .test-result__detail-title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-900);
+    margin-bottom: var(--spacing-4);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+}
+
+.page-tests .test-result__detail-content {
+    color: var(--color-gray-600);
+    line-height: var(--line-height-relaxed);
+}
+
+.page-tests .test-result__detail-list {
+    list-style: none;
+    padding: 0;
+}
+
+.page-tests .test-result__detail-list li {
+    padding: var(--spacing-2) 0;
+    padding-left: var(--spacing-6);
+    position: relative;
+}
+
+.page-tests .test-result__detail-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--color-primary);
+    font-weight: var(--font-weight-bold);
+}
+
+/* Share Section */
+.page-tests .test-share {
+    text-align: center;
+    padding: var(--spacing-8);
+    background-color: var(--color-gray-50);
+    border-radius: var(--radius-2xl);
+    margin-bottom: var(--spacing-8);
+}
+
+.page-tests .test-share__title {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-900);
+    margin-bottom: var(--spacing-4);
+}
+
+.page-tests .test-share__buttons {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-4);
+    flex-wrap: wrap;
+}
+
+.page-tests .test-share__btn {
+    padding: var(--spacing-3) var(--spacing-6);
+    border-radius: var(--radius-lg);
+    font-weight: var(--font-weight-medium);
+    text-decoration: none;
+    transition: all var(--transition-base) var(--transition-timing);
+}
+
+.page-tests .test-share__btn--kakao {
+    background-color: #fee500;
+    color: #3c1e1e;
+}
+
+.page-tests .test-share__btn--kakao:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.page-tests .test-share__btn--copy {
+    background-color: var(--color-gray-200);
+    color: var(--color-gray-700);
+}
+
+.page-tests .test-share__btn--copy:hover {
+    background-color: var(--color-gray-300);
+}
+
+/* Action Buttons */
+.page-tests .test-actions {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-4);
+    flex-wrap: wrap;
+}
+
+.page-tests .test-action-btn {
+    padding: var(--spacing-4) var(--spacing-8);
+    border-radius: var(--radius-lg);
+    font-weight: var(--font-weight-medium);
+    text-decoration: none;
+    transition: all var(--transition-base) var(--transition-timing);
+}
+
+.page-tests .test-action-btn--retry {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    color: var(--color-white);
+}
+
+.page-tests .test-action-btn--retry:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.page-tests .test-action-btn--more {
+    background-color: var(--color-gray-200);
+    color: var(--color-gray-700);
+}
+
+.page-tests .test-action-btn--more:hover {
+    background-color: var(--color-gray-300);
+}
+
+/* ==========================================================================
+   Test-Specific Styles
+   ========================================================================== */
+
+/* MBTI Test */
+.page-tests[data-test-type="mbti"] .test-header {
+    background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+}
+
+.page-tests[data-test-type="mbti"] .test-result__card {
+    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+}
+
+/* Teto-Egen Test */
+.page-tests[data-test-type="teto-egen"] .test-header {
+    background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+}
+
+.page-tests[data-test-type="teto-egen"] .test-result__card {
+    background: linear-gradient(135deg, #ec4899 0%, #f59e0b 100%);
+}
+
+.page-tests[data-test-type="teto-egen"] .test-character {
+    width: 200px;
+    height: 200px;
+    margin: var(--spacing-6) auto;
+    border-radius: var(--radius-full);
+    object-fit: cover;
+    border: 6px solid var(--color-white);
+    box-shadow: var(--shadow-xl);
+}
+
+/* Love DNA Test */
+.page-tests[data-test-type="love-dna"] .test-header {
+    background: linear-gradient(135deg, #ef4444 0%, #ec4899 100%);
+}
+
+.page-tests[data-test-type="love-dna"] .test-result__card {
+    background: linear-gradient(135deg, #ef4444 0%, #f97316 100%);
+}
+
+.page-tests[data-test-type="love-dna"] .test-dna-chart {
+    max-width: 400px;
+    margin: var(--spacing-6) auto;
+}
+
+/* ==========================================================================
+   Loading State
+   ========================================================================== */
+.page-tests .test-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    text-align: center;
+}
+
+.page-tests .test-loading__spinner {
+    width: 60px;
+    height: 60px;
+    border: 4px solid var(--color-gray-200);
+    border-top-color: var(--color-primary);
+    border-radius: 50%;
+    animation: test-loading-spin 0.8s linear infinite;
+    margin-bottom: var(--spacing-4);
+}
+
+@keyframes test-loading-spin {
+    to { transform: rotate(360deg); }
+}
+
+.page-tests .test-loading__text {
+    font-size: var(--font-size-lg);
+    color: var(--color-gray-600);
+}
+
+/* ==========================================================================
+   Mobile Specific Adjustments
+   ========================================================================== */
+@media (max-width: 640px) {
+    .page-tests .test-container {
+        padding: 0 var(--spacing-3);
+    }
+    
+    .page-tests .test-question {
+        padding: var(--spacing-6);
+    }
+    
+    .page-tests .test-option {
+        padding: var(--spacing-4);
+    }
+    
+    .page-tests .test-result__card {
+        padding: var(--spacing-6);
+    }
+}

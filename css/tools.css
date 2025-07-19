@@ -1,0 +1,699 @@
+/* ==========================================================================
+   doha.kr - Tools Page CSS
+   실용도구 카테고리 전용 스타일
+   
+   작성 규칙:
+   - .page-tools 스코프 내에서만 작동
+   - 컴포넌트는 tool- 접두사 사용
+   - 도구별 구분은 data-tool-type 속성 활용
+   ========================================================================== */
+
+/* ==========================================================================
+   Page Header (Tools Index)
+   ========================================================================== */
+.page-tools .tool-header {
+    background: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);
+    padding: var(--spacing-12) 0;
+    text-align: center;
+    color: var(--color-white);
+    position: relative;
+    overflow: hidden;
+}
+
+@media (min-width: 768px) {
+    .page-tools .tool-header {
+        padding: var(--spacing-20) 0;
+    }
+}
+
+/* Animated Background Elements */
+.page-tools .tool-header::before,
+.page-tools .tool-header::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.page-tools .tool-header::before {
+    width: 300px;
+    height: 300px;
+    top: -150px;
+    right: -100px;
+    animation: tool-header-float 15s ease-in-out infinite;
+}
+
+.page-tools .tool-header::after {
+    width: 200px;
+    height: 200px;
+    bottom: -100px;
+    left: -50px;
+    animation: tool-header-float 20s ease-in-out infinite reverse;
+}
+
+@keyframes tool-header-float {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(30px, -30px) scale(1.1); }
+}
+
+.page-tools .tool-header__content {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-4);
+}
+
+.page-tools .tool-header__title {
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-4);
+}
+
+@media (min-width: 768px) {
+    .page-tools .tool-header__title {
+        font-size: var(--font-size-5xl);
+    }
+}
+
+.page-tools .tool-header__subtitle {
+    font-size: var(--font-size-lg);
+    opacity: 0.9;
+    line-height: var(--line-height-relaxed);
+}
+
+/* ==========================================================================
+   Tools Grid (Index Page)
+   ========================================================================== */
+.page-tools .tool-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-6);
+    max-width: 1200px;
+    margin: var(--spacing-12) auto;
+    padding: 0 var(--spacing-4);
+}
+
+@media (min-width: 768px) {
+    .page-tools .tool-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-8);
+    }
+}
+
+@media (min-width: 1024px) {
+    .page-tools .tool-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Tool Card */
+.page-tools .tool-card {
+    background-color: var(--color-white);
+    border-radius: var(--radius-2xl);
+    padding: var(--spacing-8);
+    text-decoration: none;
+    box-shadow: var(--shadow-base);
+    transition: all var(--transition-base) var(--transition-timing);
+    position: relative;
+    border: 2px solid transparent;
+    display: flex;
+    flex-direction: column;
+}
+
+.page-tools .tool-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--color-warning);
+}
+
+.page-tools .tool-card__emoji {
+    font-size: 3.5rem;
+    margin-bottom: var(--spacing-6);
+    display: block;
+}
+
+.page-tools .tool-card__name {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-900);
+    margin-bottom: var(--spacing-3);
+}
+
+.page-tools .tool-card__desc {
+    color: var(--color-gray-600);
+    line-height: var(--line-height-relaxed);
+    margin-bottom: var(--spacing-6);
+    flex: 1;
+}
+
+.page-tools .tool-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-2);
+}
+
+.page-tools .tool-card__tag {
+    padding: var(--spacing-1) var(--spacing-3);
+    background-color: var(--color-gray-100);
+    color: var(--color-gray-600);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+}
+
+/* ==========================================================================
+   Tool Container (Individual Tool Pages)
+   ========================================================================== */
+.page-tools .tool-container {
+    max-width: 800px;
+    margin: var(--spacing-8) auto;
+    padding: 0 var(--spacing-4);
+}
+
+/* Tool Page Header */
+.page-tools .tool-page-header {
+    text-align: center;
+    margin-bottom: var(--spacing-10);
+}
+
+.page-tools .tool-page-header__icon {
+    font-size: 4rem;
+    margin-bottom: var(--spacing-4);
+    display: inline-block;
+}
+
+.page-tools .tool-page-header__title {
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-gray-900);
+    margin-bottom: var(--spacing-4);
+}
+
+@media (min-width: 768px) {
+    .page-tools .tool-page-header__title {
+        font-size: var(--font-size-4xl);
+    }
+}
+
+.page-tools .tool-page-header__subtitle {
+    font-size: var(--font-size-lg);
+    color: var(--color-gray-600);
+    line-height: var(--line-height-relaxed);
+}
+
+/* Tool Content Area */
+.page-tools .tool-content {
+    background-color: var(--color-white);
+    border-radius: var(--radius-2xl);
+    padding: var(--spacing-8);
+    box-shadow: var(--shadow-base);
+    margin-bottom: var(--spacing-8);
+}
+
+@media (min-width: 768px) {
+    .page-tools .tool-content {
+        padding: var(--spacing-10);
+    }
+}
+
+/* ==========================================================================
+   Text Counter Tool
+   ========================================================================== */
+.page-tools[data-tool-type="text-counter"] .tool-textarea {
+    width: 100%;
+    min-height: 300px;
+    padding: var(--spacing-4);
+    border: 2px solid var(--color-gray-300);
+    border-radius: var(--radius-lg);
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-relaxed);
+    resize: vertical;
+    transition: border-color var(--transition-base) var(--transition-timing);
+}
+
+.page-tools[data-tool-type="text-counter"] .tool-textarea:focus {
+    outline: none;
+    border-color: var(--color-warning);
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+}
+
+.page-tools[data-tool-type="text-counter"] .tool-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-4);
+    margin-top: var(--spacing-6);
+}
+
+@media (min-width: 640px) {
+    .page-tools[data-tool-type="text-counter"] .tool-stats {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.page-tools[data-tool-type="text-counter"] .tool-stat {
+    background-color: var(--color-gray-50);
+    padding: var(--spacing-4);
+    border-radius: var(--radius-lg);
+    text-align: center;
+    border: 1px solid var(--color-gray-200);
+}
+
+.page-tools[data-tool-type="text-counter"] .tool-stat__value {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-warning);
+    display: block;
+    margin-bottom: var(--spacing-2);
+}
+
+.page-tools[data-tool-type="text-counter"] .tool-stat__label {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-600);
+}
+
+/* Text Counter Actions */
+.page-tools[data-tool-type="text-counter"] .tool-actions {
+    display: flex;
+    gap: var(--spacing-4);
+    margin-top: var(--spacing-6);
+    flex-wrap: wrap;
+}
+
+.page-tools[data-tool-type="text-counter"] .tool-action-btn {
+    padding: var(--spacing-3) var(--spacing-6);
+    border-radius: var(--radius-lg);
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+    transition: all var(--transition-base) var(--transition-timing);
+}
+
+.page-tools[data-tool-type="text-counter"] .tool-action-btn--clear {
+    background-color: var(--color-gray-200);
+    color: var(--color-gray-700);
+}
+
+.page-tools[data-tool-type="text-counter"] .tool-action-btn--clear:hover {
+    background-color: var(--color-gray-300);
+}
+
+.page-tools[data-tool-type="text-counter"] .tool-action-btn--copy {
+    background: linear-gradient(135deg, var(--color-warning) 0%, #dc2626 100%);
+    color: var(--color-white);
+}
+
+.page-tools[data-tool-type="text-counter"] .tool-action-btn--copy:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+/* ==========================================================================
+   BMI Calculator Tool
+   ========================================================================== */
+.page-tools[data-tool-type="bmi"] .tool-form {
+    display: grid;
+    gap: var(--spacing-6);
+    margin-bottom: var(--spacing-8);
+}
+
+.page-tools[data-tool-type="bmi"] .tool-form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.page-tools[data-tool-type="bmi"] .tool-form-label {
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-700);
+    margin-bottom: var(--spacing-2);
+}
+
+.page-tools[data-tool-type="bmi"] .tool-form-input {
+    padding: var(--spacing-4);
+    border: 2px solid var(--color-gray-300);
+    border-radius: var(--radius-lg);
+    font-size: var(--font-size-lg);
+    transition: all var(--transition-base) var(--transition-timing);
+}
+
+.page-tools[data-tool-type="bmi"] .tool-form-input:focus {
+    outline: none;
+    border-color: var(--color-warning);
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+}
+
+.page-tools[data-tool-type="bmi"] .tool-form-input::-webkit-inner-spin-button,
+.page-tools[data-tool-type="bmi"] .tool-form-input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.page-tools[data-tool-type="bmi"] .tool-form-unit {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-500);
+    margin-top: var(--spacing-1);
+}
+
+.page-tools[data-tool-type="bmi"] .tool-calculate-btn {
+    padding: var(--spacing-4) var(--spacing-8);
+    background: linear-gradient(135deg, var(--color-warning) 0%, #dc2626 100%);
+    color: var(--color-white);
+    border: none;
+    border-radius: var(--radius-lg);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    cursor: pointer;
+    transition: all var(--transition-base) var(--transition-timing);
+}
+
+.page-tools[data-tool-type="bmi"] .tool-calculate-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+/* BMI Result */
+.page-tools[data-tool-type="bmi"] .tool-result {
+    background-color: var(--color-gray-50);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-8);
+    text-align: center;
+    border: 2px solid var(--color-gray-200);
+}
+
+.page-tools[data-tool-type="bmi"] .tool-result__value {
+    font-size: var(--font-size-5xl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-4);
+}
+
+.page-tools[data-tool-type="bmi"] .tool-result__value--underweight {
+    color: #3b82f6;
+}
+
+.page-tools[data-tool-type="bmi"] .tool-result__value--normal {
+    color: #10b981;
+}
+
+.page-tools[data-tool-type="bmi"] .tool-result__value--overweight {
+    color: #f59e0b;
+}
+
+.page-tools[data-tool-type="bmi"] .tool-result__value--obese {
+    color: #ef4444;
+}
+
+.page-tools[data-tool-type="bmi"] .tool-result__category {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--spacing-4);
+}
+
+.page-tools[data-tool-type="bmi"] .tool-result__description {
+    color: var(--color-gray-600);
+    line-height: var(--line-height-relaxed);
+}
+
+/* BMI Chart */
+.page-tools[data-tool-type="bmi"] .tool-bmi-chart {
+    margin-top: var(--spacing-8);
+    padding: var(--spacing-6);
+    background-color: var(--color-white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+}
+
+.page-tools[data-tool-type="bmi"] .tool-bmi-chart__title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-900);
+    margin-bottom: var(--spacing-4);
+}
+
+.page-tools[data-tool-type="bmi"] .tool-bmi-chart__table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.page-tools[data-tool-type="bmi"] .tool-bmi-chart__table th,
+.page-tools[data-tool-type="bmi"] .tool-bmi-chart__table td {
+    padding: var(--spacing-3);
+    text-align: left;
+    border-bottom: 1px solid var(--color-gray-200);
+}
+
+.page-tools[data-tool-type="bmi"] .tool-bmi-chart__table th {
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-700);
+    background-color: var(--color-gray-50);
+}
+
+/* ==========================================================================
+   Salary Calculator Tool
+   ========================================================================== */
+.page-tools[data-tool-type="salary"] .tool-form {
+    display: grid;
+    gap: var(--spacing-6);
+    margin-bottom: var(--spacing-8);
+}
+
+.page-tools[data-tool-type="salary"] .tool-form-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-4);
+}
+
+@media (min-width: 640px) {
+    .page-tools[data-tool-type="salary"] .tool-form-row--2cols {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.page-tools[data-tool-type="salary"] .tool-form-select {
+    padding: var(--spacing-4);
+    border: 2px solid var(--color-gray-300);
+    border-radius: var(--radius-lg);
+    font-size: var(--font-size-base);
+    background-color: var(--color-white);
+    cursor: pointer;
+    transition: all var(--transition-base) var(--transition-timing);
+}
+
+.page-tools[data-tool-type="salary"] .tool-form-select:focus {
+    outline: none;
+    border-color: var(--color-warning);
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+}
+
+/* Salary Result */
+.page-tools[data-tool-type="salary"] .tool-salary-result {
+    display: grid;
+    gap: var(--spacing-6);
+}
+
+.page-tools[data-tool-type="salary"] .tool-salary-card {
+    background-color: var(--color-white);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-6);
+    box-shadow: var(--shadow-base);
+    border: 1px solid var(--color-gray-200);
+}
+
+.page-tools[data-tool-type="salary"] .tool-salary-card__title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-900);
+    margin-bottom: var(--spacing-4);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+}
+
+.page-tools[data-tool-type="salary"] .tool-salary-card--highlight {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    border-color: var(--color-warning);
+}
+
+.page-tools[data-tool-type="salary"] .tool-salary-breakdown {
+    display: grid;
+    gap: var(--spacing-3);
+}
+
+.page-tools[data-tool-type="salary"] .tool-salary-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-3) 0;
+    border-bottom: 1px solid var(--color-gray-100);
+}
+
+.page-tools[data-tool-type="salary"] .tool-salary-item:last-child {
+    border-bottom: none;
+    padding-top: var(--spacing-4);
+    margin-top: var(--spacing-2);
+    border-top: 2px solid var(--color-gray-200);
+}
+
+.page-tools[data-tool-type="salary"] .tool-salary-label {
+    color: var(--color-gray-600);
+    font-size: var(--font-size-sm);
+}
+
+.page-tools[data-tool-type="salary"] .tool-salary-value {
+    font-weight: var(--font-weight-medium);
+    color: var(--color-gray-900);
+}
+
+.page-tools[data-tool-type="salary"] .tool-salary-value--total {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-warning);
+}
+
+/* ==========================================================================
+   Tool Info Section
+   ========================================================================== */
+.page-tools .tool-info {
+    background-color: var(--color-gray-50);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-8);
+    margin-top: var(--spacing-8);
+}
+
+.page-tools .tool-info__title {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-900);
+    margin-bottom: var(--spacing-4);
+}
+
+.page-tools .tool-info__content {
+    color: var(--color-gray-600);
+    line-height: var(--line-height-relaxed);
+}
+
+.page-tools .tool-info__list {
+    list-style: none;
+    padding: 0;
+    margin-top: var(--spacing-4);
+}
+
+.page-tools .tool-info__list li {
+    padding: var(--spacing-2) 0;
+    padding-left: var(--spacing-6);
+    position: relative;
+}
+
+.page-tools .tool-info__list li::before {
+    content: '•';
+    position: absolute;
+    left: var(--spacing-2);
+    color: var(--color-warning);
+    font-weight: var(--font-weight-bold);
+}
+
+/* ==========================================================================
+   Tool Features Grid
+   ========================================================================== */
+.page-tools .tool-features {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-4);
+    margin-top: var(--spacing-8);
+}
+
+@media (min-width: 640px) {
+    .page-tools .tool-features {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .page-tools .tool-features {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.page-tools .tool-feature {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-3);
+    padding: var(--spacing-4);
+    background-color: var(--color-white);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-gray-200);
+}
+
+.page-tools .tool-feature__icon {
+    color: var(--color-warning);
+    font-size: var(--font-size-xl);
+    flex-shrink: 0;
+}
+
+.page-tools .tool-feature__content {
+    flex: 1;
+}
+
+.page-tools .tool-feature__title {
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-900);
+    margin-bottom: var(--spacing-1);
+}
+
+.page-tools .tool-feature__description {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-600);
+}
+
+/* ==========================================================================
+   Tool Loading State
+   ========================================================================== */
+.page-tools .tool-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-16);
+}
+
+.page-tools .tool-loading__spinner {
+    width: 48px;
+    height: 48px;
+    border: 3px solid var(--color-gray-200);
+    border-top-color: var(--color-warning);
+    border-radius: 50%;
+    animation: tool-loading-spin 0.8s linear infinite;
+    margin-bottom: var(--spacing-4);
+}
+
+@keyframes tool-loading-spin {
+    to { transform: rotate(360deg); }
+}
+
+.page-tools .tool-loading__text {
+    color: var(--color-gray-600);
+}
+
+/* ==========================================================================
+   Tool Error State
+   ========================================================================== */
+.page-tools .tool-error {
+    background-color: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-4);
+    margin-bottom: var(--spacing-4);
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-3);
+}
+
+.page-tools .tool-error__icon {
+    color: var(--color-error);
+    font-size: var(--font-size-xl);
+    flex-shrink: 0;
+}
+
+.page-tools .tool-error__message {
+    color: #b91c1c;
+    font-size: var(--font-size-sm);
+}

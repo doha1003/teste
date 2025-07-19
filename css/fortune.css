@@ -1,0 +1,687 @@
+/* ==========================================================================
+   doha.kr - Fortune Page CSS
+   운세 카테고리 전용 스타일
+   
+   작성 규칙:
+   - .page-fortune 스코프 내에서만 작동
+   - 컴포넌트는 fortune- 접두사 사용
+   - 운세별 구분은 data-fortune-type 속성 활용
+   ========================================================================== */
+
+/* ==========================================================================
+   Page Header (Fortune Index)
+   ========================================================================== */
+.page-fortune .fortune-header {
+    background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+    padding: var(--spacing-12) 0;
+    text-align: center;
+    color: var(--color-white);
+    position: relative;
+    overflow: hidden;
+}
+
+@media (min-width: 768px) {
+    .page-fortune .fortune-header {
+        padding: var(--spacing-20) 0;
+    }
+}
+
+/* Mystical Background Animation */
+.page-fortune .fortune-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 50%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.08) 0%, transparent 50%);
+    animation: fortune-header-pulse 4s ease-in-out infinite;
+}
+
+@keyframes fortune-header-pulse {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.05); }
+}
+
+/* Floating Stars */
+.page-fortune .fortune-header::after {
+    content: '✨';
+    position: absolute;
+    font-size: 2rem;
+    animation: fortune-star-float 10s linear infinite;
+}
+
+@keyframes fortune-star-float {
+    from {
+        transform: translateX(-100px) translateY(100%) rotate(0deg);
+    }
+    to {
+        transform: translateX(calc(100vw + 100px)) translateY(-100%) rotate(360deg);
+    }
+}
+
+.page-fortune .fortune-header__content {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-4);
+}
+
+.page-fortune .fortune-header__title {
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-4);
+}
+
+@media (min-width: 768px) {
+    .page-fortune .fortune-header__title {
+        font-size: var(--font-size-5xl);
+    }
+}
+
+.page-fortune .fortune-header__subtitle {
+    font-size: var(--font-size-lg);
+    opacity: 0.9;
+    line-height: var(--line-height-relaxed);
+}
+
+/* ==========================================================================
+   Fortune Grid (Index Page)
+   ========================================================================== */
+.page-fortune .fortune-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-6);
+    max-width: 1200px;
+    margin: var(--spacing-12) auto;
+    padding: 0 var(--spacing-4);
+}
+
+@media (min-width: 640px) {
+    .page-fortune .fortune-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .page-fortune .fortune-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--spacing-8);
+    }
+}
+
+/* Fortune Card */
+.page-fortune .fortune-card {
+    background-color: var(--color-white);
+    border-radius: var(--radius-2xl);
+    padding: var(--spacing-8);
+    text-decoration: none;
+    box-shadow: var(--shadow-base);
+    transition: all var(--transition-base) var(--transition-timing);
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+}
+
+.page-fortune .fortune-card::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #ec4899, #8b5cf6, #3b82f6, #ec4899);
+    background-size: 300% 300%;
+    border-radius: var(--radius-2xl);
+    opacity: 0;
+    z-index: -1;
+    transition: opacity var(--transition-base) var(--transition-timing);
+}
+
+.page-fortune .fortune-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: var(--shadow-xl);
+}
+
+.page-fortune .fortune-card:hover::before {
+    opacity: 1;
+    animation: fortune-card-gradient 3s ease infinite;
+}
+
+@keyframes fortune-card-gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.page-fortune .fortune-card__icon {
+    font-size: 4rem;
+    margin-bottom: var(--spacing-6);
+    display: block;
+}
+
+.page-fortune .fortune-card__title {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-900);
+    margin-bottom: var(--spacing-3);
+}
+
+.page-fortune .fortune-card__description {
+    color: var(--color-gray-600);
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-relaxed);
+}
+
+.page-fortune .fortune-card__badge {
+    position: absolute;
+    top: var(--spacing-4);
+    right: var(--spacing-4);
+    padding: var(--spacing-1) var(--spacing-3);
+    background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+    color: var(--color-white);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+}
+
+/* ==========================================================================
+   Fortune Input Form (Individual Fortune Pages)
+   ========================================================================== */
+.page-fortune .fortune-input {
+    max-width: 600px;
+    margin: var(--spacing-12) auto;
+    padding: 0 var(--spacing-4);
+}
+
+.page-fortune .fortune-input__card {
+    background-color: var(--color-white);
+    border-radius: var(--radius-2xl);
+    padding: var(--spacing-8);
+    box-shadow: var(--shadow-base);
+}
+
+.page-fortune .fortune-form {
+    display: grid;
+    gap: var(--spacing-6);
+}
+
+.page-fortune .fortune-form__group {
+    display: flex;
+    flex-direction: column;
+}
+
+.page-fortune .fortune-form__label {
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-700);
+    margin-bottom: var(--spacing-2);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+}
+
+.page-fortune .fortune-form__label-icon {
+    color: var(--color-secondary);
+}
+
+.page-fortune .fortune-form__input,
+.page-fortune .fortune-form__select {
+    padding: var(--spacing-4);
+    border: 2px solid var(--color-gray-300);
+    border-radius: var(--radius-lg);
+    font-size: var(--font-size-base);
+    background-color: var(--color-white);
+    transition: all var(--transition-base) var(--transition-timing);
+}
+
+.page-fortune .fortune-form__input:focus,
+.page-fortune .fortune-form__select:focus {
+    outline: none;
+    border-color: var(--color-secondary);
+    box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1);
+}
+
+/* Date/Time Input Group */
+.page-fortune .fortune-form__date-group {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-4);
+}
+
+@media (min-width: 640px) {
+    .page-fortune .fortune-form__date-group {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.page-fortune .fortune-form__time-group {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-4);
+}
+
+/* Submit Button */
+.page-fortune .fortune-form__submit {
+    padding: var(--spacing-4) var(--spacing-8);
+    background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-primary) 100%);
+    color: var(--color-white);
+    border: none;
+    border-radius: var(--radius-lg);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    cursor: pointer;
+    transition: all var(--transition-base) var(--transition-timing);
+    position: relative;
+    overflow: hidden;
+}
+
+.page-fortune .fortune-form__submit:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.page-fortune .fortune-form__submit::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.page-fortune .fortune-form__submit:active::before {
+    width: 300px;
+    height: 300px;
+}
+
+/* ==========================================================================
+   Fortune Result
+   ========================================================================== */
+.page-fortune .fortune-result {
+    max-width: 800px;
+    margin: var(--spacing-12) auto;
+    padding: 0 var(--spacing-4);
+}
+
+.page-fortune .fortune-result__card {
+    background-color: var(--color-white);
+    border-radius: var(--radius-2xl);
+    padding: var(--spacing-8);
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    overflow: hidden;
+}
+
+.page-fortune .fortune-result__card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, #ec4899 0%, #8b5cf6 50%, #3b82f6 100%);
+}
+
+.page-fortune .fortune-result__header {
+    text-align: center;
+    margin-bottom: var(--spacing-8);
+}
+
+.page-fortune .fortune-result__title {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-gray-900);
+    margin-bottom: var(--spacing-4);
+}
+
+.page-fortune .fortune-result__date {
+    color: var(--color-gray-600);
+    font-size: var(--font-size-lg);
+}
+
+/* Fortune Sections */
+.page-fortune .fortune-result__section {
+    background-color: var(--color-gray-50);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-6);
+    margin-bottom: var(--spacing-6);
+}
+
+.page-fortune .fortune-result__section-title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-900);
+    margin-bottom: var(--spacing-4);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+}
+
+.page-fortune .fortune-result__section-icon {
+    color: var(--color-secondary);
+}
+
+.page-fortune .fortune-result__section-content {
+    color: var(--color-gray-700);
+    line-height: var(--line-height-relaxed);
+}
+
+/* Lucky Items */
+.page-fortune .fortune-result__lucky-items {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-4);
+    margin-top: var(--spacing-4);
+}
+
+@media (min-width: 640px) {
+    .page-fortune .fortune-result__lucky-items {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.page-fortune .fortune-result__lucky-item {
+    text-align: center;
+    padding: var(--spacing-3);
+    background-color: var(--color-white);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-gray-200);
+}
+
+.page-fortune .fortune-result__lucky-label {
+    font-size: var(--font-size-xs);
+    color: var(--color-gray-500);
+    margin-bottom: var(--spacing-1);
+}
+
+.page-fortune .fortune-result__lucky-value {
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-secondary);
+}
+
+/* ==========================================================================
+   Tarot Specific Styles
+   ========================================================================== */
+.page-fortune[data-fortune-type="tarot"] .tarot-spread {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-4);
+    margin: var(--spacing-8) 0;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media (max-width: 640px) {
+    .page-fortune[data-fortune-type="tarot"] .tarot-spread {
+        grid-template-columns: 1fr;
+    }
+}
+
+.page-fortune[data-fortune-type="tarot"] .tarot-card {
+    aspect-ratio: 2/3;
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transition-base) var(--transition-timing);
+    position: relative;
+    overflow: hidden;
+}
+
+.page-fortune[data-fortune-type="tarot"] .tarot-card::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 80%;
+    height: 80%;
+    background-image: 
+        radial-gradient(ellipse at center, rgba(236, 72, 153, 0.2) 0%, transparent 70%);
+    transform: translate(-50%, -50%);
+}
+
+.page-fortune[data-fortune-type="tarot"] .tarot-card:hover {
+    transform: translateY(-10px) rotateZ(-2deg);
+    box-shadow: var(--shadow-xl);
+}
+
+.page-fortune[data-fortune-type="tarot"] .tarot-card__back {
+    font-size: 3rem;
+    color: var(--color-secondary);
+}
+
+.page-fortune[data-fortune-type="tarot"] .tarot-card.is-revealed {
+    background: var(--color-white);
+    border: 2px solid var(--color-secondary);
+}
+
+.page-fortune[data-fortune-type="tarot"] .tarot-card.is-revealed .tarot-card__content {
+    opacity: 1;
+}
+
+.page-fortune[data-fortune-type="tarot"] .tarot-card__content {
+    opacity: 0;
+    transition: opacity var(--transition-slow) var(--transition-timing);
+    text-align: center;
+    padding: var(--spacing-4);
+}
+
+.page-fortune[data-fortune-type="tarot"] .tarot-card__name {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-900);
+    margin-bottom: var(--spacing-2);
+}
+
+.page-fortune[data-fortune-type="tarot"] .tarot-card__meaning {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-600);
+}
+
+/* ==========================================================================
+   Zodiac Specific Styles
+   ========================================================================== */
+.page-fortune[data-fortune-type="zodiac"] .zodiac-selector {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-4);
+    margin-bottom: var(--spacing-8);
+}
+
+@media (min-width: 768px) {
+    .page-fortune[data-fortune-type="zodiac"] .zodiac-selector {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.page-fortune[data-fortune-type="zodiac"] .zodiac-sign {
+    background-color: var(--color-white);
+    border: 2px solid var(--color-gray-300);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-4);
+    text-align: center;
+    cursor: pointer;
+    transition: all var(--transition-base) var(--transition-timing);
+}
+
+.page-fortune[data-fortune-type="zodiac"] .zodiac-sign:hover {
+    border-color: var(--color-secondary);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+}
+
+.page-fortune[data-fortune-type="zodiac"] .zodiac-sign.is-selected {
+    background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-primary) 100%);
+    color: var(--color-white);
+    border-color: transparent;
+}
+
+.page-fortune[data-fortune-type="zodiac"] .zodiac-sign__symbol {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-2);
+    display: block;
+}
+
+.page-fortune[data-fortune-type="zodiac"] .zodiac-sign__name {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+}
+
+/* ==========================================================================
+   Saju Specific Styles
+   ========================================================================== */
+.page-fortune[data-fortune-type="saju"] .saju-pillars {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-4);
+    margin: var(--spacing-8) 0;
+}
+
+@media (max-width: 640px) {
+    .page-fortune[data-fortune-type="saju"] .saju-pillars {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.page-fortune[data-fortune-type="saju"] .saju-pillar {
+    background: linear-gradient(135deg, var(--color-gray-100) 0%, var(--color-white) 100%);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-6);
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--color-gray-200);
+}
+
+.page-fortune[data-fortune-type="saju"] .saju-pillar__title {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-600);
+    margin-bottom: var(--spacing-3);
+}
+
+.page-fortune[data-fortune-type="saju"] .saju-pillar__stem {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-2);
+}
+
+.page-fortune[data-fortune-type="saju"] .saju-pillar__branch {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-secondary);
+}
+
+/* ==========================================================================
+   Fortune Loading State
+   ========================================================================== */
+.page-fortune .fortune-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    text-align: center;
+}
+
+.page-fortune .fortune-loading__spinner {
+    width: 80px;
+    height: 80px;
+    position: relative;
+    margin-bottom: var(--spacing-6);
+}
+
+.page-fortune .fortune-loading__spinner::before,
+.page-fortune .fortune-loading__spinner::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 3px solid transparent;
+}
+
+.page-fortune .fortune-loading__spinner::before {
+    border-top-color: var(--color-secondary);
+    animation: fortune-spin 1s linear infinite;
+}
+
+.page-fortune .fortune-loading__spinner::after {
+    border-bottom-color: var(--color-primary);
+    animation: fortune-spin 1s linear infinite reverse;
+}
+
+@keyframes fortune-spin {
+    to { transform: rotate(360deg); }
+}
+
+.page-fortune .fortune-loading__text {
+    font-size: var(--font-size-lg);
+    color: var(--color-gray-600);
+}
+
+.page-fortune .fortune-loading__subtext {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-500);
+    margin-top: var(--spacing-2);
+}
+
+/* ==========================================================================
+   Fortune Share Section
+   ========================================================================== */
+.page-fortune .fortune-share {
+    background-color: var(--color-gray-50);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-6);
+    text-align: center;
+    margin-top: var(--spacing-8);
+}
+
+.page-fortune .fortune-share__title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-900);
+    margin-bottom: var(--spacing-4);
+}
+
+.page-fortune .fortune-share__buttons {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-4);
+    flex-wrap: wrap;
+}
+
+.page-fortune .fortune-share__btn {
+    padding: var(--spacing-3) var(--spacing-6);
+    border-radius: var(--radius-lg);
+    font-weight: var(--font-weight-medium);
+    text-decoration: none;
+    transition: all var(--transition-base) var(--transition-timing);
+}
+
+.page-fortune .fortune-share__btn--kakao {
+    background-color: #fee500;
+    color: #3c1e1e;
+}
+
+.page-fortune .fortune-share__btn--save {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    color: var(--color-white);
+}
+
+.page-fortune .fortune-share__btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
