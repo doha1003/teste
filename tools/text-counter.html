@@ -721,57 +721,101 @@ window.addEventListener('load', function() {
 })();
 </script>
 
-<!-- AdSense 통합 초기화 -->
+
+
+<!-- AdSense 중복 방지 최종 버전 -->
 <script>
 (function() {
     'use strict';
     
-    // 전역 초기화 플래그
-    window.__adsInitialized = false;
+    // 전역 초기화 상태 관리
+    if (window.__adsenseFullyInitialized) return;
+    window.__adsenseFullyInitialized = true;
+    
+    // 원래 push 메서드 저장
+    let originalPush = null;
     
     // AdSense 초기화 함수
-    function initializeAds() {
-        if (window.__adsInitialized) return;
+    function safeInitAds() {
+        const ads = document.querySelectorAll('.adsbygoogle');
         
-        const ads = document.querySelectorAll('.adsbygoogle:not([data-adsbygoogle-status])');
         if (ads.length === 0) return;
         
-        // AdSense 라이브러리 로드 확인
+        // adsbygoogle가 로드될 때까지 대기
         if (typeof adsbygoogle === 'undefined') {
-            setTimeout(initializeAds, 100);
+            setTimeout(safeInitAds, 200);
             return;
         }
         
-        window.__adsInitialized = true;
+        // push 메서드 오버라이드
+        if (!originalPush && window.adsbygoogle && window.adsbygoogle.push) {
+            originalPush = window.adsbygoogle.push;
+            
+            window.adsbygoogle.push = function(config) {
+                try {
+                    // 이미 광고가 있는 요소는 건너뛰기
+                    const hasAds = Array.from(document.querySelectorAll('.adsbygoogle')).every(el => 
+                        el.getAttribute('data-adsbygoogle-status') === 'done'
+                    );
+                    
+                    if (hasAds) {
+                        console.log('모든 광고 슬롯이 이미 채워짐');
+                        return;
+                    }
+                    
+                    // 원래 push 메서드 호출
+                    return originalPush.call(this, config);
+                } catch (e) {
+                    console.warn('AdSense push 차단됨:', e.message);
+                }
+            };
+        }
         
-        // 각 광고 초기화
+        // 각 광고 슬롯 초기화
+        let initialized = 0;
         ads.forEach((ad) => {
-            try {
-                (adsbygoogle = window.adsbygoogle || []).push({});
-                ad.setAttribute('data-adsbygoogle-status', 'done');
-            } catch (e) {
-                // 오류 무시
+            if (!ad.getAttribute('data-adsbygoogle-status')) {
+                try {
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                    initialized++;
+                } catch (e) {
+                    // 오류 무시
+                }
             }
         });
+        
+        console.log('AdSense 초기화 완료:', initialized, '개 슬롯');
     }
     
-    // DOM 로드 후 실행
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(initializeAds, 500);
-        });
-    } else {
-        setTimeout(initializeAds, 500);
-    }
-    
-    // 전역 에러 핸들러로 AdSense 오류 차단
-    window.addEventListener('error', function(e) {
+    // 전역 에러 핸들러
+    const errorHandler = function(e) {
         if (e.message && e.message.includes('adsbygoogle.push() error')) {
             e.preventDefault();
             e.stopPropagation();
+            e.stopImmediatePropagation();
             return false;
         }
-    }, true);
+    };
+    
+    // 에러 핸들러 등록
+    window.addEventListener('error', errorHandler, true);
+    
+    // unhandledrejection 핸들러
+    window.addEventListener('unhandledrejection', function(e) {
+        if (e.reason && e.reason.message && e.reason.message.includes('adsbygoogle')) {
+            e.preventDefault();
+            return false;
+        }
+    });
+    
+    // DOM 로드 후 초기화
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(safeInitAds, 1000);
+        });
+    } else {
+        setTimeout(safeInitAds, 1000);
+    }
 })();
 </script>
 </body>
