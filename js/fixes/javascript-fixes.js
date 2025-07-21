@@ -10,24 +10,36 @@ function safeExecute(fn, context = 'Unknown') {
     }
 }
 
-// Fix showServices function parameter issue
-function showServices(event = null) {
+// DO NOT override main.js showServices function
+// This is a helper function with different name to avoid conflicts
+function scrollToServices(event = null) {
     if (event) {
         event.preventDefault();
     }
     
     safeExecute(() => {
-        // Your services display logic here
         const servicesSection = document.getElementById('services');
         if (servicesSection) {
             servicesSection.scrollIntoView({ behavior: 'smooth' });
         }
-    }, 'showServices');
+    }, 'scrollToServices');
 }
 
-// Enhanced component loading with better error handling
-function loadComponentSafe(componentName, targetId, fallbackContent = '') {
+// Enhanced component loading - DO NOT OVERRIDE main.js loadComponentById
+// This is a backup function with different name to avoid conflicts
+function loadComponentWithFallback(componentName, targetId, fallbackContent = '') {
     return safeExecute(async () => {
+        // Use existing loadComponentById if available
+        if (typeof window.loadComponentById === 'function') {
+            try {
+                await window.loadComponentById(componentName, targetId);
+                return true;
+            } catch (error) {
+                console.warn(`loadComponentById failed, using fallback:`, error);
+            }
+        }
+        
+        // Fallback implementation only if main function fails
         try {
             const response = await fetch(`/includes/${componentName}.html`);
             
@@ -40,13 +52,6 @@ function loadComponentSafe(componentName, targetId, fallbackContent = '') {
             
             if (target) {
                 target.innerHTML = html;
-                
-                // Trigger custom event for component loaded
-                const event = new CustomEvent('componentLoaded', {
-                    detail: { componentName, targetId }
-                });
-                document.dispatchEvent(event);
-                
                 return true;
             } else {
                 console.warn(`Target element #${targetId} not found`);
@@ -56,11 +61,8 @@ function loadComponentSafe(componentName, targetId, fallbackContent = '') {
             console.error(`Failed to load component ${componentName}:`, error);
             
             // Load fallback content if provided
-            if (fallbackContent) {
-                const target = document.getElementById(targetId);
-                if (target) {
-                    target.innerHTML = fallbackContent;
-                }
+            if (fallbackContent && document.getElementById(targetId)) {
+                document.getElementById(targetId).innerHTML = fallbackContent;
             }
             
             return false;
@@ -324,11 +326,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Export functions for global use
+// Export functions for global use - renamed to avoid conflicts
 window.JSFixes = {
     safeExecute,
-    showServices,
-    loadComponentSafe,
+    scrollToServices,
+    loadComponentWithFallback,
     validateForm,
     addSafeEventListener,
     setLoadingState,
