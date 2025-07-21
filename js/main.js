@@ -572,7 +572,108 @@ function injectStyles() {
     document.head.appendChild(styleElement);
 }
 
-// 컴포넌트 로더
+// 컴포넌트 로더 (ID 기반)
+async function loadComponentById(componentName, targetId) {
+    try {
+        const response = await fetch(`/includes/${componentName}.html`);
+        if (response.ok) {
+            const html = await response.text();
+            const target = document.getElementById(targetId);
+            if (target) {
+                target.innerHTML = html;
+            }
+        } else {
+            throw new Error(`HTTP ${response.status}`);
+        }
+    } catch (error) {
+        console.error(`Failed to load component ${componentName}:`, error);
+        
+        // Fallback content
+        const target = document.getElementById(targetId);
+        if (!target) return;
+        
+        if (componentName === 'navbar') {
+            target.innerHTML = `
+                <nav class="navbar">
+                    <div class="navbar-container">
+                        <a href="/" class="logo">doha.kr</a>
+                        <ul class="nav-menu">
+                            <li><a href="/" class="nav-link">홈</a></li>
+                            <li><a href="/tests/" class="nav-link">심리테스트</a></li>
+                            <li><a href="/tools/" class="nav-link">실용도구</a></li>
+                            <li><a href="/fortune/" class="nav-link">운세</a></li>
+                            <li><a href="/contact/" class="nav-link">문의</a></li>
+                            <li><a href="/about/" class="nav-link">소개</a></li>
+                        </ul>
+                        <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </button>
+                    </div>
+                </nav>
+            `;
+        } else if (componentName === 'footer') {
+            target.innerHTML = `
+                <footer class="footer">
+                    <div class="footer-content">
+                        <div class="footer-section">
+                            <h3>doha.kr</h3>
+                            <p style="color: var(--gray-400); margin-top: 8px;">
+                                일상을 더 재미있게 만드는 공간<br>
+                                심리테스트, 실용도구, 운세의 만남
+                            </p>
+                            <div class="footer-social">
+                                <a href="mailto:youtubdoha@gmail.com" class="social-link">📧</a>
+                            </div>
+                        </div>
+                        
+                        <div class="footer-section">
+                            <h3>서비스</h3>
+                            <ul class="footer-links">
+                                <li><a href="/">홈</a></li>
+                                <li><a href="/tests/">심리테스트</a></li>
+                                <li><a href="/tools/">실용도구</a></li>
+                                <li><a href="/fortune/">운세</a></li>
+                                <li><a href="/about/">사이트 소개</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="footer-section">
+                            <h3>인기 콘텐츠</h3>
+                            <ul class="footer-links">
+                                <li><a href="/tests/teto-egen/">테토-에겐 테스트</a></li>
+                                <li><a href="/tests/mbti/">MBTI 테스트</a></li>
+                                <li><a href="/fortune/daily/">오늘의 운세</a></li>
+                                <li><a href="/tools/text-counter.html">글자수 세기</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="footer-section">
+                            <h3>운세 & 고객지원</h3>
+                            <ul class="footer-links">
+                                <li><a href="/fortune/daily/">오늘의 운세</a></li>
+                                <li><a href="/fortune/tarot/">타로 카드</a></li>
+                                <li><a href="/fortune/zodiac/">별자리 운세</a></li>
+                                <li><a href="/contact/">문의하기</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="footer-bottom">
+                        <div class="footer-legal">
+                            <a href="/privacy/">개인정보처리방침</a>
+                            <a href="/terms/">이용약관</a>
+                        </div>
+                        <p>&copy; 2025 doha.kr. All rights reserved.</p>
+                    </div>
+                </footer>
+            `;
+        }
+    }
+}
+
+// 컴포넌트 로더 (클래스 기반 - 하위 호환성)
 async function loadComponent(componentName, targetClass) {
     try {
         const response = await fetch(`/includes/${componentName}.html`);
@@ -675,15 +776,15 @@ async function loadComponent(componentName, targetClass) {
 
 // 네비게이션과 푸터 컴포넌트 로드
 async function loadComponents() {
-    const navTarget = document.querySelector('.navbar-placeholder');
-    const footerTarget = document.querySelector('.footer-placeholder');
+    const navTarget = document.querySelector('#navbar-placeholder');
+    const footerTarget = document.querySelector('#footer-placeholder');
     
     if (navTarget) {
-        await loadComponent('navbar', 'navbar-placeholder');
+        await loadComponentById('navbar', 'navbar-placeholder');
     }
     
     if (footerTarget) {
-        await loadComponent('footer', 'footer-placeholder');
+        await loadComponentById('footer', 'footer-placeholder');
     }
 }
 
