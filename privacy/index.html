@@ -1,24 +1,34 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+
 <script id="performance-monitor">
-// 성능 모니터링 (개발용)
+// 개선된 성능 모니터링
 window.addEventListener('load', function() {
     if (window.performance && window.performance.timing) {
         const loadTime = window.performance.timing.loadEventEnd - window.performance.timing.navigationStart;
-        if (loadTime > 5000) {
+        console.log('페이지 로딩 시간:', loadTime + 'ms');
+        
+        if (loadTime > 10000) {
             console.warn('페이지 로딩이 느립니다:', loadTime + 'ms');
+        }
+        
+        // 리소스 로딩 분석
+        const resources = performance.getEntriesByType('resource');
+        const slowResources = resources.filter(r => r.duration > 1000);
+        if (slowResources.length > 0) {
+            console.warn('느린 리소스들:', slowResources.map(r => ({ name: r.name, duration: r.duration })));
         }
     }
 });
 
-// 타임아웃 방지
-let timeoutWarning = setTimeout(function() {
-    console.warn('페이지 로딩이 15초를 초과했습니다. 리소스를 확인하세요.');
-}, 15000);
-
-window.addEventListener('load', function() {
-    clearTimeout(timeoutWarning);
+// CSP 오류 감지
+window.addEventListener('securitypolicyviolation', function(e) {
+    console.warn('CSP 위반 감지:', {
+        directive: e.violatedDirective,
+        source: e.sourceFile,
+        line: e.lineNumber
+    });
 });
 </script>
     <meta charset="UTF-8">
@@ -231,6 +241,38 @@ window.addEventListener('load', function() {
         adsScript.defer = true;
         document.head.appendChild(adsScript);
     }, 2000);
+});
+</script>
+
+<script>
+// AdSense 중복 초기화 방지
+window.adsenseInitialized = window.adsenseInitialized || false;
+
+function initializeAdSense() {
+    if (window.adsenseInitialized) {
+        console.log('AdSense already initialized');
+        return;
+    }
+    
+    window.adsenseInitialized = true;
+    
+    // 기존 광고 블록 확인 및 초기화
+    const adBlocks = document.querySelectorAll('.adsbygoogle');
+    adBlocks.forEach((ad, index) => {
+        if (!ad.dataset.adsbygoogleStatus) {
+            try {
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                console.log('AdSense block initialized:', index);
+            } catch (error) {
+                console.warn('AdSense initialization error:', error);
+            }
+        }
+    });
+}
+
+// 페이지 로드 후 AdSense 초기화
+window.addEventListener('load', function() {
+    setTimeout(initializeAdSense, 1000);
 });
 </script>
 </body>
