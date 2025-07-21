@@ -288,7 +288,15 @@ const storage = (window.DohaApp && DohaApp.utils && DohaApp.utils.storage) || {
     get(key) {
         try {
             const item = localStorage.getItem(key);
-            return item ? JSON.parse(item) : null;
+            if (!item) return null;
+            
+            // Try to parse as JSON, fallback to raw string
+            try {
+                return JSON.parse(item);
+            } catch (parseError) {
+                // If JSON parsing fails, return the raw value
+                return item;
+            }
         } catch (e) {
             console.error('Storage get error:', e);
             return null;
