@@ -21,32 +21,17 @@ module.exports = {
         terserOptions: {
           compress: {
             drop_console: false,
-            drop_debugger: true
+            drop_debugger: true,
+            unused: false  // Prevent tree-shaking of unused functions
           },
-          mangle: true,
+          mangle: false,  // Disable name mangling to debug
           format: {
             comments: false,
           },
         },
         extractComments: false,
       }),
-    ],
-    splitChunks: {
-      chunks: 'all',
-      cacheGroups: {
-        vendor: {
-          test: /[\\/]node_modules[\\/]/,
-          name: 'vendors',
-          chunks: 'all',
-        },
-        common: {
-          name: 'common',
-          minChunks: 2,
-          chunks: 'all',
-          enforce: true
-        }
-      }
-    }
+    ]
   },
   module: {
     rules: [
