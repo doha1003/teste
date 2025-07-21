@@ -91,8 +91,8 @@ async function generateZodiacFortuneWithAI(zodiac) {
         return result;
     }
     
-    // 폴백
-    return generateMockZodiacFortune();
+    // 폴백: null 반환 (에러 처리는 호출하는 쪽에서)
+    return null;
 }
 
 // 사주팔자 AI 생성
@@ -103,8 +103,8 @@ async function generateSajuWithAI(sajuData) {
         return result;
     }
     
-    // 폴백
-    return generateMockSaju();
+    // 폴백: null 반환 (에러 처리는 호출하는 쪽에서)
+    return null;
 }
 
 // 백업 운세 생성 (AI 실패시 사용)
@@ -194,58 +194,3 @@ function generateBackupFortune(name, birthDate) {
     };
 }
 
-function generateMockZodiacFortune() {
-    const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
-    const seed = dayOfYear % 100;
-    
-    const overallTexts = [
-        "오늘은 당신의 별자리에 행운의 기운이 가득한 날입니다. 평소보다 더 긍정적인 에너지로 하루를 시작하세요.",
-        "별들의 배치가 당신에게 유리하게 작용하고 있습니다. 중요한 결정을 내리기에 좋은 시기입니다.",
-        "우주의 에너지가 당신의 잠재력을 깨우는 날입니다. 새로운 도전을 두려워하지 마세요.",
-        "조화로운 행성의 영향으로 모든 일이 순조롭게 진행될 것입니다. 자신감을 가지고 행동하세요."
-    ];
-    
-    return {
-        overall: overallTexts[seed % overallTexts.length],
-        scores: {
-            love: 70 + (seed % 25),
-            money: 68 + ((seed + 10) % 27),
-            work: 72 + ((seed + 20) % 23),
-            health: 75 + ((seed + 30) % 20)
-        },
-        advice: "오늘은 직감을 믿고 행동하세요. 당신의 내면의 목소리가 올바른 길을 안내할 것입니다.",
-        luckyNumber: `${(seed % 9) + 1}, ${((seed + 5) % 20) + 1}`,
-        luckyColor: ['빨간색', '파란색', '노란색', '초록색', '보라색', '주황색', '분홍색', '하늘색'][seed % 8]
-    };
-}
-
-function generateMockSaju() {
-    const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
-    const seed = dayOfYear % 100;
-    
-    const sajuTexts = [
-        "당신의 사주는 목(木)기운이 강하여 인자하고 성장하는 기질을 가지고 있습니다. 창의적이고 미래지향적인 성격으로 새로운 일을 시작하기에 적합합니다.",
-        "화(火)의 기운이 강한 사주로 열정적이고 활동적인 성격입니다. 리더십이 강하고 타인을 이끄는 능력이 뛰어납니다.",
-        "토(土)의 기운이 안정적으로 자리잡아 신뢰할 수 있는 성격입니다. 꾸준함과 성실함으로 큰 성과를 이룰 수 있습니다.",
-        "금(金)의 기운이 강하여 결단력과 추진력이 뛰어납니다. 정의감이 강하고 원칙을 중시하는 성격입니다.",
-        "수(水)의 기운이 풍부하여 지혜롭고 유연한 사고를 가지고 있습니다. 상황에 따라 변화할 수 있는 적응력이 뛰어납니다."
-    ];
-    
-    return {
-        overall: sajuTexts[seed % sajuTexts.length],
-        elements: {
-            wood: 20 + (seed % 20),
-            fire: 20 + ((seed + 10) % 20),
-            earth: 20 + ((seed + 20) % 20),
-            metal: 20 + ((seed + 30) % 20),
-            water: 20 + ((seed + 40) % 20)
-        },
-        fortune: {
-            wealth: "재물운이 안정적으로 유지되며, 꾸준한 노력으로 부를 축적할 수 있습니다.",
-            career: "직업운이 상승하는 시기로 승진이나 이직의 기회가 있을 수 있습니다.",
-            love: "애정운이 평온하며, 기존 관계는 더욱 깊어지고 새로운 만남도 기대할 수 있습니다.",
-            health: "건강운은 양호하나 과로를 주의하고 규칙적인 생활습관을 유지하세요."
-        },
-        advice: "당신의 강점을 살려 꾸준히 노력한다면 큰 성과를 얻을 수 있습니다. 주변 사람들과의 조화를 중시하며 겸손한 자세를 유지하세요."
-    };
-}

@@ -1,89 +1,111 @@
-// 모바일 메뉴 토글
+// 모바일 메뉴 토글 - DohaApp의 기능 사용
 function toggleMobileMenu() {
-    const navMenu = document.querySelector('.nav-menu');
-    const menuBtn = document.querySelector('.mobile-menu-btn');
-    
-    if (navMenu) {
-        const isOpen = navMenu.classList.toggle('active');
+    if (window.DohaApp && DohaApp.components && DohaApp.components.mobileMenu) {
+        DohaApp.components.mobileMenu.toggle();
+    } else {
+        // 폴백: DohaApp이 없을 경우 기본 동작
+        const navMenu = document.querySelector('.nav-menu, .nav');
+        const menuBtn = document.querySelector('.mobile-menu-btn, .header__menu-toggle');
         
-        // ARIA 속성 업데이트
-        if (menuBtn) {
-            menuBtn.setAttribute('aria-expanded', isOpen.toString());
-            menuBtn.setAttribute('aria-label', isOpen ? '메뉴 닫기' : '메뉴 열기');
+        if (navMenu) {
+            const isOpen = navMenu.classList.toggle('active');
+            navMenu.classList.toggle('nav--open');
+            
+            if (menuBtn) {
+                menuBtn.setAttribute('aria-expanded', isOpen.toString());
+                menuBtn.setAttribute('aria-label', isOpen ? '메뉴 닫기' : '메뉴 열기');
+            }
         }
-    }
-    
-    if (menuBtn) {
-        menuBtn.classList.toggle('active');
+        
+        if (menuBtn) {
+            menuBtn.classList.toggle('active');
+        }
     }
 }
 
-// 서비스 탭 필터링 (이벤트 파라미터 추가로 오류 수정)
+// 서비스 탭 필터링 - DohaApp의 기능과 호환
 function showServices(category, event) {
-    // 이벤트 객체가 없으면 전역 이벤트 사용
-    if (!event) {
-        event = window.event;
-    }
-    
-    const cards = document.querySelectorAll('.service-card');
-    const buttons = document.querySelectorAll('.tab-button');
-    
-    // 버튼 활성화 상태 변경
-    buttons.forEach(btn => {
-        btn.classList.remove('active');
-    });
-    
-    // 클릭된 버튼 찾아서 활성화
-    buttons.forEach(btn => {
-        if ((category === 'all' && btn.textContent.includes('전체')) ||
-            (category === 'tests' && btn.textContent.includes('심리테스트')) ||
-            (category === 'tools' && btn.textContent.includes('실용도구')) ||
-            (category === 'fortune' && btn.textContent.includes('운세')) ||
-            (category === 'new' && btn.textContent.includes('최신'))) {
-            btn.classList.add('active');
-        }
-    });
-    
-    // 카드 필터링
-    cards.forEach(card => {
-        if (category === 'all') {
-            card.style.display = 'block';
-        } else {
-            const cardCategories = card.getAttribute('data-category');
-            if (cardCategories && cardCategories.includes(category)) {
+    // DohaApp의 tabs 컴포넌트가 있으면 사용
+    if (window.DohaApp && DohaApp.components && DohaApp.components.tabs) {
+        DohaApp.components.tabs.filterServices(category);
+        
+        // 버튼 상태 업데이트
+        const buttons = document.querySelectorAll('.tab-button, [role="tab"]');
+        buttons.forEach(btn => {
+            btn.classList.remove('active', 'tabs__button--active');
+            btn.setAttribute('aria-selected', 'false');
+            
+            if ((category === 'all' && btn.textContent.includes('전체')) ||
+                (category === 'tests' && btn.textContent.includes('심리테스트')) ||
+                (category === 'tools' && btn.textContent.includes('실용도구')) ||
+                (category === 'fortune' && btn.textContent.includes('운세')) ||
+                (category === 'new' && btn.textContent.includes('최신'))) {
+                btn.classList.add('active', 'tabs__button--active');
+                btn.setAttribute('aria-selected', 'true');
+            }
+        });
+    } else {
+        // 폴백: 기본 필터링 로직
+        const cards = document.querySelectorAll('.service-card');
+        cards.forEach(card => {
+            if (!card) return;
+            
+            if (category === 'all') {
                 card.style.display = 'block';
             } else {
-                card.style.display = 'none';
+                const cardCategories = card.getAttribute('data-category');
+                if (cardCategories && cardCategories.includes(category)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
             }
-        }
-    });
+        });
+    }
 }
 
 // 스크롤 애니메이션 - 인라인 스타일 제거하여 CSS 애니메이션과 충돌 방지
 function handleScrollAnimation() {
-    const elements = document.querySelectorAll('.fade-in');
-    
-    elements.forEach(element => {
-        const rect = element.getBoundingClientRect();
-        const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+    try {
+        const elements = document.querySelectorAll('.fade-in');
         
-        if (isVisible && !element.classList.contains('animated')) {
-            element.classList.add('animated');
-            // 인라인 스타일 제거 - CSS에서 처리하도록 함
-            // element.style.opacity = '1';
-            // element.style.transform = 'translateY(0)';
-        }
-    });
+        elements.forEach(element => {
+            if (!element) return;
+            
+            const rect = element.getBoundingClientRect();
+            const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+            
+            if (isVisible && !element.classList.contains('animated')) {
+                element.classList.add('animated');
+                // 인라인 스타일 제거 - CSS에서 처리하도록 함
+                // element.style.opacity = '1';
+                // element.style.transform = 'translateY(0)';
+            }
+        });
+    } catch (error) {
+        console.error('스크롤 애니메이션 처리 중 오류:', error);
+    }
 }
 
-// 부드러운 스크롤
+// 부드러운 스크롤 - DohaApp과 호환
 function smoothScroll(target) {
-    const element = document.querySelector(target);
-    if (element) {
-        element.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-        });
+    try {
+        const element = document.querySelector(target);
+        if (element) {
+            const headerHeight = document.querySelector('.header')?.offsetHeight || 0;
+            const targetPosition = element.offsetTop - headerHeight - 20;
+            
+            window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
+            });
+            
+            // 접근성을 위한 포커스 설정
+            element.setAttribute('tabindex', '-1');
+            element.focus();
+        }
+    } catch (error) {
+        console.error('스크롤 처리 중 오류:', error);
     }
 }
 
@@ -96,37 +118,48 @@ function initPageAnimations() {
     window.addEventListener('scroll', throttle(handleScrollAnimation, 100));
 }
 
-// 쓰로틀 함수 (성능 최적화)
-function throttle(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
+// 쓰로틀 함수 - DohaApp.utils.throttle 사용 가능
+function throttle(func, limit) {
+    if (window.DohaApp && DohaApp.utils && DohaApp.utils.throttle) {
+        return DohaApp.utils.throttle(func, limit);
+    }
+    
+    // 폴백: 기본 쓰로틀 구현
+    let inThrottle;
+    return function(...args) {
+        if (!inThrottle) {
+            func.apply(this, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+        }
     };
 }
 
 // 폼 유효성 검사
 function validateForm(formId) {
-    const form = document.getElementById(formId);
-    if (!form) return true;
-    
-    const inputs = form.querySelectorAll('input[required], textarea[required]');
-    let isValid = true;
-    
-    inputs.forEach(input => {
-        if (!input.value.trim()) {
-            input.classList.add('error');
-            isValid = false;
-        } else {
-            input.classList.remove('error');
-        }
-    });
-    
-    return isValid;
+    try {
+        const form = document.getElementById(formId);
+        if (!form) return true;
+        
+        const inputs = form.querySelectorAll('input[required], textarea[required]');
+        let isValid = true;
+        
+        inputs.forEach(input => {
+            if (!input) return;
+            
+            if (!input.value.trim()) {
+                input.classList.add('error');
+                isValid = false;
+            } else {
+                input.classList.remove('error');
+            }
+        });
+        
+        return isValid;
+    } catch (error) {
+        console.error('폼 유효성 검사 중 오류:', error);
+        return false;
+    }
 }
 
 // 쿠키 관련 함수들
@@ -149,22 +182,27 @@ function getCookie(name) {
 
 // 결과 공유 기능
 function shareResult(platform, title, url) {
-    const text = encodeURIComponent(title);
-    const encodedUrl = encodeURIComponent(url || window.location.href);
-    
-    const shareUrls = {
-        facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
-        twitter: `https://twitter.com/intent/tweet?text=${text}&url=${encodedUrl}`,
-        kakao: `https://story.kakao.com/share?url=${encodedUrl}`,
-        line: `https://social-plugins.line.me/lineit/share?url=${encodedUrl}`,
-        copylink: null
-    };
-    
-    if (platform === 'copylink') {
-        copyToClipboard(url || window.location.href);
-        showNotification('링크가 복사되었습니다!');
-    } else if (shareUrls[platform]) {
-        window.open(shareUrls[platform], '_blank', 'width=600,height=400');
+    try {
+        const text = encodeURIComponent(title || '');
+        const encodedUrl = encodeURIComponent(url || window.location.href);
+        
+        const shareUrls = {
+            facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
+            twitter: `https://twitter.com/intent/tweet?text=${text}&url=${encodedUrl}`,
+            kakao: `https://story.kakao.com/share?url=${encodedUrl}`,
+            line: `https://social-plugins.line.me/lineit/share?url=${encodedUrl}`,
+            copylink: null
+        };
+        
+        if (platform === 'copylink') {
+            copyToClipboard(url || window.location.href);
+            showNotification('링크가 복사되었습니다!');
+        } else if (shareUrls[platform]) {
+            window.open(shareUrls[platform], '_blank', 'width=600,height=400');
+        }
+    } catch (error) {
+        console.error('공유 기능 오류:', error);
+        showNotification('공유 중 오류가 발생했습니다.', 'error');
     }
 }
 
@@ -201,34 +239,42 @@ function fallbackCopyToClipboard(text) {
 
 // 알림 표시
 function showNotification(message, type = 'success') {
-    const notification = document.createElement('div');
-    notification.className = `notification notification-${type}`;
-    notification.textContent = message;
-    
-    // 스타일 추가
-    notification.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        padding: 16px 24px;
-        background: ${type === 'success' ? '#10b981' : '#ef4444'};
-        color: white;
-        border-radius: 8px;
-        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-        z-index: 9999;
-        animation: slideInRight 0.3s ease;
-    `;
-    
-    document.body.appendChild(notification);
-    
-    setTimeout(() => {
-        notification.style.animation = 'slideOutRight 0.3s ease';
-        setTimeout(() => notification.remove(), 300);
-    }, 3000);
+    try {
+        const notification = document.createElement('div');
+        notification.className = `notification notification-${type}`;
+        notification.textContent = message;
+        
+        // 스타일 추가
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 16px 24px;
+            background: ${type === 'success' ? '#10b981' : '#ef4444'};
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            z-index: 9999;
+            animation: slideInRight 0.3s ease;
+        `;
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.style.animation = 'slideOutRight 0.3s ease';
+            setTimeout(() => {
+                if (notification && notification.parentNode) {
+                    notification.remove();
+                }
+            }, 300);
+        }, 3000);
+    } catch (error) {
+        console.error('알림 표시 중 오류:', error);
+    }
 }
 
-// 로컬 스토리지 헬퍼
-const storage = {
+// 로컬 스토리지 헬퍼 - DohaApp.utils.storage 우선 사용
+const storage = (window.DohaApp && DohaApp.utils && DohaApp.utils.storage) || {
     set(key, value) {
         try {
             localStorage.setItem(key, JSON.stringify(value));
@@ -270,8 +316,13 @@ const storage = {
     }
 };
 
-// 디바운스 함수
+// 디바운스 함수 - DohaApp.utils.debounce 사용 가능
 function debounce(func, wait) {
+    if (window.DohaApp && DohaApp.utils && DohaApp.utils.debounce) {
+        return DohaApp.utils.debounce(func, wait);
+    }
+    
+    // 폴백: 기본 디바운스 구현
     let timeout;
     return function executedFunction(...args) {
         const later = () => {
@@ -285,24 +336,40 @@ function debounce(func, wait) {
 
 // 날짜 포맷팅
 function formatDate(date, format = 'YYYY-MM-DD') {
-    const d = new Date(date);
-    const year = d.getFullYear();
-    const month = String(d.getMonth() + 1).padStart(2, '0');
-    const day = String(d.getDate()).padStart(2, '0');
-    const hours = String(d.getHours()).padStart(2, '0');
-    const minutes = String(d.getMinutes()).padStart(2, '0');
-    
-    return format
-        .replace('YYYY', year)
-        .replace('MM', month)
-        .replace('DD', day)
-        .replace('HH', hours)
-        .replace('mm', minutes);
+    try {
+        const d = new Date(date);
+        if (isNaN(d.getTime())) {
+            console.error('잘못된 날짜 형식:', date);
+            return format;
+        }
+        
+        const year = d.getFullYear();
+        const month = String(d.getMonth() + 1).padStart(2, '0');
+        const day = String(d.getDate()).padStart(2, '0');
+        const hours = String(d.getHours()).padStart(2, '0');
+        const minutes = String(d.getMinutes()).padStart(2, '0');
+        
+        return format
+            .replace('YYYY', year)
+            .replace('MM', month)
+            .replace('DD', day)
+            .replace('HH', hours)
+            .replace('mm', minutes);
+    } catch (error) {
+        console.error('날짜 포맷팅 오류:', error);
+        return format;
+    }
 }
 
 // 숫자 포맷팅 (천 단위 콤마)
 function formatNumber(num) {
-    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    try {
+        if (num === null || num === undefined) return '0';
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    } catch (error) {
+        console.error('숫자 포맷팅 오류:', error);
+        return '0';
+    }
 }
 
 // URL 파라미터 가져오기
@@ -311,22 +378,43 @@ function getUrlParam(name) {
     return urlParams.get(name);
 }
 
-// 이미지 지연 로딩
+// 이미지 지연 로딩 - DohaApp.components.lazyLoad와 호환
 function lazyLoadImages() {
-    const images = document.querySelectorAll('img[data-src]');
-    
-    const imageObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const img = entry.target;
-                img.src = img.dataset.src;
-                img.removeAttribute('data-src');
-                observer.unobserve(img);
-            }
-        });
-    });
-    
-    images.forEach(img => imageObserver.observe(img));
+    try {
+        // data-src 속성 사용하는 이미지 처리
+        const images = document.querySelectorAll('img[data-src]:not(.lazy)');
+        
+        if (!images.length) return;
+        
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        if (img && img.dataset.src) {
+                            img.src = img.dataset.src;
+                            img.removeAttribute('data-src');
+                            observer.unobserve(img);
+                        }
+                    }
+                });
+            });
+            
+            images.forEach(img => {
+                if (img) imageObserver.observe(img);
+            });
+        } else {
+            // 폴백: 즉시 로드
+            images.forEach(img => {
+                if (img && img.dataset.src) {
+                    img.src = img.dataset.src;
+                    img.removeAttribute('data-src');
+                }
+            });
+        }
+    } catch (error) {
+        console.error('이미지 지연 로딩 오류:', error);
+    }
 }
 
 // 다크 모드 토글
@@ -485,12 +573,12 @@ function injectStyles() {
 }
 
 // 컴포넌트 로더
-async function loadComponent(componentName, targetId) {
+async function loadComponent(componentName, targetClass) {
     try {
         const response = await fetch(`/includes/${componentName}.html`);
         if (response.ok) {
             const html = await response.text();
-            const target = document.getElementById(targetId);
+            const target = document.querySelector(`.${targetClass}`);
             if (target) {
                 target.innerHTML = html;
             }
@@ -501,7 +589,7 @@ async function loadComponent(componentName, targetId) {
         console.error(`Failed to load component ${componentName}:`, error);
         
         // Fallback content
-        const target = document.getElementById(targetId);
+        const target = document.querySelector(`.${targetClass}`);
         if (!target) return;
         
         if (componentName === 'navbar') {
@@ -587,8 +675,8 @@ async function loadComponent(componentName, targetId) {
 
 // 네비게이션과 푸터 컴포넌트 로드
 async function loadComponents() {
-    const navTarget = document.getElementById('navbar-placeholder');
-    const footerTarget = document.getElementById('footer-placeholder');
+    const navTarget = document.querySelector('.navbar-placeholder');
+    const footerTarget = document.querySelector('.footer-placeholder');
     
     if (navTarget) {
         await loadComponent('navbar', 'navbar-placeholder');
@@ -704,8 +792,13 @@ function initAdSense() {
 
 // DOM 로드 완료 시 초기화
 document.addEventListener('DOMContentLoaded', async function() {
-    // 컴포넌트 로드
-    await loadComponents();
+    // DohaApp이 이미 초기화되었는지 확인
+    const isDohaAppInitialized = window.DohaApp && typeof DohaApp.init === 'function';
+    
+    if (!isDohaAppInitialized) {
+        // DohaApp이 없을 때만 컴포넌트 로드
+        await loadComponents();
+    }
     
     // 스타일 삽입
     injectStyles();
@@ -713,7 +806,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     // 페이지 애니메이션 초기화
     initPageAnimations();
     
-    // 이미지 지연 로딩
+    // 이미지 지연 로딩 (DohaApp과 별도로 data-src 이미지 처리)
     lazyLoadImages();
     
     // 다크 모드 초기화
