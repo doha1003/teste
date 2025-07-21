@@ -1,3 +1,23 @@
+
+// 입력값 검증 함수
+function sanitizeInput(value, type = 'string') {
+    if (type === 'number') {
+        return parseFloat(String(value).replace(/[^0-9.-]/g, ''));
+    }
+    return String(value).replace(/[<>&"']/g, (match) => {
+        const entityMap = {'<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;', "'": '&#39;'};
+        return entityMap[match];
+    });
+}
+
+function validateNumber(value, min = 0, max = Number.MAX_SAFE_INTEGER) {
+    const num = parseFloat(String(value).replace(/[^0-9.-]/g, ''));
+    if (isNaN(num) || num < min || num > max) {
+        return min;
+    }
+    return num;
+}
+
 // =============================================
 // AI 운세 시스템 - DOHA.KR
 // =============================================

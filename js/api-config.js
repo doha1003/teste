@@ -1,4 +1,35 @@
-/**
+
+// 안전한 Kakao SDK 초기화
+window.initKakao = function() {
+    try {
+        if (typeof Kakao !== 'undefined' && Kakao.isInitialized && !Kakao.isInitialized()) {
+            // 실제 앱 키는 환경변수나 설정파일에서 가져와야 함
+            const kakaoKey = window.KAKAO_APP_KEY || 'your_kakao_app_key_here';
+            if (kakaoKey && kakaoKey !== 'your_kakao_app_key_here') {
+                Kakao.init(kakaoKey);
+                console.log('Kakao SDK 초기화 완료');
+            } else {
+                console.warn('Kakao 앱 키가 설정되지 않았습니다.');
+            }
+        } else if (typeof Kakao !== 'undefined' && Kakao.isInitialized && Kakao.isInitialized()) {
+            console.log('Kakao SDK 이미 초기화됨');
+        } else {
+            console.warn('Kakao SDK가 로드되지 않았습니다.');
+        }
+    } catch (error) {
+        console.warn('Kakao SDK 초기화 실패:', error.message);
+    }
+};
+
+// DOM 로드 후 초기화 시도
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(window.initKakao, 100);
+    });
+} else {
+    setTimeout(window.initKakao, 100);
+}
+\n/**
  * API 설정 및 보안 관리
  * 이 파일은 민감한 정보를 포함하므로 절대 공개 저장소에 올리지 마세요!
  */

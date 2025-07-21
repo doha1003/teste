@@ -1,6 +1,26 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<script id="performance-monitor">
+// 성능 모니터링 (개발용)
+window.addEventListener('load', function() {
+    if (window.performance && window.performance.timing) {
+        const loadTime = window.performance.timing.loadEventEnd - window.performance.timing.navigationStart;
+        if (loadTime > 5000) {
+            console.warn('페이지 로딩이 느립니다:', loadTime + 'ms');
+        }
+    }
+});
+
+// 타임아웃 방지
+let timeoutWarning = setTimeout(function() {
+    console.warn('페이지 로딩이 15초를 초과했습니다. 리소스를 확인하세요.');
+}, 15000);
+
+window.addEventListener('load', function() {
+    clearTimeout(timeoutWarning);
+});
+</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>테토-에겐 성격 유형 테스트</title>
@@ -18,13 +38,13 @@
     <!-- Canonical URL -->
     <link rel="canonical" href="https://doha.kr/tests/teto-egen/start.html">
     <!-- Google AdSense 헤드 태그 (사용자 게시자 ID 적용) -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
+    <!-- Moved to end of body -->
     
     <!-- 사이트 확인용 메타 태그 -->
     <meta name="google-adsense-account" content="ca-pub-7905640648499222">
     
     <!-- 카카오 JavaScript SDK -->
-    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js" integrity="sha384-DKYJZ8NLiK8MN4/C5P2dtSmLQ4KwPaoqAfyA/DfmEc1VDxu4yyC7wy6K1Hs90nka" crossorigin="anonymous"></script>
+    <script defer src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js" integrity="sha384-DKYJZ8NLiK8MN4/C5P2dtSmLQ4KwPaoqAfyA/DfmEc1VDxu4yyC7wy6K1Hs90nka" crossorigin="anonymous"></script>
     
     <!-- Favicon -->
     <link rel="icon" href="/images/placeholder-favicon.svg" type="image/svg+xml">
@@ -54,6 +74,9 @@
     <!-- Optimized CSS System -->
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="/css/pages/teto-egen-intro.css">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:;">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com;">
 </head>
 <body>
     <!-- 네비게이션 -->
@@ -69,12 +92,39 @@
             <!-- 헤더 광고 -->
             <div class="ad-container">
                 <div class="ad-label">광고</div>
-                <ins class="adsbygoogle"
+                
+<div id="ad-container-vj5zvgdhe" style="min-height: 100px;">
+    <div class="ad-placeholder" style="display: flex; align-items: center; justify-content: center; background: #f5f5f5; min-height: 100px; color: #999;">
+        광고 로딩 중...
+    </div>
+</div>
+<script>
+// Intersection Observer로 광고 지연 로딩
+if ('IntersectionObserver' in window) {
+    const adObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                const container = entry.target;
+                container.innerHTML = `<ins class="adsbygoogle"
                      style="display:block"
                      data-ad-client="ca-pub-7905640648499222"
                      data-ad-slot="1234567890"
                      data-ad-format="auto"
-                     data-full-width-responsive="true"></ins>
+                     data-full-width-responsive="true"></ins>`;
+                if (typeof adsbygoogle !== 'undefined') {
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                }
+                adObserver.unobserve(container);
+            }
+        });
+    }, { rootMargin: '50px' });
+    
+    const adContainer = document.getElementById('ad-container-vj5zvgdhe');
+    if (adContainer) {
+        adObserver.observe(adContainer);
+    }
+}
+</script>
             </div>
 
             <!-- 테스트 시작 전 안내 -->
@@ -147,12 +197,39 @@
                 
                 <div class="ad-container">
                     <div class="ad-label">광고</div>
-                    <ins class="adsbygoogle"
+                    
+<div id="ad-container-qzxahja5e" style="min-height: 100px;">
+    <div class="ad-placeholder" style="display: flex; align-items: center; justify-content: center; background: #f5f5f5; min-height: 100px; color: #999;">
+        광고 로딩 중...
+    </div>
+</div>
+<script>
+// Intersection Observer로 광고 지연 로딩
+if ('IntersectionObserver' in window) {
+    const adObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                const container = entry.target;
+                container.innerHTML = `<ins class="adsbygoogle"
                          style="display:block"
                          data-ad-client="ca-pub-7905640648499222"
                          data-ad-slot="2345678901"
                          data-ad-format="auto"
-                         data-full-width-responsive="true"></ins>
+                         data-full-width-responsive="true"></ins>`;
+                if (typeof adsbygoogle !== 'undefined') {
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                }
+                adObserver.unobserve(container);
+            }
+        });
+    }, { rootMargin: '50px' });
+    
+    const adContainer = document.getElementById('ad-container-qzxahja5e');
+    if (adContainer) {
+        adObserver.observe(adContainer);
+    }
+}
+</script>
                 </div>
 
                 <div class="traits-section">
@@ -192,12 +269,39 @@
                 
                 <div class="ad-container">
                     <div class="ad-label">광고</div>
-                    <ins class="adsbygoogle"
+                    
+<div id="ad-container-xa6u62aiv" style="min-height: 100px;">
+    <div class="ad-placeholder" style="display: flex; align-items: center; justify-content: center; background: #f5f5f5; min-height: 100px; color: #999;">
+        광고 로딩 중...
+    </div>
+</div>
+<script>
+// Intersection Observer로 광고 지연 로딩
+if ('IntersectionObserver' in window) {
+    const adObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                const container = entry.target;
+                container.innerHTML = `<ins class="adsbygoogle"
                          style="display:block"
                          data-ad-client="ca-pub-7905640648499222"
                          data-ad-slot="3456789012"
                          data-ad-format="auto"
-                         data-full-width-responsive="true"></ins>
+                         data-full-width-responsive="true"></ins>`;
+                if (typeof adsbygoogle !== 'undefined') {
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                }
+                adObserver.unobserve(container);
+            }
+        });
+    }, { rootMargin: '50px' });
+    
+    const adContainer = document.getElementById('ad-container-xa6u62aiv');
+    if (adContainer) {
+        adObserver.observe(adContainer);
+    }
+}
+</script>
                 </div>
 
                 <div class="share-container">
@@ -217,7 +321,7 @@
     <div id="footer-placeholder"></div>
 
     <!-- External JavaScript -->
-    <script src="/js/api-config.js"></script>
+    <script defer src="/js/api-config.js"></script>
     <script src="/js/bundle.min.js" defer></script>
     <script src="/js/main.min.js"></script>
     
@@ -433,5 +537,21 @@
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
+
+    <!-- Non-critical scripts moved here for performance -->
+    
+<!-- Google AdSense 지연 로딩 -->
+<script>
+// AdSense 지연 로딩 (페이지 로드 후 2초 대기)
+window.addEventListener('load', function() {
+    setTimeout(function() {
+        var adsScript = document.createElement('script');
+        adsScript.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222';
+        adsScript.crossOrigin = 'anonymous';
+        adsScript.defer = true;
+        document.head.appendChild(adsScript);
+    }, 2000);
+});
+</script>
 </body>
 </html>

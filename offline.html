@@ -1,6 +1,26 @@
 <!DOCTYPE html>
 <html lang="ko" dir="ltr">
 <head>
+<script id="performance-monitor">
+// 성능 모니터링 (개발용)
+window.addEventListener('load', function() {
+    if (window.performance && window.performance.timing) {
+        const loadTime = window.performance.timing.loadEventEnd - window.performance.timing.navigationStart;
+        if (loadTime > 5000) {
+            console.warn('페이지 로딩이 느립니다:', loadTime + 'ms');
+        }
+    }
+});
+
+// 타임아웃 방지
+let timeoutWarning = setTimeout(function() {
+    console.warn('페이지 로딩이 15초를 초과했습니다. 리소스를 확인하세요.');
+}, 15000);
+
+window.addEventListener('load', function() {
+    clearTimeout(timeoutWarning);
+});
+</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>오프라인 - doha.kr</title>
@@ -208,6 +228,9 @@
     </style>
     <!-- Optimized CSS System -->
     <link rel="stylesheet" href="/css/styles.css">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:;">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com;">
 </head>
 <body>
     <div class="offline-container">
