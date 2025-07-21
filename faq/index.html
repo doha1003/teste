@@ -40,7 +40,7 @@ window.addEventListener('securitypolicyviolation', function(e) {
     <meta name="author" content="doha.kr">
     
     <!-- Security Headers -->
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src 'self' https:; script-src 'self' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://fundingchoicesmessages.google.com; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:;">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src ; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com'self' https:; script-src 'self' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://fundingchoicesmessages.google.com; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:;">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), accelerometer=(), gyroscope=()">
@@ -114,9 +114,9 @@ window.addEventListener('securitypolicyviolation', function(e) {
     </script>
     <!-- Optimized CSS System -->
     <link rel="stylesheet" href="/css/styles.css">
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:;">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src ; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:;">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com;">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src ; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com;">
 </head>
 <body>
     <!-- 네비게이션 바 -->
@@ -513,9 +513,7 @@ if ('IntersectionObserver' in window) {
     }
 }
 </script>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
+        
     </div>
     
     <!-- 푸터 -->
@@ -661,6 +659,68 @@ function initializeAdSense() {
 window.addEventListener('load', function() {
     setTimeout(initializeAdSense, 1000);
 });
+</script>
+
+<script>
+// 통합 AdSense 초기화 (중복 방지)
+(function() {
+    'use strict';
+    
+    // 전역 플래그로 초기화 상태 관리
+    window.__adsenseLoaded = window.__adsenseLoaded || false;
+    window.__adsenseQueue = window.__adsenseQueue || [];
+    
+    function initAdsense() {
+        if (window.__adsenseLoaded) return;
+        
+        const ads = document.querySelectorAll('.adsbygoogle:not([data-adsbygoogle-status])');
+        
+        if (ads.length === 0) return;
+        
+        // AdSense 스크립트가 로드되었는지 확인
+        if (typeof adsbygoogle === 'undefined') {
+            setTimeout(initAdsense, 500);
+            return;
+        }
+        
+        window.__adsenseLoaded = true;
+        
+        // 각 광고 슬롯 초기화
+        ads.forEach((ad, index) => {
+            try {
+                // 중복 초기화 방지
+                if (ad.getAttribute('data-adsbygoogle-status')) return;
+                
+                // 초기화 시도
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                
+                // 상태 표시
+                ad.setAttribute('data-adsbygoogle-status', 'done');
+                
+            } catch (e) {
+                console.warn('AdSense 초기화 실패:', index, e.message);
+            }
+        });
+    }
+    
+    // 페이지 로드 완료 후 초기화
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(initAdsense, 1000);
+        });
+    } else {
+        setTimeout(initAdsense, 1000);
+    }
+    
+    // 에러 핸들러 추가
+    window.addEventListener('error', function(e) {
+        if (e.message && e.message.includes('adsbygoogle.push() error')) {
+            e.preventDefault();
+            console.warn('AdSense 중복 초기화 방지됨');
+            return false;
+        }
+    }, true);
+})();
 </script>
 </body>
 </html>

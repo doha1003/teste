@@ -1,24 +1,34 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+
 <script id="performance-monitor">
-// 성능 모니터링 (개발용)
+// 개선된 성능 모니터링
 window.addEventListener('load', function() {
     if (window.performance && window.performance.timing) {
         const loadTime = window.performance.timing.loadEventEnd - window.performance.timing.navigationStart;
-        if (loadTime > 5000) {
+        console.log('페이지 로딩 시간:', loadTime + 'ms');
+        
+        if (loadTime > 10000) {
             console.warn('페이지 로딩이 느립니다:', loadTime + 'ms');
+        }
+        
+        // 리소스 로딩 분석
+        const resources = performance.getEntriesByType('resource');
+        const slowResources = resources.filter(r => r.duration > 1000);
+        if (slowResources.length > 0) {
+            console.warn('느린 리소스들:', slowResources.map(r => ({ name: r.name, duration: r.duration })));
         }
     }
 });
 
-// 타임아웃 방지
-let timeoutWarning = setTimeout(function() {
-    console.warn('페이지 로딩이 15초를 초과했습니다. 리소스를 확인하세요.');
-}, 15000);
-
-window.addEventListener('load', function() {
-    clearTimeout(timeoutWarning);
+// CSP 오류 감지
+window.addEventListener('securitypolicyviolation', function(e) {
+    console.warn('CSP 위반 감지:', {
+        directive: e.violatedDirective,
+        source: e.sourceFile,
+        line: e.lineNumber
+    });
 });
 </script>
     <meta charset="UTF-8">
@@ -29,7 +39,7 @@ window.addEventListener('load', function() {
     <meta name="author" content="doha.kr">
     
     <!-- Security Headers -->
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:;">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src ; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:;">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), accelerometer=(), gyroscope=()">
@@ -50,9 +60,9 @@ window.addEventListener('load', function() {
     <!-- Optimized CSS System -->
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="/css/pages/zodiac.css">
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:;">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src ; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:;">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com;">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src ; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com;">
 </head>
 <body class="fortune-page">
     <!-- 네비게이션 바 -->
@@ -675,9 +685,7 @@ ${zodiac.name}의 특성과 2025년 을사년 에너지를 고려하여 구체�
     
     
     <!-- AdSense initialization -->
-    <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
+    
 
     <!-- Non-critical scripts moved here for performance -->
     
@@ -693,6 +701,100 @@ window.addEventListener('load', function() {
         document.head.appendChild(adsScript);
     }, 2000);
 });
+</script>
+
+<script>
+// AdSense 중복 초기화 방지
+window.adsenseInitialized = window.adsenseInitialized || false;
+
+function initializeAdSense() {
+    if (window.adsenseInitialized) {
+        console.log('AdSense already initialized');
+        return;
+    }
+    
+    window.adsenseInitialized = true;
+    
+    // 기존 광고 블록 확인 및 초기화
+    const adBlocks = document.querySelectorAll('.adsbygoogle');
+    adBlocks.forEach((ad, index) => {
+        if (!ad.dataset.adsbygoogleStatus) {
+            try {
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                console.log('AdSense block initialized:', index);
+            } catch (error) {
+                console.warn('AdSense initialization error:', error);
+            }
+        }
+    });
+}
+
+// 페이지 로드 후 AdSense 초기화
+window.addEventListener('load', function() {
+    setTimeout(initializeAdSense, 1000);
+});
+</script>
+
+<script>
+// 통합 AdSense 초기화 (중복 방지)
+(function() {
+    'use strict';
+    
+    // 전역 플래그로 초기화 상태 관리
+    window.__adsenseLoaded = window.__adsenseLoaded || false;
+    window.__adsenseQueue = window.__adsenseQueue || [];
+    
+    function initAdsense() {
+        if (window.__adsenseLoaded) return;
+        
+        const ads = document.querySelectorAll('.adsbygoogle:not([data-adsbygoogle-status])');
+        
+        if (ads.length === 0) return;
+        
+        // AdSense 스크립트가 로드되었는지 확인
+        if (typeof adsbygoogle === 'undefined') {
+            setTimeout(initAdsense, 500);
+            return;
+        }
+        
+        window.__adsenseLoaded = true;
+        
+        // 각 광고 슬롯 초기화
+        ads.forEach((ad, index) => {
+            try {
+                // 중복 초기화 방지
+                if (ad.getAttribute('data-adsbygoogle-status')) return;
+                
+                // 초기화 시도
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                
+                // 상태 표시
+                ad.setAttribute('data-adsbygoogle-status', 'done');
+                
+            } catch (e) {
+                console.warn('AdSense 초기화 실패:', index, e.message);
+            }
+        });
+    }
+    
+    // 페이지 로드 완료 후 초기화
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(initAdsense, 1000);
+        });
+    } else {
+        setTimeout(initAdsense, 1000);
+    }
+    
+    // 에러 핸들러 추가
+    window.addEventListener('error', function(e) {
+        if (e.message && e.message.includes('adsbygoogle.push() error')) {
+            e.preventDefault();
+            console.warn('AdSense 중복 초기화 방지됨');
+            return false;
+        }
+    }, true);
+})();
 </script>
 </body>
 </html>
