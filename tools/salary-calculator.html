@@ -228,22 +228,31 @@
         
         // 입력값 검증 함수
         function validateSalaryInput(value) {
-            // XSS 방지를 위한 sanitization
-            const sanitizedValue = Security.sanitizeInput(value, 'number');
-            const num = Security.validateNumber(sanitizedValue, 0, 1000000);
+            // 문자열을 숫자로 변환하고 유효성 검사
+            const num = parseFloat(String(value).replace(/[^0-9.]/g, ''));
             
-            if (num < 0 || num > 1000000) {
+            if (isNaN(num) || num < 0 || num > 1000000) {
                 return null;
             }
             return parseInt(num);
+        }
+        
+        // 숫자 검증 함수
+        function validateNumber(value, min, max) {
+            const num = parseInt(String(value).replace(/[^0-9]/g, ''));
+            
+            if (isNaN(num) || num < min || num > max) {
+                return min;
+            }
+            return num;
         }
         
         document.getElementById('salaryForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
             const annualSalaryManwon = validateSalaryInput(document.getElementById('annualSalary').value);
-            const familyCount = Security.validateNumber(document.getElementById('familyCount').value, 0, 20);
-            const childCount = Security.validateNumber(document.getElementById('childCount').value, 0, 20);
+            const familyCount = validateNumber(document.getElementById('familyCount').value, 1, 20);
+            const childCount = validateNumber(document.getElementById('childCount').value, 0, 20);
             
             if (!annualSalaryManwon) {
                 alert('연봉을 올바르게 입력해주세요. (0 ~ 1,000,000만원)');
