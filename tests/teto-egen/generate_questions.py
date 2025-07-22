@@ -1,0 +1,679 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+테토-에겐 테스트를 위한 고품질 질문 생성 스크립트
+한국 문화와 MZ세대 트렌드를 반영한 50개의 질문을 생성합니다.
+"""
+
+import json
+import random
+from datetime import datetime
+
+class TetoEgenQuestionGenerator:
+    def __init__(self):
+        self.categories = {
+            "social": "사회적 상황",
+            "work": "일과 커리어",
+            "relationship": "인간관계",
+            "lifestyle": "라이프스타일",
+            "conflict": "갈등 상황",
+            "values": "가치관",
+            "trend": "트렌드와 문화",
+            "emotion": "감정 표현"
+        }
+        
+    def generate_questions(self):
+        """한국 문화와 MZ세대 특성을 반영한 50개의 질문 생성"""
+        questions = []
+        
+        # 사회적 상황 (Social Situations)
+        questions.extend([
+            {
+                "id": 1,
+                "category": "social",
+                "question": "회식 자리에서 2차를 가자고 할 때, 당신의 반응은?",
+                "options": [
+                    {"text": "분위기 메이커가 되어 적극적으로 2차를 주도한다", "score": 2},
+                    {"text": "다른 사람들의 의견을 들어보고 따라간다", "score": 0},
+                    {"text": "적당한 핑계를 대고 귀가한다", "score": -2}
+                ]
+            },
+            {
+                "id": 2,
+                "category": "social",
+                "question": "처음 가는 카페에서 메뉴를 고를 때, 당신은?",
+                "options": [
+                    {"text": "직원에게 추천 메뉴를 물어보고 새로운 것에 도전한다", "score": 2},
+                    {"text": "메뉴판을 꼼꼼히 보고 익숙한 것 중에서 고른다", "score": 0},
+                    {"text": "늘 먹던 아메리카노나 라떼를 주문한다", "score": -2}
+                ]
+            },
+            {
+                "id": 3,
+                "category": "social",
+                "question": "SNS에 일상을 공유하는 당신의 스타일은?",
+                "options": [
+                    {"text": "즉흥적으로 순간순간을 실시간으로 공유한다", "score": 2},
+                    {"text": "특별한 순간만 골라서 가끔 올린다", "score": 0},
+                    {"text": "보는 것만 하고 거의 올리지 않는다", "score": -2}
+                ]
+            },
+            {
+                "id": 4,
+                "category": "social",
+                "question": "새로운 모임에 초대받았을 때, 당신의 마음은?",
+                "options": [
+                    {"text": "새로운 사람들을 만날 생각에 설렌다", "score": 2},
+                    {"text": "누가 오는지 확인하고 가볍게 참여한다", "score": 0},
+                    {"text": "부담스러워서 정중히 거절한다", "score": -2}
+                ]
+            },
+            {
+                "id": 5,
+                "category": "social",
+                "question": "엘리베이터에서 아는 사람을 만났을 때, 당신은?",
+                "options": [
+                    {"text": "먼저 인사하고 안부를 묻는다", "score": 2},
+                    {"text": "눈이 마주치면 가볍게 인사한다", "score": 0},
+                    {"text": "핸드폰을 보며 못 본 척한다", "score": -2}
+                ]
+            },
+            
+            # 일과 커리어 (Work & Career)
+            {
+                "id": 6,
+                "category": "work",
+                "question": "팀 프로젝트에서 의견 충돌이 생겼을 때, 당신은?",
+                "options": [
+                    {"text": "내 의견을 논리적으로 설득한다", "score": 2},
+                    {"text": "양쪽 의견을 절충하는 방안을 제시한다", "score": 0},
+                    {"text": "팀의 화합을 위해 내 의견을 접는다", "score": -2}
+                ]
+            },
+            {
+                "id": 7,
+                "category": "work",
+                "question": "상사가 갑자기 추가 업무를 요청했을 때, 당신의 반응은?",
+                "options": [
+                    {"text": "새로운 기회라고 생각하고 적극적으로 수행한다", "score": 2},
+                    {"text": "우선순위를 조정하여 처리한다", "score": 0},
+                    {"text": "속으로는 불만이지만 조용히 처리한다", "score": -2}
+                ]
+            },
+            {
+                "id": 8,
+                "category": "work",
+                "question": "회의에서 발표를 해야 할 때, 당신은?",
+                "options": [
+                    {"text": "자신감 있게 내 생각을 전달한다", "score": 2},
+                    {"text": "준비한 내용을 차분히 설명한다", "score": 0},
+                    {"text": "긴장해서 준비한 것보다 못한다", "score": -2}
+                ]
+            },
+            {
+                "id": 9,
+                "category": "work",
+                "question": "퇴근 후 자기계발을 하려고 할 때, 당신은?",
+                "options": [
+                    {"text": "새로운 분야에 도전해본다", "score": 2},
+                    {"text": "현재 업무와 관련된 것을 공부한다", "score": 0},
+                    {"text": "너무 피곤해서 쉬는 것을 선택한다", "score": -2}
+                ]
+            },
+            {
+                "id": 10,
+                "category": "work",
+                "question": "이직을 고민할 때, 가장 중요하게 생각하는 것은?",
+                "options": [
+                    {"text": "새로운 도전과 성장 가능성", "score": 2},
+                    {"text": "워라밸과 적절한 보상", "score": 0},
+                    {"text": "안정성과 복지 혜택", "score": -2}
+                ]
+            },
+            
+            # 인간관계 (Relationships)
+            {
+                "id": 11,
+                "category": "relationship",
+                "question": "친구가 고민을 털어놓을 때, 당신의 반응은?",
+                "options": [
+                    {"text": "해결책을 제시하며 적극적으로 조언한다", "score": 2},
+                    {"text": "공감하며 들어주고 위로한다", "score": 0},
+                    {"text": "들어주지만 깊이 관여하지 않는다", "score": -2}
+                ]
+            },
+            {
+                "id": 12,
+                "category": "relationship",
+                "question": "연인과 데이트 코스를 정할 때, 당신은?",
+                "options": [
+                    {"text": "새로운 장소를 제안하고 계획을 주도한다", "score": 2},
+                    {"text": "서로의 의견을 조율해서 정한다", "score": 0},
+                    {"text": "상대방이 원하는 대로 따라간다", "score": -2}
+                ]
+            },
+            {
+                "id": 13,
+                "category": "relationship",
+                "question": "오랜만에 만난 동창이 연락처를 물어볼 때, 당신은?",
+                "options": [
+                    {"text": "반갑게 연락처를 교환하고 만남을 제안한다", "score": 2},
+                    {"text": "연락처는 교환하지만 먼저 연락하진 않는다", "score": 0},
+                    {"text": "SNS 아이디 정도만 알려준다", "score": -2}
+                ]
+            },
+            {
+                "id": 14,
+                "category": "relationship",
+                "question": "가족 모임에서 어른들이 사생활을 물어볼 때, 당신은?",
+                "options": [
+                    {"text": "밝게 대답하며 대화를 이끌어간다", "score": 2},
+                    {"text": "적당히 대답하고 화제를 전환한다", "score": 0},
+                    {"text": "짧게 대답하고 자리를 피한다", "score": -2}
+                ]
+            },
+            {
+                "id": 15,
+                "category": "relationship",
+                "question": "친구들과의 단톡방에서 당신의 포지션은?",
+                "options": [
+                    {"text": "대화를 주도하고 모임을 제안하는 편", "score": 2},
+                    {"text": "적당히 참여하며 분위기를 맞추는 편", "score": 0},
+                    {"text": "주로 읽기만 하고 필요할 때만 대답하는 편", "score": -2}
+                ]
+            },
+            
+            # 라이프스타일 (Lifestyle)
+            {
+                "id": 16,
+                "category": "lifestyle",
+                "question": "주말 아침, 당신의 모습은?",
+                "options": [
+                    {"text": "일찍 일어나서 활동적으로 하루를 시작한다", "score": 2},
+                    {"text": "천천히 일어나서 여유롭게 준비한다", "score": 0},
+                    {"text": "늦잠을 자며 침대에서 뒹굴거린다", "score": -2}
+                ]
+            },
+            {
+                "id": 17,
+                "category": "lifestyle",
+                "question": "새로운 취미를 시작하려고 할 때, 당신은?",
+                "options": [
+                    {"text": "바로 장비를 구매하고 열정적으로 시작한다", "score": 2},
+                    {"text": "충분히 알아보고 체험 후 결정한다", "score": 0},
+                    {"text": "생각만 하다가 결국 시작하지 못한다", "score": -2}
+                ]
+            },
+            {
+                "id": 18,
+                "category": "lifestyle",
+                "question": "운동을 하려고 마음먹었을 때, 당신은?",
+                "options": [
+                    {"text": "PT나 그룹 운동으로 적극적으로 시작한다", "score": 2},
+                    {"text": "유튜브를 보며 홈트레이닝을 한다", "score": 0},
+                    {"text": "작심삼일로 끝나는 경우가 많다", "score": -2}
+                ]
+            },
+            {
+                "id": 19,
+                "category": "lifestyle",
+                "question": "쇼핑을 할 때 당신의 스타일은?",
+                "options": [
+                    {"text": "즉흥적으로 마음에 드는 것을 구매한다", "score": 2},
+                    {"text": "필요한 것 위주로 계획적으로 구매한다", "score": 0},
+                    {"text": "오래 고민하다가 결국 사지 않는다", "score": -2}
+                ]
+            },
+            {
+                "id": 20,
+                "category": "lifestyle",
+                "question": "혼자 있는 시간에 당신은 주로?",
+                "options": [
+                    {"text": "새로운 것을 배우거나 창작 활동을 한다", "score": 2},
+                    {"text": "책이나 영화를 보며 여유를 즐긴다", "score": 0},
+                    {"text": "아무것도 하지 않고 완전히 쉰다", "score": -2}
+                ]
+            },
+            
+            # 갈등 상황 (Conflict Situations)
+            {
+                "id": 21,
+                "category": "conflict",
+                "question": "택시기사님이 길을 잘못 들었을 때, 당신은?",
+                "options": [
+                    {"text": "바로 지적하고 올바른 길을 안내한다", "score": 2},
+                    {"text": "조심스럽게 다른 길을 제안한다", "score": 0},
+                    {"text": "그냥 참고 돌아가는 길로 간다", "score": -2}
+                ]
+            },
+            {
+                "id": 22,
+                "category": "conflict",
+                "question": "음식점에서 주문한 것과 다른 메뉴가 나왔을 때, 당신은?",
+                "options": [
+                    {"text": "즉시 직원을 불러 바꿔달라고 한다", "score": 2},
+                    {"text": "상황을 보고 바꿀지 그냥 먹을지 결정한다", "score": 0},
+                    {"text": "그냥 나온 것을 먹는다", "score": -2}
+                ]
+            },
+            {
+                "id": 23,
+                "category": "conflict",
+                "question": "친구가 약속에 늦었을 때, 당신의 반응은?",
+                "options": [
+                    {"text": "왜 늦었는지 직접적으로 물어본다", "score": 2},
+                    {"text": "가볍게 농담으로 넘긴다", "score": 0},
+                    {"text": "아무 말 없이 그냥 넘어간다", "score": -2}
+                ]
+            },
+            {
+                "id": 24,
+                "category": "conflict",
+                "question": "부당한 대우를 받았다고 느낄 때, 당신은?",
+                "options": [
+                    {"text": "즉시 문제를 제기하고 해결을 요구한다", "score": 2},
+                    {"text": "상황을 파악한 후 적절히 대응한다", "score": 0},
+                    {"text": "혼자 삭이고 넘어간다", "score": -2}
+                ]
+            },
+            {
+                "id": 25,
+                "category": "conflict",
+                "question": "온라인에서 악플을 받았을 때, 당신의 대응은?",
+                "options": [
+                    {"text": "논리적으로 반박하거나 신고한다", "score": 2},
+                    {"text": "무시하고 차단한다", "score": 0},
+                    {"text": "상처받아서 SNS 활동을 줄인다", "score": -2}
+                ]
+            },
+            
+            # 가치관 (Values)
+            {
+                "id": 26,
+                "category": "values",
+                "question": "인생에서 가장 중요하게 생각하는 것은?",
+                "options": [
+                    {"text": "도전과 성취를 통한 자아실현", "score": 2},
+                    {"text": "균형잡힌 삶과 행복", "score": 0},
+                    {"text": "안정적이고 평온한 일상", "score": -2}
+                ]
+            },
+            {
+                "id": 27,
+                "category": "values",
+                "question": "돈을 쓸 때 당신의 우선순위는?",
+                "options": [
+                    {"text": "경험과 자기계발에 아끼지 않는다", "score": 2},
+                    {"text": "필요한 곳에 합리적으로 사용한다", "score": 0},
+                    {"text": "미래를 위해 최대한 저축한다", "score": -2}
+                ]
+            },
+            {
+                "id": 28,
+                "category": "values",
+                "question": "성공의 기준을 정한다면?",
+                "options": [
+                    {"text": "남들과 다른 나만의 길을 개척하는 것", "score": 2},
+                    {"text": "하고 싶은 일과 해야 할 일의 균형", "score": 0},
+                    {"text": "안정적인 직장과 가정을 이루는 것", "score": -2}
+                ]
+            },
+            {
+                "id": 29,
+                "category": "values",
+                "question": "실패를 경험했을 때, 당신의 태도는?",
+                "options": [
+                    {"text": "더 큰 도전을 위한 발판으로 삼는다", "score": 2},
+                    {"text": "교훈을 얻고 다시 시도한다", "score": 0},
+                    {"text": "비슷한 실패를 피하려고 조심한다", "score": -2}
+                ]
+            },
+            {
+                "id": 30,
+                "category": "values",
+                "question": "타인의 시선에 대한 당신의 생각은?",
+                "options": [
+                    {"text": "내 길을 가는 것이 중요하다", "score": 2},
+                    {"text": "적당히 신경 쓰며 살아간다", "score": 0},
+                    {"text": "주변의 기대에 부응하려 노력한다", "score": -2}
+                ]
+            },
+            
+            # 트렌드와 문화 (Trends & Culture)
+            {
+                "id": 31,
+                "category": "trend",
+                "question": "새로운 맛집이 화제가 될 때, 당신은?",
+                "options": [
+                    {"text": "바로 예약하고 가서 SNS에 공유한다", "score": 2},
+                    {"text": "리뷰를 확인하고 기회가 되면 간다", "score": 0},
+                    {"text": "유행이 지나고 한산해지면 간다", "score": -2}
+                ]
+            },
+            {
+                "id": 32,
+                "category": "trend",
+                "question": "새로운 SNS 플랫폼이 유행할 때, 당신은?",
+                "options": [
+                    {"text": "얼리어답터로서 바로 가입하고 활동한다", "score": 2},
+                    {"text": "주변 사람들이 하면 따라서 시작한다", "score": 0},
+                    {"text": "기존 플랫폼만으로도 충분하다", "score": -2}
+                ]
+            },
+            {
+                "id": 33,
+                "category": "trend",
+                "question": "K-콘텐츠(드라마, K-POP 등)에 대한 당신의 태도는?",
+                "options": [
+                    {"text": "적극적으로 찾아보고 팬 활동도 한다", "score": 2},
+                    {"text": "화제작 위주로 가볍게 즐긴다", "score": 0},
+                    {"text": "특별히 관심 없다", "score": -2}
+                ]
+            },
+            {
+                "id": 34,
+                "category": "trend",
+                "question": "새로운 챌린지나 밈이 유행할 때, 당신은?",
+                "options": [
+                    {"text": "재미있으면 바로 참여하고 공유한다", "score": 2},
+                    {"text": "구경하다가 재미있으면 따라한다", "score": 0},
+                    {"text": "그냥 구경만 한다", "score": -2}
+                ]
+            },
+            {
+                "id": 35,
+                "category": "trend",
+                "question": "패션 스타일을 선택할 때, 당신은?",
+                "options": [
+                    {"text": "트렌드를 리드하는 개성 있는 스타일", "score": 2},
+                    {"text": "유행을 적절히 반영한 스타일", "score": 0},
+                    {"text": "편안하고 무난한 스타일", "score": -2}
+                ]
+            },
+            
+            # 감정 표현 (Emotional Expression)
+            {
+                "id": 36,
+                "category": "emotion",
+                "question": "기쁜 일이 생겼을 때, 당신의 표현 방식은?",
+                "options": [
+                    {"text": "주변 사람들과 적극적으로 공유하고 축하한다", "score": 2},
+                    {"text": "가까운 사람들에게만 조용히 알린다", "score": 0},
+                    {"text": "혼자서 조용히 기뻐한다", "score": -2}
+                ]
+            },
+            {
+                "id": 37,
+                "category": "emotion",
+                "question": "슬프거나 우울할 때, 당신은?",
+                "options": [
+                    {"text": "친구들을 만나 기분전환을 한다", "score": 2},
+                    {"text": "믿을 만한 사람과 대화를 나눈다", "score": 0},
+                    {"text": "혼자만의 시간을 갖고 회복한다", "score": -2}
+                ]
+            },
+            {
+                "id": 38,
+                "category": "emotion",
+                "question": "화가 날 때, 당신의 대처 방식은?",
+                "options": [
+                    {"text": "즉시 표현하고 해결하려 한다", "score": 2},
+                    {"text": "잠시 진정한 후 이성적으로 대화한다", "score": 0},
+                    {"text": "속으로 삭이고 표현하지 않는다", "score": -2}
+                ]
+            },
+            {
+                "id": 39,
+                "category": "emotion",
+                "question": "칭찬을 받았을 때, 당신의 반응은?",
+                "options": [
+                    {"text": "자신감 있게 받아들이고 감사를 표현한다", "score": 2},
+                    {"text": "겸손하게 받아들인다", "score": 0},
+                    {"text": "쑥스러워하며 화제를 돌린다", "score": -2}
+                ]
+            },
+            {
+                "id": 40,
+                "category": "emotion",
+                "question": "사랑하는 사람에게 애정표현을 할 때, 당신은?",
+                "options": [
+                    {"text": "말과 행동으로 적극적으로 표현한다", "score": 2},
+                    {"text": "상황에 맞게 적절히 표현한다", "score": 0},
+                    {"text": "마음속으로만 간직하는 편이다", "score": -2}
+                ]
+            },
+            
+            # 추가 질문들 (Additional Questions)
+            {
+                "id": 41,
+                "category": "lifestyle",
+                "question": "새해 계획을 세울 때, 당신의 스타일은?",
+                "options": [
+                    {"text": "구체적이고 도전적인 목표를 여러 개 세운다", "score": 2},
+                    {"text": "현실적으로 달성 가능한 몇 가지를 정한다", "score": 0},
+                    {"text": "특별한 계획 없이 자연스럽게 흘러간다", "score": -2}
+                ]
+            },
+            {
+                "id": 42,
+                "category": "social",
+                "question": "온라인 게임이나 메타버스에서 당신의 캐릭터는?",
+                "options": [
+                    {"text": "파티장이 되어 사람들을 이끈다", "score": 2},
+                    {"text": "적당히 어울리며 게임을 즐긴다", "score": 0},
+                    {"text": "솔로 플레이를 선호한다", "score": -2}
+                ]
+            },
+            {
+                "id": 43,
+                "category": "work",
+                "question": "재택근무 vs 사무실 근무, 당신의 선호는?",
+                "options": [
+                    {"text": "사무실에서 동료들과 활발히 소통하며 일하기", "score": 2},
+                    {"text": "상황에 따라 유연하게 선택하기", "score": 0},
+                    {"text": "집에서 조용히 집중해서 일하기", "score": -2}
+                ]
+            },
+            {
+                "id": 44,
+                "category": "relationship",
+                "question": "소개팅을 주선받았을 때, 당신의 반응은?",
+                "options": [
+                    {"text": "기대하며 적극적으로 준비한다", "score": 2},
+                    {"text": "가볍게 만나보기로 한다", "score": 0},
+                    {"text": "부담스러워서 거절한다", "score": -2}
+                ]
+            },
+            {
+                "id": 45,
+                "category": "trend",
+                "question": "NFT, 가상화폐 등 새로운 투자에 대한 당신의 태도는?",
+                "options": [
+                    {"text": "적극적으로 공부하고 투자한다", "score": 2},
+                    {"text": "관심은 있지만 신중하게 접근한다", "score": 0},
+                    {"text": "리스크가 커서 관심 없다", "score": -2}
+                ]
+            },
+            {
+                "id": 46,
+                "category": "conflict",
+                "question": "단톡방에서 논란이 생겼을 때, 당신은?",
+                "options": [
+                    {"text": "적극적으로 의견을 피력한다", "score": 2},
+                    {"text": "중재자 역할을 하려고 한다", "score": 0},
+                    {"text": "조용히 지켜보기만 한다", "score": -2}
+                ]
+            },
+            {
+                "id": 47,
+                "category": "values",
+                "question": "MBTI, 사주 등 성격/운세 테스트에 대한 당신의 생각은?",
+                "options": [
+                    {"text": "재미로 하고 주변에 적극 공유한다", "score": 2},
+                    {"text": "가볍게 참고하는 정도로 본다", "score": 0},
+                    {"text": "별로 믿지 않고 관심 없다", "score": -2}
+                ]
+            },
+            {
+                "id": 48,
+                "category": "emotion",
+                "question": "스트레스를 받을 때 선호하는 해소법은?",
+                "options": [
+                    {"text": "친구들과 수다 떨거나 파티를 한다", "score": 2},
+                    {"text": "산책이나 가벼운 운동을 한다", "score": 0},
+                    {"text": "집에서 혼자 넷플릭스를 본다", "score": -2}
+                ]
+            },
+            {
+                "id": 49,
+                "category": "lifestyle",
+                "question": "여행지에서 당신의 스타일은?",
+                "options": [
+                    {"text": "현지인처럼 깊숙이 체험하고 모험한다", "score": 2},
+                    {"text": "유명 관광지와 로컬 명소를 균형있게 둘러본다", "score": 0},
+                    {"text": "호텔에서 휴식 위주로 여유를 즐긴다", "score": -2}
+                ]
+            },
+            {
+                "id": 50,
+                "category": "social",
+                "question": "술자리에서 당신의 포지션은?",
+                "options": [
+                    {"text": "분위기 메이커로 게임을 주도한다", "score": 2},
+                    {"text": "적당히 어울리며 즐긴다", "score": 0},
+                    {"text": "조용히 한 자리에서 대화를 나눈다", "score": -2}
+                ]
+            }
+        ])
+        
+        return questions
+    
+    def save_questions(self, questions, filename="teto_egen_questions_v2.json"):
+        """질문을 JSON 파일로 저장"""
+        data = {
+            "version": "2.0",
+            "created_at": datetime.now().isoformat(),
+            "total_questions": len(questions),
+            "categories": self.categories,
+            "questions": questions
+        }
+        
+        with open(filename, 'w', encoding='utf-8') as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+        
+        print(f"{len(questions)}개의 질문이 {filename}에 저장되었습니다.")
+        
+    def generate_javascript_format(self, questions, filename="questions_for_test.js"):
+        """test.js에 바로 사용할 수 있는 JavaScript 형식으로 저장"""
+        js_content = """// 테토-에겐 테스트 고품질 질문 데이터 (v2.0)
+// 한국 문화와 MZ세대 트렌드를 반영한 50개 질문
+
+const questions = [
+"""
+        
+        for i, q in enumerate(questions):
+            js_content += "    {\n"
+            js_content += f'        question: "{q["question"]}",\n'
+            js_content += "        options: [\n"
+            
+            for opt in q["options"]:
+                js_content += f'            {{ text: "{opt["text"]}", score: {opt["score"]} }}'
+                if opt != q["options"][-1]:
+                    js_content += ","
+                js_content += "\n"
+            
+            js_content += "        ]\n"
+            js_content += "    }"
+            
+            if i < len(questions) - 1:
+                js_content += ","
+            js_content += "\n"
+        
+        js_content += "];\n"
+        
+        with open(filename, 'w', encoding='utf-8') as f:
+            f.write(js_content)
+        
+        print(f"JavaScript 형식의 질문이 {filename}에 저장되었습니다.")
+    
+    def analyze_questions(self, questions):
+        """생성된 질문의 통계 분석"""
+        print("\n질문 분석 결과:")
+        print("-" * 50)
+        
+        # 카테고리별 분포
+        category_count = {}
+        for q in questions:
+            cat = q["category"]
+            category_count[cat] = category_count.get(cat, 0) + 1
+        
+        print("카테고리별 질문 분포:")
+        for cat, count in sorted(category_count.items()):
+            print(f"  {self.categories[cat]}: {count}개 ({count/len(questions)*100:.1f}%)")
+        
+        print(f"\n총 질문 수: {len(questions)}개")
+        print("각 질문당 선택지: 3개")
+        print("점수 체계: -2 (에겐형), 0 (중립), +2 (테토형)")
+        
+    def create_sample_test(self, num_questions=20):
+        """전체 질문 중 랜덤으로 선택하여 샘플 테스트 생성"""
+        all_questions = self.generate_questions()
+        
+        # 카테고리별로 균등하게 선택
+        category_questions = {}
+        for q in all_questions:
+            cat = q["category"]
+            if cat not in category_questions:
+                category_questions[cat] = []
+            category_questions[cat].append(q)
+        
+        # 각 카테고리에서 균등하게 선택
+        sample_questions = []
+        questions_per_category = num_questions // len(self.categories)
+        remaining = num_questions % len(self.categories)
+        
+        for cat, questions in category_questions.items():
+            num_to_select = questions_per_category
+            if remaining > 0:
+                num_to_select += 1
+                remaining -= 1
+            
+            selected = random.sample(questions, min(num_to_select, len(questions)))
+            sample_questions.extend(selected)
+        
+        # 섞기
+        random.shuffle(sample_questions)
+        
+        # 새로운 ID 부여
+        for i, q in enumerate(sample_questions):
+            q["id"] = i + 1
+        
+        return sample_questions[:num_questions]
+
+def main():
+    generator = TetoEgenQuestionGenerator()
+    
+    # 50개 질문 생성
+    questions = generator.generate_questions()
+    
+    # JSON 형식으로 저장
+    generator.save_questions(questions)
+    
+    # JavaScript 형식으로 저장
+    generator.generate_javascript_format(questions)
+    
+    # 질문 분석
+    generator.analyze_questions(questions)
+    
+    # 20개 샘플 테스트 생성
+    sample_questions = generator.create_sample_test(20)
+    generator.save_questions(sample_questions, "teto_egen_sample_test.json")
+    
+    print("\n모든 파일이 성공적으로 생성되었습니다!")
+    print("\n생성된 파일:")
+    print("1. teto_egen_questions_v2.json - 전체 50개 질문 (JSON)")
+    print("2. questions_for_test.js - JavaScript 형식 질문")
+    print("3. teto_egen_sample_test.json - 20개 샘플 테스트")
+
+if __name__ == "__main__":
+    main()

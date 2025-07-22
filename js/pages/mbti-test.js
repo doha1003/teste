@@ -30,18 +30,31 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// MBTI 테스트 질문 데이터
+// 한국 문화를 반영한 MBTI 테스트 질문 데이터 (40문항)
 const questions = [
+    // E/I (외향/내향) - 10문항
     {
         id: 1,
-        text: "금요일 저녁, 친구가 갑자기 파티에 초대합니다. 당신의 반응은?",
+        text: "회사 회식이 끝나고 2차를 가자고 할 때, 당신의 반응은?",
         dimension: "E",
         answers: [
-            { text: "신난다! 바로 준비하고 나간다", value: 2 },
-            { text: "좋아하지만 잠시 고민한다", value: 1 },
-            { text: "상황에 따라 다르다", value: 0 },
-            { text: "내키지 않지만 의리상 간다", value: -1 },
-            { text: "정중히 거절하고 집에서 쉰다", value: -2 }
+            { text: "좋아! 오늘은 끝까지 가는거야!", value: 2 },
+            { text: "재밌는 사람들이면 가볼만해", value: 1 },
+            { text: "분위기 봐서 결정할게", value: 0 },
+            { text: "피곤한데... 잠깐만 가고 먼저 갈게", value: -1 },
+            { text: "미안, 나 내일 일찍 일어나야 해서...", value: -2 }
+        ]
+    },
+    {
+        id: 2,
+        text: "카톡 단톡방에서 당신의 활동 스타일은?",
+        dimension: "E",
+        answers: [
+            { text: "대화 주도하며 드립도 치고 활발히 참여", value: 2 },
+            { text: "재밌는 주제면 적극적으로 대화", value: 1 },
+            { text: "가끔 이모티콘이나 ㅋㅋ로 반응", value: 0 },
+            { text: "주로 읽기만 하고 필요할 때만 대답", value: -1 },
+            { text: "알림 끄고 나중에 몰아서 확인", value: -2 }
         ]
     },
     {
