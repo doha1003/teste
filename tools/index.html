@@ -323,6 +323,22 @@ if ('IntersectionObserver' in window) {
     <div id="footer-placeholder"></div>
     
     <!-- External JavaScript -->
+    <script src="/js/api-config.js?v=1753150228"></script>
+    <script src="/js/main.js?v=1753150228"></script>
+    
+    <!-- Kakao SDK Initialization -->
+    <script>
+        try {
+            if (typeof Kakao !== 'undefined' && window.API_CONFIG && window.API_CONFIG.KAKAO_APP_KEY) {
+                if (!Kakao.isInitialized()) {
+                    Kakao.init(window.API_CONFIG.KAKAO_APP_KEY);
+                    console.log('Kakao SDK initialized successfully');
+                }
+            }
+        } catch (error) {
+            console.warn('Kakao SDK initialization failed:', error);
+        }
+    </script>
 
     <!-- AdSense initialization handled by unified script -->
 

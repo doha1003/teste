@@ -290,9 +290,24 @@ if ('IntersectionObserver' in window) {
     <div id="footer-placeholder"></div>
     
     <!-- External JavaScript -->
+    <script src="/js/main.js?v=1753150228"></script>
+    <script src="/js/api-config.js?v=1753150228"></script>
     
-    
-    
+    <!-- Kakao SDK 초기화 -->
+    <script>
+        // Kakao SDK 초기화
+        if (typeof window.initKakao === 'function') {
+            window.initKakao();
+        } else if (typeof Kakao !== 'undefined' && window.KAKAO_KEY) {
+            try {
+                if (!Kakao.isInitialized()) {
+                    Kakao.init(window.KAKAO_KEY);
+                }
+            } catch (error) {
+                console.warn('Kakao initialization failed:', error);
+            }
+        }
+    </script>
     
     <!-- AdSense initialization -->
     

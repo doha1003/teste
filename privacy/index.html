@@ -205,6 +205,21 @@ if ('IntersectionObserver' in window) {
     <div id="footer-placeholder"></div>
     
     <!-- External JavaScript -->
+    <script src="/js/api-config.js?v=1753150228"></script>
+    <script src="/js/main.js?v=1753150228"></script>
+    
+    <!-- 카카오 초기화 -->
+    <script>
+        if (typeof Kakao !== 'undefined' && window.API_CONFIG) {
+            try {
+                if (!Kakao.isInitialized()) {
+                    Kakao.init(window.API_CONFIG.KAKAO_JS_KEY);
+                }
+            } catch (error) {
+                console.warn('카카오 초기화 오류:', error);
+            }
+        }
+    </script>
     
 
     <!-- Non-critical scripts moved here for performance -->

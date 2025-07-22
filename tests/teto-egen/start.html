@@ -24,7 +24,11 @@
     <meta name="google-adsense-account" content="ca-pub-7905640648499222">
     
     <!-- 카카오 JavaScript SDK -->
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
     
+    <!-- JavaScript -->
+    <script src="/js/api-config.js?v=1753150228"></script>
+    <script src="/js/main.js?v=1753150228"></script>
     
     <!-- Favicon -->
     <link rel="icon" href="/images/placeholder-favicon.svg" type="image/svg+xml">
@@ -313,9 +317,6 @@ if ('IntersectionObserver' in window) {
 
     <!-- External JavaScript -->
     
-    
-    
-    
     <!-- 테스트 로직 -->
     <script>
 
@@ -496,8 +497,7 @@ if ('IntersectionObserver' in window) {
     }
 
     function shareKakao() {
-        if (typeof Kakao !== 'undefined') {
-            Kakao.init('8b5c6e8f97ec3d51a6f784b8b4b5ed99');
+        if (typeof Kakao !== 'undefined' && Kakao.isInitialized()) {
             Kakao.Share.sendDefault({
                 objectType: 'feed',
                 content: {

@@ -7,11 +7,11 @@ document.addEventListener('DOMContentLoaded', function() {
         if (typeof Kakao !== 'undefined') {
             if (!Kakao.isInitialized()) {
                 try {
-                    // config.js에서 API 키 가져오기
-                    if (typeof Config !== 'undefined' && Config.kakao && Config.kakao.appKey && Config.validateDomain()) {
-                        Kakao.init(Config.kakao.appKey);
+                    // api-config.js에서 API 키 가져오기
+                    if (typeof API_CONFIG !== 'undefined' && API_CONFIG.kakao && API_CONFIG.kakao.appKey) {
+                        Kakao.init(API_CONFIG.kakao.appKey);
                     } else {
-                        console.error('Config not available or domain validation failed');
+                        console.error('API_CONFIG not available');
                         return;
                     }
                     console.log('Kakao SDK initialized:', Kakao.isInitialized());
@@ -186,11 +186,8 @@ function selectGender(gender) {
     // 성별 선택 화면 숨기기
     document.getElementById('gender-screen').classList.add('teto-hidden');
     
-    // 테스트 화면 보이기
-    document.getElementById('test-screen').classList.remove('teto-hidden');
-    
-    // 첫 번째 질문 표시
-    showQuestion();
+    // 테스트 시작 화면 보이기
+    document.getElementById('intro-screen').classList.remove('teto-hidden');
 }
 
 // 질문 표시 함수
@@ -198,18 +195,22 @@ function showQuestion() {
     const question = questions[currentQuestion];
     const questionElement = document.getElementById('question');
     const optionsElement = document.getElementById('options');
+    const questionNumberElement = document.getElementById('question-number');
     
-    questionElement.textContent = question.question;
+    if (questionElement) questionElement.textContent = question.question;
+    if (questionNumberElement) questionNumberElement.textContent = `Q${currentQuestion + 1}`;
     
     // 옵션 버튼 생성
-    optionsElement.innerHTML = '';
-    question.options.forEach((option, index) => {
-        const button = document.createElement('button');
-        button.className = 'teto-option';
-        button.textContent = option.text;
-        button.onclick = () => selectOption(index);
-        optionsElement.appendChild(button);
-    });
+    if (optionsElement) {
+        optionsElement.innerHTML = '';
+        question.options.forEach((option, index) => {
+            const button = document.createElement('button');
+            button.className = 'teto-option';
+            button.textContent = option.text;
+            button.onclick = () => selectOption(index);
+            optionsElement.appendChild(button);
+        });
+    }
     
     // 진행률 업데이트
     updateProgress();
@@ -382,6 +383,7 @@ function restartTest() {
     // 화면 초기화
     document.getElementById('result-screen').classList.add('teto-hidden');
     document.getElementById('test-screen').classList.add('teto-hidden');
+    document.getElementById('intro-screen').classList.add('teto-hidden');
     document.getElementById('gender-screen').classList.remove('teto-hidden');
     
     // localStorage 클리어
@@ -395,11 +397,11 @@ function reinitializeKakao() {
             Kakao.cleanup();
         }
         try {
-            if (typeof Config !== 'undefined' && Config.kakao && Config.kakao.appKey && Config.validateDomain()) {
-                Kakao.init(Config.kakao.appKey);
+            if (typeof API_CONFIG !== 'undefined' && API_CONFIG.kakao && API_CONFIG.kakao.appKey) {
+                Kakao.init(API_CONFIG.kakao.appKey);
                 console.log('Kakao SDK reinitialized successfully');
             } else {
-                console.error('Config not available for reinitialization');
+                console.error('API_CONFIG not available for reinitialization');
             }
         } catch (e) {
             console.error('Kakao SDK reinitialization failed:', e);

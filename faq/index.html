@@ -505,6 +505,22 @@ if ('IntersectionObserver' in window) {
     <script src="/js/api-config.js?v=1753150228"></script>
     <script src="/js/security.js"></script>
     
+    <!-- Kakao SDK 초기화 -->
+    <script>
+        // Kakao SDK 초기화
+        if (typeof window.initKakao === 'function') {
+            window.initKakao();
+        } else if (typeof Kakao !== 'undefined' && window.KAKAO_KEY) {
+            try {
+                if (!Kakao.isInitialized()) {
+                    Kakao.init(window.KAKAO_KEY);
+                }
+            } catch (error) {
+                console.warn('Kakao initialization failed:', error);
+            }
+        }
+    </script>
+    
     <!-- FAQ 기능 JavaScript -->
     <script>
 
