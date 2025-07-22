@@ -1,3 +1,6 @@
+// 스크립트 로딩 확인
+console.log('main.js 로드 시작');
+
 // 모바일 메뉴 토글 - DohaApp의 기능 사용
 function toggleMobileMenu() {
     if (window.DohaApp && DohaApp.components && DohaApp.components.mobileMenu) {
