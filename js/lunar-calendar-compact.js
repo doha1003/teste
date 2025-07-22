@@ -19,7 +19,7 @@ const EARTHLY_BRANCHES = ['자','축','인','묘','진','사','오','미','신',
 /**
  * 기본적인 음력 날짜 계산 (간단한 공식 사용)
  */
-export function getLunarDate(year, month, day) {
+function getLunarDate(year, month, day) {
     // 기준일: 1991년 10월 3일 = 병오일
     const referenceDate = new Date(1991, 9, 3);
     const targetDate = new Date(year, month - 1, day);
@@ -64,7 +64,7 @@ export function getLunarDate(year, month, day) {
 /**
  * 지원되는 년도 범위
  */
-export function getSupportedYearRange() {
+function getSupportedYearRange() {
     return {
         min: 1841,
         max: 2110
