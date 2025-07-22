@@ -1,37 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;">
-
-<script id="performance-monitor">
-// 개선된 성능 모니터링
-window.addEventListener('load', function() {
-    if (window.performance && window.performance.timing) {
-        const loadTime = window.performance.timing.loadEventEnd - window.performance.timing.navigationStart;
-        console.log('페이지 로딩 시간:', loadTime + 'ms');
-        
-        if (loadTime > 10000) {
-            console.warn('페이지 로딩이 느립니다:', loadTime + 'ms');
-        }
-        
-        // 리소스 로딩 분석
-        const resources = performance.getEntriesByType('resource');
-        const slowResources = resources.filter(r => r.duration > 1000);
-        if (slowResources.length > 0) {
-            console.warn('느린 리소스들:', slowResources.map(r => ({ name: r.name, duration: r.duration })));
-        }
-    }
-});
-
-// CSP 오류 감지
-window.addEventListener('securitypolicyviolation', function(e) {
-    console.warn('CSP 위반 감지:', {
-        directive: e.violatedDirective,
-        source: e.sourceFile,
-        line: e.lineNumber
-    });
-});
-</script>
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src '">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>doha.kr - 일상을 더 재미있게 만드는 공간</title>
@@ -41,7 +11,6 @@ window.addEventListener('securitypolicyviolation', function(e) {
     <meta name="author" content="doha.kr">
     
     <!-- Security Headers -->
-    self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://cdn.jsdelivr.net https://fundingchoicesmessages.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:;">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), accelerometer=(), gyroscope=()">
@@ -85,7 +54,7 @@ window.addEventListener('securitypolicyviolation', function(e) {
     <!-- Moved to end of body -->
     
     <!-- Kakao JavaScript SDK -->
-    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.4.0/kakao.min.js" integrity="sha384-mXVrIX2T/Kszp6Z0aEWaA8Nm7J6/ZeWXbL8UpGRjKwWe56Srd/iyNmWMBhcItAjH" crossorigin="anonymous" defer></script>
+    
     
     <!-- Favicon -->
     <link rel="icon" href="/images/logo.svg" type="image/svg+xml">
@@ -163,9 +132,19 @@ window.addEventListener('securitypolicyviolation', function(e) {
         ]
     }
     </script>
-    self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:;">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
-    self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com;">
+
+    <script id="performance-monitor">
+
+    window.addEventListener('load', function() {
+        if (window.performance && window.performance.timing) {
+            const loadTime = window.performance.timing.loadEventEnd - window.performance.timing.navigationStart;
+            if (loadTime > 5000) {
+                console.warn('Page loading is slow:', loadTime + 'ms');
+            }
+        }
+    });
+    </script>
 </head>
 <body>
     <!-- 네비게이션 바 -->
@@ -368,7 +347,7 @@ window.addEventListener('securitypolicyviolation', function(e) {
     </div>
 </div>
 <script>
-// Intersection Observer로 광고 지연 로딩
+
 if ('IntersectionObserver' in window) {
     const adObserver = new IntersectionObserver(function(entries) {
         entries.forEach(function(entry) {
@@ -415,21 +394,21 @@ if ('IntersectionObserver' in window) {
     <div id="footer-placeholder"></div>
     
     <!-- External JavaScript -->
-    <script defer src="/js/api-config.js"></script>
-    <script src="/js/bundle.min.js" defer></script>
-    <script src="/js/main.min.js" defer></script>
-    <script src="/js/fixes/javascript-fixes.js" defer></script>
+    
+    
+    
+    
     
     <!-- Service Counter Script -->
     <script>
-        // 실시간으로 서비스 개수 카운트
+
         document.addEventListener('DOMContentLoaded', function() {
-            // 활성화된 서비스 카드만 카운트 (disabled 클래스가 없는 것)
+
             const activeServices = document.querySelectorAll('.service-card:not(.disabled)').length;
             const countElement = document.getElementById('service-count');
             
             if (countElement) {
-                // 애니메이션 효과로 숫자 카운트
+
                 let currentCount = 0;
                 const targetCount = activeServices;
                 const increment = Math.ceil(targetCount / 20);
@@ -449,7 +428,7 @@ if ('IntersectionObserver' in window) {
     
     <!-- AdSense initialization -->
     <script>
-        // 애드센스 광고 로드
+
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 
@@ -457,7 +436,7 @@ if ('IntersectionObserver' in window) {
     
 <!-- Google AdSense 지연 로딩 -->
 <script>
-// AdSense 지연 로딩 (페이지 로드 후 2초 대기)
+
 window.addEventListener('load', function() {
     setTimeout(function() {
         var adsScript = document.createElement('script');
@@ -470,7 +449,7 @@ window.addEventListener('load', function() {
 </script>
 
 <script>
-// AdSense 중복 초기화 방지
+
 window.adsenseInitialized = window.adsenseInitialized || false;
 
 function initializeAdSense() {
@@ -480,8 +459,7 @@ function initializeAdSense() {
     }
     
     window.adsenseInitialized = true;
-    
-    // 기존 광고 블록 확인 및 초기화
+
     const adBlocks = document.querySelectorAll('.adsbygoogle');
     adBlocks.forEach((ad, index) => {
         if (!ad.dataset.adsbygoogleStatus) {
@@ -495,18 +473,16 @@ function initializeAdSense() {
     });
 }
 
-// 페이지 로드 후 AdSense 초기화
 window.addEventListener('load', function() {
     setTimeout(initializeAdSense, 1000);
 });
 </script>
 
 <script>
-// 통합 AdSense 초기화 (중복 방지)
+
 (function() {
     'use strict';
-    
-    // 전역 플래그로 초기화 상태 관리
+
     window.__adsenseLoaded = window.__adsenseLoaded || false;
     window.__adsenseQueue = window.__adsenseQueue || [];
     
@@ -516,25 +492,21 @@ window.addEventListener('load', function() {
         const ads = document.querySelectorAll('.adsbygoogle:not([data-adsbygoogle-status])');
         
         if (ads.length === 0) return;
-        
-        // AdSense 스크립트가 로드되었는지 확인
+
         if (typeof adsbygoogle === 'undefined') {
             setTimeout(initAdsense, 500);
             return;
         }
         
         window.__adsenseLoaded = true;
-        
-        // 각 광고 슬롯 초기화
+
         ads.forEach((ad, index) => {
             try {
-                // 중복 초기화 방지
+
                 if (ad.getAttribute('data-adsbygoogle-status')) return;
-                
-                // 초기화 시도
+
                 (adsbygoogle = window.adsbygoogle || []).push({});
-                
-                // 상태 표시
+
                 ad.setAttribute('data-adsbygoogle-status', 'done');
                 
             } catch (e) {
@@ -542,8 +514,7 @@ window.addEventListener('load', function() {
             }
         });
     }
-    
-    // 페이지 로드 완료 후 초기화
+
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(initAdsense, 1000);
@@ -551,8 +522,7 @@ window.addEventListener('load', function() {
     } else {
         setTimeout(initAdsense, 1000);
     }
-    
-    // 에러 핸들러 추가
+
     window.addEventListener('error', function(e) {
         if (e.message && e.message.includes('adsbygoogle.push() error')) {
             e.preventDefault();
@@ -569,33 +539,28 @@ window.addEventListener('load', function() {
 <script>
 (function() {
     'use strict';
-    
-    // 전역 초기화 상태 관리
+
     if (window.__adsenseFullyInitialized) return;
     window.__adsenseFullyInitialized = true;
-    
-    // 원래 push 메서드 저장
+
     let originalPush = null;
-    
-    // AdSense 초기화 함수
+
     function safeInitAds() {
         const ads = document.querySelectorAll('.adsbygoogle');
         
         if (ads.length === 0) return;
-        
-        // adsbygoogle가 로드될 때까지 대기
+
         if (typeof adsbygoogle === 'undefined') {
             setTimeout(safeInitAds, 200);
             return;
         }
-        
-        // push 메서드 오버라이드
+
         if (!originalPush && window.adsbygoogle && window.adsbygoogle.push) {
             originalPush = window.adsbygoogle.push;
             
             window.adsbygoogle.push = function(config) {
                 try {
-                    // 이미 광고가 있는 요소는 건너뛰기
+
                     const hasAds = Array.from(document.querySelectorAll('.adsbygoogle')).every(el => 
                         el.getAttribute('data-adsbygoogle-status') === 'done'
                     );
@@ -604,16 +569,14 @@ window.addEventListener('load', function() {
                         console.log('모든 광고 슬롯이 이미 채워짐');
                         return;
                     }
-                    
-                    // 원래 push 메서드 호출
+
                     return originalPush.call(this, config);
                 } catch (e) {
                     console.warn('AdSense push 차단됨:', e.message);
                 }
             };
         }
-        
-        // 각 광고 슬롯 초기화
+
         let initialized = 0;
         ads.forEach((ad) => {
             if (!ad.getAttribute('data-adsbygoogle-status')) {
@@ -621,15 +584,14 @@ window.addEventListener('load', function() {
                     (adsbygoogle = window.adsbygoogle || []).push({});
                     initialized++;
                 } catch (e) {
-                    // 오류 무시
+
                 }
             }
         });
         
         console.log('AdSense 초기화 완료:', initialized, '개 슬롯');
     }
-    
-    // 전역 에러 핸들러
+
     const errorHandler = function(e) {
         if (e.message && e.message.includes('adsbygoogle.push() error')) {
             e.preventDefault();
@@ -638,19 +600,16 @@ window.addEventListener('load', function() {
             return false;
         }
     };
-    
-    // 에러 핸들러 등록
+
     window.addEventListener('error', errorHandler, true);
-    
-    // unhandledrejection 핸들러
+
     window.addEventListener('unhandledrejection', function(e) {
         if (e.reason && e.reason.message && e.reason.message.includes('adsbygoogle')) {
             e.preventDefault();
             return false;
         }
     });
-    
-    // DOM 로드 후 초기화
+
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(safeInitAds, 1000);
