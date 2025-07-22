@@ -1,39 +1,38 @@
 <!DOCTYPE html>
+
 <html lang="ko">
 <head>
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>별자리 운세 - AI 운세 | doha.kr</title>
-    <meta name="description" content="12개 별자리별 AI 운세. 오늘의 별자리 운세를 확인하고 행운의 조언을 받아보세요. AI 운세에서 제공하는 유용한 서비스를 이용해보세요. 심리테스트, 실용도구, AI 운세 등 다양한 콘텐츠를 무료로 즐기실 수 있습니다.">
-    <meta name="robots" content="index, follow">
-    <meta name="author" content="doha.kr">
-    
-    <!-- Security Headers -->
-    <meta http-equiv="X-Content-Type-Options" content="nosniff">
-    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
-    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), accelerometer=(), gyroscope=()">
-    
-    <!-- Open Graph -->
-    <meta property="og:title" content="별자리 운세 | doha.kr">
-    <meta property="og:description" content="12개 별자리별 AI 운세. 오늘의 별자리 운세를 확인하고 행운의 조언을 받아보세요.">
-    <meta property="og:image" content="https://doha.kr/images/egen-male-card.jpg">
-    <meta property="og:url" content="https://doha.kr/fortune/zodiac/">
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" crossorigin href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Google AdSense -->
-    <!-- Moved to end of body -->
-    <!-- Optimized CSS System -->
-    <link rel="stylesheet" href="/css/styles.css?v=1753150228">
-    <link rel="stylesheet" href="/css/pages/zodiac.css">
+<meta content="upgrade-insecure-requests; default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;" http-equiv="Content-Security-Policy"/>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>별자리 운세 - AI 운세 | doha.kr</title>
+<meta content="12개 별자리별 AI 운세. 오늘의 별자리 운세를 확인하고 행운의 조언을 받아보세요. AI 운세에서 제공하는 유용한 서비스를 이용해보세요. 심리테스트, 실용도구, AI 운세 등 다양한 콘텐츠를 무료로 즐기실 수 있습니다." name="description"/>
+<meta content="index, follow" name="robots"/>
+<meta content="doha.kr" name="author"/>
+<!-- Security Headers -->
+<meta content="nosniff" http-equiv="X-Content-Type-Options"/>
+<meta content="strict-origin-when-cross-origin" http-equiv="Referrer-Policy"/>
+<meta content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), accelerometer=(), gyroscope=()" http-equiv="Permissions-Policy"/>
+<!-- Open Graph -->
+<meta content="별자리 운세 | doha.kr" property="og:title"/>
+<meta content="12개 별자리별 AI 운세. 오늘의 별자리 운세를 확인하고 행운의 조언을 받아보세요." property="og:description"/>
+<meta content="https://doha.kr/images/egen-male-card.jpg" property="og:image"/>
+<meta content="https://doha.kr/fortune/zodiac/" property="og:url"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="True" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Google AdSense -->
+<!-- Moved to end of body -->
+<!-- Kakao JavaScript SDK -->
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js"></script>
+<!-- Optimized CSS System -->
+<link href="/css/styles.css?v=1753150228" rel="stylesheet"/>
+<link rel="stylesheet" href="/css/mobile-fixes.css">
+<link rel="stylesheet" href="/css/button-system.css">
+<link href="/css/pages/zodiac.css" rel="stylesheet"/>
 
-    <meta http-equiv="X-Content-Type-Options" content="nosniff">
-
-    <script id="performance-monitor">
+<script id="performance-monitor">
 
     window.addEventListener('load', function() {
         if (window.performance && window.performance.timing) {
@@ -46,117 +45,111 @@
     </script>
 </head>
 <body class="fortune-page">
-    <!-- 네비게이션 바 -->
-    <div id="navbar-placeholder"></div>
-    
-    <!-- 페이지 헤더 -->
-    <section class="page-header">
-        <div class="container">
-            <h1 class="page-title fade-in">별자리 운세</h1>
-            <p class="page-subtitle fade-in stagger-1">
+<!-- 네비게이션 바 -->
+<div id="navbar-placeholder"></div>
+<!-- 페이지 헤더 -->
+<section class="page-header">
+<div class="container">
+<h1 class="page-title fade-in">별자리 운세</h1>
+<p class="page-subtitle fade-in stagger-1">
                 12개 별자리별 AI 운세와 오늘의 조언
             </p>
-        </div>
-    </section>
-    
-    <!-- 별자리 선택 섹션 -->
-    <section class="zodiac-section">
-        <div class="container">
-            <div id="zodiacSelection" class="zodiac-selection">
-                <h2 style="text-align: center; margin-bottom: 40px;">당신의 별자리를 선택하세요</h2>
-                <div class="zodiac-grid">
-                    <div class="zodiac-card" onclick="selectZodiac('aries')">
-                        <div class="zodiac-symbol">♈</div>
-                        <div class="zodiac-name">양자리</div>
-                        <div class="zodiac-date">3.21 - 4.19</div>
-                    </div>
-                    <div class="zodiac-card" onclick="selectZodiac('taurus')">
-                        <div class="zodiac-symbol">♉</div>
-                        <div class="zodiac-name">황소자리</div>
-                        <div class="zodiac-date">4.20 - 5.20</div>
-                    </div>
-                    <div class="zodiac-card" onclick="selectZodiac('gemini')">
-                        <div class="zodiac-symbol">♊</div>
-                        <div class="zodiac-name">쌍둥이자리</div>
-                        <div class="zodiac-date">5.21 - 6.21</div>
-                    </div>
-                    <div class="zodiac-card" onclick="selectZodiac('cancer')">
-                        <div class="zodiac-symbol">♋</div>
-                        <div class="zodiac-name">게자리</div>
-                        <div class="zodiac-date">6.22 - 7.22</div>
-                    </div>
-                    <div class="zodiac-card" onclick="selectZodiac('leo')">
-                        <div class="zodiac-symbol">♌</div>
-                        <div class="zodiac-name">사자자리</div>
-                        <div class="zodiac-date">7.23 - 8.22</div>
-                    </div>
-                    <div class="zodiac-card" onclick="selectZodiac('virgo')">
-                        <div class="zodiac-symbol">♍</div>
-                        <div class="zodiac-name">처녀자리</div>
-                        <div class="zodiac-date">8.23 - 9.22</div>
-                    </div>
-                    <div class="zodiac-card" onclick="selectZodiac('libra')">
-                        <div class="zodiac-symbol">♎</div>
-                        <div class="zodiac-name">천칭자리</div>
-                        <div class="zodiac-date">9.23 - 10.22</div>
-                    </div>
-                    <div class="zodiac-card" onclick="selectZodiac('scorpio')">
-                        <div class="zodiac-symbol">♏</div>
-                        <div class="zodiac-name">전갈자리</div>
-                        <div class="zodiac-date">10.23 - 11.22</div>
-                    </div>
-                    <div class="zodiac-card" onclick="selectZodiac('sagittarius')">
-                        <div class="zodiac-symbol">♐</div>
-                        <div class="zodiac-name">사수자리</div>
-                        <div class="zodiac-date">11.23 - 12.21</div>
-                    </div>
-                    <div class="zodiac-card" onclick="selectZodiac('capricorn')">
-                        <div class="zodiac-symbol">♑</div>
-                        <div class="zodiac-name">염소자리</div>
-                        <div class="zodiac-date">12.22 - 1.19</div>
-                    </div>
-                    <div class="zodiac-card" onclick="selectZodiac('aquarius')">
-                        <div class="zodiac-symbol">♒</div>
-                        <div class="zodiac-name">물병자리</div>
-                        <div class="zodiac-date">1.20 - 2.18</div>
-                    </div>
-                    <div class="zodiac-card" onclick="selectZodiac('pisces')">
-                        <div class="zodiac-symbol">♓</div>
-                        <div class="zodiac-name">물고기자리</div>
-                        <div class="zodiac-date">2.19 - 3.20</div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- 운세 결과 영역 -->
-            <div id="zodiacResult" class="zodiac-result" style="display: none;">
-                <!-- 결과가 여기에 표시됩니다 -->
-            </div>
-        </div>
-    </section>
-    
-    <!-- 별자리 안내 섹션 -->
-    <section class="info-section">
-        <div class="container">
-            <div class="info-box">
-                <h3>별자리 운세 안내</h3>
-                <ul>
-                    <li>천체의 움직임과 AI 분석을 결합한 정확한 운세를 제공합니다.</li>
-                    <li>각 별자리별 특성에 맞는 맞춤형 조언을 받아보세요.</li>
-                    <li>오늘의 행운 색상, 숫자, 방향 등 구체적인 정보를 포함합니다.</li>
-                    <li>별자리 운세는 참고용이며, 긍정적인 마음가짐이 중요합니다.</li>
-                    <li>AI가 실제로 분석하여 개인화된 운세를 제공합니다.</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-    
-    <!-- 광고 영역 -->
-    <div class="ad-container">
-        <div class="ad-label">광고</div>
-        
+</div>
+</section>
+<!-- 별자리 선택 섹션 -->
+<section class="zodiac-section">
+<div class="container">
+<div class="zodiac-selection" id="zodiacSelection">
+<h2 style="text-align: center; margin-bottom: 40px;">당신의 별자리를 선택하세요</h2>
+<div class="zodiac-grid">
+<div class="zodiac-card" onclick="selectZodiac('aries')">
+<div class="zodiac-symbol">♈</div>
+<div class="zodiac-name">양자리</div>
+<div class="zodiac-date">3.21 - 4.19</div>
+</div>
+<div class="zodiac-card" onclick="selectZodiac('taurus')">
+<div class="zodiac-symbol">♉</div>
+<div class="zodiac-name">황소자리</div>
+<div class="zodiac-date">4.20 - 5.20</div>
+</div>
+<div class="zodiac-card" onclick="selectZodiac('gemini')">
+<div class="zodiac-symbol">♊</div>
+<div class="zodiac-name">쌍둥이자리</div>
+<div class="zodiac-date">5.21 - 6.21</div>
+</div>
+<div class="zodiac-card" onclick="selectZodiac('cancer')">
+<div class="zodiac-symbol">♋</div>
+<div class="zodiac-name">게자리</div>
+<div class="zodiac-date">6.22 - 7.22</div>
+</div>
+<div class="zodiac-card" onclick="selectZodiac('leo')">
+<div class="zodiac-symbol">♌</div>
+<div class="zodiac-name">사자자리</div>
+<div class="zodiac-date">7.23 - 8.22</div>
+</div>
+<div class="zodiac-card" onclick="selectZodiac('virgo')">
+<div class="zodiac-symbol">♍</div>
+<div class="zodiac-name">처녀자리</div>
+<div class="zodiac-date">8.23 - 9.22</div>
+</div>
+<div class="zodiac-card" onclick="selectZodiac('libra')">
+<div class="zodiac-symbol">♎</div>
+<div class="zodiac-name">천칭자리</div>
+<div class="zodiac-date">9.23 - 10.22</div>
+</div>
+<div class="zodiac-card" onclick="selectZodiac('scorpio')">
+<div class="zodiac-symbol">♏</div>
+<div class="zodiac-name">전갈자리</div>
+<div class="zodiac-date">10.23 - 11.22</div>
+</div>
+<div class="zodiac-card" onclick="selectZodiac('sagittarius')">
+<div class="zodiac-symbol">♐</div>
+<div class="zodiac-name">사수자리</div>
+<div class="zodiac-date">11.23 - 12.21</div>
+</div>
+<div class="zodiac-card" onclick="selectZodiac('capricorn')">
+<div class="zodiac-symbol">♑</div>
+<div class="zodiac-name">염소자리</div>
+<div class="zodiac-date">12.22 - 1.19</div>
+</div>
+<div class="zodiac-card" onclick="selectZodiac('aquarius')">
+<div class="zodiac-symbol">♒</div>
+<div class="zodiac-name">물병자리</div>
+<div class="zodiac-date">1.20 - 2.18</div>
+</div>
+<div class="zodiac-card" onclick="selectZodiac('pisces')">
+<div class="zodiac-symbol">♓</div>
+<div class="zodiac-name">물고기자리</div>
+<div class="zodiac-date">2.19 - 3.20</div>
+</div>
+</div>
+</div>
+<!-- 운세 결과 영역 -->
+<div class="zodiac-result" id="zodiacResult" style="display: none;">
+<!-- 결과가 여기에 표시됩니다 -->
+</div>
+</div>
+</section>
+<!-- 별자리 안내 섹션 -->
+<section class="info-section">
+<div class="container">
+<div class="info-box">
+<h3>별자리 운세 안내</h3>
+<ul>
+<li>천체의 움직임과 AI 분석을 결합한 정확한 운세를 제공합니다.</li>
+<li>각 별자리별 특성에 맞는 맞춤형 조언을 받아보세요.</li>
+<li>오늘의 행운 색상, 숫자, 방향 등 구체적인 정보를 포함합니다.</li>
+<li>별자리 운세는 참고용이며, 긍정적인 마음가짐이 중요합니다.</li>
+<li>AI가 실제로 분석하여 개인화된 운세를 제공합니다.</li>
+</ul>
+</div>
+</div>
+</section>
+<!-- 광고 영역 -->
+<div class="ad-container">
+<div class="ad-label">광고</div>
 <div id="ad-container-zn06v1879" style="min-height: 100px;">
-    <div class="ad-placeholder" style="display: flex; align-items: center; justify-content: center; background: #f5f5f5; min-height: 100px; color: #999;">
+<div class="ad-placeholder" style="display: flex; align-items: center; justify-content: center; background: #f5f5f5; min-height: 100px; color: #999;">
         광고 로딩 중...
     </div>
 </div>
@@ -187,17 +180,14 @@ if ('IntersectionObserver' in window) {
     }
 }
 </script>
-    </div>
-    
-    <!-- 푸터 -->
-    <div id="footer-placeholder"></div>
-    
-    <!-- External JavaScript -->
-    <script src="/js/api-config.js?v=1753150228"></script>
-    <script src="/js/main.js?v=1753150228"></script>
-    
-    <!-- 카카오 초기화 -->
-    <script>
+</div>
+<!-- 푸터 -->
+<div id="footer-placeholder"></div>
+<!-- External JavaScript -->
+<script src="/js/api-config.js?v=1753150228"></script>
+<script src="/js/main.js?v=1753150228"></script>
+<!-- 카카오 초기화 -->
+<script>
         if (typeof Kakao !== 'undefined' && window.API_CONFIG) {
             try {
                 if (!Kakao.isInitialized()) {
@@ -208,12 +198,7 @@ if ('IntersectionObserver' in window) {
             }
         }
     </script>
-    
-    
-    
-    
-    
-    <script>
+<script>
 
         const zodiacData = {
             aries: {
@@ -673,13 +658,8 @@ ${zodiac.name}의 특성과 2025년 을사년 에너지를 고려하여 구체�
             `;
         }
     </script>
-    
-    
-    <!-- AdSense initialization -->
-    
-
-    <!-- Non-critical scripts moved here for performance -->
-    
+<!-- AdSense initialization -->
+<!-- Non-critical scripts moved here for performance -->
 <!-- Google AdSense 지연 로딩 -->
 <script>
 
@@ -693,7 +673,6 @@ window.addEventListener('load', function() {
     }, 2000);
 });
 </script>
-
 <script>
 
 window.adsenseInitialized = window.adsenseInitialized || false;
@@ -723,7 +702,6 @@ window.addEventListener('load', function() {
     setTimeout(initializeAdSense, 1000);
 });
 </script>
-
 <script>
 
 (function() {
@@ -778,7 +756,6 @@ window.addEventListener('load', function() {
     }, true);
 })();
 </script>
-
 <!-- AdSense 통합 초기화 -->
 <script>
 (function() {
@@ -826,7 +803,17 @@ window.addEventListener('load', function() {
     }, true);
 })();
 </script>
-
+<!-- 카카오 초기화 -->
+<script>
+    if (typeof Kakao !== 'undefined' && window.KAKAO_API_KEY) {
+        if (!Kakao.isInitialized()) {
+            Kakao.init(window.KAKAO_API_KEY);
+            console.log('카카오 SDK 초기화 완료');
+        }
+    } else {
+        console.warn('카카오 SDK 또는 API 키를 찾을 수 없습니다.');
+    }
+</script>
 <script>
 // 네비게이션 및 푸터 로드 - main.js의 loadComponents가 실행되지 않은 경우를 위한 폴백
 document.addEventListener('DOMContentLoaded', function() {

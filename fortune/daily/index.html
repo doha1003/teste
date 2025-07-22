@@ -1,46 +1,43 @@
 <!DOCTYPE html>
+
 <html lang="ko">
 <head>
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>오늘의 운세 - 사주 기반 정확한 일일운세 | doha.kr</title>
-    <meta name="description" content="정확한 만세력 사주팔자를 기반으로 분석하는 오늘의 운세. 생년월일시를 입력하여 상세한 일일 운세를 확인하세요.">
-    <meta name="robots" content="index, follow">
-    <meta name="author" content="doha.kr">
-    
-    <!-- Security Headers -->
-    <meta http-equiv="X-Content-Type-Options" content="nosniff">
-    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
-    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), accelerometer=(), gyroscope=()">
-    
-    <!-- Open Graph -->
-    <meta property="og:title" content="오늘의 운세 - 사주 기반 일일운세 | doha.kr">
-    <meta property="og:description" content="만세력 기반 정확한 사주팔자로 보는 오늘의 운세">
-    <meta property="og:image" content="https://doha.kr/images/egen-male-card.jpg">
-    <meta property="og:url" content="https://doha.kr/fortune/daily/">
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" crossorigin href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Google AdSense -->
-    <!-- Moved to end of body -->
-    
-    <!-- 만세력 데이터 먼저 로드 -->
-    <script src="/js/manseryeok-database.js"></script>
-    <script src="/js/lunar-calendar-compact.js?v=1753150228"></script>
-    <script src="/js/saju-calculator.js"></script>
-    
-    <!-- Optimized CSS System -->
-    <link rel="stylesheet" href="/css/styles.css?v=1753150228">
-    <link rel="stylesheet" href="/css/pages/fortune-common.css">
-    <link rel="stylesheet" href="/css/layout-fixes.css">
+<meta content="upgrade-insecure-requests; default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;" http-equiv="Content-Security-Policy"/>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>오늘의 운세 - 사주 기반 정확한 일일운세 | doha.kr</title>
+<meta content="정확한 만세력 사주팔자를 기반으로 분석하는 오늘의 운세. 생년월일시를 입력하여 상세한 일일 운세를 확인하세요." name="description"/>
+<meta content="index, follow" name="robots"/>
+<meta content="doha.kr" name="author"/>
+<!-- Security Headers -->
+<meta content="nosniff" http-equiv="X-Content-Type-Options"/>
+<meta content="strict-origin-when-cross-origin" http-equiv="Referrer-Policy"/>
+<meta content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), accelerometer=(), gyroscope=()" http-equiv="Permissions-Policy"/>
+<!-- Open Graph -->
+<meta content="오늘의 운세 - 사주 기반 일일운세 | doha.kr" property="og:title"/>
+<meta content="만세력 기반 정확한 사주팔자로 보는 오늘의 운세" property="og:description"/>
+<meta content="https://doha.kr/images/egen-male-card.jpg" property="og:image"/>
+<meta content="https://doha.kr/fortune/daily/" property="og:url"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="True" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Google AdSense -->
+<!-- Moved to end of body -->
+<!-- Kakao JavaScript SDK -->
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js"></script>
+<!-- 만세력 데이터 먼저 로드 -->
+<script src="/js/manseryeok-database.js"></script>
+<script src="/js/lunar-calendar-compact.js?v=1753150228"></script>
+<script src="/js/saju-calculator.js"></script>
+<!-- Optimized CSS System -->
+<link href="/css/styles.css?v=1753150228" rel="stylesheet"/>
+<link rel="stylesheet" href="/css/mobile-fixes.css">
+<link rel="stylesheet" href="/css/button-system.css">
+<link href="/css/pages/fortune-common.css" rel="stylesheet"/>
+<link href="/css/layout-fixes.css" rel="stylesheet"/>
 
-    <meta http-equiv="X-Content-Type-Options" content="nosniff">
-
-    <script id="performance-monitor">
+<script id="performance-monitor">
 
     window.addEventListener('load', function() {
         if (window.performance && window.performance.timing) {
@@ -54,106 +51,95 @@
 </head>
 <body>
 <body class="fortune-page">
-    <!-- 네비게이션 바 -->
-    <div id="navbar-placeholder"></div>
-    
-    <!-- 페이지 헤더 -->
-    <section class="page-header">
-        <div class="container">
-            <h1 class="page-title fade-in">✨ 오늘의 운세</h1>
-            <p class="page-subtitle fade-in stagger-1">
+<!-- 네비게이션 바 -->
+<div id="navbar-placeholder"></div>
+<!-- 페이지 헤더 -->
+<section class="page-header">
+<div class="container">
+<h1 class="page-title fade-in">✨ 오늘의 운세</h1>
+<p class="page-subtitle fade-in stagger-1">
                 사주팔자 기반 정확한 일일 운세 분석
             </p>
-        </div>
-    </section>
-    
-    <!-- 운세 입력 폼 -->
-    <section class="fortune-section">
-        <div class="container">
-            <div class="fortune-form-container" id="fortuneForm">
-                <h2>당신의 정보를 입력해주세요</h2>
-                <form onsubmit="generateDailyFortune(event)">
-                    <div class="form-group">
-                        <label for="userName">이름</label>
-                        <input type="text" id="userName" name="userName" class="form-control" placeholder="홍길동" required>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="birthYear">생년</label>
-                            <select id="birthYear" name="birthYear" class="form-control" required>
-                                <option value="">연도 선택</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="birthMonth">생월</label>
-                            <select id="birthMonth" name="birthMonth" class="form-control" required>
-                                <option value="">월 선택</option>
-                                <option value="1">1월</option>
-                                <option value="2">2월</option>
-                                <option value="3">3월</option>
-                                <option value="4">4월</option>
-                                <option value="5">5월</option>
-                                <option value="6">6월</option>
-                                <option value="7">7월</option>
-                                <option value="8">8월</option>
-                                <option value="9">9월</option>
-                                <option value="10">10월</option>
-                                <option value="11">11월</option>
-                                <option value="12">12월</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="birthDay">생일</label>
-                            <select id="birthDay" name="birthDay" class="form-control" required>
-                                <option value="">일 선택</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="birthTime">출생시간</label>
-                        <select id="birthTime" name="birthTime" class="form-control">
-                            <option value="-1">모름</option>
-                            <option value="0">자시 (23:00-01:00)</option>
-                            <option value="2">축시 (01:00-03:00)</option>
-                            <option value="4">인시 (03:00-05:00)</option>
-                            <option value="6">묘시 (05:00-07:00)</option>
-                            <option value="8">진시 (07:00-09:00)</option>
-                            <option value="10">사시 (09:00-11:00)</option>
-                            <option value="12">오시 (11:00-13:00)</option>
-                            <option value="14">미시 (13:00-15:00)</option>
-                            <option value="16">신시 (15:00-17:00)</option>
-                            <option value="18">유시 (17:00-19:00)</option>
-                            <option value="20">술시 (19:00-21:00)</option>
-                            <option value="22">해시 (21:00-23:00)</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-check">
-                        <input type="checkbox" id="isLunar" name="isLunar">
-                        <label for="isLunar">음력 생일입니다</label>
-                    </div>
-                    
-                    <button type="submit" class="btn-submit">오늘의 운세 보기</button>
-                </form>
-            </div>
-            
-            <!-- 운세 결과 -->
-            <div id="fortuneResult" style="display: none;">
-                <!-- 결과가 여기에 표시됩니다 -->
-            </div>
-        </div>
-    </section>
-    
-    <!-- 광고 영역 -->
-    <div class="ad-container">
-        <div class="ad-label">광고</div>
-        
+</div>
+</section>
+<!-- 운세 입력 폼 -->
+<section class="fortune-section">
+<div class="container">
+<div class="fortune-form-container" id="fortuneForm">
+<h2>당신의 정보를 입력해주세요</h2>
+<form onsubmit="generateDailyFortune(event)">
+<div class="form-group">
+<label for="userName">이름</label>
+<input class="form-control" id="userName" name="userName" placeholder="홍길동" required="" type="text"/>
+</div>
+<div class="form-row">
+<div class="form-group">
+<label for="birthYear">생년</label>
+<select class="form-control" id="birthYear" name="birthYear" required="">
+<option value="">연도 선택</option>
+</select>
+</div>
+<div class="form-group">
+<label for="birthMonth">생월</label>
+<select class="form-control" id="birthMonth" name="birthMonth" required="">
+<option value="">월 선택</option>
+<option value="1">1월</option>
+<option value="2">2월</option>
+<option value="3">3월</option>
+<option value="4">4월</option>
+<option value="5">5월</option>
+<option value="6">6월</option>
+<option value="7">7월</option>
+<option value="8">8월</option>
+<option value="9">9월</option>
+<option value="10">10월</option>
+<option value="11">11월</option>
+<option value="12">12월</option>
+</select>
+</div>
+<div class="form-group">
+<label for="birthDay">생일</label>
+<select class="form-control" id="birthDay" name="birthDay" required="">
+<option value="">일 선택</option>
+</select>
+</div>
+</div>
+<div class="form-group">
+<label for="birthTime">출생시간</label>
+<select class="form-control" id="birthTime" name="birthTime">
+<option value="-1">모름</option>
+<option value="0">자시 (23:00-01:00)</option>
+<option value="2">축시 (01:00-03:00)</option>
+<option value="4">인시 (03:00-05:00)</option>
+<option value="6">묘시 (05:00-07:00)</option>
+<option value="8">진시 (07:00-09:00)</option>
+<option value="10">사시 (09:00-11:00)</option>
+<option value="12">오시 (11:00-13:00)</option>
+<option value="14">미시 (13:00-15:00)</option>
+<option value="16">신시 (15:00-17:00)</option>
+<option value="18">유시 (17:00-19:00)</option>
+<option value="20">술시 (19:00-21:00)</option>
+<option value="22">해시 (21:00-23:00)</option>
+</select>
+</div>
+<div class="form-check">
+<input id="isLunar" name="isLunar" type="checkbox"/>
+<label for="isLunar">음력 생일입니다</label>
+</div>
+<button class="btn-submit" type="submit">오늘의 운세 보기</button>
+</form>
+</div>
+<!-- 운세 결과 -->
+<div id="fortuneResult" style="display: none;">
+<!-- 결과가 여기에 표시됩니다 -->
+</div>
+</div>
+</section>
+<!-- 광고 영역 -->
+<div class="ad-container">
+<div class="ad-label">광고</div>
 <div id="ad-container-bcswbbp8s" style="min-height: 100px;">
-    <div class="ad-placeholder" style="display: flex; align-items: center; justify-content: center; background: #f5f5f5; min-height: 100px; color: #999;">
+<div class="ad-placeholder" style="display: flex; align-items: center; justify-content: center; background: #f5f5f5; min-height: 100px; color: #999;">
         광고 로딩 중...
     </div>
 </div>
@@ -184,16 +170,13 @@ if ('IntersectionObserver' in window) {
     }
 }
 </script>
-    </div>
-    
-    <!-- 푸터 -->
-    <div id="footer-placeholder"></div>
-    
-    <!-- External JavaScript -->
-    <script src="/js/main.js?v=1753150228"></script>
-    <script src="/js/api-config.js?v=1753150228"></script>
-    
-    <script>
+</div>
+<!-- 푸터 -->
+<div id="footer-placeholder"></div>
+<!-- External JavaScript -->
+<script src="/js/main.js?v=1753150228"></script>
+<script src="/js/api-config.js?v=1753150228"></script>
+<script>
 
         document.addEventListener('DOMContentLoaded', function() {
 
@@ -923,8 +906,7 @@ if ('IntersectionObserver' in window) {
             };
         }
     <!-- Kakao SDK -->
-    
-    <script>
+<script>
 
         if (window.API_CONFIG && window.API_CONFIG.KAKAO_JS_KEY) {
     if (window.Kakao && !window.Kakao.isInitialized()) {
@@ -932,12 +914,8 @@ if ('IntersectionObserver' in window) {
     }
 }
     </script>
-    
-    <!-- AdSense initialization -->
-    
-
-    <!-- Non-critical scripts moved here for performance -->
-    
+<!-- AdSense initialization -->
+<!-- Non-critical scripts moved here for performance -->
 <!-- Google AdSense 지연 로딩 -->
 <script>
 
@@ -951,7 +929,6 @@ window.addEventListener('load', function() {
     }, 2000);
 });
 </script>
-
 <script>
 
 window.adsenseInitialized = window.adsenseInitialized || false;
@@ -981,7 +958,6 @@ window.addEventListener('load', function() {
     setTimeout(initializeAdSense, 1000);
 });
 </script>
-
 <script>
 
 (function() {
@@ -1036,7 +1012,6 @@ window.addEventListener('load', function() {
     }, true);
 })();
 </script>
-
 <!-- AdSense 통합 초기화 -->
 <script>
 (function() {
@@ -1084,7 +1059,17 @@ window.addEventListener('load', function() {
     }, true);
 })();
 </script>
-
+<!-- 카카오 초기화 -->
+<script>
+    if (typeof Kakao !== 'undefined' && window.KAKAO_API_KEY) {
+        if (!Kakao.isInitialized()) {
+            Kakao.init(window.KAKAO_API_KEY);
+            console.log('카카오 SDK 초기화 완료');
+        }
+    } else {
+        console.warn('카카오 SDK 또는 API 키를 찾을 수 없습니다.');
+    }
+</script>
 <script>
 // 네비게이션 및 푸터 로드 - main.js의 loadComponents가 실행되지 않은 경우를 위한 폴백
 document.addEventListener('DOMContentLoaded', function() {
@@ -1106,4 +1091,4 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 </body>
-</html>
+</body></html>

@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta content="upgrade-insecure-requests; default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;" http-equiv="Content-Security-Policy"/>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>글자수 세기 - 자소서, 리포트 글자수 계산기 | doha.kr</title>
+<meta content="자기소개서, 리포트, 논문 작성 시 필수! 공백 포함/제외, 바이트 계산, 원고지 환산까지 한번에 확인하세요. 실시간으로 글자수를 계산하여 정확한 통계를 제공합니다. 한글, 영문, 숫자, 특수문자를 구분하여 세부적인 분석이 가능하며, 200자 원고지 기준 환산 기능도 지원합니다. 대학 입시 자소서, 취업 지원서, 공모전 응모작, SNS 게시물 작성 시 글자수 제한을 쉽게 확인할 수 있습니다. 단어수, 문장수, 문단수까지 종합적인 텍스트 분석 도구로 활용하세요. 무료로 제공되며 회원가입 없이 바로 사용 가능합니다." name="description"/>
+<meta content="글자수세기, 글자수계산기, 자소서글자수, 문자수세기, 바이트계산, 원고지계산" name="keywords"/>
+<meta content="index, follow" name="robots"/>
+<meta content="doha.kr" name="author"/>
+<!-- Security Headers -->
+<meta content="nosniff" http-equiv="X-Content-Type-Options"/>
+<meta content="strict-origin-when-cross-origin" http-equiv="Referrer-Policy"/>
+<meta content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), accelerometer=(), gyroscope=()" http-equiv="Permissions-Policy"/>
+<!-- Open Graph -->
+<meta content="글자수 세기 - 정확한 글자수 계산기" property="og:title"/>
+<meta content="공백 포함/제외, 바이트, 원고지 환산까지 모든 글자수 정보를 한눈에!" property="og:description"/>
+<meta content="https://doha.kr/images/egen-male-card.jpg" property="og:image"/>
+<meta content="https://doha.kr/tools/text-counter.html" property="og:url"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="True" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- External CSS -->
+<link href="/css/styles.css?v=1753150228" rel="stylesheet"/>
+<link href="/css/pages/text-counter.css" rel="stylesheet"/>
+<!-- Favicon -->
+<link href="/images/placeholder-favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="/images/logo.svg" rel="apple-touch-icon"/>
+<link href="/manifest.json" rel="manifest"/>
+<!-- Content Security Policy --><!-- DOMPurify for XSS protection -->
+<!-- Google AdSense -->
+<!-- Moved to end of body -->
+<!-- Kakao JavaScript SDK -->
+<!-- Structured Data -->
+<script type="application/ld+json">
+    [
+        {
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            "name": "글자수 세기",
+            "alternateName": "글자수 계산기",
+            "url": "https://doha.kr/tools/text-counter.html",
+            "description": "자기소개서, 리포트, 논문 작성 시 필수! 공백 포함/제외, 바이트 계산, 원고지 환산까지 한번에 확인하세요.",
+            "applicationCategory": "UtilityApplication",
+            "operatingSystem": "Any",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "KRW"
+            },
+            "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.9",
+                "ratingCount": "5230"
+            },
+            "featureList": [
+                "실시간 글자수 카운팅",
+                "공백 포함/제외 선택",
+                "단어수 및 문단수 표시",
+                "바이트 수 계산",
+                "원고지 환산"
+            ]
+        },
+        {
+            "@context": "https://schema.org",
+            "@type": "HowTo",
+            "name": "글자수 세기 도구 사용법",
+            "description": "텍스트 글자수를 정확하게 계산하는 방법",
+            "totalTime": "PT2M",
+            "estimatedCost": {
+                "@type": "MonetaryAmount",
+                "currency": "KRW",
+                "value": "0"
+            },
+            "step": [
+                {
+                    "@type": "HowToStep",
+                    "name": "텍스트 입력",
+                    "text": "글자수를 세고 싶은 텍스트를 입력창에 붙여넣거나 직접 입력하세요.",
+                    "position": 1
+                },
+                {
+                    "@type": "HowToStep",
+                    "name": "옵션 설정",
+                    "text": "공백 포함/제외, 바이트 표시, 원고지 환산 등 원하는 옵션을 선택하세요.",
+                    "position": 2
+                },
+                {
+                    "@type": "HowToStep",
+                    "name": "결과 확인",
+                    "text": "실시간으로 계산된 글자수, 단어수, 문장수 등의 통계를 확인하세요.",
+                    "position": 3
+                }
+            ]
+        }
+    ]
+    </script>
+<!-- Optimized CSS System -->
+
+<script id="performance-monitor">
+
+    window.addEventListener('load', function() {
+        if (window.performance && window.performance.timing) {
+            const loadTime = window.performance.timing.loadEventEnd - window.performance.timing.navigationStart;
+            if (loadTime > 5000) {
+                console.warn('Page loading is slow:', loadTime + 'ms');
+            }
+        }
+    });
+    </script>
+</head>
+<body>
+<!-- 네비게이션 바 -->
+<div id="navbar-placeholder"></div>
+<!-- 헤더 -->
+<header class="header">
+<div class="header-content">
+<h1 class="header-title">글자수 세기</h1>
+<p class="header-subtitle">
+                자기소개서, 리포트, 논문 작성 시 필수!<br/>
+                공백 포함/제외, 바이트 계산, 원고지 환산까지 한번에 확인하세요.
+            </p>
+</div>
+</header>
+<!-- 메인 컨테이너 -->
+<div class="main-container">
+<!-- 도구 섹션 -->
+<div class="tool-section">
+<!-- 텍스트 입력 영역 -->
+<div class="text-input-wrapper">
+<textarea aria-label="텍스트 입력 영역" class="text-input" id="textInput" maxlength="100000" oninput="handleTextInput()" placeholder="여기에 텍스트를 입력하거나 붙여넣으세요.
+
+자기소개서, 리포트, 논문, SNS 글 등 어떤 텍스트든 정확하게 글자수를 계산해드립니다.
+
+실시간으로 계산되므로 입력하는 즉시 결과를 확인할 수 있습니다."></textarea>
+</div>
+<!-- 버튼 영역 - 텍스트 영역과 분리 -->
+<div class="text-counter-controls">
+<button class="control-btn" onclick="clearText()">
+<span>🗑️</span> 지우기
+                </button>
+<button class="control-btn" onclick="copyText()">
+<span>📋</span> 복사
+                </button>
+<button class="control-btn primary" onclick="pasteText()">
+<span>📄</span> 붙여넣기
+                </button>
+</div>
+<!-- 설정 패널 -->
+<div class="settings-panel">
+<h3 class="settings-title">계산 옵션</h3>
+<div class="settings-grid">
+<div class="setting-item">
+<input checked="" class="setting-checkbox" id="includeSpaces" onchange="updateCount()" type="checkbox"/>
+<label class="setting-label" for="includeSpaces">공백 포함</label>
+</div>
+<div class="setting-item">
+<input checked="" class="setting-checkbox" id="includeNewlines" onchange="updateCount()" type="checkbox"/>
+<label class="setting-label" for="includeNewlines">줄바꿈 포함</label>
+</div>
+<div class="setting-item">
+<input checked="" class="setting-checkbox" id="showBytes" onchange="updateCount()" type="checkbox"/>
+<label class="setting-label" for="showBytes">바이트 표시</label>
+</div>
+<div class="setting-item">
+<input checked="" class="setting-checkbox" id="showManuscript" onchange="updateCount()" type="checkbox"/>
+<label class="setting-label" for="showManuscript">원고지 환산</label>
+</div>
+</div>
+</div>
+<!-- 결과 표시 -->
+<div class="results-grid">
+<div class="result-card">
+<span class="result-icon">📝</span>
+<div class="result-label">전체 글자수</div>
+<div class="result-value">
+<span id="totalChars">0</span>
+<span class="result-unit">자</span>
+</div>
+</div>
+<div class="result-card">
+<span class="result-icon">📄</span>
+<div class="result-label">공백 제외</div>
+<div class="result-value">
+<span id="charsNoSpaces">0</span>
+<span class="result-unit">자</span>
+</div>
+</div>
+<div class="result-card">
+<span class="result-icon">💾</span>
+<div class="result-label">바이트</div>
+<div class="result-value">
+<span id="bytes">0</span>
+<span class="result-unit">byte</span>
+</div>
+</div>
+<div class="result-card">
+<span class="result-icon">📰</span>
+<div class="result-label">원고지</div>
+<div class="result-value">
+<span id="manuscript">0</span>
+<span class="result-unit">매</span>
+</div>
+</div>
+<div class="result-card">
+<span class="result-icon">🔤</span>
+<div class="result-label">단어수</div>
+<div class="result-value">
+<span id="words">0</span>
+<span class="result-unit">개</span>
+</div>
+</div>
+<div class="result-card">
+<span class="result-icon">📊</span>
+<div class="result-label">문장수</div>
+<div class="result-value">
+<span id="sentences">0</span>
+<span class="result-unit">개</span>
+</div>
+</div>
+</div>
+<!-- 상세 정보 테이블 -->
+<table class="detail-table">
+<thead>
+<tr>
+<th>구분</th>
+<th>개수</th>
+<th>비고</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>한글</td>
+<td id="koreanCount">0</td>
+<td>한글 문자만 계산</td>
+</tr>
+<tr>
+<td>영문</td>
+<td id="englishCount">0</td>
+<td>알파벳 대소문자 포함</td>
+</tr>
+<tr>
+<td>숫자</td>
+<td id="numberCount">0</td>
+<td>0-9 숫자</td>
+</tr>
+<tr>
+<td>공백</td>
+<td id="spaceCount">0</td>
+<td>스페이스, 탭 포함</td>
+</tr>
+<tr>
+<td>특수문자</td>
+<td id="specialCount">0</td>
+<td>구두점 및 기호</td>
+</tr>
+<tr>
+<td>줄바꿈</td>
+<td id="newlineCount">0</td>
+<td>엔터키로 구분된 줄</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- 광고 영역 -->
+<div class="ad-container">
+<div aria-label="광고 영역" class="ad-label">광고</div>
+<div id="ad-container-9kfjod5na" style="min-height: 100px;">
+<div class="ad-placeholder" style="display: flex; align-items: center; justify-content: center; background: #f5f5f5; min-height: 100px; color: #999;">
+        광고 로딩 중...
+    </div>
+</div>
+<script>
+
+if ('IntersectionObserver' in window) {
+    const adObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                const container = entry.target;
+                container.innerHTML = `<ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-7905640648499222"
+                 data-ad-slot="8912541604"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>`;
+                if (typeof adsbygoogle !== 'undefined') {
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                }
+                adObserver.unobserve(container);
+            }
+        });
+    }, { rootMargin: '50px' });
+    
+    const adContainer = document.getElementById('ad-container-9kfjod5na');
+    if (adContainer) {
+        adObserver.observe(adContainer);
+    }
+}
+</script>
+</div>
+<!-- 가이드 섹션 -->
+<div class="guide-section">
+<h2 class="guide-title">사용 가이드</h2>
+<div class="guide-content">
+<h3 style="font-size: 20px; margin-bottom: 16px; color: var(--gray-800);">주요 기능</h3>
+<ul class="guide-list">
+<li><strong>실시간 계산</strong>: 텍스트를 입력하는 즉시 모든 통계가 자동으로 계산됩니다.</li>
+<li><strong>다양한 통계</strong>: 글자수, 바이트, 단어수, 문장수 등 필요한 모든 정보를 제공합니다.</li>
+<li><strong>원고지 환산</strong>: 200자 원고지 기준으로 몇 매인지 자동 계산됩니다.</li>
+<li><strong>문자 유형 분석</strong>: 한글, 영문, 숫자, 특수문자를 구분하여 표시합니다.</li>
+<li><strong>편리한 기능</strong>: 복사, 붙여넣기, 지우기 버튼으로 쉽게 작업할 수 있습니다.</li>
+</ul>
+<h3 style="font-size: 20px; margin: 32px 0 16px; color: var(--gray-800);">활용 예시</h3>
+<ul class="guide-list">
+<li><strong>자기소개서 작성</strong>: 대학 입시나 취업 지원 시 글자수 제한 확인</li>
+<li><strong>SNS 게시물</strong>: 트위터, 인스타그램 등의 글자수 제한 체크</li>
+<li><strong>리포트/논문</strong>: 과제 분량 확인 및 원고지 매수 계산</li>
+<li><strong>번역 작업</strong>: 원문과 번역문의 글자수 비교</li>
+<li><strong>웹 콘텐츠</strong>: SEO를 위한 적정 글자수 확인</li>
+</ul>
+<h3 style="font-size: 20px; margin: 32px 0 16px; color: var(--gray-800);">바이트 계산 기준</h3>
+<p style="margin-bottom: 16px;">
+                    바이트는 문자의 종류에 따라 다르게 계산됩니다:
+                </p>
+<ul class="guide-list">
+<li><strong>영문, 숫자, 특수문자</strong>: 1바이트</li>
+<li><strong>한글</strong>: 2-3바이트 (UTF-8 기준)</li>
+<li><strong>이모지</strong>: 4바이트</li>
+</ul>
+</div>
+</div>
+<!-- FAQ 섹션 -->
+<div class="faq-section">
+<h2 class="faq-title">자주 묻는 질문</h2>
+<div class="faq-item">
+<button aria-controls="faq-answer-1" aria-expanded="false" class="faq-question">
+                    공백 포함과 공백 제외의 차이는 무엇인가요?
+                    <span class="faq-arrow">▼</span>
+</button>
+<div class="faq-answer" id="faq-answer-1">
+                    공백 포함은 스페이스바로 입력한 모든 공백을 글자수에 포함하여 계산합니다. 
+                    공백 제외는 순수한 문자(한글, 영문, 숫자, 특수문자)만 계산합니다. 
+                    일반적으로 자기소개서는 공백 포함, 논문은 공백 제외로 계산하는 경우가 많습니다.
+                </div>
+</div>
+<div class="faq-item">
+<button aria-controls="faq-answer-2" aria-expanded="false" class="faq-question">
+                    원고지 매수는 어떻게 계산되나요?
+                    <span class="faq-arrow">▼</span>
+</button>
+<div class="faq-answer" id="faq-answer-2">
+                    한국에서 표준으로 사용하는 200자 원고지를 기준으로 계산합니다. 
+                    공백을 포함한 전체 글자수를 200으로 나누어 표시합니다. 
+                    예를 들어, 1,000자는 5매가 됩니다.
+                </div>
+</div>
+<div class="faq-item">
+<button aria-controls="faq-answer-3" aria-expanded="false" class="faq-question">
+                    바이트 계산이 중요한 이유는 무엇인가요?
+                    <span class="faq-arrow">▼</span>
+</button>
+<div class="faq-answer" id="faq-answer-3">
+                    데이터베이스나 웹 폼에서는 글자수가 아닌 바이트 단위로 제한을 두는 경우가 많습니다. 
+                    특히 한글은 영문보다 2-3배 많은 바이트를 차지하므로, 
+                    시스템의 제한사항을 확인할 때 바이트 계산이 필요합니다.
+                </div>
+</div>
+<div class="faq-item">
+<button aria-controls="faq-answer-4" aria-expanded="false" class="faq-question">
+                    단어수는 어떻게 계산하나요?
+                    <span class="faq-arrow">▼</span>
+</button>
+<div class="faq-answer" id="faq-answer-4">
+                    공백이나 특수문자로 구분된 문자 그룹을 하나의 단어로 계산합니다. 
+                    한글의 경우 띄어쓰기 단위로, 영문의 경우 스페이스로 구분된 단위로 계산됩니다. 
+                    예: "안녕하세요 Hello World"는 3개의 단어입니다.
+                </div>
+</div>
+<div class="faq-item">
+<button aria-controls="faq-answer-5" aria-expanded="false" class="faq-question">
+                    이 도구는 무료인가요?
+                    <span class="faq-arrow">▼</span>
+</button>
+<div class="faq-answer" id="faq-answer-5">
+                    네, 완전 무료입니다. 회원가입이나 로그인 없이 누구나 자유롭게 사용할 수 있습니다. 
+                    사용 횟수 제한도 없으며, 모든 기능을 무제한으로 이용하실 수 있습니다.
+                </div>
+</div>
+</div>
+</div>
+<!-- 푸터 -->
+<div id="footer-placeholder"></div>
+<!-- External JavaScript -->
+<script src="/js/api-config.js?v=1753150228"></script>
+<script src="/js/main.js?v=1753150228"></script>
+<!-- Kakao SDK Initialization -->
+<script>
+        try {
+            if (typeof Kakao !== 'undefined' && window.API_CONFIG && window.API_CONFIG.KAKAO_APP_KEY) {
+                if (!Kakao.isInitialized()) {
+                    Kakao.init(window.API_CONFIG.KAKAO_APP_KEY);
+                    console.log('Kakao SDK initialized successfully');
+                }
+            }
+        } catch (error) {
+            console.warn('Kakao SDK initialization failed:', error);
+        }
+    </script>
+<!-- AdSense initialization -->
+<script>
+
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+<!-- Text Counter JavaScript -->
+<script>
+
+        let debounceTimer;
+
+        function validateInput(text) {
+
+            if (text.length > 100000) {
+                return text.substring(0, 100000);
+            }
+
+            return DOMPurify.sanitize(text, { ALLOWED_TAGS: [] });
+        }
+
+        function escapeHtml(unsafe) {
+            return unsafe
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        function handleTextInput() {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => {
+                updateCount();
+            }, 100); // 100ms 디바운스
+        }
+
+        function updateCount() {
+            const textInput = document.getElementById('textInput');
+            let text = textInput.value;
+
+            text = validateInput(text);
+            if (text !== textInput.value) {
+                textInput.value = text;
+            }
+
+            const totalChars = text.length;
+            const charsNoSpaces = text.replace(/\s/g, '').length;
+            const bytes = new Blob([text]).size;
+            const manuscript = Math.ceil(totalChars / 200);
+            const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+            const sentences = text.trim() ? text.split(/[.!?]+/).filter(s => s.trim().length > 0).length : 0;
+
+            const koreanCount = (text.match(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g) || []).length;
+            const englishCount = (text.match(/[a-zA-Z]/g) || []).length;
+            const numberCount = (text.match(/[0-9]/g) || []).length;
+            const spaceCount = (text.match(/\s/g) || []).length;
+            const specialCount = totalChars - koreanCount - englishCount - numberCount - spaceCount;
+            const newlineCount = (text.match(/\n/g) || []).length;
+
+            document.getElementById('totalChars').textContent = totalChars.toLocaleString();
+            document.getElementById('charsNoSpaces').textContent = charsNoSpaces.toLocaleString();
+            document.getElementById('bytes').textContent = bytes.toLocaleString();
+            document.getElementById('manuscript').textContent = manuscript.toLocaleString();
+            document.getElementById('words').textContent = words.toLocaleString();
+            document.getElementById('sentences').textContent = sentences.toLocaleString();
+
+            document.getElementById('koreanCount').textContent = koreanCount.toLocaleString();
+            document.getElementById('englishCount').textContent = englishCount.toLocaleString();
+            document.getElementById('numberCount').textContent = numberCount.toLocaleString();
+            document.getElementById('spaceCount').textContent = spaceCount.toLocaleString();
+            document.getElementById('specialCount').textContent = specialCount.toLocaleString();
+            document.getElementById('newlineCount').textContent = newlineCount.toLocaleString();
+        }
+
+        function clearText() {
+            if (confirm('입력한 텍스트를 모두 지우시겠습니까?')) {
+                document.getElementById('textInput').value = '';
+                updateCount();
+            }
+        }
+        
+        function copyText() {
+            const textInput = document.getElementById('textInput');
+            textInput.select();
+            document.execCommand('copy');
+            alert('텍스트가 복사되었습니다!');
+        }
+        
+        async function pasteText() {
+            try {
+                const text = await navigator.clipboard.readText();
+                const validatedText = validateInput(text);
+                document.getElementById('textInput').value = validatedText;
+                updateCount();
+                if (text.length > 100000) {
+                    alert('텍스트가 100,000자를 초과하여 잘렸습니다.');
+                }
+            } catch (err) {
+                alert('클립보드에서 텍스트를 가져올 수 없습니다. 브라우저 권한을 확인해주세요.');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                question.addEventListener('click', function() {
+                    const isActive = item.classList.contains('active');
+
+                    faqItems.forEach(otherItem => {
+                        otherItem.classList.remove('active');
+                        const otherQuestion = otherItem.querySelector('.faq-question');
+                        if (otherQuestion) {
+                            otherQuestion.setAttribute('aria-expanded', 'false');
+                        }
+                    });
+
+                    if (!isActive) {
+                        item.classList.add('active');
+                        question.setAttribute('aria-expanded', 'true');
+                    } else {
+                        question.setAttribute('aria-expanded', 'false');
+                    }
+                });
+            });
+
+            updateCount();
+        });
+    </script>
+<!-- Non-critical scripts moved here for performance -->
+<!-- Google AdSense 지연 로딩 -->
+<script>
+
+window.addEventListener('load', function() {
+    setTimeout(function() {
+        var adsScript = document.createElement('script');
+        adsScript.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222';
+        adsScript.crossOrigin = 'anonymous';
+        adsScript.defer = true;
+        document.head.appendChild(adsScript);
+    }, 2000);
+});
+</script>
+<script>
+
+window.adsenseInitialized = window.adsenseInitialized || false;
+
+function initializeAdSense() {
+    if (window.adsenseInitialized) {
+        console.log('AdSense already initialized');
+        return;
+    }
+    
+    window.adsenseInitialized = true;
+
+    const adBlocks = document.querySelectorAll('.adsbygoogle');
+    adBlocks.forEach((ad, index) => {
+        if (!ad.dataset.adsbygoogleStatus) {
+            try {
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                console.log('AdSense block initialized:', index);
+            } catch (error) {
+                console.warn('AdSense initialization error:', error);
+            }
+        }
+    });
+}
+
+window.addEventListener('load', function() {
+    setTimeout(initializeAdSense, 1000);
+});
+</script>
+<script>
+
+(function() {
+    'use strict';
+
+    window.__adsenseLoaded = window.__adsenseLoaded || false;
+    window.__adsenseQueue = window.__adsenseQueue || [];
+    
+    function initAdsense() {
+        if (window.__adsenseLoaded) return;
+        
+        const ads = document.querySelectorAll('.adsbygoogle:not([data-adsbygoogle-status])');
+        
+        if (ads.length === 0) return;
+
+        if (typeof adsbygoogle === 'undefined') {
+            setTimeout(initAdsense, 500);
+            return;
+        }
+        
+        window.__adsenseLoaded = true;
+
+        ads.forEach((ad, index) => {
+            try {
+
+                if (ad.getAttribute('data-adsbygoogle-status')) return;
+
+                (adsbygoogle = window.adsbygoogle || []).push({});
+
+                ad.setAttribute('data-adsbygoogle-status', 'done');
+                
+            } catch (e) {
+                console.warn('AdSense 초기화 실패:', index, e.message);
+            }
+        });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(initAdsense, 1000);
+        });
+    } else {
+        setTimeout(initAdsense, 1000);
+    }
+
+    window.addEventListener('error', function(e) {
+        if (e.message && e.message.includes('adsbygoogle.push() error')) {
+            e.preventDefault();
+            console.warn('AdSense 중복 초기화 방지됨');
+            return false;
+        }
+    }, true);
+})();
+</script>
+<!-- AdSense 중복 방지 최종 버전 -->
+<script>
+(function() {
+    'use strict';
+
+    if (window.__adsenseFullyInitialized) return;
+    window.__adsenseFullyInitialized = true;
+
+    let originalPush = null;
+
+    function safeInitAds() {
+        const ads = document.querySelectorAll('.adsbygoogle');
+        
+        if (ads.length === 0) return;
+
+        if (typeof adsbygoogle === 'undefined') {
+            setTimeout(safeInitAds, 200);
+            return;
+        }
+
+        if (!originalPush && window.adsbygoogle && window.adsbygoogle.push) {
+            originalPush = window.adsbygoogle.push;
+            
+            window.adsbygoogle.push = function(config) {
+                try {
+
+                    const hasAds = Array.from(document.querySelectorAll('.adsbygoogle')).every(el => 
+                        el.getAttribute('data-adsbygoogle-status') === 'done'
+                    );
+                    
+                    if (hasAds) {
+                        console.log('모든 광고 슬롯이 이미 채워짐');
+                        return;
+                    }
+
+                    return originalPush.call(this, config);
+                } catch (e) {
+                    console.warn('AdSense push 차단됨:', e.message);
+                }
+            };
+        }
+
+        let initialized = 0;
+        ads.forEach((ad) => {
+            if (!ad.getAttribute('data-adsbygoogle-status')) {
+                try {
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                    initialized++;
+                } catch (e) {
+
+                }
+            }
+        });
+        
+        console.log('AdSense 초기화 완료:', initialized, '개 슬롯');
+    }
+
+    const errorHandler = function(e) {
+        if (e.message && e.message.includes('adsbygoogle.push() error')) {
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            return false;
+        }
+    };
+
+    window.addEventListener('error', errorHandler, true);
+
+    window.addEventListener('unhandledrejection', function(e) {
+        if (e.reason && e.reason.message && e.reason.message.includes('adsbygoogle')) {
+            e.preventDefault();
+            return false;
+        }
+    });
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(safeInitAds, 1000);
+        });
+    } else {
+        setTimeout(safeInitAds, 1000);
+    }
+})();
+</script>
+<script>
+// 네비게이션 및 푸터 로드 - main.js의 loadComponents가 실행되지 않은 경우를 위한 폴백
+document.addEventListener('DOMContentLoaded', function() {
+    // main.js가 로드되었고 loadComponents 함수가 있는지 확인
+    if (typeof loadComponents === 'function') {
+        // main.js의 DOMContentLoaded가 이미 실행되었을 수 있으므로 
+        // navbar-placeholder가 비어있으면 다시 실행
+        const navPlaceholder = document.getElementById('navbar-placeholder');
+        const footerPlaceholder = document.getElementById('footer-placeholder');
+        
+        if ((navPlaceholder && !navPlaceholder.innerHTML.trim()) || 
+            (footerPlaceholder && !footerPlaceholder.innerHTML.trim())) {
+            console.log('Loading components...');
+            loadComponents().catch(function(error) {
+                console.error('Failed to load components:', error);
+            });
+        }
+    }
+});
+</script>
+</body>
+</html>

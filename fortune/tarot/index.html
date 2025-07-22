@@ -1,39 +1,38 @@
 <!DOCTYPE html>
+
 <html lang="ko">
 <head>
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI 타로 리딩 - AI 운세 | doha.kr</title>
-    <meta name="description" content="질문을 입력하면 AI가 타로 카드를 뽑아 심층적인 해석을 제공합니다.">
-    <meta name="robots" content="index, follow">
-    <meta name="author" content="doha.kr">
-    
-    <!-- Security Headers -->
-    <meta http-equiv="X-Content-Type-Options" content="nosniff">
-    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
-    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), accelerometer=(), gyroscope=()">
-    
-    <!-- Open Graph -->
-    <meta property="og:title" content="AI 타로 리딩 | doha.kr">
-    <meta property="og:description" content="질문을 입력하면 AI가 타로 카드를 뽑아 심층적인 해석을 제공합니다.">
-    <meta property="og:image" content="https://doha.kr/images/egen-male-card.jpg">
-    <meta property="og:url" content="https://doha.kr/fortune/tarot/">
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" crossorigin href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Google AdSense -->
-    <!-- Moved to end of body -->
-    <!-- Optimized CSS System -->
-    <link rel="stylesheet" href="/css/styles.css?v=1753150228">
-    <link rel="stylesheet" href="/css/pages/tarot.css">
+<meta content="upgrade-insecure-requests; default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;" http-equiv="Content-Security-Policy"/>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI 타로 리딩 - AI 운세 | doha.kr</title>
+<meta content="질문을 입력하면 AI가 타로 카드를 뽑아 심층적인 해석을 제공합니다." name="description"/>
+<meta content="index, follow" name="robots"/>
+<meta content="doha.kr" name="author"/>
+<!-- Security Headers -->
+<meta content="nosniff" http-equiv="X-Content-Type-Options"/>
+<meta content="strict-origin-when-cross-origin" http-equiv="Referrer-Policy"/>
+<meta content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), accelerometer=(), gyroscope=()" http-equiv="Permissions-Policy"/>
+<!-- Open Graph -->
+<meta content="AI 타로 리딩 | doha.kr" property="og:title"/>
+<meta content="질문을 입력하면 AI가 타로 카드를 뽑아 심층적인 해석을 제공합니다." property="og:description"/>
+<meta content="https://doha.kr/images/egen-male-card.jpg" property="og:image"/>
+<meta content="https://doha.kr/fortune/tarot/" property="og:url"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="True" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Google AdSense -->
+<!-- Moved to end of body -->
+<!-- Kakao JavaScript SDK -->
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js"></script>
+<!-- Optimized CSS System -->
+<link href="/css/styles.css?v=1753150228" rel="stylesheet"/>
+<link rel="stylesheet" href="/css/mobile-fixes.css">
+<link rel="stylesheet" href="/css/button-system.css">
+<link href="/css/pages/tarot.css" rel="stylesheet"/>
 
-    <meta http-equiv="X-Content-Type-Options" content="nosniff">
-
-    <script id="performance-monitor">
+<script id="performance-monitor">
 
     window.addEventListener('load', function() {
         if (window.performance && window.performance.timing) {
@@ -46,80 +45,64 @@
     </script>
 </head>
 <body class="fortune-page">
-    <!-- 네비게이션 바 -->
-    <div id="navbar-placeholder"></div>
-    
-    <!-- 페이지 헤더 -->
-    <section class="page-header">
-        <div class="container">
-            <h1 class="page-title fade-in">AI 타로 리딩</h1>
-            <p class="page-subtitle fade-in stagger-1">
+<!-- 네비게이션 바 -->
+<div id="navbar-placeholder"></div>
+<!-- 페이지 헤더 -->
+<section class="page-header">
+<div class="container">
+<h1 class="page-title fade-in">AI 타로 리딩</h1>
+<p class="page-subtitle fade-in stagger-1">
                 AI가 해석하는 신비로운 타로 카드의 메시지
             </p>
-        </div>
-    </section>
-    
-    <!-- 타로 리딩 섹션 -->
-    <section class="tarot-section">
-        <div class="container">
-            <div id="tarotForm" class="tarot-form">
-                <h2 style="text-align: center; margin-bottom: 32px;">타로 리딩 시작하기</h2>
-                
-                <div class="form-group">
-                    <label for="question">질문을 입력하세요</label>
-                    <textarea 
-                        id="question" 
-                        name="question" 
-                        class="form-control" 
-                        rows="4" 
-                        required 
-                        placeholder="타로에게 묻고 싶은 질문을 구체적으로 적어주세요. 예: 현재 연애 관계가 어떻게 발전할까요?"
-                    ></textarea>
-                </div>
-                
-                <div class="form-group">
-                    <label for="spreadType">스프레드 선택</label>
-                    <select id="spreadType" name="spreadType" class="form-control">
-                        <option value="oneCard">원 카드 (1장) - 간단한 질문</option>
-                        <option value="threeCard">쓰리 카드 (3장) - 과거/현재/미래</option>
-                        <option value="celtic">켈틱 크로스 (10장) - 상세한 분석</option>
-                    </select>
-                </div>
-                
-                <button type="button" onclick="startTarotReading()" class="btn btn-primary" style="width: 100%; margin-top: 24px;">
+</div>
+</section>
+<!-- 타로 리딩 섹션 -->
+<section class="tarot-section">
+<div class="container">
+<div class="tarot-form" id="tarotForm">
+<h2 style="text-align: center; margin-bottom: 32px;">타로 리딩 시작하기</h2>
+<div class="form-group">
+<label for="question">질문을 입력하세요</label>
+<textarea class="form-control" id="question" name="question" placeholder="타로에게 묻고 싶은 질문을 구체적으로 적어주세요. 예: 현재 연애 관계가 어떻게 발전할까요?" required="" rows="4"></textarea>
+</div>
+<div class="form-group">
+<label for="spreadType">스프레드 선택</label>
+<select class="form-control" id="spreadType" name="spreadType">
+<option value="oneCard">원 카드 (1장) - 간단한 질문</option>
+<option value="threeCard">쓰리 카드 (3장) - 과거/현재/미래</option>
+<option value="celtic">켈틱 크로스 (10장) - 상세한 분석</option>
+</select>
+</div>
+<button class="btn btn-primary" onclick="startTarotReading()" style="width: 100%; margin-top: 24px;" type="button">
                     🔮 타로 리딩 시작
                 </button>
-            </div>
-            
-            <!-- 타로 결과 영역 -->
-            <div id="tarotResult" class="tarot-result" style="display: none;">
-                <!-- 결과가 여기에 표시됩니다 -->
-            </div>
-        </div>
-    </section>
-    
-    <!-- 타로 안내 섹션 -->
-    <section class="info-section">
-        <div class="container">
-            <div class="info-box">
-                <h3>AI 타로 리딩 안내</h3>
-                <ul>
-                    <li>타로 카드는 현재 상황에 대한 통찰과 가이드를 제공합니다.</li>
-                    <li>질문은 구체적일수록 더 명확한 답변을 받을 수 있습니다.</li>
-                    <li>카드의 해석은 참고용이며, 최종 결정은 본인이 내리셔야 합니다.</li>
-                    <li>메이저 아르카나 22장을 사용하여 리딩을 진행합니다.</li>
-                    <li>AI가 실제로 분석하여 개인화된 해석을 제공합니다.</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-    
-    <!-- 광고 영역 -->
-    <div class="ad-container">
-        <div class="ad-label">광고</div>
-        
+</div>
+<!-- 타로 결과 영역 -->
+<div class="tarot-result" id="tarotResult" style="display: none;">
+<!-- 결과가 여기에 표시됩니다 -->
+</div>
+</div>
+</section>
+<!-- 타로 안내 섹션 -->
+<section class="info-section">
+<div class="container">
+<div class="info-box">
+<h3>AI 타로 리딩 안내</h3>
+<ul>
+<li>타로 카드는 현재 상황에 대한 통찰과 가이드를 제공합니다.</li>
+<li>질문은 구체적일수록 더 명확한 답변을 받을 수 있습니다.</li>
+<li>카드의 해석은 참고용이며, 최종 결정은 본인이 내리셔야 합니다.</li>
+<li>메이저 아르카나 22장을 사용하여 리딩을 진행합니다.</li>
+<li>AI가 실제로 분석하여 개인화된 해석을 제공합니다.</li>
+</ul>
+</div>
+</div>
+</section>
+<!-- 광고 영역 -->
+<div class="ad-container">
+<div class="ad-label">광고</div>
 <div id="ad-container-ewz82l37p" style="min-height: 100px;">
-    <div class="ad-placeholder" style="display: flex; align-items: center; justify-content: center; background: #f5f5f5; min-height: 100px; color: #999;">
+<div class="ad-placeholder" style="display: flex; align-items: center; justify-content: center; background: #f5f5f5; min-height: 100px; color: #999;">
         광고 로딩 중...
     </div>
 </div>
@@ -150,23 +133,19 @@ if ('IntersectionObserver' in window) {
     }
 }
 </script>
-    </div>
-    
-    <!-- 푸터 -->
-    <div id="footer-placeholder"></div>
-    
-    <!-- External JavaScript -->
-    <script src="/js/main.js?v=1753150228"></script>
-    <script src="/js/api-config.js?v=1753150228"></script>
-    
-    <script>
+</div>
+<!-- 푸터 -->
+<div id="footer-placeholder"></div>
+<!-- External JavaScript -->
+<script src="/js/main.js?v=1753150228"></script>
+<script src="/js/api-config.js?v=1753150228"></script>
+<script>
         // 카카오 초기화
         if (window.initKakao) {
             window.initKakao();
         }
     </script>
-    
-    <script>
+<script>
 
         const majorArcana = [
             { id: 0, name: "The Fool", korean: "바보", meaning: "새로운 시작, 순수함, 모험", reversed: "무모함, 경솔함, 방향감각 상실" },
@@ -505,13 +484,8 @@ if ('IntersectionObserver' in window) {
             `;
         }
     </script>
-    
-    
-    <!-- AdSense initialization -->
-    
-
-    <!-- Non-critical scripts moved here for performance -->
-    
+<!-- AdSense initialization -->
+<!-- Non-critical scripts moved here for performance -->
 <!-- Google AdSense 지연 로딩 -->
 <script>
 
@@ -525,7 +499,6 @@ window.addEventListener('load', function() {
     }, 2000);
 });
 </script>
-
 <script>
 
 window.adsenseInitialized = window.adsenseInitialized || false;
@@ -555,7 +528,6 @@ window.addEventListener('load', function() {
     setTimeout(initializeAdSense, 1000);
 });
 </script>
-
 <script>
 
 (function() {
@@ -610,7 +582,6 @@ window.addEventListener('load', function() {
     }, true);
 })();
 </script>
-
 <!-- AdSense 통합 초기화 -->
 <script>
 (function() {
@@ -658,7 +629,17 @@ window.addEventListener('load', function() {
     }, true);
 })();
 </script>
-
+<!-- 카카오 초기화 -->
+<script>
+    if (typeof Kakao !== 'undefined' && window.KAKAO_API_KEY) {
+        if (!Kakao.isInitialized()) {
+            Kakao.init(window.KAKAO_API_KEY);
+            console.log('카카오 SDK 초기화 완료');
+        }
+    } else {
+        console.warn('카카오 SDK 또는 API 키를 찾을 수 없습니다.');
+    }
+</script>
 <script>
 // 네비게이션 및 푸터 로드 - main.js의 loadComponents가 실행되지 않은 경우를 위한 폴백
 document.addEventListener('DOMContentLoaded', function() {

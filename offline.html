@@ -1,20 +1,19 @@
 <!DOCTYPE html>
-<html lang="ko" dir="ltr">
+
+<html dir="ltr" lang="ko">
 <head>
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>오프라인 - doha.kr</title>
-    <meta name="description" content="현재 인터넷 연결이 없습니다. 연결 후 다시 시도해주세요.">
-    <meta name="robots" content="noindex, nofollow">
-    
-    <!-- Security Headers -->
-    <meta http-equiv="X-Content-Type-Options" content="nosniff">
-    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
-    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), accelerometer=(), gyroscope=()">
-    
-    <!-- Inline Critical CSS for offline page -->
-    <style>
+<meta content="upgrade-insecure-requests; default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;" http-equiv="Content-Security-Policy"/>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>오프라인 - doha.kr</title>
+<meta content="현재 인터넷 연결이 없습니다. 연결 후 다시 시도해주세요." name="description"/>
+<meta content="noindex, nofollow" name="robots"/>
+<!-- Security Headers -->
+<meta content="nosniff" http-equiv="X-Content-Type-Options"/>
+<meta content="strict-origin-when-cross-origin" http-equiv="Referrer-Policy"/>
+<meta content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), accelerometer=(), gyroscope=()" http-equiv="Permissions-Policy"/>
+<!-- Inline Critical CSS for offline page -->
+<style>
         :root {
             --primary: #6366f1;
             --gray-50: #f9fafb;
@@ -206,12 +205,10 @@
             outline-offset: 2px;
         }
     </style>
-    <!-- Optimized CSS System -->
-    <link rel="stylesheet" href="/css/styles.css?v=1753150228">
+<!-- Optimized CSS System -->
+<link href="/css/styles.css?v=1753150228" rel="stylesheet"/>
 
-    <meta http-equiv="X-Content-Type-Options" content="nosniff">
-
-    <script id="performance-monitor">
+<script id="performance-monitor">
 
     window.addEventListener('load', function() {
         if (window.performance && window.performance.timing) {
@@ -222,53 +219,47 @@
         }
     });
     </script>
+<!-- Kakao JavaScript SDK -->
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js"></script>
 </head>
 <body>
-    <div class="offline-container">
-        <div class="offline-icon" aria-hidden="true">📡</div>
-        
-        <h1 class="offline-title">인터넷 연결 없음</h1>
-        
-        <p class="offline-message">
-            현재 인터넷에 연결되어 있지 않습니다.<br>
+<div class="offline-container">
+<div aria-hidden="true" class="offline-icon">📡</div>
+<h1 class="offline-title">인터넷 연결 없음</h1>
+<p class="offline-message">
+            현재 인터넷에 연결되어 있지 않습니다.<br/>
             연결을 확인한 후 다시 시도해주세요.
         </p>
-        
-        <div class="offline-actions">
-            <button class="btn btn--primary" onclick="retryConnection()" id="retry-btn">
-                <span>🔄</span>
-                <span>다시 시도</span>
-            </button>
-            
-            <button class="btn btn--secondary" onclick="goHome()">
-                <span>🏠</span>
-                <span>홈으로 이동</span>
-            </button>
-        </div>
-        
-        <div class="connection-status connection-status--offline" id="connection-status">
-            <span>📶</span>
-            <span id="status-text">오프라인 상태</span>
-        </div>
-        
-        <div class="offline-tips">
-            <h3>연결 문제 해결 방법</h3>
-            <ul>
-                <li>Wi-Fi 또는 모바일 데이터 연결을 확인하세요</li>
-                <li>라우터를 재시작해보세요</li>
-                <li>다른 웹사이트가 정상적으로 작동하는지 확인하세요</li>
-                <li>브라우저를 새로고침하거나 재시작해보세요</li>
-                <li>VPN을 사용 중이라면 잠시 비활성화해보세요</li>
-            </ul>
-        </div>
-    </div>
-    
-    <!-- External JavaScript -->
-    <script src="/js/api-config.js?v=1753150228"></script>
-    <script src="/js/main.js?v=1753150228"></script>
-    
-    <!-- 카카오 초기화 -->
-    <script>
+<div class="offline-actions">
+<button class="btn btn--primary" id="retry-btn" onclick="retryConnection()">
+<span>🔄</span>
+<span>다시 시도</span>
+</button>
+<button class="btn btn--secondary" onclick="goHome()">
+<span>🏠</span>
+<span>홈으로 이동</span>
+</button>
+</div>
+<div class="connection-status connection-status--offline" id="connection-status">
+<span>📶</span>
+<span id="status-text">오프라인 상태</span>
+</div>
+<div class="offline-tips">
+<h3>연결 문제 해결 방법</h3>
+<ul>
+<li>Wi-Fi 또는 모바일 데이터 연결을 확인하세요</li>
+<li>라우터를 재시작해보세요</li>
+<li>다른 웹사이트가 정상적으로 작동하는지 확인하세요</li>
+<li>브라우저를 새로고침하거나 재시작해보세요</li>
+<li>VPN을 사용 중이라면 잠시 비활성화해보세요</li>
+</ul>
+</div>
+</div>
+<!-- External JavaScript -->
+<script src="/js/api-config.js?v=1753150228"></script>
+<script src="/js/main.js?v=1753150228"></script>
+<!-- 카카오 초기화 -->
+<script>
         if (typeof Kakao !== 'undefined' && window.API_CONFIG) {
             try {
                 if (!Kakao.isInitialized()) {
@@ -279,8 +270,7 @@
             }
         }
     </script>
-    
-    <script>
+<script>
 
         function updateConnectionStatus() {
             const statusElement = document.getElementById('connection-status');
@@ -385,7 +375,6 @@
         
         console.log('Offline page loaded');
     </script>
-
 <script>
 
 window.adsenseInitialized = window.adsenseInitialized || false;
@@ -415,7 +404,6 @@ window.addEventListener('load', function() {
     setTimeout(initializeAdSense, 1000);
 });
 </script>
-
 <script>
 
 (function() {
@@ -469,6 +457,17 @@ window.addEventListener('load', function() {
         }
     }, true);
 })();
+</script>
+<!-- 카카오 초기화 -->
+<script>
+    if (typeof Kakao !== 'undefined' && window.KAKAO_API_KEY) {
+        if (!Kakao.isInitialized()) {
+            Kakao.init(window.KAKAO_API_KEY);
+            console.log('카카오 SDK 초기화 완료');
+        }
+    } else {
+        console.warn('카카오 SDK 또는 API 키를 찾을 수 없습니다.');
+    }
 </script>
 </body>
 </html>

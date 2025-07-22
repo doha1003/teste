@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta content="upgrade-insecure-requests; default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;" http-equiv="Content-Security-Policy"/>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI 사주팔자 - 정확한 만세력 기반 사주 분석 | doha.kr</title>
+<meta content="만세력 기반 정확한 사주팔자 분석. 생년월일과 출생시간으로 연주, 월주, 일주, 시주를 계산하고 AI가 상세하게 해석합니다." name="description"/>
+<meta content="index, follow" name="robots"/>
+<meta content="doha.kr" name="author"/>
+<!-- Security Headers -->
+<meta content="nosniff" http-equiv="X-Content-Type-Options"/>
+<meta content="strict-origin-when-cross-origin" http-equiv="Referrer-Policy"/>
+<meta content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), accelerometer=(), gyroscope=()" http-equiv="Permissions-Policy"/>
+<!-- Open Graph -->
+<meta content="AI 사주팔자 - 정확한 만세력 기반 사주 분석" property="og:title"/>
+<meta content="만세력 기반 정확한 사주팔자 분석. AI가 십신, 오행, 성격, 운세를 상세하게 해석합니다." property="og:description"/>
+<meta content="https://doha.kr/images/saju-og.png" property="og:image"/>
+<meta content="https://doha.kr/fortune/saju/" property="og:url"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="True" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Google AdSense -->
+<!-- Moved to end of body -->
+<!-- 만세력 데이터 먼저 로드 -->
+<script src="/js/manseryeok-database.js"></script>
+<script src="/js/lunar-calendar-compact.js?v=1753150228"></script>
+<script src="/js/saju-calculator.js"></script>
+<!-- Optimized CSS System -->
+<link href="/css/styles.css?v=1753150228" rel="stylesheet"/>
+<link href="/css/pages/saju.css" rel="stylesheet"/>
+
+<script id="performance-monitor">
+
+    window.addEventListener('load', function() {
+        if (window.performance && window.performance.timing) {
+            const loadTime = window.performance.timing.loadEventEnd - window.performance.timing.navigationStart;
+            if (loadTime > 5000) {
+                console.warn('Page loading is slow:', loadTime + 'ms');
+            }
+        }
+    });
+    </script>
+</head>
+<body class="saju-page">
+<!-- 네비게이션 바 -->
+<div id="navbar-placeholder"></div>
+<!-- 페이지 헤더 -->
+<section class="page-header">
+<div class="container">
+<h1 class="page-title fade-in">🔮 AI 사주팔자</h1>
+<p class="page-subtitle fade-in stagger-1">
+                만세력 기반 정확한 사주팔자 분석<br/>
+                AI가 당신의 타고난 운명과 성격을 상세하게 해석합니다
+            </p>
+</div>
+</section>
+<!-- 사주 입력 폼 -->
+<section class="saju-section">
+<div class="container">
+<div class="saju-form-container" id="sajuForm">
+<h2>사주팔자 정보 입력</h2>
+<form onsubmit="generateSaju(event)">
+<div class="form-row">
+<div class="form-group">
+<label for="userName">이름</label>
+<input class="form-control" id="userName" name="userName" required="" type="text"/>
+</div>
+<div class="form-group">
+<label for="gender">성별</label>
+<select class="form-control" id="gender" name="gender" required="">
+<option value="">선택해주세요</option>
+<option value="male">남성</option>
+<option value="female">여성</option>
+</select>
+</div>
+</div>
+<div class="form-row">
+<div class="form-group">
+<label for="birthYear">생년</label>
+<input class="form-control" id="birthYear" max="2025" min="1900" name="birthYear" required="" type="number"/>
+</div>
+<div class="form-group">
+<label for="birthMonth">생월</label>
+<input class="form-control" id="birthMonth" max="12" min="1" name="birthMonth" required="" type="number"/>
+</div>
+<div class="form-group">
+<label for="birthDay">생일</label>
+<input class="form-control" id="birthDay" max="31" min="1" name="birthDay" required="" type="number"/>
+</div>
+</div>
+<div class="form-group">
+<label for="birthTime">출생시간</label>
+<select class="form-control" id="birthTime" name="birthTime" required="">
+<option value="">선택해주세요</option>
+<option value="23">자시 (23:00-00:59)</option>
+<option value="1">축시 (01:00-02:59)</option>
+<option value="3">인시 (03:00-04:59)</option>
+<option value="5">묘시 (05:00-06:59)</option>
+<option value="7">진시 (07:00-08:59)</option>
+<option value="9">사시 (09:00-10:59)</option>
+<option value="11">오시 (11:00-12:59)</option>
+<option value="13">미시 (13:00-14:59)</option>
+<option value="15">신시 (15:00-16:59)</option>
+<option value="17">유시 (17:00-18:59)</option>
+<option value="19">술시 (19:00-20:59)</option>
+<option value="21">해시 (21:00-22:59)</option>
+</select>
+</div>
+<div class="form-group">
+<label class="checkbox-label">
+<input id="isLunar" name="isLunar" type="checkbox"/>
+<span class="checkmark"></span>
+                            음력 생일입니다
+                        </label>
+</div>
+<button class="btn btn-primary" style="width: 100%; margin-top: 30px;" type="submit">
+                        🔮 사주팔자 분석하기
+                    </button>
+</form>
+</div>
+<!-- 사주 결과 영역 -->
+<div id="sajuResult" style="display: none;">
+<!-- 결과가 여기에 표시됩니다 -->
+</div>
+</div>
+</section>
+<!-- 광고 영역 -->
+<div class="ad-container">
+<div class="ad-label">광고</div>
+<div id="ad-container-35a37wzct" style="min-height: 100px;">
+<div class="ad-placeholder" style="display: flex; align-items: center; justify-content: center; background: #f5f5f5; min-height: 100px; color: #999;">
+        광고 로딩 중...
+    </div>
+</div>
+<script>
+
+if ('IntersectionObserver' in window) {
+    const adObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                const container = entry.target;
+                container.innerHTML = `<ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-7905640648499222"
+             data-ad-slot="2789891628"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>`;
+                if (typeof adsbygoogle !== 'undefined') {
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                }
+                adObserver.unobserve(container);
+            }
+        });
+    }, { rootMargin: '50px' });
+    
+    const adContainer = document.getElementById('ad-container-35a37wzct');
+    if (adContainer) {
+        adObserver.observe(adContainer);
+    }
+}
+</script>
+</div>
+<!-- 사주팔자 안내 -->
+<section class="info-section">
+<div class="container">
+<div class="info-box">
+<h3>AI 사주팔자 분석 안내</h3>
+<ul>
+<li>만세력 기반 정확한 사주팔자 계산으로 연주, 월주, 일주, 시주를 산출합니다.</li>
+<li>십신 분석을 통해 성격, 적성, 인간관계를 파악합니다.</li>
+<li>오행 균형 분석으로 건강, 운세, 개선점을 제시합니다.</li>
+<li>AI가 전통 사주학과 현대적 해석을 결합하여 상세한 분석을 제공합니다.</li>
+<li>출생시간이 정확할수록 더 정밀한 분석이 가능합니다.</li>
+</ul>
+</div>
+</div>
+</section>
+<!-- 푸터 -->
+<div id="footer-placeholder"></div>
+<!-- External JavaScript -->
+<script src="/js/main.js?v=1753150228"></script>
+<script src="/js/api-config.js?v=1753150228"></script>
+<script>
+        // 카카오 초기화
+        if (window.initKakao) {
+            window.initKakao();
+        }
+    </script>
+<script>
+
+        function generateEnhancedInterpretation(saju) {
+            const elements = analyzeElements(saju);
+            const personality = analyzePersonality(saju);
+            const fortune = analyzeFortune(saju);
+            const compatibility = analyzeCompatibility(saju);
+            
+            return {
+                elements,
+                personality,
+                fortune,
+                compatibility,
+                advice: generateAdvice(saju)
+            };
+        }
+
+        function analyzeElements(saju) {
+            const elements = {
+                목: 0, 화: 0, 토: 0, 금: 0, 수: 0
+            };
+            
+            const pillars = [saju.yearPillar, saju.monthPillar, saju.dayPillar, saju.hourPillar];
+            pillars.forEach(pillar => {
+                if (pillar) {
+                    // pillar는 객체이므로 stem과 branch 속성으로 접근
+                    const stem = pillar.stem || (typeof pillar === 'string' ? pillar.charAt(0) : '');
+                    const branch = pillar.branch || (typeof pillar === 'string' ? pillar.charAt(1) : '');
+
+                    if ('갑을'.includes(stem)) elements.목++;
+                    else if ('병정'.includes(stem)) elements.화++;
+                    else if ('무기'.includes(stem)) elements.토++;
+                    else if ('경신'.includes(stem)) elements.금++;
+                    else if ('임계'.includes(stem)) elements.수++;
+
+                    if ('인묘'.includes(branch)) elements.목++;
+                    else if ('사오'.includes(branch)) elements.화++;
+                    else if ('진술축미'.includes(branch)) elements.토++;
+                    else if ('신유'.includes(branch)) elements.금++;
+                    else if ('해자'.includes(branch)) elements.수++;
+                }
+            });
+            
+            const maxElement = Object.entries(elements).reduce((a, b) => elements[a[0]] > elements[b[0]] ? a : b)[0];
+            const minElement = Object.entries(elements).reduce((a, b) => elements[a[0]] < elements[b[0]] ? a : b)[0];
+            
+            return {
+                distribution: elements,
+                dominant: maxElement,
+                lacking: minElement,
+                balance: calculateBalance(elements)
+            };
+        }
+        
+        function calculateBalance(elements) {
+            const total = Object.values(elements).reduce((sum, count) => sum + count, 0);
+            const average = total / 5;
+            const variance = Object.values(elements).reduce((sum, count) => {
+                return sum + Math.pow(count - average, 2);
+            }, 0) / 5;
+            
+            if (variance < 0.5) return '매우 균형적';
+            else if (variance < 1) return '균형적';
+            else if (variance < 2) return '약간 불균형';
+            else return '불균형';
+        }
+        
+        function analyzePersonality(saju) {
+            const dayMaster = saju.dayPillar ? (saju.dayPillar.stem || saju.dayPillar.charAt?.(0)) : null;
+            
+            const personalities = {
+                '갑': '리더십이 강하고 진취적이며 정의감이 강합니다.',
+                '을': '유연하고 적응력이 뛰어나며 예술적 감각이 있습니다.',
+                '병': '열정적이고 활발하며 사교성이 좋습니다.',
+                '정': '따뜻하고 배려심이 깊으며 봉사정신이 강합니다.',
+                '무': '신뢰감을 주고 포용력이 크며 중재 능력이 뛰어납니다.',
+                '기': '실용적이고 꼼꼼하며 계획성이 뛰어납니다.',
+                '경': '결단력이 있고 추진력이 강하며 정의롭습니다.',
+                '신': '예리하고 분석적이며 완벽주의 성향이 있습니다.',
+                '임': '지혜롭고 통찰력이 뛰어나며 적응력이 좋습니다.',
+                '계': '섬세하고 직관력이 뛰어나며 창의적입니다.'
+            };
+            
+            return {
+                basic: personalities[dayMaster] || '독특한 개성을 가지고 있습니다.',
+                strengths: getStrengths(dayMaster),
+                weaknesses: getWeaknesses(dayMaster),
+                advice: getPersonalityAdvice(dayMaster)
+            };
+        }
+        
+        function getStrengths(dayMaster) {
+            const strengths = {
+                '갑': ['리더십', '정의감', '추진력'],
+                '을': ['유연성', '예술성', '협조성'],
+                '병': ['열정', '사교성', '긍정성'],
+                '정': ['배려심', '봉사정신', '온화함'],
+                '무': ['신뢰성', '포용력', '안정감'],
+                '기': ['실용성', '계획성', '꼼꼼함'],
+                '경': ['결단력', '정직성', '용기'],
+                '신': ['예리함', '분석력', '정확성'],
+                '임': ['지혜', '통찰력', '유연성'],
+                '계': ['직관력', '창의성', '섬세함']
+            };
+            
+            return strengths[dayMaster] || ['개성', '독창성', '잠재력'];
+        }
+        
+        function getWeaknesses(dayMaster) {
+            const weaknesses = {
+                '갑': ['고집', '융통성 부족', '독단적'],
+                '을': ['우유부단', '소극적', '의존적'],
+                '병': ['충동적', '변덕', '과시욕'],
+                '정': ['감정적', '현실감각 부족', '희생적'],
+                '무': ['느림', '변화 거부', '고집'],
+                '기': ['소심함', '비판적', '완고함'],
+                '경': ['급진적', '타협 부족', '공격적'],
+                '신': ['차가움', '비판적', '완벽주의'],
+                '임': ['불안정', '과도한 생각', '우유부단'],
+                '계': ['예민함', '변덕', '비밀주의']
+            };
+            
+            return weaknesses[dayMaster] || ['극복해야 할 부분이 있습니다'];
+        }
+        
+        function getPersonalityAdvice(dayMaster) {
+            const advice = {
+                '갑': '때로는 타인의 의견에 귀 기울이는 유연함이 필요합니다.',
+                '을': '자신감을 가지고 주도적으로 행동해보세요.',
+                '병': '충동적인 결정보다는 신중한 판단이 중요합니다.',
+                '정': '자신을 위한 시간도 소중히 여기세요.',
+                '무': '변화를 두려워하지 말고 새로운 도전을 해보세요.',
+                '기': '완벽하지 않아도 괜찮다는 것을 받아들이세요.',
+                '경': '부드러운 카리스마로 사람들을 이끌어보세요.',
+                '신': '따뜻한 마음을 표현하는 연습을 해보세요.',
+                '임': '직관을 믿고 과감하게 행동해보세요.',
+                '계': '자신의 감정을 솔직하게 표현해보세요.'
+            };
+            
+            return advice[dayMaster] || '자신만의 장점을 살려 발전해 나가세요.';
+        }
+        
+        function analyzeFortune(saju) {
+            return {
+                overall: '안정과 성장의 시기',
+                career: '새로운 기회가 찾아옵니다',
+                wealth: '재물운이 좋은 편입니다',
+                health: '건강 관리에 신경쓰세요',
+                relationship: '인간관계가 원만합니다'
+            };
+        }
+        
+        function analyzeCompatibility(saju) {
+            const dayBranch = saju.dayPillar ? (saju.dayPillar.branch || saju.dayPillar.charAt?.(1)) : null;
+            
+            return {
+                best: getBestMatch(dayBranch),
+                good: getGoodMatch(dayBranch),
+                challenging: getChallengingMatch(dayBranch)
+            };
+        }
+        
+        function getBestMatch(branch) {
+            const matches = {
+                '자': ['신', '진'],
+                '축': ['사', '유'],
+                '인': ['해', '오'],
+                '묘': ['술', '미'],
+                '진': ['유', '자'],
+                '사': ['신', '축'],
+                '오': ['미', '인'],
+                '미': ['오', '묘'],
+                '신': ['사', '자'],
+                '유': ['진', '축'],
+                '술': ['묘', '인'],
+                '해': ['인', '미']
+            };
+            
+            return matches[branch] || ['조화로운 관계를 만들 수 있습니다'];
+        }
+        
+        function getGoodMatch(branch) {
+            const matches = {
+                '자': ['용', '원숭이'],
+                '축': ['뱀', '닭'],
+                '인': ['말', '개'],
+                '묘': ['양', '돼지'],
+                '진': ['쥐', '원숭이'],
+                '사': ['소', '닭'],
+                '오': ['호랑이', '개'],
+                '미': ['토끼', '돼지'],
+                '신': ['쥐', '용'],
+                '유': ['소', '뱀'],
+                '술': ['호랑이', '말'],
+                '해': ['토끼', '양']
+            };
+            
+            return matches[branch] || ['좋은 관계를 유지할 수 있습니다'];
+        }
+        
+        function getChallengingMatch(branch) {
+            const matches = {
+                '자': ['말'],
+                '축': ['양'],
+                '인': ['원숭이'],
+                '묘': ['닭'],
+                '진': ['개'],
+                '사': ['돼지'],
+                '오': ['쥐'],
+                '미': ['소'],
+                '신': ['호랑이'],
+                '유': ['토끼'],
+                '술': ['용'],
+                '해': ['뱀']
+            };
+            
+            return matches[branch] || ['노력이 필요한 관계입니다'];
+        }
+        
+        function generateAdvice(saju) {
+            const elements = analyzeElements(saju);
+            const lackingElement = elements.lacking;
+            
+            return {
+                career: getCareerAdvice(saju),
+                wealth: getWealthAdvice(saju),
+                health: getHealthAdvice(lackingElement),
+                relationship: getRelationshipAdvice(saju),
+                lucky: getLuckyItems(lackingElement)
+            };
+        }
+        
+        function getCareerAdvice(saju) {
+            return '창의성과 실용성을 조화롭게 발휘할 수 있는 분야가 적합합니다.';
+        }
+        
+        function getWealthAdvice(saju) {
+            return '꾸준한 저축과 현명한 투자로 안정적인 재산을 형성할 수 있습니다.';
+        }
+        
+        function getHealthAdvice(lackingElement) {
+            const advice = {
+                '목': '간과 눈 건강에 신경쓰고, 스트레스 관리가 중요합니다.',
+                '화': '심장 건강과 혈액순환에 주의하고, 규칙적인 운동이 필요합니다.',
+                '토': '소화기 건강에 신경쓰고, 규칙적인 식사가 중요합니다.',
+                '금': '호흡기와 피부 건강에 주의하고, 충분한 수분 섭취가 필요합니다.',
+                '수': '신장과 방광 건강에 신경쓰고, 충분한 휴식이 필요합니다.'
+            };
+            
+            return advice[lackingElement] || '균형잡힌 생활습관으로 건강을 유지하세요.';
+        }
+        
+        function getRelationshipAdvice(saju) {
+            return '진심어린 소통과 배려로 깊은 신뢰관계를 형성할 수 있습니다.';
+        }
+        
+        function getLuckyItems(element) {
+            const luckyItems = {
+                목: '초록색 계열, 나무 소재, 관엽식물',
+                화: '빨강/분홍 계열, 삼각형 모양, 향초',
+                토: '노랑/갈색 계열, 도자기, 천연석',
+                금: '흰색/금색 계열, 금속 액세서리, 크리스탈',
+                수: '검정/파랑 계열, 유리 소품, 물 관련 아이템'
+            };
+            
+            return luckyItems[element] || '자연 소재의 아이템들이 도움이 됩니다.';
+        }
+    </script>
+<script>
+
+        function generateSaju(event) {
+            event.preventDefault();
+            
+            const userName = document.getElementById('userName').value;
+            const gender = document.getElementById('gender').value;
+            const birthYear = parseInt(document.getElementById('birthYear').value);
+            const birthMonth = parseInt(document.getElementById('birthMonth').value);
+            const birthDay = parseInt(document.getElementById('birthDay').value);
+            const birthTime = parseInt(document.getElementById('birthTime').value);
+            const isLunar = document.getElementById('isLunar').checked;
+
+            document.getElementById('sajuResult').style.display = 'block';
+            document.getElementById('sajuResult').innerHTML = `
+                <div class="fortune-loading-container">
+                    <div class="fortune-loading-spinner"></div>
+                    <div class="fortune-loading-text">🔮 AI가 ${userName}님의 사주팔자를 분석하고 있습니다<span class="fortune-loading-dots"></span></div>
+                </div>
+            `;
+
+            document.getElementById('sajuForm').style.display = 'none';
+
+            setTimeout(() => {
+
+                const saju = calculateSajuWithManseryeok(birthYear, birthMonth, birthDay, birthTime, isLunar);
+                displaySajuResult(userName, gender, saju);
+            }, 2000);
+        }
+
+        function calculateSajuWithManseryeok(year, month, day, hour, isLunar) {
+
+            let saju = window.sajuCalculator.calculateSaju(year, month, day, hour, isLunar);
+
+            if (window.getManseryeokData) {
+                let targetYear = year, targetMonth = month, targetDay = day;
+
+                if (isLunar && window.lunarToSolar) {
+                    const solarDate = window.lunarToSolar(year, month, day);
+                    if (solarDate) {
+                        targetYear = solarDate.year;
+                        targetMonth = solarDate.month;
+                        targetDay = solarDate.day;
+                    }
+                }
+
+                const manseryeokData = window.getManseryeokData(targetYear, targetMonth, targetDay);
+                if (manseryeokData) {
+
+                    saju.dayPillar = {
+                        stem: manseryeokData.dayGanji.charAt(0),
+                        branch: manseryeokData.dayGanji.charAt(1)
+                    };
+
+                    if (manseryeokData.yearGanji) {
+                        saju.yearPillar = {
+                            stem: manseryeokData.yearGanji.charAt(0),
+                            branch: manseryeokData.yearGanji.charAt(1)
+                        };
+                    }
+
+                    saju.dayMaster = saju.dayPillar.stem;
+                    saju.dayMasterElement = window.sajuCalculator.stemElements[saju.dayMaster];
+                    saju.tenGods = window.sajuCalculator.calculateTenGods(saju.dayMaster, {
+                        year: saju.yearPillar.stem,
+                        month: saju.monthPillar.stem,
+                        day: saju.dayPillar.stem,
+                        hour: saju.hourPillar.stem
+                    });
+
+                    saju.elements = window.sajuCalculator.analyzeElements([
+                        saju.yearPillar.stem, saju.yearPillar.branch,
+                        saju.monthPillar.stem, saju.monthPillar.branch,
+                        saju.dayPillar.stem, saju.dayPillar.branch,
+                        saju.hourPillar.stem, saju.hourPillar.branch
+                    ]);
+                }
+            }
+            
+            return saju;
+        }
+
+        function displaySajuResult(userName, gender, saju) {
+
+            const interpretation = generateEnhancedInterpretation(saju);
+            const today = new Date();
+            
+            const resultHTML = `
+                <div class="saju-result-container">
+                    <h2 class="result-title">${userName}님의 사주팔자 분석 결과</h2>
+                    <p class="result-date">분석일: ${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일</p>
+                    
+                    <!-- 사주팔자 표 -->
+                    <div class="saju-table-section">
+                        <h3>🎯 사주팔자 구성</h3>
+                        <div class="saju-table">
+                            <div class="saju-pillar">
+                                <div class="pillar-title">연주</div>
+                                <div class="pillar-stem">${saju.yearPillar ? (saju.yearPillar.stem || saju.yearPillar.charAt?.(0)) : '?'}</div>
+                                <div class="pillar-branch">${saju.yearPillar ? (saju.yearPillar.branch || saju.yearPillar.charAt?.(1)) : '?'}</div>
+                            </div>
+                            <div class="saju-pillar">
+                                <div class="pillar-title">월주</div>
+                                <div class="pillar-stem">${saju.monthPillar ? (saju.monthPillar.stem || saju.monthPillar.charAt?.(0)) : '?'}</div>
+                                <div class="pillar-branch">${saju.monthPillar ? (saju.monthPillar.branch || saju.monthPillar.charAt?.(1)) : '?'}</div>
+                            </div>
+                            <div class="saju-pillar">
+                                <div class="pillar-title">일주</div>
+                                <div class="pillar-stem">${saju.dayPillar ? (saju.dayPillar.stem || saju.dayPillar.charAt?.(0)) : '?'}</div>
+                                <div class="pillar-branch">${saju.dayPillar ? (saju.dayPillar.branch || saju.dayPillar.charAt?.(1)) : '?'}</div>
+                            </div>
+                            <div class="saju-pillar">
+                                <div class="pillar-title">시주</div>
+                                <div class="pillar-stem">${saju.hourPillar ? (saju.hourPillar.stem || saju.hourPillar.charAt?.(0)) : '?'}</div>
+                                <div class="pillar-branch">${saju.hourPillar ? (saju.hourPillar.branch || saju.hourPillar.charAt?.(1)) : '?'}</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 오행 분석 -->
+                    <div class="element-analysis-section">
+                        <h3>🌟 오행 분석</h3>
+                        <div class="element-bars">
+                            ${Object.entries(interpretation.elements.distribution).map(([element, count]) => `
+                                <div class="element-bar">
+                                    <span class="element-name">${element}</span>
+                                    <div class="bar-container">
+                                        <div class="bar-fill" style="width: ${count * 25}%"></div>
+                                    </div>
+                                    <span class="element-count">${count}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <p class="element-balance">오행 균형도: ${interpretation.elements.balance}</p>
+                        <p class="element-advice">가장 강한 원소는 <strong>${interpretation.elements.dominant}</strong>이며, <strong>${interpretation.elements.lacking}</strong>이 부족합니다.</p>
+                    </div>
+                    
+                    <!-- 성격 분석 -->
+                    <div class="personality-section">
+                        <h3>👤 성격 분석</h3>
+                        <p class="personality-basic">${interpretation.personality.basic}</p>
+                        
+                        <div class="traits-container">
+                            <div class="traits-box">
+                                <h4>강점</h4>
+                                <ul>
+                                    ${interpretation.personality.strengths.map(s => `<li>${s}</li>`).join('')}
+                                </ul>
+                            </div>
+                            <div class="traits-box">
+                                <h4>약점</h4>
+                                <ul>
+                                    ${interpretation.personality.weaknesses.map(w => `<li>${w}</li>`).join('')}
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <p class="personality-advice"><strong>조언:</strong> ${interpretation.personality.advice}</p>
+                    </div>
+                    
+                    <!-- 운세 분석 -->
+                    <div class="fortune-section">
+                        <h3>🔮 운세 분석</h3>
+                        <div class="fortune-grid">
+                            <div class="fortune-item">
+                                <h4>전체운</h4>
+                                <p>${interpretation.fortune.overall}</p>
+                            </div>
+                            <div class="fortune-item">
+                                <h4>직업운</h4>
+                                <p>${interpretation.fortune.career}</p>
+                            </div>
+                            <div class="fortune-item">
+                                <h4>재물운</h4>
+                                <p>${interpretation.fortune.wealth}</p>
+                            </div>
+                            <div class="fortune-item">
+                                <h4>건강운</h4>
+                                <p>${interpretation.fortune.health}</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 궁합 -->
+                    <div class="compatibility-section">
+                        <h3>💑 궁합 분석</h3>
+                        <div class="compatibility-list">
+                            <div class="compatibility-item">
+                                <h4>최고의 궁합</h4>
+                                <p>${Array.isArray(interpretation.compatibility.best) ? interpretation.compatibility.best.join(', ') : interpretation.compatibility.best}</p>
+                            </div>
+                            <div class="compatibility-item">
+                                <h4>좋은 궁합</h4>
+                                <p>${Array.isArray(interpretation.compatibility.good) ? interpretation.compatibility.good.join(', ') : interpretation.compatibility.good}</p>
+                            </div>
+                            <div class="compatibility-item">
+                                <h4>도전적인 궁합</h4>
+                                <p>${Array.isArray(interpretation.compatibility.challenging) ? interpretation.compatibility.challenging.join(', ') : interpretation.compatibility.challenging}</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 종합 조언 -->
+                    <div class="advice-section">
+                        <h3>💡 종합 조언</h3>
+                        <div class="advice-grid">
+                            <div class="advice-item">
+                                <h4>직업</h4>
+                                <p>${interpretation.advice.career}</p>
+                            </div>
+                            <div class="advice-item">
+                                <h4>재물</h4>
+                                <p>${interpretation.advice.wealth}</p>
+                            </div>
+                            <div class="advice-item">
+                                <h4>건강</h4>
+                                <p>${interpretation.advice.health}</p>
+                            </div>
+                            <div class="advice-item">
+                                <h4>인간관계</h4>
+                                <p>${interpretation.advice.relationship}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="lucky-items">
+                            <h4>🍀 행운의 아이템</h4>
+                            <p>${interpretation.advice.lucky}</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 다시하기 버튼 -->
+                    <button onclick="resetSajuForm()" class="btn btn-secondary" style="margin-top: 30px;">
+                        🔄 다시 분석하기
+                    </button>
+                </div>
+            `;
+            
+            document.getElementById('sajuResult').innerHTML = resultHTML;
+        }
+
+        function resetSajuForm() {
+            document.getElementById('sajuForm').style.display = 'block';
+            document.getElementById('sajuResult').style.display = 'none';
+            document.getElementById('sajuForm').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+<!-- 광고 스크립트 -->
+<!-- Non-critical scripts moved here for performance -->
+<!-- Google AdSense 지연 로딩 -->
+<script>
+
+window.addEventListener('load', function() {
+    setTimeout(function() {
+        var adsScript = document.createElement('script');
+        adsScript.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222';
+        adsScript.crossOrigin = 'anonymous';
+        adsScript.defer = true;
+        document.head.appendChild(adsScript);
+    }, 2000);
+});
+</script>
+<script>
+
+window.adsenseInitialized = window.adsenseInitialized || false;
+
+function initializeAdSense() {
+    if (window.adsenseInitialized) {
+        console.log('AdSense already initialized');
+        return;
+    }
+    
+    window.adsenseInitialized = true;
+
+    const adBlocks = document.querySelectorAll('.adsbygoogle');
+    adBlocks.forEach((ad, index) => {
+        if (!ad.dataset.adsbygoogleStatus) {
+            try {
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                console.log('AdSense block initialized:', index);
+            } catch (error) {
+                console.warn('AdSense initialization error:', error);
+            }
+        }
+    });
+}
+
+window.addEventListener('load', function() {
+    setTimeout(initializeAdSense, 1000);
+});
+</script>
+<script>
+
+(function() {
+    'use strict';
+
+    window.__adsenseLoaded = window.__adsenseLoaded || false;
+    window.__adsenseQueue = window.__adsenseQueue || [];
+    
+    function initAdsense() {
+        if (window.__adsenseLoaded) return;
+        
+        const ads = document.querySelectorAll('.adsbygoogle:not([data-adsbygoogle-status])');
+        
+        if (ads.length === 0) return;
+
+        if (typeof adsbygoogle === 'undefined') {
+            setTimeout(initAdsense, 500);
+            return;
+        }
+        
+        window.__adsenseLoaded = true;
+
+        ads.forEach((ad, index) => {
+            try {
+
+                if (ad.getAttribute('data-adsbygoogle-status')) return;
+
+                (adsbygoogle = window.adsbygoogle || []).push({});
+
+                ad.setAttribute('data-adsbygoogle-status', 'done');
+                
+            } catch (e) {
+                console.warn('AdSense 초기화 실패:', index, e.message);
+            }
+        });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(initAdsense, 1000);
+        });
+    } else {
+        setTimeout(initAdsense, 1000);
+    }
+
+    window.addEventListener('error', function(e) {
+        if (e.message && e.message.includes('adsbygoogle.push() error')) {
+            e.preventDefault();
+            console.warn('AdSense 중복 초기화 방지됨');
+            return false;
+        }
+    }, true);
+})();
+</script>
+<!-- AdSense 통합 초기화 -->
+<script>
+(function() {
+    'use strict';
+
+    window.__adsInitialized = false;
+
+    function initializeAds() {
+        if (window.__adsInitialized) return;
+        
+        const ads = document.querySelectorAll('.adsbygoogle:not([data-adsbygoogle-status])');
+        if (ads.length === 0) return;
+
+        if (typeof adsbygoogle === 'undefined') {
+            setTimeout(initializeAds, 100);
+            return;
+        }
+        
+        window.__adsInitialized = true;
+
+        ads.forEach((ad) => {
+            try {
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                ad.setAttribute('data-adsbygoogle-status', 'done');
+            } catch (e) {
+
+            }
+        });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(initializeAds, 500);
+        });
+    } else {
+        setTimeout(initializeAds, 500);
+    }
+
+    window.addEventListener('error', function(e) {
+        if (e.message && e.message.includes('adsbygoogle.push() error')) {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+        }
+    }, true);
+})();
+</script>
+<script>
+// 네비게이션 및 푸터 로드 - main.js의 loadComponents가 실행되지 않은 경우를 위한 폴백
+document.addEventListener('DOMContentLoaded', function() {
+    // main.js가 로드되었고 loadComponents 함수가 있는지 확인
+    if (typeof loadComponents === 'function') {
+        // main.js의 DOMContentLoaded가 이미 실행되었을 수 있으므로 
+        // navbar-placeholder가 비어있으면 다시 실행
+        const navPlaceholder = document.getElementById('navbar-placeholder');
+        const footerPlaceholder = document.getElementById('footer-placeholder');
+        
+        if ((navPlaceholder && !navPlaceholder.innerHTML.trim()) || 
+            (footerPlaceholder && !footerPlaceholder.innerHTML.trim())) {
+            console.log('Loading components...');
+            loadComponents().catch(function(error) {
+                console.error('Failed to load components:', error);
+            });
+        }
+    }
+});
+</script>
+</body>
+</html>
