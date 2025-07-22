@@ -360,6 +360,44 @@ if ('IntersectionObserver' in window) {
 <script src="/js/api-config.js?v=1753150228"></script>
 <!-- Service Counter Script -->
 <script>
+        // 서비스 필터 함수
+        function showServices(category) {
+            const allCards = document.querySelectorAll('.service-card');
+            const buttons = document.querySelectorAll('.tab-button');
+            
+            // 버튼 상태 업데이트
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.includes(getCategoryText(category))) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // 카드 필터링
+            allCards.forEach(card => {
+                if (category === 'all') {
+                    card.style.display = 'block';
+                } else if (category === 'new') {
+                    // 최신 서비스 표시 (예: 최근 추가된 서비스에 data-new 속성 추가)
+                    card.style.display = card.dataset.new === 'true' ? 'block' : 'none';
+                } else {
+                    // 카테고리별 필터링
+                    const cardCategory = card.dataset.category || '';
+                    card.style.display = cardCategory === category ? 'block' : 'none';
+                }
+            });
+        }
+        
+        function getCategoryText(category) {
+            const categoryMap = {
+                'all': '전체',
+                'tests': '심리테스트',
+                'tools': '실용도구',
+                'fortune': 'AI 운세',
+                'new': '최신'
+            };
+            return categoryMap[category] || '전체';
+        }
 
         document.addEventListener('DOMContentLoaded', function() {
 

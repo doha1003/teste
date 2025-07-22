@@ -838,3 +838,11 @@ function copyLink() {
         alert('링크가 복사되었습니다!');
     });
 }
+
+// Window 객체에 함수 등록
+window.startTest = startTest;
+window.nextQuestion = nextQuestion;
+window.previousQuestion = previousQuestion;
+window.selectAnswer = selectAnswer;
+window.showResult = showResult;
+window.copyLink = copyLink;

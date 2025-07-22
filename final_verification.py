@@ -1,202 +1,158 @@
 #!/usr/bin/env python3
 """
 doha.kr 최종 검증 스크립트
-- 모든 HTML 페이지의 기본 구조 검증
-- CSS/JS 파일 참조 확인
-- 주요 기능 요소 존재 확인
+모든 수정사항 적용 후 최종 상태 확인
 """
 
 import os
 import re
 import json
-from pathlib import Path
+from datetime import datetime
 
-def verify_all_pages():
-    """모든 HTML 페이지 검증"""
+def final_verification():
+    """최종 검증 수행"""
+    
+    # 26개 주요 페이지
+    pages = [
+        "index.html", "404.html", "about/index.html", "contact/index.html",
+        "privacy/index.html", "terms/index.html", "faq/index.html",
+        "tests/index.html", "tests/mbti/index.html", "tests/mbti/test.html",
+        "tests/teto-egen/index.html", "tests/teto-egen/start.html", "tests/teto-egen/test.html",
+        "tests/love-dna/index.html", "tests/love-dna/test.html",
+        "tools/index.html", "tools/text-counter.html", "tools/bmi-calculator.html",
+        "tools/salary-calculator.html", "fortune/index.html", "fortune/daily/index.html",
+        "fortune/saju/index.html", "fortune/tarot/index.html", "fortune/zodiac/index.html",
+        "fortune/zodiac-animal/index.html"
+    ]
     
     results = {
-        'total_pages': 0,
-        'verified_pages': 0,
+        'timestamp': datetime.now().isoformat(),
+        'total_pages': len(pages),
+        'passed_pages': 0,
         'issues': [],
-        'pages_checked': []
+        'statistics': {
+            'css_loaded': 0,
+            'js_loaded': 0,
+            'kakao_sdk': 0,
+            'navigation': 0,
+            'mobile_css': 0,
+            'button_css': 0,
+            'inline_styles': 0
+        }
     }
     
-    # HTML 파일들 찾기
-    html_files = []
-    for root, dirs, files in os.walk('.'):
-        # 제외할 디렉토리
-        dirs[:] = [d for d in dirs if d not in {'node_modules', '.git', 'teste_repo'}]
-        
-        for file in files:
-            if file.endswith('.html'):
-                html_files.append(os.path.join(root, file))
-    
-    results['total_pages'] = len(html_files)
-    
-    for file_path in html_files:
-        try:
-            page_result = verify_single_page(file_path)
-            results['pages_checked'].append(page_result)
-            
-            if page_result['has_issues']:
-                results['issues'].extend(page_result['issues'])
-            else:
-                results['verified_pages'] += 1
-                
-        except Exception as e:
-            results['issues'].append({
-                'file': file_path,
-                'type': 'file_error',
-                'message': f"파일 읽기 오류: {str(e)}"
-            })
-    
-    return results
-
-def verify_single_page(file_path):
-    """단일 페이지 검증"""
-    
-    with open(file_path, 'r', encoding='utf-8') as f:
-        content = f.read()
-    
-    page_result = {
-        'file': file_path,
-        'has_issues': False,
-        'issues': []
-    }
-    
-    # 1. 기본 HTML 구조 확인
-    if not re.search(r'<!DOCTYPE html>', content, re.IGNORECASE):
-        page_result['issues'].append({
-            'type': 'missing_doctype',
-            'message': 'DOCTYPE 선언이 없습니다'
-        })
-    
-    if not re.search(r'<html[^>]*lang=', content, re.IGNORECASE):
-        page_result['issues'].append({
-            'type': 'missing_lang',
-            'message': 'html lang 속성이 없습니다'
-        })
-    
-    # 2. 메타태그 확인
-    if not re.search(r'<meta[^>]*charset=', content, re.IGNORECASE):
-        page_result['issues'].append({
-            'type': 'missing_charset',
-            'message': 'charset 메타태그가 없습니다'
-        })
-    
-    if not re.search(r'<meta[^>]*name=["\']viewport["\']', content, re.IGNORECASE):
-        page_result['issues'].append({
-            'type': 'missing_viewport',
-            'message': 'viewport 메타태그가 없습니다'
-        })
-    
-    # 3. CSS/JS 파일 참조 확인
-    css_refs = re.findall(r'<link[^>]*href=["\']([^"\']*\.css[^"\']*)["\']', content, re.IGNORECASE)
-    js_refs = re.findall(r'<script[^>]*src=["\']([^"\']*\.js[^"\']*)["\']', content, re.IGNORECASE)
-    
-    for css_ref in css_refs:
-        if css_ref.startswith('/'):
-            css_path = css_ref[1:]  # / 제거
-            if not os.path.exists(css_path):
-                page_result['issues'].append({
-                    'type': 'missing_css',
-                    'message': f'CSS 파일이 존재하지 않습니다: {css_ref}'
-                })
-    
-    for js_ref in js_refs:
-        if js_ref.startswith('/'):
-            js_path = js_ref[1:].split('?')[0]  # / 제거하고 쿼리 파라미터 제거
-            if not os.path.exists(js_path):
-                page_result['issues'].append({
-                    'type': 'missing_js',
-                    'message': f'JS 파일이 존재하지 않습니다: {js_ref}'
-                })
-    
-    # 4. 네비게이션/푸터 확인
-    if 'navbar-placeholder' in content and 'main.js' not in content:
-        page_result['issues'].append({
-            'type': 'missing_main_js',
-            'message': 'navbar-placeholder가 있지만 main.js가 없습니다'
-        })
-    
-    if 'footer-placeholder' in content and 'main.js' not in content:
-        page_result['issues'].append({
-            'type': 'missing_main_js',
-            'message': 'footer-placeholder가 있지만 main.js가 없습니다'
-        })
-    
-    # 5. CSP 메타태그 확인
-    csp_matches = re.findall(r'<meta[^>]*Content-Security-Policy[^>]*content=["\']([^"\']*)["\']', content, re.IGNORECASE)
-    for csp in csp_matches:
-        if csp.endswith(';') and not csp.endswith('";'):
-            page_result['issues'].append({
-                'type': 'csp_syntax_error',
-                'message': 'CSP 메타태그 문법 오류가 있을 수 있습니다'
-            })
-    
-    # 6. JavaScript 문법 오류 기본 확인
-    script_contents = re.findall(r'<script[^>]*>(.*?)</script>', content, re.DOTALL | re.IGNORECASE)
-    for script in script_contents:
-        if 'export ' in script and 'type="module"' not in content:
-            page_result['issues'].append({
-                'type': 'js_module_error',
-                'message': 'ES6 export 구문이 있지만 type="module"이 없습니다'
-            })
-    
-    page_result['has_issues'] = len(page_result['issues']) > 0
-    return page_result
-
-def generate_report(results):
-    """검증 결과 리포트 생성"""
-    
-    print("=" * 60)
-    print("📋 doha.kr 최종 검증 결과")
-    print("=" * 60)
-    print(f"전체 페이지: {results['total_pages']}개")
-    print(f"검증 통과: {results['verified_pages']}개")
-    print(f"문제 있는 페이지: {results['total_pages'] - results['verified_pages']}개")
-    print(f"총 이슈: {len(results['issues'])}개")
+    print("=" * 80)
+    print("🔍 doha.kr 최종 검증")
+    print("=" * 80)
+    print(f"검증 시작: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print()
     
-    if results['issues']:
-        print("🚨 발견된 이슈들:")
-        print("-" * 40)
-        
-        # 파일별로 그룹화
-        issues_by_file = {}
-        for issue in results['issues']:
-            file_path = issue.get('file', 'Unknown')
-            if file_path not in issues_by_file:
-                issues_by_file[file_path] = []
-            issues_by_file[file_path].append(issue)
-        
-        for file_path, file_issues in issues_by_file.items():
-            print(f"\n📄 {file_path}")
-            for issue in file_issues:
-                print(f"  ⚠️  {issue.get('type', 'unknown')}: {issue.get('message', 'No message')}")
+    for page in pages:
+        if os.path.exists(page):
+            with open(page, 'r', encoding='utf-8') as f:
+                content = f.read()
+            
+            page_issues = []
+            
+            # CSS 체크
+            if '/css/styles.css' in content:
+                results['statistics']['css_loaded'] += 1
+            else:
+                page_issues.append("메인 CSS 누락")
+            
+            if '/css/mobile-fixes.css' in content:
+                results['statistics']['mobile_css'] += 1
+            else:
+                page_issues.append("모바일 CSS 누락")
+            
+            if '/css/button-system.css' in content:
+                results['statistics']['button_css'] += 1
+            else:
+                page_issues.append("버튼 시스템 CSS 누락")
+            
+            # JS 체크
+            if '/js/main.js' in content and '/js/api-config.js' in content:
+                results['statistics']['js_loaded'] += 1
+            else:
+                page_issues.append("필수 JS 누락")
+            
+            # 카카오 SDK
+            if 'kakao_js_sdk/2.7.4' in content:
+                results['statistics']['kakao_sdk'] += 1
+            else:
+                page_issues.append("카카오 SDK 누락")
+            
+            # 네비게이션
+            if 'navbar-placeholder' in content and 'loadComponents' in content:
+                results['statistics']['navigation'] += 1
+            elif 'navbar-placeholder' not in content:
+                # 404 페이지 등은 네비게이션 없을 수 있음
+                pass
+            else:
+                page_issues.append("네비게이션 로드 누락")
+            
+            # 인라인 스타일 체크
+            inline_count = len(re.findall(r'style=["\'](.*?)["\']', content))
+            if inline_count <= 5:
+                results['statistics']['inline_styles'] += 1
+            else:
+                page_issues.append(f"과도한 인라인 스타일: {inline_count}개")
+            
+            # 중복 체크
+            css_files = re.findall(r'<link[^>]*href=["\'](.*?\.css.*?)["\']', content)
+            css_base = [f.split('?')[0] for f in css_files]
+            if len(css_base) != len(set(css_base)):
+                page_issues.append("CSS 중복 로드")
+            
+            js_files = re.findall(r'<script[^>]*src=["\'](.*?)["\']', content)
+            js_base = [f.split('?')[0] for f in js_files]
+            if len(js_base) != len(set(js_base)):
+                page_issues.append("JS 중복 로드")
+            
+            if page_issues:
+                results['issues'].append({
+                    'page': page,
+                    'issues': page_issues
+                })
+                print(f"❌ {page}: {len(page_issues)}개 문제")
+                for issue in page_issues:
+                    print(f"   • {issue}")
+            else:
+                results['passed_pages'] += 1
+                print(f"✅ {page}: 정상")
     
-    else:
-        print("✅ 모든 페이지가 검증을 통과했습니다!")
+    # 통계
+    print("\n" + "=" * 80)
+    print("📊 최종 통계")
+    print("=" * 80)
+    print(f"전체 페이지: {results['total_pages']}개")
+    print(f"정상 페이지: {results['passed_pages']}개")
+    print(f"문제 페이지: {results['total_pages'] - results['passed_pages']}개")
+    print(f"통과율: {(results['passed_pages'] / results['total_pages'] * 100):.1f}%")
+    print()
+    print("세부 통계:")
+    print(f"  • CSS 로드: {results['statistics']['css_loaded']}/{results['total_pages']}")
+    print(f"  • 모바일 CSS: {results['statistics']['mobile_css']}/{results['total_pages']}")
+    print(f"  • 버튼 CSS: {results['statistics']['button_css']}/{results['total_pages']}")
+    print(f"  • JS 로드: {results['statistics']['js_loaded']}/{results['total_pages']}")
+    print(f"  • 카카오 SDK: {results['statistics']['kakao_sdk']}/{results['total_pages']}")
+    print(f"  • 네비게이션: {results['statistics']['navigation']}/{results['total_pages']-1}")  # 404 제외
+    print(f"  • 인라인 스타일 적정: {results['statistics']['inline_styles']}/{results['total_pages']}")
     
-    print("\n" + "=" * 60)
-    
-    # 상세 결과를 JSON 파일로 저장
-    with open('verification_results.json', 'w', encoding='utf-8') as f:
+    # 결과 저장
+    with open('final_verification_report.json', 'w', encoding='utf-8') as f:
         json.dump(results, f, ensure_ascii=False, indent=2)
     
-    print("📄 상세 결과가 verification_results.json에 저장되었습니다.")
+    print("\n📁 최종 검증 리포트가 final_verification_report.json에 저장되었습니다.")
+    
+    return results
 
 if __name__ == "__main__":
     import sys
     import io
     
-    # Windows 콘솔 인코딩 문제 해결
     if sys.platform == 'win32':
         sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
         sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
     
-    print("doha.kr 전체 사이트 검증을 시작합니다...")
-    print()
-    
-    results = verify_all_pages()
-    generate_report(results)
+    final_verification()

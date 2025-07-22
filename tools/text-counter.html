@@ -37,7 +37,8 @@
 <!-- Moved to end of body -->
 <!-- Kakao JavaScript SDK -->
 <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js"></script>
-<!-- Kakao JavaScript SDK -->
+<!-- DOMPurify for XSS protection -->
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script>
 <!-- Structured Data -->
 <script type="application/ld+json">
     [
@@ -272,8 +273,8 @@
 <!-- 광고 영역 -->
 <div class="ad-container">
 <div aria-label="광고 영역" class="ad-label">광고</div>
-<div id="ad-container-9kfjod5na" style="min-height: 100px;">
-<div class="ad-placeholder" style="display: flex; align-items: center; justify-content: center; background: #f5f5f5; min-height: 100px; color: #999;">
+<div id="ad-container-9kfjod5na" class="min-height-100">
+<div class="ad-placeholder" class="ad-placeholder">
         광고 로딩 중...
     </div>
 </div>

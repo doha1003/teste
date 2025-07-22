@@ -650,3 +650,13 @@ function fallbackCopyToClipboard(text) {
     
     document.body.removeChild(textArea);
 }
+
+// Window 객체에 함수 등록
+window.startTest = startTest;
+window.nextQuestion = nextQuestion;
+window.previousQuestion = previousQuestion;
+window.selectOption = selectOption;
+window.showResult = showResult;
+window.restartTest = restartTest;
+window.shareToKakao = shareToKakao;
+window.copyResultLink = copyResultLink;

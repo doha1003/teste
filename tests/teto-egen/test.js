@@ -408,3 +408,13 @@ function reinitializeKakao() {
         }
     }
 }
+
+// 전역 함수로 등록
+window.selectGender = selectGender;
+window.startTest = startTest;
+window.showQuestion = showQuestion;
+window.selectOption = selectOption;
+window.nextQuestion = nextQuestion;
+window.previousQuestion = previousQuestion;
+window.shareKakao = shareKakao;
+window.restartTest = restartTest;
