@@ -40,7 +40,7 @@
     <!-- Moved to end of body -->
     
     <!-- Kakao SDK -->
-    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js"></script>
     
     <!-- Optimized CSS System -->
     <link rel="stylesheet" href="/css/styles.css?v=1753150228">
@@ -300,7 +300,11 @@ if ('IntersectionObserver' in window) {
     <script>
 
         if (typeof Kakao !== 'undefined') {
-            Kakao.init('19d8ba832f94d513957adc17883c1282');
+            if (window.API_CONFIG && window.API_CONFIG.KAKAO_JS_KEY) {
+    if (window.Kakao && !window.Kakao.isInitialized()) {
+        Kakao.init('19d8ba832f94d513957adc17883c1282');
+    }
+}
         }
     </script>
 

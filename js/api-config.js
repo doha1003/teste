@@ -4,7 +4,7 @@ window.initKakao = function() {
     try {
         if (typeof Kakao !== 'undefined' && Kakao.isInitialized && !Kakao.isInitialized()) {
             // 실제 앱 키는 환경변수나 설정파일에서 가져와야 함
-            const kakaoKey = window.KAKAO_APP_KEY || 'your_kakao_app_key_here';
+            const kakaoKey = window.KAKAO_APP_KEY || window.API_CONFIG?.KAKAO_JS_KEY || window.API_CONFIG?.kakao?.appKey || 'your_kakao_app_key_here';
             if (kakaoKey && kakaoKey !== 'your_kakao_app_key_here') {
                 Kakao.init(kakaoKey);
                 console.log('Kakao SDK 초기화 완료');
@@ -47,6 +47,9 @@ const API_CONFIG = {
     kakao: {
         appKey: '8b5c6e8f97ec3d51a6f784b8b4b5ed99'
     },
+    
+    // 카카오 JS 키 (호환성을 위해 추가)
+    KAKAO_JS_KEY: '8b5c6e8f97ec3d51a6f784b8b4b5ed99',
     
     // Google AdSense
     adsense: {

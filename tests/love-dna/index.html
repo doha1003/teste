@@ -273,15 +273,18 @@ if ('IntersectionObserver' in window) {
     <div id="footer-placeholder"></div>
 
     <!-- 구글 애드센스 초기화 -->
-    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js"></script>
     <script src="/js/api-config.js?v=1753150228"></script>
-    <script src="/js/components.js?v=1753150228"></script>
     <script src="/js/main.js?v=1753150228"></script>
     
     <!-- Kakao SDK 초기화 -->
     <script>
         if (typeof Kakao !== 'undefined' && !Kakao.isInitialized()) {
-            Kakao.init('8b5c6e8f97ec3d51a6f784b8b4b5ed99');
+            if (window.API_CONFIG && window.API_CONFIG.KAKAO_JS_KEY) {
+    if (window.Kakao && !window.Kakao.isInitialized()) {
+        Kakao.init('8b5c6e8f97ec3d51a6f784b8b4b5ed99');
+    }
+}
         }
     </script>
     
