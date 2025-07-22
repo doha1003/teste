@@ -45,11 +45,11 @@ const API_CONFIG = {
     
     // 카카오 SDK
     kakao: {
-        appKey: '8b5c6e8f97ec3d51a6f784b8b4b5ed99'
+        appKey: '19d8ba832f94d513957adc17883c1282'
     },
     
     // 카카오 JS 키 (호환성을 위해 추가)
-    KAKAO_JS_KEY: '8b5c6e8f97ec3d51a6f784b8b4b5ed99',
+    KAKAO_JS_KEY: '19d8ba832f94d513957adc17883c1282',
     
     // Google AdSense
     adsense: {
