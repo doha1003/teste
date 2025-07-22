@@ -2,36 +2,6 @@
 <html lang="ko">
 <head>
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;">
-
-<script id="performance-monitor">
-// 개선된 성능 모니터링
-window.addEventListener('load', function() {
-    if (window.performance && window.performance.timing) {
-        const loadTime = window.performance.timing.loadEventEnd - window.performance.timing.navigationStart;
-        console.log('페이지 로딩 시간:', loadTime + 'ms');
-        
-        if (loadTime > 10000) {
-            console.warn('페이지 로딩이 느립니다:', loadTime + 'ms');
-        }
-        
-        // 리소스 로딩 분석
-        const resources = performance.getEntriesByType('resource');
-        const slowResources = resources.filter(r => r.duration > 1000);
-        if (slowResources.length > 0) {
-            console.warn('느린 리소스들:', slowResources.map(r => ({ name: r.name, duration: r.duration })));
-        }
-    }
-});
-
-// CSP 오류 감지
-window.addEventListener('securitypolicyviolation', function(e) {
-    console.warn('CSP 위반 감지:', {
-        directive: e.violatedDirective,
-        source: e.sourceFile,
-        line: e.lineNumber
-    });
-});
-</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI 사주팔자 - 정확한 만세력 기반 사주 분석 | doha.kr</title>
@@ -40,7 +10,6 @@ window.addEventListener('securitypolicyviolation', function(e) {
     <meta name="author" content="doha.kr">
     
     <!-- Security Headers -->
-    self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:;">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), accelerometer=(), gyroscope=()">
@@ -58,17 +27,34 @@ window.addEventListener('securitypolicyviolation', function(e) {
     
     <!-- Google AdSense -->
     <!-- Moved to end of body -->
+    
+    <!-- 만세력 데이터 먼저 로드 -->
+    <script src="/js/manseryeok-database.js"></script>
+    <script src="/js/lunar-calendar-compact.js"></script>
+    <script src="/js/saju-calculator.js"></script>
+    
     <!-- Optimized CSS System -->
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="/css/pages/saju.css">
-    self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:;">
+
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
-    self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com;">
+
+    <script id="performance-monitor">
+
+    window.addEventListener('load', function() {
+        if (window.performance && window.performance.timing) {
+            const loadTime = window.performance.timing.loadEventEnd - window.performance.timing.navigationStart;
+            if (loadTime > 5000) {
+                console.warn('Page loading is slow:', loadTime + 'ms');
+            }
+        }
+    });
+    </script>
 </head>
 <body class="saju-page">
     <!-- 네비게이션 바 -->
     <div id="navbar-placeholder"></div>
-    <script src="/js/manseryeok-database.js"></script>
+    
     
     <!-- 페이지 헤더 -->
     <section class="page-header">
@@ -169,8 +155,7 @@ window.addEventListener('securitypolicyviolation', function(e) {
         광고 로딩 중...
     </div>
 </div>
-<script>
-// Intersection Observer로 광고 지연 로딩
+<script>
 if ('IntersectionObserver' in window) {
     const adObserver = new IntersectionObserver(function(entries) {
         entries.forEach(function(entry) {
@@ -218,15 +203,10 @@ if ('IntersectionObserver' in window) {
     <div id="footer-placeholder"></div>
     
     <!-- External JavaScript -->
-    <script defer src="/js/api-config.js"></script>
-    <script src="/js/bundle.min.js" defer></script>
-    <script src="/js/main.min.js"></script>
-    <script src="/js/manseryeok-converter.js"></script>
-    <script src="/js/saju-calculator.min.js"></script>
-    <script src="/js/gemini-api.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/api-config.js"></script>
     
-    <script>
-        // 향상된 사주 해석 생성 함수
+    <script>
         function generateEnhancedInterpretation(saju) {
             const elements = analyzeElements(saju);
             const personality = analyzePersonality(saju);
@@ -240,9 +220,7 @@ if ('IntersectionObserver' in window) {
                 compatibility,
                 advice: generateAdvice(saju)
             };
-        }
-        
-        // 오행 분석 함수
+        }
         function analyzeElements(saju) {
             const elements = {
                 목: 0, 화: 0, 토: 0, 금: 0, 수: 0
@@ -252,16 +230,12 @@ if ('IntersectionObserver' in window) {
             pillars.forEach(pillar => {
                 if (pillar) {
                     const stem = pillar.charAt(0);
-                    const branch = pillar.charAt(1);
-                    
-                    // 천간 오행
+                    const branch = pillar.charAt(1);
                     if ('갑을'.includes(stem)) elements.목++;
                     else if ('병정'.includes(stem)) elements.화++;
                     else if ('무기'.includes(stem)) elements.토++;
                     else if ('경신'.includes(stem)) elements.금++;
-                    else if ('임계'.includes(stem)) elements.수++;
-                    
-                    // 지지 오행
+                    else if ('임계'.includes(stem)) elements.수++;
                     if ('인묘'.includes(branch)) elements.목++;
                     else if ('사오'.includes(branch)) elements.화++;
                     else if ('진술축미'.includes(branch)) elements.토++;
@@ -496,8 +470,7 @@ if ('IntersectionObserver' in window) {
         }
     </script>
     
-    <script>
-        // 사주 생성 함수
+    <script>
         function generateSaju(event) {
             event.preventDefault();
             
@@ -507,37 +480,24 @@ if ('IntersectionObserver' in window) {
             const birthMonth = parseInt(document.getElementById('birthMonth').value);
             const birthDay = parseInt(document.getElementById('birthDay').value);
             const birthTime = parseInt(document.getElementById('birthTime').value);
-            const isLunar = document.getElementById('isLunar').checked;
-            
-            // 로딩 표시
+            const isLunar = document.getElementById('isLunar').checked;
             document.getElementById('sajuResult').style.display = 'block';
             document.getElementById('sajuResult').innerHTML = `
                 <div class="fortune-loading-container">
                     <div class="fortune-loading-spinner"></div>
                     <div class="fortune-loading-text">🔮 AI가 ${userName}님의 사주팔자를 분석하고 있습니다<span class="fortune-loading-dots"></span></div>
                 </div>
-            `;
-            
-            // 폼 숨기기
-            document.getElementById('sajuForm').style.display = 'none';
-            
-            // 사주 계산 및 표시
-            setTimeout(() => {
-                // 만세력 데이터베이스를 활용한 정확한 사주 계산
+            `;
+            document.getElementById('sajuForm').style.display = 'none';
+            setTimeout(() => {
                 const saju = calculateSajuWithManseryeok(birthYear, birthMonth, birthDay, birthTime, isLunar);
                 displaySajuResult(userName, gender, saju);
             }, 2000);
-        }
-        // 만세력 데이터베이스를 활용한 정확한 사주 계산
-        function calculateSajuWithManseryeok(year, month, day, hour, isLunar) {
-            // 기본 사주 계산
-            let saju = window.sajuCalculator.calculateSaju(year, month, day, hour, isLunar);
-            
-            // 만세력 데이터베이스에서 정확한 일주 확인
+        }
+        function calculateSajuWithManseryeok(year, month, day, hour, isLunar) {
+            let saju = window.sajuCalculator.calculateSaju(year, month, day, hour, isLunar);
             if (window.getManseryeokData) {
-                let targetYear = year, targetMonth = month, targetDay = day;
-                
-                // 음력인 경우 양력으로 변환
+                let targetYear = year, targetMonth = month, targetDay = day;
                 if (isLunar && window.lunarToSolar) {
                     const solarDate = window.lunarToSolar(year, month, day);
                     if (solarDate) {
@@ -545,26 +505,19 @@ if ('IntersectionObserver' in window) {
                         targetMonth = solarDate.month;
                         targetDay = solarDate.day;
                     }
-                }
-                
-                // 만세력 데이터에서 정확한 간지 가져오기
+                }
                 const manseryeokData = window.getManseryeokData(targetYear, targetMonth, targetDay);
-                if (manseryeokData) {
-                    // 정확한 일주로 교체
+                if (manseryeokData) {
                     saju.dayPillar = {
                         stem: manseryeokData.dayGanji.charAt(0),
                         branch: manseryeokData.dayGanji.charAt(1)
-                    };
-                    
-                    // 연주도 교체 (년간지)
+                    };
                     if (manseryeokData.yearGanji) {
                         saju.yearPillar = {
                             stem: manseryeokData.yearGanji.charAt(0),
                             branch: manseryeokData.yearGanji.charAt(1)
                         };
-                    }
-                    
-                    // 일주가 바뀌었으므로 십신 재계산
+                    }
                     saju.dayMaster = saju.dayPillar.stem;
                     saju.dayMasterElement = window.sajuCalculator.stemElements[saju.dayMaster];
                     saju.tenGods = window.sajuCalculator.calculateTenGods(saju.dayMaster, {
@@ -572,9 +525,7 @@ if ('IntersectionObserver' in window) {
                         month: saju.monthPillar.stem,
                         day: saju.dayPillar.stem,
                         hour: saju.hourPillar.stem
-                    });
-                    
-                    // 오행 분석 재계산
+                    });
                     saju.elements = window.sajuCalculator.analyzeElements([
                         saju.yearPillar.stem, saju.yearPillar.branch,
                         saju.monthPillar.stem, saju.monthPillar.branch,
@@ -585,11 +536,8 @@ if ('IntersectionObserver' in window) {
             }
             
             return saju;
-        }
-        
-        // 사주 결과 표시
-        function displaySajuResult(userName, gender, saju) {
-            // 사주 해석 생성
+        }
+        function displaySajuResult(userName, gender, saju) {
             const interpretation = generateEnhancedInterpretation(saju);
             const today = new Date();
             
@@ -744,9 +692,7 @@ if ('IntersectionObserver' in window) {
             `;
             
             document.getElementById('sajuResult').innerHTML = resultHTML;
-        }
-        
-        // 폼 리셋 함수
+        }
         function resetSajuForm() {
             document.getElementById('sajuForm').style.display = 'block';
             document.getElementById('sajuResult').style.display = 'none';
@@ -760,8 +706,7 @@ if ('IntersectionObserver' in window) {
     <!-- Non-critical scripts moved here for performance -->
     
 <!-- Google AdSense 지연 로딩 -->
-<script>
-// AdSense 지연 로딩 (페이지 로드 후 2초 대기)
+<script>
 window.addEventListener('load', function() {
     setTimeout(function() {
         var adsScript = document.createElement('script');
@@ -773,8 +718,7 @@ window.addEventListener('load', function() {
 });
 </script>
 
-<script>
-// AdSense 중복 초기화 방지
+<script>
 window.adsenseInitialized = window.adsenseInitialized || false;
 
 function initializeAdSense() {
@@ -783,9 +727,7 @@ function initializeAdSense() {
         return;
     }
     
-    window.adsenseInitialized = true;
-    
-    // 기존 광고 블록 확인 및 초기화
+    window.adsenseInitialized = true;
     const adBlocks = document.querySelectorAll('.adsbygoogle');
     adBlocks.forEach((ad, index) => {
         if (!ad.dataset.adsbygoogleStatus) {
@@ -797,20 +739,15 @@ function initializeAdSense() {
             }
         }
     });
-}
-
-// 페이지 로드 후 AdSense 초기화
+}
 window.addEventListener('load', function() {
     setTimeout(initializeAdSense, 1000);
 });
 </script>
 
-<script>
-// 통합 AdSense 초기화 (중복 방지)
+<script>
 (function() {
-    'use strict';
-    
-    // 전역 플래그로 초기화 상태 관리
+    'use strict';
     window.__adsenseLoaded = window.__adsenseLoaded || false;
     window.__adsenseQueue = window.__adsenseQueue || [];
     
@@ -819,44 +756,31 @@ window.addEventListener('load', function() {
         
         const ads = document.querySelectorAll('.adsbygoogle:not([data-adsbygoogle-status])');
         
-        if (ads.length === 0) return;
-        
-        // AdSense 스크립트가 로드되었는지 확인
+        if (ads.length === 0) return;
         if (typeof adsbygoogle === 'undefined') {
             setTimeout(initAdsense, 500);
             return;
         }
         
-        window.__adsenseLoaded = true;
-        
-        // 각 광고 슬롯 초기화
+        window.__adsenseLoaded = true;
         ads.forEach((ad, index) => {
-            try {
-                // 중복 초기화 방지
-                if (ad.getAttribute('data-adsbygoogle-status')) return;
-                
-                // 초기화 시도
-                (adsbygoogle = window.adsbygoogle || []).push({});
-                
-                // 상태 표시
+            try {
+                if (ad.getAttribute('data-adsbygoogle-status')) return;
+                (adsbygoogle = window.adsbygoogle || []).push({});
                 ad.setAttribute('data-adsbygoogle-status', 'done');
                 
             } catch (e) {
                 console.warn('AdSense 초기화 실패:', index, e.message);
             }
         });
-    }
-    
-    // 페이지 로드 완료 후 초기화
+    }
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(initAdsense, 1000);
         });
     } else {
         setTimeout(initAdsense, 1000);
-    }
-    
-    // 에러 핸들러 추가
+    }
     window.addEventListener('error', function(e) {
         if (e.message && e.message.includes('adsbygoogle.push() error')) {
             e.preventDefault();
@@ -870,47 +794,34 @@ window.addEventListener('load', function() {
 <!-- AdSense 통합 초기화 -->
 <script>
 (function() {
-    'use strict';
-    
-    // 전역 초기화 플래그
-    window.__adsInitialized = false;
-    
-    // AdSense 초기화 함수
+    'use strict';
+    window.__adsInitialized = false;
     function initializeAds() {
         if (window.__adsInitialized) return;
         
         const ads = document.querySelectorAll('.adsbygoogle:not([data-adsbygoogle-status])');
-        if (ads.length === 0) return;
-        
-        // AdSense 라이브러리 로드 확인
+        if (ads.length === 0) return;
         if (typeof adsbygoogle === 'undefined') {
             setTimeout(initializeAds, 100);
             return;
         }
         
-        window.__adsInitialized = true;
-        
-        // 각 광고 초기화
+        window.__adsInitialized = true;
         ads.forEach((ad) => {
             try {
                 (adsbygoogle = window.adsbygoogle || []).push({});
                 ad.setAttribute('data-adsbygoogle-status', 'done');
-            } catch (e) {
-                // 오류 무시
+            } catch (e) {
             }
         });
-    }
-    
-    // DOM 로드 후 실행
+    }
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(initializeAds, 500);
         });
     } else {
         setTimeout(initializeAds, 500);
-    }
-    
-    // 전역 에러 핸들러로 AdSense 오류 차단
+    }
     window.addEventListener('error', function(e) {
         if (e.message && e.message.includes('adsbygoogle.push() error')) {
             e.preventDefault();

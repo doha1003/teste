@@ -2,36 +2,6 @@
 <html lang="ko">
 <head>
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;">
-
-<script id="performance-monitor">
-// 개선된 성능 모니터링
-window.addEventListener('load', function() {
-    if (window.performance && window.performance.timing) {
-        const loadTime = window.performance.timing.loadEventEnd - window.performance.timing.navigationStart;
-        console.log('페이지 로딩 시간:', loadTime + 'ms');
-        
-        if (loadTime > 10000) {
-            console.warn('페이지 로딩이 느립니다:', loadTime + 'ms');
-        }
-        
-        // 리소스 로딩 분석
-        const resources = performance.getEntriesByType('resource');
-        const slowResources = resources.filter(r => r.duration > 1000);
-        if (slowResources.length > 0) {
-            console.warn('느린 리소스들:', slowResources.map(r => ({ name: r.name, duration: r.duration })));
-        }
-    }
-});
-
-// CSP 오류 감지
-window.addEventListener('securitypolicyviolation', function(e) {
-    console.warn('CSP 위반 감지:', {
-        directive: e.violatedDirective,
-        source: e.sourceFile,
-        line: e.lineNumber
-    });
-});
-</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>문의하기 - doha.kr | 고객지원 및 의견수렴</title>
@@ -67,21 +37,30 @@ window.addEventListener('securitypolicyviolation', function(e) {
     <link rel="stylesheet" href="/css/pages/contact.css">
     
     <!-- Security Headers -->
-    self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com; script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://cdn.jsdelivr.net https://fundingchoicesmessages.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://googleads.g.doubleclick.net;">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
     
     <!-- DOMPurify for XSS Protection -->
-    <script defer src="https://cdn.jsdelivr.net/npm/dompurify@3.0.5/dist/purify.min.js" crossorigin="anonymous"></script>
-    
+
     <!-- Google AdSense -->
     <!-- Moved to end of body -->
     
     <!-- Optimized CSS System -->
     <link rel="stylesheet" href="/css/styles.css">
-    self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:;">
+
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
-    self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com;">
+
+    <script id="performance-monitor">
+
+    window.addEventListener('load', function() {
+        if (window.performance && window.performance.timing) {
+            const loadTime = window.performance.timing.loadEventEnd - window.performance.timing.navigationStart;
+            if (loadTime > 5000) {
+                console.warn('Page loading is slow:', loadTime + 'ms');
+            }
+        }
+    });
+    </script>
 </head>
 <body>
     <!-- 네비게이션 바 -->
@@ -177,7 +156,7 @@ window.addEventListener('securitypolicyviolation', function(e) {
     </div>
 </div>
 <script>
-// Intersection Observer로 광고 지연 로딩
+
 if ('IntersectionObserver' in window) {
     const adObserver = new IntersectionObserver(function(entries) {
         entries.forEach(function(entry) {
@@ -189,7 +168,9 @@ if ('IntersectionObserver' in window) {
                  data-ad-slot="3911401606"
                  data-ad-format="auto"
                  data-full-width-responsive="true"></ins>`;
-                if (typeof adsbygoogle !== 'undefined') {
+                if (typeof window.initializeDynamicAd === 'function') {
+                    window.initializeDynamicAd(container.querySelector('.adsbygoogle'));
+                } else if (typeof adsbygoogle !== 'undefined') {
                     (adsbygoogle = window.adsbygoogle || []).push({});
                 }
                 adObserver.unobserve(container);
@@ -271,18 +252,14 @@ if ('IntersectionObserver' in window) {
     <div id="footer-placeholder"></div>
     
     <!-- External JavaScript -->
-    <script defer src="/js/api-config.js"></script>
-    <script src="/js/bundle.min.js" defer></script>
-    <script src="/js/main.min.js"></script>
-    
+
     <script>
-        // FAQ 토글
+
         document.querySelectorAll('.faq-question').forEach(question => {
             question.addEventListener('click', () => {
                 const faqItem = question.parentElement;
                 faqItem.classList.toggle('active');
-                
-                // 다른 FAQ 항목 닫기
+
                 document.querySelectorAll('.faq-item').forEach(item => {
                     if (item !== faqItem) {
                         item.classList.remove('active');
@@ -290,8 +267,7 @@ if ('IntersectionObserver' in window) {
                 });
             });
         });
-        
-        // 입력 검증 함수들
+
         function validateInput(input, type) {
             if (!input || typeof input !== 'string') return false;
             
@@ -311,9 +287,9 @@ if ('IntersectionObserver' in window) {
         
         function sanitizeInput(input) {
             if (!input) return '';
-            // DOMPurify로 기본 정화
+
             const sanitized = DOMPurify.sanitize(input, {ALLOWED_TAGS: [], ALLOWED_ATTR: []});
-            // 추가 특수문자 필터링
+
             return sanitized.replace(/[<>\"'&]/g, '');
         }
         
@@ -330,21 +306,19 @@ if ('IntersectionObserver' in window) {
             form.insertBefore(errorDiv, form.firstChild);
             setTimeout(() => errorDiv.remove(), 5000);
         }
-        
-        // 폼 제출 처리 (보안 강화)
+
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
             try {
-                // 폼 데이터 수집
+
                 const rawData = {
                     name: document.getElementById('name').value.trim(),
                     email: document.getElementById('email').value.trim(),
                     subject: document.getElementById('subject').value.trim(),
                     message: document.getElementById('message').value.trim()
                 };
-                
-                // 입력 검증
+
                 if (!validateInput(rawData.name, 'name')) {
                     showError('이름은 2-50자의 한글/영문만 입력 가능합니다.');
                     return;
@@ -364,34 +338,28 @@ if ('IntersectionObserver' in window) {
                     showError('문의 내용은 10-2000자로 입력해주세요.');
                     return;
                 }
-                
-                // 입력 데이터 정화
+
                 const formData = {
                     name: sanitizeInput(rawData.name),
                     email: sanitizeInput(rawData.email),
                     subject: sanitizeInput(rawData.subject),
                     message: sanitizeInput(rawData.message)
                 };
-                
-                // 안전한 이메일 링크 생성
+
                 const encodedSubject = encodeURIComponent(`[doha.kr 문의] ${formData.subject}`);
                 const encodedBody = encodeURIComponent(`이름: ${formData.name}\n이메일: ${formData.email}\n\n문의 내용:\n${formData.message}`);
                 
                 const mailtoLink = `mailto:youtubdoha@gmail.com?subject=${encodedSubject}&body=${encodedBody}`;
-                
-                // 링크 길이 제한 (일부 이메일 클라이언트의 URL 길이 제한)
+
                 if (mailtoLink.length > 2000) {
                     showError('문의 내용이 너무 깁니다. 조금 더 간단하게 작성해주세요.');
                     return;
                 }
-                
-                // 이메일 클라이언트 열기
+
                 window.location.href = mailtoLink;
-                
-                // 폼 리셋
+
                 this.reset();
-                
-                // 성공 메시지
+
                 const successDiv = document.createElement('div');
                 successDiv.className = 'success-message';
                 successDiv.style.cssText = 'color: #27ae60; background: #d5f4e6; padding: 10px; border-radius: 5px; margin: 10px 0; text-align: center;';
@@ -405,8 +373,7 @@ if ('IntersectionObserver' in window) {
                 showError('문의 전송 중 오류가 발생했습니다. 다시 시도해주세요.');
             }
         });
-        
-        // 실시간 입력 검증
+
         function addInputValidation() {
             const inputs = [
                 {id: 'name', type: 'name', message: '이름은 2-50자의 한글/영문만 입력 가능합니다.'},
@@ -422,16 +389,13 @@ if ('IntersectionObserver' in window) {
                 input.addEventListener('blur', function() {
                     const value = this.value.trim();
                     const isValid = validateInput(value, type);
-                    
-                    // 기존 에러 메시지 제거
+
                     const existingError = this.parentElement.querySelector('.field-error');
                     if (existingError) existingError.remove();
-                    
-                    // 검증 결과에 따른 스타일 적용
+
                     if (value && !isValid) {
                         this.style.borderColor = '#e74c3c';
-                        
-                        // 에러 메시지 표시
+
                         const errorSpan = document.createElement('span');
                         errorSpan.className = 'field-error';
                         errorSpan.style.cssText = 'color: #e74c3c; font-size: 0.875rem; margin-top: 0.25rem; display: block;';
@@ -443,7 +407,7 @@ if ('IntersectionObserver' in window) {
                 });
                 
                 input.addEventListener('input', function() {
-                    // 실시간 문자 카운터 (message field용)
+
                     if (type === 'message') {
                         const counter = this.parentElement.querySelector('.char-counter') || 
                                       document.createElement('span');
@@ -458,178 +422,15 @@ if ('IntersectionObserver' in window) {
                 });
             });
         }
-        
-        // DOM 로드 후 실행
+
         document.addEventListener('DOMContentLoaded', function() {
             addInputValidation();
         });
-        
-        // 애드센스 광고 로드
-        (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 
     <!-- Non-critical scripts moved here for performance -->
-    
-<!-- Google AdSense 지연 로딩 -->
-<script>
-// AdSense 지연 로딩 (페이지 로드 후 2초 대기)
-window.addEventListener('load', function() {
-    setTimeout(function() {
-        var adsScript = document.createElement('script');
-        adsScript.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222';
-        adsScript.crossOrigin = 'anonymous';
-        adsScript.defer = true;
-        document.head.appendChild(adsScript);
-    }, 2000);
-});
-</script>
 
-<script>
-// AdSense 중복 초기화 방지
-window.adsenseInitialized = window.adsenseInitialized || false;
-
-function initializeAdSense() {
-    if (window.adsenseInitialized) {
-        console.log('AdSense already initialized');
-        return;
-    }
-    
-    window.adsenseInitialized = true;
-    
-    // 기존 광고 블록 확인 및 초기화
-    const adBlocks = document.querySelectorAll('.adsbygoogle');
-    adBlocks.forEach((ad, index) => {
-        if (!ad.dataset.adsbygoogleStatus) {
-            try {
-                (adsbygoogle = window.adsbygoogle || []).push({});
-                console.log('AdSense block initialized:', index);
-            } catch (error) {
-                console.warn('AdSense initialization error:', error);
-            }
-        }
-    });
-}
-
-// 페이지 로드 후 AdSense 초기화
-window.addEventListener('load', function() {
-    setTimeout(initializeAdSense, 1000);
-});
-</script>
-
-<script>
-// 통합 AdSense 초기화 (중복 방지)
-(function() {
-    'use strict';
-    
-    // 전역 플래그로 초기화 상태 관리
-    window.__adsenseLoaded = window.__adsenseLoaded || false;
-    window.__adsenseQueue = window.__adsenseQueue || [];
-    
-    function initAdsense() {
-        if (window.__adsenseLoaded) return;
-        
-        const ads = document.querySelectorAll('.adsbygoogle:not([data-adsbygoogle-status])');
-        
-        if (ads.length === 0) return;
-        
-        // AdSense 스크립트가 로드되었는지 확인
-        if (typeof adsbygoogle === 'undefined') {
-            setTimeout(initAdsense, 500);
-            return;
-        }
-        
-        window.__adsenseLoaded = true;
-        
-        // 각 광고 슬롯 초기화
-        ads.forEach((ad, index) => {
-            try {
-                // 중복 초기화 방지
-                if (ad.getAttribute('data-adsbygoogle-status')) return;
-                
-                // 초기화 시도
-                (adsbygoogle = window.adsbygoogle || []).push({});
-                
-                // 상태 표시
-                ad.setAttribute('data-adsbygoogle-status', 'done');
-                
-            } catch (e) {
-                console.warn('AdSense 초기화 실패:', index, e.message);
-            }
-        });
-    }
-    
-    // 페이지 로드 완료 후 초기화
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(initAdsense, 1000);
-        });
-    } else {
-        setTimeout(initAdsense, 1000);
-    }
-    
-    // 에러 핸들러 추가
-    window.addEventListener('error', function(e) {
-        if (e.message && e.message.includes('adsbygoogle.push() error')) {
-            e.preventDefault();
-            console.warn('AdSense 중복 초기화 방지됨');
-            return false;
-        }
-    }, true);
-})();
-</script>
-
-<!-- AdSense 통합 초기화 -->
-<script>
-(function() {
-    'use strict';
-    
-    // 전역 초기화 플래그
-    window.__adsInitialized = false;
-    
-    // AdSense 초기화 함수
-    function initializeAds() {
-        if (window.__adsInitialized) return;
-        
-        const ads = document.querySelectorAll('.adsbygoogle:not([data-adsbygoogle-status])');
-        if (ads.length === 0) return;
-        
-        // AdSense 라이브러리 로드 확인
-        if (typeof adsbygoogle === 'undefined') {
-            setTimeout(initializeAds, 100);
-            return;
-        }
-        
-        window.__adsInitialized = true;
-        
-        // 각 광고 초기화
-        ads.forEach((ad) => {
-            try {
-                (adsbygoogle = window.adsbygoogle || []).push({});
-                ad.setAttribute('data-adsbygoogle-status', 'done');
-            } catch (e) {
-                // 오류 무시
-            }
-        });
-    }
-    
-    // DOM 로드 후 실행
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(initializeAds, 500);
-        });
-    } else {
-        setTimeout(initializeAds, 500);
-    }
-    
-    // 전역 에러 핸들러로 AdSense 오류 차단
-    window.addEventListener('error', function(e) {
-        if (e.message && e.message.includes('adsbygoogle.push() error')) {
-            e.preventDefault();
-            e.stopPropagation();
-            return false;
-        }
-    }, true);
-})();
-</script>
+<!-- Unified AdSense Script -->
+<script src="/js/adsense-unified.js"></script>
 </body>
 </html>
