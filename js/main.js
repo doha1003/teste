@@ -1,6 +1,3 @@
-// 스크립트 로딩 확인
-console.log('main.js 로드 시작');
-
 // 모바일 메뉴 토글 - DohaApp의 기능 사용
 function toggleMobileMenu() {
     if (window.DohaApp && DohaApp.components && DohaApp.components.mobileMenu) {
@@ -787,23 +784,15 @@ async function loadComponent(componentName, targetClass) {
 
 // 네비게이션과 푸터 컴포넌트 로드
 async function loadComponents() {
-    console.log('loadComponents 함수 실행됨');
     const navTarget = document.querySelector('#navbar-placeholder');
     const footerTarget = document.querySelector('#footer-placeholder');
     
-    console.log('navbar-placeholder 존재:', !!navTarget);
-    console.log('footer-placeholder 존재:', !!footerTarget);
-    
     if (navTarget) {
-        console.log('navbar 로딩 시작');
         await loadComponentById('navbar', 'navbar-placeholder');
-        console.log('navbar 로딩 완료');
     }
     
     if (footerTarget) {
-        console.log('footer 로딩 시작');
         await loadComponentById('footer', 'footer-placeholder');
-        console.log('footer 로딩 완료');
     }
 }
 
@@ -912,17 +901,12 @@ function initAdSense() {
 
 // DOM 로드 완료 시 초기화
 document.addEventListener('DOMContentLoaded', async function() {
-    console.log('DOMContentLoaded 이벤트 발생');
-    
     // DohaApp이 이미 초기화되었는지 확인
     const isDohaAppInitialized = window.DohaApp && typeof DohaApp.init === 'function';
-    console.log('DohaApp 초기화 상태:', isDohaAppInitialized);
     
     if (!isDohaAppInitialized) {
-        console.log('컴포넌트 로딩 시작');
         // DohaApp이 없을 때만 컴포넌트 로드
         await loadComponents();
-        console.log('컴포넌트 로딩 완료');
     }
     
     // 스타일 삽입
