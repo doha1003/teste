@@ -29,7 +29,8 @@ if (document.readyState === 'loading') {
 } else {
     setTimeout(window.initKakao, 100);
 }
-\n/**
+
+/**
  * API 설정 및 보안 관리
  * 이 파일은 민감한 정보를 포함하므로 절대 공개 저장소에 올리지 마세요!
  */

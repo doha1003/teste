@@ -2,36 +2,6 @@
 <html lang="ko">
 <head>
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;">
-
-<script id="performance-monitor">
-// 개선된 성능 모니터링
-window.addEventListener('load', function() {
-    if (window.performance && window.performance.timing) {
-        const loadTime = window.performance.timing.loadEventEnd - window.performance.timing.navigationStart;
-        console.log('페이지 로딩 시간:', loadTime + 'ms');
-        
-        if (loadTime > 10000) {
-            console.warn('페이지 로딩이 느립니다:', loadTime + 'ms');
-        }
-        
-        // 리소스 로딩 분석
-        const resources = performance.getEntriesByType('resource');
-        const slowResources = resources.filter(r => r.duration > 1000);
-        if (slowResources.length > 0) {
-            console.warn('느린 리소스들:', slowResources.map(r => ({ name: r.name, duration: r.duration })));
-        }
-    }
-});
-
-// CSP 오류 감지
-window.addEventListener('securitypolicyviolation', function(e) {
-    console.warn('CSP 위반 감지:', {
-        directive: e.violatedDirective,
-        source: e.sourceFile,
-        line: e.lineNumber
-    });
-});
-</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>doha.kr 소개 - 일상을 더 재미있게 만드는 공간</title>
@@ -56,9 +26,20 @@ window.addEventListener('securitypolicyviolation', function(e) {
     
     <!-- Optimized CSS System -->
     <link rel="stylesheet" href="/css/styles.css">
-    self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:;">
+
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
-    self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com;">
+
+    <script id="performance-monitor">
+
+    window.addEventListener('load', function() {
+        if (window.performance && window.performance.timing) {
+            const loadTime = window.performance.timing.loadEventEnd - window.performance.timing.navigationStart;
+            if (loadTime > 5000) {
+                console.warn('Page loading is slow:', loadTime + 'ms');
+            }
+        }
+    });
+    </script>
 </head>
 <body>
     <!-- 네비게이션 바 -->
@@ -212,6 +193,6 @@ window.addEventListener('securitypolicyviolation', function(e) {
     <div id="footer-placeholder"></div>
     
     <!-- JavaScript -->
-    <script src="/js/main.js"></script>
+    
 </body>
 </html>

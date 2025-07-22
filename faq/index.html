@@ -467,7 +467,8 @@
         광고 로딩 중...
     </div>
 </div>
-<script>
+<script>
+
 if ('IntersectionObserver' in window) {
     const adObserver = new IntersectionObserver(function(entries) {
         entries.forEach(function(entry) {
@@ -505,46 +506,56 @@ if ('IntersectionObserver' in window) {
     <script src="/js/security.js"></script>
     
     <!-- FAQ 기능 JavaScript -->
-    <script>
+    <script>
+
         document.addEventListener('DOMContentLoaded', function() {
             const faqQuestions = document.querySelectorAll('.faq-question');
             const searchInput = document.getElementById('searchInput');
             const filterBtns = document.querySelectorAll('.filter-btn');
             const faqCategories = document.querySelectorAll('.faq-category');
-            const noResults = document.getElementById('noResults');
+            const noResults = document.getElementById('noResults');
+
             faqQuestions.forEach(question => {
                 question.addEventListener('click', function() {
                     const faqItem = this.parentElement;
-                    const isActive = faqItem.classList.contains('active');
+                    const isActive = faqItem.classList.contains('active');
+
                     document.querySelectorAll('.faq-item.active').forEach(item => {
                         item.classList.remove('active');
-                    });
+                    });
+
                     if (!isActive) {
                         faqItem.classList.add('active');
                     }
                 });
-            });
-            searchInput.addEventListener('input', function() {
+            });
+
+            searchInput.addEventListener('input', function() {
+
                 const sanitizedValue = Security.sanitizeInput(this.value, 'text');
                 const searchTerm = sanitizedValue.toLowerCase();
                 filterFAQs(searchTerm, 'all');
-            });
+            });
+
             filterBtns.forEach(btn => {
                 btn.addEventListener('click', function() {
                     const category = this.dataset.category;
-                    const searchTerm = searchInput.value.toLowerCase();
+                    const searchTerm = searchInput.value.toLowerCase();
+
                     filterBtns.forEach(b => b.classList.remove('active'));
                     this.classList.add('active');
                     
                     filterFAQs(searchTerm, category);
                 });
-            });
+            });
+
             function filterFAQs(searchTerm, category) {
                 let hasVisibleItems = false;
                 
                 faqCategories.forEach(categoryEl => {
                     const categoryData = categoryEl.dataset.category;
-                    let categoryHasVisibleItems = false;
+                    let categoryHasVisibleItems = false;
+
                     if (category === 'all' || category === categoryData) {
                         const faqItems = categoryEl.querySelectorAll('.faq-item');
                         
@@ -566,7 +577,8 @@ if ('IntersectionObserver' in window) {
                     } else {
                         categoryEl.style.display = 'none';
                     }
-                });
+                });
+
                 noResults.style.display = hasVisibleItems ? 'none' : 'block';
             }
         });
@@ -575,7 +587,8 @@ if ('IntersectionObserver' in window) {
     <!-- Non-critical scripts moved here for performance -->
     
 <!-- Google AdSense 지연 로딩 -->
-<script>
+<script>
+
 window.addEventListener('load', function() {
     setTimeout(function() {
         var adsScript = document.createElement('script');
@@ -587,7 +600,8 @@ window.addEventListener('load', function() {
 });
 </script>
 
-<script>
+<script>
+
 window.adsenseInitialized = window.adsenseInitialized || false;
 
 function initializeAdSense() {
@@ -596,7 +610,8 @@ function initializeAdSense() {
         return;
     }
     
-    window.adsenseInitialized = true;
+    window.adsenseInitialized = true;
+
     const adBlocks = document.querySelectorAll('.adsbygoogle');
     adBlocks.forEach((ad, index) => {
         if (!ad.dataset.adsbygoogleStatus) {
@@ -608,15 +623,18 @@ function initializeAdSense() {
             }
         }
     });
-}
+}
+
 window.addEventListener('load', function() {
     setTimeout(initializeAdSense, 1000);
 });
 </script>
 
-<script>
+<script>
+
 (function() {
-    'use strict';
+    'use strict';
+
     window.__adsenseLoaded = window.__adsenseLoaded || false;
     window.__adsenseQueue = window.__adsenseQueue || [];
     
@@ -625,31 +643,38 @@ window.addEventListener('load', function() {
         
         const ads = document.querySelectorAll('.adsbygoogle:not([data-adsbygoogle-status])');
         
-        if (ads.length === 0) return;
+        if (ads.length === 0) return;
+
         if (typeof adsbygoogle === 'undefined') {
             setTimeout(initAdsense, 500);
             return;
         }
         
-        window.__adsenseLoaded = true;
+        window.__adsenseLoaded = true;
+
         ads.forEach((ad, index) => {
-            try {
-                if (ad.getAttribute('data-adsbygoogle-status')) return;
-                (adsbygoogle = window.adsbygoogle || []).push({});
+            try {
+
+                if (ad.getAttribute('data-adsbygoogle-status')) return;
+
+                (adsbygoogle = window.adsbygoogle || []).push({});
+
                 ad.setAttribute('data-adsbygoogle-status', 'done');
                 
             } catch (e) {
                 console.warn('AdSense 초기화 실패:', index, e.message);
             }
         });
-    }
+    }
+
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(initAdsense, 1000);
         });
     } else {
         setTimeout(initAdsense, 1000);
-    }
+    }
+
     window.addEventListener('error', function(e) {
         if (e.message && e.message.includes('adsbygoogle.push() error')) {
             e.preventDefault();
@@ -663,34 +688,41 @@ window.addEventListener('load', function() {
 <!-- AdSense 통합 초기화 -->
 <script>
 (function() {
-    'use strict';
-    window.__adsInitialized = false;
+    'use strict';
+
+    window.__adsInitialized = false;
+
     function initializeAds() {
         if (window.__adsInitialized) return;
         
         const ads = document.querySelectorAll('.adsbygoogle:not([data-adsbygoogle-status])');
-        if (ads.length === 0) return;
+        if (ads.length === 0) return;
+
         if (typeof adsbygoogle === 'undefined') {
             setTimeout(initializeAds, 100);
             return;
         }
         
-        window.__adsInitialized = true;
+        window.__adsInitialized = true;
+
         ads.forEach((ad) => {
             try {
                 (adsbygoogle = window.adsbygoogle || []).push({});
                 ad.setAttribute('data-adsbygoogle-status', 'done');
-            } catch (e) {
+            } catch (e) {
+
             }
         });
-    }
+    }
+
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(initializeAds, 500);
         });
     } else {
         setTimeout(initializeAds, 500);
-    }
+    }
+
     window.addEventListener('error', function(e) {
         if (e.message && e.message.includes('adsbygoogle.push() error')) {
             e.preventDefault();

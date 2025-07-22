@@ -2,36 +2,6 @@
 <html lang="ko">
 <head>
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;">
-
-<script id="performance-monitor">
-// 개선된 성능 모니터링
-window.addEventListener('load', function() {
-    if (window.performance && window.performance.timing) {
-        const loadTime = window.performance.timing.loadEventEnd - window.performance.timing.navigationStart;
-        console.log('페이지 로딩 시간:', loadTime + 'ms');
-        
-        if (loadTime > 10000) {
-            console.warn('페이지 로딩이 느립니다:', loadTime + 'ms');
-        }
-        
-        // 리소스 로딩 분석
-        const resources = performance.getEntriesByType('resource');
-        const slowResources = resources.filter(r => r.duration > 1000);
-        if (slowResources.length > 0) {
-            console.warn('느린 리소스들:', slowResources.map(r => ({ name: r.name, duration: r.duration })));
-        }
-    }
-});
-
-// CSP 오류 감지
-window.addEventListener('securitypolicyviolation', function(e) {
-    console.warn('CSP 위반 감지:', {
-        directive: e.violatedDirective,
-        source: e.sourceFile,
-        line: e.lineNumber
-    });
-});
-</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>별자리 운세 - AI 운세 | doha.kr</title>
@@ -40,7 +10,6 @@ window.addEventListener('securitypolicyviolation', function(e) {
     <meta name="author" content="doha.kr">
     
     <!-- Security Headers -->
-    self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:;">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), accelerometer=(), gyroscope=()">
@@ -61,9 +30,20 @@ window.addEventListener('securitypolicyviolation', function(e) {
     <!-- Optimized CSS System -->
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="/css/pages/zodiac.css">
-    self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:;">
+
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
-    self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com;">
+
+    <script id="performance-monitor">
+
+    window.addEventListener('load', function() {
+        if (window.performance && window.performance.timing) {
+            const loadTime = window.performance.timing.loadEventEnd - window.performance.timing.navigationStart;
+            if (loadTime > 5000) {
+                console.warn('Page loading is slow:', loadTime + 'ms');
+            }
+        }
+    });
+    </script>
 </head>
 <body class="fortune-page">
     <!-- 네비게이션 바 -->
@@ -181,7 +161,7 @@ window.addEventListener('securitypolicyviolation', function(e) {
     </div>
 </div>
 <script>
-// Intersection Observer로 광고 지연 로딩
+
 if ('IntersectionObserver' in window) {
     const adObserver = new IntersectionObserver(function(entries) {
         entries.forEach(function(entry) {
@@ -213,13 +193,13 @@ if ('IntersectionObserver' in window) {
     <div id="footer-placeholder"></div>
     
     <!-- External JavaScript -->
-    <script defer src="/js/api-config.js"></script>
-    <script src="/js/bundle.min.js" defer></script>
-    <script src="/js/main.min.js"></script>
-    <script src="/js/gemini-api.min.js"></script>
+    
+    
+    
+    
     
     <script>
-        // 별자리 데이터
+
         const zodiacData = {
             aries: {
                 symbol: '♈',
@@ -332,10 +312,9 @@ if ('IntersectionObserver' in window) {
         };
         
         async function selectZodiac(zodiacSign) {
-            // 선택 화면 숨기기
+
             document.getElementById('zodiacSelection').style.display = 'none';
-            
-            // 로딩 표시 (애니메이션 없음)
+
             const resultDiv = document.getElementById('zodiacResult');
             resultDiv.style.display = 'block';
             resultDiv.innerHTML = `
@@ -348,21 +327,19 @@ if ('IntersectionObserver' in window) {
             `;
             
             try {
-                // 실제 AI 분석 시도
+
                 const aiAnalysis = await generateZodiacFortuneWithAI(zodiacSign);
-                
-                // 결과 표시
+
                 displayZodiacResult(zodiacSign, aiAnalysis);
                 
             } catch (error) {
                 console.error('별자리 운세 분석 오류:', error);
-                // 오류 시 폴백 데이터 사용
+
                 const fallbackFortune = generateFallbackFortune(zodiacSign);
                 displayZodiacResult(zodiacSign, fallbackFortune);
             }
         }
-        
-        // 실제 AI 분석 함수
+
         async function generateZodiacFortuneWithAI(zodiacSign) {
             const zodiac = zodiacData[zodiacSign];
             const today = new Date();
@@ -412,14 +389,12 @@ ${zodiac.name}의 특성과 2025년 을사년 에너지를 고려하여 구체�
             const zodiac = zodiacData[zodiacSign];
             const today = new Date();
             const seed = today.getDate() + today.getMonth() + zodiacSign.length;
-            
-            // 시드 기반 운세 생성
+
             const totalScore = 65 + Math.floor(seededRandom(seed) * 30);
             const loveScore = 65 + Math.floor(seededRandom(seed * 2) * 30);
             const moneyScore = 65 + Math.floor(seededRandom(seed * 3) * 30);
             const healthScore = 65 + Math.floor(seededRandom(seed * 4) * 30);
-            
-            // 행운 정보
+
             const luckyColors = ['딥 레드', '로열 블루', '골든 옐로우', '포레스트 그린', '아메시스트 퍼플', '선셋 오렌지', '로즈 핑크', '터쿼이즈', '샴페인 골드', '문스톤 실버'];
             const luckyDirections = ['동쪽', '서쪽', '남쪽', '북쪽', '동남쪽', '서남쪽', '동북쪽', '서북쪽'];
             
@@ -692,7 +667,7 @@ ${zodiac.name}의 특성과 2025년 을사년 에너지를 고려하여 구체�
     
 <!-- Google AdSense 지연 로딩 -->
 <script>
-// AdSense 지연 로딩 (페이지 로드 후 2초 대기)
+
 window.addEventListener('load', function() {
     setTimeout(function() {
         var adsScript = document.createElement('script');
@@ -705,7 +680,7 @@ window.addEventListener('load', function() {
 </script>
 
 <script>
-// AdSense 중복 초기화 방지
+
 window.adsenseInitialized = window.adsenseInitialized || false;
 
 function initializeAdSense() {
@@ -715,8 +690,7 @@ function initializeAdSense() {
     }
     
     window.adsenseInitialized = true;
-    
-    // 기존 광고 블록 확인 및 초기화
+
     const adBlocks = document.querySelectorAll('.adsbygoogle');
     adBlocks.forEach((ad, index) => {
         if (!ad.dataset.adsbygoogleStatus) {
@@ -730,18 +704,16 @@ function initializeAdSense() {
     });
 }
 
-// 페이지 로드 후 AdSense 초기화
 window.addEventListener('load', function() {
     setTimeout(initializeAdSense, 1000);
 });
 </script>
 
 <script>
-// 통합 AdSense 초기화 (중복 방지)
+
 (function() {
     'use strict';
-    
-    // 전역 플래그로 초기화 상태 관리
+
     window.__adsenseLoaded = window.__adsenseLoaded || false;
     window.__adsenseQueue = window.__adsenseQueue || [];
     
@@ -751,25 +723,21 @@ window.addEventListener('load', function() {
         const ads = document.querySelectorAll('.adsbygoogle:not([data-adsbygoogle-status])');
         
         if (ads.length === 0) return;
-        
-        // AdSense 스크립트가 로드되었는지 확인
+
         if (typeof adsbygoogle === 'undefined') {
             setTimeout(initAdsense, 500);
             return;
         }
         
         window.__adsenseLoaded = true;
-        
-        // 각 광고 슬롯 초기화
+
         ads.forEach((ad, index) => {
             try {
-                // 중복 초기화 방지
+
                 if (ad.getAttribute('data-adsbygoogle-status')) return;
-                
-                // 초기화 시도
+
                 (adsbygoogle = window.adsbygoogle || []).push({});
-                
-                // 상태 표시
+
                 ad.setAttribute('data-adsbygoogle-status', 'done');
                 
             } catch (e) {
@@ -777,8 +745,7 @@ window.addEventListener('load', function() {
             }
         });
     }
-    
-    // 페이지 로드 완료 후 초기화
+
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(initAdsense, 1000);
@@ -786,8 +753,7 @@ window.addEventListener('load', function() {
     } else {
         setTimeout(initAdsense, 1000);
     }
-    
-    // 에러 핸들러 추가
+
     window.addEventListener('error', function(e) {
         if (e.message && e.message.includes('adsbygoogle.push() error')) {
             e.preventDefault();
@@ -802,37 +768,32 @@ window.addEventListener('load', function() {
 <script>
 (function() {
     'use strict';
-    
-    // 전역 초기화 플래그
+
     window.__adsInitialized = false;
-    
-    // AdSense 초기화 함수
+
     function initializeAds() {
         if (window.__adsInitialized) return;
         
         const ads = document.querySelectorAll('.adsbygoogle:not([data-adsbygoogle-status])');
         if (ads.length === 0) return;
-        
-        // AdSense 라이브러리 로드 확인
+
         if (typeof adsbygoogle === 'undefined') {
             setTimeout(initializeAds, 100);
             return;
         }
         
         window.__adsInitialized = true;
-        
-        // 각 광고 초기화
+
         ads.forEach((ad) => {
             try {
                 (adsbygoogle = window.adsbygoogle || []).push({});
                 ad.setAttribute('data-adsbygoogle-status', 'done');
             } catch (e) {
-                // 오류 무시
+
             }
         });
     }
-    
-    // DOM 로드 후 실행
+
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(initializeAds, 500);
@@ -840,8 +801,7 @@ window.addEventListener('load', function() {
     } else {
         setTimeout(initializeAds, 500);
     }
-    
-    // 전역 에러 핸들러로 AdSense 오류 차단
+
     window.addEventListener('error', function(e) {
         if (e.message && e.message.includes('adsbygoogle.push() error')) {
             e.preventDefault();

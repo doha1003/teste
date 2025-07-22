@@ -77,8 +77,31 @@ def run_diagnostics_for_url(url):
         # Use --output=json for machine-readable output
         # Use --output-path to specify the output file
         # Use --chrome-flags="--headless=new" to ensure headless mode
-        lighthouse_command = [
+        # Try to find lighthouse in common locations or PATH
+        lighthouse_cmd = None
+        possible_paths = [
             "lighthouse",
+            "lighthouse.cmd",
+            r"C:\Program Files\nodejs\lighthouse",
+            r"C:\Program Files\nodejs\lighthouse.cmd",
+            os.path.join(os.environ.get("APPDATA", ""), "npm", "lighthouse.cmd"),
+            os.path.join(os.environ.get("APPDATA", ""), "npm", "lighthouse")
+        ]
+        
+        for path in possible_paths:
+            try:
+                subprocess.run([path, "--version"], capture_output=True, check=True, shell=True)
+                lighthouse_cmd = path
+                break
+            except:
+                continue
+        
+        if not lighthouse_cmd:
+            print(f"Lighthouse not found in PATH. Skipping Lighthouse analysis for {url}")
+            return
+        
+        lighthouse_command = [
+            lighthouse_cmd,
             url,
             f"--output=json",
             f"--output-path={lighthouse_report_path}",

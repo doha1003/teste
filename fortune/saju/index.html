@@ -155,7 +155,8 @@
         광고 로딩 중...
     </div>
 </div>
-<script>
+<script>
+
 if ('IntersectionObserver' in window) {
     const adObserver = new IntersectionObserver(function(entries) {
         entries.forEach(function(entry) {
@@ -206,7 +207,8 @@ if ('IntersectionObserver' in window) {
     <script src="/js/main.js"></script>
     <script src="/js/api-config.js"></script>
     
-    <script>
+    <script>
+
         function generateEnhancedInterpretation(saju) {
             const elements = analyzeElements(saju);
             const personality = analyzePersonality(saju);
@@ -220,7 +222,8 @@ if ('IntersectionObserver' in window) {
                 compatibility,
                 advice: generateAdvice(saju)
             };
-        }
+        }
+
         function analyzeElements(saju) {
             const elements = {
                 목: 0, 화: 0, 토: 0, 금: 0, 수: 0
@@ -230,12 +233,14 @@ if ('IntersectionObserver' in window) {
             pillars.forEach(pillar => {
                 if (pillar) {
                     const stem = pillar.charAt(0);
-                    const branch = pillar.charAt(1);
+                    const branch = pillar.charAt(1);
+
                     if ('갑을'.includes(stem)) elements.목++;
                     else if ('병정'.includes(stem)) elements.화++;
                     else if ('무기'.includes(stem)) elements.토++;
                     else if ('경신'.includes(stem)) elements.금++;
-                    else if ('임계'.includes(stem)) elements.수++;
+                    else if ('임계'.includes(stem)) elements.수++;
+
                     if ('인묘'.includes(branch)) elements.목++;
                     else if ('사오'.includes(branch)) elements.화++;
                     else if ('진술축미'.includes(branch)) elements.토++;
@@ -470,7 +475,8 @@ if ('IntersectionObserver' in window) {
         }
     </script>
     
-    <script>
+    <script>
+
         function generateSaju(event) {
             event.preventDefault();
             
@@ -480,24 +486,32 @@ if ('IntersectionObserver' in window) {
             const birthMonth = parseInt(document.getElementById('birthMonth').value);
             const birthDay = parseInt(document.getElementById('birthDay').value);
             const birthTime = parseInt(document.getElementById('birthTime').value);
-            const isLunar = document.getElementById('isLunar').checked;
+            const isLunar = document.getElementById('isLunar').checked;
+
             document.getElementById('sajuResult').style.display = 'block';
             document.getElementById('sajuResult').innerHTML = `
                 <div class="fortune-loading-container">
                     <div class="fortune-loading-spinner"></div>
                     <div class="fortune-loading-text">🔮 AI가 ${userName}님의 사주팔자를 분석하고 있습니다<span class="fortune-loading-dots"></span></div>
                 </div>
-            `;
-            document.getElementById('sajuForm').style.display = 'none';
-            setTimeout(() => {
+            `;
+
+            document.getElementById('sajuForm').style.display = 'none';
+
+            setTimeout(() => {
+
                 const saju = calculateSajuWithManseryeok(birthYear, birthMonth, birthDay, birthTime, isLunar);
                 displaySajuResult(userName, gender, saju);
             }, 2000);
-        }
-        function calculateSajuWithManseryeok(year, month, day, hour, isLunar) {
-            let saju = window.sajuCalculator.calculateSaju(year, month, day, hour, isLunar);
+        }
+
+        function calculateSajuWithManseryeok(year, month, day, hour, isLunar) {
+
+            let saju = window.sajuCalculator.calculateSaju(year, month, day, hour, isLunar);
+
             if (window.getManseryeokData) {
-                let targetYear = year, targetMonth = month, targetDay = day;
+                let targetYear = year, targetMonth = month, targetDay = day;
+
                 if (isLunar && window.lunarToSolar) {
                     const solarDate = window.lunarToSolar(year, month, day);
                     if (solarDate) {
@@ -505,19 +519,23 @@ if ('IntersectionObserver' in window) {
                         targetMonth = solarDate.month;
                         targetDay = solarDate.day;
                     }
-                }
+                }
+
                 const manseryeokData = window.getManseryeokData(targetYear, targetMonth, targetDay);
-                if (manseryeokData) {
+                if (manseryeokData) {
+
                     saju.dayPillar = {
                         stem: manseryeokData.dayGanji.charAt(0),
                         branch: manseryeokData.dayGanji.charAt(1)
-                    };
+                    };
+
                     if (manseryeokData.yearGanji) {
                         saju.yearPillar = {
                             stem: manseryeokData.yearGanji.charAt(0),
                             branch: manseryeokData.yearGanji.charAt(1)
                         };
-                    }
+                    }
+
                     saju.dayMaster = saju.dayPillar.stem;
                     saju.dayMasterElement = window.sajuCalculator.stemElements[saju.dayMaster];
                     saju.tenGods = window.sajuCalculator.calculateTenGods(saju.dayMaster, {
@@ -525,7 +543,8 @@ if ('IntersectionObserver' in window) {
                         month: saju.monthPillar.stem,
                         day: saju.dayPillar.stem,
                         hour: saju.hourPillar.stem
-                    });
+                    });
+
                     saju.elements = window.sajuCalculator.analyzeElements([
                         saju.yearPillar.stem, saju.yearPillar.branch,
                         saju.monthPillar.stem, saju.monthPillar.branch,
@@ -536,8 +555,10 @@ if ('IntersectionObserver' in window) {
             }
             
             return saju;
-        }
-        function displaySajuResult(userName, gender, saju) {
+        }
+
+        function displaySajuResult(userName, gender, saju) {
+
             const interpretation = generateEnhancedInterpretation(saju);
             const today = new Date();
             
@@ -692,7 +713,8 @@ if ('IntersectionObserver' in window) {
             `;
             
             document.getElementById('sajuResult').innerHTML = resultHTML;
-        }
+        }
+
         function resetSajuForm() {
             document.getElementById('sajuForm').style.display = 'block';
             document.getElementById('sajuResult').style.display = 'none';
@@ -706,7 +728,8 @@ if ('IntersectionObserver' in window) {
     <!-- Non-critical scripts moved here for performance -->
     
 <!-- Google AdSense 지연 로딩 -->
-<script>
+<script>
+
 window.addEventListener('load', function() {
     setTimeout(function() {
         var adsScript = document.createElement('script');
@@ -718,7 +741,8 @@ window.addEventListener('load', function() {
 });
 </script>
 
-<script>
+<script>
+
 window.adsenseInitialized = window.adsenseInitialized || false;
 
 function initializeAdSense() {
@@ -727,7 +751,8 @@ function initializeAdSense() {
         return;
     }
     
-    window.adsenseInitialized = true;
+    window.adsenseInitialized = true;
+
     const adBlocks = document.querySelectorAll('.adsbygoogle');
     adBlocks.forEach((ad, index) => {
         if (!ad.dataset.adsbygoogleStatus) {
@@ -739,15 +764,18 @@ function initializeAdSense() {
             }
         }
     });
-}
+}
+
 window.addEventListener('load', function() {
     setTimeout(initializeAdSense, 1000);
 });
 </script>
 
-<script>
+<script>
+
 (function() {
-    'use strict';
+    'use strict';
+
     window.__adsenseLoaded = window.__adsenseLoaded || false;
     window.__adsenseQueue = window.__adsenseQueue || [];
     
@@ -756,31 +784,38 @@ window.addEventListener('load', function() {
         
         const ads = document.querySelectorAll('.adsbygoogle:not([data-adsbygoogle-status])');
         
-        if (ads.length === 0) return;
+        if (ads.length === 0) return;
+
         if (typeof adsbygoogle === 'undefined') {
             setTimeout(initAdsense, 500);
             return;
         }
         
-        window.__adsenseLoaded = true;
+        window.__adsenseLoaded = true;
+
         ads.forEach((ad, index) => {
-            try {
-                if (ad.getAttribute('data-adsbygoogle-status')) return;
-                (adsbygoogle = window.adsbygoogle || []).push({});
+            try {
+
+                if (ad.getAttribute('data-adsbygoogle-status')) return;
+
+                (adsbygoogle = window.adsbygoogle || []).push({});
+
                 ad.setAttribute('data-adsbygoogle-status', 'done');
                 
             } catch (e) {
                 console.warn('AdSense 초기화 실패:', index, e.message);
             }
         });
-    }
+    }
+
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(initAdsense, 1000);
         });
     } else {
         setTimeout(initAdsense, 1000);
-    }
+    }
+
     window.addEventListener('error', function(e) {
         if (e.message && e.message.includes('adsbygoogle.push() error')) {
             e.preventDefault();
@@ -794,34 +829,41 @@ window.addEventListener('load', function() {
 <!-- AdSense 통합 초기화 -->
 <script>
 (function() {
-    'use strict';
-    window.__adsInitialized = false;
+    'use strict';
+
+    window.__adsInitialized = false;
+
     function initializeAds() {
         if (window.__adsInitialized) return;
         
         const ads = document.querySelectorAll('.adsbygoogle:not([data-adsbygoogle-status])');
-        if (ads.length === 0) return;
+        if (ads.length === 0) return;
+
         if (typeof adsbygoogle === 'undefined') {
             setTimeout(initializeAds, 100);
             return;
         }
         
-        window.__adsInitialized = true;
+        window.__adsInitialized = true;
+
         ads.forEach((ad) => {
             try {
                 (adsbygoogle = window.adsbygoogle || []).push({});
                 ad.setAttribute('data-adsbygoogle-status', 'done');
-            } catch (e) {
+            } catch (e) {
+
             }
         });
-    }
+    }
+
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(initializeAds, 500);
         });
     } else {
         setTimeout(initializeAds, 500);
-    }
+    }
+
     window.addEventListener('error', function(e) {
         if (e.message && e.message.includes('adsbygoogle.push() error')) {
             e.preventDefault();

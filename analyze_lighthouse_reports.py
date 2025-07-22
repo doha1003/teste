@@ -1,7 +1,7 @@
 import os
 import json
 
-REPORTS_DIR = "C:/Users/pc/teste/reports"
+REPORTS_DIR = os.path.join(os.path.dirname(__file__), "reports")
 LIGHTHOUSE_REPORT_FILENAME = "lighthouse_report.json"
 
 def analyze_lighthouse_reports():
@@ -116,6 +116,8 @@ if __name__ == "__main__":
         print("No significant Core Web Vitals issues found across audited pages.")
 
     # Save summary to a file
-    with open(os.path.join(REPORTS_DIR, "lighthouse_summary.json"), "w", encoding="utf-8") as f:
+    os.makedirs(REPORTS_DIR, exist_ok=True)
+    summary_path = os.path.join(REPORTS_DIR, "lighthouse_summary.json")
+    with open(summary_path, "w", encoding="utf-8") as f:
         json.dump(analysis_results, f, ensure_ascii=False, indent=2)
-    print(f"\nFull Lighthouse analysis summary saved to {os.path.join(REPORTS_DIR, 'lighthouse_summary.json')}")
+    print(f"\nFull Lighthouse analysis summary saved to {summary_path}")

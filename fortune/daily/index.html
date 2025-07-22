@@ -157,7 +157,8 @@
         광고 로딩 중...
     </div>
 </div>
-<script>
+<script>
+
 if ('IntersectionObserver' in window) {
     const adObserver = new IntersectionObserver(function(entries) {
         entries.forEach(function(entry) {
@@ -192,8 +193,10 @@ if ('IntersectionObserver' in window) {
     <script src="/js/main.js"></script>
     <script src="/js/api-config.js"></script>
     
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function() {
+
             const yearSelect = document.getElementById('birthYear');
             const currentYear = new Date().getFullYear();
             for (let year = currentYear; year >= 1900; year--) {
@@ -201,10 +204,12 @@ if ('IntersectionObserver' in window) {
                 option.value = year;
                 option.textContent = year + '년';
                 yearSelect.appendChild(option);
-            }
+            }
+
             document.getElementById('birthMonth').addEventListener('change', updateDayOptions);
             document.getElementById('birthYear').addEventListener('change', updateDayOptions);
-        });
+        });
+
         function updateDayOptions() {
             const year = parseInt(document.getElementById('birthYear').value);
             const month = parseInt(document.getElementById('birthMonth').value);
@@ -221,7 +226,8 @@ if ('IntersectionObserver' in window) {
                     daySelect.appendChild(option);
                 }
             }
-        }
+        }
+
         function generateDailyFortune(event) {
             event.preventDefault();
             
@@ -230,7 +236,8 @@ if ('IntersectionObserver' in window) {
             const birthMonth = parseInt(document.getElementById('birthMonth').value);
             const birthDay = parseInt(document.getElementById('birthDay').value);
             const birthTime = parseInt(document.getElementById('birthTime').value);
-            const isLunar = document.getElementById('isLunar').checked;
+            const isLunar = document.getElementById('isLunar').checked;
+
             const resultDiv = document.getElementById('fortuneResult');
             resultDiv.style.display = 'block';
             resultDiv.innerHTML = `
@@ -238,22 +245,30 @@ if ('IntersectionObserver' in window) {
                     <div class="fortune-loading-spinner"></div>
                     <div class="fortune-loading-text">🔮 만세력으로 ${userName}님의 사주를 분석하고 있습니다<span class="fortune-loading-dots"></span></div>
                 </div>
-            `;
-            document.getElementById('fortuneForm').style.display = 'none';
+            `;
+
+            document.getElementById('fortuneForm').style.display = 'none';
+
             setTimeout(() => {
                 displayDailyFortune(userName, birthYear, birthMonth, birthDay, birthTime, isLunar);
             }, 2000);
-        }
-        function displayDailyFortune(userName, birthYear, birthMonth, birthDay, birthTime, isLunar) {
+        }
+
+        function displayDailyFortune(userName, birthYear, birthMonth, birthDay, birthTime, isLunar) {
+
             if (typeof SajuCalculator === 'undefined') {
                 console.error('SajuCalculator가 로드되지 않았습니다.');
                 alert('페이지 로딩 중 오류가 발생했습니다. 새로고침 후 다시 시도해주세요.');
                 location.reload();
                 return;
-            }
-            const saju = window.sajuCalculator.calculateSaju(birthYear, birthMonth, birthDay, birthTime >= 0 ? birthTime : 12, isLunar);
-            const today = new Date();
-            const todayPillar = getTodayPillarFromManseryeok();
+            }
+
+            const saju = window.sajuCalculator.calculateSaju(birthYear, birthMonth, birthDay, birthTime >= 0 ? birthTime : 12, isLunar);
+
+            const today = new Date();
+
+            const todayPillar = getTodayPillarFromManseryeok();
+
             const relation = analyzeRelation(saju.dayPillar, todayPillar);
             const fortune = generateDetailedFortune(saju, todayPillar, relation);
             
@@ -442,7 +457,8 @@ if ('IntersectionObserver' in window) {
             `;
             
             resultDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
+        }
+
         function analyzeRelation(dayPillar, todayPillar) {
             const relations = {
                 stemRelation: analyzeStemRelation(dayPillar.stem, todayPillar.stem),
@@ -451,7 +467,8 @@ if ('IntersectionObserver' in window) {
             };
             
             return relations;
-        }
+        }
+
         function analyzeStemRelation(stem1, stem2) {
             const stemElements = {
                 '갑': '목', '을': '목',
@@ -462,7 +479,8 @@ if ('IntersectionObserver' in window) {
             };
             
             const element1 = stemElements[stem1];
-            const element2 = stemElements[stem2];
+            const element2 = stemElements[stem2];
+
             const relations = {
                 '목': { generate: '화', control: '토', generated: '수', controlled: '금' },
                 '화': { generate: '토', control: '금', generated: '목', controlled: '수' },
@@ -478,7 +496,8 @@ if ('IntersectionObserver' in window) {
             if (relations[element1].controlled === element2) return 'controlled';
             
             return 'none';
-        }
+        }
+
         function analyzeBranchRelation(branch1, branch2) {
             const branchElements = {
                 '자': '수', '축': '토', '인': '목', '묘': '목',
@@ -490,8 +509,10 @@ if ('IntersectionObserver' in window) {
             const element2 = branchElements[branch2];
             
             return analyzeStemRelation(element1, element2);
-        }
-        function findSpecialRelation(branch1, branch2) {
+        }
+
+        function findSpecialRelation(branch1, branch2) {
+
             const combinations = {
                 '자': '축', '축': '자',
                 '인': '해', '해': '인',
@@ -499,7 +520,8 @@ if ('IntersectionObserver' in window) {
                 '진': '유', '유': '진',
                 '사': '신', '신': '사',
                 '오': '미', '미': '오'
-            };
+            };
+
             const clashes = {
                 '자': '오', '오': '자',
                 '축': '미', '미': '축',
@@ -507,7 +529,8 @@ if ('IntersectionObserver' in window) {
                 '묘': '유', '유': '묘',
                 '진': '술', '술': '진',
                 '사': '해', '해': '사'
-            };
+            };
+
             const punishments = {
                 '인': ['사', '신'], '사': ['인', '신'], '신': ['인', '사'],
                 '축': ['술', '미'], '술': ['축', '미'], '미': ['축', '술']
@@ -526,10 +549,13 @@ if ('IntersectionObserver' in window) {
             }
             
             return { type: 'none', strength: 'neutral' };
-        }
-        function generateDetailedFortune(saju, todayPillar, relation) {
+        }
+
+        function generateDetailedFortune(saju, todayPillar, relation) {
+
             const baseScore = 65;
-            let overallScore = baseScore;
+            let overallScore = baseScore;
+
             if (relation.stemRelation === 'generate' || relation.stemRelation === 'generated') {
                 overallScore += 10;
             } else if (relation.stemRelation === 'control' || relation.stemRelation === 'controlled') {
@@ -542,18 +568,23 @@ if ('IntersectionObserver' in window) {
                 overallScore -= 15;
             } else if (relation.specialRelation.type === '형') {
                 overallScore -= 10;
-            }
-            overallScore = Math.max(20, Math.min(95, overallScore));
+            }
+
+            overallScore = Math.max(20, Math.min(95, overallScore));
+
             const loveScore = Math.max(20, Math.min(95, overallScore + Math.floor(Math.random() * 20 - 10)));
             const moneyScore = Math.max(20, Math.min(95, overallScore + Math.floor(Math.random() * 20 - 10)));
             const healthScore = Math.max(20, Math.min(95, overallScore + Math.floor(Math.random() * 20 - 10)));
-            const careerScore = Math.max(20, Math.min(95, overallScore + Math.floor(Math.random() * 20 - 10)));
+            const careerScore = Math.max(20, Math.min(95, overallScore + Math.floor(Math.random() * 20 - 10)));
+
             const overallFortune = generateOverallMessage(saju, overallScore, relation);
             const loveFortune = generateLoveMessage(saju, loveScore, relation);
             const moneyFortune = generateMoneyMessage(saju, moneyScore, relation);
             const careerFortune = generateCareerMessage(saju, careerScore, relation);
-            const healthFortune = generateHealthMessage(saju, healthScore, relation);
-            const luckyElements = generateLuckyElements(saju, todayPillar);
+            const healthFortune = generateHealthMessage(saju, healthScore, relation);
+
+            const luckyElements = generateLuckyElements(saju, todayPillar);
+
             const advice = generateAdvice(saju, todayPillar, relation);
             
             return {
@@ -573,7 +604,8 @@ if ('IntersectionObserver' in window) {
                 ...luckyElements,
                 ...advice
             };
-        }
+        }
+
         function generateOverallMessage(saju, score, relation) {
             const dayMaster = saju.dayPillar.stem + saju.dayPillar.branch;
             let message = `${dayMaster}일주인 당신의 오늘 운세는 `;
@@ -675,7 +707,8 @@ if ('IntersectionObserver' in window) {
             }
             
             return message;
-        }
+        }
+
         function generateLoveAdvice(saju, score) {
             if (score >= 80) {
                 return '오늘은 적극적으로 감정을 표현하세요. 로맨틱한 데이트나 진심 어린 고백이 좋은 결과를 가져올 것입니다.';
@@ -714,10 +747,12 @@ if ('IntersectionObserver' in window) {
             } else {
                 return '무리하지 말고 충분한 휴식을 취하세요. 스트레스 관리와 명상이 도움이 될 것입니다.';
             }
-        }
+        }
+
         function generateLuckyElements(saju, todayPillar) {
             const dayMaster = saju.dayPillar.stem;
-            const todayElement = FIVE_ELEMENTS[todayPillar.stem];
+            const todayElement = FIVE_ELEMENTS[todayPillar.stem];
+
             const timeMap = {
                 '갑': '묘시 (05:00-07:00)',
                 '을': '묘시 (05:00-07:00)',
@@ -729,21 +764,24 @@ if ('IntersectionObserver' in window) {
                 '신': '유시 (17:00-19:00)',
                 '임': '자시 (23:00-01:00)',
                 '계': '해시 (21:00-23:00)'
-            };
+            };
+
             const directionMap = {
                 '목': '동쪽',
                 '화': '남쪽',
                 '토': '중앙',
                 '금': '서쪽',
                 '수': '북쪽'
-            };
+            };
+
             const colorMap = {
                 '목': '초록색, 청록색',
                 '화': '빨간색, 보라색',
                 '토': '노란색, 갈색',
                 '금': '흰색, 은색',
                 '수': '검은색, 파란색'
-            };
+            };
+
             const numberMap = {
                 '갑': '3, 8',
                 '을': '3, 8',
@@ -763,21 +801,24 @@ if ('IntersectionObserver' in window) {
                 luckyColor: colorMap[todayElement],
                 luckyNumber: numberMap[dayMaster]
             };
-        }
+        }
+
         function generateAdvice(saju, todayPillar, relation) {
             const dayMaster = saju.dayPillar.stem;
             const element = FIVE_ELEMENTS[dayMaster];
             
             let mainAdvice = '';
             let doAdvice = '';
-            let dontAdvice = '';
+            let dontAdvice = '';
+
             if (relation.specialRelation.type === '육합') {
                 mainAdvice = `오늘은 육합의 조화로운 기운이 가득한 날입니다. ${dayMaster}일주인 당신의 장점이 최대한 발휘될 수 있으니, 평소 미뤄왔던 중요한 일을 진행해보세요.`;
             } else if (relation.specialRelation.type === '충') {
                 mainAdvice = `충의 변화 에너지가 강한 날입니다. 예상치 못한 상황이 발생할 수 있지만, 이는 새로운 기회가 될 수도 있습니다.`;
             } else {
                 mainAdvice = `${element}의 특성을 살려 차분하고 신중하게 하루를 보내세요. 큰 변화보다는 일상의 소중함을 느끼며 내적 성장에 집중하는 것이 좋겠습니다.`;
-            }
+            }
+
             const doList = {
                 '목': '새로운 프로젝트 시작',
                 '화': '프레젠테이션이나 발표',
@@ -786,7 +827,8 @@ if ('IntersectionObserver' in window) {
                 '수': '학습과 연구'
             };
             
-            doAdvice = doList[element];
+            doAdvice = doList[element];
+
             const dontList = {
                 '목': '고집스러운 태도',
                 '화': '과도한 열정',
@@ -802,13 +844,15 @@ if ('IntersectionObserver' in window) {
                 doAdvice,
                 dontAdvice
             };
-        }
+        }
+
         function getScoreColor(score) {
             if (score >= 85) return '#10b981';
             if (score >= 70) return '#3b82f6';
             if (score >= 55) return '#f59e0b';
             return '#ef4444';
-        }
+        }
+
         function shareFortune() {
             const text = '나의 오늘 운세를 확인해보세요!';
             const url = window.location.href;
@@ -819,7 +863,8 @@ if ('IntersectionObserver' in window) {
                     text: text,
                     url: url
                 });
-            } else {
+            } else {
+
                 if (window.Kakao && window.Kakao.isInitialized()) {
                     Kakao.Share.sendDefault({
                         objectType: 'feed',
@@ -833,13 +878,15 @@ if ('IntersectionObserver' in window) {
                             }
                         }
                     });
-                } else {
+                } else {
+
                     navigator.clipboard.writeText(url).then(() => {
                         alert('링크가 복사되었습니다!');
                     });
                 }
             }
-        }
+        }
+
         const FIVE_ELEMENTS = {
             '갑': '목', '을': '목',
             '병': '화', '정': '화',
@@ -847,12 +894,14 @@ if ('IntersectionObserver' in window) {
             '경': '금', '신': '금',
             '임': '수', '계': '수'
         };
-    </script>
+    </script>
+
         function getTodayPillarFromManseryeok() {
             const today = new Date();
             const year = today.getFullYear();
             const month = today.getMonth() + 1;
-            const day = today.getDate();
+            const day = today.getDate();
+
             if (window.getManseryeokData) {
                 const data = window.getManseryeokData(year, month, day);
                 if (data) {
@@ -861,7 +910,8 @@ if ('IntersectionObserver' in window) {
                         branch: data.dayGanji.charAt(1)
                     };
                 }
-            }
+            }
+
             const totalDays = Math.floor(today.getTime() / (1000 * 60 * 60 * 24));
             const ganjiIndex = totalDays % 60;
             const stems = ["갑", "을", "병", "정", "무", "기", "경", "신", "임", "계"];
@@ -874,7 +924,8 @@ if ('IntersectionObserver' in window) {
         }
     <!-- Kakao SDK -->
     
-    <script>
+    <script>
+
         if (window.Kakao && !window.Kakao.isInitialized()) {
             Kakao.init('8b5c6e8f97ec3d51a6f784b8b4b5ed99');
         }
@@ -886,7 +937,8 @@ if ('IntersectionObserver' in window) {
     <!-- Non-critical scripts moved here for performance -->
     
 <!-- Google AdSense 지연 로딩 -->
-<script>
+<script>
+
 window.addEventListener('load', function() {
     setTimeout(function() {
         var adsScript = document.createElement('script');
@@ -898,7 +950,8 @@ window.addEventListener('load', function() {
 });
 </script>
 
-<script>
+<script>
+
 window.adsenseInitialized = window.adsenseInitialized || false;
 
 function initializeAdSense() {
@@ -907,7 +960,8 @@ function initializeAdSense() {
         return;
     }
     
-    window.adsenseInitialized = true;
+    window.adsenseInitialized = true;
+
     const adBlocks = document.querySelectorAll('.adsbygoogle');
     adBlocks.forEach((ad, index) => {
         if (!ad.dataset.adsbygoogleStatus) {
@@ -919,15 +973,18 @@ function initializeAdSense() {
             }
         }
     });
-}
+}
+
 window.addEventListener('load', function() {
     setTimeout(initializeAdSense, 1000);
 });
 </script>
 
-<script>
+<script>
+
 (function() {
-    'use strict';
+    'use strict';
+
     window.__adsenseLoaded = window.__adsenseLoaded || false;
     window.__adsenseQueue = window.__adsenseQueue || [];
     
@@ -936,31 +993,38 @@ window.addEventListener('load', function() {
         
         const ads = document.querySelectorAll('.adsbygoogle:not([data-adsbygoogle-status])');
         
-        if (ads.length === 0) return;
+        if (ads.length === 0) return;
+
         if (typeof adsbygoogle === 'undefined') {
             setTimeout(initAdsense, 500);
             return;
         }
         
-        window.__adsenseLoaded = true;
+        window.__adsenseLoaded = true;
+
         ads.forEach((ad, index) => {
-            try {
-                if (ad.getAttribute('data-adsbygoogle-status')) return;
-                (adsbygoogle = window.adsbygoogle || []).push({});
+            try {
+
+                if (ad.getAttribute('data-adsbygoogle-status')) return;
+
+                (adsbygoogle = window.adsbygoogle || []).push({});
+
                 ad.setAttribute('data-adsbygoogle-status', 'done');
                 
             } catch (e) {
                 console.warn('AdSense 초기화 실패:', index, e.message);
             }
         });
-    }
+    }
+
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(initAdsense, 1000);
         });
     } else {
         setTimeout(initAdsense, 1000);
-    }
+    }
+
     window.addEventListener('error', function(e) {
         if (e.message && e.message.includes('adsbygoogle.push() error')) {
             e.preventDefault();
@@ -974,34 +1038,41 @@ window.addEventListener('load', function() {
 <!-- AdSense 통합 초기화 -->
 <script>
 (function() {
-    'use strict';
-    window.__adsInitialized = false;
+    'use strict';
+
+    window.__adsInitialized = false;
+
     function initializeAds() {
         if (window.__adsInitialized) return;
         
         const ads = document.querySelectorAll('.adsbygoogle:not([data-adsbygoogle-status])');
-        if (ads.length === 0) return;
+        if (ads.length === 0) return;
+
         if (typeof adsbygoogle === 'undefined') {
             setTimeout(initializeAds, 100);
             return;
         }
         
-        window.__adsInitialized = true;
+        window.__adsInitialized = true;
+
         ads.forEach((ad) => {
             try {
                 (adsbygoogle = window.adsbygoogle || []).push({});
                 ad.setAttribute('data-adsbygoogle-status', 'done');
-            } catch (e) {
+            } catch (e) {
+
             }
         });
-    }
+    }
+
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(initializeAds, 500);
         });
     } else {
         setTimeout(initializeAds, 500);
-    }
+    }
+
     window.addEventListener('error', function(e) {
         if (e.message && e.message.includes('adsbygoogle.push() error')) {
             e.preventDefault();

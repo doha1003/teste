@@ -2,36 +2,6 @@
 <html lang="ko">
 <head>
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;">
-
-<script id="performance-monitor">
-// 개선된 성능 모니터링
-window.addEventListener('load', function() {
-    if (window.performance && window.performance.timing) {
-        const loadTime = window.performance.timing.loadEventEnd - window.performance.timing.navigationStart;
-        console.log('페이지 로딩 시간:', loadTime + 'ms');
-        
-        if (loadTime > 10000) {
-            console.warn('페이지 로딩이 느립니다:', loadTime + 'ms');
-        }
-        
-        // 리소스 로딩 분석
-        const resources = performance.getEntriesByType('resource');
-        const slowResources = resources.filter(r => r.duration > 1000);
-        if (slowResources.length > 0) {
-            console.warn('느린 리소스들:', slowResources.map(r => ({ name: r.name, duration: r.duration })));
-        }
-    }
-});
-
-// CSP 오류 감지
-window.addEventListener('securitypolicyviolation', function(e) {
-    console.warn('CSP 위반 감지:', {
-        directive: e.violatedDirective,
-        source: e.sourceFile,
-        line: e.lineNumber
-    });
-});
-</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BMI 계산기 - 체질량지수 계산 및 건강 상태 확인 | doha.kr</title>
@@ -41,7 +11,6 @@ window.addEventListener('securitypolicyviolation', function(e) {
     <meta name="author" content="doha.kr">
     
     <!-- Security Headers -->
-    self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://cdn.jsdelivr.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:;">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), accelerometer=(), gyroscope=()">
@@ -79,16 +48,13 @@ window.addEventListener('securitypolicyviolation', function(e) {
     <link rel="manifest" href="/manifest.json">
     
     <!-- DOMPurify for XSS protection -->
-    <script defer src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js" crossorigin="anonymous"></script>
     
-    <!-- Content Security Policy -->
-   self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:;">>
     
-    <!-- Google AdSense -->
+    <!-- Content Security Policy --><!-- Google AdSense -->
     <!-- Moved to end of body -->
     
     <!-- Kakao JavaScript SDK -->
-    <script defer src="https://t1.kakaocdn.net/kakao_js_sdk/2.4.0/kakao.min.js" crossorigin="anonymous"></script>
+    
     
     <!-- Structured Data -->
     <script type="application/ld+json">
@@ -123,9 +89,20 @@ window.addEventListener('securitypolicyviolation', function(e) {
     
     <!-- Optimized CSS System -->
     <link rel="stylesheet" href="/css/styles.css">
-    self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:;">
+
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
-    self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com;">
+
+    <script id="performance-monitor">
+
+    window.addEventListener('load', function() {
+        if (window.performance && window.performance.timing) {
+            const loadTime = window.performance.timing.loadEventEnd - window.performance.timing.navigationStart;
+            if (loadTime > 5000) {
+                console.warn('Page loading is slow:', loadTime + 'ms');
+            }
+        }
+    });
+    </script>
 </head>
 <body>
     <!-- 네비게이션 -->
@@ -289,7 +266,7 @@ window.addEventListener('securitypolicyviolation', function(e) {
     </div>
 </div>
 <script>
-// Intersection Observer로 광고 지연 로딩
+
 if ('IntersectionObserver' in window) {
     const adObserver = new IntersectionObserver(function(entries) {
         entries.forEach(function(entry) {
@@ -357,15 +334,15 @@ if ('IntersectionObserver' in window) {
     <div id="footer-placeholder"></div>
     
     <!-- External JavaScript -->
-    <script defer src="/js/api-config.js"></script>
-    <script src="/js/bundle.min.js" defer></script>
-    <script src="/js/main.min.js"></script>
+    
+    
+    
     
     <!-- BMI Calculator JavaScript -->
     <script>
-        // 입력값 검증 함수
+
         function validateInput(value, min, max, fieldName) {
-            // XSS 방지를 위한 sanitization
+
             const sanitizedValue = Security.sanitizeInput(value, 'number');
             const num = Security.validateNumber(sanitizedValue, min, max);
             
@@ -377,7 +354,7 @@ if ('IntersectionObserver' in window) {
         }
         
         function calculateBMI() {
-            // 입력값 가져오기 및 검증
+
             const heightInput = document.getElementById('height').value;
             const weightInput = document.getElementById('weight').value;
             const ageInput = document.getElementById('age').value;
@@ -391,13 +368,11 @@ if ('IntersectionObserver' in window) {
             }
             
             const gender = document.querySelector('input[name="gender"]:checked').value;
-            
-            // BMI 계산
+
             const heightInMeters = height / 100;
             const bmi = weight / (heightInMeters * heightInMeters);
             const roundedBMI = Math.round(bmi * 10) / 10;
-            
-            // 표준 체중 계산 (브로카 공식)
+
             let standardWeight;
             if (gender === 'male') {
                 standardWeight = (height - 100) * 0.9;
@@ -405,8 +380,7 @@ if ('IntersectionObserver' in window) {
                 standardWeight = (height - 100) * 0.85;
             }
             const weightDifference = weight - standardWeight;
-            
-            // BMI 상태 판정 및 맞춤형 조언 (감성적이고 격려하는 방식)
+
             let status, statusColor, description, personalizedAdvice;
             if (bmi < 18.5) {
                 status = '체중 관리가 필요해요';
@@ -434,14 +408,12 @@ if ('IntersectionObserver' in window) {
                 description = '지금이 건강한 변화를 시작할 완벽한 시기예요. 의료진과 상담하여 체계적인 관리 계획을 세워보세요. 💝';
                 personalizedAdvice = getSevereObeseAdvice(gender, age);
             }
-            
-            // 결과 표시 (textContent 사용으로 XSS 방지)
+
             document.getElementById('bmiValue').textContent = roundedBMI;
             document.getElementById('bmiStatus').textContent = status;
             document.getElementById('bmiStatus').style.color = statusColor;
             document.getElementById('bmiDescription').textContent = description;
-            
-            // 스크린 리더를 위한 결과 안내
+
             const announcement = `BMI 계산 결과: ${roundedBMI}, 상태: ${status}. ${description}`;
             document.getElementById('bmiAnnouncement').textContent = announcement;
             
@@ -451,8 +423,7 @@ if ('IntersectionObserver' in window) {
                 `${Math.round(weightDifference * 10) / 10}kg`;
             document.getElementById('weightDiff').style.color = 
                 Math.abs(weightDifference) < 5 ? 'var(--success-color)' : 'var(--error-color)';
-            
-            // 차트 포인터 위치 계산
+
             let pointerPosition;
             if (bmi < 18.5) {
                 pointerPosition = (bmi / 18.5) * 18.5;
@@ -468,22 +439,18 @@ if ('IntersectionObserver' in window) {
             
             document.getElementById('chartPointer').style.left = `${pointerPosition}%`;
             document.getElementById('chartValue').textContent = roundedBMI;
-            
-            // 맞춤형 조언 표시
+
             showPersonalizedAdvice(personalizedAdvice, status);
-            
-            // 결과 섹션 표시
+
             document.getElementById('resultSection').classList.remove('hidden');
             document.getElementById('bmiChart').classList.remove('hidden');
-            
-            // 스크롤 이동
+
             document.getElementById('resultSection').scrollIntoView({ 
                 behavior: 'smooth', 
                 block: 'center' 
             });
         }
-        
-        // 맞춤형 조언 표시 함수
+
         function showPersonalizedAdvice(advice, status) {
             const adviceSection = document.getElementById('personalizedAdvice');
             const adviceTitle = document.getElementById('adviceTitle');
@@ -492,8 +459,7 @@ if ('IntersectionObserver' in window) {
             
             adviceTitle.textContent = `${status} 상태인 당신을 위한 맞춤 조언`;
             adviceSubtitle.textContent = advice.subtitle;
-            
-            // 조언 카드들 생성
+
             adviceGrid.innerHTML = '';
             advice.cards.forEach((card, index) => {
                 const cardElement = document.createElement('div');
@@ -503,7 +469,7 @@ if ('IntersectionObserver' in window) {
                 else cardType = 'lifestyle';
                 
                 cardElement.className = `bmi-advice-card ${cardType}`;
-                // XSS 방지를 위해 textContent 사용
+
                 const iconSpan = document.createElement('span');
                 iconSpan.className = 'bmi-advice-card-icon';
                 iconSpan.textContent = card.icon;
@@ -526,8 +492,7 @@ if ('IntersectionObserver' in window) {
             
             adviceSection.style.display = 'block';
         }
-        
-        // 저체중 조언
+
         function getUnderweightAdvice(gender, age) {
             return {
                 subtitle: '건강하고 아름다운 체중을 위한 따뜻한 조언이에요. 무엇보다 자신을 사랑하는 마음으로 천천히 건강해져 가세요! 💝',
@@ -565,8 +530,7 @@ if ('IntersectionObserver' in window) {
                 ]
             };
         }
-        
-        // 정상 체중 조언
+
         function getNormalAdvice(gender, age) {
             return {
                 subtitle: '현재 건강한 체중을 유지하고 계시네요! 이 상태를 꾸준히 유지하는 것이 가장 중요해요. 🌟',
@@ -604,8 +568,7 @@ if ('IntersectionObserver' in window) {
                 ]
             };
         }
-        
-        // 과체중 조언
+
         function getOverweightAdvice(gender, age) {
             return {
                 subtitle: '작은 변화만으로도 큰 개선을 이룰 수 있어요! 무리하지 말고 천천히 건강한 습관을 만들어가세요. 💪',
@@ -643,8 +606,7 @@ if ('IntersectionObserver' in window) {
                 ]
             };
         }
-        
-        // 비만 조언
+
         function getObeseAdvice(gender, age) {
             return {
                 subtitle: '지금이 건강한 변화를 시작할 완벽한 시기예요! 전문가와 함께 체계적으로 관리해나가세요. 🌈',
@@ -682,8 +644,7 @@ if ('IntersectionObserver' in window) {
                 ]
             };
         }
-        
-        // 고도비만 조언
+
         function getSevereObeseAdvice(gender, age) {
             return {
                 subtitle: '전문적인 도움이 필요한 상황이에요. 의료진과 함께 안전하고 체계적인 관리 계획을 세워보세요. 💙',
@@ -721,16 +682,14 @@ if ('IntersectionObserver' in window) {
                 ]
             };
         }
-        
-        // 계산 버튼 및 엔터키 이벤트 리스너
+
         document.addEventListener('DOMContentLoaded', function() {
-            // 계산 버튼 클릭 이벤트
+
             const calculateBtn = document.getElementById('calculateBtn');
             if (calculateBtn) {
                 calculateBtn.addEventListener('click', calculateBMI);
             }
-            
-            // 엔터키로 계산하기
+
             const inputs = document.querySelectorAll('.bmi-input-field');
             inputs.forEach(input => {
                 input.addEventListener('keypress', function(e) {
@@ -744,7 +703,7 @@ if ('IntersectionObserver' in window) {
     
     <!-- AdSense initialization -->
     <script>
-        // 애드센스 광고 로드
+
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 
@@ -752,7 +711,7 @@ if ('IntersectionObserver' in window) {
     
 <!-- Google AdSense 지연 로딩 -->
 <script>
-// AdSense 지연 로딩 (페이지 로드 후 2초 대기)
+
 window.addEventListener('load', function() {
     setTimeout(function() {
         var adsScript = document.createElement('script');
@@ -765,7 +724,7 @@ window.addEventListener('load', function() {
 </script>
 
 <script>
-// AdSense 중복 초기화 방지
+
 window.adsenseInitialized = window.adsenseInitialized || false;
 
 function initializeAdSense() {
@@ -775,8 +734,7 @@ function initializeAdSense() {
     }
     
     window.adsenseInitialized = true;
-    
-    // 기존 광고 블록 확인 및 초기화
+
     const adBlocks = document.querySelectorAll('.adsbygoogle');
     adBlocks.forEach((ad, index) => {
         if (!ad.dataset.adsbygoogleStatus) {
@@ -790,18 +748,16 @@ function initializeAdSense() {
     });
 }
 
-// 페이지 로드 후 AdSense 초기화
 window.addEventListener('load', function() {
     setTimeout(initializeAdSense, 1000);
 });
 </script>
 
 <script>
-// 통합 AdSense 초기화 (중복 방지)
+
 (function() {
     'use strict';
-    
-    // 전역 플래그로 초기화 상태 관리
+
     window.__adsenseLoaded = window.__adsenseLoaded || false;
     window.__adsenseQueue = window.__adsenseQueue || [];
     
@@ -811,25 +767,21 @@ window.addEventListener('load', function() {
         const ads = document.querySelectorAll('.adsbygoogle:not([data-adsbygoogle-status])');
         
         if (ads.length === 0) return;
-        
-        // AdSense 스크립트가 로드되었는지 확인
+
         if (typeof adsbygoogle === 'undefined') {
             setTimeout(initAdsense, 500);
             return;
         }
         
         window.__adsenseLoaded = true;
-        
-        // 각 광고 슬롯 초기화
+
         ads.forEach((ad, index) => {
             try {
-                // 중복 초기화 방지
+
                 if (ad.getAttribute('data-adsbygoogle-status')) return;
-                
-                // 초기화 시도
+
                 (adsbygoogle = window.adsbygoogle || []).push({});
-                
-                // 상태 표시
+
                 ad.setAttribute('data-adsbygoogle-status', 'done');
                 
             } catch (e) {
@@ -837,8 +789,7 @@ window.addEventListener('load', function() {
             }
         });
     }
-    
-    // 페이지 로드 완료 후 초기화
+
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(initAdsense, 1000);
@@ -846,8 +797,7 @@ window.addEventListener('load', function() {
     } else {
         setTimeout(initAdsense, 1000);
     }
-    
-    // 에러 핸들러 추가
+
     window.addEventListener('error', function(e) {
         if (e.message && e.message.includes('adsbygoogle.push() error')) {
             e.preventDefault();
@@ -864,33 +814,28 @@ window.addEventListener('load', function() {
 <script>
 (function() {
     'use strict';
-    
-    // 전역 초기화 상태 관리
+
     if (window.__adsenseFullyInitialized) return;
     window.__adsenseFullyInitialized = true;
-    
-    // 원래 push 메서드 저장
+
     let originalPush = null;
-    
-    // AdSense 초기화 함수
+
     function safeInitAds() {
         const ads = document.querySelectorAll('.adsbygoogle');
         
         if (ads.length === 0) return;
-        
-        // adsbygoogle가 로드될 때까지 대기
+
         if (typeof adsbygoogle === 'undefined') {
             setTimeout(safeInitAds, 200);
             return;
         }
-        
-        // push 메서드 오버라이드
+
         if (!originalPush && window.adsbygoogle && window.adsbygoogle.push) {
             originalPush = window.adsbygoogle.push;
             
             window.adsbygoogle.push = function(config) {
                 try {
-                    // 이미 광고가 있는 요소는 건너뛰기
+
                     const hasAds = Array.from(document.querySelectorAll('.adsbygoogle')).every(el => 
                         el.getAttribute('data-adsbygoogle-status') === 'done'
                     );
@@ -899,16 +844,14 @@ window.addEventListener('load', function() {
                         console.log('모든 광고 슬롯이 이미 채워짐');
                         return;
                     }
-                    
-                    // 원래 push 메서드 호출
+
                     return originalPush.call(this, config);
                 } catch (e) {
                     console.warn('AdSense push 차단됨:', e.message);
                 }
             };
         }
-        
-        // 각 광고 슬롯 초기화
+
         let initialized = 0;
         ads.forEach((ad) => {
             if (!ad.getAttribute('data-adsbygoogle-status')) {
@@ -916,15 +859,14 @@ window.addEventListener('load', function() {
                     (adsbygoogle = window.adsbygoogle || []).push({});
                     initialized++;
                 } catch (e) {
-                    // 오류 무시
+
                 }
             }
         });
         
         console.log('AdSense 초기화 완료:', initialized, '개 슬롯');
     }
-    
-    // 전역 에러 핸들러
+
     const errorHandler = function(e) {
         if (e.message && e.message.includes('adsbygoogle.push() error')) {
             e.preventDefault();
@@ -933,19 +875,16 @@ window.addEventListener('load', function() {
             return false;
         }
     };
-    
-    // 에러 핸들러 등록
+
     window.addEventListener('error', errorHandler, true);
-    
-    // unhandledrejection 핸들러
+
     window.addEventListener('unhandledrejection', function(e) {
         if (e.reason && e.reason.message && e.reason.message.includes('adsbygoogle')) {
             e.preventDefault();
             return false;
         }
     });
-    
-    // DOM 로드 후 초기화
+
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(safeInitAds, 1000);
