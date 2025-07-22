@@ -275,7 +275,7 @@ if ('IntersectionObserver' in window) {
         }
         
         function analyzePersonality(saju) {
-            const dayMaster = saju.dayPillar ? saju.dayPillar.charAt(0) : null;
+            const dayMaster = saju.dayPillar ? (saju.dayPillar.stem || saju.dayPillar.charAt?.(0)) : null;
             
             const personalities = {
                 '갑': '리더십이 강하고 진취적이며 정의감이 강합니다.',
@@ -360,7 +360,7 @@ if ('IntersectionObserver' in window) {
         }
         
         function analyzeCompatibility(saju) {
-            const dayBranch = saju.dayPillar ? saju.dayPillar.charAt(1) : null;
+            const dayBranch = saju.dayPillar ? (saju.dayPillar.branch || saju.dayPillar.charAt?.(1)) : null;
             
             return {
                 best: getBestMatch(dayBranch),
@@ -574,23 +574,23 @@ if ('IntersectionObserver' in window) {
                         <div class="saju-table">
                             <div class="saju-pillar">
                                 <div class="pillar-title">연주</div>
-                                <div class="pillar-stem">${saju.yearPillar ? saju.yearPillar.charAt(0) : '?'}</div>
-                                <div class="pillar-branch">${saju.yearPillar ? saju.yearPillar.charAt(1) : '?'}</div>
+                                <div class="pillar-stem">${saju.yearPillar ? (saju.yearPillar.stem || saju.yearPillar.charAt?.(0)) : '?'}</div>
+                                <div class="pillar-branch">${saju.yearPillar ? (saju.yearPillar.branch || saju.yearPillar.charAt?.(1)) : '?'}</div>
                             </div>
                             <div class="saju-pillar">
                                 <div class="pillar-title">월주</div>
-                                <div class="pillar-stem">${saju.monthPillar ? saju.monthPillar.charAt(0) : '?'}</div>
-                                <div class="pillar-branch">${saju.monthPillar ? saju.monthPillar.charAt(1) : '?'}</div>
+                                <div class="pillar-stem">${saju.monthPillar ? (saju.monthPillar.stem || saju.monthPillar.charAt?.(0)) : '?'}</div>
+                                <div class="pillar-branch">${saju.monthPillar ? (saju.monthPillar.branch || saju.monthPillar.charAt?.(1)) : '?'}</div>
                             </div>
                             <div class="saju-pillar">
                                 <div class="pillar-title">일주</div>
-                                <div class="pillar-stem">${saju.dayPillar ? saju.dayPillar.charAt(0) : '?'}</div>
-                                <div class="pillar-branch">${saju.dayPillar ? saju.dayPillar.charAt(1) : '?'}</div>
+                                <div class="pillar-stem">${saju.dayPillar ? (saju.dayPillar.stem || saju.dayPillar.charAt?.(0)) : '?'}</div>
+                                <div class="pillar-branch">${saju.dayPillar ? (saju.dayPillar.branch || saju.dayPillar.charAt?.(1)) : '?'}</div>
                             </div>
                             <div class="saju-pillar">
                                 <div class="pillar-title">시주</div>
-                                <div class="pillar-stem">${saju.hourPillar ? saju.hourPillar.charAt(0) : '?'}</div>
-                                <div class="pillar-branch">${saju.hourPillar ? saju.hourPillar.charAt(1) : '?'}</div>
+                                <div class="pillar-stem">${saju.hourPillar ? (saju.hourPillar.stem || saju.hourPillar.charAt?.(0)) : '?'}</div>
+                                <div class="pillar-branch">${saju.hourPillar ? (saju.hourPillar.branch || saju.hourPillar.charAt?.(1)) : '?'}</div>
                             </div>
                         </div>
                     </div>
