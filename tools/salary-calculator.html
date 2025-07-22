@@ -77,8 +77,7 @@
     </script>
     
     <!-- Optimized CSS System -->
-    <link rel="stylesheet" href="/css/styles.css?v=1753150228">
-
+    
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
 
     <script id="performance-monitor">
@@ -621,6 +620,27 @@ window.addEventListener('load', function() {
         setTimeout(safeInitAds, 1000);
     }
 })();
+</script>
+
+<script>
+// 네비게이션 및 푸터 로드 - main.js의 loadComponents가 실행되지 않은 경우를 위한 폴백
+document.addEventListener('DOMContentLoaded', function() {
+    // main.js가 로드되었고 loadComponents 함수가 있는지 확인
+    if (typeof loadComponents === 'function') {
+        // main.js의 DOMContentLoaded가 이미 실행되었을 수 있으므로 
+        // navbar-placeholder가 비어있으면 다시 실행
+        const navPlaceholder = document.getElementById('navbar-placeholder');
+        const footerPlaceholder = document.getElementById('footer-placeholder');
+        
+        if ((navPlaceholder && !navPlaceholder.innerHTML.trim()) || 
+            (footerPlaceholder && !footerPlaceholder.innerHTML.trim())) {
+            console.log('Loading components...');
+            loadComponents().catch(function(error) {
+                console.error('Failed to load components:', error);
+            });
+        }
+    }
+});
 </script>
 </body>
 </html>
