@@ -222,7 +222,7 @@
 <div class="ad-container" style="margin: 40px auto; text-align: center; max-width: 1200px; padding: 0 20px;">
 <div class="ad-label" style="font-size: 12px; color: #666; margin-bottom: 8px;">광고</div>
 <div id="ad-container-mzrzbdo5k" class="min-height-100">
-<div class="ad-placeholder" class="ad-placeholder">
+<div class="ad-placeholder">
         광고 로딩 중...
     </div>
 </div>
@@ -259,7 +259,7 @@ if ('IntersectionObserver' in window) {
 <!-- External JavaScript -->
 <script src="/js/api-config.js?v=1753150228"></script>
 <script src="/js/main.js?v=1753150228"></script>
-<script src="/tests/teto-egen/test.js"></script>
+<script src="/tests/teto-egen/test.js" defer></script>
 <!-- 추가 기능 함수들 -->
 <script>
     function startTest() {
@@ -325,7 +325,9 @@ if ('IntersectionObserver' in window) {
             }
         }, 3000);
     }
-    </script>
+    
+// 전역 함수로 등록
+</script>
 <!-- AdSense initialization -->
 <!-- Non-critical scripts moved here for performance -->
 <!-- Google AdSense 지연 로딩 -->
