@@ -232,8 +232,9 @@ if ('IntersectionObserver' in window) {
             const pillars = [saju.yearPillar, saju.monthPillar, saju.dayPillar, saju.hourPillar];
             pillars.forEach(pillar => {
                 if (pillar) {
-                    const stem = pillar.charAt(0);
-                    const branch = pillar.charAt(1);
+                    // pillar는 객체이므로 stem과 branch 속성으로 접근
+                    const stem = pillar.stem || (typeof pillar === 'string' ? pillar.charAt(0) : '');
+                    const branch = pillar.branch || (typeof pillar === 'string' ? pillar.charAt(1) : '');
 
                     if ('갑을'.includes(stem)) elements.목++;
                     else if ('병정'.includes(stem)) elements.화++;
