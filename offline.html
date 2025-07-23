@@ -1,19 +1,20 @@
 <!DOCTYPE html>
-
-<html dir="ltr" lang="ko">
+<html lang="ko" dir="ltr">
 <head>
-<meta content="upgrade-insecure-requests; default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;" http-equiv="Content-Security-Policy"/>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>?�프?�인 - doha.kr</title>
-<meta content="?�재 ?�터???�결???�습?�다. ?�결 ???�시 ?�도?�주?�요." name="description"/>
-<meta content="noindex, nofollow" name="robots"/>
-<!-- Security Headers -->
-<meta content="nosniff" http-equiv="X-Content-Type-Options"/>
-<meta content="strict-origin-when-cross-origin" http-equiv="Referrer-Policy"/>
-<meta content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), accelerometer=(), gyroscope=()" http-equiv="Permissions-Policy"/>
-<!-- Inline Critical CSS for offline page -->
-<style>
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>오프라인 - doha.kr</title>
+    <meta name="description" content="현재 인터넷 연결이 없습니다. 연결 후 다시 시도해주세요.">
+    <meta name="robots" content="noindex, nofollow">
+    
+    <!-- Security Headers -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), accelerometer=(), gyroscope=()">
+    
+    <!-- Inline Critical CSS for offline page -->
+    <style>
         :root {
             --primary: #6366f1;
             --gray-50: #f9fafb;
@@ -205,10 +206,12 @@
             outline-offset: 2px;
         }
     </style>
-<!-- Optimized CSS System -->
-<link href="/css/styles.css?v=1753283465" rel="stylesheet"/>
+    <!-- Optimized CSS System -->
+    <link rel="stylesheet" href="/css/styles.css?v=1753150228">
 
-<script id="performance-monitor">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+
+    <script id="performance-monitor">
 
     window.addEventListener('load', function() {
         if (window.performance && window.performance.timing) {
@@ -219,59 +222,65 @@
         }
     });
     </script>
-<!-- Kakao JavaScript SDK -->
-<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js"></script>
 </head>
-<body><div id="navbar-placeholder"></div>
-
-<div class="offline-container">
-<div aria-hidden="true" class="offline-icon">?��</div>
-<h1 class="offline-title">?�터???�결 ?�음</h1>
-<p class="offline-message">
-            ?�재 ?�터?�에 ?�결?�어 ?��? ?�습?�다.<br/>
-            ?�결???�인?????�시 ?�도?�주?�요.
+<body>
+    <div class="offline-container">
+        <div class="offline-icon" aria-hidden="true">📡</div>
+        
+        <h1 class="offline-title">인터넷 연결 없음</h1>
+        
+        <p class="offline-message">
+            현재 인터넷에 연결되어 있지 않습니다.<br>
+            연결을 확인한 후 다시 시도해주세요.
         </p>
-<div class="offline-actions">
-<button class="btn btn--primary" id="retry-btn" onclick="retryConnection()">
-<span>?��</span>
-<span>?�시 ?�도</span>
-</button>
-<button class="btn btn--secondary" onclick="goHome()">
-<span>?��</span>
-<span>?�으�??�동</span>
-</button>
-</div>
-<div class="connection-status connection-status--offline" id="connection-status">
-<span>?��</span>
-<span id="status-text">?�프?�인 ?�태</span>
-</div>
-<div class="offline-tips">
-<h3>?�결 문제 ?�결 방법</h3>
-<ul>
-<li>Wi-Fi ?�는 모바???�이???�결???�인?�세??/li>
-<li>?�우?��? ?�시?�해보세??/li>
-<li>?�른 ?�사?�트가 ?�상?�으�??�동?�는지 ?�인?�세??/li>
-<li>브라?��?�??�로고침?�거???�시?�해보세??/li>
-<li>VPN???�용 중이?�면 ?�시 비활?�화?�보?�요</li>
-</ul>
-</div>
-</div>
-<!-- External JavaScript -->
-<script src="/js/api-config.js?v=1753283465"></script>
-<script src="/js/main.js?v=1753283465"></script>
-<!-- 카카??초기??-->
-<script>
+        
+        <div class="offline-actions">
+            <button class="btn btn--primary" onclick="retryConnection()" id="retry-btn">
+                <span>🔄</span>
+                <span>다시 시도</span>
+            </button>
+            
+            <button class="btn btn--secondary" onclick="goHome()">
+                <span>🏠</span>
+                <span>홈으로 이동</span>
+            </button>
+        </div>
+        
+        <div class="connection-status connection-status--offline" id="connection-status">
+            <span>📶</span>
+            <span id="status-text">오프라인 상태</span>
+        </div>
+        
+        <div class="offline-tips">
+            <h3>연결 문제 해결 방법</h3>
+            <ul>
+                <li>Wi-Fi 또는 모바일 데이터 연결을 확인하세요</li>
+                <li>라우터를 재시작해보세요</li>
+                <li>다른 웹사이트가 정상적으로 작동하는지 확인하세요</li>
+                <li>브라우저를 새로고침하거나 재시작해보세요</li>
+                <li>VPN을 사용 중이라면 잠시 비활성화해보세요</li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- External JavaScript -->
+    <script src="/js/api-config.js?v=1753150228"></script>
+    <script src="/js/main.js?v=1753150228"></script>
+    
+    <!-- 카카오 초기화 -->
+    <script>
         if (typeof Kakao !== 'undefined' && window.API_CONFIG) {
             try {
                 if (!Kakao.isInitialized()) {
                     Kakao.init(window.API_CONFIG.KAKAO_JS_KEY);
                 }
             } catch (error) {
-                console.warn('카카??초기???�류:', error);
+                console.warn('카카오 초기화 오류:', error);
             }
         }
     </script>
-<script>
+    
+    <script>
 
         function updateConnectionStatus() {
             const statusElement = document.getElementById('connection-status');
@@ -280,12 +289,12 @@
             
             if (navigator.onLine) {
                 statusElement.className = 'connection-status connection-status--online';
-                statusText.textContent = '?�라???�태 - ?�이지�??�로고침?�세??;
-                retryBtn.textContent = '?�이지 ?�로고침';
+                statusText.textContent = '온라인 상태 - 페이지를 새로고침하세요';
+                retryBtn.textContent = '페이지 새로고침';
             } else {
                 statusElement.className = 'connection-status connection-status--offline';
-                statusText.textContent = '?�프?�인 ?�태';
-                retryBtn.innerHTML = '<span>?��</span><span>?�시 ?�도</span>';
+                statusText.textContent = '오프라인 상태';
+                retryBtn.innerHTML = '<span>🔄</span><span>다시 시도</span>';
             }
         }
 
@@ -294,7 +303,7 @@
             const statusText = document.getElementById('status-text');
             
             statusElement.className = 'connection-status checking-connection';
-            statusText.textContent = '?�결 ?�인 �?..';
+            statusText.textContent = '연결 확인 중...';
 
             fetch('/', { 
                 method: 'HEAD',
@@ -357,7 +366,7 @@
                         font-size: 14px;
                         font-weight: 500;
                     `;
-                    message.textContent = '??콘텐츠�? ?�용 가?�합?�다';
+                    message.textContent = '새 콘텐츠가 사용 가능합니다';
                     document.body.appendChild(message);
                     
                     setTimeout(() => {
@@ -369,13 +378,14 @@
 
         if (typeof gtag !== 'undefined') {
             gtag('event', 'page_view', {
-                page_title: '?�프?�인 ?�이지',
+                page_title: '오프라인 페이지',
                 page_location: window.location.href
             });
         }
         
         console.log('Offline page loaded');
     </script>
+
 <script>
 
 window.adsenseInitialized = window.adsenseInitialized || false;
@@ -405,6 +415,7 @@ window.addEventListener('load', function() {
     setTimeout(initializeAdSense, 1000);
 });
 </script>
+
 <script>
 
 (function() {
@@ -437,7 +448,7 @@ window.addEventListener('load', function() {
                 ad.setAttribute('data-adsbygoogle-status', 'done');
                 
             } catch (e) {
-                console.warn('AdSense 초기???�패:', index, e.message);
+                console.warn('AdSense 초기화 실패:', index, e.message);
             }
         });
     }
@@ -453,23 +464,11 @@ window.addEventListener('load', function() {
     window.addEventListener('error', function(e) {
         if (e.message && e.message.includes('adsbygoogle.push() error')) {
             e.preventDefault();
-            console.warn('AdSense 중복 초기??방�???);
+            console.warn('AdSense 중복 초기화 방지됨');
             return false;
         }
     }, true);
 })();
 </script>
-<!-- 카카??초기??-->
-<script>
-    if (typeof Kakao !== 'undefined' && window.KAKAO_API_KEY) {
-        if (!Kakao.isInitialized()) {
-            Kakao.init(window.KAKAO_API_KEY);
-            console.log('카카??SDK 초기???�료');
-        }
-    } else {
-        console.warn('카카??SDK ?�는 API ?��? 찾을 ???�습?�다.');
-    }
-</script>
-<div id="footer-placeholder"></div>
 </body>
 </html>

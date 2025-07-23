@@ -1,30 +1,57 @@
 <!DOCTYPE html>
-
 <html lang="ko">
 <head>
-<meta content="upgrade-insecure-requests; default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;" http-equiv="Content-Security-Policy"/>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>404 - ?�이지�?찾을 ???�습?�다 | doha.kr</title>
-<meta content="?�청?�신 ?�이지�?찾을 ???�습?�다. doha.kr???�리?�스?? ?�용?�구, AI?�세 ?�비?��? ?�용?�보?�요." name="description"/>
-<meta content="noindex, nofollow" name="robots"/>
-<!-- Security Headers -->
-<meta content="nosniff" http-equiv="X-Content-Type-Options"/>
-<meta content="strict-origin-when-cross-origin" http-equiv="Referrer-Policy"/>
-<meta content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), accelerometer=(), gyroscope=()" http-equiv="Permissions-Policy"/>
-<!-- Canonical URL -->
-<link href="https://doha.kr/404.html" rel="canonical"/>
-<!-- Google AdSense -->
-<!-- Moved to end of body -->
-<!-- Kakao JavaScript SDK -->
-<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js"></script>
-<!-- Optimized CSS System -->
-<link href="/css/styles.css?v=1753283465" rel="stylesheet"/>
-<link href="/css/mobile-fixes.css" rel="stylesheet"/>
-<link href="/css/button-system.css" rel="stylesheet"/>
-<link href="/css/pages/404.css" rel="stylesheet"/>
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;">
 
-<script id="performance-monitor">
+window.addEventListener('load', function() {
+    if (window.performance && window.performance.timing) {
+        const loadTime = window.performance.timing.loadEventEnd - window.performance.timing.navigationStart;
+        console.log('페이지 로딩 시간:', loadTime + 'ms');
+        
+        if (loadTime > 10000) {
+            console.warn('페이지 로딩이 느립니다:', loadTime + 'ms');
+        }
+
+        const resources = performance.getEntriesByType('resource');
+        const slowResources = resources.filter(r => r.duration > 1000);
+        if (slowResources.length > 0) {
+            console.warn('느린 리소스들:', slowResources.map(r => ({ name: r.name, duration: r.duration })));
+        }
+    }
+});
+
+window.addEventListener('securitypolicyviolation', function(e) {
+    console.warn('CSP 위반 감지:', {
+        directive: e.violatedDirective,
+        source: e.sourceFile,
+        line: e.lineNumber
+    });
+});
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - 페이지를 찾을 수 없습니다 | doha.kr</title>
+    <meta name="description" content="요청하신 페이지를 찾을 수 없습니다. doha.kr의 심리테스트, 실용도구, AI운세 서비스를 이용해보세요.">
+    <meta name="robots" content="noindex, nofollow">
+    
+    <!-- Security Headers -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), accelerometer=(), gyroscope=()">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://doha.kr/404.html">
+    
+    <!-- Google AdSense -->
+    <!-- Moved to end of body -->
+
+    <!-- Optimized CSS System -->
+    <link rel="stylesheet" href="/css/styles.css?v=1753150228">
+    <link rel="stylesheet" href="/css/pages/404.css">
+
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+
+    <script id="performance-monitor">
 
     window.addEventListener('load', function() {
         if (window.performance && window.performance.timing) {
@@ -37,21 +64,23 @@
     </script>
 </head>
 <body>
-<div class="error-container">
-<div class="error-illustration"></div>
-<h1>404</h1>
-<h2>?�이지�?찾을 ???�습?�다</h2>
-<p>?�청?�신 ?�이지가 존재?��? ?�거???�동?�었?�니??</p>
-<div class="error-actions">
-<a class="btn btn-primary" href="/">?�으�??�아가�?/a>
-<a class="btn btn-secondary" href="/tests/">?�기 ?�스??보기</a>
-</div>
-<!-- 광고 ?�역 -->
-<div class="ad-wrapper">
-<div class="ad-label-small">광고</div>
-<div id="ad-container-g0o7mx6io" class="ad-container-slot">
-<div class="ad-placeholder">
-        광고 로딩 �?..
+    <div class="error-container">
+        <div class="error-illustration"></div>
+        <h1>404</h1>
+        <h2>페이지를 찾을 수 없습니다</h2>
+        <p>요청하신 페이지가 존재하지 않거나 이동되었습니다.</p>
+        <div class="error-actions">
+            <a href="/" class="btn btn-primary">홈으로 돌아가기</a>
+            <a href="/tests/" class="btn btn-secondary">인기 테스트 보기</a>
+        </div>
+        
+        <!-- 광고 영역 -->
+        <div style="margin-top: 40px; max-width: 600px; width: 100%;">
+            <div style="font-size: 12px; color: rgba(255,255,255,0.7); margin-bottom: 8px;">광고</div>
+            
+<div id="ad-container-g0o7mx6io" style="min-height: 100px;">
+    <div class="ad-placeholder" style="display: flex; align-items: center; justify-content: center; background: #f5f5f5; min-height: 100px; color: #999;">
+        광고 로딩 중...
     </div>
 </div>
 <script>
@@ -62,6 +91,7 @@ if ('IntersectionObserver' in window) {
             if (entry.isIntersecting) {
                 const container = entry.target;
                 container.innerHTML = `<ins class="adsbygoogle"
+                 style="display:block"
                  data-ad-client="ca-pub-7905640648499222"
                  data-ad-slot="3911401606"
                  data-ad-format="auto"
@@ -80,14 +110,18 @@ if ('IntersectionObserver' in window) {
     }
 }
 </script>
-</div>
-</div>
-<!-- AdSense initialization -->
-<!-- Core JavaScript -->
-<script src="/js/main.js?v=1753283465"></script>
-<script src="/js/api-config.js?v=1753283465"></script>
-<!-- Non-critical scripts moved here for performance -->
-<!-- Google AdSense 지??로딩 -->
+        </div>
+    </div>
+    
+    <!-- AdSense initialization -->
+
+    <!-- Core JavaScript -->
+    <script src="/js/main.js?v=1753150228"></script>
+    <script src="/js/api-config.js?v=1753150228"></script>
+    
+    <!-- Non-critical scripts moved here for performance -->
+    
+<!-- Google AdSense 지연 로딩 -->
 <script>
 
 window.addEventListener('load', function() {
@@ -100,6 +134,7 @@ window.addEventListener('load', function() {
     }, 2000);
 });
 </script>
+
 <script>
 
 window.adsenseInitialized = window.adsenseInitialized || false;
@@ -129,6 +164,7 @@ window.addEventListener('load', function() {
     setTimeout(initializeAdSense, 1000);
 });
 </script>
+
 <script>
 
 (function() {
@@ -161,7 +197,7 @@ window.addEventListener('load', function() {
                 ad.setAttribute('data-adsbygoogle-status', 'done');
                 
             } catch (e) {
-                console.warn('AdSense 초기???�패:', index, e.message);
+                console.warn('AdSense 초기화 실패:', index, e.message);
             }
         });
     }
@@ -177,13 +213,14 @@ window.addEventListener('load', function() {
     window.addEventListener('error', function(e) {
         if (e.message && e.message.includes('adsbygoogle.push() error')) {
             e.preventDefault();
-            console.warn('AdSense 중복 초기??방�???);
+            console.warn('AdSense 중복 초기화 방지됨');
             return false;
         }
     }, true);
 })();
 </script>
-<!-- AdSense ?�합 초기??-->
+
+<!-- AdSense 통합 초기화 -->
 <script>
 (function() {
     'use strict';
@@ -229,17 +266,6 @@ window.addEventListener('load', function() {
         }
     }, true);
 })();
-</script>
-<!-- 카카??초기??-->
-<script>
-    if (typeof Kakao !== 'undefined' && window.KAKAO_API_KEY) {
-        if (!Kakao.isInitialized()) {
-            Kakao.init(window.KAKAO_API_KEY);
-            console.log('카카??SDK 초기???�료');
-        }
-    } else {
-        console.warn('카카??SDK ?�는 API ?��? 찾을 ???�습?�다.');
-    }
 </script>
 </body>
 </html>

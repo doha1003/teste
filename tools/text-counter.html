@@ -1,219 +1,59 @@
 <!DOCTYPE html>
-
 <html lang="ko">
 <head>
-<meta content="upgrade-insecure-requests; default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;" http-equiv="Content-Security-Policy"/>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>글?�수 ?�기 - ?�소?? 리포??글?�수 계산�?| doha.kr</title>
-<meta content="?�기?�개?? 리포?? ?�문 ?�성 ???�수! 공백 ?�함/?�외, 바이??계산, ?�고지 ?�산까�? ?�번???�인?�세?? ?�시간으�?글?�수�?계산?�여 ?�확???�계�??�공?�니?? ?��?, ?�문, ?�자, ?�수문자�?구분?�여 ?��??�인 분석??가?�하�? 200???�고지 기�? ?�산 기능??지?�합?�다. ?�???�시 ?�소?? 취업 지?�서, 공모???�모?? SNS 게시�??�성 ??글?�수 ?�한???�게 ?�인?????�습?�다. ?�어?? 문장?? 문단?�까지 종합?�인 ?�스??분석 ?�구�??�용?�세?? 무료�??�공?�며 ?�원가???�이 바로 ?�용 가?�합?�다." name="description"/>
-<meta content="글?�수?�기, 글?�수계산�? ?�소?��??�수, 문자?�세�? 바이?�계?? ?�고지계산" name="keywords"/>
-<meta content="index, follow" name="robots"/>
-<meta content="doha.kr" name="author"/>
-<!-- Security Headers -->
-<meta content="nosniff" http-equiv="X-Content-Type-Options"/>
-<meta content="strict-origin-when-cross-origin" http-equiv="Referrer-Policy"/>
-<meta content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), accelerometer=(), gyroscope=()" http-equiv="Permissions-Policy"/>
-<!-- Open Graph -->
-<meta content="글?�수 ?�기 - ?�확??글?�수 계산�? property="og:title"/>
-<meta content="공백 ?�함/?�외, 바이?? ?�고지 ?�산까�? 모든 글?�수 ?�보�??�눈??" property="og:description"/>
-<meta content="https://doha.kr/images/egen-male-card.jpg" property="og:image"/>
-<meta content="https://doha.kr/tools/text-counter.html" property="og:url"/>
-<!-- Critical CSS -->
-<style>
-/* Critical CSS for above-the-fold content */
-:root {
-    --primary-color: #2563eb;
-    --primary-hover: #1d4ed8;
-    --text-primary: #000000;
-    --text-secondary: #1f2937;
-    --gray-50: #f9fafb;
-    --gray-100: #f3f4f6;
-    --gray-200: #e5e7eb;
-    --gray-900: #111827;
-    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
-    --font-sans: 'Inter', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: var(--font-sans);
-    color: var(--text-primary);
-    line-height: 1.5;
-    background-color: var(--gray-50);
-}
-
-/* Navigation placeholder */
-#navbar-placeholder {
-    min-height: 64px;
-    background: white;
-    border-bottom: 1px solid var(--gray-200);
-}
-
-/* Page Header */
-.page-header {
-    background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
-    color: white;
-    padding: 80px 20px;
-    text-align: center;
-}
-
-.page-header .container {
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.page-title {
-    font-size: 48px;
-    font-weight: 700;
-    margin-bottom: 16px;
-}
-
-.page-subtitle {
-    font-size: 20px;
-    opacity: 0.9;
-}
-
-/* Tool Container */
-.tool-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 40px 20px;
-}
-
-/* Counter Section */
-.counter-section {
-    background: white;
-    border-radius: 16px;
-    padding: 32px;
-    box-shadow: var(--shadow-md);
-    margin-bottom: 32px;
-}
-
-/* Textarea */
-.text-input {
-    width: 100%;
-    min-height: 300px;
-    padding: 16px;
-    border: 2px solid var(--gray-200);
-    border-radius: 8px;
-    font-family: inherit;
-    font-size: 16px;
-    resize: vertical;
-    transition: border-color 0.2s;
-}
-
-.text-input:focus {
-    outline: none;
-    border-color: var(--primary-color);
-}
-
-/* Stats Grid */
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 16px;
-    margin-top: 24px;
-}
-
-.stat-card {
-    background: var(--gray-50);
-    padding: 16px;
-    border-radius: 8px;
-    text-align: center;
-}
-
-.stat-value {
-    font-size: 32px;
-    font-weight: 700;
-    color: var(--primary-color);
-}
-
-.stat-label {
-    font-size: 14px;
-    color: var(--text-secondary);
-    margin-top: 4px;
-}
-
-/* Animations */
-.fade-in {
-    animation: fadeIn 0.6s ease-out;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .page-header {
-        padding: 60px 20px;
-    }
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>글자수 세기 - 자소서, 리포트 글자수 계산기 | doha.kr</title>
+    <meta name="description" content="자기소개서, 리포트, 논문 작성 시 필수! 공백 포함/제외, 바이트 계산, 원고지 환산까지 한번에 확인하세요. 실시간으로 글자수를 계산하여 정확한 통계를 제공합니다. 한글, 영문, 숫자, 특수문자를 구분하여 세부적인 분석이 가능하며, 200자 원고지 기준 환산 기능도 지원합니다. 대학 입시 자소서, 취업 지원서, 공모전 응모작, SNS 게시물 작성 시 글자수 제한을 쉽게 확인할 수 있습니다. 단어수, 문장수, 문단수까지 종합적인 텍스트 분석 도구로 활용하세요. 무료로 제공되며 회원가입 없이 바로 사용 가능합니다.">
+    <meta name="keywords" content="글자수세기, 글자수계산기, 자소서글자수, 문자수세기, 바이트계산, 원고지계산">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="doha.kr">
     
-    .page-title {
-        font-size: 36px;
-    }
+    <!-- Security Headers -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), accelerometer=(), gyroscope=()">
     
-    .page-subtitle {
-        font-size: 18px;
-    }
+    <!-- Open Graph -->
+    <meta property="og:title" content="글자수 세기 - 정확한 글자수 계산기">
+    <meta property="og:description" content="공백 포함/제외, 바이트, 원고지 환산까지 모든 글자수 정보를 한눈에!">
+    <meta property="og:image" content="https://doha.kr/images/egen-male-card.jpg">
+    <meta property="og:url" content="https://doha.kr/tools/text-counter.html">
     
-    .counter-section {
-        padding: 24px;
-    }
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" crossorigin href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    .text-input {
-        min-height: 250px;
-    }
+    <!-- External CSS -->
+    <link rel="stylesheet" href="/css/styles.css?v=1753150228">
+    <link rel="stylesheet" href="/css/pages/text-counter.css">
     
-    .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-</style>
-<!-- Google Fonts -->
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="True" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<!-- External CSS -->
-<link href="/css/styles.css?v=1753283465" rel="stylesheet"/>
-<link href="/css/mobile-fixes.css" rel="stylesheet"/>
-<link href="/css/button-system.css" rel="stylesheet"/>
-<link href="/css/pages/text-counter.css" rel="stylesheet"/>
-<!-- Favicon -->
-<link href="/images/placeholder-favicon.svg" rel="icon" type="image/svg+xml"/>
-<link href="/images/logo.svg" rel="apple-touch-icon"/>
-<link href="/manifest.json" rel="manifest"/>
-<!-- Content Security Policy --><!-- DOMPurify for XSS protection -->
-<!-- Google AdSense -->
-<!-- Moved to end of body -->
-<!-- Kakao JavaScript SDK -->
-<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js"></script>
-<!-- DOMPurify for XSS protection -->
-<script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script>
-<!-- Structured Data -->
-<script type="application/ld+json">
+    <!-- Favicon -->
+    <link rel="icon" href="/images/placeholder-favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/images/logo.svg">
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- Content Security Policy --><!-- DOMPurify for XSS protection -->
+    
+    
+    <!-- Google AdSense -->
+    <!-- Moved to end of body -->
+    
+    <!-- Kakao JavaScript SDK -->
+    
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
     [
         {
             "@context": "https://schema.org",
             "@type": "WebApplication",
-            "name": "글?�수 ?�기",
-            "alternateName": "글?�수 계산�?,
+            "name": "글자수 세기",
+            "alternateName": "글자수 계산기",
             "url": "https://doha.kr/tools/text-counter.html",
-            "description": "?�기?�개?? 리포?? ?�문 ?�성 ???�수! 공백 ?�함/?�외, 바이??계산, ?�고지 ?�산까�? ?�번???�인?�세??",
+            "description": "자기소개서, 리포트, 논문 작성 시 필수! 공백 포함/제외, 바이트 계산, 원고지 환산까지 한번에 확인하세요.",
             "applicationCategory": "UtilityApplication",
             "operatingSystem": "Any",
             "offers": {
@@ -227,18 +67,18 @@ body {
                 "ratingCount": "5230"
             },
             "featureList": [
-                "?�시�?글?�수 카운??,
-                "공백 ?�함/?�외 ?�택",
-                "?�어??�?문단???�시",
-                "바이????계산",
-                "?�고지 ?�산"
+                "실시간 글자수 카운팅",
+                "공백 포함/제외 선택",
+                "단어수 및 문단수 표시",
+                "바이트 수 계산",
+                "원고지 환산"
             ]
         },
         {
             "@context": "https://schema.org",
             "@type": "HowTo",
-            "name": "글?�수 ?�기 ?�구 ?�용�?,
-            "description": "?�스??글?�수�??�확?�게 계산?�는 방법",
+            "name": "글자수 세기 도구 사용법",
+            "description": "텍스트 글자수를 정확하게 계산하는 방법",
             "totalTime": "PT2M",
             "estimatedCost": {
                 "@type": "MonetaryAmount",
@@ -248,29 +88,32 @@ body {
             "step": [
                 {
                     "@type": "HowToStep",
-                    "name": "?�스???�력",
-                    "text": "글?�수�??�고 ?��? ?�스?��? ?�력창에 붙여?�거??직접 ?�력?�세??",
+                    "name": "텍스트 입력",
+                    "text": "글자수를 세고 싶은 텍스트를 입력창에 붙여넣거나 직접 입력하세요.",
                     "position": 1
                 },
                 {
                     "@type": "HowToStep",
-                    "name": "?�션 ?�정",
-                    "text": "공백 ?�함/?�외, 바이???�시, ?�고지 ?�산 ???�하???�션???�택?�세??",
+                    "name": "옵션 설정",
+                    "text": "공백 포함/제외, 바이트 표시, 원고지 환산 등 원하는 옵션을 선택하세요.",
                     "position": 2
                 },
                 {
                     "@type": "HowToStep",
-                    "name": "결과 ?�인",
-                    "text": "?�시간으�?계산??글?�수, ?�어?? 문장???�의 ?�계�??�인?�세??",
+                    "name": "결과 확인",
+                    "text": "실시간으로 계산된 글자수, 단어수, 문장수 등의 통계를 확인하세요.",
                     "position": 3
                 }
             ]
         }
     ]
     </script>
-<!-- Optimized CSS System -->
+    
+    <!-- Optimized CSS System -->
+    
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
 
-<script id="performance-monitor">
+    <script id="performance-monitor">
 
     window.addEventListener('load', function() {
         if (window.performance && window.performance.timing) {
@@ -283,164 +126,184 @@ body {
     </script>
 </head>
 <body>
-<!-- ?�비게이??�?-->
-<div id="navbar-placeholder"></div>
-<!-- ?�더 -->
-<header class="header">
-<div class="header-content">
-<h1 class="header-title">글?�수 ?�기</h1>
-<p class="header-subtitle">
-                ?�기?�개?? 리포?? ?�문 ?�성 ???�수!<br/>
-                공백 ?�함/?�외, 바이??계산, ?�고지 ?�산까�? ?�번???�인?�세??
+    <!-- 네비게이션 바 -->
+    <div id="navbar-placeholder"></div>
+    
+    <!-- 헤더 -->
+    <header class="header">
+        <div class="header-content">
+            <h1 class="header-title">글자수 세기</h1>
+            <p class="header-subtitle">
+                자기소개서, 리포트, 논문 작성 시 필수!<br>
+                공백 포함/제외, 바이트 계산, 원고지 환산까지 한번에 확인하세요.
             </p>
-</div>
-</header>
-<!-- 메인 컨테?�너 -->
-<div class="main-container">
-<!-- ?�구 ?�션 -->
-<div class="tool-section">
-<!-- ?�스???�력 ?�역 -->
-<div class="text-input-wrapper">
-<textarea aria-label="?�스???�력 ?�역" class="text-input" id="textInput" maxlength="100000" oninput="handleTextInput()" placeholder="?�기???�스?��? ?�력?�거??붙여?�으?�요.
+        </div>
+    </header>
+    
+    <!-- 메인 컨테이너 -->
+    <div class="main-container">
+        <!-- 도구 섹션 -->
+        <div class="tool-section">
+            <!-- 텍스트 입력 영역 -->
+            <div class="text-input-wrapper">
+                <textarea 
+                    id="textInput" 
+                    class="text-input" 
+                    placeholder="여기에 텍스트를 입력하거나 붙여넣으세요.
 
-?�기?�개?? 리포?? ?�문, SNS 글 ???�떤 ?�스?�든 ?�확?�게 글?�수�?계산?�드립니??
+자기소개서, 리포트, 논문, SNS 글 등 어떤 텍스트든 정확하게 글자수를 계산해드립니다.
 
-?�시간으�?계산?��?�??�력?�는 즉시 결과�??�인?????�습?�다."></textarea>
-</div>
-<!-- 버튼 ?�역 - ?�스???�역�?분리 -->
-<div class="text-counter-controls">
-<button class="control-btn" onclick="clearText()">
-<span>?���?/span> 지?�기
+실시간으로 계산되므로 입력하는 즉시 결과를 확인할 수 있습니다."
+                    oninput="handleTextInput()"
+                    aria-label="텍스트 입력 영역"
+                    maxlength="100000"
+                ></textarea>
+            </div>
+            
+            <!-- 버튼 영역 - 텍스트 영역과 분리 -->
+            <div class="text-counter-controls">
+                <button class="control-btn" onclick="clearText()">
+                    <span>🗑️</span> 지우기
                 </button>
-<button class="control-btn" onclick="copyText()">
-<span>?��</span> 복사
+                <button class="control-btn" onclick="copyText()">
+                    <span>📋</span> 복사
                 </button>
-<button class="control-btn primary" onclick="pasteText()">
-<span>?��</span> 붙여?�기
+                <button class="control-btn primary" onclick="pasteText()">
+                    <span>📄</span> 붙여넣기
                 </button>
-</div>
-<!-- ?�정 ?�널 -->
-<div class="settings-panel">
-<h3 class="settings-title">계산 ?�션</h3>
-<div class="settings-grid">
-<div class="setting-item">
-<input checked="" class="setting-checkbox" id="includeSpaces" onchange="updateCount()" type="checkbox"/>
-<label class="setting-label" for="includeSpaces">공백 ?�함</label>
-</div>
-<div class="setting-item">
-<input checked="" class="setting-checkbox" id="includeNewlines" onchange="updateCount()" type="checkbox"/>
-<label class="setting-label" for="includeNewlines">줄바�??�함</label>
-</div>
-<div class="setting-item">
-<input checked="" class="setting-checkbox" id="showBytes" onchange="updateCount()" type="checkbox"/>
-<label class="setting-label" for="showBytes">바이???�시</label>
-</div>
-<div class="setting-item">
-<input checked="" class="setting-checkbox" id="showManuscript" onchange="updateCount()" type="checkbox"/>
-<label class="setting-label" for="showManuscript">?�고지 ?�산</label>
-</div>
-</div>
-</div>
-<!-- 결과 ?�시 -->
-<div class="results-grid">
-<div class="result-card">
-<span class="result-icon">?��</span>
-<div class="result-label">?�체 글?�수</div>
-<div class="result-value">
-<span id="totalChars">0</span>
-<span class="result-unit">??/span>
-</div>
-</div>
-<div class="result-card">
-<span class="result-icon">?��</span>
-<div class="result-label">공백 ?�외</div>
-<div class="result-value">
-<span id="charsNoSpaces">0</span>
-<span class="result-unit">??/span>
-</div>
-</div>
-<div class="result-card">
-<span class="result-icon">?��</span>
-<div class="result-label">바이??/div>
-<div class="result-value">
-<span id="bytes">0</span>
-<span class="result-unit">byte</span>
-</div>
-</div>
-<div class="result-card">
-<span class="result-icon">?��</span>
-<div class="result-label">?�고지</div>
-<div class="result-value">
-<span id="manuscript">0</span>
-<span class="result-unit">�?/span>
-</div>
-</div>
-<div class="result-card">
-<span class="result-icon">?��</span>
-<div class="result-label">?�어??/div>
-<div class="result-value">
-<span id="words">0</span>
-<span class="result-unit">�?/span>
-</div>
-</div>
-<div class="result-card">
-<span class="result-icon">?��</span>
-<div class="result-label">문장??/div>
-<div class="result-value">
-<span id="sentences">0</span>
-<span class="result-unit">�?/span>
-</div>
-</div>
-</div>
-<!-- ?�세 ?�보 ?�이�?-->
-<table class="detail-table">
-<thead>
-<tr>
-<th>구분</th>
-<th>개수</th>
-<th>비고</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>?��?</td>
-<td id="koreanCount">0</td>
-<td>?��? 문자�?계산</td>
-</tr>
-<tr>
-<td>?�문</td>
-<td id="englishCount">0</td>
-<td>?�파�??�?�문???�함</td>
-</tr>
-<tr>
-<td>?�자</td>
-<td id="numberCount">0</td>
-<td>0-9 ?�자</td>
-</tr>
-<tr>
-<td>공백</td>
-<td id="spaceCount">0</td>
-<td>?�페?�스, ???�함</td>
-</tr>
-<tr>
-<td>?�수문자</td>
-<td id="specialCount">0</td>
-<td>구두??�?기호</td>
-</tr>
-<tr>
-<td>줄바�?/td>
-<td id="newlineCount">0</td>
-<td>?�터?�로 구분??�?/td>
-</tr>
-</tbody>
-</table>
-</div>
-<!-- 광고 ?�역 -->
-<div class="ad-container">
-<div aria-label="광고 ?�역" class="ad-label">광고</div>
-<div id="ad-container-9kfjod5na" class="min-height-100">
-<div class="ad-placeholder">
-        광고 로딩 �?..
+            </div>
+            
+            <!-- 설정 패널 -->
+            <div class="settings-panel">
+                <h3 class="settings-title">계산 옵션</h3>
+                <div class="settings-grid">
+                    <div class="setting-item">
+                        <input type="checkbox" id="includeSpaces" class="setting-checkbox" checked onchange="updateCount()">
+                        <label for="includeSpaces" class="setting-label">공백 포함</label>
+                    </div>
+                    <div class="setting-item">
+                        <input type="checkbox" id="includeNewlines" class="setting-checkbox" checked onchange="updateCount()">
+                        <label for="includeNewlines" class="setting-label">줄바꿈 포함</label>
+                    </div>
+                    <div class="setting-item">
+                        <input type="checkbox" id="showBytes" class="setting-checkbox" checked onchange="updateCount()">
+                        <label for="showBytes" class="setting-label">바이트 표시</label>
+                    </div>
+                    <div class="setting-item">
+                        <input type="checkbox" id="showManuscript" class="setting-checkbox" checked onchange="updateCount()">
+                        <label for="showManuscript" class="setting-label">원고지 환산</label>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 결과 표시 -->
+            <div class="results-grid">
+                <div class="result-card">
+                    <span class="result-icon">📝</span>
+                    <div class="result-label">전체 글자수</div>
+                    <div class="result-value">
+                        <span id="totalChars">0</span>
+                        <span class="result-unit">자</span>
+                    </div>
+                </div>
+                
+                <div class="result-card">
+                    <span class="result-icon">📄</span>
+                    <div class="result-label">공백 제외</div>
+                    <div class="result-value">
+                        <span id="charsNoSpaces">0</span>
+                        <span class="result-unit">자</span>
+                    </div>
+                </div>
+                
+                <div class="result-card">
+                    <span class="result-icon">💾</span>
+                    <div class="result-label">바이트</div>
+                    <div class="result-value">
+                        <span id="bytes">0</span>
+                        <span class="result-unit">byte</span>
+                    </div>
+                </div>
+                
+                <div class="result-card">
+                    <span class="result-icon">📰</span>
+                    <div class="result-label">원고지</div>
+                    <div class="result-value">
+                        <span id="manuscript">0</span>
+                        <span class="result-unit">매</span>
+                    </div>
+                </div>
+                
+                <div class="result-card">
+                    <span class="result-icon">🔤</span>
+                    <div class="result-label">단어수</div>
+                    <div class="result-value">
+                        <span id="words">0</span>
+                        <span class="result-unit">개</span>
+                    </div>
+                </div>
+                
+                <div class="result-card">
+                    <span class="result-icon">📊</span>
+                    <div class="result-label">문장수</div>
+                    <div class="result-value">
+                        <span id="sentences">0</span>
+                        <span class="result-unit">개</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 상세 정보 테이블 -->
+            <table class="detail-table">
+                <thead>
+                    <tr>
+                        <th>구분</th>
+                        <th>개수</th>
+                        <th>비고</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>한글</td>
+                        <td id="koreanCount">0</td>
+                        <td>한글 문자만 계산</td>
+                    </tr>
+                    <tr>
+                        <td>영문</td>
+                        <td id="englishCount">0</td>
+                        <td>알파벳 대소문자 포함</td>
+                    </tr>
+                    <tr>
+                        <td>숫자</td>
+                        <td id="numberCount">0</td>
+                        <td>0-9 숫자</td>
+                    </tr>
+                    <tr>
+                        <td>공백</td>
+                        <td id="spaceCount">0</td>
+                        <td>스페이스, 탭 포함</td>
+                    </tr>
+                    <tr>
+                        <td>특수문자</td>
+                        <td id="specialCount">0</td>
+                        <td>구두점 및 기호</td>
+                    </tr>
+                    <tr>
+                        <td>줄바꿈</td>
+                        <td id="newlineCount">0</td>
+                        <td>엔터키로 구분된 줄</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- 광고 영역 -->
+        <div class="ad-container">
+            <div class="ad-label" aria-label="광고 영역">광고</div>
+            
+<div id="ad-container-9kfjod5na" style="min-height: 100px;">
+    <div class="ad-placeholder" style="display: flex; align-items: center; justify-content: center; background: #f5f5f5; min-height: 100px; color: #999;">
+        광고 로딩 중...
     </div>
 </div>
 <script>
@@ -451,6 +314,7 @@ if ('IntersectionObserver' in window) {
             if (entry.isIntersecting) {
                 const container = entry.target;
                 container.innerHTML = `<ins class="adsbygoogle"
+                 style="display:block"
                  data-ad-client="ca-pub-7905640648499222"
                  data-ad-slot="8912541604"
                  data-ad-format="auto"
@@ -469,104 +333,116 @@ if ('IntersectionObserver' in window) {
     }
 }
 </script>
-</div>
-<!-- 가?�드 ?�션 -->
-<div class="guide-section">
-<h2 class="guide-title">?�용 가?�드</h2>
-<div class="guide-content">
-<h3 class="guide-subtitle">주요 기능</h3>
-<ul class="guide-list">
-<li><strong>?�시�?계산</strong>: ?�스?��? ?�력?�는 즉시 모든 ?�계가 ?�동?�로 계산?�니??</li>
-<li><strong>?�양???�계</strong>: 글?�수, 바이?? ?�어?? 문장?????�요??모든 ?�보�??�공?�니??</li>
-<li><strong>?�고지 ?�산</strong>: 200???�고지 기�??�로 �?매인지 ?�동 계산?�니??</li>
-<li><strong>문자 ?�형 분석</strong>: ?��?, ?�문, ?�자, ?�수문자�?구분?�여 ?�시?�니??</li>
-<li><strong>?�리??기능</strong>: 복사, 붙여?�기, 지?�기 버튼?�로 ?�게 ?�업?????�습?�다.</li>
-</ul>
-<h3 class="guide-subtitle-spaced">?�용 ?�시</h3>
-<ul class="guide-list">
-<li><strong>?�기?�개???�성</strong>: ?�???�시??취업 지????글?�수 ?�한 ?�인</li>
-<li><strong>SNS 게시�?/strong>: ?�위?? ?�스?�그램 ?�의 글?�수 ?�한 체크</li>
-<li><strong>리포???�문</strong>: 과제 분량 ?�인 �??�고지 매수 계산</li>
-<li><strong>번역 ?�업</strong>: ?�문�?번역문의 글?�수 비교</li>
-<li><strong>??콘텐�?/strong>: SEO�??�한 ?�정 글?�수 ?�인</li>
-</ul>
-<h3 class="guide-subtitle-spaced">바이??계산 기�?</h3>
-<p class="guide-text">
-                    바이?�는 문자??종류???�라 ?�르�?계산?�니??
+        </div>
+        
+        <!-- 가이드 섹션 -->
+        <div class="guide-section">
+            <h2 class="guide-title">사용 가이드</h2>
+            <div class="guide-content">
+                <h3 style="font-size: 20px; margin-bottom: 16px; color: var(--gray-800);">주요 기능</h3>
+                <ul class="guide-list">
+                    <li><strong>실시간 계산</strong>: 텍스트를 입력하는 즉시 모든 통계가 자동으로 계산됩니다.</li>
+                    <li><strong>다양한 통계</strong>: 글자수, 바이트, 단어수, 문장수 등 필요한 모든 정보를 제공합니다.</li>
+                    <li><strong>원고지 환산</strong>: 200자 원고지 기준으로 몇 매인지 자동 계산됩니다.</li>
+                    <li><strong>문자 유형 분석</strong>: 한글, 영문, 숫자, 특수문자를 구분하여 표시합니다.</li>
+                    <li><strong>편리한 기능</strong>: 복사, 붙여넣기, 지우기 버튼으로 쉽게 작업할 수 있습니다.</li>
+                </ul>
+                
+                <h3 style="font-size: 20px; margin: 32px 0 16px; color: var(--gray-800);">활용 예시</h3>
+                <ul class="guide-list">
+                    <li><strong>자기소개서 작성</strong>: 대학 입시나 취업 지원 시 글자수 제한 확인</li>
+                    <li><strong>SNS 게시물</strong>: 트위터, 인스타그램 등의 글자수 제한 체크</li>
+                    <li><strong>리포트/논문</strong>: 과제 분량 확인 및 원고지 매수 계산</li>
+                    <li><strong>번역 작업</strong>: 원문과 번역문의 글자수 비교</li>
+                    <li><strong>웹 콘텐츠</strong>: SEO를 위한 적정 글자수 확인</li>
+                </ul>
+                
+                <h3 style="font-size: 20px; margin: 32px 0 16px; color: var(--gray-800);">바이트 계산 기준</h3>
+                <p style="margin-bottom: 16px;">
+                    바이트는 문자의 종류에 따라 다르게 계산됩니다:
                 </p>
-<ul class="guide-list">
-<li><strong>?�문, ?�자, ?�수문자</strong>: 1바이??/li>
-<li><strong>?��?</strong>: 2-3바이??(UTF-8 기�?)</li>
-<li><strong>?�모지</strong>: 4바이??/li>
-</ul>
-</div>
-</div>
-<!-- FAQ ?�션 -->
-<div class="faq-section">
-<h2 class="faq-title">?�주 묻는 질문</h2>
-<div class="faq-item">
-<button aria-controls="faq-answer-1" aria-expanded="false" class="faq-question">
-                    공백 ?�함�?공백 ?�외??차이??무엇?��???
-                    <span class="faq-arrow">??/span>
-</button>
-<div class="faq-answer" id="faq-answer-1">
-                    공백 ?�함?� ?�페?�스바로 ?�력??모든 공백??글?�수???�함?�여 계산?�니?? 
-                    공백 ?�외???�수??문자(?��?, ?�문, ?�자, ?�수문자)�?계산?�니?? 
-                    ?�반?�으�??�기?�개?�는 공백 ?�함, ?�문?� 공백 ?�외�?계산?�는 경우가 많습?�다.
+                <ul class="guide-list">
+                    <li><strong>영문, 숫자, 특수문자</strong>: 1바이트</li>
+                    <li><strong>한글</strong>: 2-3바이트 (UTF-8 기준)</li>
+                    <li><strong>이모지</strong>: 4바이트</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- FAQ 섹션 -->
+        <div class="faq-section">
+            <h2 class="faq-title">자주 묻는 질문</h2>
+            
+            <div class="faq-item">
+                <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-1">
+                    공백 포함과 공백 제외의 차이는 무엇인가요?
+                    <span class="faq-arrow">▼</span>
+                </button>
+                <div class="faq-answer" id="faq-answer-1">
+                    공백 포함은 스페이스바로 입력한 모든 공백을 글자수에 포함하여 계산합니다. 
+                    공백 제외는 순수한 문자(한글, 영문, 숫자, 특수문자)만 계산합니다. 
+                    일반적으로 자기소개서는 공백 포함, 논문은 공백 제외로 계산하는 경우가 많습니다.
                 </div>
-</div>
-<div class="faq-item">
-<button aria-controls="faq-answer-2" aria-expanded="false" class="faq-question">
-                    ?�고지 매수???�떻�?계산?�나??
-                    <span class="faq-arrow">??/span>
-</button>
-<div class="faq-answer" id="faq-answer-2">
-                    ?�국?�서 ?��??�로 ?�용?�는 200???�고지�?기�??�로 계산?�니?? 
-                    공백???�함???�체 글?�수�?200?�로 ?�누???�시?�니?? 
-                    ?��? ?�어, 1,000?�는 5매�? ?�니??
+            </div>
+            
+            <div class="faq-item">
+                <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-2">
+                    원고지 매수는 어떻게 계산되나요?
+                    <span class="faq-arrow">▼</span>
+                </button>
+                <div class="faq-answer" id="faq-answer-2">
+                    한국에서 표준으로 사용하는 200자 원고지를 기준으로 계산합니다. 
+                    공백을 포함한 전체 글자수를 200으로 나누어 표시합니다. 
+                    예를 들어, 1,000자는 5매가 됩니다.
                 </div>
-</div>
-<div class="faq-item">
-<button aria-controls="faq-answer-3" aria-expanded="false" class="faq-question">
-                    바이??계산??중요???�유??무엇?��???
-                    <span class="faq-arrow">??/span>
-</button>
-<div class="faq-answer" id="faq-answer-3">
-                    ?�이?�베?�스?????�에?�는 글?�수가 ?�닌 바이???�위�??�한???�는 경우가 많습?�다. 
-                    ?�히 ?��??� ?�문보다 2-3�?많�? 바이?��? 차�??��?�? 
-                    ?�스?�의 ?�한?�항???�인????바이??계산???�요?�니??
+            </div>
+            
+            <div class="faq-item">
+                <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-3">
+                    바이트 계산이 중요한 이유는 무엇인가요?
+                    <span class="faq-arrow">▼</span>
+                </button>
+                <div class="faq-answer" id="faq-answer-3">
+                    데이터베이스나 웹 폼에서는 글자수가 아닌 바이트 단위로 제한을 두는 경우가 많습니다. 
+                    특히 한글은 영문보다 2-3배 많은 바이트를 차지하므로, 
+                    시스템의 제한사항을 확인할 때 바이트 계산이 필요합니다.
                 </div>
-</div>
-<div class="faq-item">
-<button aria-controls="faq-answer-4" aria-expanded="false" class="faq-question">
-                    ?�어?�는 ?�떻�?계산?�나??
-                    <span class="faq-arrow">??/span>
-</button>
-<div class="faq-answer" id="faq-answer-4">
-                    공백?�나 ?�수문자�?구분??문자 그룹???�나???�어�?계산?�니?? 
-                    ?��???경우 ?�어?�기 ?�위�? ?�문??경우 ?�페?�스�?구분???�위�?계산?�니?? 
-                    ?? "?�녕?�세??Hello World"??3개의 ?�어?�니??
+            </div>
+            
+            <div class="faq-item">
+                <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-4">
+                    단어수는 어떻게 계산하나요?
+                    <span class="faq-arrow">▼</span>
+                </button>
+                <div class="faq-answer" id="faq-answer-4">
+                    공백이나 특수문자로 구분된 문자 그룹을 하나의 단어로 계산합니다. 
+                    한글의 경우 띄어쓰기 단위로, 영문의 경우 스페이스로 구분된 단위로 계산됩니다. 
+                    예: "안녕하세요 Hello World"는 3개의 단어입니다.
                 </div>
-</div>
-<div class="faq-item">
-<button aria-controls="faq-answer-5" aria-expanded="false" class="faq-question">
-                    ???�구??무료?��???
-                    <span class="faq-arrow">??/span>
-</button>
-<div class="faq-answer" id="faq-answer-5">
-                    ?? ?�전 무료?�니?? ?�원가?�이??로그???�이 ?�구???�유�?�� ?�용?????�습?�다. 
-                    ?�용 ?�수 ?�한???�으�? 모든 기능??무제?�으�??�용?�실 ???�습?�다.
+            </div>
+            
+            <div class="faq-item">
+                <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-5">
+                    이 도구는 무료인가요?
+                    <span class="faq-arrow">▼</span>
+                </button>
+                <div class="faq-answer" id="faq-answer-5">
+                    네, 완전 무료입니다. 회원가입이나 로그인 없이 누구나 자유롭게 사용할 수 있습니다. 
+                    사용 횟수 제한도 없으며, 모든 기능을 무제한으로 이용하실 수 있습니다.
                 </div>
-</div>
-</div>
-</div>
-<!-- ?�터 -->
-<div id="footer-placeholder"></div>
-<!-- External JavaScript -->
-<script src="/js/api-config.js?v=1753283465"></script>
-<script src="/js/main.js?v=1753283465"></script>
-<!-- Kakao SDK Initialization -->
-<script>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 푸터 -->
+    <div id="footer-placeholder"></div>
+    
+    <!-- External JavaScript -->
+    <script src="/js/api-config.js?v=1753150228"></script>
+    <script src="/js/main.js?v=1753150228"></script>
+    
+    <!-- Kakao SDK Initialization -->
+    <script>
         try {
             if (typeof Kakao !== 'undefined' && window.API_CONFIG && window.API_CONFIG.KAKAO_APP_KEY) {
                 if (!Kakao.isInitialized()) {
@@ -578,13 +454,15 @@ if ('IntersectionObserver' in window) {
             console.warn('Kakao SDK initialization failed:', error);
         }
     </script>
-<!-- AdSense initialization -->
-<script>
+    
+    <!-- AdSense initialization -->
+    <script>
 
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-<!-- Text Counter JavaScript -->
-<script>
+    
+    <!-- Text Counter JavaScript -->
+    <script>
 
         let debounceTimer;
 
@@ -610,7 +488,7 @@ if ('IntersectionObserver' in window) {
             clearTimeout(debounceTimer);
             debounceTimer = setTimeout(() => {
                 updateCount();
-            }, 100); // 100ms ?�바?�스
+            }, 100); // 100ms 디바운스
         }
 
         function updateCount() {
@@ -629,7 +507,7 @@ if ('IntersectionObserver' in window) {
             const words = text.trim() ? text.trim().split(/\s+/).length : 0;
             const sentences = text.trim() ? text.split(/[.!?]+/).filter(s => s.trim().length > 0).length : 0;
 
-            const koreanCount = (text.match(/[????????가-??/g) || []).length;
+            const koreanCount = (text.match(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g) || []).length;
             const englishCount = (text.match(/[a-zA-Z]/g) || []).length;
             const numberCount = (text.match(/[0-9]/g) || []).length;
             const spaceCount = (text.match(/\s/g) || []).length;
@@ -652,7 +530,7 @@ if ('IntersectionObserver' in window) {
         }
 
         function clearText() {
-            if (confirm('?�력???�스?��? 모두 지?�시겠습?�까?')) {
+            if (confirm('입력한 텍스트를 모두 지우시겠습니까?')) {
                 document.getElementById('textInput').value = '';
                 updateCount();
             }
@@ -662,7 +540,7 @@ if ('IntersectionObserver' in window) {
             const textInput = document.getElementById('textInput');
             textInput.select();
             document.execCommand('copy');
-            alert('?�스?��? 복사?�었?�니??');
+            alert('텍스트가 복사되었습니다!');
         }
         
         async function pasteText() {
@@ -672,10 +550,10 @@ if ('IntersectionObserver' in window) {
                 document.getElementById('textInput').value = validatedText;
                 updateCount();
                 if (text.length > 100000) {
-                    alert('?�스?��? 100,000?��? 초과?�여 ?�렸?�니??');
+                    alert('텍스트가 100,000자를 초과하여 잘렸습니다.');
                 }
             } catch (err) {
-                alert('?�립보드?�서 ?�스?��? 가?�올 ???�습?�다. 브라?��? 권한???�인?�주?�요.');
+                alert('클립보드에서 텍스트를 가져올 수 없습니다. 브라우저 권한을 확인해주세요.');
             }
         }
 
@@ -707,8 +585,10 @@ if ('IntersectionObserver' in window) {
             updateCount();
         });
     </script>
-<!-- Non-critical scripts moved here for performance -->
-<!-- Google AdSense 지??로딩 -->
+
+    <!-- Non-critical scripts moved here for performance -->
+    
+<!-- Google AdSense 지연 로딩 -->
 <script>
 
 window.addEventListener('load', function() {
@@ -721,6 +601,7 @@ window.addEventListener('load', function() {
     }, 2000);
 });
 </script>
+
 <script>
 
 window.adsenseInitialized = window.adsenseInitialized || false;
@@ -750,6 +631,7 @@ window.addEventListener('load', function() {
     setTimeout(initializeAdSense, 1000);
 });
 </script>
+
 <script>
 
 (function() {
@@ -782,7 +664,7 @@ window.addEventListener('load', function() {
                 ad.setAttribute('data-adsbygoogle-status', 'done');
                 
             } catch (e) {
-                console.warn('AdSense 초기???�패:', index, e.message);
+                console.warn('AdSense 초기화 실패:', index, e.message);
             }
         });
     }
@@ -798,13 +680,16 @@ window.addEventListener('load', function() {
     window.addEventListener('error', function(e) {
         if (e.message && e.message.includes('adsbygoogle.push() error')) {
             e.preventDefault();
-            console.warn('AdSense 중복 초기??방�???);
+            console.warn('AdSense 중복 초기화 방지됨');
             return false;
         }
     }, true);
 })();
 </script>
-<!-- AdSense 중복 방�? 최종 버전 -->
+
+
+
+<!-- AdSense 중복 방지 최종 버전 -->
 <script>
 (function() {
     'use strict';
@@ -835,13 +720,13 @@ window.addEventListener('load', function() {
                     );
                     
                     if (hasAds) {
-                        console.log('모든 광고 ?�롯???��? 채워�?);
+                        console.log('모든 광고 슬롯이 이미 채워짐');
                         return;
                     }
 
                     return originalPush.call(this, config);
                 } catch (e) {
-                    console.warn('AdSense push 차단??', e.message);
+                    console.warn('AdSense push 차단됨:', e.message);
                 }
             };
         }
@@ -858,7 +743,7 @@ window.addEventListener('load', function() {
             }
         });
         
-        console.log('AdSense 초기???�료:', initialized, '�??�롯');
+        console.log('AdSense 초기화 완료:', initialized, '개 슬롯');
     }
 
     const errorHandler = function(e) {
@@ -888,24 +773,14 @@ window.addEventListener('load', function() {
     }
 })();
 </script>
-<!-- 카카??초기??-->
+
 <script>
-    if (typeof Kakao !== 'undefined' && window.KAKAO_API_KEY) {
-        if (!Kakao.isInitialized()) {
-            Kakao.init(window.KAKAO_API_KEY);
-            console.log('카카??SDK 초기???�료');
-        }
-    } else {
-        console.warn('카카??SDK ?�는 API ?��? 찾을 ???�습?�다.');
-    }
-</script>
-<script>
-// ?�비게이??�??�터 로드 - main.js??loadComponents가 ?�행?��? ?��? 경우�??�한 ?�백
+// 네비게이션 및 푸터 로드 - main.js의 loadComponents가 실행되지 않은 경우를 위한 폴백
 document.addEventListener('DOMContentLoaded', function() {
-    // main.js가 로드?�었�?loadComponents ?�수가 ?�는지 ?�인
+    // main.js가 로드되었고 loadComponents 함수가 있는지 확인
     if (typeof loadComponents === 'function') {
-        // main.js??DOMContentLoaded가 ?��? ?�행?�었?????�으므�?
-        // navbar-placeholder가 비어?�으�??�시 ?�행
+        // main.js의 DOMContentLoaded가 이미 실행되었을 수 있으므로 
+        // navbar-placeholder가 비어있으면 다시 실행
         const navPlaceholder = document.getElementById('navbar-placeholder');
         const footerPlaceholder = document.getElementById('footer-placeholder');
         
