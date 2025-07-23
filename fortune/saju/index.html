@@ -5,8 +5,8 @@
 <meta content="upgrade-insecure-requests; default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;" http-equiv="Content-Security-Policy"/>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>AI 사주팔자 - 정확한 만세력 기반 사주 분석 | doha.kr</title>
-<meta content="만세력 기반 정확한 사주팔자 분석. 생년월일과 출생시간으로 연주, 월주, 일주, 시주를 계산하고 AI가 상세하게 해석합니다." name="description"/>
+<title>AI ?�주?�자 - ?�확??만세??기반 ?�주 분석 | doha.kr</title>
+<meta content="만세??기반 ?�확???�주?�자 분석. ?�년?�일�?출생?�간?�로 ?�주, ?�주, ?�주, ?�주�?계산?�고 AI가 ?�세?�게 ?�석?�니??" name="description"/>
 <meta content="index, follow" name="robots"/>
 <meta content="doha.kr" name="author"/>
 <!-- Security Headers -->
@@ -14,8 +14,8 @@
 <meta content="strict-origin-when-cross-origin" http-equiv="Referrer-Policy"/>
 <meta content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), accelerometer=(), gyroscope=()" http-equiv="Permissions-Policy"/>
 <!-- Open Graph -->
-<meta content="AI 사주팔자 - 정확한 만세력 기반 사주 분석" property="og:title"/>
-<meta content="만세력 기반 정확한 사주팔자 분석. AI가 십신, 오행, 성격, 운세를 상세하게 해석합니다." property="og:description"/>
+<meta content="AI ?�주?�자 - ?�확??만세??기반 ?�주 분석" property="og:title"/>
+<meta content="만세??기반 ?�확???�주?�자 분석. AI가 ??��, ?�행, ?�격, ?�세�??�세?�게 ?�석?�니??" property="og:description"/>
 <meta content="https://doha.kr/images/saju-og.png" property="og:image"/>
 <meta content="https://doha.kr/fortune/saju/" property="og:url"/>
 <!-- Google Fonts -->
@@ -26,12 +26,12 @@
 <!-- Moved to end of body -->
 <!-- Kakao JavaScript SDK -->
 <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js"></script>
-<!-- 만세력 데이터 먼저 로드 -->
+<!-- 만세???�이??먼�? 로드 -->
 <script src="/js/manseryeok-database.js"></script>
-<script src="/js/lunar-calendar-compact.js?v=1753150228"></script>
+<script src="/js/lunar-calendar-compact.js?v=1753283465"></script>
 <script src="/js/saju-calculator.js"></script>
 <!-- Optimized CSS System -->
-<link href="/css/styles.css?v=1753150228" rel="stylesheet"/>
+<link href="/css/styles.css?v=1753283465" rel="stylesheet"/>
 <link href="/css/mobile-fixes.css" rel="stylesheet"/>
 <link href="/css/button-system.css" rel="stylesheet"/>
 <link href="/css/pages/saju.css" rel="stylesheet"/>
@@ -49,94 +49,94 @@
     </script>
 </head>
 <body class="saju-page">
-<!-- 네비게이션 바 -->
+<!-- ?�비게이??�?-->
 <div id="navbar-placeholder"></div>
-<!-- 페이지 헤더 -->
+<!-- ?�이지 ?�더 -->
 <section class="page-header">
 <div class="container">
-<h1 class="page-title fade-in">🔮 AI 사주팔자</h1>
+<h1 class="page-title fade-in">?�� AI ?�주?�자</h1>
 <p class="page-subtitle fade-in stagger-1">
-                만세력 기반 정확한 사주팔자 분석<br/>
-                AI가 당신의 타고난 운명과 성격을 상세하게 해석합니다
+                만세??기반 ?�확???�주?�자 분석<br/>
+                AI가 ?�신???�고난 ?�명�??�격???�세?�게 ?�석?�니??
             </p>
 </div>
 </section>
-<!-- 사주 입력 폼 -->
+<!-- ?�주 ?�력 ??-->
 <section class="saju-section">
 <div class="container">
 <div class="saju-form-container" id="sajuForm">
-<h2>사주팔자 정보 입력</h2>
+<h2>?�주?�자 ?�보 ?�력</h2>
 <form onsubmit="generateSaju(event)">
 <div class="form-row">
 <div class="form-group">
-<label for="userName">이름</label>
+<label for="userName">?�름</label>
 <input class="form-control" id="userName" name="userName" required="" type="text"/>
 </div>
 <div class="form-group">
-<label for="gender">성별</label>
+<label for="gender">?�별</label>
 <select class="form-control" id="gender" name="gender" required="">
-<option value="">선택해주세요</option>
-<option value="male">남성</option>
-<option value="female">여성</option>
+<option value="">?�택?�주?�요</option>
+<option value="male">?�성</option>
+<option value="female">?�성</option>
 </select>
 </div>
 </div>
 <div class="form-row">
 <div class="form-group">
-<label for="birthYear">생년</label>
+<label for="birthYear">?�년</label>
 <input class="form-control" id="birthYear" max="2025" min="1900" name="birthYear" required="" type="number"/>
 </div>
 <div class="form-group">
-<label for="birthMonth">생월</label>
+<label for="birthMonth">?�월</label>
 <input class="form-control" id="birthMonth" max="12" min="1" name="birthMonth" required="" type="number"/>
 </div>
 <div class="form-group">
-<label for="birthDay">생일</label>
+<label for="birthDay">?�일</label>
 <input class="form-control" id="birthDay" max="31" min="1" name="birthDay" required="" type="number"/>
 </div>
 </div>
 <div class="form-group">
-<label for="birthTime">출생시간</label>
+<label for="birthTime">출생?�간</label>
 <select class="form-control" id="birthTime" name="birthTime" required="">
-<option value="">선택해주세요</option>
-<option value="23">자시 (23:00-00:59)</option>
+<option value="">?�택?�주?�요</option>
+<option value="23">?�시 (23:00-00:59)</option>
 <option value="1">축시 (01:00-02:59)</option>
-<option value="3">인시 (03:00-04:59)</option>
+<option value="3">?�시 (03:00-04:59)</option>
 <option value="5">묘시 (05:00-06:59)</option>
 <option value="7">진시 (07:00-08:59)</option>
-<option value="9">사시 (09:00-10:59)</option>
-<option value="11">오시 (11:00-12:59)</option>
+<option value="9">?�시 (09:00-10:59)</option>
+<option value="11">?�시 (11:00-12:59)</option>
 <option value="13">미시 (13:00-14:59)</option>
-<option value="15">신시 (15:00-16:59)</option>
-<option value="17">유시 (17:00-18:59)</option>
-<option value="19">술시 (19:00-20:59)</option>
-<option value="21">해시 (21:00-22:59)</option>
+<option value="15">?�시 (15:00-16:59)</option>
+<option value="17">?�시 (17:00-18:59)</option>
+<option value="19">?�시 (19:00-20:59)</option>
+<option value="21">?�시 (21:00-22:59)</option>
 </select>
 </div>
 <div class="form-group">
 <label class="checkbox-label">
 <input id="isLunar" name="isLunar" type="checkbox"/>
 <span class="checkmark"></span>
-                            음력 생일입니다
+                            ?�력 ?�일?�니??
                         </label>
 </div>
 <button class="btn btn-primary w-full mt-30" type="submit">
-                        🔮 사주팔자 분석하기
+                        ?�� ?�주?�자 분석?�기
                     </button>
 </form>
 </div>
-<!-- 사주 결과 영역 -->
+<!-- ?�주 결과 ?�역 -->
 <div id="sajuResult" class="hidden">
-<!-- 결과가 여기에 표시됩니다 -->
+<!-- 결과가 ?�기???�시?�니??-->
 </div>
 </div>
 </section>
-<!-- 광고 영역 -->
+<!-- 광고 ?�역 -->
 <div class="ad-container">
 <div class="ad-label">광고</div>
 <div id="ad-container-35a37wzct" class="min-height-100">
 <div class="ad-placeholder">
-        광고 로딩 중...
+        광고 로딩 �?..
     </div>
 </div>
 <script>
@@ -166,28 +166,28 @@ if ('IntersectionObserver' in window) {
 }
 </script>
 </div>
-<!-- 사주팔자 안내 -->
+<!-- ?�주?�자 ?�내 -->
 <section class="info-section">
 <div class="container">
 <div class="info-box">
-<h3>AI 사주팔자 분석 안내</h3>
+<h3>AI ?�주?�자 분석 ?�내</h3>
 <ul>
-<li>만세력 기반 정확한 사주팔자 계산으로 연주, 월주, 일주, 시주를 산출합니다.</li>
-<li>십신 분석을 통해 성격, 적성, 인간관계를 파악합니다.</li>
-<li>오행 균형 분석으로 건강, 운세, 개선점을 제시합니다.</li>
-<li>AI가 전통 사주학과 현대적 해석을 결합하여 상세한 분석을 제공합니다.</li>
-<li>출생시간이 정확할수록 더 정밀한 분석이 가능합니다.</li>
+<li>만세??기반 ?�확???�주?�자 계산?�로 ?�주, ?�주, ?�주, ?�주�??�출?�니??</li>
+<li>??�� 분석???�해 ?�격, ?�성, ?�간관계�? ?�악?�니??</li>
+<li>?�행 균형 분석?�로 건강, ?�세, 개선?�을 ?�시?�니??</li>
+<li>AI가 ?�통 ?�주?�과 ?��????�석??결합?�여 ?�세??분석???�공?�니??</li>
+<li>출생?�간???�확?�수�????��???분석??가?�합?�다.</li>
 </ul>
 </div>
 </div>
 </section>
-<!-- 푸터 -->
+<!-- ?�터 -->
 <div id="footer-placeholder"></div>
 <!-- External JavaScript -->
-<script src="/js/main.js?v=1753150228"></script>
-<script src="/js/api-config.js?v=1753150228"></script>
+<script src="/js/main.js?v=1753283465"></script>
+<script src="/js/api-config.js?v=1753283465"></script>
 <script>
-        // 카카오 초기화
+        // 카카??초기??
         if (window.initKakao) {
             window.initKakao();
         }
@@ -211,27 +211,27 @@ if ('IntersectionObserver' in window) {
 
         function analyzeElements(saju) {
             const elements = {
-                목: 0, 화: 0, 토: 0, 금: 0, 수: 0
+                �? 0, ?? 0, ?? 0, �? 0, ?? 0
             };
             
             const pillars = [saju.yearPillar, saju.monthPillar, saju.dayPillar, saju.hourPillar];
             pillars.forEach(pillar => {
                 if (pillar) {
-                    // pillar는 객체이므로 stem과 branch 속성으로 접근
+                    // pillar??객체?��?�?stem�?branch ?�성?�로 ?�근
                     const stem = pillar.stem || '';
                     const branch = pillar.branch || '';
 
-                    if ('갑을'.includes(stem)) elements.목++;
-                    else if ('병정'.includes(stem)) elements.화++;
-                    else if ('무기'.includes(stem)) elements.토++;
-                    else if ('경신'.includes(stem)) elements.금++;
-                    else if ('임계'.includes(stem)) elements.수++;
+                    if ('갑을'.includes(stem)) elements.�?+;
+                    else if ('병정'.includes(stem)) elements.??+;
+                    else if ('무기'.includes(stem)) elements.??+;
+                    else if ('경신'.includes(stem)) elements.�?+;
+                    else if ('?�계'.includes(stem)) elements.??+;
 
-                    if ('인묘'.includes(branch)) elements.목++;
-                    else if ('사오'.includes(branch)) elements.화++;
-                    else if ('진술축미'.includes(branch)) elements.토++;
-                    else if ('신유'.includes(branch)) elements.금++;
-                    else if ('해자'.includes(branch)) elements.수++;
+                    if ('?�묘'.includes(branch)) elements.�?+;
+                    else if ('?�오'.includes(branch)) elements.??+;
+                    else if ('진술축�?'.includes(branch)) elements.??+;
+                    else if ('?�유'.includes(branch)) elements.�?+;
+                    else if ('?�자'.includes(branch)) elements.??+;
                 }
             });
             
@@ -253,30 +253,30 @@ if ('IntersectionObserver' in window) {
                 return sum + Math.pow(count - average, 2);
             }, 0) / 5;
             
-            if (variance < 0.5) return '매우 균형적';
-            else if (variance < 1) return '균형적';
-            else if (variance < 2) return '약간 불균형';
-            else return '불균형';
+            if (variance < 0.5) return '매우 균형??;
+            else if (variance < 1) return '균형??;
+            else if (variance < 2) return '?�간 불균??;
+            else return '불균??;
         }
         
         function analyzePersonality(saju) {
             const dayMaster = saju.dayPillar ? saju.dayPillar.stem : null;
             
             const personalities = {
-                '갑': '리더십이 강하고 진취적이며 정의감이 강합니다.',
-                '을': '유연하고 적응력이 뛰어나며 예술적 감각이 있습니다.',
-                '병': '열정적이고 활발하며 사교성이 좋습니다.',
-                '정': '따뜻하고 배려심이 깊으며 봉사정신이 강합니다.',
-                '무': '신뢰감을 주고 포용력이 크며 중재 능력이 뛰어납니다.',
-                '기': '실용적이고 꼼꼼하며 계획성이 뛰어납니다.',
-                '경': '결단력이 있고 추진력이 강하며 정의롭습니다.',
-                '신': '예리하고 분석적이며 완벽주의 성향이 있습니다.',
-                '임': '지혜롭고 통찰력이 뛰어나며 적응력이 좋습니다.',
-                '계': '섬세하고 직관력이 뛰어나며 창의적입니다.'
+                '�?: '리더??�� 강하�?진취?�이�??�의감이 강합?�다.',
+                '??: '?�연?�고 ?�응?�이 ?�어?�며 ?�술??감각???�습?�다.',
+                '�?: '?�정?�이�??�발?�며 ?�교?�이 좋습?�다.',
+                '??: '?�뜻?�고 배려?�이 깊으�?봉사?�신??강합?�다.',
+                '�?: '?�뢰감을 주고 ?�용?�이 ?�며 중재 ?�력???�어?�니??',
+                '�?: '?�용?�이�?꼼꼼?�며 계획?�이 ?�어?�니??',
+                '�?: '결단?�이 ?�고 추진?�이 강하�??�의�?��?�다.',
+                '??: '?�리?�고 분석?�이�??�벽주의 ?�향???�습?�다.',
+                '??: '지?�롭�??�찰?�이 ?�어?�며 ?�응?�이 좋습?�다.',
+                '�?: '?�세?�고 직�??�이 ?�어?�며 창의?�입?�다.'
             };
             
             return {
-                basic: personalities[dayMaster] || '독특한 개성을 가지고 있습니다.',
+                basic: personalities[dayMaster] || '?�특??개성??가지�??�습?�다.',
                 strengths: getStrengths(dayMaster),
                 weaknesses: getWeaknesses(dayMaster),
                 advice: getPersonalityAdvice(dayMaster)
@@ -285,62 +285,62 @@ if ('IntersectionObserver' in window) {
         
         function getStrengths(dayMaster) {
             const strengths = {
-                '갑': ['리더십', '정의감', '추진력'],
-                '을': ['유연성', '예술성', '협조성'],
-                '병': ['열정', '사교성', '긍정성'],
-                '정': ['배려심', '봉사정신', '온화함'],
-                '무': ['신뢰성', '포용력', '안정감'],
-                '기': ['실용성', '계획성', '꼼꼼함'],
-                '경': ['결단력', '정직성', '용기'],
-                '신': ['예리함', '분석력', '정확성'],
-                '임': ['지혜', '통찰력', '유연성'],
-                '계': ['직관력', '창의성', '섬세함']
+                '�?: ['리더??, '?�의�?, '추진??],
+                '??: ['?�연??, '?�술??, '?�조??],
+                '�?: ['?�정', '?�교??, '긍정??],
+                '??: ['배려??, '봉사?�신', '?�화??],
+                '�?: ['?�뢰??, '?�용??, '?�정�?],
+                '�?: ['?�용??, '계획??, '꼼꼼??],
+                '�?: ['결단??, '?�직??, '?�기'],
+                '??: ['?�리??, '분석??, '?�확??],
+                '??: ['지??, '?�찰??, '?�연??],
+                '�?: ['직�???, '창의??, '?�세??]
             };
             
-            return strengths[dayMaster] || ['개성', '독창성', '잠재력'];
+            return strengths[dayMaster] || ['개성', '?�창??, '?�재??];
         }
         
         function getWeaknesses(dayMaster) {
             const weaknesses = {
-                '갑': ['고집', '융통성 부족', '독단적'],
-                '을': ['우유부단', '소극적', '의존적'],
-                '병': ['충동적', '변덕', '과시욕'],
-                '정': ['감정적', '현실감각 부족', '희생적'],
-                '무': ['느림', '변화 거부', '고집'],
-                '기': ['소심함', '비판적', '완고함'],
-                '경': ['급진적', '타협 부족', '공격적'],
-                '신': ['차가움', '비판적', '완벽주의'],
-                '임': ['불안정', '과도한 생각', '우유부단'],
-                '계': ['예민함', '변덕', '비밀주의']
+                '�?: ['고집', '?�통??부�?, '?�단??],
+                '??: ['?�유부??, '?�극??, '?�존??],
+                '�?: ['충동??, '변??, '과시??],
+                '??: ['감정??, '?�실감각 부�?, '?�생??],
+                '�?: ['?�림', '변??거�?', '고집'],
+                '�?: ['?�심??, '비판??, '?�고??],
+                '�?: ['급진??, '?�??부�?, '공격??],
+                '??: ['차�??�', '비판??, '?�벽주의'],
+                '??: ['불안??, '과도???�각', '?�유부??],
+                '�?: ['?��???, '변??, '비�?주의']
             };
             
-            return weaknesses[dayMaster] || ['극복해야 할 부분이 있습니다'];
+            return weaknesses[dayMaster] || ['극복?�야 ??부분이 ?�습?�다'];
         }
         
         function getPersonalityAdvice(dayMaster) {
             const advice = {
-                '갑': '때로는 타인의 의견에 귀 기울이는 유연함이 필요합니다.',
-                '을': '자신감을 가지고 주도적으로 행동해보세요.',
-                '병': '충동적인 결정보다는 신중한 판단이 중요합니다.',
-                '정': '자신을 위한 시간도 소중히 여기세요.',
-                '무': '변화를 두려워하지 말고 새로운 도전을 해보세요.',
-                '기': '완벽하지 않아도 괜찮다는 것을 받아들이세요.',
-                '경': '부드러운 카리스마로 사람들을 이끌어보세요.',
-                '신': '따뜻한 마음을 표현하는 연습을 해보세요.',
-                '임': '직관을 믿고 과감하게 행동해보세요.',
-                '계': '자신의 감정을 솔직하게 표현해보세요.'
+                '�?: '?�로???�?�의 ?�견??귀 기울?�는 ?�연?�이 ?�요?�니??',
+                '??: '?�신감을 가지�?주도?�으�??�동?�보?�요.',
+                '�?: '충동?�인 결정보다???�중???�단??중요?�니??',
+                '??: '?�신???�한 ?�간???�중???�기?�요.',
+                '�?: '변?��? ?�려?�하지 말고 ?�로???�전???�보?�요.',
+                '�?: '?�벽?��? ?�아??괜찮?�는 것을 받아?�이?�요.',
+                '�?: '부?�러??카리?�마�??�람?�을 ?�끌?�보?�요.',
+                '??: '?�뜻??마음???�현?�는 ?�습???�보?�요.',
+                '??: '직�???믿고 과감?�게 ?�동?�보?�요.',
+                '�?: '?�신??감정???�직?�게 ?�현?�보?�요.'
             };
             
-            return advice[dayMaster] || '자신만의 장점을 살려 발전해 나가세요.';
+            return advice[dayMaster] || '?�신만의 ?�점???�려 발전???��??�요.';
         }
         
         function analyzeFortune(saju) {
             return {
-                overall: '안정과 성장의 시기',
-                career: '새로운 기회가 찾아옵니다',
-                wealth: '재물운이 좋은 편입니다',
-                health: '건강 관리에 신경쓰세요',
-                relationship: '인간관계가 원만합니다'
+                overall: '?�정�??�장???�기',
+                career: '?�로??기회가 찾아?�니??,
+                wealth: '?�물?�이 좋�? ?�입?�다',
+                health: '건강 관리에 ?�경?�세??,
+                relationship: '?�간관계�? ?�만?�니??
             };
         }
         
@@ -356,59 +356,59 @@ if ('IntersectionObserver' in window) {
         
         function getBestMatch(branch) {
             const matches = {
-                '자': ['신', '진'],
-                '축': ['사', '유'],
-                '인': ['해', '오'],
-                '묘': ['술', '미'],
-                '진': ['유', '자'],
-                '사': ['신', '축'],
-                '오': ['미', '인'],
-                '미': ['오', '묘'],
-                '신': ['사', '자'],
-                '유': ['진', '축'],
-                '술': ['묘', '인'],
-                '해': ['인', '미']
+                '??: ['??, '�?],
+                '�?: ['??, '??],
+                '??: ['??, '??],
+                '�?: ['??, '�?],
+                '�?: ['??, '??],
+                '??: ['??, '�?],
+                '??: ['�?, '??],
+                '�?: ['??, '�?],
+                '??: ['??, '??],
+                '??: ['�?, '�?],
+                '??: ['�?, '??],
+                '??: ['??, '�?]
             };
             
-            return matches[branch] || ['조화로운 관계를 만들 수 있습니다'];
+            return matches[branch] || ['조화로운 관계�? 만들 ???�습?�다'];
         }
         
         function getGoodMatch(branch) {
             const matches = {
-                '자': ['용', '원숭이'],
-                '축': ['뱀', '닭'],
-                '인': ['말', '개'],
-                '묘': ['양', '돼지'],
-                '진': ['쥐', '원숭이'],
-                '사': ['소', '닭'],
-                '오': ['호랑이', '개'],
-                '미': ['토끼', '돼지'],
-                '신': ['쥐', '용'],
-                '유': ['소', '뱀'],
-                '술': ['호랑이', '말'],
-                '해': ['토끼', '양']
+                '??: ['??, '?�숭??],
+                '�?: ['뱀', '??],
+                '??: ['�?, '�?],
+                '�?: ['??, '?��?'],
+                '�?: ['�?, '?�숭??],
+                '??: ['??, '??],
+                '??: ['?�랑??, '�?],
+                '�?: ['?�끼', '?��?'],
+                '??: ['�?, '??],
+                '??: ['??, '뱀'],
+                '??: ['?�랑??, '�?],
+                '??: ['?�끼', '??]
             };
             
-            return matches[branch] || ['좋은 관계를 유지할 수 있습니다'];
+            return matches[branch] || ['좋�? 관계�? ?��??????�습?�다'];
         }
         
         function getChallengingMatch(branch) {
             const matches = {
-                '자': ['말'],
-                '축': ['양'],
-                '인': ['원숭이'],
-                '묘': ['닭'],
-                '진': ['개'],
-                '사': ['돼지'],
-                '오': ['쥐'],
-                '미': ['소'],
-                '신': ['호랑이'],
-                '유': ['토끼'],
-                '술': ['용'],
-                '해': ['뱀']
+                '??: ['�?],
+                '�?: ['??],
+                '??: ['?�숭??],
+                '�?: ['??],
+                '�?: ['�?],
+                '??: ['?��?'],
+                '??: ['�?],
+                '�?: ['??],
+                '??: ['?�랑??],
+                '??: ['?�끼'],
+                '??: ['??],
+                '??: ['뱀']
             };
             
-            return matches[branch] || ['노력이 필요한 관계입니다'];
+            return matches[branch] || ['?�력???�요??관계입?�다'];
         }
         
         function generateAdvice(saju) {
@@ -425,39 +425,39 @@ if ('IntersectionObserver' in window) {
         }
         
         function getCareerAdvice(saju) {
-            return '창의성과 실용성을 조화롭게 발휘할 수 있는 분야가 적합합니다.';
+            return '창의?�과 ?�용?�을 조화�?�� 발휘?????�는 분야가 ?�합?�니??';
         }
         
         function getWealthAdvice(saju) {
-            return '꾸준한 저축과 현명한 투자로 안정적인 재산을 형성할 수 있습니다.';
+            return '꾸�????�축과 ?�명???�자�??�정?�인 ?�산???�성?????�습?�다.';
         }
         
         function getHealthAdvice(lackingElement) {
             const advice = {
-                '목': '간과 눈 건강에 신경쓰고, 스트레스 관리가 중요합니다.',
-                '화': '심장 건강과 혈액순환에 주의하고, 규칙적인 운동이 필요합니다.',
-                '토': '소화기 건강에 신경쓰고, 규칙적인 식사가 중요합니다.',
-                '금': '호흡기와 피부 건강에 주의하고, 충분한 수분 섭취가 필요합니다.',
-                '수': '신장과 방광 건강에 신경쓰고, 충분한 휴식이 필요합니다.'
+                '�?: '간과 ??건강???�경?�고, ?�트?�스 관리�? 중요?�니??',
+                '??: '?�장 건강�??�액?�환??주의?�고, 규칙?�인 ?�동???�요?�니??',
+                '??: '?�화�?건강???�경?�고, 규칙?�인 ?�사가 중요?�니??',
+                '�?: '?�흡기�? ?��? 건강??주의?�고, 충분???�분 ??��가 ?�요?�니??',
+                '??: '?�장�?방광 건강???�경?�고, 충분???�식???�요?�니??'
             };
             
-            return advice[lackingElement] || '균형잡힌 생활습관으로 건강을 유지하세요.';
+            return advice[lackingElement] || '균형?�힌 ?�활?��??�로 건강???��??�세??';
         }
         
         function getRelationshipAdvice(saju) {
-            return '진심어린 소통과 배려로 깊은 신뢰관계를 형성할 수 있습니다.';
+            return '진심?�린 ?�통�?배려�?깊�? ?�뢰관계�? ?�성?????�습?�다.';
         }
         
         function getLuckyItems(element) {
             const luckyItems = {
-                목: '초록색 계열, 나무 소재, 관엽식물',
-                화: '빨강/분홍 계열, 삼각형 모양, 향초',
-                토: '노랑/갈색 계열, 도자기, 천연석',
-                금: '흰색/금색 계열, 금속 액세서리, 크리스탈',
-                수: '검정/파랑 계열, 유리 소품, 물 관련 아이템'
+                �? '초록??계열, ?�무 ?�재, 관?�식�?,
+                ?? '빨강/분홍 계열, ?�각??모양, ?�초',
+                ?? '?�랑/갈색 계열, ?�자�? 천연??,
+                �? '?�색/금색 계열, 금속 ?�세?�리, ?�리?�탈',
+                ?? '검???�랑 계열, ?�리 ?�품, �?관???�이??
             };
             
-            return luckyItems[element] || '자연 소재의 아이템들이 도움이 됩니다.';
+            return luckyItems[element] || '?�연 ?�재???�이?�들???��????�니??';
         }
     </script>
 <script>
@@ -477,7 +477,7 @@ if ('IntersectionObserver' in window) {
             document.getElementById('sajuResult').innerHTML = `
                 <div class="fortune-loading-container">
                     <div class="fortune-loading-spinner"></div>
-                    <div class="fortune-loading-text">🔮 AI가 ${userName}님의 사주팔자를 분석하고 있습니다<span class="fortune-loading-dots"></span></div>
+                    <div class="fortune-loading-text">?�� AI가 ${userName}?�의 ?�주?�자�?분석?�고 ?�습?�다<span class="fortune-loading-dots"></span></div>
                 </div>
             `;
 
@@ -549,39 +549,39 @@ if ('IntersectionObserver' in window) {
             
             const resultHTML = `
                 <div class="saju-result-container">
-                    <h2 class="result-title">${userName}님의 사주팔자 분석 결과</h2>
-                    <p class="result-date">분석일: ${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일</p>
+                    <h2 class="result-title">${userName}?�의 ?�주?�자 분석 결과</h2>
+                    <p class="result-date">분석?? ${today.getFullYear()}??${today.getMonth() + 1}??${today.getDate()}??/p>
                     
-                    <!-- 사주팔자 표 -->
+                    <!-- ?�주?�자 ??-->
                     <div class="saju-table-section">
-                        <h3>🎯 사주팔자 구성</h3>
+                        <h3>?�� ?�주?�자 구성</h3>
                         <div class="saju-table">
                             <div class="saju-pillar">
-                                <div class="pillar-title">연주</div>
+                                <div class="pillar-title">?�주</div>
                                 <div class="pillar-stem">${saju.yearPillar ? saju.yearPillar.stem : '?'}</div>
                                 <div class="pillar-branch">${saju.yearPillar ? saju.yearPillar.branch : '?'}</div>
                             </div>
                             <div class="saju-pillar">
-                                <div class="pillar-title">월주</div>
+                                <div class="pillar-title">?�주</div>
                                 <div class="pillar-stem">${saju.monthPillar ? saju.monthPillar.stem : '?'}</div>
                                 <div class="pillar-branch">${saju.monthPillar ? saju.monthPillar.branch : '?'}</div>
                             </div>
                             <div class="saju-pillar">
-                                <div class="pillar-title">일주</div>
+                                <div class="pillar-title">?�주</div>
                                 <div class="pillar-stem">${saju.dayPillar ? saju.dayPillar.stem : '?'}</div>
                                 <div class="pillar-branch">${saju.dayPillar ? saju.dayPillar.branch : '?'}</div>
                             </div>
                             <div class="saju-pillar">
-                                <div class="pillar-title">시주</div>
+                                <div class="pillar-title">?�주</div>
                                 <div class="pillar-stem">${saju.hourPillar ? saju.hourPillar.stem : '?'}</div>
                                 <div class="pillar-branch">${saju.hourPillar ? saju.hourPillar.branch : '?'}</div>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- 오행 분석 -->
+                    <!-- ?�행 분석 -->
                     <div class="element-analysis-section">
-                        <h3>🌟 오행 분석</h3>
+                        <h3>?�� ?�행 분석</h3>
                         <div class="element-bars">
                             ${Object.entries(interpretation.elements.distribution).map(([element, count]) => `
                                 <div class="element-bar">
@@ -593,13 +593,13 @@ if ('IntersectionObserver' in window) {
                                 </div>
                             `).join('')}
                         </div>
-                        <p class="element-balance">오행 균형도: ${interpretation.elements.balance}</p>
-                        <p class="element-advice">가장 강한 원소는 <strong>${interpretation.elements.dominant}</strong>이며, <strong>${interpretation.elements.lacking}</strong>이 부족합니다.</p>
+                        <p class="element-balance">?�행 균형?? ${interpretation.elements.balance}</p>
+                        <p class="element-advice">가??강한 ?�소??<strong>${interpretation.elements.dominant}</strong>?�며, <strong>${interpretation.elements.lacking}</strong>??부족합?�다.</p>
                     </div>
                     
-                    <!-- 성격 분석 -->
+                    <!-- ?�격 분석 -->
                     <div class="personality-section">
-                        <h3>👤 성격 분석</h3>
+                        <h3>?�� ?�격 분석</h3>
                         <p class="personality-basic">${interpretation.personality.basic}</p>
                         
                         <div class="traits-container">
@@ -610,7 +610,7 @@ if ('IntersectionObserver' in window) {
                                 </ul>
                             </div>
                             <div class="traits-box">
-                                <h4>약점</h4>
+                                <h4>?�점</h4>
                                 <ul>
                                     ${interpretation.personality.weaknesses.map(w => `<li>${w}</li>`).join('')}
                                 </ul>
@@ -620,24 +620,24 @@ if ('IntersectionObserver' in window) {
                         <p class="personality-advice"><strong>조언:</strong> ${interpretation.personality.advice}</p>
                     </div>
                     
-                    <!-- 운세 분석 -->
+                    <!-- ?�세 분석 -->
                     <div class="fortune-section">
-                        <h3>🔮 운세 분석</h3>
+                        <h3>?�� ?�세 분석</h3>
                         <div class="fortune-grid">
                             <div class="fortune-item">
-                                <h4>전체운</h4>
+                                <h4>?�체??/h4>
                                 <p>${interpretation.fortune.overall}</p>
                             </div>
                             <div class="fortune-item">
-                                <h4>직업운</h4>
+                                <h4>직업??/h4>
                                 <p>${interpretation.fortune.career}</p>
                             </div>
                             <div class="fortune-item">
-                                <h4>재물운</h4>
+                                <h4>?�물??/h4>
                                 <p>${interpretation.fortune.wealth}</p>
                             </div>
                             <div class="fortune-item">
-                                <h4>건강운</h4>
+                                <h4>건강??/h4>
                                 <p>${interpretation.fortune.health}</p>
                             </div>
                         </div>
@@ -645,18 +645,18 @@ if ('IntersectionObserver' in window) {
                     
                     <!-- 궁합 -->
                     <div class="compatibility-section">
-                        <h3>💑 궁합 분석</h3>
+                        <h3>?�� 궁합 분석</h3>
                         <div class="compatibility-list">
                             <div class="compatibility-item">
-                                <h4>최고의 궁합</h4>
+                                <h4>최고??궁합</h4>
                                 <p>${Array.isArray(interpretation.compatibility.best) ? interpretation.compatibility.best.join(', ') : interpretation.compatibility.best}</p>
                             </div>
                             <div class="compatibility-item">
-                                <h4>좋은 궁합</h4>
+                                <h4>좋�? 궁합</h4>
                                 <p>${Array.isArray(interpretation.compatibility.good) ? interpretation.compatibility.good.join(', ') : interpretation.compatibility.good}</p>
                             </div>
                             <div class="compatibility-item">
-                                <h4>도전적인 궁합</h4>
+                                <h4>?�전?�인 궁합</h4>
                                 <p>${Array.isArray(interpretation.compatibility.challenging) ? interpretation.compatibility.challenging.join(', ') : interpretation.compatibility.challenging}</p>
                             </div>
                         </div>
@@ -664,14 +664,14 @@ if ('IntersectionObserver' in window) {
                     
                     <!-- 종합 조언 -->
                     <div class="advice-section">
-                        <h3>💡 종합 조언</h3>
+                        <h3>?�� 종합 조언</h3>
                         <div class="advice-grid">
                             <div class="advice-item">
                                 <h4>직업</h4>
                                 <p>${interpretation.advice.career}</p>
                             </div>
                             <div class="advice-item">
-                                <h4>재물</h4>
+                                <h4>?�물</h4>
                                 <p>${interpretation.advice.wealth}</p>
                             </div>
                             <div class="advice-item">
@@ -679,30 +679,30 @@ if ('IntersectionObserver' in window) {
                                 <p>${interpretation.advice.health}</p>
                             </div>
                             <div class="advice-item">
-                                <h4>인간관계</h4>
+                                <h4>?�간관�?/h4>
                                 <p>${interpretation.advice.relationship}</p>
                             </div>
                         </div>
                         
                         <div class="lucky-items">
-                            <h4>🍀 행운의 아이템</h4>
+                            <h4>?? ?�운???�이??/h4>
                             <p>${interpretation.advice.lucky}</p>
                         </div>
                     </div>
                     
-                    <!-- 다시하기 버튼 -->
+                    <!-- ?�시?�기 버튼 -->
                     <button onclick="resetSajuForm()" class="btn btn-secondary mt-30">
-                        🔄 다시 분석하기
+                        ?�� ?�시 분석?�기
                     </button>
                 </div>
             `;
             
             document.getElementById('sajuResult').innerHTML = resultHTML;
             
-            // CSS 변수 설정
+            // CSS 변???�정
             const elementBars = document.querySelectorAll('.element-bar');
             const distribution = interpretation.elements.distribution;
-            const elements = ['목', '화', '토', '금', '수'];
+            const elements = ['�?, '??, '??, '�?, '??];
             
             elementBars.forEach((bar, index) => {
                 const element = elements[index];
@@ -717,9 +717,9 @@ if ('IntersectionObserver' in window) {
             document.getElementById('sajuForm').scrollIntoView({ behavior: 'smooth' });
         }
     </script>
-<!-- 광고 스크립트 -->
+<!-- 광고 ?�크립트 -->
 <!-- Non-critical scripts moved here for performance -->
-<!-- Google AdSense 지연 로딩 -->
+<!-- Google AdSense 지??로딩 -->
 <script>
 
 window.addEventListener('load', function() {
@@ -793,7 +793,7 @@ window.addEventListener('load', function() {
                 ad.setAttribute('data-adsbygoogle-status', 'done');
                 
             } catch (e) {
-                console.warn('AdSense 초기화 실패:', index, e.message);
+                console.warn('AdSense 초기???�패:', index, e.message);
             }
         });
     }
@@ -809,13 +809,13 @@ window.addEventListener('load', function() {
     window.addEventListener('error', function(e) {
         if (e.message && e.message.includes('adsbygoogle.push() error')) {
             e.preventDefault();
-            console.warn('AdSense 중복 초기화 방지됨');
+            console.warn('AdSense 중복 초기??방�???);
             return false;
         }
     }, true);
 })();
 </script>
-<!-- AdSense 통합 초기화 -->
+<!-- AdSense ?�합 초기??-->
 <script>
 (function() {
     'use strict';
@@ -862,24 +862,24 @@ window.addEventListener('load', function() {
     }, true);
 })();
 </script>
-<!-- 카카오 초기화 -->
+<!-- 카카??초기??-->
 <script>
     if (typeof Kakao !== 'undefined' && window.KAKAO_API_KEY) {
         if (!Kakao.isInitialized()) {
             Kakao.init(window.KAKAO_API_KEY);
-            console.log('카카오 SDK 초기화 완료');
+            console.log('카카??SDK 초기???�료');
         }
     } else {
-        console.warn('카카오 SDK 또는 API 키를 찾을 수 없습니다.');
+        console.warn('카카??SDK ?�는 API ?��? 찾을 ???�습?�다.');
     }
 </script>
 <script>
-// 네비게이션 및 푸터 로드 - main.js의 loadComponents가 실행되지 않은 경우를 위한 폴백
+// ?�비게이??�??�터 로드 - main.js??loadComponents가 ?�행?��? ?��? 경우�??�한 ?�백
 document.addEventListener('DOMContentLoaded', function() {
-    // main.js가 로드되었고 loadComponents 함수가 있는지 확인
+    // main.js가 로드?�었�?loadComponents ?�수가 ?�는지 ?�인
     if (typeof loadComponents === 'function') {
-        // main.js의 DOMContentLoaded가 이미 실행되었을 수 있으므로 
-        // navbar-placeholder가 비어있으면 다시 실행
+        // main.js??DOMContentLoaded가 ?��? ?�행?�었?????�으므�?
+        // navbar-placeholder가 비어?�으�??�시 ?�행
         const navPlaceholder = document.getElementById('navbar-placeholder');
         const footerPlaceholder = document.getElementById('footer-placeholder');
         

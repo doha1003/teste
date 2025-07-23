@@ -5,8 +5,8 @@
 <meta content="upgrade-insecure-requests; default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;" http-equiv="Content-Security-Policy"/>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>AI 타로 리딩 - AI 운세 | doha.kr</title>
-<meta content="질문을 입력하면 AI가 타로 카드를 뽑아 심층적인 해석을 제공합니다." name="description"/>
+<title>AI ?��?리딩 - AI ?�세 | doha.kr</title>
+<meta content="질문???�력?�면 AI가 ?��?카드�?뽑아 ?�층?�인 ?�석???�공?�니??" name="description"/>
 <meta content="index, follow" name="robots"/>
 <meta content="doha.kr" name="author"/>
 <!-- Security Headers -->
@@ -14,8 +14,8 @@
 <meta content="strict-origin-when-cross-origin" http-equiv="Referrer-Policy"/>
 <meta content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), accelerometer=(), gyroscope=()" http-equiv="Permissions-Policy"/>
 <!-- Open Graph -->
-<meta content="AI 타로 리딩 | doha.kr" property="og:title"/>
-<meta content="질문을 입력하면 AI가 타로 카드를 뽑아 심층적인 해석을 제공합니다." property="og:description"/>
+<meta content="AI ?��?리딩 | doha.kr" property="og:title"/>
+<meta content="질문???�력?�면 AI가 ?��?카드�?뽑아 ?�층?�인 ?�석???�공?�니??" property="og:description"/>
 <meta content="https://doha.kr/images/egen-male-card.jpg" property="og:image"/>
 <meta content="https://doha.kr/fortune/tarot/" property="og:url"/>
 <!-- Critical CSS -->
@@ -195,7 +195,7 @@ textarea.form-control {
 <!-- Kakao JavaScript SDK -->
 <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js"></script>
 <!-- Optimized CSS System -->
-<link href="/css/styles.css?v=1753150228" rel="stylesheet"/>
+<link href="/css/styles.css?v=1753283465" rel="stylesheet"/>
 <link href="/css/mobile-fixes.css" rel="stylesheet"/>
 <link href="/css/button-system.css" rel="stylesheet"/>
 <link href="/css/pages/tarot.css" rel="stylesheet"/>
@@ -213,65 +213,65 @@ textarea.form-control {
     </script>
 </head>
 <body class="fortune-page">
-<!-- 네비게이션 바 -->
+<!-- ?�비게이??�?-->
 <div id="navbar-placeholder"></div>
-<!-- 페이지 헤더 -->
+<!-- ?�이지 ?�더 -->
 <section class="page-header">
 <div class="container">
-<h1 class="page-title fade-in">AI 타로 리딩</h1>
+<h1 class="page-title fade-in">AI ?��?리딩</h1>
 <p class="page-subtitle fade-in stagger-1">
-                AI가 해석하는 신비로운 타로 카드의 메시지
+                AI가 ?�석?�는 ?�비로운 ?��?카드??메시지
             </p>
 </div>
 </section>
-<!-- 타로 리딩 섹션 -->
+<!-- ?��?리딩 ?�션 -->
 <section class="tarot-section">
 <div class="container">
 <div class="tarot-form" id="tarotForm">
-<h2 class="text-center mb-32">타로 리딩 시작하기</h2>
+<h2 class="text-center mb-32">?��?리딩 ?�작?�기</h2>
 <div class="form-group">
-<label for="question">질문을 입력하세요</label>
-<textarea class="form-control" id="question" name="question" placeholder="타로에게 묻고 싶은 질문을 구체적으로 적어주세요. 예: 현재 연애 관계가 어떻게 발전할까요?" required="" rows="4"></textarea>
+<label for="question">질문???�력?�세??/label>
+<textarea class="form-control" id="question" name="question" placeholder="?�로에�?묻고 ?��? 질문??구체?�으�??�어주세?? ?? ?�재 ?�애 관계�? ?�떻�?발전?�까??" required="" rows="4"></textarea>
 </div>
 <div class="form-group">
-<label for="spreadType">스프레드 선택</label>
+<label for="spreadType">?�프?�드 ?�택</label>
 <select class="form-control" id="spreadType" name="spreadType">
-<option value="oneCard">원 카드 (1장) - 간단한 질문</option>
-<option value="threeCard">쓰리 카드 (3장) - 과거/현재/미래</option>
-<option value="celtic">켈틱 크로스 (10장) - 상세한 분석</option>
+<option value="oneCard">??카드 (1?? - 간단??질문</option>
+<option value="threeCard">?�리 카드 (3?? - 과거/?�재/미래</option>
+<option value="celtic">켈틱 ?�로??(10?? - ?�세??분석</option>
 </select>
 </div>
 <button class="btn btn-primary w-full mt-24" onclick="startTarotReading()" type="button">
-                    🔮 타로 리딩 시작
+                    ?�� ?��?리딩 ?�작
                 </button>
 </div>
-<!-- 타로 결과 영역 -->
+<!-- ?��?결과 ?�역 -->
 <div class="tarot-result hidden" id="tarotResult">
-<!-- 결과가 여기에 표시됩니다 -->
+<!-- 결과가 ?�기???�시?�니??-->
 </div>
 </div>
 </section>
-<!-- 타로 안내 섹션 -->
+<!-- ?��??�내 ?�션 -->
 <section class="info-section">
 <div class="container">
 <div class="info-box">
-<h3>AI 타로 리딩 안내</h3>
+<h3>AI ?��?리딩 ?�내</h3>
 <ul>
-<li>타로 카드는 현재 상황에 대한 통찰과 가이드를 제공합니다.</li>
-<li>질문은 구체적일수록 더 명확한 답변을 받을 수 있습니다.</li>
-<li>카드의 해석은 참고용이며, 최종 결정은 본인이 내리셔야 합니다.</li>
-<li>메이저 아르카나 22장을 사용하여 리딩을 진행합니다.</li>
-<li>AI가 실제로 분석하여 개인화된 해석을 제공합니다.</li>
+<li>?��?카드???�재 ?�황???�???�찰�?가?�드�??�공?�니??</li>
+<li>질문?� 구체?�일?�록 ??명확???��???받을 ???�습?�다.</li>
+<li>카드???�석?� 참고?�이�? 최종 결정?� 본인???�리?�야 ?�니??</li>
+<li>메이?� ?�르카나 22?�을 ?�용?�여 리딩??진행?�니??</li>
+<li>AI가 ?�제�?분석?�여 개인?�된 ?�석???�공?�니??</li>
 </ul>
 </div>
 </div>
 </section>
-<!-- 광고 영역 -->
+<!-- 광고 ?�역 -->
 <div class="ad-container">
 <div class="ad-label">광고</div>
 <div id="ad-container-ewz82l37p" class="min-height-100">
 <div class="ad-placeholder">
-        광고 로딩 중...
+        광고 로딩 �?..
     </div>
 </div>
 <script>
@@ -301,13 +301,13 @@ if ('IntersectionObserver' in window) {
 }
 </script>
 </div>
-<!-- 푸터 -->
+<!-- ?�터 -->
 <div id="footer-placeholder"></div>
 <!-- External JavaScript -->
-<script src="/js/main.js?v=1753150228"></script>
-<script src="/js/api-config.js?v=1753150228"></script>
+<script src="/js/main.js?v=1753283465"></script>
+<script src="/js/api-config.js?v=1753283465"></script>
 <script>
-        // 카카오 초기화
+        // 카카??초기??
         if (window.initKakao) {
             window.initKakao();
         }
@@ -315,34 +315,34 @@ if ('IntersectionObserver' in window) {
 <script>
 
         const majorArcana = [
-            { id: 0, name: "The Fool", korean: "바보", meaning: "새로운 시작, 순수함, 모험", reversed: "무모함, 경솔함, 방향감각 상실" },
-            { id: 1, name: "The Magician", korean: "마법사", meaning: "의지력, 창조력, 능력", reversed: "속임수, 능력 부족, 자만심" },
-            { id: 2, name: "The High Priestess", korean: "여교황", meaning: "직관, 신비, 내면의 지혜", reversed: "비밀, 무지, 표면적 지식" },
-            { id: 3, name: "The Empress", korean: "여황제", meaning: "풍요, 창조, 모성", reversed: "의존, 과보호, 창조력 부족" },
-            { id: 4, name: "The Emperor", korean: "황제", meaning: "권위, 안정, 지배", reversed: "독단, 경직, 폭정" },
-            { id: 5, name: "The Hierophant", korean: "교황", meaning: "전통, 종교, 교육", reversed: "독단, 형식주의, 반항" },
-            { id: 6, name: "The Lovers", korean: "연인", meaning: "사랑, 선택, 결합", reversed: "분리, 갈등, 잘못된 선택" },
-            { id: 7, name: "The Chariot", korean: "전차", meaning: "의지, 승리, 통제", reversed: "패배, 방향감각 상실, 통제 불능" },
-            { id: 8, name: "Strength", korean: "힘", meaning: "용기, 인내, 내적 힘", reversed: "약함, 의심, 자제력 부족" },
-            { id: 9, name: "The Hermit", korean: "은둔자", meaning: "성찰, 내적 인도, 지혜", reversed: "고립, 외로움, 거부" },
-            { id: 10, name: "Wheel of Fortune", korean: "운명의 바퀴", meaning: "변화, 운명, 기회", reversed: "불운, 통제 불능, 악순환" },
-            { id: 11, name: "Justice", korean: "정의", meaning: "공정, 균형, 진실", reversed: "불공정, 편견, 거짓" },
-            { id: 12, name: "The Hanged Man", korean: "매달린 사람", meaning: "희생, 새로운 관점, 기다림", reversed: "헛된 희생, 지연, 이기심" },
-            { id: 13, name: "Death", korean: "죽음", meaning: "변화, 재생, 끝과 시작", reversed: "정체, 변화에 대한 저항" },
-            { id: 14, name: "Temperance", korean: "절제", meaning: "조화, 균형, 절제", reversed: "불균형, 과도함, 불화" },
-            { id: 15, name: "The Devil", korean: "악마", meaning: "유혹, 속박, 물질주의", reversed: "해방, 깨달음, 자유" },
-            { id: 16, name: "The Tower", korean: "탑", meaning: "파괴, 갑작스런 변화, 깨달음", reversed: "피할 수 있는 재앙, 내적 변화" },
-            { id: 17, name: "The Star", korean: "별", meaning: "희망, 영감, 치유", reversed: "절망, 환멸, 영감 부족" },
-            { id: 18, name: "The Moon", korean: "달", meaning: "환상, 불안, 무의식", reversed: "혼란 해소, 진실 발견" },
-            { id: 19, name: "The Sun", korean: "태양", meaning: "기쁨, 성공, 활력", reversed: "과신, 오만, 에너지 부족" },
-            { id: 20, name: "Judgement", korean: "심판", meaning: "부활, 깨달음, 용서", reversed: "후회, 자기 비판, 용서 부족" },
-            { id: 21, name: "The World", korean: "세계", meaning: "완성, 성취, 통합", reversed: "미완성, 좌절, 부족함" }
+            { id: 0, name: "The Fool", korean: "바보", meaning: "?�로???�작, ?�수?? 모험", reversed: "무모?? 경솔?? 방향감각 ?�실" },
+            { id: 1, name: "The Magician", korean: "마법??, meaning: "?��??? 창조?? ?�력", reversed: "?�임?? ?�력 부�? ?�만?? },
+            { id: 2, name: "The High Priestess", korean: "?�교??, meaning: "직�?, ?�비, ?�면??지??, reversed: "비�?, 무�?, ?�면??지?? },
+            { id: 3, name: "The Empress", korean: "?�황??, meaning: "?�요, 창조, 모성", reversed: "?�존, 과보?? 창조??부�? },
+            { id: 4, name: "The Emperor", korean: "?�제", meaning: "권위, ?�정, 지�?, reversed: "?�단, 경직, ??��" },
+            { id: 5, name: "The Hierophant", korean: "교황", meaning: "?�통, 종교, 교육", reversed: "?�단, ?�식주의, 반항" },
+            { id: 6, name: "The Lovers", korean: "?�인", meaning: "?�랑, ?�택, 결합", reversed: "분리, 갈등, ?�못???�택" },
+            { id: 7, name: "The Chariot", korean: "?�차", meaning: "?��?, ?�리, ?�제", reversed: "?�배, 방향감각 ?�실, ?�제 불능" },
+            { id: 8, name: "Strength", korean: "??, meaning: "?�기, ?�내, ?�적 ??, reversed: "?�함, ?�심, ?�제??부�? },
+            { id: 9, name: "The Hermit", korean: "?�?�자", meaning: "?�찰, ?�적 ?�도, 지??, reversed: "고립, ?�로?�, 거�?" },
+            { id: 10, name: "Wheel of Fortune", korean: "?�명??바�?, meaning: "변?? ?�명, 기회", reversed: "불운, ?�제 불능, ?�순?? },
+            { id: 11, name: "Justice", korean: "?�의", meaning: "공정, 균형, 진실", reversed: "불공?? ?�견, 거짓" },
+            { id: 12, name: "The Hanged Man", korean: "매달�??�람", meaning: "?�생, ?�로??관?? 기다�?, reversed: "?�된 ?�생, 지?? ?�기?? },
+            { id: 13, name: "Death", korean: "죽음", meaning: "변?? ?�생, ?�과 ?�작", reversed: "?�체, 변?�에 ?�???�?? },
+            { id: 14, name: "Temperance", korean: "?�제", meaning: "조화, 균형, ?�제", reversed: "불균?? 과도?? 불화" },
+            { id: 15, name: "The Devil", korean: "?�마", meaning: "?�혹, ?�박, 물질주의", reversed: "?�방, 깨달?? ?�유" },
+            { id: 16, name: "The Tower", korean: "??, meaning: "?�괴, 갑작?�런 변?? 깨달??, reversed: "?�할 ???�는 ?�앙, ?�적 변?? },
+            { id: 17, name: "The Star", korean: "�?, meaning: "?�망, ?�감, 치유", reversed: "?�망, ?�멸, ?�감 부�? },
+            { id: 18, name: "The Moon", korean: "??, meaning: "?�상, 불안, 무의??, reversed: "?��? ?�소, 진실 발견" },
+            { id: 19, name: "The Sun", korean: "?�양", meaning: "기쁨, ?�공, ?�력", reversed: "과신, ?�만, ?�너지 부�? },
+            { id: 20, name: "Judgement", korean: "?�판", meaning: "부?? 깨달?? ?�서", reversed: "?�회, ?�기 비판, ?�서 부�? },
+            { id: 21, name: "The World", korean: "?�계", meaning: "?�성, ?�취, ?�합", reversed: "미완?? 좌절, 부족함" }
         ];
 
         const spreads = {
-            oneCard: { name: "원 카드", count: 1, positions: ["현재 상황"] },
-            threeCard: { name: "쓰리 카드", count: 3, positions: ["과거", "현재", "미래"] },
-            celtic: { name: "켈틱 크로스", count: 10, positions: ["현재 상황", "도전/십자가", "먼 과거", "가까운 과거", "가능한 미래", "가까운 미래", "자신", "외부 영향", "희망과 두려움", "최종 결과"] }
+            oneCard: { name: "??카드", count: 1, positions: ["?�재 ?�황"] },
+            threeCard: { name: "?�리 카드", count: 3, positions: ["과거", "?�재", "미래"] },
+            celtic: { name: "켈틱 ?�로??, count: 10, positions: ["?�재 ?�황", "?�전/??��가", "�?과거", "가까운 과거", "가?�한 미래", "가까운 미래", "?�신", "?��? ?�향", "?�망�??�려?�", "최종 결과"] }
         };
         
         // Initialize page functionality
@@ -373,7 +373,7 @@ if ('IntersectionObserver' in window) {
             const spreadType = document.getElementById('spreadType').value;
             
             if (!question) {
-                alert('질문을 입력해주세요.');
+                alert('질문???�력?�주?�요.');
                 return;
             }
 
@@ -383,7 +383,7 @@ if ('IntersectionObserver' in window) {
             resultDiv.style.display = 'block';
             resultDiv.innerHTML = `
                 <div class="tarot-ai-analyzing">
-                    🔮 AI가 타로 카드를 분석하고 있습니다...
+                    ?�� AI가 ?��?카드�?분석?�고 ?�습?�다...
                     <div class="fortune-loading-info">
                         질문: "${question}"
                     </div>
@@ -399,7 +399,7 @@ if ('IntersectionObserver' in window) {
                 displayTarotResult(question, cards, spreadType, aiAnalysis);
                 
             } catch (error) {
-                console.error('타로 분석 오류:', error);
+                console.error('?��?분석 ?�류:', error);
 
                 const cards = drawCards(question, spreadType);
                 const fallbackAnalysis = generateFallbackAnalysis(question, cards, spreadType);
@@ -415,7 +415,7 @@ if ('IntersectionObserver' in window) {
             
             for (let i = 0; i < spread.count; i++) {
                 const cardIndex = Math.floor(seededRandom(seed + i) * majorArcana.length);
-                const isReversed = seededRandom(seed + i + 100) < 0.25; // 25% 확률로 역방향
+                const isReversed = seededRandom(seed + i + 100) < 0.25; // 25% ?�률�???��??
                 
                 cards.push({
                     ...majorArcana[cardIndex],
@@ -432,7 +432,7 @@ if ('IntersectionObserver' in window) {
             for (let i = 0; i < text.length; i++) {
                 const char = text.charCodeAt(i);
                 hash = ((hash << 5) - hash) + char;
-                hash = hash & hash; // 32비트 정수로 변환
+                hash = hash & hash; // 32비트 ?�수�?변??
             }
             return Math.abs(hash);
         }
@@ -445,29 +445,29 @@ if ('IntersectionObserver' in window) {
         async function generateTarotAnalysisWithAI(question, cards, spreadType) {
             const spread = spreads[spreadType];
             const cardDescriptions = cards.map(card => 
-                `${card.position}: ${card.korean}(${card.name}) ${card.reversed ? '역방향' : '정방향'}`
+                `${card.position}: ${card.korean}(${card.name}) ${card.reversed ? '??��?? : '?�방??}`
             ).join(', ');
             
-            const prompt = `당신은 전문 타로 리더입니다. 다음 질문과 뽑힌 카드들을 바탕으로 상세한 타로 리딩을 해주세요.
+            const prompt = `?�신?� ?�문 ?��?리더?�니?? ?�음 질문�?뽑힌 카드?�을 바탕?�로 ?�세???��?리딩???�주?�요.
 
 질문: "${question}"
-스프레드: ${spread.name}
-뽑힌 카드들: ${cardDescriptions}
+?�프?�드: ${spread.name}
+뽑힌 카드?? ${cardDescriptions}
 
-다음 형식으로 응답해주세요:
+?�음 ?�식?�로 ?�답?�주?�요:
 {
-  "overall": "전체적인 메시지 (100-200자)",
+  "overall": "?�체?�인 메시지 (100-200??",
   "cardAnalysis": [
     {
-      "position": "포지션명",
-      "interpretation": "해당 카드의 상세한 해석 (80-120자)"
+      "position": "?��??�명",
+      "interpretation": "?�당 카드???�세???�석 (80-120??"
     }
   ],
-  "advice": "구체적인 조언 (100-150자)",
-  "futureGuidance": "미래에 대한 가이드 (80-120자)"
+  "advice": "구체?�인 조언 (100-150??",
+  "futureGuidance": "미래???�??가?�드 (80-120??"
 }
 
-카드의 의미를 질문과 연결하여 개인화된 해석을 제공하고, 실용적인 조언을 포함해주세요.`;
+카드???��?�?질문�??�결?�여 개인?�된 ?�석???�공?�고, ?�용?�인 조언???�함?�주?�요.`;
 
             try {
                 const aiResponse = await callGeminiAPI(prompt);
@@ -478,7 +478,7 @@ if ('IntersectionObserver' in window) {
                     return parsed;
                 }
             } catch (error) {
-                console.error('AI 분석 파싱 오류:', error);
+                console.error('AI 분석 ?�싱 ?�류:', error);
             }
             
             return null;
@@ -493,43 +493,43 @@ if ('IntersectionObserver' in window) {
             }));
             
             return {
-                overall: `${spread.name} 리딩에서 나타난 메시지는 변화와 성장의 에너지입니다. 카드들이 당신의 질문에 대한 깊은 통찰을 제공하고 있습니다.`,
+                overall: `${spread.name} 리딩?�서 ?��???메시지??변?��? ?�장???�너지?�니?? 카드?�이 ?�신??질문???�??깊�? ?�찰???�공?�고 ?�습?�다.`,
                 cardAnalysis: cardAnalysis,
-                advice: "카드의 메시지를 마음에 새기고, 직관을 믿으며 행동하시기 바랍니다. 모든 변화는 성장의 기회입니다.",
-                futureGuidance: "긍정적인 마음가짐으로 다가올 변화를 받아들이세요. 당신의 내적 지혜가 올바른 길을 알려줄 것입니다."
+                advice: "카드??메시지�?마음???�기�? 직�???믿으�??�동?�시�?바랍?�다. 모든 변?�는 ?�장??기회?�니??",
+                futureGuidance: "긍정?�인 마음가짐으�??��???변?��? 받아?�이?�요. ?�신???�적 지?��? ?�바�?길을 ?�려�?것입?�다."
             };
         }
         
         function generateCardInterpretation(card, question) {
             const interpretations = {
-                0: "새로운 시작을 앞두고 있습니다. 용기를 내어 첫 발을 내딛으세요.",
-                1: "당신에게는 원하는 것을 이룰 수 있는 능력이 있습니다. 자신감을 가지세요.",
-                2: "직감을 믿으세요. 내면의 목소리가 올바른 길을 알려줄 것입니다.",
-                3: "풍요로운 시기가 다가오고 있습니다. 창조적인 에너지를 발휘하세요.",
-                4: "안정과 질서가 필요한 시기입니다. 계획을 세우고 실행하세요.",
-                5: "전통적인 방법이나 조언을 구하는 것이 도움이 될 것입니다.",
-                6: "중요한 선택의 기로에 서 있습니다. 마음의 소리를 들으세요.",
-                7: "의지력으로 어려움을 극복할 수 있습니다. 포기하지 마세요.",
-                8: "내적 힘을 발휘할 때입니다. 용기와 인내가 필요합니다.",
-                9: "혼자만의 시간을 통해 답을 찾을 수 있습니다. 성찰이 필요합니다.",
-                10: "운명의 변화가 다가오고 있습니다. 기회를 놓치지 마세요.",
-                11: "공정하고 균형 잡힌 판단이 필요합니다. 진실을 직시하세요.",
-                12: "새로운 관점이 필요합니다. 기다림의 시간을 견디세요.",
-                13: "변화와 재생의 시기입니다. 과거를 놓아주세요.",
-                14: "조화와 균형을 찾아야 합니다. 극단을 피하세요.",
-                15: "유혹이나 속박에서 벗어나야 합니다. 자유를 찾으세요.",
-                16: "갑작스런 변화가 있을 수 있습니다. 준비를 갖추세요.",
-                17: "희망과 치유의 시기입니다. 꿈을 포기하지 마세요.",
-                18: "혼란스러운 상황입니다. 차분히 진실을 찾으세요.",
-                19: "성공과 기쁨이 가득한 시기입니다. 긍정적으로 생각하세요.",
-                20: "과거를 정리하고 새로운 시작을 준비하세요.",
-                21: "목표 달성이 가까워졌습니다. 끝까지 최선을 다하세요."
+                0: "?�로???�작???�두�??�습?�다. ?�기�??�어 �?발을 ?�딛?�세??",
+                1: "?�신?�게???�하??것을 ?�룰 ???�는 ?�력???�습?�다. ?�신감을 가지?�요.",
+                2: "직감??믿으?�요. ?�면??목소리�? ?�바�?길을 ?�려�?것입?�다.",
+                3: "?�요로운 ?�기가 ?��??�고 ?�습?�다. 창조?�인 ?�너지�?발휘?�세??",
+                4: "?�정�?질서가 ?�요???�기?�니?? 계획???�우�??�행?�세??",
+                5: "?�통?�인 방법?�나 조언??구하??것이 ?��?????것입?�다.",
+                6: "중요???�택??기로?????�습?�다. 마음???�리�??�으?�요.",
+                7: "?��??�으�??�려?�??극복?????�습?�다. ?�기?��? 마세??",
+                8: "?�적 ?�을 발휘???�입?�다. ?�기?� ?�내가 ?�요?�니??",
+                9: "?�자만의 ?�간???�해 ?�을 찾을 ???�습?�다. ?�찰???�요?�니??",
+                10: "?�명??변?��? ?��??�고 ?�습?�다. 기회�??�치지 마세??",
+                11: "공정?�고 균형 ?�힌 ?�단???�요?�니?? 진실??직시?�세??",
+                12: "?�로??관?�이 ?�요?�니?? 기다림의 ?�간??견디?�요.",
+                13: "변?��? ?�생???�기?�니?? 과거�??�아주세??",
+                14: "조화?� 균형??찾아???�니?? 극단???�하?�요.",
+                15: "?�혹?�나 ?�박?�서 벗어?�야 ?�니?? ?�유�?찾으?�요.",
+                16: "갑작?�런 변?��? ?�을 ???�습?�다. 준비�? 갖추?�요.",
+                17: "?�망�?치유???�기?�니?? 꿈을 ?�기?��? 마세??",
+                18: "?��??�러???�황?�니?? 차분??진실??찾으?�요.",
+                19: "?�공�?기쁨??가?�한 ?�기?�니?? 긍정?�으�??�각?�세??",
+                20: "과거�??�리?�고 ?�로???�작??준비하?�요.",
+                21: "목표 ?�성??가까워졌습?�다. ?�까지 최선???�하?�요."
             };
             
-            let interpretation = interpretations[card.id] || "카드가 당신에게 특별한 메시지를 전하고 있습니다.";
+            let interpretation = interpretations[card.id] || "카드가 ?�신?�게 ?�별??메시지�??�하�??�습?�다.";
             
             if (card.reversed) {
-                interpretation += " 다만 역방향으로 나타나 신중한 접근이 필요합니다.";
+                interpretation += " ?�만 ??��?�으�??��????�중???�근???�요?�니??";
             }
             
             return interpretation;
@@ -547,10 +547,10 @@ if ('IntersectionObserver' in window) {
                     <div class="single-card-layout">
                         <div class="card-container ${cards[0].reversed ? 'reversed' : ''}">
                             <div class="card-visual">
-                                <div class="card-symbol">🃏</div>
+                                <div class="card-symbol">?��</div>
                                 <div class="card-name">${cards[0].korean}</div>
                                 <div class="card-english">${cards[0].name}</div>
-                                ${cards[0].reversed ? '<div class="reversed-badge">역방향</div>' : ''}
+                                ${cards[0].reversed ? '<div class="reversed-badge">??��??/div>' : ''}
                             </div>
                         </div>
                         <div class="card-interpretation">
@@ -567,10 +567,10 @@ if ('IntersectionObserver' in window) {
                             <div class="card-position">
                                 <div class="card-container ${card.reversed ? 'reversed' : ''}">
                                     <div class="card-visual">
-                                        <div class="card-symbol">🃏</div>
+                                        <div class="card-symbol">?��</div>
                                         <div class="card-name">${card.korean}</div>
                                         <div class="card-english">${card.name}</div>
-                                        ${card.reversed ? '<div class="reversed-badge">역방향</div>' : ''}
+                                        ${card.reversed ? '<div class="reversed-badge">??��??/div>' : ''}
                                     </div>
                                 </div>
                                 <div class="position-label">${card.position}</div>
@@ -589,7 +589,7 @@ if ('IntersectionObserver' in window) {
                             ${cards.map((card, index) => `
                                 <div class="celtic-position position-${index + 1}">
                                     <div class="mini-card ${card.reversed ? 'reversed' : ''}">
-                                        <div class="mini-symbol">🃏</div>
+                                        <div class="mini-symbol">?��</div>
                                         <div class="mini-name">${card.korean}</div>
                                         ${card.reversed ? '<div class="mini-reversed">R</div>' : ''}
                                     </div>
@@ -611,40 +611,40 @@ if ('IntersectionObserver' in window) {
             
             resultDiv.innerHTML = `
                 <div class="tarot-result-container">
-                    <h2 class="text-center mb-30">🔮 타로 리딩 결과</h2>
+                    <h2 class="text-center mb-30">?�� ?��?리딩 결과</h2>
                     
                     <div class="question-display">
-                        <h3>📝 질문</h3>
+                        <h3>?�� 질문</h3>
                         <p>"${question}"</p>
                     </div>
                     
                     <div class="cards-display">
-                        <h3>🃏 뽑힌 카드 (${spread.name})</h3>
+                        <h3>?�� 뽑힌 카드 (${spread.name})</h3>
                         ${cardDisplayHTML}
                     </div>
                     
                     <div class="overall-message">
-                        <h3>🔍 전체 메시지</h3>
+                        <h3>?�� ?�체 메시지</h3>
                         <p>${analysis.overall}</p>
                     </div>
                     
                     <div class="advice-section">
-                        <h3>💡 조언</h3>
+                        <h3>?�� 조언</h3>
                         <p>${analysis.advice}</p>
                     </div>
                     
                     <div class="future-guidance">
-                        <h3>🌟 미래 가이드</h3>
+                        <h3>?�� 미래 가?�드</h3>
                         <p>${analysis.futureGuidance}</p>
                     </div>
                     
                     <div class="ai-disclaimer">
-                        <small>※ 본 타로 리딩은 AI가 분석한 참고용 정보입니다. doha.kr 독자적인 해석을 제공합니다.</small>
+                        <small>??�??��?리딩?� AI가 분석??참고???�보?�니?? doha.kr ?�자?�인 ?�석???�공?�니??</small>
                     </div>
                     
                     <div class="text-center mt-40">
                         <button onclick="location.reload()" class="btn btn-secondary">
-                            다시 점보기
+                            ?�시 ?�보�?
                         </button>
                     </div>
                 </div>
@@ -653,7 +653,7 @@ if ('IntersectionObserver' in window) {
     </script>
 <!-- AdSense initialization -->
 <!-- Non-critical scripts moved here for performance -->
-<!-- Google AdSense 지연 로딩 -->
+<!-- Google AdSense 지??로딩 -->
 <script>
 
 window.addEventListener('load', function() {
@@ -727,7 +727,7 @@ window.addEventListener('load', function() {
                 ad.setAttribute('data-adsbygoogle-status', 'done');
                 
             } catch (e) {
-                console.warn('AdSense 초기화 실패:', index, e.message);
+                console.warn('AdSense 초기???�패:', index, e.message);
             }
         });
     }
@@ -743,13 +743,13 @@ window.addEventListener('load', function() {
     window.addEventListener('error', function(e) {
         if (e.message && e.message.includes('adsbygoogle.push() error')) {
             e.preventDefault();
-            console.warn('AdSense 중복 초기화 방지됨');
+            console.warn('AdSense 중복 초기??방�???);
             return false;
         }
     }, true);
 })();
 </script>
-<!-- AdSense 통합 초기화 -->
+<!-- AdSense ?�합 초기??-->
 <script>
 (function() {
     'use strict';
@@ -796,24 +796,24 @@ window.addEventListener('load', function() {
     }, true);
 })();
 </script>
-<!-- 카카오 초기화 -->
+<!-- 카카??초기??-->
 <script>
     if (typeof Kakao !== 'undefined' && window.KAKAO_API_KEY) {
         if (!Kakao.isInitialized()) {
             Kakao.init(window.KAKAO_API_KEY);
-            console.log('카카오 SDK 초기화 완료');
+            console.log('카카??SDK 초기???�료');
         }
     } else {
-        console.warn('카카오 SDK 또는 API 키를 찾을 수 없습니다.');
+        console.warn('카카??SDK ?�는 API ?��? 찾을 ???�습?�다.');
     }
 </script>
 <script>
-// 네비게이션 및 푸터 로드 - main.js의 loadComponents가 실행되지 않은 경우를 위한 폴백
+// ?�비게이??�??�터 로드 - main.js??loadComponents가 ?�행?��? ?��? 경우�??�한 ?�백
 document.addEventListener('DOMContentLoaded', function() {
-    // main.js가 로드되었고 loadComponents 함수가 있는지 확인
+    // main.js가 로드?�었�?loadComponents ?�수가 ?�는지 ?�인
     if (typeof loadComponents === 'function') {
-        // main.js의 DOMContentLoaded가 이미 실행되었을 수 있으므로 
-        // navbar-placeholder가 비어있으면 다시 실행
+        // main.js??DOMContentLoaded가 ?��? ?�행?�었?????�으므�?
+        // navbar-placeholder가 비어?�으�??�시 ?�행
         const navPlaceholder = document.getElementById('navbar-placeholder');
         const footerPlaceholder = document.getElementById('footer-placeholder');
         
