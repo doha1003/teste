@@ -192,14 +192,8 @@ class PerformanceOptimizer {
             }
         });
 
-        // 폰트 프리로드
-        const fontPreload = document.createElement('link');
-        fontPreload.rel = 'preload';
-        fontPreload.href = 'https://fonts.gstatic.com/s/notosanskr/v13/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWtUyuEQ.woff2';
-        fontPreload.as = 'font';
-        fontPreload.type = 'font/woff2';
-        fontPreload.crossOrigin = 'anonymous';
-        document.head.appendChild(fontPreload);
+        // 폰트 프리로드 - 이미 index.html에서 로드되므로 제거
+        // Google Fonts는 동적으로 URL이 변경될 수 있으므로 직접 프리로드하지 않음
 
         this.optimizations.push('Fonts optimized with display: swap');
     }
@@ -216,10 +210,14 @@ class PerformanceOptimizer {
         });
 
         // 이미지 지연 로딩 최적화
-        this.optimizeLazyLoading();
+        if (typeof this.optimizeLazyLoading === 'function') {
+            this.optimizeLazyLoading();
+        }
         
         // 이미지 압축 및 리사이징
-        this.optimizeImageSizes();
+        if (typeof this.optimizeImageSizes === 'function') {
+            this.optimizeImageSizes();
+        }
     }
 
     /**
@@ -495,7 +493,9 @@ class PerformanceOptimizer {
         // 느린 리소스 감지 (1초 이상)
         if (loadTime > 1000) {
             console.warn(`Slow resource detected: ${entry.name} (${loadTime}ms)`);
-            this.optimizeSlowResource(entry);
+            if (typeof this.optimizeSlowResource === 'function') {
+                this.optimizeSlowResource(entry);
+            }
         }
     }
 
