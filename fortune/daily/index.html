@@ -473,36 +473,36 @@ if ('IntersectionObserver' in window) {
                         <div class="score-card">
                             <div class="score-icon">💫</div>
                             <div class="score-label">총운</div>
-                            <div class="score-value" style="color: ${getScoreColor(fortune.overallScore)}">${fortune.overallScore}</div>
+                            <div class="score-value">${fortune.overallScore}</div>
                             <div class="score-bar">
-                                <div class="score-fill" style="width: ${fortune.overallScore}%; background: ${getScoreColor(fortune.overallScore)}"></div>
+                                <div class="score-fill"></div>
                             </div>
                         </div>
                         
                         <div class="score-card">
                             <div class="score-icon">❤️</div>
                             <div class="score-label">애정운</div>
-                            <div class="score-value" style="color: ${getScoreColor(fortune.loveScore)}">${fortune.loveScore}</div>
+                            <div class="score-value">${fortune.loveScore}</div>
                             <div class="score-bar">
-                                <div class="score-fill" style="width: ${fortune.loveScore}%; background: ${getScoreColor(fortune.loveScore)}"></div>
+                                <div class="score-fill"></div>
                             </div>
                         </div>
                         
                         <div class="score-card">
                             <div class="score-icon">💰</div>
                             <div class="score-label">금전운</div>
-                            <div class="score-value" style="color: ${getScoreColor(fortune.moneyScore)}">${fortune.moneyScore}</div>
+                            <div class="score-value">${fortune.moneyScore}</div>
                             <div class="score-bar">
-                                <div class="score-fill" style="width: ${fortune.moneyScore}%; background: ${getScoreColor(fortune.moneyScore)}"></div>
+                                <div class="score-fill"></div>
                             </div>
                         </div>
                         
                         <div class="score-card">
                             <div class="score-icon">🏃</div>
                             <div class="score-label">건강운</div>
-                            <div class="score-value" style="color: ${getScoreColor(fortune.healthScore)}">${fortune.healthScore}</div>
+                            <div class="score-value">${fortune.healthScore}</div>
                             <div class="score-bar">
-                                <div class="score-fill" style="width: ${fortune.healthScore}%; background: ${getScoreColor(fortune.healthScore)}"></div>
+                                <div class="score-fill"></div>
                             </div>
                         </div>
                     </div>
@@ -595,6 +595,16 @@ if ('IntersectionObserver' in window) {
                     </div>
                 </div>
             `;
+            
+            // CSS 변수 설정
+            const scoreCards = resultDiv.querySelectorAll('.score-card');
+            const scores = [fortune.overallScore, fortune.loveScore, fortune.moneyScore, fortune.healthScore];
+            
+            scoreCards.forEach((card, index) => {
+                const score = scores[index];
+                card.style.setProperty('--score', score);
+                card.style.setProperty('--score-color', getScoreColor(score));
+            });
             
             resultDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }

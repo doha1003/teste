@@ -288,3 +288,20 @@ label {
         margin: 0 15px;
     }
 }
+
+/* Dynamic Score System using CSS Variables */
+.score-value {
+    color: var(--score-color);
+}
+
+.score-fill {
+    width: calc(var(--score) * 1%);
+    background: var(--score-color);
+    transition: width 0.5s ease, background 0.5s ease;
+}
+
+/* 오행 분석 바 차트 */
+.bar-fill {
+    width: calc(var(--count) * 25%);
+    transition: width 0.5s ease;
+}

@@ -312,10 +312,10 @@ if ('IntersectionObserver' in window) {
         
         async function selectZodiac(zodiacSign) {
 
-            document.getElementById('zodiacSelection').style.display = 'none';
+            document.getElementById('zodiacSelection').classList.add('hidden');
 
             const resultDiv = document.getElementById('zodiacResult');
-            resultDiv.style.display = 'block';
+            resultDiv.classList.remove('hidden');
             resultDiv.innerHTML = `
                 <div class="zodiac-ai-analyzing">
                     ⭐ AI가 별자리 운세를 분석하고 있습니다...
@@ -562,7 +562,7 @@ ${zodiac.name}의 특성과 2025년 을사년 에너지를 고려하여 구체�
                         <div class="score-item">
                             <h4>💫 총운</h4>
                             <div class="score-bar">
-                                <div class="score-fill" style="width: ${fortune.totalScore}%"></div>
+                                <div class="score-fill"></div>
                             </div>
                             <span class="score-number">${fortune.totalScore}점</span>
                         </div>
@@ -570,7 +570,7 @@ ${zodiac.name}의 특성과 2025년 을사년 에너지를 고려하여 구체�
                         <div class="score-item">
                             <h4>💕 애정운</h4>
                             <div class="score-bar">
-                                <div class="score-fill" style="width: ${fortune.loveScore}%"></div>
+                                <div class="score-fill"></div>
                             </div>
                             <span class="score-number">${fortune.loveScore}점</span>
                         </div>
@@ -578,7 +578,7 @@ ${zodiac.name}의 특성과 2025년 을사년 에너지를 고려하여 구체�
                         <div class="score-item">
                             <h4>💰 금전운</h4>
                             <div class="score-bar">
-                                <div class="score-fill" style="width: ${fortune.moneyScore}%"></div>
+                                <div class="score-fill"></div>
                             </div>
                             <span class="score-number">${fortune.moneyScore}점</span>
                         </div>
@@ -586,7 +586,7 @@ ${zodiac.name}의 특성과 2025년 을사년 에너지를 고려하여 구체�
                         <div class="score-item">
                             <h4>🏃 건강운</h4>
                             <div class="score-bar">
-                                <div class="score-fill" style="width: ${fortune.healthScore}%"></div>
+                                <div class="score-fill"></div>
                             </div>
                             <span class="score-number">${fortune.healthScore}점</span>
                         </div>
@@ -655,6 +655,15 @@ ${zodiac.name}의 특성과 2025년 을사년 에너지를 고려하여 구체�
                     </div>
                 </div>
             `;
+            
+            // CSS 변수 설정
+            const scoreItems = resultDiv.querySelectorAll('.score-item');
+            const scores = [fortune.totalScore, fortune.loveScore, fortune.moneyScore, fortune.healthScore];
+            
+            scoreItems.forEach((item, index) => {
+                const score = scores[index];
+                item.style.setProperty('--score', score);
+            });
         }
     </script>
 <!-- AdSense initialization -->

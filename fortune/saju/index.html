@@ -473,7 +473,7 @@ if ('IntersectionObserver' in window) {
             const birthTime = parseInt(document.getElementById('birthTime').value);
             const isLunar = document.getElementById('isLunar').checked;
 
-            document.getElementById('sajuResult').style.display = 'block';
+            document.getElementById('sajuResult').classList.remove('hidden');
             document.getElementById('sajuResult').innerHTML = `
                 <div class="fortune-loading-container">
                     <div class="fortune-loading-spinner"></div>
@@ -481,7 +481,7 @@ if ('IntersectionObserver' in window) {
                 </div>
             `;
 
-            document.getElementById('sajuForm').style.display = 'none';
+            document.getElementById('sajuForm').classList.add('hidden');
 
             setTimeout(() => {
 
@@ -587,7 +587,7 @@ if ('IntersectionObserver' in window) {
                                 <div class="element-bar">
                                     <span class="element-name">${element}</span>
                                     <div class="bar-container">
-                                        <div class="bar-fill" style="width: ${count * 25}%"></div>
+                                        <div class="bar-fill"></div>
                                     </div>
                                     <span class="element-count">${count}</span>
                                 </div>
@@ -698,11 +698,22 @@ if ('IntersectionObserver' in window) {
             `;
             
             document.getElementById('sajuResult').innerHTML = resultHTML;
+            
+            // CSS 변수 설정
+            const elementBars = document.querySelectorAll('.element-bar');
+            const distribution = interpretation.elements.distribution;
+            const elements = ['목', '화', '토', '금', '수'];
+            
+            elementBars.forEach((bar, index) => {
+                const element = elements[index];
+                const count = distribution[element] || 0;
+                bar.style.setProperty('--count', count);
+            });
         }
 
         function resetSajuForm() {
-            document.getElementById('sajuForm').style.display = 'block';
-            document.getElementById('sajuResult').style.display = 'none';
+            document.getElementById('sajuForm').classList.remove('hidden');
+            document.getElementById('sajuResult').classList.add('hidden');
             document.getElementById('sajuForm').scrollIntoView({ behavior: 'smooth' });
         }
     </script>
