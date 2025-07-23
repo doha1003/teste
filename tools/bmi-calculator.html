@@ -430,9 +430,12 @@ if ('IntersectionObserver' in window) {
     <script>
 
         function validateInput(value, min, max, fieldName) {
-
-            const sanitizedValue = Security.sanitizeInput(value, 'number');
-            const num = Security.validateNumber(sanitizedValue, min, max);
+            if (!value || value.trim() === '') {
+                alert(`${fieldName}을(를) 입력해주세요.`);
+                return null;
+            }
+            
+            const num = Security.validateNumber(parseFloat(value), min, max);
             
             if (num < min || num > max) {
                 alert(`${fieldName}은(는) ${min}에서 ${max} 사이로 입력해주세요.`);
