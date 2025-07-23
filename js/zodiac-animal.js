@@ -176,7 +176,10 @@ async function showAnimalFortune(animal) {
     document.querySelectorAll('.zodiac-card').forEach(card => {
         card.classList.remove('active');
     });
-    document.querySelector(`[data-animal="${animal}"]`).classList.add('active');
+    const animalElement = document.querySelector(`[data-animal="${animal}"]`);
+    if (animalElement) {
+        animalElement.classList.add('active');
+    }
     
     try {
         // 실제 AI API 호출

@@ -40,7 +40,10 @@ async function showZodiacFortune(zodiac) {
     document.querySelectorAll('.zodiac-card').forEach(card => {
         card.classList.remove('active');
     });
-    document.querySelector(`[data-zodiac="${zodiac}"]`).classList.add('active');
+    const zodiacElement = document.querySelector(`[data-zodiac="${zodiac}"]`);
+    if (zodiacElement) {
+        zodiacElement.classList.add('active');
+    }
     
     // 로딩 시뮬레이션 (실제로는 AI API 호출)
     setTimeout(() => {
