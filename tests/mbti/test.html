@@ -300,20 +300,15 @@ if ('IntersectionObserver' in window) {
 
         document.addEventListener('DOMContentLoaded', function() {
 
-            if (typeof Config === 'undefined') {
-                console.error('설정 파일을 로드할 수 없습니다.');
-                return;
-            }
-
-            if (!Config.validateDomain()) {
-                console.warn('허용되지 않은 도메인에서의 접근:', window.location.hostname);
+            if (typeof API_CONFIG === 'undefined') {
+                console.warn('API 설정을 로드할 수 없습니다. 일부 기능이 제한될 수 있습니다.');
                 return;
             }
             
             if (typeof Kakao !== 'undefined' && !Kakao.isInitialized()) {
                 try {
 
-                    Kakao.init(Config.kakao.appKey);
+                    Kakao.init(API_CONFIG.kakao.appKey);
                     console.log('Kakao SDK 초기화 성공');
                 } catch (error) {
                     console.error('Kakao SDK 초기화 실패:', error);
