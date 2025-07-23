@@ -58,7 +58,7 @@ const questions = [
         ]
     },
     {
-        id: 2,
+        id: 3,
         text: "새로운 프로젝트를 시작할 때 당신의 접근법은?",
         dimension: "S",
         answers: [
@@ -70,7 +70,7 @@ const questions = [
         ]
     },
     {
-        id: 3,
+        id: 4,
         text: "친구가 실연으로 힘들어할 때 당신은?",
         dimension: "T",
         answers: [
@@ -82,7 +82,7 @@ const questions = [
         ]
     },
     {
-        id: 4,
+        id: 5,
         text: "여행 계획을 세울 때 당신의 스타일은?",
         dimension: "J",
         answers: [
@@ -94,7 +94,7 @@ const questions = [
         ]
     },
     {
-        id: 5,
+        id: 6,
         text: "회의나 모임에서 당신의 모습은?",
         dimension: "E",
         answers: [
@@ -106,7 +106,7 @@ const questions = [
         ]
     },
     {
-        id: 6,
+        id: 7,
         text: "요리를 할 때 당신은?",
         dimension: "S",
         answers: [
@@ -118,7 +118,7 @@ const questions = [
         ]
     },
     {
-        id: 7,
+        id: 8,
         text: "중요한 결정을 내릴 때 당신은?",
         dimension: "T",
         answers: [
@@ -130,7 +130,7 @@ const questions = [
         ]
     },
     {
-        id: 8,
+        id: 9,
         text: "주말 계획이 갑자기 취소되었을 때?",
         dimension: "J",
         answers: [
@@ -142,7 +142,7 @@ const questions = [
         ]
     },
     {
-        id: 9,
+        id: 10,
         text: "스트레스를 받았을 때 당신은?",
         dimension: "E",
         answers: [
@@ -154,7 +154,7 @@ const questions = [
         ]
     },
     {
-        id: 10,
+        id: 11,
         text: "새로운 기술이나 기기를 접할 때?",
         dimension: "S",
         answers: [
@@ -166,7 +166,7 @@ const questions = [
         ]
     },
     {
-        id: 11,
+        id: 12,
         text: "팀 프로젝트에서 갈등이 생겼을 때?",
         dimension: "T",
         answers: [
@@ -178,7 +178,7 @@ const questions = [
         ]
     },
     {
-        id: 12,
+        id: 13,
         text: "책상이나 작업 공간의 상태는?",
         dimension: "J",
         answers: [
@@ -190,7 +190,7 @@ const questions = [
         ]
     },
     {
-        id: 13,
+        id: 14,
         text: "새로운 사람들과의 모임에서?",
         dimension: "E",
         answers: [
@@ -202,7 +202,7 @@ const questions = [
         ]
     },
     {
-        id: 14,
+        id: 15,
         text: "문제를 해결할 때 선호하는 방식은?",
         dimension: "S",
         answers: [
@@ -214,7 +214,7 @@ const questions = [
         ]
     },
     {
-        id: 15,
+        id: 16,
         text: "영화나 드라마를 볼 때?",
         dimension: "T",
         answers: [
@@ -226,7 +226,7 @@ const questions = [
         ]
     },
     {
-        id: 16,
+        id: 17,
         text: "약속 시간에 대한 당신의 태도는?",
         dimension: "J",
         answers: [
@@ -238,7 +238,7 @@ const questions = [
         ]
     },
     {
-        id: 17,
+        id: 18,
         text: "에너지를 충전하는 방법은?",
         dimension: "E",
         answers: [
@@ -250,7 +250,7 @@ const questions = [
         ]
     },
     {
-        id: 18,
+        id: 19,
         text: "선물을 고를 때 당신은?",
         dimension: "S",
         answers: [
@@ -262,7 +262,7 @@ const questions = [
         ]
     },
     {
-        id: 19,
+        id: 20,
         text: "비판을 받았을 때의 반응은?",
         dimension: "T",
         answers: [
@@ -274,7 +274,7 @@ const questions = [
         ]
     },
     {
-        id: 20,
+        id: 21,
         text: "하루 일과를 계획할 때?",
         dimension: "J",
         answers: [
@@ -286,7 +286,7 @@ const questions = [
         ]
     },
     {
-        id: 21,
+        id: 22,
         text: "대화 중 침묵이 흐를 때?",
         dimension: "E",
         answers: [
@@ -298,7 +298,7 @@ const questions = [
         ]
     },
     {
-        id: 22,
+        id: 23,
         text: "새로운 아이디어를 떠올릴 때?",
         dimension: "S",
         answers: [
@@ -310,7 +310,7 @@ const questions = [
         ]
     },
     {
-        id: 23,
+        id: 24,
         text: "친구의 고민을 들을 때?",
         dimension: "T",
         answers: [
@@ -322,7 +322,7 @@ const questions = [
         ]
     },
     {
-        id: 24,
+        id: 25,
         text: "목표를 달성하는 과정에서?",
         dimension: "J",
         answers: [
@@ -331,6 +331,186 @@ const questions = [
             { text: "상황에 맞게 계획을 수정한다", value: 0 },
             { text: "과정보다 결과에 집중한다", value: -1 },
             { text: "즉흥적으로 최선을 다한다", value: -2 }
+        ]
+    },
+    {
+        id: 26,
+        text: "카페에서 공부나 작업을 할 때?",
+        dimension: "E",
+        answers: [
+            { text: "사람들이 북적이는 곳이 집중이 잘 된다", value: 2 },
+            { text: "적당히 소음이 있는 곳이 좋다", value: 1 },
+            { text: "상황에 따라 다르다", value: 0 },
+            { text: "조용한 구석자리를 찾는다", value: -1 },
+            { text: "집에서 혼자 하는 게 최고다", value: -2 }
+        ]
+    },
+    {
+        id: 27,
+        text: "책을 읽을 때 당신의 스타일은?",
+        dimension: "S",
+        answers: [
+            { text: "처음부터 끝까지 순서대로 읽는다", value: 2 },
+            { text: "대부분 순서대로 읽지만 가끔 건너뛴다", value: 1 },
+            { text: "목차를 보고 관심 있는 부분부터", value: 0 },
+            { text: "여기저기 뛰어다니며 읽는다", value: -1 },
+            { text: "느낌 가는 대로 아무 곳이나 펼쳐 읽는다", value: -2 }
+        ]
+    },
+    {
+        id: 28,
+        text: "회사에서 팀원이 실수했을 때?",
+        dimension: "T",
+        answers: [
+            { text: "문제점을 지적하고 개선 방안을 제시한다", value: 2 },
+            { text: "객관적으로 상황을 설명하고 조언한다", value: 1 },
+            { text: "실수를 지적하되 격려도 함께한다", value: 0 },
+            { text: "먼저 위로하고 함께 해결책을 찾는다", value: -1 },
+            { text: "상처받지 않도록 최대한 배려하며 돕는다", value: -2 }
+        ]
+    },
+    {
+        id: 29,
+        text: "집 청소를 하는 스타일은?",
+        dimension: "J",
+        answers: [
+            { text: "매일 정해진 시간에 규칙적으로", value: 2 },
+            { text: "주기적으로 계획을 세워서", value: 1 },
+            { text: "더러워 보이면 그때그때", value: 0 },
+            { text: "기분 내킬 때 한 번에 몰아서", value: -1 },
+            { text: "정말 필요할 때만 대충", value: -2 }
+        ]
+    },
+    {
+        id: 30,
+        text: "SNS 사용 패턴은?",
+        dimension: "E",
+        answers: [
+            { text: "일상을 자주 공유하고 적극적으로 소통", value: 2 },
+            { text: "가끔 올리고 댓글도 자주 단다", value: 1 },
+            { text: "보통 수준으로 활동한다", value: 0 },
+            { text: "주로 보기만 하고 가끔 반응한다", value: -1 },
+            { text: "거의 안 하거나 비공개 계정만 사용", value: -2 }
+        ]
+    },
+    {
+        id: 31,
+        text: "음악을 들을 때 선호하는 방식은?",
+        dimension: "S",
+        answers: [
+            { text: "가사와 멜로디를 집중해서 듣는다", value: 2 },
+            { text: "노래의 전체적인 분위기를 느낀다", value: 1 },
+            { text: "상황에 따라 다르게 듣는다", value: 0 },
+            { text: "배경음악으로 들으며 다른 일을 한다", value: -1 },
+            { text: "음악이 주는 감정과 상상에 빠진다", value: -2 }
+        ]
+    },
+    {
+        id: 32,
+        text: "선물을 받았을 때 반응은?",
+        dimension: "T",
+        answers: [
+            { text: "실용성과 가격대를 먼저 생각한다", value: 2 },
+            { text: "고마움을 표현하고 어디에 쓸지 생각한다", value: 1 },
+            { text: "선물 자체와 마음 모두 고맙게 받는다", value: 0 },
+            { text: "준 사람의 마음이 더 중요하다고 생각한다", value: -1 },
+            { text: "감동해서 눈물이 날 것 같다", value: -2 }
+        ]
+    },
+    {
+        id: 33,
+        text: "운동을 시작할 때?",
+        dimension: "J",
+        answers: [
+            { text: "운동 계획표를 만들고 체계적으로", value: 2 },
+            { text: "목표를 정하고 꾸준히 하려 노력", value: 1 },
+            { text: "할 수 있을 때 하는 편", value: 0 },
+            { text: "기분이나 컨디션에 따라 유연하게", value: -1 },
+            { text: "하고 싶을 때만 즉흥적으로", value: -2 }
+        ]
+    },
+    {
+        id: 34,
+        text: "파티나 행사 준비를 맡았을 때?",
+        dimension: "E",
+        answers: [
+            { text: "신나서 적극적으로 아이디어를 낸다", value: 2 },
+            { text: "즐겁게 참여하며 의견을 제시한다", value: 1 },
+            { text: "맡은 역할을 충실히 수행한다", value: 0 },
+            { text: "뒤에서 조용히 도우는 역할을 선호", value: -1 },
+            { text: "가능하면 준비는 피하고 싶다", value: -2 }
+        ]
+    },
+    {
+        id: 35,
+        text: "새로운 가전제품을 샀을 때?",
+        dimension: "S",
+        answers: [
+            { text: "설명서를 정독하고 모든 기능을 파악", value: 2 },
+            { text: "주요 기능 위주로 설명서를 본다", value: 1 },
+            { text: "기본 사용법만 익히고 쓴다", value: 0 },
+            { text: "필요한 기능만 찾아가며 익힌다", value: -1 },
+            { text: "설명서 안 보고 직감으로 사용", value: -2 }
+        ]
+    },
+    {
+        id: 36,
+        text: "친구가 이직을 고민할 때 조언은?",
+        dimension: "T",
+        answers: [
+            { text: "연봉, 커리어 등을 분석해 조언한다", value: 2 },
+            { text: "장단점을 정리해서 이야기해준다", value: 1 },
+            { text: "현실과 감정 모두 고려하라고 한다", value: 0 },
+            { text: "행복이 우선이라고 조언한다", value: -1 },
+            { text: "마음이 가는 대로 하라고 응원한다", value: -2 }
+        ]
+    },
+    {
+        id: 37,
+        text: "일기나 메모를 작성할 때?",
+        dimension: "J",
+        answers: [
+            { text: "매일 같은 시간에 규칙적으로 쓴다", value: 2 },
+            { text: "자주 쓰려고 노력하는 편", value: 1 },
+            { text: "특별한 일이 있을 때 쓴다", value: 0 },
+            { text: "생각날 때 가끔 쓴다", value: -1 },
+            { text: "거의 안 쓰거나 머릿속으로만", value: -2 }
+        ]
+    },
+    {
+        id: 38,
+        text: "처음 가는 모임에서 자리 선택은?",
+        dimension: "E",
+        answers: [
+            { text: "중앙이나 사람들과 가까운 자리", value: 2 },
+            { text: "적당히 어울릴 수 있는 자리", value: 1 },
+            { text: "아무 자리나 앉는다", value: 0 },
+            { text: "구석이나 출입구 근처 자리", value: -1 },
+            { text: "가장 눈에 안 띄는 자리", value: -2 }
+        ]
+    },
+    {
+        id: 39,
+        text: "공부나 업무 방식은?",
+        dimension: "S",
+        answers: [
+            { text: "체계적으로 정리하며 단계별로 진행", value: 2 },
+            { text: "중요한 것부터 순서대로 처리", value: 1 },
+            { text: "전체를 파악하고 나서 시작", value: 0 },
+            { text: "큰 그림을 그리고 유연하게 진행", value: -1 },
+            { text: "영감과 직관에 따라 자유롭게", value: -2 }
+        ]
+    },
+    {
+        id: 40,
+        text: "연인과 여행 계획이 틀어졌을 때?",
+        dimension: "T",
+        answers: [
+            { text: "대안을 찾아 문제를 해결한다", value: 2 },
+            { text: "상황을 받아들이고 다음을 계획한다", value: 1 },
+            { text: "아쉽지만 긍정적으로 생각한다", value: 0 },
+            { text: "연인의 기분을 먼저 살핀다", value: -1 },
+            { text: "속상한 마음을 서로 위로한다", value: -2 }
         ]
     }
 ];
@@ -635,23 +815,22 @@ let answers = [];
 // 테스트 시작
 function startTest() {
     document.getElementById('intro-screen').style.display = 'none';
-    document.getElementById('progress-screen').style.display = 'block';
-    document.getElementById('question-screen').style.display = 'block';
+    document.getElementById('test-screen').style.display = 'block';
     showQuestion();
 }
 
 // 질문 표시
 function showQuestion() {
     const question = questions[currentQuestion];
-    document.getElementById('questionNumber').textContent = `Q${currentQuestion + 1}`;
-    document.getElementById('questionText').textContent = question.text;
-    document.getElementById('currentQuestion').textContent = currentQuestion + 1;
+    document.getElementById('question-number').textContent = `Q${currentQuestion + 1}`;
+    document.getElementById('question').textContent = question.text;
+    document.getElementById('progress-text').textContent = `질문 ${currentQuestion + 1} / 40`;
     
     const progress = ((currentQuestion + 1) / questions.length) * 100;
-    document.getElementById('progressPercent').textContent = Math.round(progress) + '%';
-    document.getElementById('progressFill').style.width = progress + '%';
+    document.getElementById('progress-percent').textContent = Math.round(progress) + '%';
+    document.getElementById('progress').style.width = progress + '%';
     
-    const optionsContainer = document.getElementById('optionsContainer');
+    const optionsContainer = document.getElementById('options');
     optionsContainer.innerHTML = '';
     
     question.answers.forEach((answer, index) => {
@@ -668,8 +847,8 @@ function showQuestion() {
     });
     
     // 네비게이션 버튼 표시/숨김
-    document.getElementById('prevBtn').style.visibility = currentQuestion > 0 ? 'visible' : 'hidden';
-    document.getElementById('nextBtn').style.visibility = answers[currentQuestion] !== undefined ? 'visible' : 'hidden';
+    document.getElementById('prev-btn').style.visibility = currentQuestion > 0 ? 'visible' : 'hidden';
+    document.getElementById('next-btn').style.visibility = answers[currentQuestion] !== undefined ? 'visible' : 'hidden';
 }
 
 // 답변 선택 - 자동 다음 질문 이동 제거
@@ -694,7 +873,7 @@ function selectAnswer(index) {
     });
     
     // 다음 버튼 활성화
-    document.getElementById('nextBtn').style.visibility = 'visible';
+    document.getElementById('next-btn').style.visibility = 'visible';
 }
 
 // 다음 질문
@@ -730,20 +909,18 @@ function showResult() {
     const result = mbtiResults[type];
     
     // 결과 표시
-    document.querySelector('.mbti-test-container').style.display = 'none';
-    document.getElementById('progress-screen').style.display = 'none';
-    document.getElementById('question-screen').style.display = 'none';
-    document.getElementById('resultContainer').style.display = 'block';
+    document.getElementById('test-screen').style.display = 'none';
+    document.getElementById('result-screen').style.display = 'block';
     
     // 기본 정보
-    document.getElementById('resultType').textContent = type;
-    document.getElementById('resultTitle').textContent = result.title;
-    document.getElementById('resultSubtitle').textContent = result.subtitle;
-    document.getElementById('resultRarity').textContent = result.rarity;
-    document.getElementById('personalityDescription').textContent = result.description;
+    document.getElementById('result-type').textContent = type;
+    document.getElementById('result-title').textContent = result.title;
+    document.getElementById('result-subtitle').textContent = result.subtitle;
+    document.getElementById('result-rarity').textContent = result.rarity;
+    document.getElementById('result-description').textContent = result.description;
     
     // 성향 분석
-    const traitsGrid = document.getElementById('traitsGrid');
+    const traitsGrid = document.getElementById('mbti-breakdown');
     const traitData = [
         { label: '에너지 방향', value: type[0] === 'E' ? '외향형 (E)' : '내향형 (I)' },
         { label: '인식 기능', value: type[1] === 'S' ? '감각형 (S)' : '직관형 (N)' },
@@ -759,54 +936,38 @@ function showResult() {
     `).join('');
     
     // 유명인
-    const celebritiesGrid = document.getElementById('celebritiesGrid');
+    const celebritiesGrid = document.getElementById('celebrities');
     celebritiesGrid.innerHTML = result.celebrities.map(celeb => 
-        `<div class="mbti-celebrity-item">${celeb}</div>`
+        `<span class="mbti-celebrity-item">${celeb}</span>`
     ).join('');
     
     // 추천 직업
-    const careersList = document.getElementById('careersList');
+    const careersList = document.getElementById('recommended-careers');
     careersList.innerHTML = result.careers.map(career => 
         `<span class="mbti-career-tag">${career}</span>`
     ).join('');
     
     // 연애 궁합
-    const compatibilitySection = document.getElementById('compatibilitySection');
-    compatibilitySection.innerHTML = `
-        <div class="mbti-compatibility-item">
-            <div class="mbti-compatibility-label">최고의 궁합</div>
-            <div class="mbti-compatibility-types">
-                ${result.compatibility.best.map(type => `<span class="mbti-type-tag">${type}</span>`).join('')}
-            </div>
-        </div>
-        <div class="mbti-compatibility-item">
-            <div class="mbti-compatibility-label">좋은 궁합</div>
-            <div class="mbti-compatibility-types">
-                ${result.compatibility.good.map(type => `<span class="mbti-type-tag">${type}</span>`).join('')}
-            </div>
-        </div>
-        <div class="mbti-compatibility-item">
-            <div class="mbti-compatibility-label">도전적 궁합</div>
-            <div class="mbti-compatibility-types">
-                ${result.compatibility.challenging.map(type => `<span class="mbti-type-tag">${type}</span>`).join('')}
-            </div>
-        </div>
-    `;
+    const bestMatches = document.getElementById('best-matches');
+    bestMatches.innerHTML = result.compatibility.best.map(type => `<span class="mbti-compatibility-type">${type}</span>`).join('');
+    
+    const goodMatches = document.getElementById('good-matches');
+    goodMatches.innerHTML = result.compatibility.good.map(type => `<span class="mbti-compatibility-type-good">${type}</span>`).join('');
+    
+    const challengingMatches = document.getElementById('challenging-matches');
+    challengingMatches.innerHTML = result.compatibility.challenging.map(type => `<span class="mbti-compatibility-type-challenge">${type}</span>`).join('');
     
     // 강점과 약점
-    document.getElementById('strengthsList').innerHTML = 
-        `<ul>${result.strengths.map(s => `<li>${s}</li>`).join('')}</ul>`;
-    document.getElementById('weaknessesList').innerHTML = 
-        `<ul>${result.weaknesses.map(w => `<li>${w}</li>`).join('')}</ul>`;
+    document.getElementById('strengths').innerHTML = result.strengths ? result.strengths.join(', ') : '깊은 공감 능력과 창의적 사고로 타인을 이해하고 새로운 아이디어를 제시합니다.';
+    document.getElementById('weaknesses').innerHTML = result.weaknesses ? result.weaknesses.join(', ') : '완벽주의 성향으로 스트레스를 받기 쉽고 현실적인 문제에 어려움을 겪을 수 있습니다.';
     
     // 성장 포인트
-    document.getElementById('growthPoints').innerHTML = 
-        `<p>${result.growthPoints}</p>
-         <p><strong>스트레스 관리:</strong> ${result.stressManagement}</p>
-         <p><strong>연애 스타일:</strong> ${result.loveStyle}</p>`;
+    document.getElementById('growth').innerHTML = result.growthPoints || '현실적인 목표 설정과 실행력 향상을 통해 이상을 현실로 만드는 연습이 필요합니다.';
     
-    // 카카오톡 공유 설정
-    document.getElementById('kakaoShare').onclick = () => {
+    // 카카오톡 공유 설정 - 공유 버튼에 직접 이벤트 추가
+    const kakaoShareBtn = document.querySelector('.mbti-share-btn-kakao');
+    if (kakaoShareBtn) {
+        kakaoShareBtn.onclick = () => {
         if (typeof Kakao !== 'undefined' && Kakao.isInitialized()) {
             Kakao.Share.sendDefault({
                 objectType: 'feed',
@@ -833,6 +994,7 @@ function showResult() {
             alert('카카오톡 공유를 사용할 수 없습니다.');
         }
     };
+    }
 }
 
 // 링크 복사
@@ -852,6 +1014,63 @@ function copyLink() {
     });
 }
 
+// 테스트 재시작 함수
+function restartTest() {
+    currentQuestion = 0;
+    scores = { E: 0, S: 0, T: 0, J: 0 };
+    answers = [];
+    
+    document.getElementById('result-screen').style.display = 'none';
+    document.getElementById('intro-screen').style.display = 'block';
+}
+
+// 카카오 공유 함수
+function shareToKakao() {
+    if (typeof Kakao !== 'undefined' && Kakao.isInitialized()) {
+        const type = getCurrentMBTIType();
+        const result = mbtiResults[type];
+        
+        Kakao.Share.sendDefault({
+            objectType: 'feed',
+            content: {
+                title: `나의 MBTI 유형은 ${type} - ${result.title}`,
+                description: result.subtitle,
+                imageUrl: 'https://doha.kr/images/mbti-og.png',
+                link: {
+                    mobileWebUrl: 'https://doha.kr/tests/mbti/',
+                    webUrl: 'https://doha.kr/tests/mbti/'
+                }
+            },
+            buttons: [
+                {
+                    title: '나도 테스트하기',
+                    link: {
+                        mobileWebUrl: 'https://doha.kr/tests/mbti/',
+                        webUrl: 'https://doha.kr/tests/mbti/'
+                    }
+                }
+            ]
+        });
+    } else {
+        alert('카카오톡 공유를 사용할 수 없습니다.');
+    }
+}
+
+// 링크 복사 함수
+function copyResultLink() {
+    copyLink();
+}
+
+// 현재 MBTI 유형 가져오기 함수
+function getCurrentMBTIType() {
+    let type = '';
+    type += scores.E > 0 ? 'E' : 'I';
+    type += scores.S > 0 ? 'S' : 'N';
+    type += scores.T > 0 ? 'T' : 'F';
+    type += scores.J > 0 ? 'J' : 'P';
+    return type;
+}
+
 // Window 객체에 함수 등록
 window.startTest = startTest;
 window.nextQuestion = nextQuestion;
@@ -859,3 +1078,6 @@ window.previousQuestion = previousQuestion;
 window.selectAnswer = selectAnswer;
 window.showResult = showResult;
 window.copyLink = copyLink;
+window.restartTest = restartTest;
+window.shareToKakao = shareToKakao;
+window.copyResultLink = copyResultLink;

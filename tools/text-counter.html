@@ -19,14 +19,179 @@
 <meta content="공백 포함/제외, 바이트, 원고지 환산까지 모든 글자수 정보를 한눈에!" property="og:description"/>
 <meta content="https://doha.kr/images/egen-male-card.jpg" property="og:image"/>
 <meta content="https://doha.kr/tools/text-counter.html" property="og:url"/>
+<!-- Critical CSS -->
+<style>
+/* Critical CSS for above-the-fold content */
+:root {
+    --primary-color: #2563eb;
+    --primary-hover: #1d4ed8;
+    --text-primary: #000000;
+    --text-secondary: #1f2937;
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-900: #111827;
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    --font-sans: 'Inter', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-sans);
+    color: var(--text-primary);
+    line-height: 1.5;
+    background-color: var(--gray-50);
+}
+
+/* Navigation placeholder */
+#navbar-placeholder {
+    min-height: 64px;
+    background: white;
+    border-bottom: 1px solid var(--gray-200);
+}
+
+/* Page Header */
+.page-header {
+    background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+    color: white;
+    padding: 80px 20px;
+    text-align: center;
+}
+
+.page-header .container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.page-title {
+    font-size: 48px;
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+.page-subtitle {
+    font-size: 20px;
+    opacity: 0.9;
+}
+
+/* Tool Container */
+.tool-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+/* Counter Section */
+.counter-section {
+    background: white;
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: var(--shadow-md);
+    margin-bottom: 32px;
+}
+
+/* Textarea */
+.text-input {
+    width: 100%;
+    min-height: 300px;
+    padding: 16px;
+    border: 2px solid var(--gray-200);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 16px;
+    resize: vertical;
+    transition: border-color 0.2s;
+}
+
+.text-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+/* Stats Grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 16px;
+    margin-top: 24px;
+}
+
+.stat-card {
+    background: var(--gray-50);
+    padding: 16px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.stat-value {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.stat-label {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+}
+
+/* Animations */
+.fade-in {
+    animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .page-header {
+        padding: 60px 20px;
+    }
+    
+    .page-title {
+        font-size: 36px;
+    }
+    
+    .page-subtitle {
+        font-size: 18px;
+    }
+    
+    .counter-section {
+        padding: 24px;
+    }
+    
+    .text-input {
+        min-height: 250px;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+</style>
 <!-- Google Fonts -->
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="True" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
 <!-- External CSS -->
 <link href="/css/styles.css?v=1753150228" rel="stylesheet"/>
-<link rel="stylesheet" href="/css/mobile-fixes.css">
-<link rel="stylesheet" href="/css/button-system.css">
+<link href="/css/mobile-fixes.css" rel="stylesheet"/>
+<link href="/css/button-system.css" rel="stylesheet"/>
 <link href="/css/pages/text-counter.css" rel="stylesheet"/>
 <!-- Favicon -->
 <link href="/images/placeholder-favicon.svg" rel="icon" type="image/svg+xml"/>

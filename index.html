@@ -47,6 +47,16 @@
 <!-- Moved to end of body -->
 <!-- Kakao JavaScript SDK -->
 <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js"></script>
+<!-- Critical Inline CSS -->
+<style>
+/* Critical Above-the-fold CSS */
+:root{--primary-color:#6366f1;--secondary-color:#f59e0b;--gray-50:#f9fafb;--gray-700:#374151;--gray-800:#1f2937}*{box-sizing:border-box}body{margin:0;font-family:'Noto Sans KR',-apple-system,sans-serif;font-size:16px;line-height:1.6;color:var(--gray-800);background:var(--gray-50)}.header,.navbar{background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.1);position:sticky;top:0;z-index:1000}.navbar-container{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding:1rem 20px}.logo{font-size:1.5rem;font-weight:700;color:var(--primary-color);text-decoration:none}.nav-menu{display:flex;list-style:none;margin:0;padding:0;gap:2rem}.hero{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;padding:80px 20px;text-align:center;min-height:60vh;display:flex;align-items:center}.container{max-width:1200px;margin:0 auto;padding:0 20px}
+</style>
+<!-- Critical Performance Script -->
+<script>
+// 크리티컬 인라인 스크립트
+(function(){if('fonts' in document){document.fonts.load('400 14px "Noto Sans KR"');document.fonts.load('600 16px "Noto Sans KR"');}})();
+</script>
 <!-- Favicon -->
 <link href="/images/logo.svg" rel="icon" type="image/svg+xml"/>
 <link href="/images/logo.svg" rel="apple-touch-icon"/>
@@ -230,19 +240,19 @@
 <h3 class="service-name">글자수 세기</h3>
 <p class="service-desc">자소서, 리포트 작성 시 필수! 글자수를 확인하세요</p>
 </a>
-<a class="service-card" data-category="tools" href="/tools/salary-calculator.html">
+<a class="service-card" data-category="tools" data-new="true" href="/tools/salary-calculator.html">
 <span class="service-emoji">💰</span>
 <h3 class="service-name">연봉 실수령액 계산기</h3>
 <p class="service-desc">세금 공제 후 실제 받는 금액을 계산해보세요</p>
 <span class="service-badge new-green">NEW</span>
 </a>
-<a class="service-card" data-category="tests new" href="/tests/love-dna/">
+<a class="service-card" data-category="tests" data-new="true" href="/tests/love-dna/">
 <span class="service-emoji">💕</span>
 <h3 class="service-name">러브 DNA 테스트</h3>
 <p class="service-desc">당신만의 연애 스타일을 5축 DNA로 분석해보세요</p>
 <span class="service-badge new-pink">NEW</span>
 </a>
-<a class="service-card" data-category="tools" href="/tools/bmi-calculator.html">
+<a class="service-card" data-category="tools" data-new="true" href="/tools/bmi-calculator.html">
 <span class="service-emoji">🏃</span>
 <h3 class="service-name">BMI 계산기</h3>
 <p class="service-desc">키와 몸무게로 체질량지수를 확인하세요</p>
@@ -266,13 +276,13 @@
 <p class="service-desc">12궁도 별자리별 오늘의 상세 운세를 확인하세요</p>
 <span class="service-badge fortune-gradient">인기</span>
 </a>
-<a class="service-card" data-category="fortune" href="/fortune/tarot/">
+<a class="service-card" data-category="fortune" data-new="true" href="/fortune/tarot/">
 <span class="service-emoji">🃏</span>
 <h3 class="service-name">AI 타로 리딩</h3>
 <p class="service-desc">질문을 입력하면 AI가 타로카드로 답을 찾아드려요</p>
 <span class="service-badge fortune-gradient">NEW</span>
 </a>
-<a class="service-card" data-category="fortune new" href="/fortune/zodiac-animal/">
+<a class="service-card" data-category="fortune" data-new="true" href="/fortune/zodiac-animal/">
 <span class="service-emoji">🐲</span>
 <h3 class="service-name">띠별 운세</h3>
 <p class="service-desc">12간지 띠별 상세한 오늘의 운세를 확인하세요</p>
@@ -378,12 +388,12 @@ if ('IntersectionObserver' in window) {
                 if (category === 'all') {
                     card.style.display = 'block';
                 } else if (category === 'new') {
-                    // 최신 서비스 표시 (예: 최근 추가된 서비스에 data-new 속성 추가)
+                    // 최신 서비스 표시 (data-new 속성이 true인 것만)
                     card.style.display = card.dataset.new === 'true' ? 'block' : 'none';
                 } else {
-                    // 카테고리별 필터링
-                    const cardCategory = card.dataset.category || '';
-                    card.style.display = cardCategory === category ? 'block' : 'none';
+                    // 카테고리별 필터링 (categories 속성을 공백으로 분할해서 확인)
+                    const cardCategories = card.dataset.category ? card.dataset.category.split(' ') : [];
+                    card.style.display = cardCategories.includes(category) ? 'block' : 'none';
                 }
             });
         }

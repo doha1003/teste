@@ -923,7 +923,73 @@ document.addEventListener('DOMContentLoaded', async function() {
     
     // Apply AdSense responsive fix immediately
     fixAdSenseResponsive();
+    
+    // 사용자 데이터 저장 시스템 및 분석 시스템 로드
+    await loadDataSystems();
+    
+    // 성능 최적화 시스템 로드
+    await loadPerformanceOptimizer();
 });
+
+// 데이터 시스템 로드 함수
+async function loadDataSystems() {
+    try {
+        // storage.js 스크립트가 이미 로드되었는지 확인
+        if (!window.userDataManager) {
+            const storageScript = document.createElement('script');
+            storageScript.src = '/js/storage.js';
+            storageScript.onload = () => {
+                console.log('Storage system loaded successfully');
+            };
+            storageScript.onerror = () => {
+                console.warn('Failed to load storage system');
+            };
+            document.head.appendChild(storageScript);
+        }
+        
+        // Analytics 시스템 초기화 (이미 analytics.js가 로드되어 있음)
+        if (window.Analytics && typeof Analytics.init === 'function') {
+            Analytics.init();
+            console.log('Analytics system initialized');
+        }
+        
+        // Analytics Dashboard 로드
+        if (!window.analyticsDashboard) {
+            const dashboardScript = document.createElement('script');
+            dashboardScript.src = '/js/analytics-dashboard.js';
+            dashboardScript.onload = () => {
+                console.log('Analytics Dashboard loaded successfully');
+            };
+            dashboardScript.onerror = () => {
+                console.warn('Failed to load Analytics Dashboard');
+            };
+            document.head.appendChild(dashboardScript);
+        }
+        
+    } catch (error) {
+        console.error('Failed to load data systems:', error);
+    }
+}
+
+// 성능 최적화 시스템 로드 함수
+async function loadPerformanceOptimizer() {
+    try {
+        // Performance Optimizer가 이미 로드되었는지 확인
+        if (!window.performanceOptimizer) {
+            const optimizerScript = document.createElement('script');
+            optimizerScript.src = '/js/performance-optimizer.js';
+            optimizerScript.onload = () => {
+                console.log('Performance Optimizer loaded successfully');
+            };
+            optimizerScript.onerror = () => {
+                console.warn('Failed to load Performance Optimizer');
+            };
+            document.head.appendChild(optimizerScript);
+        }
+    } catch (error) {
+        console.error('Failed to load Performance Optimizer:', error);
+    }
+}
 
 // 윈도우 로드 완료 후 AdSense 초기화
 window.addEventListener('load', function() {
@@ -943,3 +1009,5 @@ window.toggleDarkMode = toggleDarkMode;
 window.fortuneHelpers = fortuneHelpers();
 window.loadComponents = loadComponents;
 window.loadComponentById = loadComponentById;
+window.loadDataSystems = loadDataSystems;
+window.loadPerformanceOptimizer = loadPerformanceOptimizer;

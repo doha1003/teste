@@ -16,7 +16,7 @@
 <meta content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), accelerometer=(), gyroscope=()" http-equiv="Permissions-Policy"/>
 <!-- Open Graph -->
 <meta content="MBTI 성격유형 검사 - 16가지 성격 유형 무료 테스트" property="og:title"/>
-<meta content="60개 문항으로 정확하게 분석하는 MBTI 성격유형 검사. 16가지 성격 유형 중 당신의 유형을 찾아보세요." property="og:description"/>
+<meta content="40개 문항으로 정확하게 분석하는 MBTI 성격유형 검사. 16가지 성격 유형 중 당신의 유형을 찾아보세요." property="og:description"/>
 <meta content="https://doha.kr/images/egen-male-card.jpg" property="og:image"/>
 <meta content="https://doha.kr/tests/mbti/" property="og:url"/>
 <meta content="website" property="og:type"/>
@@ -25,7 +25,7 @@
 <!-- Twitter Card -->
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="MBTI 성격유형 검사 - 16가지 성격 유형 무료 테스트" name="twitter:title"/>
-<meta content="60개 문항으로 정확하게 분석하는 MBTI 성격유형 검사. 16가지 성격 유형 중 당신의 유형을 찾아보세요." name="twitter:description"/>
+<meta content="40개 문항으로 정확하게 분석하는 MBTI 성격유형 검사. 16가지 성격 유형 중 당신의 유형을 찾아보세요." name="twitter:description"/>
 <meta content="https://doha.kr/images/egen-male-card.jpg" name="twitter:image"/>
 <!-- Canonical URL -->
 <link href="https://doha.kr/tests/mbti/" rel="canonical"/>
@@ -37,22 +37,160 @@
         "name": "MBTI 성격유형 검사",
         "description": "Myers-Briggs Type Indicator 기반의 16가지 성격유형 분석 테스트",
         "educationalLevel": "All",
-        "numberOfQuestions": 60,
-        "timeRequired": "PT15M",
+        "numberOfQuestions": 40,
+        "timeRequired": "PT12M",
         "provider": {
             "@type": "Organization",
             "name": "doha.kr"
         }
     }
     </script>
+<!-- Critical CSS -->
+<style>
+/* Critical CSS for above-the-fold content */
+:root {
+    --primary-color: #2563eb;
+    --primary-hover: #1d4ed8;
+    --text-primary: #000000;
+    --text-secondary: #1f2937;
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-900: #111827;
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    --font-sans: 'Inter', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-sans);
+    color: var(--text-primary);
+    line-height: 1.5;
+    background-color: var(--gray-50);
+}
+
+/* Navigation placeholder */
+#navbar-placeholder {
+    min-height: 64px;
+    background: white;
+    border-bottom: 1px solid var(--gray-200);
+}
+
+/* Hero Section */
+.mbti-page .hero {
+    background: linear-gradient(135deg, #3b82f6 0%, #10b981 100%) !important;
+    color: white !important;
+    padding: 100px 20px !important;
+    text-align: center !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+.mbti-page .hero-content {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+.mbti-page .hero-badge {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    backdrop-filter: blur(10px);
+}
+
+.mbti-page .hero-title {
+    font-size: 52px !important;
+    font-weight: 700 !important;
+    margin-bottom: 20px !important;
+    line-height: 1.2 !important;
+    color: white !important;
+}
+
+.mbti-page .hero-subtitle {
+    font-size: 22px !important;
+    opacity: 1 !important;
+    margin-bottom: 40px !important;
+    line-height: 1.5 !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+    color: white !important;
+}
+
+.mbti-page .mbti-types-preview {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.mbti-page .type-badge {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    backdrop-filter: blur(10px);
+    transition: all 0.2s;
+}
+
+.mbti-page .test-start-btn {
+    background: white;
+    color: #3b82f6;
+    padding: 18px 56px;
+    font-size: 20px;
+    font-weight: 600;
+    border-radius: 8px;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.mbti-page .test-start-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .mbti-page .hero {
+        padding: 60px 20px !important;
+    }
+    
+    .mbti-page .hero-title {
+        font-size: 36px !important;
+    }
+    
+    .mbti-page .hero-subtitle {
+        font-size: 18px !important;
+    }
+    
+    .mbti-page .test-start-btn {
+        padding: 16px 40px;
+        font-size: 18px;
+    }
+}
+</style>
 <!-- Google Fonts -->
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="True" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
 <!-- External CSS -->
 <link href="/css/styles.css?v=1753150228" rel="stylesheet"/>
-<link rel="stylesheet" href="/css/mobile-fixes.css">
-<link rel="stylesheet" href="/css/button-system.css">
+<link href="/css/mobile-fixes.css" rel="stylesheet"/>
+<link href="/css/button-system.css" rel="stylesheet"/>
 <link href="/css/pages/mbti-intro.css" rel="stylesheet"/>
 <!-- Favicon -->
 <link href="/images/placeholder-favicon.svg" rel="icon" type="image/svg+xml"/>

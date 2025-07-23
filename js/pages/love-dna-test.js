@@ -292,15 +292,30 @@ function calculateLoveDNA(answers) {
         scores[selectedOption.type]++;
     });
     
-    // 최고 점수 유형 결정
-    const maxScore = Math.max(...Object.values(scores));
-    const dominantTypes = Object.keys(scores).filter(type => scores[type] === maxScore);
-    const resultType = dominantTypes[0]; // 첫 번째 우세 유형
+    // 점수 기반으로 유형 결정
+    let resultKey;
+    
+    // 1. Thrilling (T) 우세 유형
+    if (scores.T >= 12) {
+        resultKey = 'PASSIONATE_EXPLORER';
+    }
+    // 2. Warm (W) + Caring (C) 조합 - 헌신적인 서포터
+    else if (scores.W + scores.C >= 15) {
+        resultKey = 'CARING_SUPPORTER';
+    }
+    // 3. Logical (L) + Analytical (A) 조합 - 안정적인 동반자
+    else if (scores.L + scores.A >= 12) {
+        resultKey = 'STEADY_COMPANION';
+    }
+    // 4. 기본값 - 로맨틱한 이상주의자
+    else {
+        resultKey = 'ROMANTIC_IDEALIST';
+    }
     
     return {
         scores: scores,
-        type: resultType,
-        result: loveDNAResults[Object.keys(loveDNAResults)[0]] // 임시로 첫 번째 결과
+        type: resultKey,
+        result: loveDNAResults[resultKey]
     };
 }
 

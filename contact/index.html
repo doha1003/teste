@@ -24,14 +24,164 @@
 <meta content="문의하기 | doha.kr" name="twitter:title"/>
 <meta content="궁금한 점이나 제안사항이 있으신가요? 언제든지 연락주세요!" name="twitter:description"/>
 <meta content="https://doha.kr/images/egen-male-card.jpg" name="twitter:image"/>
+<!-- Critical CSS -->
+<style>
+/* Critical CSS for above-the-fold content */
+:root {
+    --primary-color: #2563eb;
+    --primary-hover: #1d4ed8;
+    --text-primary: #000000;
+    --text-secondary: #1f2937;
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-900: #111827;
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    --font-sans: 'Inter', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-sans);
+    color: var(--text-primary);
+    line-height: 1.5;
+    background-color: var(--gray-50);
+}
+
+/* Navigation placeholder */
+#navbar-placeholder {
+    min-height: 64px;
+    background: white;
+    border-bottom: 1px solid var(--gray-200);
+}
+
+/* Hero Section */
+.hero {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    padding: 100px 20px;
+    text-align: center;
+}
+
+.hero-content {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.hero-title {
+    font-size: 48px;
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+.hero-subtitle {
+    font-size: 22px;
+    opacity: 0.95;
+}
+
+/* Content */
+.content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 20px;
+}
+
+/* Contact Grid */
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+}
+
+.contact-section {
+    background: white;
+    border-radius: 16px;
+    padding: 40px;
+    box-shadow: var(--shadow-md);
+}
+
+.contact-section-title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 32px;
+    color: var(--text-primary);
+}
+
+/* Contact Info */
+.contact-info-item {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.contact-info-icon {
+    font-size: 32px;
+    flex-shrink: 0;
+}
+
+.contact-info-content h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.contact-info-content p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.contact-info-content a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.contact-info-content a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero {
+        padding: 60px 20px;
+    }
+    
+    .hero-title {
+        font-size: 36px;
+    }
+    
+    .hero-subtitle {
+        font-size: 18px;
+    }
+    
+    .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+    
+    .contact-section {
+        padding: 24px;
+    }
+    
+    .contact-section-title {
+        font-size: 24px;
+        margin-bottom: 24px;
+    }
+}
+</style>
 <!-- Google Fonts -->
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="True" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
 <!-- External CSS - 절대 경로로 수정 -->
 <link href="/css/styles.css?v=1753150228" rel="stylesheet"/>
-<link rel="stylesheet" href="/css/mobile-fixes.css">
-<link rel="stylesheet" href="/css/button-system.css">
+<link href="/css/mobile-fixes.css" rel="stylesheet"/>
+<link href="/css/button-system.css" rel="stylesheet"/>
 <link href="/css/pages/contact.css" rel="stylesheet"/>
 <!-- Security Headers -->
 <meta content="nosniff" http-equiv="X-Content-Type-Options"/>

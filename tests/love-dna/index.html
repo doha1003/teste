@@ -6,7 +6,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>러브 DNA 테스트 - 나의 연애 스타일 분석 | doha.kr</title>
-<meta content="25개 질문으로 알아보는 나만의 연애 스타일! 32가지 러브 DNA 유형 중 당신은? 무료 심리테스트로 연애 궁합까지 확인하세요." name="description"/>
+<meta content="30개 질문으로 알아보는 나만의 연애 스타일! 4가지 연애 유형 중 당신은? 무료 심리테스트로 연애 궁합까지 확인하세요." name="description"/>
 <meta content="index, follow" name="robots"/>
 <meta content="doha.kr" name="author"/>
 <!-- Security Headers -->
@@ -18,20 +18,161 @@
 <meta content="연애테스트, 심리테스트, 러브DNA, 연애스타일, 궁합테스트, 성격분석" name="keywords"/>
 <!-- Open Graph -->
 <meta content="러브 DNA 테스트 - 나의 연애 스타일 분석" property="og:title"/>
-<meta content="25개 질문으로 알아보는 나만의 연애 스타일! 32가지 러브 DNA 유형 중 당신은?" property="og:description"/>
+<meta content="30개 질문으로 알아보는 나만의 연애 스타일! 4가지 연애 유형 중 당신은?" property="og:description"/>
 <meta content="website" property="og:type"/>
 <meta content="https://doha.kr/tests/love-dna/" property="og:url"/>
 <meta content="https://doha.kr/images/teto-female-card.jpg" property="og:image"/>
 <!-- Twitter Card -->
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="러브 DNA 테스트 - 나의 연애 스타일 분석" name="twitter:title"/>
-<meta content="25개 질문으로 알아보는 나만의 연애 스타일! 32가지 러브 DNA 유형 중 당신은?" name="twitter:description"/>
+<meta content="30개 질문으로 알아보는 나만의 연애 스타일! 4가지 연애 유형 중 당신은?" name="twitter:description"/>
 <meta content="https://doha.kr/images/teto-female-card.jpg" name="twitter:image"/>
 <!-- Canonical URL -->
 <link href="https://doha.kr/tests/love-dna/" rel="canonical"/>
 <!-- 파비콘 -->
 <link href="/images/logo.svg" rel="icon" type="image/svg+xml"/>
 <link href="/images/android-chrome-192x192.png" rel="apple-touch-icon"/>
+<!-- Critical CSS -->
+<style>
+/* Critical CSS for above-the-fold content */
+:root {
+    --primary-color: #2563eb;
+    --primary-hover: #1d4ed8;
+    --text-primary: #000000;
+    --text-secondary: #1f2937;
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-900: #111827;
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    --font-sans: 'Inter', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-sans);
+    color: var(--text-primary);
+    line-height: 1.5;
+    background-color: var(--gray-50);
+}
+
+/* Navigation placeholder */
+#navbar-placeholder {
+    min-height: 64px;
+    background: white;
+    border-bottom: 1px solid var(--gray-200);
+}
+
+/* Hero Section */
+.love-hero {
+    background: linear-gradient(135deg, #ec4899 0%, #f43f5e 100%);
+    color: white;
+    padding: 100px 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.floating-hearts {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.floating-hearts .heart {
+    position: absolute;
+    font-size: 24px;
+    animation: float 20s infinite;
+    opacity: 0.3;
+}
+
+.love-hero-content {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+.love-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    backdrop-filter: blur(10px);
+}
+
+.love-hero h1 {
+    font-size: 52px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    line-height: 1.2;
+}
+
+.love-hero p {
+    font-size: 22px;
+    margin-bottom: 40px;
+    line-height: 1.5;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.cta-button {
+    background: white;
+    color: #ec4899;
+    padding: 18px 56px;
+    font-size: 20px;
+    font-weight: 600;
+    border-radius: 8px;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    25% { transform: translateY(-20px) rotate(5deg); }
+    75% { transform: translateY(20px) rotate(-5deg); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .love-hero {
+        padding: 60px 20px;
+    }
+    
+    .love-hero h1 {
+        font-size: 36px;
+    }
+    
+    .love-hero p {
+        font-size: 18px;
+    }
+    
+    .cta-button {
+        padding: 16px 40px;
+        font-size: 18px;
+    }
+}
+</style>
 <!-- 폰트 -->
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="True" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -42,9 +183,9 @@
         "@context": "https://schema.org",
         "@type": "Quiz",
         "name": "러브 DNA 테스트",
-        "description": "25개 질문으로 알아보는 나만의 연애 스타일 분석. 32가지 러브 DNA 유형 중 당신의 연애 스타일을 발견하세요",
+        "description": "30개 질문으로 알아보는 나만의 연애 스타일 분석. 4가지 연애 유형 중 당신의 연애 스타일을 발견하세요",
         "educationalLevel": "All",
-        "numberOfQuestions": 25,
+        "numberOfQuestions": 30,
         "timeRequired": "PT10M",
         "url": "https://doha.kr/tests/love-dna/",
         "provider": {
@@ -60,8 +201,8 @@
     </script>
 <!-- 기본 스타일 -->
 <link href="/css/styles.css?v=1753150228" rel="stylesheet"/>
-<link rel="stylesheet" href="/css/mobile-fixes.css">
-<link rel="stylesheet" href="/css/button-system.css">
+<link href="/css/mobile-fixes.css" rel="stylesheet"/>
+<link href="/css/button-system.css" rel="stylesheet"/>
 <link href="/css/pages/love-dna-test.css" rel="stylesheet"/>
 <!-- 애드센스 -->
 <!-- Moved to end of body -->
@@ -97,16 +238,16 @@
 </div>
 <h1>러브 DNA 테스트</h1>
 <p>
-                25개의 심층 질문으로 분석하는 당신만의 연애 스타일<br/>
-                32가지 유형 중 나의 러브 DNA를 찾아보세요
+                30개의 심층 질문으로 분석하는 당신만의 연애 스타일<br/>
+                4가지 연애 유형 중 나의 러브 DNA를 찾아보세요
             </p>
 <div class="love-stats">
 <div class="love-stat">
-<span class="love-stat-number">25</span>
+<span class="love-stat-number">30</span>
 <span class="love-stat-label">문항</span>
 </div>
 <div class="love-stat">
-<span class="love-stat-number">32</span>
+<span class="love-stat-number">4</span>
 <span class="love-stat-label">유형</span>
 </div>
 <div class="love-stat">
@@ -138,9 +279,9 @@
 </div>
 <div class="love-feature-card">
 <div class="love-feature-icon">🎯</div>
-<h3 class="love-feature-title">32가지 세분화 유형</h3>
+<h3 class="love-feature-title">4가지 세분화 유형</h3>
 <p class="love-feature-desc">
-                    단순한 분류가 아닌, 5개 축의 조합으로 만들어진 32가지 고유한 연애 유형을 제공합니다
+                    단순한 분류가 아닌, 5개 축의 조합으로 만들어진 4가지 고유한 연애 유형을 제공합니다
                 </p>
 </div>
 <div class="love-feature-card">

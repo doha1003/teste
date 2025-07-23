@@ -31,10 +31,112 @@
 <meta content="https://doha.kr/images/egen-male-card.jpg" name="twitter:image"/>
 <!-- Canonical URL -->
 <link href="https://doha.kr/about/" rel="canonical"/>
+<!-- Critical CSS -->
+<style>
+/* Critical CSS for above-the-fold content */
+:root {
+    --primary-color: #2563eb;
+    --primary-hover: #1d4ed8;
+    --text-primary: #000000;
+    --text-secondary: #1f2937;
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-900: #111827;
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    --font-sans: 'Inter', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-sans);
+    color: var(--text-primary);
+    line-height: 1.5;
+    background-color: var(--gray-50);
+}
+
+/* Navigation placeholder */
+#navbar-placeholder {
+    min-height: 64px;
+    background: white;
+    border-bottom: 1px solid var(--gray-200);
+}
+
+/* Hero Section */
+.hero {
+    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+    color: white;
+    padding: 120px 20px;
+    text-align: center;
+}
+
+.hero-content {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.hero-title {
+    font-size: 52px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    line-height: 1.2;
+}
+
+.hero-subtitle {
+    font-size: 24px;
+    line-height: 1.5;
+    opacity: 0.95;
+}
+
+/* Mission Section */
+.mission {
+    padding: 80px 20px;
+    background: white;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.section-title {
+    font-size: 40px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 56px;
+    color: var(--text-primary);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero {
+        padding: 80px 20px;
+    }
+    
+    .hero-title {
+        font-size: 36px;
+    }
+    
+    .hero-subtitle {
+        font-size: 20px;
+    }
+    
+    .section-title {
+        font-size: 32px;
+        margin-bottom: 40px;
+    }
+}
+</style>
 <!-- External CSS - 절대 경로로 수정 -->
 <link href="/css/styles.css?v=1753150228" rel="stylesheet"/>
-<link rel="stylesheet" href="/css/mobile-fixes.css">
-<link rel="stylesheet" href="/css/button-system.css">
+<link href="/css/mobile-fixes.css" rel="stylesheet"/>
+<link href="/css/button-system.css" rel="stylesheet"/>
 <link href="/css/pages/about.css" rel="stylesheet"/>
 <!-- Favicon -->
 <link href="/images/logo.svg" rel="icon" type="image/svg+xml"/>
