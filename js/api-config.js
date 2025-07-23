@@ -4,17 +4,30 @@ window.initKakao = function() {
     try {
         if (typeof Kakao !== 'undefined' && Kakao.isInitialized && !Kakao.isInitialized()) {
             // 실제 앱 키는 환경변수나 설정파일에서 가져와야 함
-            const kakaoKey = window.KAKAO_APP_KEY || window.API_CONFIG?.KAKAO_JS_KEY || window.API_CONFIG?.kakao?.appKey || 'your_kakao_app_key_here';
+            const kakaoKey = window.KAKAO_APP_KEY || 
+                            (window.API_CONFIG && window.API_CONFIG.KAKAO_JS_KEY) || 
+                            (window.API_CONFIG && window.API_CONFIG.kakao && window.API_CONFIG.kakao.appKey) || 
+                            'your_kakao_app_key_here';
             if (kakaoKey && kakaoKey !== 'your_kakao_app_key_here') {
                 Kakao.init(kakaoKey);
                 console.log('Kakao SDK 초기화 완료');
             } else {
-                console.warn('Kakao 앱 키가 설정되지 않았습니다.');
+                // 개발 환경에서는 warn 대신 info로 변경
+                if (window.location.hostname === 'localhost') {
+                    console.info('개발 환경: Kakao 앱 키가 설정되지 않았습니다.');
+                } else {
+                    console.warn('Kakao 앱 키가 설정되지 않았습니다.');
+                }
             }
         } else if (typeof Kakao !== 'undefined' && Kakao.isInitialized && Kakao.isInitialized()) {
             console.log('Kakao SDK 이미 초기화됨');
         } else {
-            console.warn('Kakao SDK가 로드되지 않았습니다.');
+            // 개발 환경에서는 warn 대신 info로 변경
+            if (window.location.hostname === 'localhost') {
+                console.info('개발 환경: Kakao SDK가 로드되지 않았습니다.');
+            } else {
+                console.warn('Kakao SDK가 로드되지 않았습니다.');
+            }
         }
     } catch (error) {
         console.warn('Kakao SDK 초기화 실패:', error.message);
