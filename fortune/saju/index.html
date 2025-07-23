@@ -120,13 +120,13 @@
                             음력 생일입니다
                         </label>
 </div>
-<button class="btn btn-primary" style="width: 100%; margin-top: 30px;" type="submit">
+<button class="btn btn-primary w-full mt-30" type="submit">
                         🔮 사주팔자 분석하기
                     </button>
 </form>
 </div>
 <!-- 사주 결과 영역 -->
-<div id="sajuResult" style="display: none;">
+<div id="sajuResult" class="hidden">
 <!-- 결과가 여기에 표시됩니다 -->
 </div>
 </div>
@@ -147,7 +147,6 @@ if ('IntersectionObserver' in window) {
             if (entry.isIntersecting) {
                 const container = entry.target;
                 container.innerHTML = `<ins class="adsbygoogle"
-             style="display:block"
              data-ad-client="ca-pub-7905640648499222"
              data-ad-slot="2789891628"
              data-ad-format="auto"
@@ -692,7 +691,7 @@ if ('IntersectionObserver' in window) {
                     </div>
                     
                     <!-- 다시하기 버튼 -->
-                    <button onclick="resetSajuForm()" class="btn btn-secondary" style="margin-top: 30px;">
+                    <button onclick="resetSajuForm()" class="btn btn-secondary mt-30">
                         🔄 다시 분석하기
                     </button>
                 </div>

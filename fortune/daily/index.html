@@ -288,7 +288,7 @@ body {
 </form>
 </div>
 <!-- 운세 결과 -->
-<div id="fortuneResult" style="display: none;">
+<div id="fortuneResult" class="hidden">
 <!-- 결과가 여기에 표시됩니다 -->
 </div>
 </div>
@@ -309,7 +309,6 @@ if ('IntersectionObserver' in window) {
             if (entry.isIntersecting) {
                 const container = entry.target;
                 container.innerHTML = `<ins class="adsbygoogle"
-             style="display:block"
              data-ad-client="ca-pub-7905640648499222"
              data-ad-slot="2789891628"
              data-ad-format="auto"
@@ -416,7 +415,7 @@ if ('IntersectionObserver' in window) {
             const resultDiv = document.getElementById('fortuneResult');
             resultDiv.innerHTML = `
                 <div class="fortune-result-container">
-                    <h2 style="text-align: center; margin-bottom: 30px;">
+                    <h2 class="text-center mb-30">
                         ${userName}님의 ${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일 운세
                     </h2>
                     

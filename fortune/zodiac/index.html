@@ -60,7 +60,7 @@
 <section class="zodiac-section">
 <div class="container">
 <div class="zodiac-selection" id="zodiacSelection">
-<h2 style="text-align: center; margin-bottom: 40px;">당신의 별자리를 선택하세요</h2>
+<h2 class="text-center mb-40">당신의 별자리를 선택하세요</h2>
 <div class="zodiac-grid">
 <div class="zodiac-card" onclick="selectZodiac('aries')">
 <div class="zodiac-symbol">♈</div>
@@ -125,7 +125,7 @@
 </div>
 </div>
 <!-- 운세 결과 영역 -->
-<div class="zodiac-result" id="zodiacResult" style="display: none;">
+<div class="zodiac-result hidden" id="zodiacResult">
 <!-- 결과가 여기에 표시됩니다 -->
 </div>
 </div>
@@ -161,7 +161,6 @@ if ('IntersectionObserver' in window) {
             if (entry.isIntersecting) {
                 const container = entry.target;
                 container.innerHTML = `<ins class="adsbygoogle"
-             style="display:block"
              data-ad-client="ca-pub-7905640648499222"
              data-ad-slot="2789891628"
              data-ad-format="auto"

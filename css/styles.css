@@ -2644,6 +2644,7 @@ select:focus-visible {
 
 /* AdSense responsive container */
 .ad-container ins.adsbygoogle {
+    display: block !important;
     min-width: 320px !important; /* Ensure minimum width for ads */
     width: 100% !important;
     max-width: 100% !important;
@@ -2658,6 +2659,46 @@ select:focus-visible {
     font-weight: var(--font-medium);
 }
 
+/* Ad placeholder for loading state */
+.ad-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f5f5f5;
+    min-height: 100px;
+    color: #999;
+    font-size: 0.875rem;
+    border-radius: var(--radius-lg);
+}
+
+/* Ad container with minimum height */
+.ad-container-slot {
+    min-height: 100px;
+}
+
+/* Ad label styling */
+.ad-label-small {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+/* Ad wrapper for centered layout */
+.ad-wrapper {
+    margin: 40px auto;
+    text-align: center;
+    max-width: 1200px;
+    padding: 0 20px;
+}
+
+/* Ad wrapper for specific pages */
+.ad-wrapper {
+    margin: 40px auto;
+    text-align: center;
+    max-width: 1200px;
+    padding: 0 20px;
+}
+
 /* Mobile responsive ad styles */
 @media (max-width: 768px) {
     .ad-container {
@@ -2668,6 +2709,11 @@ select:focus-visible {
     
     .ad-container ins.adsbygoogle {
         min-width: 300px !important;
+    }
+    
+    .ad-wrapper {
+        margin: 20px auto;
+        padding: 0 15px;
     }
 }
 
@@ -3889,4 +3935,281 @@ section.stats *,
 
 .min-height-100 {
     min-height: 100px;
+}
+
+/* =========================================================================
+   UTILITY CLASSES - 인라인 스타일 대체용
+   ========================================================================= */
+
+/* Display utilities */
+.hidden {
+    display: none !important;
+}
+
+.block {
+    display: block !important;
+}
+
+/* Text alignment */
+.text-center {
+    text-align: center !important;
+}
+
+.text-left {
+    text-align: left !important;
+}
+
+.text-right {
+    text-align: right !important;
+}
+
+/* Width utilities */
+.w-full {
+    width: 100% !important;
+}
+
+/* Margin utilities */
+.mt-0 {
+    margin-top: 0 !important;
+}
+
+.mt-8 {
+    margin-top: 8px !important;
+}
+
+.mt-10 {
+    margin-top: 10px !important;
+}
+
+.mt-20 {
+    margin-top: 20px !important;
+}
+
+.mt-30 {
+    margin-top: 30px !important;
+}
+
+.mt-24 {
+    margin-top: 24px !important;
+}
+
+.mt-32 {
+    margin-top: 32px !important;
+}
+
+.mt-40 {
+    margin-top: 40px !important;
+}
+
+.mb-0 {
+    margin-bottom: 0 !important;
+}
+
+.mb-10 {
+    margin-bottom: 10px !important;
+}
+
+.mb-16 {
+    margin-bottom: 16px !important;
+}
+
+.mb-20 {
+    margin-bottom: 20px !important;
+}
+
+.mb-30 {
+    margin-bottom: 30px !important;
+}
+
+.mb-24 {
+    margin-bottom: 24px !important;
+}
+
+.mb-32 {
+    margin-bottom: 32px !important;
+}
+
+.mb-40 {
+    margin-bottom: 40px !important;
+}
+
+/* Font size utilities */
+.text-sm {
+    font-size: 0.875rem !important;
+}
+
+.text-base {
+    font-size: 1rem !important;
+}
+
+.text-lg {
+    font-size: 1.125rem !important;
+}
+
+.text-xl {
+    font-size: 1.25rem !important;
+}
+
+.text-2xl {
+    font-size: 1.5rem !important;
+}
+
+.text-3xl {
+    font-size: 1.875rem !important;
+}
+
+/* Font weight utilities */
+.font-normal {
+    font-weight: 400 !important;
+}
+
+.font-medium {
+    font-weight: 500 !important;
+}
+
+.font-semibold {
+    font-weight: 600 !important;
+}
+
+.font-bold {
+    font-weight: 700 !important;
+}
+
+/* Color utilities */
+.text-gray-400 {
+    color: #9ca3af !important;
+}
+
+.text-gray-600 {
+    color: #4b5563 !important;
+}
+
+.text-gray-700 {
+    color: #374151 !important;
+}
+
+.text-gray-800 {
+    color: #1f2937 !important;
+}
+
+.text-blue-600 {
+    color: #2563eb !important;
+}
+
+.text-green-600 {
+    color: #059669 !important;
+}
+
+.text-purple-600 {
+    color: #9333ea !important;
+}
+
+/* Background utilities */
+.bg-gray-50 {
+    background-color: #f9fafb !important;
+}
+
+.bg-gray-100 {
+    background-color: #f3f4f6 !important;
+}
+
+.bg-blue-50 {
+    background-color: #eff6ff !important;
+}
+
+/* Border utilities */
+.border-l-4 {
+    border-left-width: 4px !important;
+}
+
+.border-blue-500 {
+    border-color: #3b82f6 !important;
+}
+
+.border-green-500 {
+    border-color: #10b981 !important;
+}
+
+.border-purple-500 {
+    border-color: #a855f7 !important;
+}
+
+/* Padding utilities */
+.p-4 {
+    padding: 1rem !important;
+}
+
+.p-6 {
+    padding: 1.5rem !important;
+}
+
+.px-4 {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+}
+
+.py-4 {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+}
+
+/* Border radius utilities */
+.rounded {
+    border-radius: 0.25rem !important;
+}
+
+.rounded-lg {
+    border-radius: 0.5rem !important;
+}
+
+.rounded-xl {
+    border-radius: 0.75rem !important;
+}
+
+/* Line height utilities */
+.leading-relaxed {
+    line-height: 1.625 !important;
+}
+
+.leading-loose {
+    line-height: 2 !important;
+}
+
+/* Flex utilities */
+.flex {
+    display: flex !important;
+}
+
+.items-center {
+    align-items: center !important;
+}
+
+.justify-center {
+    justify-content: center !important;
+}
+
+.gap-4 {
+    gap: 1rem !important;
+}
+
+/* Max width utilities */
+.max-w-3xl {
+    max-width: 48rem !important;
+}
+
+.max-w-4xl {
+    max-width: 56rem !important;
+}
+
+/* Shadow utilities */
+.shadow-sm {
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
+}
+
+.shadow-md {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.05) !important;
+}
+
+.shadow-lg {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
 }

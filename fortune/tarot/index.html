@@ -228,7 +228,7 @@ textarea.form-control {
 <section class="tarot-section">
 <div class="container">
 <div class="tarot-form" id="tarotForm">
-<h2 style="text-align: center; margin-bottom: 32px;">타로 리딩 시작하기</h2>
+<h2 class="text-center mb-32">타로 리딩 시작하기</h2>
 <div class="form-group">
 <label for="question">질문을 입력하세요</label>
 <textarea class="form-control" id="question" name="question" placeholder="타로에게 묻고 싶은 질문을 구체적으로 적어주세요. 예: 현재 연애 관계가 어떻게 발전할까요?" required="" rows="4"></textarea>
@@ -241,12 +241,12 @@ textarea.form-control {
 <option value="celtic">켈틱 크로스 (10장) - 상세한 분석</option>
 </select>
 </div>
-<button class="btn btn-primary" onclick="startTarotReading()" style="width: 100%; margin-top: 24px;" type="button">
+<button class="btn btn-primary w-full mt-24" onclick="startTarotReading()" type="button">
                     🔮 타로 리딩 시작
                 </button>
 </div>
 <!-- 타로 결과 영역 -->
-<div class="tarot-result" id="tarotResult" style="display: none;">
+<div class="tarot-result hidden" id="tarotResult">
 <!-- 결과가 여기에 표시됩니다 -->
 </div>
 </div>
@@ -282,7 +282,6 @@ if ('IntersectionObserver' in window) {
             if (entry.isIntersecting) {
                 const container = entry.target;
                 container.innerHTML = `<ins class="adsbygoogle"
-             style="display:block"
              data-ad-client="ca-pub-7905640648499222"
              data-ad-slot="2789891628"
              data-ad-format="auto"
@@ -612,7 +611,7 @@ if ('IntersectionObserver' in window) {
             
             resultDiv.innerHTML = `
                 <div class="tarot-result-container">
-                    <h2 style="text-align: center; margin-bottom: 30px;">🔮 타로 리딩 결과</h2>
+                    <h2 class="text-center mb-30">🔮 타로 리딩 결과</h2>
                     
                     <div class="question-display">
                         <h3>📝 질문</h3>
@@ -643,7 +642,7 @@ if ('IntersectionObserver' in window) {
                         <small>※ 본 타로 리딩은 AI가 분석한 참고용 정보입니다. doha.kr 독자적인 해석을 제공합니다.</small>
                     </div>
                     
-                    <div style="text-align: center; margin-top: 40px;">
+                    <div class="text-center mt-40">
                         <button onclick="location.reload()" class="btn btn-secondary">
                             다시 점보기
                         </button>

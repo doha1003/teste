@@ -47,10 +47,10 @@
 <a class="btn btn-secondary" href="/tests/">인기 테스트 보기</a>
 </div>
 <!-- 광고 영역 -->
-<div style="margin-top: 40px; max-width: 600px; width: 100%;">
-<div style="font-size: 12px; color: rgba(255,255,255,0.7); margin-bottom: 8px;">광고</div>
-<div id="ad-container-g0o7mx6io" style="min-height: 100px;">
-<div class="ad-placeholder" style="display: flex; align-items: center; justify-content: center; background: #f5f5f5; min-height: 100px; color: #999;">
+<div class="ad-wrapper">
+<div class="ad-label-small">광고</div>
+<div id="ad-container-g0o7mx6io" class="ad-container-slot">
+<div class="ad-placeholder">
         광고 로딩 중...
     </div>
 </div>
@@ -62,7 +62,6 @@ if ('IntersectionObserver' in window) {
             if (entry.isIntersecting) {
                 const container = entry.target;
                 container.innerHTML = `<ins class="adsbygoogle"
-                 style="display:block"
                  data-ad-client="ca-pub-7905640648499222"
                  data-ad-slot="3911401606"
                  data-ad-format="auto"
