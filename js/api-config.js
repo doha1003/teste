@@ -20,7 +20,10 @@ window.initKakao = function() {
                 }
             }
         } else if (typeof Kakao !== 'undefined' && Kakao.isInitialized && Kakao.isInitialized()) {
-            console.log('Kakao SDK 이미 초기화됨');
+            // 개발 환경에서만 로그 출력
+            if (window.location.hostname === 'localhost') {
+                console.log('Kakao SDK 이미 초기화됨');
+            }
         } else {
             // 개발 환경에서는 warn 대신 info로 변경
             if (window.location.hostname === 'localhost') {

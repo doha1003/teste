@@ -490,9 +490,11 @@ class PerformanceOptimizer {
     analyzeResourcePerformance(entry) {
         const loadTime = entry.responseEnd - entry.startTime;
         
-        // 느린 리소스 감지 (1초 이상)
+        // 느린 리소스 감지 (1초 이상) - 개발 환경에서만 경고
         if (loadTime > 1000) {
-            console.warn(`Slow resource detected: ${entry.name} (${loadTime}ms)`);
+            if (window.location.hostname === 'localhost') {
+                console.warn(`Slow resource detected: ${entry.name} (${loadTime}ms)`);
+            }
             if (typeof this.optimizeSlowResource === 'function') {
                 this.optimizeSlowResource(entry);
             }
@@ -512,12 +514,14 @@ class PerformanceOptimizer {
             domComplete: entry.loadEventStart - entry.domContentLoadedEventStart
         };
 
-        // 각 단계별 성능 임계값 확인
-        Object.entries(metrics).forEach(([phase, time]) => {
-            if (this.isSlowPhase(phase, time)) {
-                console.warn(`Slow ${phase}: ${time}ms`);
-            }
-        });
+        // 각 단계별 성능 임계값 확인 (개발 환경에서만)
+        if (window.location.hostname === 'localhost') {
+            Object.entries(metrics).forEach(([phase, time]) => {
+                if (this.isSlowPhase(phase, time)) {
+                    console.warn(`Slow ${phase}: ${time}ms`);
+                }
+            });
+        }
     }
 
     /**
