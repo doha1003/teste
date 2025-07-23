@@ -370,24 +370,17 @@ window.shareKakao = shareKakao;
 // 성별 선택 함수
 function selectGender(gender) {
     selectedGender = gender;
-    document.getElementById('gender-screen').classList.add('hidden');
-    document.getElementById('intro-screen').classList.remove('hidden');
+    document.getElementById('gender-screen').classList.add('teto-hidden');
+    document.getElementById('intro-screen').classList.remove('teto-hidden');
 }
 
 // 테스트 시작 함수  
 function startTest() {
-    const name = document.getElementById('nameInput').value.trim();
-    if (name === '') {
-        alert('이름을 입력해주세요!');
-        return;
-    }
-    
-    userName = name;
     currentQuestion = 0;
     answers = [];
     
-    document.getElementById('intro-screen').classList.add('hidden');
-    document.getElementById('test-screen').classList.remove('hidden');
+    document.getElementById('intro-screen').classList.add('teto-hidden');
+    document.getElementById('test-screen').classList.remove('teto-hidden');
     showQuestion();
 }
 
@@ -483,8 +476,8 @@ function calculateResult() {
     const result = getResultType(totalScore);
     
     // 화면 전환
-    document.getElementById('test-screen').classList.add('hidden');
-    document.getElementById('result-screen').classList.remove('hidden');
+    document.getElementById('test-screen').classList.add('teto-hidden');
+    document.getElementById('result-screen').classList.remove('teto-hidden');
     
     // 결과 표시
     document.getElementById('resultEmoji').textContent = result.emoji;
@@ -580,8 +573,8 @@ function restartTest() {
     selectedGender = '';
     userName = '';
     
-    document.getElementById('result-screen').classList.add('hidden');
-    document.getElementById('gender-screen').classList.remove('hidden');
+    document.getElementById('result-screen').classList.add('teto-hidden');
+    document.getElementById('gender-screen').classList.remove('teto-hidden');
 }
 
 // 페이지 로드 시 초기화

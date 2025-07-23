@@ -1,4 +1,9 @@
 // 러브 DNA 테스트 (30문항)
+
+// 전역 변수들
+let currentQuestion = 0;
+let answers = [];
+
 const loveDNAQuestions = [
   {
     "question": "첫 데이트 장소를 정할 때 당신은?",
@@ -295,21 +300,25 @@ function calculateLoveDNA(answers) {
     // 점수 기반으로 유형 결정
     let resultKey;
     
-    // 1. Thrilling (T) 우세 유형
-    if (scores.T >= 12) {
-        resultKey = 'PASSIONATE_EXPLORER';
+    // 1. Thrilling (T) 우세 유형 - 모험가형 연인
+    if (scores.T >= 6) {
+        resultKey = 'ADVENTUROUS_LOVER';
     }
-    // 2. Warm (W) + Caring (C) 조합 - 헌신적인 서포터
-    else if (scores.W + scores.C >= 15) {
-        resultKey = 'CARING_SUPPORTER';
+    // 2. Warm (W) 우세 유형 - 로맨틱 몽상가
+    else if (scores.W >= 4) {
+        resultKey = 'ROMANTIC_DREAMER';
     }
-    // 3. Logical (L) + Analytical (A) 조합 - 안정적인 동반자
-    else if (scores.L + scores.A >= 12) {
+    // 3. Caring (C) 우세 유형 - 안정적인 동반자
+    else if (scores.C >= 4) {
         resultKey = 'STEADY_COMPANION';
     }
-    // 4. 기본값 - 로맨틱한 이상주의자
+    // 4. Logical (L) 우세 유형 - 헌신적인 서포터
+    else if (scores.L >= 4) {
+        resultKey = 'CARING_SUPPORTER';
+    }
+    // 5. 기본값 - 로맨틱 몽상가
     else {
-        resultKey = 'ROMANTIC_IDEALIST';
+        resultKey = 'ROMANTIC_DREAMER';
     }
     
     return {
@@ -319,6 +328,225 @@ function calculateLoveDNA(answers) {
     };
 }
 
+// 화면 전환 함수
+function showScreen(screenId) {
+    document.querySelectorAll('#intro-screen, #test-screen, #result-screen').forEach(screen => {
+        screen.classList.add('love-hidden');
+    });
+    document.getElementById(screenId).classList.remove('love-hidden');
+}
+
+// 테스트 시작 함수
+function startTest() {
+    currentQuestion = 0;
+    answers = [];
+    showScreen('test-screen');
+    showQuestion();
+}
+
+// 질문 표시 함수
+function showQuestion() {
+    if (currentQuestion >= loveDNAQuestions.length) {
+        showResult();
+        return;
+    }
+    
+    const question = loveDNAQuestions[currentQuestion];
+    const progressPercent = ((currentQuestion + 1) / loveDNAQuestions.length) * 100;
+    
+    // 진행률 업데이트
+    document.getElementById('progress-text').textContent = `질문 ${currentQuestion + 1} / ${loveDNAQuestions.length}`;
+    document.getElementById('progress-percent').textContent = `${Math.round(progressPercent)}%`;
+    document.getElementById('progress').style.width = `${progressPercent}%`;
+    
+    // 질문 번호와 텍스트 표시
+    document.getElementById('question-number').textContent = `Q${currentQuestion + 1}`;
+    document.getElementById('question').textContent = question.question;
+    
+    // 옵션 표시
+    const optionsContainer = document.getElementById('options');
+    optionsContainer.innerHTML = '';
+    
+    question.options.forEach((option, index) => {
+        const optionElement = document.createElement('div');
+        optionElement.className = 'love-option';
+        optionElement.textContent = option.text;
+        optionElement.onclick = () => selectOption(index);
+        
+        // 이전 답변 표시
+        if (answers[currentQuestion] === index) {
+            optionElement.classList.add('selected');
+        }
+        
+        optionsContainer.appendChild(optionElement);
+    });
+    
+    // 버튼 상태 업데이트
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    
+    if (prevBtn) prevBtn.style.display = currentQuestion > 0 ? 'block' : 'none';
+    if (nextBtn) {
+        nextBtn.textContent = currentQuestion === loveDNAQuestions.length - 1 ? '결과 보기' : '다음';
+        nextBtn.disabled = answers[currentQuestion] === undefined;
+    }
+}
+
+// 옵션 선택 함수 (자동 넘김 기능)
+function selectOption(index) {
+    console.log(`Love DNA DEBUG: 질문 ${currentQuestion + 1}/${loveDNAQuestions.length}, 옵션 ${index + 1} 선택됨`);
+    
+    answers[currentQuestion] = index;
+    
+    // 선택 표시 업데이트
+    document.querySelectorAll('.love-option').forEach((opt, i) => {
+        opt.classList.toggle('selected', i === index);
+    });
+    
+    // 다음 버튼 활성화
+    const nextBtn = document.getElementById('next-btn');
+    if (nextBtn) {
+        nextBtn.disabled = false;
+        console.log('Love DNA DEBUG: 다음 버튼 활성화됨');
+    }
+    
+    // 자동으로 다음 질문으로 넘어가기 (1.2초 딜레이)
+    setTimeout(() => {
+        if (currentQuestion < loveDNAQuestions.length - 1) {
+            console.log(`Love DNA DEBUG: 다음 질문으로 이동 (${currentQuestion + 2}/${loveDNAQuestions.length})`);
+            nextQuestion();
+        } else {
+            console.log('Love DNA DEBUG: 모든 질문 완료, 결과 표시');
+            showResult();
+        }
+    }, 1200);
+}
+
+// 다음 질문 함수
+function nextQuestion() {
+    if (answers[currentQuestion] === undefined) return;
+    
+    currentQuestion++;
+    showQuestion();
+}
+
+// 이전 질문 함수
+function previousQuestion() {
+    if (currentQuestion > 0) {
+        currentQuestion--;
+        showQuestion();
+    }
+}
+
+// 결과 표시 함수
+function showResult() {
+    const result = calculateLoveDNA(answers);
+    
+    showScreen('result-screen');
+    
+    // 결과가 정의되지 않은 경우 기본 결과 사용
+    const resultData = result.result || loveDNAResults['ROMANTIC_DREAMER'];
+    
+    // 결과 표시
+    document.getElementById('result-dna').textContent = result.type || 'LOVED';
+    document.getElementById('result-title').textContent = resultData.type || '로맨틱 드리머';
+    document.getElementById('result-subtitle').textContent = resultData.description || '영화 같은 사랑을 꿈꾸는 낭만주의자';
+    document.getElementById('result-rarity').textContent = `희귀도: SPECIAL (${Math.floor(Math.random() * 20 + 5)}%)`;
+    
+    // 특성 표시
+    if (resultData.traits) {
+        const traitsContainer = document.getElementById('result-traits');
+        if (traitsContainer) {
+            traitsContainer.innerHTML = '';
+            resultData.traits.forEach(trait => {
+                const traitElement = document.createElement('div');
+                traitElement.className = 'love-trait-item';
+                traitElement.textContent = `• ${trait}`;
+                traitsContainer.appendChild(traitElement);
+            });
+        }
+    }
+}
+
+// 테스트 재시작 함수
+function restartTest() {
+    currentQuestion = 0;
+    answers = [];
+    showScreen('intro-screen');
+}
+
+// 링크 복사 함수
+function copyResultLink() {
+    const url = window.location.href;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(() => {
+            alert('링크가 복사되었습니다!');
+        }).catch(() => {
+            fallbackCopyToClipboard(url);
+        });
+    } else {
+        fallbackCopyToClipboard(url);
+    }
+}
+
+function fallbackCopyToClipboard(text) {
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    textArea.style.position = 'fixed';
+    textArea.style.left = '-999999px';
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    
+    try {
+        document.execCommand('copy');
+        alert('링크가 복사되었습니다!');
+    } catch (err) {
+        alert('복사에 실패했습니다.');
+    }
+    
+    document.body.removeChild(textArea);
+}
+
+// 카카오톡 공유 함수
+function shareToKakao() {
+    if (typeof Kakao !== 'undefined' && Kakao.isInitialized()) {
+        const resultType = document.getElementById('result-title').textContent || '나의 러브 DNA';
+        
+        Kakao.Share.sendDefault({
+            objectType: 'feed',
+            content: {
+                title: `러브 DNA 테스트 결과: ${resultType}`,
+                description: '당신만의 특별한 연애 스타일을 발견해보세요!',
+                imageUrl: 'https://doha.kr/images/love-dna-og.png',
+                link: {
+                    mobileWebUrl: window.location.href,
+                    webUrl: window.location.href,
+                },
+            },
+        });
+    } else {
+        copyResultLink();
+    }
+}
+
+// 전역 함수로 노출
 window.loveDNAQuestions = loveDNAQuestions;
 window.loveDNAResults = loveDNAResults; 
 window.calculateLoveDNA = calculateLoveDNA;
+window.startTest = startTest;
+window.showQuestion = showQuestion;
+window.selectOption = selectOption;
+window.nextQuestion = nextQuestion;
+window.previousQuestion = previousQuestion;
+window.showResult = showResult;
+window.restartTest = restartTest;
+window.copyResultLink = copyResultLink;
+window.shareToKakao = shareToKakao;
+
+// 페이지 로드 시 초기화
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('러브 DNA 테스트 로드 완료');
+    console.log(`총 ${loveDNAQuestions.length}개 질문 로드됨`);
+    console.log(`${Object.keys(loveDNAResults).length}가지 결과 유형 준비됨`);
+});

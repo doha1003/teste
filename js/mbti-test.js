@@ -326,8 +326,9 @@ function showScreen(screenId) {
 // 테스트 시작
 function startTest() {
     currentQuestion = 0;
-    answers = {};
+    answers = [];
     scores = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
+    console.log(`MBTI DEBUG: 테스트 시작 - 총 ${mbtiQuestions.length}개 질문`);
     showScreen('test-screen');
     showQuestion();
 }
@@ -377,6 +378,8 @@ function showQuestion() {
 
 // 옵션 선택 (자동 넘김 기능)
 function selectOption(index) {
+    console.log(`MBTI DEBUG: 질문 ${currentQuestion + 1}/${mbtiQuestions.length}, 옵션 ${index + 1} 선택됨`);
+    
     answers[currentQuestion] = index;
     
     // 선택 표시 업데이트
@@ -385,17 +388,22 @@ function selectOption(index) {
     });
     
     // 다음 버튼 활성화
-    document.getElementById('next-btn').disabled = false;
+    const nextBtn = document.getElementById('next-btn');
+    if (nextBtn) {
+        nextBtn.disabled = false;
+        console.log('MBTI DEBUG: 다음 버튼 활성화됨');
+    }
     
-    // 자동으로 다음 질문으로 넘어가기 (0.8초 딜레이)
+    // 자동으로 다음 질문으로 넘어가기 (1.2초 딜레이)
     setTimeout(() => {
         if (currentQuestion < mbtiQuestions.length - 1) {
+            console.log(`MBTI DEBUG: 다음 질문으로 이동 (${currentQuestion + 2}/${mbtiQuestions.length})`);
             nextQuestion();
         } else {
-            // 마지막 질문이면 결과 보기
+            console.log('MBTI DEBUG: 모든 질문 완료, 결과 표시');
             showResult();
         }
-    }, 800);
+    }, 1200);
 }
 
 // 다음 질문
@@ -420,11 +428,15 @@ function calculateMbtiType() {
     scores = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
     
     // 각 답변에 대해 점수 계산
-    Object.keys(answers).forEach(questionIndex => {
-        const question = mbtiQuestions[parseInt(questionIndex)];
-        const selectedOption = question.options[answers[questionIndex]];
-        scores[selectedOption.type] += selectedOption.score;
+    answers.forEach((answerIndex, questionIndex) => {
+        if (answerIndex !== undefined) {
+            const question = mbtiQuestions[questionIndex];
+            const selectedOption = question.options[answerIndex];
+            scores[selectedOption.type] += selectedOption.score;
+        }
     });
+    
+    console.log('MBTI DEBUG: 최종 점수:', scores);
     
     // 각 축별 우세한 유형 결정
     let mbtiType = '';
@@ -433,6 +445,7 @@ function calculateMbtiType() {
     mbtiType += scores.T >= scores.F ? 'T' : 'F';
     mbtiType += scores.J >= scores.P ? 'J' : 'P';
     
+    console.log('MBTI DEBUG: 계산된 유형:', mbtiType);
     return mbtiType;
 }
 
@@ -572,8 +585,9 @@ function copyResultLink() {
 
 // 테스트 재시작
 function restartTest() {
-    currentQuestion = -1;
-    answers = {};
+    currentQuestion = 0;
+    answers = [];
     scores = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
+    console.log('MBTI DEBUG: 테스트 재시작');
     showScreen('intro-screen');
 }
