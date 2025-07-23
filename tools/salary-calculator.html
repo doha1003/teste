@@ -435,6 +435,108 @@ if ('IntersectionObserver' in window) {
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 
+    <!-- 연봉 계산기 JavaScript -->
+    <script>
+    // 2025년 연봉 계산기 로직
+    function calculateSalary() {
+        const annualSalary = parseInt(document.getElementById('annualSalary').value) * 10000; // 만원 -> 원
+        const familyCount = parseInt(document.getElementById('familyCount').value);
+        const childCount = parseInt(document.getElementById('childCount').value);
+        
+        if (!annualSalary || annualSalary < 0) {
+            alert('연봉을 올바르게 입력해주세요.');
+            return;
+        }
+        
+        const monthlySalary = annualSalary / 12;
+        
+        // 2025년 4대보험료율
+        const nationalPensionRate = 0.045; // 4.5%
+        const healthInsuranceRate = 0.03545; // 3.545%
+        const longTermCareRate = 0.004591; // 0.4591%
+        const employmentInsuranceRate = 0.009; // 0.9%
+        
+        // 국민연금 (상한액: 월 654만원)
+        const pensionBase = Math.min(monthlySalary, 6540000);
+        const nationalPension = Math.round(pensionBase * nationalPensionRate);
+        
+        // 건강보험료 (상한액: 월 8730만원)
+        const healthBase = Math.min(monthlySalary, 87300000);
+        const healthInsurance = Math.round(healthBase * healthInsuranceRate);
+        
+        // 장기요양보험료 (건강보험료의 12.95%)
+        const longTermCare = Math.round(healthInsurance * longTermCareRate / healthInsuranceRate);
+        
+        // 고용보험료 (상한액: 월 543만원)
+        const employmentBase = Math.min(monthlySalary, 5430000);
+        const employmentInsurance = Math.round(employmentBase * employmentInsuranceRate);
+        
+        // 과세표준 (연봉 - 비과세 - 소득공제)
+        const taxableIncome = Math.max(0, annualSalary - (nationalPension * 12) - 1500000); // 기본공제 150만원
+        
+        // 2025년 간이세액표 기준 소득세 계산 (근사치)
+        let incomeTax = 0;
+        if (taxableIncome <= 14000000) {
+            incomeTax = taxableIncome * 0.06;
+        } else if (taxableIncome <= 50000000) {
+            incomeTax = 840000 + (taxableIncome - 14000000) * 0.15;
+        } else if (taxableIncome <= 88000000) {
+            incomeTax = 6240000 + (taxableIncome - 50000000) * 0.24;
+        } else {
+            incomeTax = 15360000 + (taxableIncome - 88000000) * 0.35;
+        }
+        
+        // 부양가족 및 자녀 세액공제
+        const familyDeduction = (familyCount - 1) * 150000; // 부양가족당 15만원
+        const childDeduction = childCount * 150000; // 자녀당 15만원
+        incomeTax = Math.max(0, incomeTax - familyDeduction - childDeduction);
+        
+        const monthlyIncomeTax = Math.round(incomeTax / 12);
+        
+        // 지방소득세 (소득세의 10%)
+        const localTax = Math.round(monthlyIncomeTax * 0.1);
+        
+        // 총 공제액
+        const totalDeduction = nationalPension + healthInsurance + longTermCare + employmentInsurance + monthlyIncomeTax + localTax;
+        
+        // 실수령액
+        const monthlyNet = Math.round(monthlySalary - totalDeduction);
+        const annualNet = monthlyNet * 12;
+        
+        // 결과 표시
+        document.getElementById('resultContainer').style.display = 'block';
+        document.getElementById('resultSummary').textContent = 
+            `연봉 ${(annualSalary/10000).toLocaleString()}만원 기준 (부양가족 ${familyCount}명, 자녀 ${childCount}명)`;
+        
+        document.getElementById('monthlyNet').textContent = monthlyNet.toLocaleString() + '원';
+        document.getElementById('annualNet').textContent = annualNet.toLocaleString() + '원';
+        
+        document.getElementById('incomeTax').textContent = monthlyIncomeTax.toLocaleString() + '원';
+        document.getElementById('localTax').textContent = localTax.toLocaleString() + '원';
+        document.getElementById('nationalPension').textContent = nationalPension.toLocaleString() + '원';
+        document.getElementById('healthInsurance').textContent = healthInsurance.toLocaleString() + '원';
+        document.getElementById('longTermCare').textContent = longTermCare.toLocaleString() + '원';
+        document.getElementById('employmentInsurance').textContent = employmentInsurance.toLocaleString() + '원';
+        document.getElementById('totalDeduction').textContent = totalDeduction.toLocaleString() + '원';
+        
+        // 결과창으로 스크롤
+        document.getElementById('resultContainer').scrollIntoView({ behavior: 'smooth' });
+    }
+    
+    // 이벤트 리스너 등록
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('salaryForm');
+        
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            calculateSalary();
+        });
+        
+        // 초기 계산
+        calculateSalary();
+    });
+    </script>
+    
     <!-- Non-critical scripts moved here for performance -->
     
 <!-- Google AdSense 지연 로딩 -->
