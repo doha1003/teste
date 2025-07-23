@@ -254,6 +254,33 @@ if ('IntersectionObserver' in window) {
             }, 2000);
         }
 
+        function getTodayPillarFromManseryeok() {
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = today.getMonth() + 1;
+            const day = today.getDate();
+
+            if (window.getManseryeokData) {
+                const data = window.getManseryeokData(year, month, day);
+                if (data) {
+                    return {
+                        stem: data.dayGanji.charAt(0),
+                        branch: data.dayGanji.charAt(1)
+                    };
+                }
+            }
+
+            const totalDays = Math.floor(today.getTime() / (1000 * 60 * 60 * 24));
+            const ganjiIndex = totalDays % 60;
+            const stems = ["갑", "을", "병", "정", "무", "기", "경", "신", "임", "계"];
+            const branches = ["자", "축", "인", "묘", "진", "사", "오", "미", "신", "유", "술", "해"];
+            
+            return {
+                stem: stems[ganjiIndex % 10],
+                branch: branches[ganjiIndex % 12]
+            };
+        }
+
         function displayDailyFortune(userName, birthYear, birthMonth, birthDay, birthTime, isLunar) {
 
             if (typeof sajuCalculator === 'undefined') {
@@ -896,32 +923,6 @@ if ('IntersectionObserver' in window) {
         };
     </script>
 
-        function getTodayPillarFromManseryeok() {
-            const today = new Date();
-            const year = today.getFullYear();
-            const month = today.getMonth() + 1;
-            const day = today.getDate();
-
-            if (window.getManseryeokData) {
-                const data = window.getManseryeokData(year, month, day);
-                if (data) {
-                    return {
-                        stem: data.dayGanji.charAt(0),
-                        branch: data.dayGanji.charAt(1)
-                    };
-                }
-            }
-
-            const totalDays = Math.floor(today.getTime() / (1000 * 60 * 60 * 24));
-            const ganjiIndex = totalDays % 60;
-            const stems = ["갑", "을", "병", "정", "무", "기", "경", "신", "임", "계"];
-            const branches = ["자", "축", "인", "묘", "진", "사", "오", "미", "신", "유", "술", "해"];
-            
-            return {
-                stem: stems[ganjiIndex % 10],
-                branch: branches[ganjiIndex % 12]
-            };
-        }
     <!-- Kakao SDK -->
     
     <script>
