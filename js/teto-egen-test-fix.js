@@ -16,21 +16,25 @@ document.addEventListener('DOMContentLoaded', function() {
     showQuestion(0);
     
     function showQuestion(index) {
-        questions.forEach(q => q.style.display = 'none');
-        questions[index].style.display = 'block';
+        questions.forEach(q => q.classList.add('hidden'));
+        questions[index].classList.remove('hidden');
         
         // 버튼 상태 업데이트
-        prevBtn.style.display = index === 0 ? 'none' : 'inline-block';
+        if (index === 0) {
+            prevBtn.classList.add('hidden');
+        } else {
+            prevBtn.classList.remove('hidden');
+        }
         
         // 마지막 질문에서는 다음 버튼 대신 제출 버튼 표시
         if (index === totalQuestions - 1) {
-            nextBtn.style.display = 'none';
-            submitBtn.style.display = 'inline-block';
+            nextBtn.classList.add('hidden');
+            submitBtn.classList.remove('hidden');
             // 마지막 질문에서는 자동 진행 비활성화
             disableAutoProgress();
         } else {
-            nextBtn.style.display = 'inline-block';
-            submitBtn.style.display = 'none';
+            nextBtn.classList.remove('hidden');
+            submitBtn.classList.add('hidden');
             // 자동 진행 활성화
             enableAutoProgress();
         }
@@ -42,7 +46,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateProgress() {
         const answered = testForm.querySelectorAll('input[type="radio"]:checked').length;
         const percentage = (answered / totalQuestions) * 100;
-        progressFill.style.width = percentage + '%';
+        progressFill.style.setProperty('--progress-width', percentage + '%');
+        progressFill.classList.add('progress-dynamic');
     }
     
     // 자동 진행 기능
@@ -104,26 +109,22 @@ function enhanceTetoEgenResult() {
     // 결과 카드 애니메이션
     const resultCard = resultContainer.querySelector('.result-card');
     if (resultCard) {
-        resultCard.style.opacity = '0';
-        resultCard.style.transform = 'scale(0.8) rotateY(180deg)';
+        resultCard.classList.add('result-card-hidden');
         
         setTimeout(() => {
-            resultCard.style.transition = 'all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-            resultCard.style.opacity = '1';
-            resultCard.style.transform = 'scale(1) rotateY(0)';
+            resultCard.classList.remove('result-card-hidden');
+            resultCard.classList.add('result-card-visible');
         }, 100);
     }
     
     // 특성 아이템 애니메이션
     const traits = resultContainer.querySelectorAll('.trait-item');
     traits.forEach((trait, index) => {
-        trait.style.opacity = '0';
-        trait.style.transform = 'translateX(-50px)';
+        trait.classList.add('trait-hidden');
         
         setTimeout(() => {
-            trait.style.transition = 'all 0.6s ease-out';
-            trait.style.opacity = '1';
-            trait.style.transform = 'translateX(0)';
+            trait.classList.remove('trait-hidden');
+            trait.classList.add('trait-visible');
         }, 300 + (index * 100));
     });
     
@@ -190,24 +191,22 @@ function enhanceTetoEgenResult() {
 // 파티클 효과 함수
 function addParticleEffect(container) {
     const particleContainer = document.createElement('div');
-    particleContainer.style.position = 'fixed';
-    particleContainer.style.top = '0';
-    particleContainer.style.left = '0';
-    particleContainer.style.width = '100%';
-    particleContainer.style.height = '100%';
-    particleContainer.style.pointerEvents = 'none';
-    particleContainer.style.zIndex = '999';
+    particleContainer.className = 'particle-container';
     
     for (let i = 0; i < 50; i++) {
         const particle = document.createElement('div');
-        particle.style.position = 'absolute';
-        particle.style.width = Math.random() * 10 + 5 + 'px';
-        particle.style.height = particle.style.width;
-        particle.style.background = `hsla(${Math.random() * 60 + 200}, 70%, 60%, 0.8)`;
-        particle.style.borderRadius = '50%';
-        particle.style.left = Math.random() * 100 + '%';
-        particle.style.top = '100%';
-        particle.style.animation = `float ${Math.random() * 3 + 2}s ease-out forwards`;
+        particle.className = 'particle';
+        
+        // CSS 변수로 동적 값 설정
+        const size = Math.random() * 10 + 5 + 'px';
+        const color = `hsla(${Math.random() * 60 + 200}, 70%, 60%, 0.8)`;
+        const left = Math.random() * 100 + '%';
+        const duration = Math.random() * 3 + 2 + 's';
+        
+        particle.style.setProperty('--particle-size', size);
+        particle.style.setProperty('--particle-color', color);
+        particle.style.setProperty('--particle-left', left);
+        particle.style.setProperty('--particle-duration', duration);
         
         particleContainer.appendChild(particle);
     }
@@ -218,18 +217,6 @@ function addParticleEffect(container) {
     setTimeout(() => {
         particleContainer.remove();
     }, 5000);
-    
-    // 애니메이션 CSS 추가
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes float {
-            to {
-                transform: translateY(-100vh) rotate(360deg);
-                opacity: 0;
-            }
-        }
-    `;
-    document.head.appendChild(style);
 }
 
 // 페이지 로드시 실행

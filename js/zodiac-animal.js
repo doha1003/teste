@@ -169,7 +169,7 @@ document.addEventListener('DOMContentLoaded', function() {
 async function showAnimalFortune(animal) {
     // 로딩 효과
     const fortuneResult = document.getElementById('fortuneResult');
-    fortuneResult.style.display = 'block';
+    fortuneResult.classList.remove('hidden');
     fortuneResult.innerHTML = '<div class="zodiac-ai-analyzing">🔮 AI가 띠별 운세를 분석하고 있습니다...</div>';
     
     // 선택된 띠 강조
@@ -287,7 +287,7 @@ ${info.name}의 특성과 2025년 을사년(뱀의 해) 에너지를 고려하�
 
 // 띠 선택 초기화
 function resetAnimal() {
-    document.getElementById('fortuneResult').style.display = 'none';
+    document.getElementById('fortuneResult').classList.add('hidden');
     document.querySelectorAll('.zodiac-card').forEach(card => {
         card.classList.remove('active');
     });

@@ -458,7 +458,7 @@ class AnalyticsDashboard {
     show() {
         const dashboard = document.getElementById('analytics-dashboard');
         if (dashboard) {
-            dashboard.style.display = 'block';
+            dashboard.classList.remove('hidden');
             this.isVisible = true;
             this.refreshData();
             this.startRealTimeUpdates();
@@ -471,7 +471,7 @@ class AnalyticsDashboard {
     hide() {
         const dashboard = document.getElementById('analytics-dashboard');
         if (dashboard) {
-            dashboard.style.display = 'none';
+            dashboard.classList.add('hidden');
             this.isVisible = false;
             this.stopRealTimeUpdates();
         }

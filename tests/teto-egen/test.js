@@ -370,8 +370,8 @@ window.shareKakao = shareKakao;
 // 성별 선택 함수
 function selectGender(gender) {
     selectedGender = gender;
-    document.getElementById('gender-screen').style.display = 'none';
-    document.getElementById('intro-screen').style.display = 'block';
+    document.getElementById('gender-screen').classList.add('hidden');
+    document.getElementById('intro-screen').classList.remove('hidden');
 }
 
 // 테스트 시작 함수  
@@ -386,8 +386,8 @@ function startTest() {
     currentQuestion = 0;
     answers = [];
     
-    document.getElementById('intro-screen').style.display = 'none';
-    document.getElementById('test-screen').style.display = 'block';
+    document.getElementById('intro-screen').classList.add('hidden');
+    document.getElementById('test-screen').classList.remove('hidden');
     showQuestion();
 }
 
@@ -402,7 +402,7 @@ function showQuestion() {
     
     // 진행률 업데이트
     const progress = ((currentQuestion + 1) / questions.length) * 100;
-    document.getElementById('progress').style.width = progress + '%';
+    document.getElementById('progress').style.setProperty('--progress-width', progress + '%');
     document.getElementById('question-number').textContent = `질문 ${currentQuestion + 1}`;
     document.getElementById('progress-text').textContent = `질문 ${currentQuestion + 1} / ${questions.length}`;
     document.getElementById('progress-percent').textContent = Math.round(progress) + '%';
@@ -424,9 +424,9 @@ function showQuestion() {
     // 이전 버튼 표시 여부
     const prevBtn = document.getElementById('prevBtn');
     if (currentQuestion > 0) {
-        prevBtn.style.display = 'inline-block';
+        prevBtn.classList.remove('hidden');
     } else {
-        prevBtn.style.display = 'none';
+        prevBtn.classList.add('hidden');
     }
 }
 
@@ -483,8 +483,8 @@ function calculateResult() {
     const result = getResultType(totalScore);
     
     // 화면 전환
-    document.getElementById('test-screen').style.display = 'none';
-    document.getElementById('result-screen').style.display = 'block';
+    document.getElementById('test-screen').classList.add('hidden');
+    document.getElementById('result-screen').classList.remove('hidden');
     
     // 결과 표시
     document.getElementById('resultEmoji').textContent = result.emoji;
@@ -580,8 +580,8 @@ function restartTest() {
     selectedGender = '';
     userName = '';
     
-    document.getElementById('result-screen').style.display = 'none';
-    document.getElementById('gender-screen').style.display = 'block';
+    document.getElementById('result-screen').classList.add('hidden');
+    document.getElementById('gender-screen').classList.remove('hidden');
 }
 
 // 페이지 로드 시 초기화

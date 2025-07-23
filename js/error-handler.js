@@ -205,28 +205,13 @@
             
             // Fallback notification
             const notification = document.createElement('div');
-            notification.className = `error-notification ${type}`;
+            notification.className = `notification notification-${type}`;
             notification.innerHTML = `
                 <div class="notification-content">
                     <span class="notification-icon">${type === 'error' ? '⚠️' : 'ℹ️'}</span>
                     <span class="notification-message">${this.escapeHtml(message)}</span>
                     <button class="notification-close" onclick="this.parentElement.parentElement.remove()">×</button>
                 </div>
-            `;
-            
-            // Add styles
-            notification.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                z-index: 10000;
-                background: ${type === 'error' ? '#ff4444' : '#4CAF50'};
-                color: white;
-                padding: 15px;
-                border-radius: 5px;
-                box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-                max-width: 400px;
-                animation: slideIn 0.3s ease-out;
             `;
             
             document.body.appendChild(notification);

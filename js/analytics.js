@@ -254,7 +254,7 @@
             // Check for disabled images
             if (typeof Image !== 'undefined') {
                 const img = new Image();
-                img.style.display = 'none';
+                img.classList.add('hidden');
                 document.body.appendChild(img);
                 
                 setTimeout(() => {

@@ -4217,3 +4217,36 @@ section.stats *,
 .shadow-lg {
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
 }
+
+/* Notification styles */
+.notification {
+    position: fixed !important;
+    top: 20px !important;
+    right: 20px !important;
+    padding: 16px 24px !important;
+    border-radius: 8px !important;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1) !important;
+    z-index: 9999 !important;
+    animation: slideInRight 0.3s ease !important;
+}
+
+.notification-success {
+    background: #10b981 !important;
+    color: white !important;
+}
+
+.notification-error {
+    background: #ef4444 !important;
+    color: white !important;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}

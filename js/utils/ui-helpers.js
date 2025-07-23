@@ -45,13 +45,13 @@ export function showServices(category, event) {
     // 카드 필터링
     cards.forEach(card => {
         if (category === 'all') {
-            card.style.display = 'block';
+            card.classList.remove('hidden');
         } else {
             const cardCategories = card.getAttribute('data-category');
             if (cardCategories && cardCategories.includes(category)) {
-                card.style.display = 'block';
+                card.classList.remove('hidden');
             } else {
-                card.style.display = 'none';
+                card.classList.add('hidden');
             }
         }
     });
@@ -62,20 +62,6 @@ export function showNotification(message, type = 'success') {
     const notification = document.createElement('div');
     notification.className = `notification notification-${type}`;
     notification.textContent = message;
-    
-    // 스타일 추가
-    notification.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        padding: 16px 24px;
-        background: ${type === 'success' ? '#10b981' : '#ef4444'};
-        color: white;
-        border-radius: 8px;
-        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-        z-index: 9999;
-        animation: slideInRight 0.3s ease;
-    `;
     
     document.body.appendChild(notification);
     

@@ -243,7 +243,7 @@
     background: linear-gradient(135deg, var(--teto-primary), var(--teto-secondary));
     border-radius: 4px;
     transition: width 0.3s ease;
-    width: 0%;
+    width: var(--progress-width, 0%);
 }
 
 /* 질문 컨테이너 */
@@ -703,3 +703,61 @@
 .teto-particle:nth-child(7) { left: 70%; animation-delay: 6s; }
 .teto-particle:nth-child(8) { left: 80%; animation-delay: 7s; }
 .teto-particle:nth-child(9) { left: 90%; animation-delay: 8s; }
+
+/* 파티클 효과 스타일 */
+.particle-container {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    pointer-events: none !important;
+    z-index: 999 !important;
+}
+
+.particle {
+    position: absolute !important;
+    width: var(--particle-size) !important;
+    height: var(--particle-size) !important;
+    background: var(--particle-color) !important;
+    border-radius: 50% !important;
+    left: var(--particle-left) !important;
+    top: 100% !important;
+    animation: float var(--particle-duration) ease-out forwards !important;
+}
+
+@keyframes float {
+    to {
+        transform: translateY(-100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* 결과 카드 애니메이션 */
+.result-card-hidden {
+    opacity: 0 !important;
+    transform: scale(0.8) rotateY(180deg) !important;
+}
+
+.result-card-visible {
+    transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+    opacity: 1 !important;
+    transform: scale(1) rotateY(0) !important;
+}
+
+/* 특성 항목 애니메이션 */
+.trait-hidden {
+    opacity: 0 !important;
+    transform: translateX(-50px) !important;
+}
+
+.trait-visible {
+    transition: all 0.6s ease-out !important;
+    opacity: 1 !important;
+    transform: translateX(0) !important;
+}
+
+/* 프로그레스 바 동적 너비 */
+.progress-dynamic {
+    width: var(--progress-width, 0%) !important;
+}

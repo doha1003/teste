@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
 async function showZodiacFortune(zodiac) {
     // 로딩 효과
     const fortuneResult = document.getElementById('fortuneResult');
-    fortuneResult.style.display = 'block';
+    fortuneResult.classList.remove('hidden');
     fortuneResult.innerHTML = '<div class="loading">AI가 운세를 분석하고 있습니다...</div>';
     
     // 선택된 별자리 강조
@@ -224,7 +224,7 @@ function generateMockFortune(zodiac) {
 
 // 별자리 선택 초기화
 function resetZodiac() {
-    document.getElementById('fortuneResult').style.display = 'none';
+    document.getElementById('fortuneResult').classList.add('hidden');
     document.querySelectorAll('.zodiac-card').forEach(card => {
         card.classList.remove('active');
     });
