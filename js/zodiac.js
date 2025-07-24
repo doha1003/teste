@@ -50,7 +50,7 @@ async function showZodiacFortune(zodiac) {
         const today = new Date();
         const todayStr = `${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일`;
         
-        const response = await fetch('/api/fortune', {
+        const response = await fetch('https://doha-kr-ap.vercel.app/api/fortune', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

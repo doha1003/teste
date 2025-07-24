@@ -223,12 +223,15 @@ function displayAnimalResult(animal, fortuneData, isAIGenerated = false) {
             <div class="yearly-fortunes">
                 <h3>생년별 상세 운세 ${isAIGenerated ? '(AI 실시간 분석)' : '(전문가 해석)'}</h3>
                 <div class="year-list">
-                    ${Object.entries(fortuneData.byYear).map(([year, content]) => `
+                    ${Object.entries(fortuneData.byYear).map(([year, content]) => {
+                        // 2자리 연도를 4자리로 변환
+                        const displayYear = year.length === 2 ? (parseInt(year) > 50 ? '19' + year : '20' + year) : year;
+                        return `
                         <div class="year-item">
-                            <div class="birth-year">${year}년생</div>
+                            <div class="birth-year">${displayYear.slice(-2)}년생</div>
                             <div class="year-fortune">${content}</div>
                         </div>
-                    `).join('')}
+                    `}).join('')}
                 </div>
             </div>
             
@@ -253,12 +256,12 @@ async function generateAnimalFortuneWithAI(animal) {
 {
   "general": "전체 운세 (100-150자)",
   "byYear": {
-    "60": "60년생 운세 (50-80자)",
-    "72": "72년생 운세 (50-80자)",
-    "84": "84년생 운세 (50-80자)",
-    "96": "96년생 운세 (50-80자)",
-    "08": "08년생 운세 (50-80자)",
-    "20": "20년생 운세 (50-80자)"
+    "1960": "60년생 운세",
+    "1972": "72년생 운세",
+    "1984": "84년생 운세", 
+    "1996": "96년생 운세",
+    "2008": "08년생 운세",
+    "2020": "20년생 운세"
   }
 }
 
@@ -266,7 +269,7 @@ ${info.name}의 특성과 2025년 을사년(뱀의 해) 에너지를 고려하�
 
     try {
         // API 호출
-        const response = await fetch('/api/fortune', {
+        const response = await fetch('https://doha-kr-ap.vercel.app/api/fortune', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

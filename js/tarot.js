@@ -187,7 +187,7 @@ async function performReading(selectedCards) {
     
     try {
         // AI API 호출
-        const response = await fetch('/api/fortune', {
+        const response = await fetch('https://doha-kr-ap.vercel.app/api/fortune', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

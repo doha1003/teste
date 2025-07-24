@@ -481,7 +481,7 @@ document.addEventListener('DOMContentLoaded', function() {
             birthYear: parseInt(formData.get('birthYear')),
             birthMonth: parseInt(formData.get('birthMonth')),
             birthDay: parseInt(formData.get('birthDay')),
-            birthHour: parseInt(formData.get('birthHour')) || null,
+            birthHour: parseInt(formData.get('birthTime')) || null,
             isLunar: formData.get('lunarCalendar') === 'on'
         };
         
@@ -537,7 +537,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const todayStr = `${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일`;
             
             try {
-                const response = await fetch('/api/fortune', {
+                const response = await fetch('https://doha-kr-ap.vercel.app/api/fortune', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -573,7 +573,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             } catch (apiError) {
                 console.error('AI API error:', apiError);
-                fortuneResult = generateBackupFortune(userData.name, birthDateStr);
+                // 백업 운세 데이터
+                fortuneResult = {
+                    general: '오늘은 새로운 기회가 찾아올 수 있는 날입니다. 긍정적인 마음가짐으로 하루를 시작해보세요.',
+                    love: '인연과의 만남에 주의를 기울여보세요. 주변에 좋은 사람이 있을 수 있습니다.',
+                    money: '재정적인 결정은 신중하게 하는 것이 좋습니다. 충동적인 소비를 피하세요.',
+                    work: '업무에서 좋은 성과를 기대할 수 있습니다. 동료들과의 협력이 중요합니다.',
+                    advice: '오늘은 긍정적인 마음가짐이 중요합니다. 작은 일에도 감사하는 마음을 가져보세요.'
+                };
             }
             
             // Display result
