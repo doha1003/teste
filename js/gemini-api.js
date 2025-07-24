@@ -1,5 +1,5 @@
 // Gemini API 클라이언트 - 서버리스 함수 호출
-const API_ENDPOINT = '/api/fortune';
+const API_ENDPOINT = 'https://doha-kr-ap.vercel.app/api/fortune';
 
 // 서버리스 API 호출 함수
 async function callFortuneAPI(type, data) {
