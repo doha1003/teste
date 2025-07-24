@@ -508,9 +508,38 @@ if ('IntersectionObserver' in window) {
 
             document.getElementById('sajuForm').style.display = 'none';
 
-            setTimeout(() => {
-
+            setTimeout(async () => {
                 const saju = calculateSajuWithManseryeok(birthYear, birthMonth, birthDay, birthTime, isLunar);
+                
+                // AI API 호출
+                try {
+                    const response = await fetch('/api/fortune', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            type: 'saju',
+                            data: {
+                                yearPillar: `${saju.yearPillar.stem || saju.yearPillar.charAt?.(0)}${saju.yearPillar.branch || saju.yearPillar.charAt?.(1)}`,
+                                monthPillar: `${saju.monthPillar.stem || saju.monthPillar.charAt?.(0)}${saju.monthPillar.branch || saju.monthPillar.charAt?.(1)}`,
+                                dayPillar: `${saju.dayPillar.stem || saju.dayPillar.charAt?.(0)}${saju.dayPillar.branch || saju.dayPillar.charAt?.(1)}`,
+                                hourPillar: `${saju.hourPillar.stem || saju.hourPillar.charAt?.(0)}${saju.hourPillar.branch || saju.hourPillar.charAt?.(1)}`
+                            }
+                        })
+                    });
+                    
+                    if (response.ok) {
+                        const result = await response.json();
+                        if (result.success && result.data) {
+                            // AI 해석이 있으면 기존 해석에 추가
+                            saju.aiInterpretation = result.data;
+                        }
+                    }
+                } catch (error) {
+                    console.error('AI API 호출 오류:', error);
+                }
+                
                 displaySajuResult(userName, gender, saju);
             }, 2000);
         }

@@ -265,23 +265,42 @@ async function generateAnimalFortuneWithAI(animal) {
 ${info.name}의 특성과 2025년 을사년(뱀의 해) 에너지를 고려하여 구체적이고 실용적인 조언을 포함해주세요.`;
 
     try {
-        // Gemini API 호출 시도
-        if (typeof callGeminiAPI === 'function') {
-            const aiResponse = await callGeminiAPI(prompt);
-            
-            if (aiResponse) {
+        // API 호출
+        const response = await fetch('/api/fortune', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                type: 'zodiac-animal',
+                data: { 
+                    animal: animal,
+                    animalName: info.name,
+                    animalHanja: info.hanja
+                },
+                todayDate: dateStr
+            })
+        });
+        
+        if (response.ok) {
+            const result = await response.json();
+            if (result.success && result.data) {
                 // JSON 파싱 시도
-                const cleanResponse = aiResponse.replace(/```json|```/g, '').trim();
-                const parsed = JSON.parse(cleanResponse);
-                
-                // 필수 필드 검증
-                if (parsed.general && parsed.byYear && Object.keys(parsed.byYear).length >= 6) {
-                    return parsed;
+                try {
+                    const cleanResponse = result.data.replace(/```json|```/g, '').trim();
+                    const parsed = JSON.parse(cleanResponse);
+                    
+                    // 필수 필드 검증
+                    if (parsed.general && parsed.byYear && Object.keys(parsed.byYear).length >= 6) {
+                        return parsed;
+                    }
+                } catch (parseError) {
+                    console.error('JSON 파싱 오류:', parseError);
                 }
             }
         }
     } catch (error) {
-        console.error('AI 응답 파싱 오류:', error);
+        console.error('AI API 호출 오류:', error);
     }
     
     // AI 실패 시 null 반환 (기본 데이터 사용)

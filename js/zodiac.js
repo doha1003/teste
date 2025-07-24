@@ -45,26 +45,43 @@ async function showZodiacFortune(zodiac) {
         zodiacElement.classList.add('active');
     }
     
-    // 로딩 시뮬레이션 (실제로는 AI API 호출)
-    setTimeout(() => {
-        try {
-            // 실제 구현 시 AI API 호출
-            // const aiResult = await generateZodiacFortuneWithAI(zodiac);
-            // displayZodiacResult(zodiac, aiResult);
-            
-            // 현재는 모의 데이터 사용
-            const fallbackData = generateMockFortune(zodiac);
-            displayZodiacResult(zodiac, fallbackData);
-        } catch (error) {
-            console.error('별자리 운세 생성 오류:', error);
-            const fallbackData = generateMockFortune(zodiac);
-            displayZodiacResult(zodiac, fallbackData);
+    try {
+        // 실제 AI API 호출
+        const today = new Date();
+        const todayStr = `${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일`;
+        
+        const response = await fetch('/api/fortune', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                type: 'zodiac',
+                data: { zodiac: zodiac },
+                todayDate: todayStr
+            })
+        });
+        
+        if (response.ok) {
+            const result = await response.json();
+            if (result.success && result.data) {
+                // AI 응답 파싱
+                const parsedData = parseZodiacResponse(result.data);
+                displayZodiacResult(zodiac, parsedData, true);
+                return;
+            }
         }
-    }, 2000);
+    } catch (error) {
+        console.error('AI API 호출 오류:', error);
+    }
+    
+    // API 실패시 폴백 데이터 사용
+    const fallbackData = generateMockFortune(zodiac);
+    displayZodiacResult(zodiac, fallbackData, false);
 }
 
 // 운세 결과 표시
-function displayZodiacResult(zodiac, fortuneData) {
+function displayZodiacResult(zodiac, fortuneData, isAIGenerated = false) {
     const info = zodiacInfo[zodiac];
     const fortune = fortuneData || generateMockFortune(zodiac);
     
@@ -114,6 +131,8 @@ function displayZodiacResult(zodiac, fortuneData) {
                 <h4>💡 오늘의 조언</h4>
                 <p>${fortune.advice}</p>
             </div>
+            
+            ${isAIGenerated ? '<div class="ai-badge">🤖 AI 실시간 분석</div>' : ''}
             
             <div class="fortune-lucky">
                 <div class="lucky-item">
@@ -223,6 +242,50 @@ function generateMockFortune(zodiac) {
     };
     
     return fortunes[zodiac] || fortunes.aries;
+}
+
+// AI 응답 파싱
+function parseZodiacResponse(text) {
+    // API 응답이 문자열인 경우 파싱
+    if (typeof text === 'string') {
+        const lines = text.split('\n').filter(line => line.trim());
+        const result = {
+            overall: '',
+            scores: { love: 75, money: 75, work: 75, health: 75 },
+            advice: '',
+            luckyNumber: '',
+            luckyColor: ''
+        };
+        
+        lines.forEach(line => {
+            if (line.includes('종합운:')) {
+                result.overall = line.replace(/종합운:?\s*/, '').trim();
+            } else if (line.includes('애정운:')) {
+                const match = line.match(/(\d+)/);
+                if (match) result.scores.love = parseInt(match[1]);
+            } else if (line.includes('금전운:')) {
+                const match = line.match(/(\d+)/);
+                if (match) result.scores.money = parseInt(match[1]);
+            } else if (line.includes('직장운:')) {
+                const match = line.match(/(\d+)/);
+                if (match) result.scores.work = parseInt(match[1]);
+            } else if (line.includes('건강운:')) {
+                const match = line.match(/(\d+)/);
+                if (match) result.scores.health = parseInt(match[1]);
+            } else if (line.includes('오늘의 조언:')) {
+                result.advice = line.replace(/오늘의 조언:?\s*/, '').trim();
+            } else if (line.includes('행운의 숫자:')) {
+                result.luckyNumber = line.replace(/행운의 숫자:?\s*/, '').trim();
+            } else if (line.includes('행운의 색상:')) {
+                result.luckyColor = line.replace(/행운의 색상:?\s*/, '').trim();
+            }
+        });
+        
+        return result;
+    }
+    
+    // 이미 객체인 경우 그대로 반환
+    return text;
 }
 
 // 별자리 선택 초기화

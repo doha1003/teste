@@ -24,15 +24,16 @@ export default async function handler(req, res) {
     }
 
     try {
-        const { type, data, prompt } = req.body;
+        const { type, data, prompt, todayDate } = req.body;
         const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
         let aiPrompt = '';
         
         switch(type) {
             case 'daily':
-                const { name, birthDate, gender, birthTime } = data;
-                const today = new Date().toLocaleDateString('ko-KR');
+                const { name, birthDate, gender, birthTime, manseryeok } = data;
+                // 클라이언트에서 보낸 날짜 사용, 없으면 서버 날짜
+                const today = todayDate || new Date().toLocaleDateString('ko-KR', { timeZone: 'Asia/Seoul' });
                 aiPrompt = `
 당신은 한국 최고의 사주 전문가입니다. 다음 정보를 바탕으로 오늘의 운세를 전문적으로 분석해주세요.
 
@@ -40,6 +41,7 @@ export default async function handler(req, res) {
 생년월일: ${birthDate}
 성별: ${gender}
 ${birthTime ? `출생시간: ${birthTime}` : ''}
+${manseryeok ? `만세력 사주: ${manseryeok}` : ''}
 오늘 날짜: ${today}
 
 다음 형식으로 상세하게 답변해주세요:
@@ -66,8 +68,9 @@ ${birthTime ? `출생시간: ${birthTime}` : ''}
                     libra: '천칭자리', scorpio: '전갈자리', sagittarius: '사수자리',
                     capricorn: '염소자리', aquarius: '물병자리', pisces: '물고기자리'
                 };
+                const todayZodiac = todayDate || new Date().toLocaleDateString('ko-KR', { timeZone: 'Asia/Seoul' });
                 aiPrompt = `
-당신은 전문 점성술사입니다. ${zodiacKorean[zodiac]}의 오늘 운세를 상세히 분석해주세요.
+당신은 전문 점성술사입니다. 오늘 ${todayZodiac} ${zodiacKorean[zodiac]}의 운세를 상세히 분석해주세요.
 
 종합운: [오늘의 전체적인 운세를 3-4문장으로 상세히]
 애정운: [0-100점] [연애운 2문장]
@@ -102,8 +105,28 @@ ${sajuData.yearPillar} ${sajuData.monthPillar} ${sajuData.dayPillar} ${sajuData.
 `;
                 break;
                 
+            case 'zodiac-animal':
+                const { animal, animalName, animalHanja } = data;
+                const todayAnimal = todayDate || new Date().toLocaleDateString('ko-KR', { timeZone: 'Asia/Seoul' });
+                aiPrompt = `
+당신은 전문 운세가입니다. 오늘 ${todayAnimal} ${animalName}(${animalHanja})의 운세를 상세히 분석해주세요.
+
+종합운: [오늘의 전체적인 운세를 3-4문장으로]
+애정운: [0-100점] [연애운 2문장]
+금전운: [0-100점] [재물운 2문장]
+직장운: [0-100점] [업무운 2문장]
+건강운: [0-100점] [건강운 2문장]
+
+오늘의 조언: [구체적인 행동 지침 2-3문장]
+행운의 숫자: [1-45 사이 숫자 2개]
+행운의 색상: [색상명]
+
+${animalName}의 특성과 2025년 을사년(뱀의 해) 에너지를 고려하여 분석해주세요.
+`;
+                break;
+                
             case 'general':
-                // 일반적인 프롬프트 처리 (zodiac-animal.js에서 사용)
+                // 일반적인 프롬프트 처리
                 aiPrompt = prompt || data.prompt || '';
                 break;
                 
@@ -118,13 +141,21 @@ ${sajuData.yearPillar} ${sajuData.monthPillar} ${sajuData.dayPillar} ${sajuData.
         const response = await result.response;
         const text = response.text();
         
-        // 응답 파싱
-        const parsedData = type === 'general' ? text : parseFortuneResponse(text, type);
+        // 응답 파싱 - 각 타입별로 구조화된 JSON 반환
+        let parsedData;
+        if (type === 'general' || type === 'tarot') {
+            parsedData = text;
+        } else if (type === 'zodiac' || type === 'zodiac-animal') {
+            parsedData = parseZodiacResponse(text);
+        } else {
+            parsedData = parseFortuneResponse(text, type);
+        }
         
         res.status(200).json({
             success: true,
             data: parsedData,
-            aiGenerated: true
+            aiGenerated: true,
+            date: todayDate || new Date().toLocaleDateString('ko-KR', { timeZone: 'Asia/Seoul' })
         });
         
     } catch (error) {
@@ -135,6 +166,52 @@ ${sajuData.yearPillar} ${sajuData.monthPillar} ${sajuData.dayPillar} ${sajuData.
             message: error.message
         });
     }
+}
+
+// 별자리/띠 운세 파싱
+function parseZodiacResponse(text) {
+    const lines = text.split('\n').filter(line => line.trim());
+    const result = {
+        overall: '',
+        scores: { love: 0, money: 0, work: 0, health: 0 },
+        advice: '',
+        luckyNumber: '',
+        luckyColor: ''
+    };
+    
+    lines.forEach(line => {
+        if (line.includes('종합운:')) {
+            result.overall = line.replace(/종합운:?\s*/, '').trim();
+        } else if (line.includes('애정운:')) {
+            const match = line.match(/(\d+)/);
+            if (match) result.scores.love = parseInt(match[1]);
+            const desc = line.replace(/애정운:?\s*\[?\d+점\]?\s*/, '').trim();
+            if (desc) result.loveDesc = desc;
+        } else if (line.includes('금전운:')) {
+            const match = line.match(/(\d+)/);
+            if (match) result.scores.money = parseInt(match[1]);
+            const desc = line.replace(/금전운:?\s*\[?\d+점\]?\s*/, '').trim();
+            if (desc) result.moneyDesc = desc;
+        } else if (line.includes('직장운:')) {
+            const match = line.match(/(\d+)/);
+            if (match) result.scores.work = parseInt(match[1]);
+            const desc = line.replace(/직장운:?\s*\[?\d+점\]?\s*/, '').trim();
+            if (desc) result.workDesc = desc;
+        } else if (line.includes('건강운:')) {
+            const match = line.match(/(\d+)/);
+            if (match) result.scores.health = parseInt(match[1]);
+            const desc = line.replace(/건강운:?\s*\[?\d+점\]?\s*/, '').trim();
+            if (desc) result.healthDesc = desc;
+        } else if (line.includes('오늘의 조언:')) {
+            result.advice = line.replace(/오늘의 조언:?\s*/, '').trim();
+        } else if (line.includes('행운의 숫자:')) {
+            result.luckyNumber = line.replace(/행운의 숫자:?\s*/, '').trim();
+        } else if (line.includes('행운의 색상:')) {
+            result.luckyColor = line.replace(/행운의 색상:?\s*/, '').trim();
+        }
+    });
+    
+    return result;
 }
 
 function parseFortuneResponse(text, type) {

@@ -488,13 +488,92 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             // Call AI API
             let fortuneResult;
-            if (typeof generateDailyFortuneWithAI === 'function') {
-                const birthDateStr = `${userData.birthYear}-${String(userData.birthMonth).padStart(2, '0')}-${String(userData.birthDay).padStart(2, '0')}`;
-                const gender = userData.birthHour && userData.birthHour >= 0 && userData.birthHour <= 11 ? '남' : '여'; // 임시 성별 추정
-                fortuneResult = await generateDailyFortuneWithAI(userData.name, birthDateStr, gender, userData.birthHour);
-            } else {
-                console.error('AI API function not found, using backup');
-                fortuneResult = generateBackupFortune(userData.name, `${userData.birthYear}-${userData.birthMonth}-${userData.birthDay}`);
+            const birthDateStr = `${userData.birthYear}-${String(userData.birthMonth).padStart(2, '0')}-${String(userData.birthDay).padStart(2, '0')}`;
+            const gender = userData.birthHour && userData.birthHour >= 0 && userData.birthHour <= 11 ? '남' : '여'; // 임시 성별 추정
+            
+            // 만세력 데이터 계산
+            let manseryeokData = null;
+            if (window.sajuCalculator && window.sajuCalculator.calculateSaju) {
+                const saju = window.sajuCalculator.calculateSaju(
+                    userData.birthYear, 
+                    userData.birthMonth, 
+                    userData.birthDay, 
+                    userData.birthHour || 0, 
+                    userData.isLunar
+                );
+                
+                // 만세력 데이터로 일주 보정
+                if (window.getManseryeokData) {
+                    let targetYear = userData.birthYear, targetMonth = userData.birthMonth, targetDay = userData.birthDay;
+                    
+                    if (userData.isLunar && window.lunarToSolar) {
+                        const solarDate = window.lunarToSolar(userData.birthYear, userData.birthMonth, userData.birthDay);
+                        if (solarDate) {
+                            targetYear = solarDate.year;
+                            targetMonth = solarDate.month;
+                            targetDay = solarDate.day;
+                        }
+                    }
+                    
+                    const manseryeokResult = window.getManseryeokData(targetYear, targetMonth, targetDay);
+                    if (manseryeokResult && manseryeokResult.dayGanji) {
+                        saju.dayPillar = {
+                            stem: manseryeokResult.dayGanji.charAt(0),
+                            branch: manseryeokResult.dayGanji.charAt(1)
+                        };
+                    }
+                }
+                
+                manseryeokData = {
+                    yearPillar: `${saju.yearPillar.stem || saju.yearPillar.charAt?.(0)}${saju.yearPillar.branch || saju.yearPillar.charAt?.(1)}`,
+                    monthPillar: `${saju.monthPillar.stem || saju.monthPillar.charAt?.(0)}${saju.monthPillar.branch || saju.monthPillar.charAt?.(1)}`,
+                    dayPillar: `${saju.dayPillar.stem || saju.dayPillar.charAt?.(0)}${saju.dayPillar.branch || saju.dayPillar.charAt?.(1)}`,
+                    hourPillar: userData.birthHour ? `${saju.hourPillar.stem || saju.hourPillar.charAt?.(0)}${saju.hourPillar.branch || saju.hourPillar.charAt?.(1)}` : null,
+                    dayMaster: saju.dayPillar?.stem || saju.dayMaster
+                };
+            }
+            
+            const today = new Date();
+            const todayStr = `${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일`;
+            
+            try {
+                const response = await fetch('/api/fortune', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        type: 'daily',
+                        data: {
+                            name: userData.name,
+                            birthDate: birthDateStr,
+                            gender: gender,
+                            birthTime: userData.birthHour ? `${userData.birthHour}시` : null,
+                            manseryeok: manseryeokData ? JSON.stringify(manseryeokData) : null
+                        },
+                        todayDate: todayStr
+                    })
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    if (result.success && result.data) {
+                        fortuneResult = {
+                            general: result.data.descriptions?.overall || '오늘은 새로운 기회가 찾아올 수 있는 날입니다.',
+                            love: result.data.descriptions?.love || '인연과의 만남에 주의를 기울여보세요.',
+                            money: result.data.descriptions?.money || '재정적인 결정은 신중하게 하는 것이 좋습니다.',
+                            work: result.data.descriptions?.work || '업무에서 좋은 성과를 기대할 수 있습니다.',
+                            advice: result.data.luck?.caution || '오늘은 긍정적인 마음가짐이 중요합니다.'
+                        };
+                    } else {
+                        throw new Error('Invalid API response');
+                    }
+                } else {
+                    throw new Error('API request failed');
+                }
+            } catch (apiError) {
+                console.error('AI API error:', apiError);
+                fortuneResult = generateBackupFortune(userData.name, birthDateStr);
             }
             
             // Display result
