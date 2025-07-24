@@ -192,6 +192,7 @@ if ('IntersectionObserver' in window) {
     <!-- External JavaScript -->
     <script src="/js/main.js"></script>
     <script src="/js/api-config.js"></script>
+    <script src="/js/gemini-api.js"></script>
     
     
 
@@ -449,9 +450,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Ensure form submission works
-    window.generateDailyFortune = function(event) {
+    window.generateDailyFortune = async function(event) {
         event.preventDefault();
-        console.log('Generating daily fortune...');
+        console.log('Generating daily fortune with AI...');
         
         const form = event.target;
         const formData = new FormData(form);
@@ -469,15 +470,67 @@ document.addEventListener('DOMContentLoaded', function() {
         const resultDiv = document.getElementById('fortuneResult');
         if (resultDiv) {
             resultDiv.style.display = 'block';
-            resultDiv.innerHTML = '<div class="loading">운세를 분석하고 있습니다...</div>';
+            resultDiv.innerHTML = '<div class="loading">AI가 당신의 운세를 분석하고 있습니다...</div>';
         }
         
-        // Generate fortune (implement actual logic here)
-        setTimeout(() => {
-            if (resultDiv) {
-                resultDiv.innerHTML = '<div class="fortune-result">운세 결과가 여기에 표시됩니다.</div>';
+        // Prepare user data
+        const userData = {
+            name: formData.get('userName'),
+            birthYear: parseInt(formData.get('birthYear')),
+            birthMonth: parseInt(formData.get('birthMonth')),
+            birthDay: parseInt(formData.get('birthDay')),
+            birthHour: parseInt(formData.get('birthHour')) || null,
+            isLunar: formData.get('lunarCalendar') === 'on'
+        };
+        
+        try {
+            // Call AI API
+            let fortuneResult;
+            if (typeof generateDailyFortuneWithAI === 'function') {
+                const birthDateStr = `${userData.birthYear}-${String(userData.birthMonth).padStart(2, '0')}-${String(userData.birthDay).padStart(2, '0')}`;
+                const gender = userData.birthHour && userData.birthHour >= 0 && userData.birthHour <= 11 ? '남' : '여'; // 임시 성별 추정
+                fortuneResult = await generateDailyFortuneWithAI(userData.name, birthDateStr, gender, userData.birthHour);
+            } else {
+                console.error('AI API function not found, using backup');
+                fortuneResult = generateBackupFortune(userData.name, `${userData.birthYear}-${userData.birthMonth}-${userData.birthDay}`);
             }
-        }, 2000);
+            
+            // Display result
+            if (resultDiv && fortuneResult) {
+                resultDiv.innerHTML = `
+                    <div class="fortune-result-card">
+                        <h3>${userData.name}님의 오늘의 운세</h3>
+                        <div class="fortune-content">
+                            <div class="fortune-section">
+                                <h4>📅 종합운</h4>
+                                <p>${fortuneResult.general || '오늘은 새로운 기회가 찾아올 수 있는 날입니다.'}</p>
+                            </div>
+                            <div class="fortune-section">
+                                <h4>💕 애정운</h4>
+                                <p>${fortuneResult.love || '인연과의 만남에 주의를 기울여보세요.'}</p>
+                            </div>
+                            <div class="fortune-section">
+                                <h4>💰 재물운</h4>
+                                <p>${fortuneResult.money || '재정적인 결정은 신중하게 하는 것이 좋습니다.'}</p>
+                            </div>
+                            <div class="fortune-section">
+                                <h4>💼 직장운</h4>
+                                <p>${fortuneResult.work || '업무에서 좋은 성과를 기대할 수 있습니다.'}</p>
+                            </div>
+                            <div class="fortune-section">
+                                <h4>🍀 행운의 조언</h4>
+                                <p>${fortuneResult.advice || '오늘은 긍정적인 마음가짐이 중요합니다.'}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+        } catch (error) {
+            console.error('Fortune generation error:', error);
+            if (resultDiv) {
+                resultDiv.innerHTML = '<div class="error">운세 생성 중 오류가 발생했습니다. 다시 시도해주세요.</div>';
+            }
+        }
     };
 });
 </script>
