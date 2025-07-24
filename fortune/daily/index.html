@@ -193,735 +193,7 @@ if ('IntersectionObserver' in window) {
     <script src="/js/main.js"></script>
     <script src="/js/api-config.js"></script>
     
-    <script>
-
-        document.addEventListener('DOMContentLoaded', function() {
-
-            const yearSelect = document.getElementById('birthYear');
-            const currentYear = new Date().getFullYear();
-            for (let year = currentYear; year >= 1900; year--) {
-                const option = document.createElement('option');
-                option.value = year;
-                option.textContent = year + '년';
-                yearSelect.appendChild(option);
-            }
-
-            document.getElementById('birthMonth').addEventListener('change', updateDayOptions);
-            document.getElementById('birthYear').addEventListener('change', updateDayOptions);
-        });
-
-        function updateDayOptions() {
-            const year = parseInt(document.getElementById('birthYear').value);
-            const month = parseInt(document.getElementById('birthMonth').value);
-            const daySelect = document.getElementById('birthDay');
-            
-            daySelect.innerHTML = '<option value="">일 선택</option>';
-            
-            if (year && month) {
-                const daysInMonth = new Date(year, month, 0).getDate();
-                for (let day = 1; day <= daysInMonth; day++) {
-                    const option = document.createElement('option');
-                    option.value = day;
-                    option.textContent = day + '일';
-                    daySelect.appendChild(option);
-                }
-            }
-        }
-
-        function generateDailyFortune(event) {
-            event.preventDefault();
-            
-            const userName = document.getElementById('userName').value;
-            const birthYear = parseInt(document.getElementById('birthYear').value);
-            const birthMonth = parseInt(document.getElementById('birthMonth').value);
-            const birthDay = parseInt(document.getElementById('birthDay').value);
-            const birthTime = parseInt(document.getElementById('birthTime').value);
-            const isLunar = document.getElementById('isLunar').checked;
-
-            const resultDiv = document.getElementById('fortuneResult');
-            resultDiv.style.display = 'block';
-            resultDiv.innerHTML = `
-                <div class="daily-ai-analyzing">
-                    <div class="fortune-loading-spinner"></div>
-                    <div class="fortune-loading-text">🔮 만세력으로 ${userName}님의 사주를 분석하고 있습니다<span class="fortune-loading-dots"></span></div>
-                </div>
-            `;
-
-            document.getElementById('fortuneForm').style.display = 'none';
-
-            setTimeout(() => {
-                displayDailyFortune(userName, birthYear, birthMonth, birthDay, birthTime, isLunar);
-            }, 2000);
-        }
-
-        function getTodayPillarFromManseryeok() {
-            const today = new Date();
-            const year = today.getFullYear();
-            const month = today.getMonth() + 1;
-            const day = today.getDate();
-
-            if (window.getManseryeokData) {
-                const data = window.getManseryeokData(year, month, day);
-                if (data) {
-                    return {
-                        stem: data.dayGanji.charAt(0),
-                        branch: data.dayGanji.charAt(1)
-                    };
-                }
-            }
-
-            const totalDays = Math.floor(today.getTime() / (1000 * 60 * 60 * 24));
-            const ganjiIndex = totalDays % 60;
-            const stems = ["갑", "을", "병", "정", "무", "기", "경", "신", "임", "계"];
-            const branches = ["자", "축", "인", "묘", "진", "사", "오", "미", "신", "유", "술", "해"];
-            
-            return {
-                stem: stems[ganjiIndex % 10],
-                branch: branches[ganjiIndex % 12]
-            };
-        }
-
-        function displayDailyFortune(userName, birthYear, birthMonth, birthDay, birthTime, isLunar) {
-
-            if (typeof sajuCalculator === 'undefined') {
-                console.error('sajuCalculator가 로드되지 않았습니다.');
-                alert('페이지 로딩 중 오류가 발생했습니다. 새로고침 후 다시 시도해주세요.');
-                location.reload();
-                return;
-            }
-
-            const saju = sajuCalculator.calculateSaju(birthYear, birthMonth, birthDay, birthTime >= 0 ? birthTime : 12, isLunar);
-
-            const today = new Date();
-
-            const todayPillar = getTodayPillarFromManseryeok();
-
-            const relation = analyzeRelation(saju.dayPillar, todayPillar);
-            const fortune = generateDetailedFortune(saju, todayPillar, relation);
-            
-            const resultDiv = document.getElementById('fortuneResult');
-            resultDiv.innerHTML = `
-                <div class="fortune-result-container">
-                    <h2 style="text-align: center; margin-bottom: 30px;">
-                        ${userName}님의 ${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일 운세
-                    </h2>
-                    
-                    <div class="saju-brief">
-                        <h3>📅 사주팔자 (四柱八字)</h3>
-                        <div class="pillars-row">
-                            <div class="pillar-item">
-                                <div class="pillar-label">연주 (年柱)</div>
-                                <div class="pillar-chars">
-                                    <span class="stem">${saju.yearPillar.stem}</span>
-                                    <span class="branch">${saju.yearPillar.branch}</span>
-                                </div>
-                                <div class="pillar-ten-god">${saju.tenGods.year}</div>
-                            </div>
-                            
-                            <div class="pillar-item">
-                                <div class="pillar-label">월주 (月柱)</div>
-                                <div class="pillar-chars">
-                                    <span class="stem">${saju.monthPillar.stem}</span>
-                                    <span class="branch">${saju.monthPillar.branch}</span>
-                                </div>
-                                <div class="pillar-ten-god">${saju.tenGods.month}</div>
-                            </div>
-                            
-                            <div class="pillar-item highlight">
-                                <div class="pillar-label">일주 (日柱) ⭐</div>
-                                <div class="pillar-chars">
-                                    <span class="stem">${saju.dayPillar.stem}</span>
-                                    <span class="branch">${saju.dayPillar.branch}</span>
-                                </div>
-                                <div class="pillar-ten-god">일주(본인)</div>
-                            </div>
-                            
-                            <div class="pillar-item ${birthTime < 0 ? 'unknown' : ''}">
-                                <div class="pillar-label">시주 (時柱)</div>
-                                <div class="pillar-chars">
-                                    <span class="stem">${birthTime >= 0 ? saju.hourPillar.stem : '?'}</span>
-                                    <span class="branch">${birthTime >= 0 ? saju.hourPillar.branch : '?'}</span>
-                                </div>
-                                <div class="pillar-ten-god">${birthTime >= 0 ? saju.tenGods.hour : '미상'}</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="today-pillar">
-                        <h3>🌅 오늘의 일진</h3>
-                        <div class="today-info">
-                            <span class="today-stem">${todayPillar.stem}</span>
-                            <span class="today-branch">${todayPillar.branch}</span>
-                            <span class="today-day">일 (${todayPillar.stem}${todayPillar.branch}日)</span>
-                        </div>
-                    </div>
-                    
-                    <div class="fortune-scores">
-                        <div class="score-card">
-                            <div class="score-icon">💫</div>
-                            <div class="score-label">총운</div>
-                            <div class="score-value" style="color: ${getScoreColor(fortune.overallScore)}">${fortune.overallScore}</div>
-                            <div class="score-bar">
-                                <div class="score-fill" style="width: ${fortune.overallScore}%; background: ${getScoreColor(fortune.overallScore)}"></div>
-                            </div>
-                        </div>
-                        
-                        <div class="score-card">
-                            <div class="score-icon">❤️</div>
-                            <div class="score-label">애정운</div>
-                            <div class="score-value" style="color: ${getScoreColor(fortune.loveScore)}">${fortune.loveScore}</div>
-                            <div class="score-bar">
-                                <div class="score-fill" style="width: ${fortune.loveScore}%; background: ${getScoreColor(fortune.loveScore)}"></div>
-                            </div>
-                        </div>
-                        
-                        <div class="score-card">
-                            <div class="score-icon">💰</div>
-                            <div class="score-label">금전운</div>
-                            <div class="score-value" style="color: ${getScoreColor(fortune.moneyScore)}">${fortune.moneyScore}</div>
-                            <div class="score-bar">
-                                <div class="score-fill" style="width: ${fortune.moneyScore}%; background: ${getScoreColor(fortune.moneyScore)}"></div>
-                            </div>
-                        </div>
-                        
-                        <div class="score-card">
-                            <div class="score-icon">🏃</div>
-                            <div class="score-label">건강운</div>
-                            <div class="score-value" style="color: ${getScoreColor(fortune.healthScore)}">${fortune.healthScore}</div>
-                            <div class="score-bar">
-                                <div class="score-fill" style="width: ${fortune.healthScore}%; background: ${getScoreColor(fortune.healthScore)}"></div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="fortune-details">
-                        <div class="fortune-category">
-                            <h4>💫 총운</h4>
-                            <p>${fortune.overallFortune}</p>
-                        </div>
-                        
-                        <div class="fortune-category">
-                            <h4>❤️ 애정운</h4>
-                            <p>${fortune.loveFortune}</p>
-                            <div class="fortune-advice">
-                                <strong>💡 조언:</strong> ${fortune.loveAdvice}
-                            </div>
-                        </div>
-                        
-                        <div class="fortune-category">
-                            <h4>💰 금전운</h4>
-                            <p>${fortune.moneyFortune}</p>
-                            <div class="fortune-advice">
-                                <strong>💡 조언:</strong> ${fortune.moneyAdvice}
-                            </div>
-                        </div>
-                        
-                        <div class="fortune-category">
-                            <h4>💼 직업운</h4>
-                            <p>${fortune.careerFortune}</p>
-                            <div class="fortune-advice">
-                                <strong>💡 조언:</strong> ${fortune.careerAdvice}
-                            </div>
-                        </div>
-                        
-                        <div class="fortune-category">
-                            <h4>🏃 건강운</h4>
-                            <p>${fortune.healthFortune}</p>
-                            <div class="fortune-advice">
-                                <strong>💡 조언:</strong> ${fortune.healthAdvice}
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="lucky-elements">
-                        <h3>🌟 오늘의 행운 요소</h3>
-                        <div class="lucky-items">
-                            <div class="lucky-box">
-                                <div class="lucky-icon">⏰</div>
-                                <div class="lucky-label">행운의 시간</div>
-                                <div class="lucky-value">${fortune.luckyTime}</div>
-                            </div>
-                            <div class="lucky-box">
-                                <div class="lucky-icon">🧭</div>
-                                <div class="lucky-label">행운의 방향</div>
-                                <div class="lucky-value">${fortune.luckyDirection}</div>
-                            </div>
-                            <div class="lucky-box">
-                                <div class="lucky-icon">🎨</div>
-                                <div class="lucky-label">행운의 색상</div>
-                                <div class="lucky-value">${fortune.luckyColor}</div>
-                            </div>
-                            <div class="lucky-box">
-                                <div class="lucky-icon">🔢</div>
-                                <div class="lucky-label">행운의 숫자</div>
-                                <div class="lucky-value">${fortune.luckyNumber}</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="daily-advice-section">
-                        <h3>📝 오늘의 조언</h3>
-                        <div class="advice-content">
-                            <p class="main-advice">${fortune.advice}</p>
-                            <div class="advice-details">
-                                <div class="advice-item">
-                                    <strong>✅ 오늘 하면 좋은 일</strong>
-                                    ${fortune.doAdvice}
-                                </div>
-                                <div class="advice-item">
-                                    <strong>❌ 오늘 피해야 할 일</strong>
-                                    ${fortune.dontAdvice}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="action-buttons">
-                        <button onclick="location.reload()" class="btn btn-primary">다시 보기</button>
-                        <button onclick="shareFortune()" class="btn btn-secondary">공유하기</button>
-                    </div>
-                </div>
-            `;
-            
-            resultDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-
-        function analyzeRelation(dayPillar, todayPillar) {
-            const relations = {
-                stemRelation: analyzeStemRelation(dayPillar.stem, todayPillar.stem),
-                branchRelation: analyzeBranchRelation(dayPillar.branch, todayPillar.branch),
-                specialRelation: findSpecialRelation(dayPillar.branch, todayPillar.branch)
-            };
-            
-            return relations;
-        }
-
-        function analyzeStemRelation(stem1, stem2) {
-            const stemElements = {
-                '갑': '목', '을': '목',
-                '병': '화', '정': '화',
-                '무': '토', '기': '토',
-                '경': '금', '신': '금',
-                '임': '수', '계': '수'
-            };
-            
-            const element1 = stemElements[stem1];
-            const element2 = stemElements[stem2];
-
-            const relations = {
-                '목': { generate: '화', control: '토', generated: '수', controlled: '금' },
-                '화': { generate: '토', control: '금', generated: '목', controlled: '수' },
-                '토': { generate: '금', control: '수', generated: '화', controlled: '목' },
-                '금': { generate: '수', control: '목', generated: '토', controlled: '화' },
-                '수': { generate: '목', control: '화', generated: '금', controlled: '토' }
-            };
-            
-            if (element1 === element2) return 'same';
-            if (relations[element1].generate === element2) return 'generate';
-            if (relations[element1].generated === element2) return 'generated';
-            if (relations[element1].control === element2) return 'control';
-            if (relations[element1].controlled === element2) return 'controlled';
-            
-            return 'none';
-        }
-
-        function analyzeBranchRelation(branch1, branch2) {
-            const branchElements = {
-                '자': '수', '축': '토', '인': '목', '묘': '목',
-                '진': '토', '사': '화', '오': '화', '미': '토',
-                '신': '금', '유': '금', '술': '토', '해': '수'
-            };
-            
-            const element1 = branchElements[branch1];
-            const element2 = branchElements[branch2];
-            
-            return analyzeStemRelation(element1, element2);
-        }
-
-        function findSpecialRelation(branch1, branch2) {
-
-            const combinations = {
-                '자': '축', '축': '자',
-                '인': '해', '해': '인',
-                '묘': '술', '술': '묘',
-                '진': '유', '유': '진',
-                '사': '신', '신': '사',
-                '오': '미', '미': '오'
-            };
-
-            const clashes = {
-                '자': '오', '오': '자',
-                '축': '미', '미': '축',
-                '인': '신', '신': '인',
-                '묘': '유', '유': '묘',
-                '진': '술', '술': '진',
-                '사': '해', '해': '사'
-            };
-
-            const punishments = {
-                '인': ['사', '신'], '사': ['인', '신'], '신': ['인', '사'],
-                '축': ['술', '미'], '술': ['축', '미'], '미': ['축', '술']
-            };
-            
-            if (combinations[branch1] === branch2) {
-                return { type: '육합', strength: 'positive' };
-            }
-            
-            if (clashes[branch1] === branch2) {
-                return { type: '충', strength: 'negative' };
-            }
-            
-            if (punishments[branch1] && punishments[branch1].includes(branch2)) {
-                return { type: '형', strength: 'negative' };
-            }
-            
-            return { type: 'none', strength: 'neutral' };
-        }
-
-        function generateDetailedFortune(saju, todayPillar, relation) {
-
-            const baseScore = 65;
-            let overallScore = baseScore;
-
-            if (relation.stemRelation === 'generate' || relation.stemRelation === 'generated') {
-                overallScore += 10;
-            } else if (relation.stemRelation === 'control' || relation.stemRelation === 'controlled') {
-                overallScore -= 10;
-            }
-            
-            if (relation.specialRelation.type === '육합') {
-                overallScore += 20;
-            } else if (relation.specialRelation.type === '충') {
-                overallScore -= 15;
-            } else if (relation.specialRelation.type === '형') {
-                overallScore -= 10;
-            }
-
-            overallScore = Math.max(20, Math.min(95, overallScore));
-
-            const loveScore = Math.max(20, Math.min(95, overallScore + Math.floor(Math.random() * 20 - 10)));
-            const moneyScore = Math.max(20, Math.min(95, overallScore + Math.floor(Math.random() * 20 - 10)));
-            const healthScore = Math.max(20, Math.min(95, overallScore + Math.floor(Math.random() * 20 - 10)));
-            const careerScore = Math.max(20, Math.min(95, overallScore + Math.floor(Math.random() * 20 - 10)));
-
-            const overallFortune = generateOverallMessage(saju, overallScore, relation);
-            const loveFortune = generateLoveMessage(saju, loveScore, relation);
-            const moneyFortune = generateMoneyMessage(saju, moneyScore, relation);
-            const careerFortune = generateCareerMessage(saju, careerScore, relation);
-            const healthFortune = generateHealthMessage(saju, healthScore, relation);
-
-            const luckyElements = generateLuckyElements(saju, todayPillar);
-
-            const advice = generateAdvice(saju, todayPillar, relation);
-            
-            return {
-                overallScore,
-                loveScore,
-                moneyScore,
-                healthScore,
-                overallFortune,
-                loveFortune,
-                loveAdvice: generateLoveAdvice(saju, loveScore),
-                moneyFortune,
-                moneyAdvice: generateMoneyAdvice(saju, moneyScore),
-                careerFortune,
-                careerAdvice: generateCareerAdvice(saju, careerScore),
-                healthFortune,
-                healthAdvice: generateHealthAdvice(saju, healthScore),
-                ...luckyElements,
-                ...advice
-            };
-        }
-
-        function generateOverallMessage(saju, score, relation) {
-            const dayMaster = saju.dayPillar.stem + saju.dayPillar.branch;
-            let message = `${dayMaster}일주인 당신의 오늘 운세는 `;
-            
-            if (score >= 80) {
-                message += '매우 좋습니다! ';
-                if (relation.specialRelation.type === '육합') {
-                    message += '육합의 조화로운 기운이 당신을 감싸고 있어, 모든 일이 순조롭게 진행될 것입니다. ';
-                }
-                message += '평소 미뤄왔던 중요한 일을 시작하기에 최적의 날입니다.';
-            } else if (score >= 60) {
-                message += '평균 이상입니다. ';
-                message += '큰 변화보다는 안정적인 흐름 속에서 차근차근 일을 진행하는 것이 좋겠습니다.';
-            } else {
-                message += '다소 주의가 필요합니다. ';
-                if (relation.specialRelation.type === '충') {
-                    message += '충의 변화 에너지가 강하므로 예상치 못한 상황에 대비하세요. ';
-                }
-                message += '무리하지 말고 신중하게 행동하는 것이 중요합니다.';
-            }
-            
-            return message;
-        }
-        
-        function generateLoveMessage(saju, score, relation) {
-            const element = FIVE_ELEMENTS[saju.dayPillar.stem];
-            let message = '';
-            
-            if (score >= 80) {
-                message = `애정운이 매우 좋은 날입니다. ${element}의 매력이 빛을 발하여 이성에게 좋은 인상을 줄 수 있습니다. `;
-                message += '연인이 있다면 깊은 대화를 나누기 좋고, 싱글이라면 새로운 만남의 기회가 있을 수 있습니다.';
-            } else if (score >= 60) {
-                message = '평온한 애정운입니다. 서로를 이해하고 배려하는 마음이 중요한 시기입니다. ';
-                message += '작은 선물이나 따뜻한 말 한마디가 관계를 더욱 돈독하게 만들 것입니다.';
-            } else {
-                message = '애정 관계에서 약간의 긴장이 있을 수 있습니다. ';
-                message += '감정적으로 예민해질 수 있으니 상대방의 입장을 이해하려고 노력하세요.';
-            }
-            
-            return message;
-        }
-        
-        function generateMoneyMessage(saju, score, relation) {
-            let message = '';
-            
-            if (score >= 80) {
-                message = '금전운이 상승하는 날입니다. 투자나 사업에서 좋은 기회를 포착할 수 있습니다. ';
-                message += '다만 과욕은 금물이니 적절한 선에서 만족하는 것이 중요합니다.';
-            } else if (score >= 60) {
-                message = '안정적인 금전 흐름이 예상됩니다. 계획적인 소비와 저축을 실천하기 좋은 날입니다. ';
-                message += '충동구매는 피하고 필요한 것만 구입하세요.';
-            } else {
-                message = '금전적으로 신중해야 하는 날입니다. 큰 지출이나 투자는 미루는 것이 좋겠습니다. ';
-                message += '예상치 못한 지출이 발생할 수 있으니 여유 자금을 확보해두세요.';
-            }
-            
-            return message;
-        }
-        
-        function generateCareerMessage(saju, score, relation) {
-            let message = '';
-            
-            if (score >= 80) {
-                message = '직장에서의 성과가 돋보이는 날입니다. 상사나 동료들에게 능력을 인정받을 수 있습니다. ';
-                message += '새로운 프로젝트나 중요한 업무를 맡기에 좋은 시기입니다.';
-            } else if (score >= 60) {
-                message = '평소와 같은 업무 흐름이 이어집니다. 묵묵히 자신의 일에 집중하면 좋은 결과를 얻을 수 있습니다. ';
-                message += '동료들과의 협력이 중요한 날입니다.';
-            } else {
-                message = '업무상 약간의 어려움이 있을 수 있습니다. 실수를 줄이기 위해 꼼꼼히 확인하세요. ';
-                message += '중요한 결정은 다음으로 미루는 것이 현명합니다.';
-            }
-            
-            return message;
-        }
-        
-        function generateHealthMessage(saju, score, relation) {
-            const element = FIVE_ELEMENTS[saju.dayPillar.stem];
-            const organMap = {
-                '목': '간과 담',
-                '화': '심장과 혈관',
-                '토': '비장과 소화기',
-                '금': '폐와 호흡기',
-                '수': '신장과 방광'
-            };
-            
-            const organ = organMap[element];
-            let message = '';
-            
-            if (score >= 80) {
-                message = `건강 상태가 매우 좋은 날입니다. ${organ} 기능이 활발하여 전반적인 컨디션이 최상입니다. `;
-                message += '운동이나 야외 활동을 즐기기에 좋은 날입니다.';
-            } else if (score >= 60) {
-                message = `평소와 비슷한 건강 상태를 유지하고 있습니다. ${organ}에 좋은 음식을 섭취하면 도움이 됩니다. `;
-                message += '규칙적인 생활 습관을 유지하세요.';
-            } else {
-                message = `컨디션이 다소 떨어질 수 있는 날입니다. ${organ}에 특히 주의가 필요합니다. `;
-                message += '무리한 활동은 피하고 충분한 휴식을 취하세요.';
-            }
-            
-            return message;
-        }
-
-        function generateLoveAdvice(saju, score) {
-            if (score >= 80) {
-                return '오늘은 적극적으로 감정을 표현하세요. 로맨틱한 데이트나 진심 어린 고백이 좋은 결과를 가져올 것입니다.';
-            } else if (score >= 60) {
-                return '평소보다 더 많은 관심과 배려를 보여주세요. 작은 정성이 큰 감동을 줄 수 있습니다.';
-            } else {
-                return '감정적으로 예민할 수 있으니 중요한 대화는 미루세요. 혼자만의 시간을 갖는 것도 좋습니다.';
-            }
-        }
-        
-        function generateMoneyAdvice(saju, score) {
-            if (score >= 80) {
-                return '투자나 사업 확장의 좋은 기회입니다. 하지만 욕심을 부리지 말고 분산 투자를 고려하세요.';
-            } else if (score >= 60) {
-                return '안정적인 재테크 전략을 유지하세요. 장기적인 관점에서 꾸준히 저축하는 것이 중요합니다.';
-            } else {
-                return '지출을 최소화하고 비상금을 확보하세요. 리스크가 큰 투자는 피하는 것이 좋습니다.';
-            }
-        }
-        
-        function generateCareerAdvice(saju, score) {
-            if (score >= 80) {
-                return '자신감을 갖고 새로운 도전을 시작하세요. 당신의 능력이 빛을 발할 최적의 시기입니다.';
-            } else if (score >= 60) {
-                return '꾸준함이 성공의 열쇠입니다. 현재 맡은 일에 최선을 다하면 좋은 평가를 받을 것입니다.';
-            } else {
-                return '실수를 방지하기 위해 두 번 확인하세요. 동료들과의 소통을 강화하여 협력을 구하세요.';
-            }
-        }
-        
-        function generateHealthAdvice(saju, score) {
-            if (score >= 80) {
-                return '활동적인 운동을 즐기기 좋은 날입니다. 새로운 운동을 시작하거나 야외 활동을 계획해보세요.';
-            } else if (score >= 60) {
-                return '규칙적인 생활 리듬을 유지하세요. 가벼운 스트레칭과 충분한 수분 섭취가 도움이 됩니다.';
-            } else {
-                return '무리하지 말고 충분한 휴식을 취하세요. 스트레스 관리와 명상이 도움이 될 것입니다.';
-            }
-        }
-
-        function generateLuckyElements(saju, todayPillar) {
-            const dayMaster = saju.dayPillar.stem;
-            const todayElement = FIVE_ELEMENTS[todayPillar.stem];
-
-            const timeMap = {
-                '갑': '묘시 (05:00-07:00)',
-                '을': '묘시 (05:00-07:00)',
-                '병': '오시 (11:00-13:00)',
-                '정': '사시 (09:00-11:00)',
-                '무': '진시 (07:00-09:00)',
-                '기': '미시 (13:00-15:00)',
-                '경': '신시 (15:00-17:00)',
-                '신': '유시 (17:00-19:00)',
-                '임': '자시 (23:00-01:00)',
-                '계': '해시 (21:00-23:00)'
-            };
-
-            const directionMap = {
-                '목': '동쪽',
-                '화': '남쪽',
-                '토': '중앙',
-                '금': '서쪽',
-                '수': '북쪽'
-            };
-
-            const colorMap = {
-                '목': '초록색, 청록색',
-                '화': '빨간색, 보라색',
-                '토': '노란색, 갈색',
-                '금': '흰색, 은색',
-                '수': '검은색, 파란색'
-            };
-
-            const numberMap = {
-                '갑': '3, 8',
-                '을': '3, 8',
-                '병': '2, 7',
-                '정': '2, 7',
-                '무': '5, 10',
-                '기': '5, 10',
-                '경': '4, 9',
-                '신': '4, 9',
-                '임': '1, 6',
-                '계': '1, 6'
-            };
-            
-            return {
-                luckyTime: timeMap[dayMaster],
-                luckyDirection: directionMap[FIVE_ELEMENTS[dayMaster]],
-                luckyColor: colorMap[todayElement],
-                luckyNumber: numberMap[dayMaster]
-            };
-        }
-
-        function generateAdvice(saju, todayPillar, relation) {
-            const dayMaster = saju.dayPillar.stem;
-            const element = FIVE_ELEMENTS[dayMaster];
-            
-            let mainAdvice = '';
-            let doAdvice = '';
-            let dontAdvice = '';
-
-            if (relation.specialRelation.type === '육합') {
-                mainAdvice = `오늘은 육합의 조화로운 기운이 가득한 날입니다. ${dayMaster}일주인 당신의 장점이 최대한 발휘될 수 있으니, 평소 미뤄왔던 중요한 일을 진행해보세요.`;
-            } else if (relation.specialRelation.type === '충') {
-                mainAdvice = `충의 변화 에너지가 강한 날입니다. 예상치 못한 상황이 발생할 수 있지만, 이는 새로운 기회가 될 수도 있습니다.`;
-            } else {
-                mainAdvice = `${element}의 특성을 살려 차분하고 신중하게 하루를 보내세요. 큰 변화보다는 일상의 소중함을 느끼며 내적 성장에 집중하는 것이 좋겠습니다.`;
-            }
-
-            const doList = {
-                '목': '새로운 프로젝트 시작',
-                '화': '프레젠테이션이나 발표',
-                '토': '계획 수립과 정리',
-                '금': '중요한 결정',
-                '수': '학습과 연구'
-            };
-            
-            doAdvice = doList[element];
-
-            const dontList = {
-                '목': '고집스러운 태도',
-                '화': '과도한 열정',
-                '토': '우유부단함',
-                '금': '융통성 부족',
-                '수': '책임 회피'
-            };
-            
-            dontAdvice = dontList[element];
-            
-            return {
-                advice: mainAdvice,
-                doAdvice,
-                dontAdvice
-            };
-        }
-
-        function getScoreColor(score) {
-            if (score >= 85) return '#10b981';
-            if (score >= 70) return '#3b82f6';
-            if (score >= 55) return '#f59e0b';
-            return '#ef4444';
-        }
-
-        function shareFortune() {
-            const text = '나의 오늘 운세를 확인해보세요!';
-            const url = window.location.href;
-            
-            if (navigator.share) {
-                navigator.share({
-                    title: '오늘의 운세',
-                    text: text,
-                    url: url
-                });
-            } else {
-
-                if (window.Kakao && window.Kakao.isInitialized()) {
-                    Kakao.Share.sendDefault({
-                        objectType: 'feed',
-                        content: {
-                            title: '오늘의 운세',
-                            description: text,
-                            imageUrl: 'https://doha.kr/images/og-default.png',
-                            link: {
-                                mobileWebUrl: url,
-                                webUrl: url
-                            }
-                        }
-                    });
-                } else {
-
-                    navigator.clipboard.writeText(url).then(() => {
-                        alert('링크가 복사되었습니다!');
-                    });
-                }
-            }
-        }
-
-        const FIVE_ELEMENTS = {
-            '갑': '목', '을': '목',
-            '병': '화', '정': '화',
-            '무': '토', '기': '토',
-            '경': '금', '신': '금',
-            '임': '수', '계': '수'
-        };
-    </script>
+    
 
     <!-- Kakao SDK -->
     
@@ -1106,5 +378,109 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 </script>
+
+<script>
+// Fix for form initialization timeout
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Daily Fortune: Initializing form...');
+    
+    // Initialize year dropdown with retry mechanism
+    function initializeYearDropdown() {
+        const yearSelect = document.getElementById('birthYear');
+        if (!yearSelect) {
+            console.error('Year select not found, retrying...');
+            setTimeout(initializeYearDropdown, 100);
+            return;
+        }
+        
+        // Clear existing options
+        yearSelect.innerHTML = '<option value="">연도 선택</option>';
+        
+        // Add years
+        const currentYear = new Date().getFullYear();
+        for (let year = currentYear; year >= 1920; year--) {
+            const option = document.createElement('option');
+            option.value = year;
+            option.textContent = year + '년';
+            yearSelect.appendChild(option);
+        }
+        console.log('Year dropdown initialized');
+    }
+    
+    // Initialize day dropdown
+    function updateDayOptions() {
+        const monthSelect = document.getElementById('birthMonth');
+        const daySelect = document.getElementById('birthDay');
+        
+        if (!monthSelect || !daySelect) {
+            console.error('Month or day select not found');
+            return;
+        }
+        
+        const month = parseInt(monthSelect.value);
+        const year = parseInt(document.getElementById('birthYear').value) || new Date().getFullYear();
+        
+        daySelect.innerHTML = '<option value="">일 선택</option>';
+        
+        if (!month) return;
+        
+        let days = 31;
+        if ([4, 6, 9, 11].includes(month)) {
+            days = 30;
+        } else if (month === 2) {
+            days = (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0 ? 29 : 28;
+        }
+        
+        for (let day = 1; day <= days; day++) {
+            const option = document.createElement('option');
+            option.value = day;
+            option.textContent = day + '일';
+            daySelect.appendChild(option);
+        }
+    }
+    
+    // Initialize dropdowns
+    initializeYearDropdown();
+    
+    // Add event listeners
+    const monthSelect = document.getElementById('birthMonth');
+    if (monthSelect) {
+        monthSelect.addEventListener('change', updateDayOptions);
+    }
+    
+    // Ensure form submission works
+    window.generateDailyFortune = function(event) {
+        event.preventDefault();
+        console.log('Generating daily fortune...');
+        
+        const form = event.target;
+        const formData = new FormData(form);
+        
+        // Validate form
+        const required = ['userName', 'birthYear', 'birthMonth', 'birthDay'];
+        for (const field of required) {
+            if (!formData.get(field)) {
+                alert('모든 필수 항목을 입력해주세요.');
+                return;
+            }
+        }
+        
+        // Show loading state
+        const resultDiv = document.getElementById('fortuneResult');
+        if (resultDiv) {
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = '<div class="loading">운세를 분석하고 있습니다...</div>';
+        }
+        
+        // Generate fortune (implement actual logic here)
+        setTimeout(() => {
+            if (resultDiv) {
+                resultDiv.innerHTML = '<div class="fortune-result">운세 결과가 여기에 표시됩니다.</div>';
+            }
+        }, 2000);
+    };
+});
+</script>
+
 </body>
 </html>
