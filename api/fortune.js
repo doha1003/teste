@@ -25,7 +25,7 @@ export default async function handler(req, res) {
 
     try {
         const { type, data, prompt, todayDate } = req.body;
-        const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
         let aiPrompt = '';
         
