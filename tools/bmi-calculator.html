@@ -361,9 +361,9 @@ if ('IntersectionObserver' in window) {
                 return null;
             }
             
-            const num = Security.validateNumber(parseFloat(value), min, max);
+            const num = parseFloat(value);
             
-            if (num < min || num > max) {
+            if (isNaN(num) || num < min || num > max) {
                 alert(`${fieldName}은(는) ${min}에서 ${max} 사이로 입력해주세요.`);
                 return null;
             }

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>로컬 파일 검증</title>
+</head>
+<body>
+    <h1>로컬 파일 직접 테스트</h1>
+    
+    <h2>BMI 계산기 테스트</h2>
+    <iframe src="tools/bmi-calculator.html" width="100%" height="600"></iframe>
+    
+    <h2>급여 계산기 테스트</h2>
+    <iframe src="tools/salary-calculator.html" width="100%" height="600"></iframe>
+    
+    <script>
+        setTimeout(() => {
+            // BMI 계산기 테스트
+            const bmiFrame = document.querySelector('iframe[src*="bmi"]').contentWindow;
+            bmiFrame.document.getElementById('height').value = '170';
+            bmiFrame.document.getElementById('weight').value = '70';
+            bmiFrame.document.getElementById('calculateBtn').click();
+            
+            setTimeout(() => {
+                const bmiValue = bmiFrame.document.getElementById('bmiValue').textContent;
+                console.log('BMI 결과:', bmiValue);
+            }, 1000);
+            
+            // 급여 계산기 테스트
+            const salaryFrame = document.querySelector('iframe[src*="salary"]').contentWindow;
+            salaryFrame.document.getElementById('annualSalary').value = '5000';
+            salaryFrame.document.querySelector('.calculate-btn').click();
+            
+            setTimeout(() => {
+                const monthlyNet = salaryFrame.document.getElementById('monthlyNet').textContent;
+                console.log('월 실수령액:', monthlyNet);
+            }, 1000);
+        }, 2000);
+    </script>
+</body>
+</html>
