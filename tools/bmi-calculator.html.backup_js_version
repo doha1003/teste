@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI 계산기 - 체질량지수 계산 및 건강 상태 확인 | doha.kr</title>
+    <meta name="description" content="키와 몸무게로 BMI(체질량지수)를 계산하고 건강 상태를 확인하세요. 정상 체중 범위와 건강 관리 팁을 제공합니다. WHO 아시아-태평양 기준을 적용하여 저체중, 정상, 과체중, 비만, 고도비만으로 분류합니다. 성별, 나이를 고려한 표준 체중과 체중 차이도 계산해드립니다. 각 BMI 범위에 따른 맞춤형 건강 조언을 제공하며, 영양 관리, 운동 방법, 생활 습관 개선 팁을 포함합니다. BMI의 한계점과 근육량, 체지방률 등 추가 지표의 중요성도 안내합니다. 무료로 제공되며 회원가입 없이 바로 사용 가능합니다.">
+    <meta name="keywords" content="BMI계산기, 체질량지수, 비만도계산, 표준체중, 건강관리, 다이어트">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="doha.kr">
+    
+    <!-- Security Headers -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), accelerometer=(), gyroscope=()">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="BMI 계산기 - 체질량지수 계산 및 건강 상태 확인">
+    <meta property="og:description" content="키와 몸무게로 BMI(체질량지수)를 계산하고 WHO 기준 건강 상태를 확인하세요. 무료 BMI 계산기">
+    <meta property="og:image" content="https://doha.kr/images/egen-male-card.jpg">
+    <meta property="og:url" content="https://doha.kr/tools/bmi-calculator.html">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ko_KR">
+    <meta property="og:site_name" content="doha.kr">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="BMI 계산기 - 체질량지수 계산 및 건강 상태 확인">
+    <meta name="twitter:description" content="키와 몸무게로 BMI(체질량지수)를 계산하고 WHO 기준 건강 상태를 확인하세요. 무료 BMI 계산기">
+    <meta name="twitter:image" content="https://doha.kr/images/egen-male-card.jpg">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://doha.kr/tools/bmi-calculator.html">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" crossorigin href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/pages/bmi-calculator.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/images/placeholder-favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/images/logo.svg">
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- DOMPurify for XSS protection -->
+    
+    
+    <!-- Content Security Policy --><!-- Google AdSense -->
+    <!-- Moved to end of body -->
+    
+    <!-- Kakao JavaScript SDK -->
+    
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "BMI 계산기",
+        "alternateName": "체질량지수 계산기",
+        "url": "https://doha.kr/tools/bmi-calculator.html",
+        "description": "키와 몸무게로 BMI(체질량지수)를 계산하고 건강 상태를 확인하는 무료 도구",
+        "applicationCategory": "HealthApplication",
+        "operatingSystem": "Any",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "KRW"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "ratingCount": "2840"
+        },
+        "featureList": [
+            "실시간 BMI 계산",
+            "건강 상태 분석", 
+            "표준 체중 제시",
+            "맞춤형 건강 조언",
+            "WHO 아시아-태평양 기준 적용"
+        ]
+    }
+    </script>
+    
+    <!-- Optimized CSS System -->
+    
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+
+    <script id="performance-monitor">
+
+    window.addEventListener('load', function() {
+        if (window.performance && window.performance.timing) {
+            const loadTime = window.performance.timing.loadEventEnd - window.performance.timing.navigationStart;
+            if (loadTime > 5000) {
+                console.warn('Page loading is slow:', loadTime + 'ms');
+            }
+        }
+    });
+    </script>
+</head>
+<body>
+    <main class="page-main">
+    <!-- 네비게이션 -->
+    <div id="navbar-placeholder"></div>
+    
+    <!-- 헤더 -->
+    <header class="bmi-header">
+        <div class="bmi-header-content">
+            <h1 class="bmi-header-title">BMI 계산기</h1>
+            <p class="bmi-header-subtitle">
+                체질량지수(BMI)를 계산하여 건강 상태를 확인하세요.<br>
+                표준 체중 범위와 맞춤형 건강 조언을 제공합니다.
+            </p>
+        </div>
+    </header>
+    
+    <!-- 메인 컨테이너 -->
+    <div class="bmi-main-container">
+        <!-- BMI 계산기 섹션 -->
+        <div class="bmi-calculator-section">
+            <div class="bmi-calculator-grid">
+                <!-- 입력 영역 -->
+                <div class="bmi-input-section">
+                    <h2 style="font-size: 24px; margin-bottom: 24px; color: var(--gray-800);">정보 입력</h2>
+                    
+                    <div class="bmi-input-group">
+                        <label class="bmi-input-label">성별</label>
+                        <div class="bmi-radio-group" role="radiogroup" aria-label="성별 선택">
+                            <label class="bmi-radio-label">
+                                <input type="radio" name="gender" value="male" checked aria-label="남성">
+                                남성
+                            </label>
+                            <label class="bmi-radio-label">
+                                <input type="radio" name="gender" value="female" aria-label="여성">
+                                여성
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="bmi-input-group">
+                        <label class="bmi-input-label" for="age">나이</label>
+                        <div class="bmi-input-wrapper">
+                            <input type="number" id="age" class="bmi-input-field" placeholder="25" min="1" max="120" aria-label="나이 입력">
+                            <span class="bmi-input-unit">세</span>
+                        </div>
+                    </div>
+                    
+                    <div class="bmi-input-group">
+                        <label class="bmi-input-label" for="height">키</label>
+                        <div class="bmi-input-wrapper">
+                            <input type="number" id="height" class="bmi-input-field" placeholder="170" min="100" max="250" step="0.1" aria-label="키 입력 (센티미터)">
+                            <span class="bmi-input-unit">cm</span>
+                        </div>
+                    </div>
+                    
+                    <div class="bmi-input-group">
+                        <label class="bmi-input-label" for="weight">몸무게</label>
+                        <div class="bmi-input-wrapper">
+                            <input type="number" id="weight" class="bmi-input-field" placeholder="65" min="20" max="300" step="0.1" aria-label="몸무게 입력 (킬로그램)">
+                            <span class="bmi-input-unit">kg</span>
+                        </div>
+                    </div>
+                    
+                    <button class="bmi-calculate-btn" id="calculateBtn">
+                        BMI 계산하기
+                    </button>
+                </div>
+                
+                <!-- 결과 영역 -->
+                <div class="bmi-result-section hidden" id="resultSection">
+                    <div class="bmi-value" id="bmiValue">0</div>
+                    <div class="bmi-status" id="bmiStatus">-</div>
+                    <div class="bmi-description" id="bmiDescription">
+                        키와 몸무게를 입력하고 계산 버튼을 클릭하세요.
+                    </div>
+                    
+                    <!-- 스크린 리더를 위한 aria-live 영역 -->
+                    <div aria-live="polite" aria-atomic="true" class="sr-only" id="bmiAnnouncement"></div>
+                    
+                    <div class="bmi-weight-info">
+                        <div class="bmi-weight-card">
+                            <div class="bmi-weight-card-label">표준 체중</div>
+                            <div class="bmi-weight-card-value" id="standardWeight">-</div>
+                        </div>
+                        <div class="bmi-weight-card">
+                            <div class="bmi-weight-card-label">체중 차이</div>
+                            <div class="bmi-weight-card-value" id="weightDiff">-</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- BMI 차트 -->
+            <div class="bmi-chart hidden" id="bmiChart">
+                <h3 class="bmi-chart-title">BMI 지수 범위</h3>
+                <div class="bmi-chart-container">
+                    <div class="bmi-chart-bar"></div>
+                    <div class="bmi-chart-pointer" id="chartPointer">
+                        <div class="bmi-chart-pointer-value" id="chartValue">0</div>
+                        <div class="bmi-chart-pointer-arrow"></div>
+                    </div>
+                </div>
+                <div class="bmi-chart-labels">
+                    <span>저체중<br>18.5↓</span>
+                    <span>정상<br>18.5-23</span>
+                    <span>과체중<br>23-25</span>
+                    <span>비만<br>25-30</span>
+                    <span>고도비만<br>30↑</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- BMI 분류표 -->
+        <div class="bmi-advice-section">
+            <h2 class="bmi-advice-title">BMI 분류 기준 (WHO 아시아-태평양 기준)</h2>
+            <table class="bmi-table">
+                <thead>
+                    <tr>
+                        <th>BMI 지수</th>
+                        <th>분류</th>
+                        <th>건강 위험도</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>18.5 미만</td>
+                        <td><span class="bmi-status-badge bmi-status-underweight">저체중</span></td>
+                        <td>영양실조 위험</td>
+                    </tr>
+                    <tr>
+                        <td>18.5 ~ 22.9</td>
+                        <td><span class="bmi-status-badge bmi-status-normal">정상</span></td>
+                        <td>건강한 상태</td>
+                    </tr>
+                    <tr>
+                        <td>23.0 ~ 24.9</td>
+                        <td><span class="bmi-status-badge bmi-status-overweight">과체중</span></td>
+                        <td>주의 필요</td>
+                    </tr>
+                    <tr>
+                        <td>25.0 ~ 29.9</td>
+                        <td><span class="bmi-status-badge bmi-status-obese">비만</span></td>
+                        <td>질병 위험 증가</td>
+                    </tr>
+                    <tr>
+                        <td>30.0 이상</td>
+                        <td><span class="bmi-status-badge bmi-status-obese">고도비만</span></td>
+                        <td>심각한 건강 위험</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- 광고 영역 -->
+        <div class="ad-container">
+            <div class="ad-label" aria-label="광고 영역">광고</div>
+            
+<div id="ad-container-rittcsgv5" style="min-height: 100px;">
+    <div class="ad-placeholder" style="display: flex; align-items: center; justify-content: center; background: #f5f5f5; min-height: 100px; color: #999;">
+        광고 로딩 중...
+    </div>
+</div>
+<script>
+
+if ('IntersectionObserver' in window) {
+    const adObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                const container = entry.target;
+                container.innerHTML = `<ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-7905640648499222"
+                 data-ad-slot="8912541604"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>`;
+                if (typeof adsbygoogle !== 'undefined') {
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                }
+                adObserver.unobserve(container);
+            }
+        });
+    }, { rootMargin: '50px' });
+    
+    const adContainer = document.getElementById('ad-container-rittcsgv5');
+    if (adContainer) {
+        adObserver.observe(adContainer);
+    }
+}
+</script>
+        </div>
+        
+        <!-- 맞춤형 건강 조언 섹션 -->
+        <div class="bmi-advice-section" id="personalizedAdvice" style="display: none;">
+            <h2 class="bmi-advice-title" id="adviceTitle">당신을 위한 맞춤 건강 조언</h2>
+            <div class="bmi-advice-subtitle" id="adviceSubtitle"></div>
+            
+            <div class="bmi-advice-grid" id="adviceGrid">
+                <!-- 동적으로 생성될 조언 카드들 -->
+            </div>
+        </div>
+
+        <!-- BMI 지식 섹션 -->
+        <div class="bmi-advice-section">
+            <h2 class="bmi-advice-title">BMI에 대해 알아두면 좋은 사실들 🤓</h2>
+            
+            <div class="bmi-knowledge-section">
+                <div class="bmi-knowledge-card">
+                    <h3>🏺 BMI의 역사</h3>
+                    <p>BMI는 1832년 벨기에의 수학자 아돌프 케틀레가 개발했어요. 원래는 개인이 아닌 인구 통계를 위한 도구였는데, 
+                    1970년대부터 개인의 건강 지표로 사용되기 시작했습니다.</p>
+                </div>
+                
+                <div class="bmi-knowledge-card">
+                    <h3>🌏 아시아인의 특별한 기준</h3>
+                    <p>우리나라는 WHO 아시아-태평양 기준을 사용해요. 서양인보다 낮은 BMI에서도 건강 위험이 증가할 수 있어서 
+                    더 엄격한 기준을 적용합니다. 정상 범위가 18.5-22.9로 더 낮아요.</p>
+                </div>
+                
+                <div class="bmi-knowledge-card">
+                    <h3>⚖️ BMI의 한계점</h3>
+                    <p>BMI는 근육량과 지방량을 구분하지 못해요. 근육이 많은 운동선수는 실제보다 높게 나올 수 있고, 
+                    나이가 많을수록 근육량이 줄어들어 정확도가 떨어질 수 있습니다.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 푸터 -->
+    <div id="footer-placeholder"></div>
+    
+    <!-- External JavaScript -->
+    <script src="/js/api-config.js?v=1753150228"></script>
+    <script src="/js/main.js?v=1753150228"></script>
+    
+    <!-- BMI Calculator JavaScript -->
+    <script>
+    // BMI 계산 함수
+    function calculateBMI() {
+        const height = parseFloat(document.getElementById('height').value);
+        const weight = parseFloat(document.getElementById('weight').value);
+        
+        if (!height || !weight || height < 100 || height > 250 || weight < 20 || weight > 300) {
+            alert('올바른 키(100-250cm)와 몸무게(20-300kg)를 입력해주세요.');
+            return;
+        }
+        
+        const heightInMeters = height / 100;
+        const bmi = weight / (heightInMeters * heightInMeters);
+        
+        // 결과 표시
+        document.getElementById('bmiValue').textContent = bmi.toFixed(1);
+        document.getElementById('resultSection').classList.remove('hidden');
+        
+        // BMI 상태 판정 (WHO 아시아-태평양 기준)
+        let status = '';
+        let description = '';
+        
+        if (bmi < 18.5) {
+            status = '저체중';
+            description = '체중이 부족합니다. 균형잡힌 식단과 적절한 운동으로 건강한 체중을 유지하세요.';
+        } else if (bmi < 23) {
+            status = '정상';
+            description = '건강한 체중 범위입니다. 현재 상태를 유지하세요.';
+        } else if (bmi < 25) {
+            status = '과체중';
+            description = '약간의 체중 감량이 필요합니다. 규칙적인 운동과 식단 조절을 권장합니다.';
+        } else if (bmi < 30) {
+            status = '비만';
+            description = '체중 감량이 필요합니다. 전문가와 상담하여 체계적인 관리를 시작하세요.';
+        } else {
+            status = '고도비만';
+            description = '즉시 전문의와 상담하여 체중 관리 계획을 세우시기 바랍니다.';
+        }
+        
+        document.getElementById('bmiStatus').textContent = status;
+        document.getElementById('bmiDescription').textContent = description;
+        
+        // 표준 체중 계산 (BMI 22 기준)
+        const standardWeight = (heightInMeters * heightInMeters * 22).toFixed(1);
+        const weightDiff = (weight - standardWeight).toFixed(1);
+        
+        document.getElementById('standardWeight').textContent = standardWeight + 'kg';
+        document.getElementById('weightDiff').textContent = 
+            (weightDiff > 0 ? '+' : '') + weightDiff + 'kg';
+        
+        // 접근성을 위한 음성 안내
+        document.getElementById('bmiAnnouncement').textContent = 
+            `BMI 계산 완료. 당신의 BMI는 ${bmi.toFixed(1)}이며, ${status} 상태입니다.`;
+    }
+    
+    // 이벤트 리스너 등록
+    document.addEventListener('DOMContentLoaded', function() {
+        const calculateBtn = document.getElementById('calculateBtn');
+        const heightInput = document.getElementById('height');
+        const weightInput = document.getElementById('weight');
+        
+        calculateBtn.addEventListener('click', calculateBMI);
+        
+        // Enter 키로도 계산 가능
+        heightInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') calculateBMI();
+        });
+        
+        weightInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') calculateBMI();
+        });
+    });
+    </script>
+    
+    <!-- Kakao SDK Initialization -->
+    <script>
+        try {
+            if (typeof Kakao !== 'undefined' && window.API_CONFIG && window.API_CONFIG.KAKAO_APP_KEY) {
+                if (!Kakao.isInitialized()) {
+                    Kakao.init(window.API_CONFIG.KAKAO_APP_KEY);
+                    console.log('Kakao SDK initialized successfully');
+                }
+            }
+        } catch (error) {
+            console.warn('Kakao SDK initialization failed:', error);
+        }
+    </script>
+    
+    <!-- BMI Calculator JavaScript -->
+    <script>
+
+        function validateInput(value, min, max, fieldName) {
+            if (!value || value.trim() === '') {
+                alert(`${fieldName}을(를) 입력해주세요.`);
+                return null;
+            }
+            
+            const num = Security.validateNumber(parseFloat(value), min, max);
+            
+            if (num < min || num > max) {
+                alert(`${fieldName}은(는) ${min}에서 ${max} 사이로 입력해주세요.`);
+                return null;
+            }
+            return num;
+        }
+        
+        function calculateBMI() {
+
+            const heightInput = document.getElementById('height').value;
+            const weightInput = document.getElementById('weight').value;
+            const ageInput = document.getElementById('age').value;
+            
+            const height = validateInput(heightInput, 100, 250, '키');
+            const weight = validateInput(weightInput, 20, 300, '몸무게');
+            const age = ageInput ? validateInput(ageInput, 1, 120, '나이') : 25; // 나이는 선택사항
+            
+            if (!height || !weight) {
+                return;
+            }
+            
+            const gender = document.querySelector('input[name="gender"]:checked').value;
+
+            const heightInMeters = height / 100;
+            const bmi = weight / (heightInMeters * heightInMeters);
+            const roundedBMI = Math.round(bmi * 10) / 10;
+
+            let standardWeight;
+            if (gender === 'male') {
+                standardWeight = (height - 100) * 0.9;
+            } else {
+                standardWeight = (height - 100) * 0.85;
+            }
+            const weightDifference = weight - standardWeight;
+
+            let status, statusColor, description, personalizedAdvice;
+            if (bmi < 18.5) {
+                status = '체중 관리가 필요해요';
+                statusColor = 'var(--primary-color)';
+                description = '조금 더 건강한 체중을 위해 영양가 있는 식사에 신경 써보세요. 천천히 건강하게 늘려나가면 됩니다! 💪';
+                personalizedAdvice = getUnderweightAdvice(gender, age);
+            } else if (bmi < 23) {
+                status = '완벽해요! ✨';
+                statusColor = 'var(--success-color)';
+                description = '정말 멋진 체중을 유지하고 계시네요! 지금의 건강한 습관을 계속 이어가시면 됩니다. 👏';
+                personalizedAdvice = getNormalAdvice(gender, age);
+            } else if (bmi < 25) {
+                status = '조금 관리가 필요해요';
+                statusColor = 'var(--accent-color)';
+                description = '걱정하지 마세요! 작은 변화부터 시작하면 충분히 개선할 수 있어요. 함께 건강한 습관을 만들어나가요. 🌟';
+                personalizedAdvice = getOverweightAdvice(gender, age);
+            } else if (bmi < 30) {
+                status = '건강 관리에 신경써주세요';
+                statusColor = 'var(--error-color)';
+                description = '혼자서 힘들어하지 마세요. 전문가의 도움을 받으면 더 안전하고 효과적으로 건강을 되찾을 수 있어요. 🤝';
+                personalizedAdvice = getObeseAdvice(gender, age);
+            } else {
+                status = '전문가와 함께하는 여정';
+                statusColor = '#dc2626';
+                description = '지금이 건강한 변화를 시작할 완벽한 시기예요. 의료진과 상담하여 체계적인 관리 계획을 세워보세요. 💝';
+                personalizedAdvice = getSevereObeseAdvice(gender, age);
+            }
+
+            document.getElementById('bmiValue').textContent = roundedBMI;
+            document.getElementById('bmiStatus').textContent = status;
+            document.getElementById('bmiStatus').style.color = statusColor;
+            document.getElementById('bmiDescription').textContent = description;
+
+            const announcement = `BMI 계산 결과: ${roundedBMI}, 상태: ${status}. ${description}`;
+            document.getElementById('bmiAnnouncement').textContent = announcement;
+            
+            document.getElementById('standardWeight').textContent = `${Math.round(standardWeight * 10) / 10}kg`;
+            document.getElementById('weightDiff').textContent = 
+                weightDifference > 0 ? `+${Math.round(weightDifference * 10) / 10}kg` : 
+                `${Math.round(weightDifference * 10) / 10}kg`;
+            document.getElementById('weightDiff').style.color = 
+                Math.abs(weightDifference) < 5 ? 'var(--success-color)' : 'var(--error-color)';
+
+            let pointerPosition;
+            if (bmi < 18.5) {
+                pointerPosition = (bmi / 18.5) * 18.5;
+            } else if (bmi < 23) {
+                pointerPosition = 18.5 + ((bmi - 18.5) / 4.5) * 6.5;
+            } else if (bmi < 25) {
+                pointerPosition = 25 + ((bmi - 23) / 2) * 5;
+            } else if (bmi < 30) {
+                pointerPosition = 30 + ((bmi - 25) / 5) * 5;
+            } else {
+                pointerPosition = Math.min(35 + ((bmi - 30) / 10) * 65, 100);
+            }
+            
+            document.getElementById('chartPointer').style.left = `${pointerPosition}%`;
+            document.getElementById('chartValue').textContent = roundedBMI;
+
+            showPersonalizedAdvice(personalizedAdvice, status);
+
+            document.getElementById('resultSection').classList.remove('hidden');
+            document.getElementById('bmiChart').classList.remove('hidden');
+
+            document.getElementById('resultSection').scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'center' 
+            });
+        }
+
+        function showPersonalizedAdvice(advice, status) {
+            const adviceSection = document.getElementById('personalizedAdvice');
+            const adviceTitle = document.getElementById('adviceTitle');
+            const adviceSubtitle = document.getElementById('adviceSubtitle');
+            const adviceGrid = document.getElementById('adviceGrid');
+            
+            adviceTitle.textContent = `${status} 상태인 당신을 위한 맞춤 조언`;
+            adviceSubtitle.textContent = advice.subtitle;
+
+            adviceGrid.innerHTML = '';
+            advice.cards.forEach((card, index) => {
+                const cardElement = document.createElement('div');
+                let cardType = '';
+                if (index % 3 === 0) cardType = 'diet';
+                else if (index % 3 === 1) cardType = 'exercise';
+                else cardType = 'lifestyle';
+                
+                cardElement.className = `bmi-advice-card ${cardType}`;
+
+                const iconSpan = document.createElement('span');
+                iconSpan.className = 'bmi-advice-card-icon';
+                iconSpan.textContent = card.icon;
+                
+                const titleH3 = document.createElement('h3');
+                titleH3.className = 'bmi-advice-card-title';
+                titleH3.textContent = card.title;
+                
+                const contentDiv = document.createElement('div');
+                contentDiv.className = 'bmi-advice-card-content';
+                const contentP = document.createElement('p');
+                contentP.textContent = card.description;
+                contentDiv.appendChild(contentP);
+                
+                cardElement.appendChild(iconSpan);
+                cardElement.appendChild(titleH3);
+                cardElement.appendChild(contentDiv);
+                adviceGrid.appendChild(cardElement);
+            });
+            
+            adviceSection.style.display = 'block';
+        }
+
+        function getUnderweightAdvice(gender, age) {
+            return {
+                subtitle: '건강하고 아름다운 체중을 위한 따뜻한 조언이에요. 무엇보다 자신을 사랑하는 마음으로 천천히 건강해져 가세요! 💝',
+                cards: [
+                    {
+                        icon: '🍯',
+                        title: '칼로리 밀도 높은 음식',
+                        description: '견과류, 아보카도, 올리브오일, 꿀 등 건강한 고칼로리 음식을 섭취하세요. 하루 500-1000칼로리를 추가로 섭취하는 것이 목표입니다.'
+                    },
+                    {
+                        icon: '🥤',
+                        title: '건강한 간식과 음료',
+                        description: '식사 사이사이에 프로틴 셰이크, 견과류, 바나나 등을 섭취하세요. 물 대신 우유나 100% 과일주스도 좋은 칼로리 공급원입니다.'
+                    },
+                    {
+                        icon: '💪',
+                        title: '근력 운동 중심',
+                        description: '유산소보다는 근력 운동에 집중하세요. 근육량을 늘리면 건강한 방식으로 체중을 증가시킬 수 있습니다.'
+                    },
+                    {
+                        icon: '👨‍⚕️',
+                        title: '의학적 검사',
+                        description: '갑상선 기능항진증, 당뇨병 등 저체중의 원인이 될 수 있는 질환이 있는지 검사받아보세요.'
+                    },
+                    {
+                        icon: '😴',
+                        title: '충분한 휴식',
+                        description: '스트레스와 수면 부족은 체중 감소의 원인이 됩니다. 하루 8시간 이상 충분히 잠을 자세요.'
+                    },
+                    {
+                        icon: '📈',
+                        title: '점진적 증가',
+                        description: '한 달에 1-2kg씩 천천히 체중을 늘려가세요. 급격한 체중 증가는 오히려 건강에 해로울 수 있습니다.'
+                    }
+                ]
+            };
+        }
+
+        function getNormalAdvice(gender, age) {
+            return {
+                subtitle: '현재 건강한 체중을 유지하고 계시네요! 이 상태를 꾸준히 유지하는 것이 가장 중요해요. 🌟',
+                cards: [
+                    {
+                        icon: '⚖️',
+                        title: '현재 상태 유지',
+                        description: '지금의 식습관과 운동 습관을 계속 유지하세요. 작은 변화라도 꾸준함이 가장 중요합니다.'
+                    },
+                    {
+                        icon: '🥗',
+                        title: '균형잡힌 식단',
+                        description: '다양한 영양소를 골고루 섭취하고, 가공식품보다는 자연식품을 선택하세요.'
+                    },
+                    {
+                        icon: '🏃‍♀️',
+                        title: '꾸준한 운동',
+                        description: '주 3-4회의 유산소 운동과 주 2회의 근력 운동으로 건강한 몸을 유지하세요.'
+                    },
+                    {
+                        icon: '📊',
+                        title: '정기적인 체크',
+                        description: '월 1회 정도 체중을 확인하고, 연 1회 건강검진을 통해 전반적인 건강 상태를 점검하세요.'
+                    },
+                    {
+                        icon: '🧘‍♀️',
+                        title: '스트레스 관리',
+                        description: '스트레스는 체중 변화의 주요 원인입니다. 취미 활동이나 명상으로 마음의 건강도 챙기세요.'
+                    },
+                    {
+                        icon: '💧',
+                        title: '충분한 수분',
+                        description: '하루 8잔 이상의 물을 마시고, 카페인이나 당분이 많은 음료는 줄이세요.'
+                    }
+                ]
+            };
+        }
+
+        function getOverweightAdvice(gender, age) {
+            return {
+                subtitle: '작은 변화만으로도 큰 개선을 이룰 수 있어요! 무리하지 말고 천천히 건강한 습관을 만들어가세요. 💪',
+                cards: [
+                    {
+                        icon: '🍽️',
+                        title: '적당한 칼로리 제한',
+                        description: '하루 300-500칼로리 정도 줄여보세요. 극단적인 다이어트보다는 점진적인 변화가 효과적입니다.'
+                    },
+                    {
+                        icon: '🚶‍♀️',
+                        title: '일상 활동 늘리기',
+                        description: '엘리베이터 대신 계단 이용하기, 한 정거장 일찍 내려서 걷기 등 작은 변화부터 시작하세요.'
+                    },
+                    {
+                        icon: '🥬',
+                        title: '식이섬유 늘리기',
+                        description: '채소, 과일, 통곡물을 늘리고 포화지방이 많은 음식은 줄이세요. 포만감을 오래 유지할 수 있습니다.'
+                    },
+                    {
+                        icon: '⏰',
+                        title: '규칙적인 식사',
+                        description: '하루 3끼를 규칙적으로 드시고, 야식은 피하세요. 늦은 시간 식사는 체중 증가의 원인이 됩니다.'
+                    },
+                    {
+                        icon: '🏊‍♀️',
+                        title: '유산소 운동',
+                        description: '주 4-5회, 30-40분 정도의 유산소 운동을 시작하세요. 걷기, 수영, 자전거 타기 등이 좋습니다.'
+                    },
+                    {
+                        icon: '📝',
+                        title: '식사 일기',
+                        description: '무엇을 언제 얼마나 먹었는지 기록해보세요. 패턴을 파악하면 개선점을 찾기 쉽습니다.'
+                    }
+                ]
+            };
+        }
+
+        function getObeseAdvice(gender, age) {
+            return {
+                subtitle: '지금이 건강한 변화를 시작할 완벽한 시기예요! 전문가와 함께 체계적으로 관리해나가세요. 🌈',
+                cards: [
+                    {
+                        icon: '👩‍⚕️',
+                        title: '전문가 상담',
+                        description: '의사나 영양사와 상담하여 개인 맞춤형 계획을 세우세요. 안전하고 효과적인 방법을 찾을 수 있습니다.'
+                    },
+                    {
+                        icon: '📉',
+                        title: '점진적 체중 감량',
+                        description: '한 달에 2-4kg 정도의 점진적 감량을 목표로 하세요. 급격한 감량은 요요현상을 일으킬 수 있습니다.'
+                    },
+                    {
+                        icon: '🥙',
+                        title: '식단 조절',
+                        description: '칼로리는 줄이되 필수 영양소는 충분히 섭취하세요. 단백질, 비타민, 미네랄이 부족하지 않도록 주의하세요.'
+                    },
+                    {
+                        icon: '🚴‍♀️',
+                        title: '저강도 운동',
+                        description: '관절에 무리가 가지 않는 수영, 실내 자전거 등부터 시작하세요. 운동량은 점차 늘려가세요.'
+                    },
+                    {
+                        icon: '🩺',
+                        title: '건강 상태 모니터링',
+                        description: '혈압, 혈당, 콜레스테롤 수치를 정기적으로 확인하세요. 동반 질환 예방이 중요합니다.'
+                    },
+                    {
+                        icon: '👨‍👩‍👧‍👦',
+                        title: '가족의 지지',
+                        description: '가족과 친구들의 응원과 지지를 받으세요. 함께 건강한 식습관을 만들어가면 더 수월합니다.'
+                    }
+                ]
+            };
+        }
+
+        function getSevereObeseAdvice(gender, age) {
+            return {
+                subtitle: '전문적인 도움이 필요한 상황이에요. 의료진과 함께 안전하고 체계적인 관리 계획을 세워보세요. 💙',
+                cards: [
+                    {
+                        icon: '🏥',
+                        title: '의료진 상담 필수',
+                        description: '비만 전문의, 내분비내과 전문의와 상담하세요. 동반 질환 검사와 치료 계획 수립이 우선입니다.'
+                    },
+                    {
+                        icon: '💊',
+                        title: '약물 치료 고려',
+                        description: '필요시 의사와 상담하여 안전한 비만 치료제 사용을 고려해보세요. 전문의 지도하에 사용해야 합니다.'
+                    },
+                    {
+                        icon: '🍎',
+                        title: '영양 관리',
+                        description: '영양사와 함께 개인 맞춤 식단을 계획하세요. 극단적인 제한보다는 균형잡힌 감량 식단이 중요합니다.'
+                    },
+                    {
+                        icon: '🧘‍♂️',
+                        title: '정신 건강 케어',
+                        description: '스트레스나 우울감이 과식의 원인일 수 있습니다. 필요시 심리 상담도 받아보세요.'
+                    },
+                    {
+                        icon: '📊',
+                        title: '정기적인 모니터링',
+                        description: '체중, 혈압, 혈당 등을 정기적으로 체크하고, 진료를 통해 진행 상황을 확인하세요.'
+                    },
+                    {
+                        icon: '🎯',
+                        title: '현실적인 목표',
+                        description: '처음에는 5-10% 체중 감량을 목표로 하세요. 작은 성공이 큰 변화의 시작이 됩니다.'
+                    }
+                ]
+            };
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+
+            const calculateBtn = document.getElementById('calculateBtn');
+            if (calculateBtn) {
+                calculateBtn.addEventListener('click', calculateBMI);
+            }
+
+            const inputs = document.querySelectorAll('.bmi-input-field');
+            inputs.forEach(input => {
+                input.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        calculateBMI();
+                    }
+                });
+            });
+        });
+    </script>
+    
+    <!-- AdSense initialization -->
+    <script>
+
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+
+    <!-- Non-critical scripts moved here for performance -->
+    
+<!-- Google AdSense 지연 로딩 -->
+<script>
+
+window.addEventListener('load', function() {
+    setTimeout(function() {
+        var adsScript = document.createElement('script');
+        adsScript.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222';
+        adsScript.crossOrigin = 'anonymous';
+        adsScript.defer = true;
+        document.head.appendChild(adsScript);
+    }, 2000);
+});
+</script>
+
+<script>
+
+window.adsenseInitialized = window.adsenseInitialized || false;
+
+function initializeAdSense() {
+    if (window.adsenseInitialized) {
+        console.log('AdSense already initialized');
+        return;
+    }
+    
+    window.adsenseInitialized = true;
+
+    const adBlocks = document.querySelectorAll('.adsbygoogle');
+    adBlocks.forEach((ad, index) => {
+        if (!ad.dataset.adsbygoogleStatus) {
+            try {
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                console.log('AdSense block initialized:', index);
+            } catch (error) {
+                console.warn('AdSense initialization error:', error);
+            }
+        }
+    });
+}
+
+window.addEventListener('load', function() {
+    setTimeout(initializeAdSense, 1000);
+});
+</script>
+
+<script>
+
+(function() {
+    'use strict';
+
+    window.__adsenseLoaded = window.__adsenseLoaded || false;
+    window.__adsenseQueue = window.__adsenseQueue || [];
+    
+    function initAdsense() {
+        if (window.__adsenseLoaded) return;
+        
+        const ads = document.querySelectorAll('.adsbygoogle:not([data-adsbygoogle-status])');
+        
+        if (ads.length === 0) return;
+
+        if (typeof adsbygoogle === 'undefined') {
+            setTimeout(initAdsense, 500);
+            return;
+        }
+        
+        window.__adsenseLoaded = true;
+
+        ads.forEach((ad, index) => {
+            try {
+
+                if (ad.getAttribute('data-adsbygoogle-status')) return;
+
+                (adsbygoogle = window.adsbygoogle || []).push({});
+
+                ad.setAttribute('data-adsbygoogle-status', 'done');
+                
+            } catch (e) {
+                console.warn('AdSense 초기화 실패:', index, e.message);
+            }
+        });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(initAdsense, 1000);
+        });
+    } else {
+        setTimeout(initAdsense, 1000);
+    }
+
+    window.addEventListener('error', function(e) {
+        if (e.message && e.message.includes('adsbygoogle.push() error')) {
+            e.preventDefault();
+            console.warn('AdSense 중복 초기화 방지됨');
+            return false;
+        }
+    }, true);
+})();
+</script>
+
+
+
+<!-- AdSense 중복 방지 최종 버전 -->
+<script>
+(function() {
+    'use strict';
+
+    if (window.__adsenseFullyInitialized) return;
+    window.__adsenseFullyInitialized = true;
+
+    let originalPush = null;
+
+    function safeInitAds() {
+        const ads = document.querySelectorAll('.adsbygoogle');
+        
+        if (ads.length === 0) return;
+
+        if (typeof adsbygoogle === 'undefined') {
+            setTimeout(safeInitAds, 200);
+            return;
+        }
+
+        if (!originalPush && window.adsbygoogle && window.adsbygoogle.push) {
+            originalPush = window.adsbygoogle.push;
+            
+            window.adsbygoogle.push = function(config) {
+                try {
+
+                    const hasAds = Array.from(document.querySelectorAll('.adsbygoogle')).every(el => 
+                        el.getAttribute('data-adsbygoogle-status') === 'done'
+                    );
+                    
+                    if (hasAds) {
+                        console.log('모든 광고 슬롯이 이미 채워짐');
+                        return;
+                    }
+
+                    return originalPush.call(this, config);
+                } catch (e) {
+                    console.warn('AdSense push 차단됨:', e.message);
+                }
+            };
+        }
+
+        let initialized = 0;
+        ads.forEach((ad) => {
+            if (!ad.getAttribute('data-adsbygoogle-status')) {
+                try {
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                    initialized++;
+                } catch (e) {
+
+                }
+            }
+        });
+        
+        console.log('AdSense 초기화 완료:', initialized, '개 슬롯');
+    }
+
+    const errorHandler = function(e) {
+        if (e.message && e.message.includes('adsbygoogle.push() error')) {
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            return false;
+        }
+    };
+
+    window.addEventListener('error', errorHandler, true);
+
+    window.addEventListener('unhandledrejection', function(e) {
+        if (e.reason && e.reason.message && e.reason.message.includes('adsbygoogle')) {
+            e.preventDefault();
+            return false;
+        }
+    });
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(safeInitAds, 1000);
+        });
+    } else {
+        setTimeout(safeInitAds, 1000);
+    }
+})();
+</script>
+
+<script>
+// 네비게이션 및 푸터 로드 - main.js의 loadComponents가 실행되지 않은 경우를 위한 폴백
+document.addEventListener('DOMContentLoaded', function() {
+    // main.js가 로드되었고 loadComponents 함수가 있는지 확인
+    if (typeof loadComponents === 'function') {
+        // main.js의 DOMContentLoaded가 이미 실행되었을 수 있으므로 
+        // navbar-placeholder가 비어있으면 다시 실행
+        const navPlaceholder = document.getElementById('navbar-placeholder');
+        const footerPlaceholder = document.getElementById('footer-placeholder');
+        
+        if ((navPlaceholder && !navPlaceholder.innerHTML.trim()) || 
+            (footerPlaceholder && !footerPlaceholder.innerHTML.trim())) {
+            console.log('Loading components...');
+            loadComponents().catch(function(error) {
+                console.error('Failed to load components:', error);
+            });
+        }
+    }
+});
+</script>
+    </main>
+</body>
+</html>

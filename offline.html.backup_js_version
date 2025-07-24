@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr">
+<head>
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>오프라인 - doha.kr</title>
+    <meta name="description" content="현재 인터넷 연결이 없습니다. 연결 후 다시 시도해주세요.">
+    <meta name="robots" content="noindex, nofollow">
+    
+    <!-- Security Headers -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), accelerometer=(), gyroscope=()">
+    
+    <!-- Inline Critical CSS for offline page -->
+    <style>
+        :root {
+            --primary: #6366f1;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-400: #9ca3af;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-900: #111827;
+            --white: #ffffff;
+            
+            --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --space-md: 1rem;
+            --space-lg: 1.5rem;
+            --space-xl: 2rem;
+            --space-2xl: 3rem;
+            --space-3xl: 4rem;
+            
+            --radius-lg: 0.5rem;
+            --radius-xl: 0.75rem;
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+        
+        body {
+            margin: 0;
+            font-family: var(--font-sans);
+            background: linear-gradient(135deg, var(--gray-50) 0%, var(--gray-100) 100%);
+            color: var(--gray-900);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--space-md);
+        }
+        
+        .offline-container {
+            max-width: 500px;
+            text-align: center;
+            background: var(--white);
+            padding: var(--space-3xl) var(--space-xl);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .offline-icon {
+            font-size: 4rem;
+            margin-bottom: var(--space-xl);
+            opacity: 0.7;
+        }
+        
+        .offline-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: var(--space-md);
+        }
+        
+        .offline-message {
+            font-size: 1.125rem;
+            color: var(--gray-600);
+            line-height: 1.6;
+            margin-bottom: var(--space-2xl);
+        }
+        
+        .offline-actions {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-md);
+            align-items: center;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-md);
+            padding: var(--space-md) var(--space-xl);
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: var(--radius-lg);
+            transition: all 150ms ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+            white-space: nowrap;
+            min-width: 200px;
+        }
+        
+        .btn--primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+        
+        .btn--primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+        }
+        
+        .btn--secondary {
+            background: var(--white);
+            color: var(--gray-700);
+            border-color: var(--gray-400);
+        }
+        
+        .btn--secondary:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        
+        .connection-status {
+            margin-top: var(--space-xl);
+            padding: var(--space-md);
+            border-radius: var(--radius-lg);
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        
+        .connection-status--offline {
+            background: #fef2f2;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+        }
+        
+        .connection-status--online {
+            background: #f0fdf4;
+            color: #16a34a;
+            border: 1px solid #bbf7d0;
+        }
+        
+        .offline-tips {
+            margin-top: var(--space-2xl);
+            text-align: left;
+            background: var(--gray-50);
+            padding: var(--space-lg);
+            border-radius: var(--radius-lg);
+        }
+        
+        .offline-tips h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: var(--space-md);
+            color: var(--gray-900);
+        }
+        
+        .offline-tips ul {
+            margin: 0;
+            padding-left: var(--space-lg);
+            color: var(--gray-600);
+        }
+        
+        .offline-tips li {
+            margin-bottom: var(--space-md);
+            line-height: 1.5;
+        }
+        
+        @media (max-width: 640px) {
+            .offline-container {
+                padding: var(--space-2xl) var(--space-lg);
+            }
+            
+            .offline-title {
+                font-size: 1.5rem;
+            }
+            
+            .offline-icon {
+                font-size: 3rem;
+            }
+        }
+        
+        /* Animation for connection status */
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+        
+        .checking-connection {
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        
+        /* Focus styles for accessibility */
+        .btn:focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+    </style>
+    <!-- Optimized CSS System -->
+    <link rel="stylesheet" href="/css/styles.css">
+
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+
+    <script id="performance-monitor">
+
+    window.addEventListener('load', function() {
+        if (window.performance && window.performance.timing) {
+            const loadTime = window.performance.timing.loadEventEnd - window.performance.timing.navigationStart;
+            if (loadTime > 5000) {
+                console.warn('Page loading is slow:', loadTime + 'ms');
+            }
+        }
+    });
+    </script>
+</head>
+<body>
+    <!-- 네비게이션 -->
+    <div id="navbar-placeholder"></div>
+    
+    <main class="offline-main">
+    <div class="offline-container">
+        <div class="offline-icon" aria-hidden="true">📡</div>
+        
+        <h1 class="offline-title">인터넷 연결 없음</h1>
+        
+        <p class="offline-message">
+            현재 인터넷에 연결되어 있지 않습니다.<br>
+            연결을 확인한 후 다시 시도해주세요.
+        </p>
+        
+        <div class="offline-actions">
+            <button class="btn btn--primary" onclick="retryConnection()" id="retry-btn">
+                <span>🔄</span>
+                <span>다시 시도</span>
+            </button>
+            
+            <button class="btn btn--secondary" onclick="goHome()">
+                <span>🏠</span>
+                <span>홈으로 이동</span>
+            </button>
+        </div>
+        
+        <div class="connection-status connection-status--offline" id="connection-status">
+            <span>📶</span>
+            <span id="status-text">오프라인 상태</span>
+        </div>
+        
+        <div class="offline-tips">
+            <h3>연결 문제 해결 방법</h3>
+            <ul>
+                <li>Wi-Fi 또는 모바일 데이터 연결을 확인하세요</li>
+                <li>라우터를 재시작해보세요</li>
+                <li>다른 웹사이트가 정상적으로 작동하는지 확인하세요</li>
+                <li>브라우저를 새로고침하거나 재시작해보세요</li>
+                <li>VPN을 사용 중이라면 잠시 비활성화해보세요</li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- External JavaScript -->
+    <script src="/js/api-config.js?v=1753150228"></script>
+    <script src="/js/main.js?v=1753150228"></script>
+    
+    <!-- 카카오 초기화 -->
+    <script>
+        if (typeof Kakao !== 'undefined' && window.API_CONFIG) {
+            try {
+                if (!Kakao.isInitialized()) {
+                    Kakao.init(window.API_CONFIG.KAKAO_JS_KEY);
+                }
+            } catch (error) {
+                console.warn('카카오 초기화 오류:', error);
+            }
+        }
+    </script>
+    
+    <script>
+
+        function updateConnectionStatus() {
+            const statusElement = document.getElementById('connection-status');
+            const statusText = document.getElementById('status-text');
+            const retryBtn = document.getElementById('retry-btn');
+            
+            if (navigator.onLine) {
+                statusElement.className = 'connection-status connection-status--online';
+                statusText.textContent = '온라인 상태 - 페이지를 새로고침하세요';
+                retryBtn.textContent = '페이지 새로고침';
+            } else {
+                statusElement.className = 'connection-status connection-status--offline';
+                statusText.textContent = '오프라인 상태';
+                retryBtn.innerHTML = '<span>🔄</span><span>다시 시도</span>';
+            }
+        }
+
+        function retryConnection() {
+            const statusElement = document.getElementById('connection-status');
+            const statusText = document.getElementById('status-text');
+            
+            statusElement.className = 'connection-status checking-connection';
+            statusText.textContent = '연결 확인 중...';
+
+            fetch('/', { 
+                method: 'HEAD',
+                cache: 'no-cache'
+            })
+            .then(response => {
+                if (response.ok) {
+                    window.location.reload();
+                } else {
+                    throw new Error('Network response was not ok');
+                }
+            })
+            .catch(() => {
+                setTimeout(() => {
+                    updateConnectionStatus();
+                }, 2000);
+            });
+        }
+
+        function goHome() {
+            window.location.href = '/';
+        }
+
+        window.addEventListener('online', updateConnectionStatus);
+        window.addEventListener('offline', updateConnectionStatus);
+
+        updateConnectionStatus();
+
+        setInterval(() => {
+            if (!navigator.onLine) {
+                retryConnection();
+            }
+        }, 30000);
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'r' && (e.ctrlKey || e.metaKey)) {
+                e.preventDefault();
+                retryConnection();
+            } else if (e.key === 'h' && (e.ctrlKey || e.metaKey)) {
+                e.preventDefault();
+                goHome();
+            }
+        });
+
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.addEventListener('message', (event) => {
+                if (event.data && event.data.type === 'CACHE_UPDATED') {
+
+                    const message = document.createElement('div');
+                    message.style.cssText = `
+                        position: fixed;
+                        top: 20px;
+                        right: 20px;
+                        background: #10b981;
+                        color: white;
+                        padding: 12px 16px;
+                        border-radius: 8px;
+                        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+                        z-index: 1000;
+                        font-size: 14px;
+                        font-weight: 500;
+                    `;
+                    message.textContent = '새 콘텐츠가 사용 가능합니다';
+                    document.body.appendChild(message);
+                    
+                    setTimeout(() => {
+                        message.remove();
+                    }, 5000);
+                }
+            });
+        }
+
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'page_view', {
+                page_title: '오프라인 페이지',
+                page_location: window.location.href
+            });
+        }
+        
+        console.log('Offline page loaded');
+    </script>
+    </main>
+    
+    <!-- 푸터 -->
+    <div id="footer-placeholder"></div>
+    
+    <!-- 네비게이션과 푸터 로드 -->
+    <script src="/js/main.js?v=1753150228"></script>
+
+<script>
+
+window.adsenseInitialized = window.adsenseInitialized || false;
+
+function initializeAdSense() {
+    if (window.adsenseInitialized) {
+        console.log('AdSense already initialized');
+        return;
+    }
+    
+    window.adsenseInitialized = true;
+
+    const adBlocks = document.querySelectorAll('.adsbygoogle');
+    adBlocks.forEach((ad, index) => {
+        if (!ad.dataset.adsbygoogleStatus) {
+            try {
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                console.log('AdSense block initialized:', index);
+            } catch (error) {
+                console.warn('AdSense initialization error:', error);
+            }
+        }
+    });
+}
+
+window.addEventListener('load', function() {
+    setTimeout(initializeAdSense, 1000);
+});
+</script>
+
+<script>
+
+(function() {
+    'use strict';
+
+    window.__adsenseLoaded = window.__adsenseLoaded || false;
+    window.__adsenseQueue = window.__adsenseQueue || [];
+    
+    function initAdsense() {
+        if (window.__adsenseLoaded) return;
+        
+        const ads = document.querySelectorAll('.adsbygoogle:not([data-adsbygoogle-status])');
+        
+        if (ads.length === 0) return;
+
+        if (typeof adsbygoogle === 'undefined') {
+            setTimeout(initAdsense, 500);
+            return;
+        }
+        
+        window.__adsenseLoaded = true;
+
+        ads.forEach((ad, index) => {
+            try {
+
+                if (ad.getAttribute('data-adsbygoogle-status')) return;
+
+                (adsbygoogle = window.adsbygoogle || []).push({});
+
+                ad.setAttribute('data-adsbygoogle-status', 'done');
+                
+            } catch (e) {
+                console.warn('AdSense 초기화 실패:', index, e.message);
+            }
+        });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(initAdsense, 1000);
+        });
+    } else {
+        setTimeout(initAdsense, 1000);
+    }
+
+    window.addEventListener('error', function(e) {
+        if (e.message && e.message.includes('adsbygoogle.push() error')) {
+            e.preventDefault();
+            console.warn('AdSense 중복 초기화 방지됨');
+            return false;
+        }
+    }, true);
+})();
+</script>
+</body>
+</html>

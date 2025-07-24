@@ -61,6 +61,32 @@
             }
         },
         
+        // Sanitize input based on type
+        sanitizeInput: function(input, type = 'text') {
+            if (!input) return '';
+            
+            const str = String(input);
+            
+            switch (type) {
+                case 'number':
+                    // Remove non-numeric characters except decimal point
+                    return str.replace(/[^0-9.-]/g, '');
+                    
+                case 'email':
+                    // Basic email character sanitization
+                    return str.toLowerCase().replace(/[^a-z0-9@._-]/g, '');
+                    
+                case 'phone':
+                    // Keep only numbers and hyphens
+                    return str.replace(/[^0-9-]/g, '');
+                    
+                case 'text':
+                default:
+                    // General text sanitization
+                    return this.sanitizeHTML(str);
+            }
+        },
+        
         // Validate and sanitize numeric input
         validateNumber: function(input, min = 0, max = Infinity) {
             const num = parseFloat(input);

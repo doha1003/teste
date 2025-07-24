@@ -43,7 +43,7 @@
     <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js"></script>
     
     <!-- Optimized CSS System -->
-    <link rel="stylesheet" href="/css/styles.css?v=1753150228">
+    <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/pages/mbti-test.css">
 
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
@@ -291,8 +291,8 @@ if ('IntersectionObserver' in window) {
     <div id="footer-placeholder"></div>
     
     <!-- External JavaScript -->
-    <script src="/js/api-config.js?v=1753150228"></script>
-    <script src="/js/main.js?v=1753150228"></script>
+    <script src="/js/api-config.js"></script>
+    <script src="/js/main.js"></script>
     <script src="/js/mbti-test.js"></script>
     
     <!-- Kakao SDK 초기화 -->
@@ -300,15 +300,17 @@ if ('IntersectionObserver' in window) {
 
         document.addEventListener('DOMContentLoaded', function() {
 
-            if (typeof API_CONFIG === 'undefined') {
-                console.warn('API 설정을 로드할 수 없습니다. 일부 기능이 제한될 수 있습니다.');
-                return;
-            }
-            
             if (typeof Kakao !== 'undefined' && !Kakao.isInitialized()) {
                 try {
-
-                    Kakao.init(API_CONFIG.kakao.appKey);
+                    if (typeof API_CONFIG !== 'undefined' && API_CONFIG.kakao && API_CONFIG.kakao.appKey) {
+                        Kakao.init(API_CONFIG.kakao.appKey);
+                    } else if (typeof API_CONFIG !== 'undefined' && API_CONFIG.KAKAO_JS_KEY) {
+                        Kakao.init(API_CONFIG.KAKAO_JS_KEY);
+                    } else if (window.initKakao) {
+                        window.initKakao();
+                    } else {
+                        console.warn('API 설정을 로드할 수 없습니다. 일부 기능이 제한될 수 있습니다.');
+                    }
                     console.log('Kakao SDK 초기화 성공');
                 } catch (error) {
                     console.error('Kakao SDK 초기화 실패:', error);

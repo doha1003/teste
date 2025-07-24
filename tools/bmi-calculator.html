@@ -39,7 +39,7 @@
     <link rel="preconnect" crossorigin href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <!-- External CSS -->
-    <link rel="stylesheet" href="/css/styles.css?v=1753150228">
+    <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="/css/pages/bmi-calculator.css">
     
     <!-- Favicon -->
@@ -334,8 +334,8 @@ if ('IntersectionObserver' in window) {
     <div id="footer-placeholder"></div>
     
     <!-- External JavaScript -->
-    <script src="/js/api-config.js?v=1753150228"></script>
-    <script src="/js/main.js?v=1753150228"></script>
+    <script src="/js/api-config.js"></script>
+    <script src="/js/main.js"></script>
     
     <!-- BMI Calculator JavaScript -->
     <script>
@@ -415,9 +415,9 @@ if ('IntersectionObserver' in window) {
     <!-- Kakao SDK Initialization -->
     <script>
         try {
-            if (typeof Kakao !== 'undefined' && window.API_CONFIG && window.API_CONFIG.KAKAO_APP_KEY) {
+            if (typeof Kakao !== 'undefined' && window.API_CONFIG && window.API_CONFIG.KAKAO_JS_KEY) {
                 if (!Kakao.isInitialized()) {
-                    Kakao.init(window.API_CONFIG.KAKAO_APP_KEY);
+                    Kakao.init(window.API_CONFIG.KAKAO_JS_KEY);
                     console.log('Kakao SDK initialized successfully');
                 }
             }
