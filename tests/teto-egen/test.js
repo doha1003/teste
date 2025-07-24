@@ -408,25 +408,27 @@ function showQuestion() {
     
     question.options.forEach((option, index) => {
         const button = document.createElement('button');
-        button.className = 'option-btn';
+        button.className = 'teto-option';
         button.textContent = option.text;
         button.onclick = () => selectAnswer(index);
         optionsContainer.appendChild(button);
     });
     
     // 이전 버튼 표시 여부
-    const prevBtn = document.getElementById('prevBtn');
-    if (currentQuestion > 0) {
-        prevBtn.classList.remove('hidden');
-    } else {
-        prevBtn.classList.add('hidden');
+    const prevBtn = document.getElementById('prev-btn');
+    if (prevBtn) {
+        if (currentQuestion > 0) {
+            prevBtn.style.display = 'block';
+        } else {
+            prevBtn.style.display = 'none';
+        }
     }
 }
 
 // 답변 선택 함수
 function selectAnswer(answerIndex) {
     // 선택한 답변 하이라이트
-    const options = document.querySelectorAll('.option-btn');
+    const options = document.querySelectorAll('.teto-option');
     options.forEach((btn, idx) => {
         if (idx === answerIndex) {
             btn.classList.add('selected');
@@ -480,47 +482,52 @@ function calculateResult() {
     document.getElementById('result-screen').classList.remove('teto-hidden');
     
     // 결과 표시
-    document.getElementById('resultEmoji').textContent = result.emoji;
-    document.getElementById('resultType').textContent = result.type;
-    document.getElementById('resultTitle').textContent = result.title;
-    document.getElementById('resultSubtitle').textContent = result.subtitle;
-    document.getElementById('resultDescription').textContent = result.description;
-    document.getElementById('resultPercentage').textContent = result.percentage;
+    document.getElementById('result-emoji').textContent = result.emoji;
+    document.getElementById('result-type').textContent = result.type;
+    document.getElementById('result-title').textContent = result.title;
+    document.getElementById('result-subtitle').textContent = result.subtitle;
+    document.getElementById('result-description').textContent = result.description;
+    document.getElementById('result-rarity').textContent = `비율: ${result.percentage}`;
     
     // 특성 표시
-    const traitsContainer = document.getElementById('resultTraits');
+    const traitsContainer = document.getElementById('result-traits');
     traitsContainer.innerHTML = '';
     result.traits.forEach(trait => {
-        const span = document.createElement('span');
-        span.className = 'trait-tag';
-        span.textContent = trait;
-        traitsContainer.appendChild(span);
+        const div = document.createElement('div');
+        div.className = 'teto-trait-item';
+        div.textContent = `• ${trait}`;
+        traitsContainer.appendChild(div);
     });
     
     // 취미 표시
-    const hobbiesContainer = document.getElementById('resultHobbies');
+    const hobbiesContainer = document.getElementById('recommended-hobbies');
     hobbiesContainer.innerHTML = '';
     result.hobbies.forEach(hobby => {
         const span = document.createElement('span');
-        span.className = 'hobby-tag';
+        span.className = 'teto-hobby-tag';
         span.textContent = hobby;
         hobbiesContainer.appendChild(span);
     });
     
     // 연예인 표시
-    const celebsContainer = document.getElementById('resultCelebrities');
+    const celebsContainer = document.getElementById('celebrities');
     celebsContainer.innerHTML = '';
     result.celebrities.forEach(celeb => {
         const span = document.createElement('span');
-        span.className = 'celebrity-tag';
+        span.className = 'teto-celebrity-item';
         span.textContent = celeb;
         celebsContainer.appendChild(span);
     });
     
     // 기타 정보 표시
-    document.getElementById('resultStrengths').textContent = result.strengths;
-    document.getElementById('resultGrowth').textContent = result.growth;
-    document.getElementById('resultCompatibility').textContent = result.compatibility;
+    document.getElementById('result-strengths').textContent = result.strengths;
+    document.getElementById('result-growth').textContent = result.growth;
+    
+    // 궁합 표시
+    const bestMatchesContainer = document.getElementById('best-matches');
+    if (bestMatchesContainer) {
+        bestMatchesContainer.innerHTML = `<span class="teto-compatibility-type">${result.compatibility}</span>`;
+    }
 }
 
 // 카카오톡 공유 함수
@@ -530,10 +537,10 @@ function shareKakao() {
         return;
     }
     
-    const resultElement = document.getElementById('resultType');
+    const resultElement = document.getElementById('result-type');
     const resultType = resultElement ? resultElement.textContent : '테토-에겐 테스트';
     
-    const titleElement = document.getElementById('resultTitle');  
+    const titleElement = document.getElementById('result-title');  
     const resultTitle = titleElement ? titleElement.textContent : '나의 성격 유형';
     
     Kakao.Share.sendDefault({

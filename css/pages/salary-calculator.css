@@ -95,6 +95,10 @@
     margin-bottom: 2rem;
 }
 
+.result-container.show {
+    display: block;
+}
+
 .result-header {
     text-align: center;
     margin-bottom: 2rem;
@@ -174,6 +178,115 @@
     border-bottom: none;
     font-weight: 600;
     color: var(--gray-900);
+}
+
+/* 추가 스타일 */
+.year-badge {
+    background: var(--success-color);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-left: 8px;
+    vertical-align: middle;
+}
+
+.input-wrapper {
+    position: relative;
+}
+
+.input-unit {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gray-500);
+    font-weight: 500;
+    pointer-events: none;
+}
+
+.result-main {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.result-item.highlight {
+    background: var(--gradient-primary);
+    color: white;
+    transform: scale(1.05);
+}
+
+.result-item.highlight .result-label,
+.result-item.highlight .result-detail {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.result-item.highlight .result-value {
+    color: white;
+}
+
+.result-detail {
+    font-size: 0.85rem;
+    color: var(--gray-500);
+    margin-top: 0.25rem;
+}
+
+.deduction-title {
+    font-size: 1.3rem;
+    color: var(--gray-900);
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+.deduction-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.deduction-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: white;
+    border-radius: 8px;
+    border: 1px solid var(--gray-200);
+}
+
+.deduction-item-name {
+    font-size: 0.95rem;
+    color: var(--gray-700);
+    font-weight: 500;
+}
+
+.deduction-item-value {
+    font-size: 1.1rem;
+    color: var(--gray-900);
+    font-weight: 600;
+}
+
+.info-box {
+    background: #f0f9ff;
+    border: 1px solid #bae6fd;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-top: 2rem;
+}
+
+.info-box h3 {
+    color: #0369a1;
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+}
+
+.info-box p {
+    color: #0c4a6e;
+    line-height: 1.6;
+    font-size: 0.95rem;
 }
 
 /* 반응형 스타일 */
