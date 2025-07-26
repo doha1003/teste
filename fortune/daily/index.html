@@ -292,7 +292,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         // Clear existing options
-        yearSelect.innerHTML = safeHTML('<option value="">연도 선택</option>');
+        yearSelect.innerHTML = '';
+        const defaultOption = document.createElement('option');
+        defaultOption.value = '';
+        defaultOption.textContent = '연도 선택';
+        yearSelect.appendChild(defaultOption);
         
         // Add years
         const currentYear = new Date().getFullYear();
@@ -318,7 +322,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const month = parseInt(monthSelect.value);
         const year = parseInt(document.getElementById('birthYear').value) || new Date().getFullYear();
         
-        daySelect.innerHTML = safeHTML('<option value="">일 선택</option>');
+        daySelect.innerHTML = '';
+        const defaultOption = document.createElement('option');
+        defaultOption.value = '';
+        defaultOption.textContent = '일 선택';
+        daySelect.appendChild(defaultOption);
         
         if (!month) return;
         
