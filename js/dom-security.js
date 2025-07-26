@@ -483,7 +483,7 @@ class SecureDOM {
         // DOMPurify 라이브러리 확인
         if (typeof DOMPurify === 'undefined') {
             console.error('🚨 SecureDOM: DOMPurify library not found!');
-            console.info('Please include: <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.7/dist/purify.min.js"></script>');
+            console.info('Please include: <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script>');
             return false;
         }
 
