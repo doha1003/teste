@@ -4,12 +4,12 @@
 if (typeof Kakao !== 'undefined' && typeof Config !== 'undefined' && Config.kakao && Config.kakao.appKey) {
     if (Config.validateDomain()) {
         Kakao.init(Config.kakao.appKey);
-        console.log('MBTI Test: Kakao SDK initialized successfully');
+        // console.log removed('MBTI Test: Kakao SDK initialized successfully');
     } else {
-        console.warn('MBTI Test: Domain validation failed - Kakao SDK not initialized');
+        // console.warn removed('MBTI Test: Domain validation failed - Kakao SDK not initialized');
     }
 } else {
-    console.warn('MBTI Test: Config not loaded - Kakao SDK not initialized');
+    // console.warn removed('MBTI Test: Config not loaded - Kakao SDK not initialized');
 }
 
 // MBTI 질문 데이터
@@ -328,7 +328,7 @@ function startTest() {
     currentQuestion = 0;
     answers = {};
     scores = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
-    console.log(`MBTI DEBUG: 테스트 시작 - 총 ${mbtiQuestions.length}개 질문`);
+    // 테스트 시작
     showScreen('test-screen');
     showQuestion();
 }
@@ -354,7 +354,7 @@ function showQuestion() {
     
     // 옵션 표시
     const optionsContainer = document.getElementById('options');
-    optionsContainer.innerHTML = '';
+    SecureDOM.setInnerHTML(optionsContainer, '');
     
     q.options.forEach((option, index) => {
         const optionElement = document.createElement('div');
@@ -378,7 +378,7 @@ function showQuestion() {
 
 // 옵션 선택 (자동 넘김 기능)
 function selectOption(index) {
-    console.log(`MBTI DEBUG: 질문 ${currentQuestion + 1}/${mbtiQuestions.length}, 옵션 ${index + 1} 선택됨`);
+    // 옵션 선택됨
     
     answers[currentQuestion] = index;
     
@@ -391,16 +391,16 @@ function selectOption(index) {
     const nextBtn = document.getElementById('next-btn');
     if (nextBtn) {
         nextBtn.disabled = false;
-        console.log('MBTI DEBUG: 다음 버튼 활성화됨');
+        // 다음 버튼 활성화됨
     }
     
     // 자동으로 다음 질문으로 넘어가기 (1.2초 딜레이)
     setTimeout(() => {
         if (currentQuestion < mbtiQuestions.length - 1) {
-            console.log(`MBTI DEBUG: 다음 질문으로 이동 (${currentQuestion + 2}/${mbtiQuestions.length})`);
+            // 다음 질문으로 이동
             nextQuestion();
         } else {
-            console.log('MBTI DEBUG: 모든 질문 완료, 결과 표시');
+            // 모든 질문 완료, 결과 표시
             showResult();
         }
     }, 1200);
@@ -436,7 +436,7 @@ function calculateMbtiType() {
         }
     });
     
-    console.log('MBTI DEBUG: 최종 점수:', scores);
+    // 최종 점수 계산
     
     // 각 축별 우세한 유형 결정
     let mbtiType = '';
@@ -445,7 +445,7 @@ function calculateMbtiType() {
     mbtiType += scores.T >= scores.F ? 'T' : 'F';
     mbtiType += scores.J >= scores.P ? 'J' : 'P';
     
-    console.log('MBTI DEBUG: 계산된 유형:', mbtiType);
+    // 계산된 유형
     return mbtiType;
 }
 
@@ -463,7 +463,7 @@ function showResult() {
     
     // MBTI 4축 분석 표시
     const breakdown = document.getElementById('mbti-breakdown');
-    breakdown.innerHTML = `
+    SecureDOM.setInnerHTML(breakdown, `
         <div class="mbti-axis-result">
             <div class="mbti-axis-label">에너지 방향</div>
             <div class="mbti-axis-value">${scores.E >= scores.I ? 'E (외향)' : 'I (내향)'}</div>
@@ -480,11 +480,11 @@ function showResult() {
             <div class="mbti-axis-label">생활 양식</div>
             <div class="mbti-axis-value">${scores.J >= scores.P ? 'J (판단)' : 'P (인식)'}</div>
         </div>
-    `;
+    `);
     
     // 성격 특징 표시
     const traitsList = document.getElementById('personality-traits');
-    traitsList.innerHTML = '';
+    SecureDOM.setInnerHTML(traitsList, '');
     typeData.traits.forEach(trait => {
         const li = document.createElement('li');
         li.textContent = trait;
@@ -493,7 +493,7 @@ function showResult() {
     
     // 추천 직업 표시
     const careers = document.getElementById('recommended-careers');
-    careers.innerHTML = '';
+    SecureDOM.setInnerHTML(careers, '');
     typeData.careers.forEach(career => {
         const span = document.createElement('span');
         span.className = 'mbti-career-tag';
@@ -508,7 +508,7 @@ function showResult() {
     
     // 궁합 표시
     const bestMatches = document.getElementById('best-matches');
-    bestMatches.innerHTML = '';
+    SecureDOM.setInnerHTML(bestMatches, '');
     typeData.bestMatches.forEach(match => {
         const span = document.createElement('span');
         span.className = 'mbti-compatibility-type';
@@ -517,7 +517,7 @@ function showResult() {
     });
     
     const goodMatches = document.getElementById('good-matches');
-    goodMatches.innerHTML = '';
+    SecureDOM.setInnerHTML(goodMatches, '');
     typeData.goodMatches.forEach(match => {
         const span = document.createElement('span');
         span.className = 'mbti-compatibility-type-good';
@@ -526,7 +526,7 @@ function showResult() {
     });
     
     const challengingMatches = document.getElementById('challenging-matches');
-    challengingMatches.innerHTML = '';
+    SecureDOM.setInnerHTML(challengingMatches, '');
     typeData.challengingMatches.forEach(match => {
         const span = document.createElement('span');
         span.className = 'mbti-compatibility-type-challenge';
@@ -536,7 +536,7 @@ function showResult() {
     
     // 연예인 표시
     const celebrities = document.getElementById('celebrities');
-    celebrities.innerHTML = '';
+    SecureDOM.setInnerHTML(celebrities, '');
     typeData.celebrities.forEach(celebrity => {
         const span = document.createElement('span');
         span.className = 'mbti-celebrity-item';
@@ -588,6 +588,6 @@ function restartTest() {
     currentQuestion = 0;
     answers = [];
     scores = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
-    console.log('MBTI DEBUG: 테스트 재시작');
+    // 테스트 재시작
     showScreen('intro-screen');
 }

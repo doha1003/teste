@@ -11,7 +11,7 @@ if (!fs.existsSync(optimizedDir)) {
 }
 
 async function optimizeImages() {
-  console.log('🖼️  이미지 최적화 시작...');
+  // console.log removed('🖼️  이미지 최적화 시작...');
   
   const processDirectory = async (dirPath, relativePath = '') => {
     const items = fs.readdirSync(dirPath);
@@ -37,7 +37,7 @@ async function optimizeImages() {
           if (item.toLowerCase().endsWith('.svg')) {
             // SVG는 복사만
             fs.copyFileSync(itemPath, outputPath);
-            console.log(`📋 SVG 복사: ${path.join(relativePath, item)}`);
+            // console.log removed(`📋 SVG 복사: ${path.join(relativePath, item)}`);
           } else {
             // 이미지 최적화
             await sharp(itemPath)
@@ -52,10 +52,10 @@ async function optimizeImages() {
             const newSize = fs.statSync(outputPath).size;
             const savings = ((originalSize - newSize) / originalSize * 100).toFixed(1);
             
-            console.log(`✅ 최적화: ${path.join(relativePath, item)} - ${savings}% 감소`);
+            // console.log removed(`✅ 최적화: ${path.join(relativePath, item)} - ${savings}% 감소`);
           }
         } catch (error) {
-          console.error(`❌ 오류: ${path.join(relativePath, item)} - ${error.message}`);
+          // console.error removed(`❌ 오류: ${path.join(relativePath, item)} - ${error.message}`);
         }
       }
     }
@@ -64,10 +64,10 @@ async function optimizeImages() {
   await processDirectory(imageDir);
   
   // WebP 변환도 수행
-  console.log('\n🔄 WebP 변환 시작...');
+  // console.log removed('\n🔄 WebP 변환 시작...');
   await convertToWebP();
   
-  console.log('\n✨ 이미지 최적화 완료!');
+  // console.log removed('\n✨ 이미지 최적화 완료!');
 }
 
 async function convertToWebP() {
@@ -102,9 +102,9 @@ async function convertToWebP() {
             .webp({ quality: 85, effort: 6 })
             .toFile(outputPath);
             
-          console.log(`🔄 WebP 생성: ${path.join(relativePath, webpName)}`);
+          // console.log removed(`🔄 WebP 생성: ${path.join(relativePath, webpName)}`);
         } catch (error) {
-          console.error(`❌ WebP 오류: ${path.join(relativePath, item)} - ${error.message}`);
+          // console.error removed(`❌ WebP 오류: ${path.join(relativePath, item)} - ${error.message}`);
         }
       }
     }
@@ -114,7 +114,9 @@ async function convertToWebP() {
 }
 
 if (require.main === module) {
-  optimizeImages().catch(console.error);
+  optimizeImages().catch(err => {
+        // Error handling
+    });
 }
 
 module.exports = { optimizeImages };

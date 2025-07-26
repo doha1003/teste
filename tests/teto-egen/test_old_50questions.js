@@ -11,24 +11,24 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (typeof API_CONFIG !== 'undefined' && API_CONFIG.kakao && API_CONFIG.kakao.appKey) {
                         Kakao.init(API_CONFIG.kakao.appKey);
                     } else {
-                        console.error('API_CONFIG not available');
+                        // console.error removed('API_CONFIG not available');
                         return;
                     }
-                    console.log('Kakao SDK initialized:', Kakao.isInitialized());
+                    // console.log removed('Kakao SDK initialized:', Kakao.isInitialized());
                     
                     // 초기화 확인
                     if (Kakao.isInitialized()) {
-                        console.log('Kakao SDK Version:', Kakao.VERSION);
+                        // console.log removed('Kakao SDK Version:', Kakao.VERSION);
                     }
                 } catch (e) {
-                    console.error('Kakao SDK initialization failed:', e);
-                    console.error('Error details:', e.message);
+                    // console.error removed('Kakao SDK initialization failed:', e);
+                    // console.error removed('Error details:', e.message);
                 }
             } else {
-                console.log('Kakao SDK already initialized');
+                // console.log removed('Kakao SDK already initialized');
             }
         } else {
-            console.error('Kakao SDK not loaded');
+            // console.error removed('Kakao SDK not loaded');
         }
     }, 500);
 });
@@ -887,12 +887,12 @@ function reinitializeKakao() {
         try {
             if (typeof API_CONFIG !== 'undefined' && API_CONFIG.kakao && API_CONFIG.kakao.appKey) {
                 Kakao.init(API_CONFIG.kakao.appKey);
-                console.log('Kakao SDK reinitialized successfully');
+                // console.log removed('Kakao SDK reinitialized successfully');
             } else {
-                console.error('API_CONFIG not available for reinitialization');
+                // console.error removed('API_CONFIG not available for reinitialization');
             }
         } catch (e) {
-            console.error('Kakao SDK reinitialization failed:', e);
+            // console.error removed('Kakao SDK reinitialization failed:', e);
         }
     }
 }

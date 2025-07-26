@@ -170,7 +170,7 @@ async function showAnimalFortune(animal) {
     // 로딩 효과
     const fortuneResult = document.getElementById('fortuneResult');
     fortuneResult.classList.remove('hidden');
-    fortuneResult.innerHTML = '<div class="zodiac-ai-analyzing">🔮 AI가 띠별 운세를 분석하고 있습니다...</div>';
+    SecureDOM.setInnerHTML(fortuneResult, '<div class="zodiac-ai-analyzing">🔮 AI가 띠별 운세를 분석하고 있습니다...</div>');
     
     // 선택된 띠 강조
     document.querySelectorAll('.zodiac-card').forEach(card => {
@@ -190,7 +190,7 @@ async function showAnimalFortune(animal) {
         displayAnimalResult(animal, fortuneData, aiResult ? true : false);
         
     } catch (error) {
-        console.error('AI 운세 생성 오류:', error);
+        // console.error removed('AI 운세 생성 오류:', error);
         // AI 실패 시 기본 데이터 사용
         const fallbackData = yearlyFortunes[animal];
         displayAnimalResult(animal, fallbackData, false);
@@ -206,7 +206,7 @@ function displayAnimalResult(animal, fortuneData, isAIGenerated = false) {
     const fortuneResult = document.getElementById('fortuneResult');
     
     // 네이버 스타일 HTML 구조
-    fortuneResult.innerHTML = `
+    SecureDOM.setInnerHTML(fortuneResult, `
         <div class="naver-style-fortune">
             <div class="fortune-header">
                 <div class="animal-info">
@@ -298,12 +298,12 @@ ${info.name}의 특성과 2025년 을사년(뱀의 해) 에너지를 고려하�
                         return parsed;
                     }
                 } catch (parseError) {
-                    console.error('JSON 파싱 오류:', parseError);
+                    // console.error removed('JSON 파싱 오류:', parseError);
                 }
             }
         }
     } catch (error) {
-        console.error('AI API 호출 오류:', error);
+        // console.error removed('AI API 호출 오류:', error);
     }
     
     // AI 실패 시 null 반환 (기본 데이터 사용)

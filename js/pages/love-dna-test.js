@@ -764,7 +764,7 @@ function showQuestion() {
     
     // 옵션 표시
     const optionsContainer = document.getElementById('options');
-    optionsContainer.innerHTML = '';
+    SecureDOM.setInnerHTML(optionsContainer, '');
     
     question.options.forEach((option, index) => {
         const optionElement = document.createElement('div');
@@ -793,7 +793,7 @@ function showQuestion() {
 
 // 옵션 선택 함수 (자동 넘김 기능)
 function selectOption(index) {
-    console.log(`Love DNA DEBUG: 질문 ${currentQuestion + 1}/${loveDNAQuestions.length}, 옵션 ${index + 1} 선택됨`);
+    // 옵션 선택됨
     
     answers[currentQuestion] = index;
     
@@ -806,16 +806,16 @@ function selectOption(index) {
     const nextBtn = document.getElementById('next-btn');
     if (nextBtn) {
         nextBtn.disabled = false;
-        console.log('Love DNA DEBUG: 다음 버튼 활성화됨');
+        // 다음 버튼 활성화됨
     }
     
     // 자동으로 다음 질문으로 넘어가기 (1.2초 딜레이)
     setTimeout(() => {
         if (currentQuestion < loveDNAQuestions.length - 1) {
-            console.log(`Love DNA DEBUG: 다음 질문으로 이동 (${currentQuestion + 2}/${loveDNAQuestions.length})`);
+            // 다음 질문으로 이동
             nextQuestion();
         } else {
-            console.log('Love DNA DEBUG: 모든 질문 완료, 결과 표시');
+            // 모든 질문 완료, 결과 표시
             showResult();
         }
     }, 1200);
@@ -856,7 +856,7 @@ function showResult() {
     if (resultData.traits) {
         const traitsContainer = document.getElementById('result-traits');
         if (traitsContainer) {
-            traitsContainer.innerHTML = '';
+            SecureDOM.setInnerHTML(traitsContainer, '');
             resultData.traits.forEach(trait => {
                 const traitElement = document.createElement('div');
                 traitElement.className = 'love-trait-item';
@@ -945,7 +945,7 @@ window.shareToKakao = shareToKakao;
 
 // 페이지 로드 시 초기화
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('러브 DNA 테스트 로드 완료');
-    console.log(`총 ${loveDNAQuestions.length}개 질문 로드됨`);
-    console.log(`${Object.keys(loveDNAResults).length}가지 결과 유형 준비됨`);
+    // console.log removed('러브 DNA 테스트 로드 완료');
+    // console.log removed(`총 ${loveDNAQuestions.length}개 질문 로드됨`);
+    // console.log removed(`${Object.keys(loveDNAResults).length}가지 결과 유형 준비됨`);
 });

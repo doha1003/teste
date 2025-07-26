@@ -18,9 +18,9 @@ class UserDataManager {
     async init() {
         try {
             await this.initIndexedDB();
-            console.log('UserDataManager initialized successfully');
+            // UserDataManager initialized successfully
         } catch (error) {
-            console.warn('IndexedDB initialization failed, falling back to localStorage:', error);
+            // IndexedDB initialization failed, falling back to localStorage
         }
     }
 
@@ -93,7 +93,7 @@ class UserDataManager {
 
             return testData;
         } catch (error) {
-            console.error('Failed to save test result:', error);
+            // Failed to save test result
             throw error;
         }
     }
@@ -107,7 +107,7 @@ class UserDataManager {
                 return await this.getFromIndexedDB('testResults', 'testType', testType, limit);
             }
         } catch (error) {
-            console.warn('Failed to get results from IndexedDB:', error);
+            // Failed to get results from IndexedDB
         }
 
         // IndexedDB 실패 시 localStorage에서 조회
@@ -125,7 +125,7 @@ class UserDataManager {
                 return results.slice(0, limit);
             }
         } catch (error) {
-            console.error('Failed to get recent results:', error);
+            // Failed to get recent results
         }
         return [];
     }
@@ -142,7 +142,7 @@ class UserDataManager {
             }
             localStorage.setItem(`${this.storagePrefix}setting_${key}`, JSON.stringify(settingData));
         } catch (error) {
-            console.error('Failed to save setting:', error);
+            // Failed to save setting
         }
     }
 
@@ -158,7 +158,7 @@ class UserDataManager {
                 }
             }
         } catch (error) {
-            console.warn('Failed to get setting from IndexedDB:', error);
+            // Failed to get setting from IndexedDB
         }
 
         // localStorage에서 조회
@@ -169,7 +169,7 @@ class UserDataManager {
                 return settingData.value;
             }
         } catch (error) {
-            console.error('Failed to get setting from localStorage:', error);
+            // Failed to get setting from localStorage
         }
 
         return defaultValue;
@@ -198,7 +198,7 @@ class UserDataManager {
             localStorage.setItem(counterKey, (currentCount + 1).toString());
 
         } catch (error) {
-            console.error('Failed to update statistics:', error);
+            // Failed to update statistics
         }
     }
 
@@ -229,7 +229,7 @@ class UserDataManager {
                 });
             }
         } catch (error) {
-            console.warn('Failed to get statistics from IndexedDB:', error);
+            // Failed to get statistics from IndexedDB
         }
 
         return results;
@@ -294,9 +294,9 @@ class UserDataManager {
             const keys = Object.keys(localStorage).filter(key => key.startsWith(this.storagePrefix));
             keys.forEach(key => localStorage.removeItem(key));
 
-            console.log('All user data cleared successfully');
+            // All user data cleared successfully
         } catch (error) {
-            console.error('Failed to clear user data:', error);
+            // Failed to clear user data
             throw error;
         }
     }
@@ -372,4 +372,4 @@ window.trackTestStart = (testType) => {
 
 // 테스트 완료 추적은 saveTestResult에서 자동으로 처리됨
 
-console.log('User Data Storage System loaded successfully');
+// User Data Storage System loaded successfully

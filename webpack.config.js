@@ -1,7 +1,7 @@
-const path = require('path');
-const TerserPlugin = require('terser-webpack-plugin');
+import path from 'path';
+import TerserPlugin from 'terser-webpack-plugin';
 
-module.exports = {
+export default {
   mode: 'production',
   entry: {
     'main': './js/main.js',
@@ -10,7 +10,7 @@ module.exports = {
     'gemini-api': './js/gemini-api.js'
   },
   output: {
-    path: path.resolve(__dirname, 'js'),
+    path: path.resolve(process.cwd(), 'js'),
     filename: '[name].min.js',
     clean: false
   },

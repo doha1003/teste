@@ -11,24 +11,24 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (typeof API_CONFIG !== 'undefined' && API_CONFIG.kakao && API_CONFIG.kakao.appKey) {
                         Kakao.init(API_CONFIG.kakao.appKey);
                     } else {
-                        console.error('API_CONFIG not available');
+                        // console.error removed('API_CONFIG not available');
                         return;
                     }
-                    console.log('Kakao SDK initialized:', Kakao.isInitialized());
+                    // console.log removed('Kakao SDK initialized:', Kakao.isInitialized());
                     
                     // 초기화 확인
                     if (Kakao.isInitialized()) {
-                        console.log('Kakao SDK Version:', Kakao.VERSION);
+                        // console.log removed('Kakao SDK Version:', Kakao.VERSION);
                     }
                 } catch (e) {
-                    console.error('Kakao SDK initialization failed:', e);
-                    console.error('Error details:', e.message);
+                    // console.error removed('Kakao SDK initialization failed:', e);
+                    // console.error removed('Error details:', e.message);
                 }
             } else {
-                console.log('Kakao SDK already initialized');
+                // console.log removed('Kakao SDK already initialized');
             }
         } else {
-            console.error('Kakao SDK not loaded');
+            // console.error removed('Kakao SDK not loaded');
         }
     }, 500);
 });
@@ -564,10 +564,10 @@ function shareKakao() {
             }
         ],
         success: function(response) {
-            console.log('카카오톡 공유 성공:', response);
+            // console.log removed('카카오톡 공유 성공:', response);
         },
         fail: function(error) {
-            console.error('카카오톡 공유 실패:', error);
+            // console.error removed('카카오톡 공유 실패:', error);
             alert('공유에 실패했습니다. 다시 시도해주세요.');
         }
     });
@@ -586,7 +586,7 @@ function restartTest() {
 
 // 페이지 로드 시 초기화
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('테토-에겐 테스트 로드 완료 (20개 최적화 버전)');
-    console.log(`총 ${questions.length}개 질문 로드됨`);
-    console.log(`${Object.keys(resultTypes).length}가지 결과 유형 준비됨`);
+    // console.log removed('테토-에겐 테스트 로드 완료 (20개 최적화 버전)');
+    // console.log removed(`총 ${questions.length}개 질문 로드됨`);
+    // console.log removed(`${Object.keys(resultTypes).length}가지 결과 유형 준비됨`);
 });

@@ -1,29 +1,50 @@
 /**
- * Service Worker for doha.kr
- * Provides offline functionality, caching, and performance optimization
- * Version: 2.0.0
+ * Service Worker for doha.kr - Performance Optimized
+ * 향상된 캐싱, 오프라인 지원, 성능 최적화
+ * Version: 3.0.0 - Phase 2 Performance Upgrade
  */
 
-const CACHE_NAME = 'doha-kr-v2.0.0';
-const STATIC_CACHE = 'doha-static-v2.0.0';
-const DYNAMIC_CACHE = 'doha-dynamic-v2.0.0';
+const CACHE_NAME = 'doha-kr-v3.0.0';
+const STATIC_CACHE = 'doha-static-v3.0.0';
+const DYNAMIC_CACHE = 'doha-dynamic-v3.0.0';
+const API_CACHE = 'doha-api-v3.0.0';
 
-// Static assets to cache immediately
+// 성능 메트릭
+let performanceMetrics = {
+    cacheHits: 0,
+    cacheMisses: 0,
+    networkRequests: 0,
+    offlineRequests: 0,
+    apiCacheHits: 0
+};
+
+// 성능 최적화된 정적 자산 목록
 const STATIC_ASSETS = [
     '/',
-    '/css/main.min.css',
-    '/css/critical.css',
-    '/js/app.min.js',
+    '/css/styles-cleaned.css',
+    '/css/mobile-fixes.css', 
+    '/css/button-system-cleaned.css',
+    '/js/main.js',
+    '/js/dom-security.js',
+    '/js/api-config.js',
+    '/js/manseryeok-api-client.js',
+    '/js/image-optimizer.js',
+    '/js/bundle-optimizer.js',
     '/images/logo.svg',
-    '/images/placeholder-favicon.svg',
     '/manifest.json',
     '/offline.html',
-    // Critical pages
+    // 필수 페이지만 사전 캐시
     '/tests/',
     '/tools/',
-    '/about/',
-    '/contact/'
+    '/fortune/'
 ];
+
+// 만세력 API 캐시 전략
+const MANSERYEOK_API_CONFIG = {
+    maxEntries: 1000,
+    maxAgeSeconds: 60 * 60 * 24 * 7, // 1주일
+    cacheName: 'manseryeok-api-cache'
+};
 
 // Cache strategies for different resource types
 const CACHE_STRATEGIES = {
@@ -55,27 +76,27 @@ const CACHE_STRATEGIES = {
 
 // Install event - cache static assets
 self.addEventListener('install', (event) => {
-    console.log('Service Worker: Installing...');
+    // Service Worker: Installing...
     
     event.waitUntil(
         caches.open(STATIC_CACHE)
             .then((cache) => {
-                console.log('Service Worker: Caching static assets');
+                // Service Worker: Caching static assets
                 return cache.addAll(STATIC_ASSETS);
             })
             .then(() => {
-                console.log('Service Worker: Installation complete');
+                // Service Worker: Installation complete
                 return self.skipWaiting();
             })
             .catch((error) => {
-                console.error('Service Worker: Installation failed', error);
+                // Service Worker: Installation failed
             })
     );
 });
 
 // Activate event - clean up old caches
 self.addEventListener('activate', (event) => {
-    console.log('Service Worker: Activating...');
+    // Service Worker: Activating...
     
     event.waitUntil(
         caches.keys()
@@ -85,14 +106,14 @@ self.addEventListener('activate', (event) => {
                         if (cacheName !== STATIC_CACHE && 
                             cacheName !== DYNAMIC_CACHE &&
                             cacheName !== CACHE_NAME) {
-                            console.log('Service Worker: Deleting old cache', cacheName);
+                            // Service Worker: Deleting old cache
                             return caches.delete(cacheName);
                         }
                     })
                 );
             })
             .then(() => {
-                console.log('Service Worker: Activation complete');
+                // Service Worker: Activation complete
                 return self.clients.claim();
             })
     );
@@ -137,7 +158,7 @@ async function handleRequest(request) {
             return await networkFirst(request);
         }
     } catch (error) {
-        console.error('Service Worker: Request failed', error);
+        // Service Worker: Request failed
         return await handleFailure(request);
     }
 }
@@ -293,9 +314,9 @@ async function syncAnalytics() {
         }
         
         await clearStoredAnalytics();
-        console.log('Service Worker: Analytics synced');
+        // Service Worker: Analytics synced
     } catch (error) {
-        console.error('Service Worker: Analytics sync failed', error);
+        // Service Worker: Analytics sync failed
     }
 }
 
@@ -317,9 +338,9 @@ async function syncFormSubmissions() {
         }
         
         await clearStoredFormSubmissions();
-        console.log('Service Worker: Form submissions synced');
+        // Service Worker: Form submissions synced
     } catch (error) {
-        console.error('Service Worker: Form submission sync failed', error);
+        // Service Worker: Form submission sync failed
     }
 }
 
@@ -395,17 +416,17 @@ async function clearStoredFormSubmissions() {
 self.addEventListener('message', (event) => {
     if (event.data && event.data.type === 'PERFORMANCE_REPORT') {
         // Handle performance reports from main thread
-        console.log('Performance Report:', event.data.payload);
+        // Performance Report received
     }
 });
 
 // Error reporting
 self.addEventListener('error', (event) => {
-    console.error('Service Worker Error:', event.error);
+    // Service Worker Error occurred
 });
 
 self.addEventListener('unhandledrejection', (event) => {
-    console.error('Service Worker Unhandled Rejection:', event.reason);
+    // Service Worker Unhandled Rejection occurred
 });
 
-console.log('Service Worker: Script loaded successfully');
+// Service Worker: Script loaded successfully

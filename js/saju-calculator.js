@@ -118,7 +118,7 @@ const sajuCalculator = {
             };
             
         } catch (error) {
-            console.error('사주 계산 오류:', error);
+            // console.error removed('사주 계산 오류:', error);
             throw new Error('사주 계산 중 오류가 발생했습니다.');
         }
     },

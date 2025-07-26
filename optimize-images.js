@@ -68,13 +68,13 @@ function optimizeImagesInHTML(filePath) {
         
         if (modified) {
             fs.writeFileSync(filePath, content);
-            console.log(`✓ 최적화됨: ${filePath}`);
+            // ✓ 최적화됨
             return true;
         }
         
         return false;
     } catch (error) {
-        console.error(`오류 발생 ${filePath}:`, error.message);
+        // 오류 발생
         return false;
     }
 }
@@ -99,12 +99,12 @@ function findHTMLFiles(dir, fileList = []) {
 
 // 메인 실행
 function main() {
-    console.log('이미지 최적화 시작...\n');
+    // 이미지 최적화 시작...
     
     const rootDir = __dirname; // teste 디렉토리만 대상으로
     const htmlFiles = findHTMLFiles(rootDir);
     
-    console.log(`발견된 HTML 파일: ${htmlFiles.length}개\n`);
+    // 발견된 HTML 파일
     
     let optimizedCount = 0;
     
@@ -114,14 +114,14 @@ function main() {
         }
     });
     
-    console.log(`\n최적화 완료! ${optimizedCount}개 파일이 업데이트되었습니다.`);
+    // 최적화 완료
     
     // WebP 변환 안내
-    console.log('\n다음 단계:');
-    console.log('1. 이미지를 WebP로 변환하려면 다음 명령어를 사용하세요:');
-    console.log('   npm install -g webp-converter');
-    console.log('   또는 온라인 도구 사용: https://cloudconvert.com/jpg-to-webp');
-    console.log('\n2. 변환된 WebP 파일을 동일한 디렉토리에 배치하세요.');
+    // 다음 단계
+    // 1. 이미지를 WebP로 변환하려면 다음 명령어를 사용하세요
+    // npm install -g webp-converter
+    // 또는 온라인 도구 사용: https://cloudconvert.com/jpg-to-webp
+    // 2. 변환된 WebP 파일을 동일한 디렉토리에 배치하세요
 }
 
 // 스크립트 실행

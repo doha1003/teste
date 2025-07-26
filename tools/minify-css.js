@@ -45,11 +45,11 @@ async function processCSS(filePath) {
         // Write minified file
         await fs.writeFile(minPath, minified);
         
-        console.log(`✓ ${path.basename(filePath)} → ${path.basename(minPath)} (${reduction}% reduction)`);
+        // console.log removed(`✓ ${path.basename(filePath)} → ${path.basename(minPath)} (${reduction}% reduction)`);
         
         return { original: originalSize, minified: minifiedSize };
     } catch (error) {
-        console.error(`✗ Error processing ${filePath}:`, error.message);
+        // console.error removed(`✗ Error processing ${filePath}:`, error.message);
         return { original: 0, minified: 0 };
     }
 }
@@ -74,12 +74,12 @@ async function findCSSFiles(dir, files = []) {
 }
 
 async function main() {
-    console.log('🔄 Starting CSS minification...\n');
+    // console.log removed('🔄 Starting CSS minification...\n');
     
     const cssDir = path.join(__dirname, '..', 'css');
     const cssFiles = await findCSSFiles(cssDir);
     
-    console.log(`Found ${cssFiles.length} CSS files to minify\n`);
+    // console.log removed(`Found ${cssFiles.length} CSS files to minify\n`);
     
     let totalOriginal = 0;
     let totalMinified = 0;
@@ -92,12 +92,14 @@ async function main() {
     
     const totalReduction = ((totalOriginal - totalMinified) / totalOriginal * 100).toFixed(1);
     
-    console.log('\n📊 Summary:');
-    console.log(`Original size: ${(totalOriginal / 1024).toFixed(1)} KB`);
-    console.log(`Minified size: ${(totalMinified / 1024).toFixed(1)} KB`);
-    console.log(`Total reduction: ${totalReduction}%`);
-    console.log('\n✅ CSS minification complete!');
+    // console.log removed('\n📊 Summary:');
+    // console.log removed(`Original size: ${(totalOriginal / 1024).toFixed(1)} KB`);
+    // console.log removed(`Minified size: ${(totalMinified / 1024).toFixed(1)} KB`);
+    // console.log removed(`Total reduction: ${totalReduction}%`);
+    // console.log removed('\n✅ CSS minification complete!');
 }
 
 // Run the script
-main().catch(console.error);
+main().catch(err => {
+        // Error handling
+    });

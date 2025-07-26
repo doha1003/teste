@@ -19,7 +19,7 @@ class AnalyticsDashboard {
         this.createDashboardContainer();
         this.setupEventListeners();
         this.loadHistoricalData();
-        console.log('Analytics Dashboard initialized');
+        // Analytics Dashboard initialized
     }
 
     /**
@@ -448,7 +448,7 @@ class AnalyticsDashboard {
                 this.data.statistics = statistics;
             }
         } catch (error) {
-            console.error('Failed to load historical data:', error);
+            // Failed to load historical data
         }
     }
 
@@ -650,7 +650,7 @@ class AnalyticsDashboard {
                 window.showNotification('분석 데이터가 내보내기되었습니다.');
             }
         } catch (error) {
-            console.error('Export failed:', error);
+            // Export failed
             if (window.showNotification) {
                 window.showNotification('내보내기 중 오류가 발생했습니다.', 'error');
             }
@@ -781,4 +781,4 @@ window.hideAnalyticsDashboard = () => {
     window.analyticsDashboard.hide();
 };
 
-console.log('Analytics Dashboard System loaded successfully');
+// Analytics Dashboard System loaded successfully

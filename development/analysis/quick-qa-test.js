@@ -25,8 +25,8 @@ class QuickQATest {
     }
     
     async runQuickTest() {
-        console.log('🔍 STARTING QUICK QA TEST FOR DOHA.KR');
-        console.log('=====================================');
+        // console.log removed('🔍 STARTING QUICK QA TEST FOR DOHA.KR');
+        // console.log removed('=====================================');
         
         const browser = await puppeteer.launch({ 
             headless: 'new',
@@ -35,7 +35,7 @@ class QuickQATest {
         
         try {
             for (const testPage of this.testPages) {
-                console.log(`\n📄 Testing: ${testPage.name}`);
+                // console.log removed(`\n📄 Testing: ${testPage.name}`);
                 
                 const result = await this.testPage(browser, testPage);
                 this.results.pages[testPage.name] = result;
@@ -43,14 +43,14 @@ class QuickQATest {
                 
                 if (result.overall === 'passed') {
                     this.results.summary.passed++;
-                    console.log(`  ✅ ${testPage.name}: PASSED`);
+                    // console.log removed(`  ✅ ${testPage.name}: PASSED`);
                 } else {
                     this.results.summary.failed++;
-                    console.log(`  ❌ ${testPage.name}: FAILED`);
+                    // console.log removed(`  ❌ ${testPage.name}: FAILED`);
                 }
             }
         } catch (error) {
-            console.error('Error during testing:', error);
+            // console.error removed('Error during testing:', error);
         } finally {
             await browser.close();
         }
@@ -207,21 +207,23 @@ ${this.generateRecommendations()}
     }
     
     printSummary() {
-        console.log('\n🎉 QUICK QA TEST COMPLETE');
-        console.log('========================');
-        console.log(`📊 Total: ${this.results.summary.total}`);
-        console.log(`✅ Passed: ${this.results.summary.passed}`);
-        console.log(`❌ Failed: ${this.results.summary.failed}`);
+        // console.log removed('\n🎉 QUICK QA TEST COMPLETE');
+        // console.log removed('========================');
+        // console.log removed(`📊 Total: ${this.results.summary.total}`);
+        // console.log removed(`✅ Passed: ${this.results.summary.passed}`);
+        // console.log removed(`❌ Failed: ${this.results.summary.failed}`);
         
         const successRate = (this.results.summary.passed / this.results.summary.total * 100).toFixed(1);
-        console.log(`📈 Success Rate: ${successRate}%`);
+        // console.log removed(`📈 Success Rate: ${successRate}%`);
         
-        console.log('\n📋 Reports Generated:');
-        console.log('- quick-qa-report.md');
-        console.log('- quick-qa-results.json');
+        // console.log removed('\n📋 Reports Generated:');
+        // console.log removed('- quick-qa-report.md');
+        // console.log removed('- quick-qa-results.json');
     }
 }
 
 // Run the test
 const qa = new QuickQATest();
-qa.runQuickTest().catch(console.error);
+qa.runQuickTest().catch(err => {
+        // Error handling
+    });

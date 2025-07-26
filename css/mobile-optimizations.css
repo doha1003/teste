@@ -1,0 +1,283 @@
+/* Mobile Optimizations for doha.kr */
+
+/* ========================================
+   1. Touch Target Minimum Sizes (44x44px)
+   ======================================== */
+.btn,
+.option-btn,
+.zodiac-card,
+.animal-card,
+.tarot-card,
+button,
+a.button,
+input[type="button"],
+input[type="submit"] {
+    min-height: 44px;
+    min-width: 44px;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+/* Ensure clickable cards have proper touch targets */
+.zodiac-card,
+.animal-card {
+    padding: 15px;
+    cursor: pointer;
+    user-select: none;
+}
+
+/* ========================================
+   2. Form Input Optimizations
+   ======================================== */
+/* Prevent zoom on input focus (iOS) */
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="tel"],
+input[type="date"],
+input[type="time"],
+select,
+textarea {
+    font-size: 16px !important; /* Prevents zoom on iOS */
+    padding: 12px 16px;
+    min-height: 44px;
+}
+
+/* Native date/time inputs for mobile */
+input[type="date"],
+input[type="time"] {
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: white;
+    border: 1px solid var(--border-color);
+}
+
+/* Better select elements on mobile */
+select {
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 20px;
+    padding-right: 40px;
+}
+
+/* ========================================
+   3. Swipe Gesture Support
+   ======================================== */
+.swipeable {
+    touch-action: pan-y;
+    -webkit-overflow-scrolling: touch;
+}
+
+.card-container {
+    scroll-snap-type: x mandatory;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.card-container > * {
+    scroll-snap-align: center;
+}
+
+/* ========================================
+   4. Performance Optimizations
+   ======================================== */
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Hardware acceleration for smooth scrolling */
+.scroll-container {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    will-change: transform;
+}
+
+/* ========================================
+   5. Viewport and Layout Fixes
+   ======================================== */
+/* Prevent horizontal scrolling */
+html, body {
+    overflow-x: hidden;
+    width: 100%;
+}
+
+/* Safe area insets for notched devices */
+.container {
+    padding-left: max(20px, env(safe-area-inset-left));
+    padding-right: max(20px, env(safe-area-inset-right));
+}
+
+/* ========================================
+   6. Modal/Popup Mobile Optimization
+   ======================================== */
+@media (max-width: 768px) {
+    .modal,
+    .popup,
+    .result-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        max-width: none;
+        max-height: none;
+        margin: 0;
+        border-radius: 0;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .modal-content {
+        min-height: 100vh;
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+}
+
+/* ========================================
+   7. Touch-Friendly Spacing
+   ======================================== */
+@media (max-width: 768px) {
+    /* Increase spacing between interactive elements */
+    .btn + .btn,
+    .option-btn + .option-btn {
+        margin-top: 10px;
+    }
+    
+    /* Card spacing */
+    .zodiac-card,
+    .animal-card,
+    .tarot-card {
+        margin-bottom: 15px;
+    }
+    
+    /* Form spacing */
+    .form-group {
+        margin-bottom: 20px;
+    }
+}
+
+/* ========================================
+   8. Landscape Orientation Fixes
+   ======================================== */
+@media (max-width: 768px) and (orientation: landscape) {
+    .page-header {
+        padding: 20px 0;
+    }
+    
+    .page-title {
+        font-size: 1.8rem;
+    }
+    
+    /* Reduce vertical spacing in landscape */
+    section {
+        padding: 30px 0;
+    }
+}
+
+/* ========================================
+   9. Loading States for Mobile
+   ======================================== */
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    margin: 20px auto;
+}
+
+/* Touch feedback */
+.touchable:active {
+    opacity: 0.7;
+    transform: scale(0.98);
+    transition: all 0.1s ease;
+}
+
+/* ========================================
+   10. Accessibility Improvements
+   ======================================== */
+/* Focus styles for keyboard navigation */
+*:focus {
+    outline: 3px solid var(--color-primary, #007bff);
+    outline-offset: 2px;
+}
+
+/* Skip to content link */
+.skip-to-content {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--color-primary, #007bff);
+    color: white;
+    padding: 8px;
+    text-decoration: none;
+    z-index: 100;
+}
+
+.skip-to-content:focus {
+    top: 0;
+}
+
+/* ========================================
+   11. Input Autocomplete Attributes
+   ======================================== */
+/* Add these as data attributes in HTML:
+   data-autocomplete="name" → autocomplete="name"
+   data-autocomplete="bday-year" → autocomplete="bday-year"
+   data-autocomplete="bday-month" → autocomplete="bday-month"
+   data-autocomplete="bday-day" → autocomplete="bday-day"
+*/
+
+/* ========================================
+   12. Sticky Elements Fix
+   ======================================== */
+.sticky-bottom {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding-bottom: env(safe-area-inset-bottom);
+    z-index: 100;
+}
+
+/* ========================================
+   13. Image Optimization
+   ======================================== */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Lazy loading placeholder */
+img[loading="lazy"] {
+    background: #f0f0f0;
+}
+
+/* ========================================
+   14. Text Readability
+   ======================================== */
+@media (max-width: 768px) {
+    body {
+        font-size: 16px;
+        line-height: 1.6;
+    }
+    
+    p {
+        margin-bottom: 1em;
+    }
+    
+    /* Prevent orphaned words */
+    h1, h2, h3, h4, h5, h6, p {
+        word-wrap: break-word;
+        hyphens: auto;
+    }
+}

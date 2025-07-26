@@ -241,7 +241,7 @@ function showQuestion() {
     
     // 옵션 표시
     const optionsContainer = document.getElementById('options');
-    optionsContainer.innerHTML = '';
+    SecureDOM.setInnerHTML(optionsContainer, '');
     
     q.options.forEach((option, index) => {
         const optionElement = document.createElement('div');
@@ -340,7 +340,7 @@ function showResult() {
     
     // 성격 특징 표시
     const traitsList = document.getElementById('personality-traits');
-    traitsList.innerHTML = '';
+    SecureDOM.setInnerHTML(traitsList, '');
     currentTypeData.traits.forEach(trait => {
         const li = document.createElement('li');
         li.textContent = trait;
@@ -349,7 +349,7 @@ function showResult() {
     
     // 추천 취미 표시
     const hobbies = document.getElementById('recommended-hobbies');
-    hobbies.innerHTML = '';
+    SecureDOM.setInnerHTML(hobbies, '');
     currentTypeData.hobbies.forEach(hobby => {
         const span = document.createElement('span');
         span.className = 'teto-hobby-tag';
@@ -364,7 +364,7 @@ function showResult() {
     
     // 궁합 표시
     const bestMatches = document.getElementById('best-matches');
-    bestMatches.innerHTML = '';
+    SecureDOM.setInnerHTML(bestMatches, '');
     currentTypeData.bestMatches.forEach(match => {
         const span = document.createElement('span');
         span.className = 'teto-compatibility-type';
@@ -373,7 +373,7 @@ function showResult() {
     });
     
     const goodMatches = document.getElementById('good-matches');
-    goodMatches.innerHTML = '';
+    SecureDOM.setInnerHTML(goodMatches, '');
     currentTypeData.goodMatches.forEach(match => {
         const span = document.createElement('span');
         span.className = 'teto-compatibility-type-good';
@@ -383,7 +383,7 @@ function showResult() {
     
     // 연예인 표시
     const celebrities = document.getElementById('celebrities');
-    celebrities.innerHTML = '';
+    SecureDOM.setInnerHTML(celebrities, '');
     currentTypeData.celebrities.forEach(celebrity => {
         const span = document.createElement('span');
         span.className = 'teto-celebrity-item';

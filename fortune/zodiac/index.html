@@ -28,7 +28,10 @@
     <!-- Google AdSense -->
     <!-- Moved to end of body -->
     <!-- Optimized CSS System -->
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/styles-cleaned.css">
+    <link rel="stylesheet" href="/css/css-cleanup.css">
+    <link rel="stylesheet" href="/css/inline-style-replacement.css">
+    <link rel="stylesheet" href="/css/mobile-optimizations.css">
     <link rel="stylesheet" href="/css/pages/zodiac.css">
     
     <link rel="stylesheet" href="/css/pages/result-detail.css">
@@ -65,7 +68,7 @@
     <section class="zodiac-section">
         <div class="container">
             <div id="zodiacSelection" class="zodiac-selection">
-                <h2 style="text-align: center; margin-bottom: 40px;">당신의 별자리를 선택하세요</h2>
+                <h2 class="text-center mb-40">당신의 별자리를 선택하세요</h2>
                 <div class="zodiac-grid">
                     <div class="zodiac-card" onclick="selectZodiac('aries')">
                         <div class="zodiac-symbol">♈</div>
@@ -131,7 +134,7 @@
             </div>
             
             <!-- 운세 결과 영역 -->
-            <div id="zodiacResult" class="zodiac-result" style="display: none;">
+            <div id="zodiacResult" class="zodiac-result d-none-init">
                 <!-- 결과가 여기에 표시됩니다 -->
             </div>
         </div>
@@ -157,8 +160,8 @@
     <div class="ad-container">
         <div class="ad-label">광고</div>
         
-<div id="ad-container-zn06v1879" style="min-height: 100px;">
-    <div class="ad-placeholder" style="display: flex; align-items: center; justify-content: center; background: #f5f5f5; min-height: 100px; color: #999;">
+<div id="ad-container-zn06v1879" class="ad-container-min">
+    <div class="ad-placeholder ad-container-styled">
         광고 로딩 중...
     </div>
 </div>
@@ -696,138 +699,6 @@ window.addEventListener('load', function() {
 });
 </script>
 
-<script>
-
-window.adsenseInitialized = window.adsenseInitialized || false;
-
-function initializeAdSense() {
-    if (window.adsenseInitialized) {
-        console.log('AdSense already initialized');
-        return;
-    }
-    
-    window.adsenseInitialized = true;
-
-    const adBlocks = document.querySelectorAll('.adsbygoogle');
-    adBlocks.forEach((ad, index) => {
-        if (!ad.dataset.adsbygoogleStatus) {
-            try {
-                (adsbygoogle = window.adsbygoogle || []).push({});
-                console.log('AdSense block initialized:', index);
-            } catch (error) {
-                console.warn('AdSense initialization error:', error);
-            }
-        }
-    });
-}
-
-window.addEventListener('load', function() {
-    setTimeout(initializeAdSense, 1000);
-});
-</script>
-
-<script>
-
-(function() {
-    'use strict';
-
-    window.__adsenseLoaded = window.__adsenseLoaded || false;
-    window.__adsenseQueue = window.__adsenseQueue || [];
-    
-    function initAdsense() {
-        if (window.__adsenseLoaded) return;
-        
-        const ads = document.querySelectorAll('.adsbygoogle:not([data-adsbygoogle-status])');
-        
-        if (ads.length === 0) return;
-
-        if (typeof adsbygoogle === 'undefined') {
-            setTimeout(initAdsense, 500);
-            return;
-        }
-        
-        window.__adsenseLoaded = true;
-
-        ads.forEach((ad, index) => {
-            try {
-
-                if (ad.getAttribute('data-adsbygoogle-status')) return;
-
-                (adsbygoogle = window.adsbygoogle || []).push({});
-
-                ad.setAttribute('data-adsbygoogle-status', 'done');
-                
-            } catch (e) {
-                console.warn('AdSense 초기화 실패:', index, e.message);
-            }
-        });
-    }
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(initAdsense, 1000);
-        });
-    } else {
-        setTimeout(initAdsense, 1000);
-    }
-
-    window.addEventListener('error', function(e) {
-        if (e.message && e.message.includes('adsbygoogle.push() error')) {
-            e.preventDefault();
-            console.warn('AdSense 중복 초기화 방지됨');
-            return false;
-        }
-    }, true);
-})();
-</script>
-
-<!-- AdSense 통합 초기화 -->
-<script>
-(function() {
-    'use strict';
-
-    window.__adsInitialized = false;
-
-    function initializeAds() {
-        if (window.__adsInitialized) return;
-        
-        const ads = document.querySelectorAll('.adsbygoogle:not([data-adsbygoogle-status])');
-        if (ads.length === 0) return;
-
-        if (typeof adsbygoogle === 'undefined') {
-            setTimeout(initializeAds, 100);
-            return;
-        }
-        
-        window.__adsInitialized = true;
-
-        ads.forEach((ad) => {
-            try {
-                (adsbygoogle = window.adsbygoogle || []).push({});
-                ad.setAttribute('data-adsbygoogle-status', 'done');
-            } catch (e) {
-
-            }
-        });
-    }
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(initializeAds, 500);
-        });
-    } else {
-        setTimeout(initializeAds, 500);
-    }
-
-    window.addEventListener('error', function(e) {
-        if (e.message && e.message.includes('adsbygoogle.push() error')) {
-            e.preventDefault();
-            e.stopPropagation();
-            return false;
-        }
-    }, true);
-})();
-</script>
 
 <script>
 // 네비게이션 및 푸터 로드 - main.js의 loadComponents가 실행되지 않은 경우를 위한 폴백

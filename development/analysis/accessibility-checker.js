@@ -268,7 +268,7 @@ class AccessibilityChecker {
     }
     
     async checkPage(url) {
-        console.log(`\n🔍 Checking: ${url}`);
+        // console.log removed(`\n🔍 Checking: ${url}`);
         
         try {
             const html = await this.fetchPage(url);
@@ -309,7 +309,7 @@ class AccessibilityChecker {
             return result;
             
         } catch (error) {
-            console.error(`❌ Error checking ${url}:`, error.message);
+            // console.error removed(`❌ Error checking ${url}:`, error.message);
             return {
                 url,
                 error: error.message,
@@ -320,29 +320,29 @@ class AccessibilityChecker {
     
     displayPageResult(result) {
         const status = result.passed ? '✅' : '❌';
-        console.log(`\n${status} ${result.url}`);
-        console.log(`   Total Issues: ${result.totalIssues}`);
+        // console.log removed(`\n${status} ${result.url}`);
+        // console.log removed(`   Total Issues: ${result.totalIssues}`);
         
         if (result.totalIssues > 0) {
-            console.log(`   Level A: ${result.issuesByLevel.A} issues`);
-            console.log(`   Level AA: ${result.issuesByLevel.AA} issues`);
+            // console.log removed(`   Level A: ${result.issuesByLevel.A} issues`);
+            // console.log removed(`   Level AA: ${result.issuesByLevel.AA} issues`);
             
-            console.log(`\n   Issues by WCAG Criterion:`);
+            // console.log removed(`\n   Issues by WCAG Criterion:`);
             Object.entries(result.groupedIssues).forEach(([criterion, issues]) => {
-                console.log(`   ${criterion}: ${issues.length} issues`);
+                // console.log removed(`   ${criterion}: ${issues.length} issues`);
                 issues.slice(0, 2).forEach(issue => {
-                    console.log(`     - ${issue.issue}`);
+                    // console.log removed(`     - ${issue.issue}`);
                 });
                 if (issues.length > 2) {
-                    console.log(`     ... and ${issues.length - 2} more`);
+                    // console.log removed(`     ... and ${issues.length - 2} more`);
                 }
             });
         }
     }
     
     async runAllChecks() {
-        console.log('🚀 Starting accessibility check for doha.kr...');
-        console.log('📋 Checking WCAG 2.1 Level AA compliance\n');
+        // console.log removed('🚀 Starting accessibility check for doha.kr...');
+        // console.log removed('📋 Checking WCAG 2.1 Level AA compliance\n');
         
         for (const url of PAGES_TO_CHECK) {
             await this.checkPage(url);
@@ -352,16 +352,16 @@ class AccessibilityChecker {
     }
     
     displaySummary() {
-        console.log('\n' + '='.repeat(60));
-        console.log('📊 ACCESSIBILITY CHECK SUMMARY');
-        console.log('='.repeat(60));
+        // console.log removed('\n' + '='.repeat(60));
+        // console.log removed('📊 ACCESSIBILITY CHECK SUMMARY');
+        // console.log removed('='.repeat(60));
         
         const passed = this.results.filter(r => r.passed).length;
         const total = this.results.length;
         
-        console.log(`\nTotal Pages: ${total}`);
-        console.log(`✅ Passed: ${passed}`);
-        console.log(`❌ Failed: ${total - passed}`);
+        // console.log removed(`\nTotal Pages: ${total}`);
+        // console.log removed(`✅ Passed: ${passed}`);
+        // console.log removed(`❌ Failed: ${total - passed}`);
         
         // Aggregate all issues
         const allIssues = {};
@@ -380,22 +380,22 @@ class AccessibilityChecker {
         });
         
         if (totalIssues > 0) {
-            console.log(`\n🔍 Issues by WCAG Criterion:`);
+            // console.log removed(`\n🔍 Issues by WCAG Criterion:`);
             Object.entries(allIssues)
                 .sort((a, b) => b[1].count - a[1].count)
                 .forEach(([criterion, data]) => {
-                    console.log(`   ${criterion} (Level ${data.level}): ${data.count} issues`);
+                    // console.log removed(`   ${criterion} (Level ${data.level}): ${data.count} issues`);
                 });
             
-            console.log(`\n💡 Recommendations:`);
-            console.log(`   1. Add alt attributes to all images`);
-            console.log(`   2. Ensure all form inputs have labels`);
-            console.log(`   3. Maintain proper heading hierarchy`);
-            console.log(`   4. Check color contrast ratios`);
-            console.log(`   5. Make all interactive elements keyboard accessible`);
+            // console.log removed(`\n💡 Recommendations:`);
+            // console.log removed(`   1. Add alt attributes to all images`);
+            // console.log removed(`   2. Ensure all form inputs have labels`);
+            // console.log removed(`   3. Maintain proper heading hierarchy`);
+            // console.log removed(`   4. Check color contrast ratios`);
+            // console.log removed(`   5. Make all interactive elements keyboard accessible`);
         }
         
-        console.log('\n✨ Accessibility check complete!');
+        // console.log removed('\n✨ Accessibility check complete!');
     }
 }
 
@@ -403,18 +403,20 @@ class AccessibilityChecker {
 try {
     require('jsdom');
     const checker = new AccessibilityChecker();
-    checker.runAllChecks().catch(console.error);
+    checker.runAllChecks().catch(err => {
+        // Error handling
+    });
 } catch (error) {
-    console.log('⚠️  jsdom not installed. Installing...');
-    console.log('Run: npm install jsdom');
-    console.log('\nFor now, here are the accessibility checks that would be performed:');
-    console.log('\n📋 WCAG 2.1 AA Checks:');
-    console.log('   - Alt text for images (1.1.1)');
-    console.log('   - Form labels (3.3.2)');
-    console.log('   - Heading structure (2.4.6, 1.3.1)');
-    console.log('   - Color contrast (1.4.3)');
-    console.log('   - Language attributes (3.1.1)');
-    console.log('   - Link purpose (2.4.4)');
-    console.log('   - Keyboard navigation (2.4.3)');
-    console.log('   - ARIA usage (4.1.2, 1.3.1)');
+    // console.log removed('⚠️  jsdom not installed. Installing...');
+    // console.log removed('Run: npm install jsdom');
+    // console.log removed('\nFor now, here are the accessibility checks that would be performed:');
+    // console.log removed('\n📋 WCAG 2.1 AA Checks:');
+    // console.log removed('   - Alt text for images (1.1.1)');
+    // console.log removed('   - Form labels (3.3.2)');
+    // console.log removed('   - Heading structure (2.4.6, 1.3.1)');
+    // console.log removed('   - Color contrast (1.4.3)');
+    // console.log removed('   - Language attributes (3.1.1)');
+    // console.log removed('   - Link purpose (2.4.4)');
+    // console.log removed('   - Keyboard navigation (2.4.3)');
+    // console.log removed('   - ARIA usage (4.1.2, 1.3.1)');
 }

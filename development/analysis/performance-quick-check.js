@@ -30,7 +30,7 @@ class PerformanceChecker {
     }
     
     async checkPage(url) {
-        console.log(`\n🔍 Checking: ${url}`);
+        // console.log removed(`\n🔍 Checking: ${url}`);
         const startTime = performance.now();
         
         try {
@@ -83,7 +83,7 @@ class PerformanceChecker {
             return pageResult;
             
         } catch (error) {
-            console.error(`❌ Error checking ${url}:`, error.message);
+            // console.error removed(`❌ Error checking ${url}:`, error.message);
             return {
                 url,
                 error: error.message,
@@ -172,19 +172,19 @@ class PerformanceChecker {
     
     displayPageResult(result) {
         const status = result.passed ? '✅' : '❌';
-        console.log(`\n${status} ${result.url}`);
+        // console.log removed(`\n${status} ${result.url}`);
         
         if (!result.error) {
-            console.log(`   TTFB: ${result.ttfb}ms`);
-            console.log(`   Total Time: ${result.totalTime}ms`);
-            console.log(`   Size: ${result.sizeKB}KB`);
-            console.log(`   Compression: ${result.compression || 'none'}`);
-            console.log(`   External Resources: ${result.resourceCount}`);
+            // console.log removed(`   TTFB: ${result.ttfb}ms`);
+            // console.log removed(`   Total Time: ${result.totalTime}ms`);
+            // console.log removed(`   Size: ${result.sizeKB}KB`);
+            // console.log removed(`   Compression: ${result.compression || 'none'}`);
+            // console.log removed(`   External Resources: ${result.resourceCount}`);
             
             if (result.issues.length > 0) {
-                console.log(`   Issues:`);
+                // console.log removed(`   Issues:`);
                 result.issues.forEach(issue => {
-                    console.log(`     - ${issue}`);
+                    // console.log removed(`     - ${issue}`);
                 });
             }
             
@@ -197,22 +197,22 @@ class PerformanceChecker {
                 'content-security-policy'
             ];
             
-            console.log(`   Security Headers:`);
+            // console.log removed(`   Security Headers:`);
             importantHeaders.forEach(header => {
                 const value = result.headers[header];
                 const status = value ? '✓' : '✗';
-                console.log(`     ${status} ${header}: ${value || 'missing'}`);
+                // console.log removed(`     ${status} ${header}: ${value || 'missing'}`);
             });
         }
     }
     
     async runAllChecks() {
-        console.log('🚀 Starting performance check for doha.kr...\n');
-        console.log('⚡ Performance Thresholds:');
-        console.log(`   TTFB: ${THRESHOLDS.ttfb}ms`);
-        console.log(`   Total Time: ${THRESHOLDS.totalTime}ms`);
-        console.log(`   Page Size: ${Math.round(THRESHOLDS.size / 1024)}KB`);
-        console.log(`   Resource Count: ${THRESHOLDS.resources}`);
+        // console.log removed('🚀 Starting performance check for doha.kr...\n');
+        // console.log removed('⚡ Performance Thresholds:');
+        // console.log removed(`   TTFB: ${THRESHOLDS.ttfb}ms`);
+        // console.log removed(`   Total Time: ${THRESHOLDS.totalTime}ms`);
+        // console.log removed(`   Page Size: ${Math.round(THRESHOLDS.size / 1024)}KB`);
+        // console.log removed(`   Resource Count: ${THRESHOLDS.resources}`);
         
         for (const url of PAGES_TO_TEST) {
             await this.checkPage(url);
@@ -224,16 +224,16 @@ class PerformanceChecker {
     }
     
     displaySummary() {
-        console.log('\n' + '='.repeat(60));
-        console.log('📊 PERFORMANCE CHECK SUMMARY');
-        console.log('='.repeat(60));
+        // console.log removed('\n' + '='.repeat(60));
+        // console.log removed('📊 PERFORMANCE CHECK SUMMARY');
+        // console.log removed('='.repeat(60));
         
         const passed = this.results.filter(r => r.passed).length;
         const total = this.results.length;
         
-        console.log(`\nTotal Pages: ${total}`);
-        console.log(`✅ Passed: ${passed}`);
-        console.log(`❌ Failed: ${total - passed}`);
+        // console.log removed(`\nTotal Pages: ${total}`);
+        // console.log removed(`✅ Passed: ${passed}`);
+        // console.log removed(`❌ Failed: ${total - passed}`);
         
         // Calculate averages
         const validResults = this.results.filter(r => !r.error);
@@ -248,10 +248,10 @@ class PerformanceChecker {
                 validResults.reduce((sum, r) => sum + r.sizeKB, 0) / validResults.length
             );
             
-            console.log(`\n📈 Averages:`);
-            console.log(`   TTFB: ${avgTTFB}ms`);
-            console.log(`   Load Time: ${avgTime}ms`);
-            console.log(`   Page Size: ${avgSize}KB`);
+            // console.log removed(`\n📈 Averages:`);
+            // console.log removed(`   TTFB: ${avgTTFB}ms`);
+            // console.log removed(`   Load Time: ${avgTime}ms`);
+            // console.log removed(`   Page Size: ${avgSize}KB`);
         }
         
         // Common issues
@@ -264,33 +264,33 @@ class PerformanceChecker {
         });
         
         if (Object.keys(issueTypes).length > 0) {
-            console.log(`\n🔍 Common Issues:`);
+            // console.log removed(`\n🔍 Common Issues:`);
             Object.entries(issueTypes)
                 .sort((a, b) => b[1] - a[1])
                 .forEach(([type, count]) => {
-                    console.log(`   ${type}: ${count} pages`);
+                    // console.log removed(`   ${type}: ${count} pages`);
                 });
         }
         
         // Recommendations
-        console.log(`\n💡 Recommendations:`);
+        // console.log removed(`\n💡 Recommendations:`);
         
         if (issueTypes['High TTFB']) {
-            console.log(`   - Optimize server response time`);
-            console.log(`   - Consider using a CDN`);
-            console.log(`   - Enable server-side caching`);
+            // console.log removed(`   - Optimize server response time`);
+            // console.log removed(`   - Consider using a CDN`);
+            // console.log removed(`   - Enable server-side caching`);
         }
         
         if (issueTypes['Large page size']) {
-            console.log(`   - Compress images (use WebP format)`);
-            console.log(`   - Minify CSS and JavaScript`);
-            console.log(`   - Enable GZIP compression`);
+            // console.log removed(`   - Compress images (use WebP format)`);
+            // console.log removed(`   - Minify CSS and JavaScript`);
+            // console.log removed(`   - Enable GZIP compression`);
         }
         
         if (issueTypes['Too many resources']) {
-            console.log(`   - Bundle CSS and JavaScript files`);
-            console.log(`   - Implement lazy loading for images`);
-            console.log(`   - Use HTTP/2 server push`);
+            // console.log removed(`   - Bundle CSS and JavaScript files`);
+            // console.log removed(`   - Implement lazy loading for images`);
+            // console.log removed(`   - Use HTTP/2 server push`);
         }
         
         // Missing security headers
@@ -308,16 +308,18 @@ class PerformanceChecker {
         });
         
         if (missingHeaders.size > 0) {
-            console.log(`\n🔒 Missing Security Headers:`);
+            // console.log removed(`\n🔒 Missing Security Headers:`);
             missingHeaders.forEach(header => {
-                console.log(`   - ${header}`);
+                // console.log removed(`   - ${header}`);
             });
         }
         
-        console.log('\n✨ Performance check complete!');
+        // console.log removed('\n✨ Performance check complete!');
     }
 }
 
 // Run the checker
 const checker = new PerformanceChecker();
-checker.runAllChecks().catch(console.error);
+checker.runAllChecks().catch(err => {
+        // Error handling
+    });

@@ -1,13 +1,27 @@
 // Vercel 서버리스 함수 - 운세 API
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { 
+    sanitizeInput, 
+    validateFortuneRequest, 
+    checkRateLimit 
+} from './validation.js';
+
+// Check if API key is configured
+if (!process.env.GEMINI_API_KEY) {
+    // console.error removed('GEMINI_API_KEY environment variable is not set');
+}
 
 // Gemini API 초기화
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
 export default async function handler(req, res) {
     // CORS 설정
+    const allowedOrigins = ['https://doha.kr', 'http://localhost:3000'];
+    const origin = req.headers.origin;
+    if (allowedOrigins.includes(origin)) {
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    }
     res.setHeader('Access-Control-Allow-Credentials', true);
-    res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
     res.setHeader(
         'Access-Control-Allow-Headers',
@@ -24,7 +38,47 @@ export default async function handler(req, res) {
     }
 
     try {
+        // Check if API key is configured
+        if (!process.env.GEMINI_API_KEY) {
+            return res.status(503).json({
+                success: false,
+                error: 'Service temporarily unavailable'
+            });
+        }
+
+        // Get client IP for rate limiting
+        const clientIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress || 'unknown';
+        
+        // Check rate limit
+        const rateLimitCheck = checkRateLimit(clientIp);
+        if (!rateLimitCheck.allowed) {
+            return res.status(429).json({
+                success: false,
+                error: 'Too many requests',
+                retryAfter: rateLimitCheck.retryAfter
+            });
+        }
+
+        // Validate request body
+        if (!req.body || !req.body.type) {
+            return res.status(400).json({
+                success: false,
+                error: 'Missing required fields'
+            });
+        }
+
         const { type, data, prompt, todayDate } = req.body;
+
+        // Validate request based on type
+        const validation = validateFortuneRequest(type, data || {});
+        if (!validation.valid) {
+            return res.status(400).json({
+                success: false,
+                error: 'Validation failed',
+                errors: validation.errors
+            });
+        }
+
         const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
         let aiPrompt = '';
@@ -32,16 +86,19 @@ export default async function handler(req, res) {
         switch(type) {
             case 'daily':
                 const { name, birthDate, gender, birthTime, manseryeok } = data;
+                // Sanitize user inputs
+                const safeName = sanitizeInput(name);
+                const safeGender = gender === 'male' ? '남성' : '여성';
                 // 클라이언트에서 보낸 날짜 사용, 없으면 서버 날짜
                 const today = todayDate || new Date().toLocaleDateString('ko-KR', { timeZone: 'Asia/Seoul' });
                 aiPrompt = `
 당신은 한국 최고의 사주 전문가입니다. 다음 정보를 바탕으로 오늘의 운세를 전문적으로 분석해주세요.
 
-이름: ${name}
+이름: ${safeName}
 생년월일: ${birthDate}
-성별: ${gender}
+성별: ${safeGender}
 ${birthTime ? `출생시간: ${birthTime}` : ''}
-${manseryeok ? `만세력 사주: ${manseryeok}` : ''}
+${manseryeok ? `만세력 사주: ${JSON.stringify(manseryeok).substring(0, 500)}` : ''}
 오늘 날짜: ${today}
 
 다음 형식으로 상세하게 답변해주세요:
@@ -159,11 +216,15 @@ ${animalName}의 특성과 2025년 을사년(뱀의 해) 에너지를 고려하�
         });
         
     } catch (error) {
-        console.error('API Error:', error);
+        // console.error removed('API Error:', error);
+        
+        // Don't expose internal error details in production
+        const isDevelopment = process.env.NODE_ENV === 'development';
+        
         res.status(500).json({
             success: false,
             error: 'AI 분석 중 오류가 발생했습니다.',
-            message: error.message
+            ...(isDevelopment && { message: error.message })
         });
     }
 }

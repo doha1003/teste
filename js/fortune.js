@@ -29,14 +29,14 @@ function validateNumber(value, min = 0, max = Number.MAX_SAFE_INTEGER) {
     
     // Security check
     if (typeof Security === 'undefined') {
-        console.error('Security library required for Fortune system');
+        // Security library required for Fortune system
         return;
     }
     
     const Fortune = {
         // Configuration
         config: {
-            apiEndpoint: '/api/fortune.php',
+            apiEndpoint: 'https://doha-kr-ap.vercel.app/api/fortune',
             maxRetries: 3,
             timeout: 30000,
             rateLimitWindow: 60000, // 1 minute
@@ -51,9 +51,8 @@ function validateNumber(value, min = 0, max = Number.MAX_SAFE_INTEGER) {
             try {
                 this.setupEventListeners();
                 this.checkAPIConfig();
-                console.log('Fortune system initialized');
-            } catch (error) {
-                console.error('Fortune initialization failed:', error);
+                } catch (error) {
+                // Fortune initialization failed
             }
         },
         
@@ -63,10 +62,8 @@ function validateNumber(value, min = 0, max = Number.MAX_SAFE_INTEGER) {
                 const geminiConfig = APIConfig.getConfig('gemini');
                 if (geminiConfig && geminiConfig.apiKey) {
                     this.config.hasAPI = true;
-                    console.log('Gemini API configured');
-                } else {
-                    console.warn('Gemini API not configured');
-                }
+                    } else {
+                    }
             }
         },
         
@@ -156,7 +153,7 @@ function validateNumber(value, min = 0, max = Number.MAX_SAFE_INTEGER) {
             try {
                 button.disabled = true;
                 button.textContent = '운세 분석 중...';
-                resultDiv.innerHTML = '<div class="loading">운세를 분석하고 있습니다...</div>';
+                SecureDOM.setInnerHTML(resultDiv, '<div class="loading">운세를 분석하고 있습니다...</div>');
                 
                 const today = new Date();
                 const data = {
@@ -174,8 +171,8 @@ function validateNumber(value, min = 0, max = Number.MAX_SAFE_INTEGER) {
                 }
                 
             } catch (error) {
-                console.error('Daily fortune error:', error);
-                resultDiv.innerHTML = `<div class="error-message">${error.message}</div>`;
+                // Daily fortune error
+                SecureDOM.setInnerHTML(resultDiv, `<div class="error-message">${error.message}</div>`);
             } finally {
                 button.disabled = false;
                 button.textContent = '오늘의 운세 보기';
@@ -213,7 +210,7 @@ function validateNumber(value, min = 0, max = Number.MAX_SAFE_INTEGER) {
                 </div>
             `;
             
-            resultDiv.innerHTML = html;
+            SecureDOM.setInnerHTML(resultDiv, html);
             
             // Track event
             if (typeof Analytics !== 'undefined') {
@@ -246,7 +243,7 @@ function validateNumber(value, min = 0, max = Number.MAX_SAFE_INTEGER) {
                 
                 submitBtn.disabled = true;
                 submitBtn.textContent = '사주 분석 중...';
-                resultDiv.innerHTML = '<div class="loading">AI가 사주를 분석하고 있습니다...</div>';
+                SecureDOM.setInnerHTML(resultDiv, '<div class="loading">AI가 사주를 분석하고 있습니다...</div>');
                 
                 const data = {
                     type: 'saju',
@@ -267,8 +264,8 @@ function validateNumber(value, min = 0, max = Number.MAX_SAFE_INTEGER) {
                 }
                 
             } catch (error) {
-                console.error('Saju analysis error:', error);
-                resultDiv.innerHTML = `<div class="error-message">${error.message}</div>`;
+                // Saju analysis error
+                SecureDOM.setInnerHTML(resultDiv, `<div class="error-message">${error.message}</div>`);
             } finally {
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'AI 사주 분석';
@@ -317,7 +314,7 @@ function validateNumber(value, min = 0, max = Number.MAX_SAFE_INTEGER) {
                 </div>
             `;
             
-            resultDiv.innerHTML = html;
+            SecureDOM.setInnerHTML(resultDiv, html);
             
             // Track event
             if (typeof Analytics !== 'undefined') {
@@ -335,7 +332,7 @@ function validateNumber(value, min = 0, max = Number.MAX_SAFE_INTEGER) {
             try {
                 button.disabled = true;
                 button.textContent = '카드 뽑는 중...';
-                resultDiv.innerHTML = '<div class="loading">타로 카드를 뽑고 있습니다...</div>';
+                SecureDOM.setInnerHTML(resultDiv, '<div class="loading">타로 카드를 뽑고 있습니다...</div>');
                 
                 const data = {
                     type: 'tarot',
@@ -352,8 +349,8 @@ function validateNumber(value, min = 0, max = Number.MAX_SAFE_INTEGER) {
                 }
                 
             } catch (error) {
-                console.error('Tarot reading error:', error);
-                resultDiv.innerHTML = `<div class="error-message">${error.message}</div>`;
+                // Tarot reading error
+                SecureDOM.setInnerHTML(resultDiv, `<div class="error-message">${error.message}</div>`);
             } finally {
                 button.disabled = false;
                 button.textContent = 'AI 타로 보기';
@@ -393,7 +390,7 @@ function validateNumber(value, min = 0, max = Number.MAX_SAFE_INTEGER) {
                 </div>
             `;
             
-            resultDiv.innerHTML = html;
+            SecureDOM.setInnerHTML(resultDiv, html);
             
             // Track event
             if (typeof Analytics !== 'undefined') {
@@ -424,5 +421,4 @@ function validateNumber(value, min = 0, max = Number.MAX_SAFE_INTEGER) {
     // Expose to global scope
     window.Fortune = Fortune;
     
-    console.log('Fortune system loaded successfully');
-})();
+    })();

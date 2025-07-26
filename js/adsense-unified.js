@@ -22,12 +22,12 @@
         script.async = true;
         
         script.onload = function() {
-            console.log('AdSense script loaded');
+            // AdSense script loaded
             setTimeout(initializeAds, 100);
         };
         
         script.onerror = function() {
-            console.error('Failed to load AdSense script');
+            // Failed to load AdSense script
             window.__adsenseState.scriptLoaded = false;
         };
         
@@ -37,7 +37,7 @@
     // Initialize ads
     function initializeAds() {
         if (window.__adsenseState.initialized) {
-            console.log('AdSense already initialized');
+            // AdSense already initialized
             return;
         }
         
@@ -46,7 +46,7 @@
             if (window.__adsenseState.initializationAttempts < window.__adsenseState.maxAttempts) {
                 setTimeout(initializeAds, 500);
             } else {
-                console.error('AdSense failed to load after maximum attempts');
+                // AdSense failed to load after maximum attempts
             }
             return;
         }
@@ -55,16 +55,16 @@
         
         // Find all ad slots
         const ads = document.querySelectorAll('.adsbygoogle:not([data-adsbygoogle-status="done"])');
-        console.log('Found ' + ads.length + ' ad slots to initialize');
+        // Found ad slots to initialize
         
         ads.forEach((ad, index) => {
             try {
                 // Push the ad
                 (adsbygoogle = window.adsbygoogle || []).push({});
                 ad.setAttribute('data-adsbygoogle-status', 'done');
-                console.log('Initialized ad slot ' + (index + 1));
+                // Initialized ad slot
             } catch (e) {
-                console.warn('Failed to initialize ad slot ' + (index + 1), e.message);
+                // Failed to initialize ad slot
             }
         });
     }
@@ -76,7 +76,7 @@
         }
         
         if (typeof window.adsbygoogle === 'undefined') {
-            console.warn('AdSense not loaded yet, queuing ad initialization');
+            // AdSense not loaded yet, queuing ad initialization
             setTimeout(function() {
                 window.initializeDynamicAd(adElement);
             }, 500);
@@ -86,9 +86,9 @@
         try {
             (adsbygoogle = window.adsbygoogle || []).push({});
             adElement.setAttribute('data-adsbygoogle-status', 'done');
-            console.log('Initialized dynamic ad');
+            // Initialized dynamic ad
         } catch (e) {
-            console.warn('Failed to initialize dynamic ad', e.message);
+            // Failed to initialize dynamic ad
         }
     };
     
@@ -97,7 +97,7 @@
         if (e.message && e.message.includes('adsbygoogle.push() error')) {
             e.preventDefault();
             e.stopPropagation();
-            console.warn('Prevented duplicate AdSense initialization error');
+            // Prevented duplicate AdSense initialization error
             return false;
         }
     }, true);

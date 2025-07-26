@@ -33,11 +33,7 @@
             this.setupEventListeners();
             this.startSessionTracking();
             
-            console.log('Analytics system initialized', {
-                sessionId: this.sessionId,
-                botDetected: this.botDetected
-            });
-        },
+            },
         
         // Generate unique session ID
         generateSessionId: function() {
@@ -559,8 +555,7 @@
                     });
                 }
             } catch (error) {
-                console.warn('Failed to send to Google Analytics:', error);
-            }
+                }
         },
         
         // Send to custom analytics
@@ -572,8 +567,7 @@
                     this.queueForBatchSend(event);
                 }
             } catch (error) {
-                console.warn('Failed to send to custom analytics:', error);
-            }
+                }
         },
         
         // Queue events for batch sending
@@ -613,8 +607,7 @@
                     timestamp: Date.now()
                 })
             }).catch(error => {
-                console.warn('Failed to send analytics batch:', error);
-            });
+                });
         },
         
         // Send session data on page unload
@@ -667,5 +660,4 @@
         Analytics.init();
     }
     
-    console.log('Analytics and bot detection system loaded successfully');
-})();
+    })();

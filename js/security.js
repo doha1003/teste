@@ -50,13 +50,12 @@
                 const allowedProtocols = ['http:', 'https:', 'mailto:'];
                 
                 if (!allowedProtocols.includes(parsed.protocol)) {
-                    console.warn('Blocked potentially dangerous URL:', url);
                     return '';
                 }
                 
                 return parsed.href;
             } catch (e) {
-                console.error('Invalid URL:', url);
+                // console.error removed('Invalid URL:', url);
                 return '';
             }
         },
@@ -162,7 +161,7 @@
             try {
                 return JSON.parse(str);
             } catch (e) {
-                console.error('JSON parse error:', e);
+                // console.error removed('JSON parse error:', e);
                 return defaultValue;
             }
         },
@@ -189,7 +188,6 @@
             // Safely set attributes
             Object.keys(attributes).forEach(key => {
                 if (key.toLowerCase().startsWith('on')) {
-                    console.warn('Event handler attributes not allowed');
                     return;
                 }
                 
@@ -220,7 +218,6 @@
                 }
                 
                 if (calls.length >= maxCalls) {
-                    console.warn('Rate limit exceeded');
                     return false;
                 }
                 
@@ -247,8 +244,7 @@
                 // Check for dangerous content
                 if (Security.containsDangerousContent(e.target.value)) {
                     e.target.value = Security.sanitizeHTML(e.target.value);
-                    console.warn('Potentially dangerous content sanitized');
-                }
+                    }
             }
         });
         
@@ -260,7 +256,7 @@
             for (let input of inputs) {
                 if (Security.containsDangerousContent(input.value)) {
                     e.preventDefault();
-                    console.error('Form submission blocked: dangerous content detected');
+                    // console.error removed('Form submission blocked: dangerous content detected');
                     
                     // Show user-friendly error
                     if (typeof showNotification === 'function') {
@@ -276,5 +272,4 @@
     });
     
     // Log successful initialization
-    console.log('Security utilities loaded successfully');
-})();
+    })();

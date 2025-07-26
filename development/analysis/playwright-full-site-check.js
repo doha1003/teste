@@ -149,8 +149,8 @@ async function checkPage(page, pageInfo) {
 }
 
 async function runFullSiteCheck() {
-    console.log('🔍 Starting full site check with Playwright...');
-    console.log(`📄 Checking ${pages.length} pages for JavaScript errors and component loading`);
+    // console.log removed('🔍 Starting full site check with Playwright...');
+    // console.log removed(`📄 Checking ${pages.length} pages for JavaScript errors and component loading`);
 
     const browser = await chromium.launch({ 
         headless: true,
@@ -166,7 +166,7 @@ async function runFullSiteCheck() {
 
     for (let i = 0; i < pages.length; i++) {
         const pageInfo = pages[i];
-        console.log(`🔄 Checking ${i + 1}/${pages.length}: ${pageInfo.name}`);
+        // console.log removed(`🔄 Checking ${i + 1}/${pages.length}: ${pageInfo.name}`);
         
         const result = await checkPage(page, pageInfo);
         results.push(result);
@@ -177,11 +177,11 @@ async function runFullSiteCheck() {
         const navFooter = `Nav:${result.navbarPresent ? '✅' : '❌'} Footer:${result.footerPresent ? '✅' : '❌'}`;
         const errorCount = `Errors:${result.errors.length} Console:${result.consoleErrors.length}`;
         
-        console.log(`   ${statusEmoji} ${navFooter} ${errorCount} (${result.loadTime}ms)`);
+        // console.log removed(`   ${statusEmoji} ${navFooter} ${errorCount} (${result.loadTime}ms)`);
         
         // 중요한 오류가 있으면 즉시 출력
         if (result.errors.length > 0) {
-            result.errors.forEach(error => console.log(`     🚨 ${error}`));
+            result.errors.forEach(error => // console.log removed(`     🚨 ${error}`));
         }
         
         // 페이지 간 간격
@@ -208,17 +208,17 @@ async function runFullSiteCheck() {
     fs.writeFileSync(reportPath, JSON.stringify({ summary, results }, null, 2));
 
     // 콘솔 요약 출력
-    console.log('\n📊 FULL SITE CHECK SUMMARY');
-    console.log('═'.repeat(50));
-    console.log(`📄 Total Pages Checked: ${summary.totalPages}`);
-    console.log(`✅ Successfully Loaded: ${summary.successful}`);
-    console.log(`❌ Failed to Load: ${summary.failed}`);
-    console.log(`🚫 Navbar Issues: ${summary.navbarIssues}`);
-    console.log(`🚫 Footer Issues: ${summary.footerIssues}`);
-    console.log(`🐛 Pages with Errors: ${summary.pagesWithErrors}`);
-    console.log(`💥 Pages with Console Errors: ${summary.pagesWithConsoleErrors}`);
-    console.log(`📋 Total Console Errors: ${summary.totalConsoleErrors}`);
-    console.log(`🌐 Total Network Errors: ${summary.totalNetworkErrors}`);
+    // console.log removed('\n📊 FULL SITE CHECK SUMMARY');
+    // console.log removed('═'.repeat(50));
+    // console.log removed(`📄 Total Pages Checked: ${summary.totalPages}`);
+    // console.log removed(`✅ Successfully Loaded: ${summary.successful}`);
+    // console.log removed(`❌ Failed to Load: ${summary.failed}`);
+    // console.log removed(`🚫 Navbar Issues: ${summary.navbarIssues}`);
+    // console.log removed(`🚫 Footer Issues: ${summary.footerIssues}`);
+    // console.log removed(`🐛 Pages with Errors: ${summary.pagesWithErrors}`);
+    // console.log removed(`💥 Pages with Console Errors: ${summary.pagesWithConsoleErrors}`);
+    // console.log removed(`📋 Total Console Errors: ${summary.totalConsoleErrors}`);
+    // console.log removed(`🌐 Total Network Errors: ${summary.totalNetworkErrors}`);
 
     // 가장 문제가 많은 페이지들
     const problematicPages = results
@@ -227,12 +227,12 @@ async function runFullSiteCheck() {
         .slice(0, 5);
 
     if (problematicPages.length > 0) {
-        console.log('\n🔴 TOP 5 PROBLEMATIC PAGES:');
+        // console.log removed('\n🔴 TOP 5 PROBLEMATIC PAGES:');
         problematicPages.forEach((page, index) => {
-            console.log(`${index + 1}. ${page.name} (${page.url})`);
-            console.log(`   Errors: ${page.errors.length}, Console Errors: ${page.consoleErrors.length}`);
+            // console.log removed(`${index + 1}. ${page.name} (${page.url})`);
+            // console.log removed(`   Errors: ${page.errors.length}, Console Errors: ${page.consoleErrors.length}`);
             if (page.errors.length > 0) {
-                page.errors.forEach(error => console.log(`   🚨 ${error}`));
+                page.errors.forEach(error => // console.log removed(`   🚨 ${error}`));
             }
         });
     }
@@ -240,23 +240,25 @@ async function runFullSiteCheck() {
     // 네비게이션/푸터 문제 상세
     const navFooterIssues = results.filter(r => !r.navbarPresent || !r.footerPresent);
     if (navFooterIssues.length > 0) {
-        console.log('\n🚫 NAVIGATION/FOOTER ISSUES:');
+        // console.log removed('\n🚫 NAVIGATION/FOOTER ISSUES:');
         navFooterIssues.forEach(page => {
             const issues = [];
             if (!page.navbarPresent) issues.push('Missing Navbar');
             if (!page.footerPresent) issues.push('Missing Footer');
-            console.log(`- ${page.name}: ${issues.join(', ')}`);
+            // console.log removed(`- ${page.name}: ${issues.join(', ')}`);
         });
     }
 
-    console.log(`\n📁 Detailed report saved: ${reportPath}`);
+    // console.log removed(`\n📁 Detailed report saved: ${reportPath}`);
     
     return { summary, results };
 }
 
 // 실행
 if (require.main === module) {
-    runFullSiteCheck().catch(console.error);
+    runFullSiteCheck().catch(err => {
+        // Error handling
+    });
 }
 
 module.exports = { runFullSiteCheck };

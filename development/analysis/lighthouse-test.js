@@ -60,7 +60,7 @@ class LighthouseRunner {
     
     async runTest(page) {
         const url = this.config.baseUrl + page.url;
-        console.log(`\n🔍 Testing: ${page.name} (${url})`);
+        // console.log removed(`\n🔍 Testing: ${page.name} (${url})`);
         
         try {
             // Run Lighthouse
@@ -141,7 +141,7 @@ class LighthouseRunner {
             return result;
             
         } catch (error) {
-            console.error(`❌ Error testing ${page.name}:`, error.message);
+            // console.error removed(`❌ Error testing ${page.name}:`, error.message);
             return {
                 page: page.name,
                 url,
@@ -152,34 +152,34 @@ class LighthouseRunner {
     }
     
     displayPageResults(result) {
-        console.log('\n📊 Scores:');
+        // console.log removed('\n📊 Scores:');
         for (const [category, score] of Object.entries(result.scores)) {
             const emoji = score >= THRESHOLDS[category] ? '✅' : '⚠️';
-            console.log(`${emoji} ${category}: ${score}/100`);
+            // console.log removed(`${emoji} ${category}: ${score}/100`);
         }
         
         if (result.metrics) {
-            console.log('\n⚡ Performance Metrics:');
-            console.log(`   FCP: ${Math.round(result.metrics.FCP)}ms`);
-            console.log(`   LCP: ${Math.round(result.metrics.LCP)}ms`);
-            console.log(`   TTI: ${Math.round(result.metrics.TTI)}ms`);
-            console.log(`   TBT: ${Math.round(result.metrics.TBT)}ms`);
-            console.log(`   CLS: ${result.metrics.CLS.toFixed(3)}`);
-            console.log(`   SI: ${Math.round(result.metrics.SI)}ms`);
+            // console.log removed('\n⚡ Performance Metrics:');
+            // console.log removed(`   FCP: ${Math.round(result.metrics.FCP)}ms`);
+            // console.log removed(`   LCP: ${Math.round(result.metrics.LCP)}ms`);
+            // console.log removed(`   TTI: ${Math.round(result.metrics.TTI)}ms`);
+            // console.log removed(`   TBT: ${Math.round(result.metrics.TBT)}ms`);
+            // console.log removed(`   CLS: ${result.metrics.CLS.toFixed(3)}`);
+            // console.log removed(`   SI: ${Math.round(result.metrics.SI)}ms`);
         }
         
         if (result.issues.length > 0) {
-            console.log('\n⚠️  Issues:');
+            // console.log removed('\n⚠️  Issues:');
             result.issues.forEach(issue => {
-                console.log(`   ${issue.category}: ${issue.score} (needs ${issue.threshold})`);
+                // console.log removed(`   ${issue.category}: ${issue.score} (needs ${issue.threshold})`);
             });
         }
         
         if (result.opportunities && result.opportunities.length > 0) {
-            console.log('\n💡 Top Opportunities:');
+            // console.log removed('\n💡 Top Opportunities:');
             result.opportunities.forEach(opp => {
                 if (opp.impact > 0) {
-                    console.log(`   - ${opp.title} (${Math.round(opp.impact)}ms potential savings)`);
+                    // console.log removed(`   - ${opp.title} (${Math.round(opp.impact)}ms potential savings)`);
                 }
             });
         }
@@ -188,7 +188,7 @@ class LighthouseRunner {
     async runAllTests() {
         await this.init();
         
-        console.log('🚀 Starting Lighthouse tests for doha.kr...\n');
+        // console.log removed('🚀 Starting Lighthouse tests for doha.kr...\n');
         
         // Run tests for each page
         for (const page of this.config.pages) {
@@ -251,31 +251,31 @@ class LighthouseRunner {
         );
         
         // Display summary
-        console.log('\n' + '='.repeat(60));
-        console.log('📊 LIGHTHOUSE TEST SUMMARY');
-        console.log('='.repeat(60));
-        console.log(`\n📅 Date: ${new Date().toLocaleString()}`);
-        console.log(`🌐 Site: ${this.config.baseUrl}`);
-        console.log(`📄 Pages tested: ${summary.totalPages}`);
-        console.log(`✅ Passed: ${summary.passed}`);
-        console.log(`❌ Failed: ${summary.failed}`);
+        // console.log removed('\n' + '='.repeat(60));
+        // console.log removed('📊 LIGHTHOUSE TEST SUMMARY');
+        // console.log removed('='.repeat(60));
+        // console.log removed(`\n📅 Date: ${new Date().toLocaleString()}`);
+        // console.log removed(`🌐 Site: ${this.config.baseUrl}`);
+        // console.log removed(`📄 Pages tested: ${summary.totalPages}`);
+        // console.log removed(`✅ Passed: ${summary.passed}`);
+        // console.log removed(`❌ Failed: ${summary.failed}`);
         
-        console.log('\n📈 Average Scores:');
+        // console.log removed('\n📈 Average Scores:');
         for (const [category, score] of Object.entries(summary.averageScores)) {
             const emoji = score >= THRESHOLDS[category] ? '✅' : '⚠️';
-            console.log(`${emoji} ${category}: ${score}/100`);
+            // console.log removed(`${emoji} ${category}: ${score}/100`);
         }
         
         if (Object.keys(summary.commonIssues).length > 0) {
-            console.log('\n🔍 Common Issues:');
+            // console.log removed('\n🔍 Common Issues:');
             for (const [issue, count] of Object.entries(summary.commonIssues)) {
-                console.log(`   ${issue}: ${count} pages affected`);
+                // console.log removed(`   ${issue}: ${count} pages affected`);
             }
         }
         
-        console.log('\n📁 Reports saved to:', path.resolve(this.config.outputDir));
-        console.log('   - Individual HTML reports for each page');
-        console.log('   - summary.json with all results');
+        // console.log removed('\n📁 Reports saved to:', path.resolve(this.config.outputDir));
+        // console.log removed('   - Individual HTML reports for each page');
+        // console.log removed('   - summary.json with all results');
         
         // Generate markdown report
         await this.generateMarkdownReport(summary);
@@ -379,7 +379,7 @@ class LighthouseRunner {
             markdown
         );
         
-        console.log('\n📝 Markdown report saved:', path.join(this.config.outputDir, 'lighthouse-report.md'));
+        // console.log removed('\n📝 Markdown report saved:', path.join(this.config.outputDir, 'lighthouse-report.md'));
     }
 }
 
@@ -392,11 +392,11 @@ if (require.main === module) {
             const passed = results.filter(r => r.passed).length;
             const total = results.length;
             
-            console.log(`\n✨ Testing complete! ${passed}/${total} pages passed all thresholds.`);
+            // console.log removed(`\n✨ Testing complete! ${passed}/${total} pages passed all thresholds.`);
             process.exit(passed === total ? 0 : 1);
         })
         .catch(error => {
-            console.error('💥 Fatal error:', error);
+            // console.error removed('💥 Fatal error:', error);
             process.exit(1);
         });
 }

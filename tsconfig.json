@@ -1,0 +1,84 @@
+{
+  "compilerOptions": {
+    // 기본 설정
+    "target": "ES2020",
+    "module": "ES2020",
+    "moduleResolution": "node",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    
+    // 출력 설정
+    "outDir": "./js",
+    "rootDir": "./src",
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    
+    // 엄격한 타입 체크
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": false,
+    
+    // 추가 검사
+    "noUnusedLocals": false,
+    "noUnusedParameters": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    
+    // 출력 품질
+    "removeComments": false,
+    "preserveConstEnums": true,
+    "declarationDir": "./dist/types",
+    
+    // 모듈 해석
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    
+    // 실험적 기능
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    
+    // 개발 경험
+    "skipLibCheck": true,
+    "incremental": true,
+    "tsBuildInfoFile": "./.tsbuildinfo"
+  },
+  
+  "include": [
+    "src/**/*",
+    "src/**/*.ts",
+    "types/**/*.d.ts"
+  ],
+  
+  "exclude": [
+    "node_modules",
+    "js/**/*",
+    "dist",
+    "build",
+    "**/*.spec.ts",
+    "**/*.test.ts"
+  ],
+  
+  "compileOnSave": true,
+  
+  "watchOptions": {
+    "watchFile": "useFsEvents",
+    "watchDirectory": "useFsEvents",
+    "fallbackPolling": "dynamicPriority",
+    "synchronousWatchDirectory": true,
+    "excludeDirectories": ["**/node_modules", "**/js"]
+  },
+  
+  "typeAcquisition": {
+    "enable": true,
+    "include": ["node", "dom", "es6"]
+  }
+}

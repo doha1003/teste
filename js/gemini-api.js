@@ -21,11 +21,11 @@ async function callFortuneAPI(type, data) {
         if (result.success) {
             return result.data;
         } else {
-            console.error('API Error:', result.error);
+            // API Error
             return null;
         }
     } catch (error) {
-        console.error('Fortune API 호출 오류:', error);
+        // Fortune API 호출 오류
         return null;
     }
 }
@@ -53,11 +53,11 @@ async function callGeminiAPI(prompt) {
         if (result.success) {
             return result.data;
         } else {
-            console.error('Gemini API Error:', result.error);
+            // Gemini API Error
             return null;
         }
     } catch (error) {
-        console.error('Gemini API 호출 오류:', error);
+        // Gemini API 호출 오류
         return null;
     }
 }

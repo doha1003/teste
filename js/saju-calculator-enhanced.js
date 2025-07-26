@@ -73,7 +73,7 @@ class SajuCalculatorEnhanced {
                 lunarInfo = window.LunarCalendarCompact.getLunarDate(solarDate.year, solarDate.month, solarDate.day);
             }
         } catch (e) {
-            console.log('음력 데이터 로드 실패, 기본 계산 사용');
+            // console.log removed('음력 데이터 로드 실패, 기본 계산 사용');
         }
         
         // 각 기둥 계산

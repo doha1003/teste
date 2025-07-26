@@ -34,7 +34,7 @@ async function showZodiacFortune(zodiac) {
     // 로딩 효과
     const fortuneResult = document.getElementById('fortuneResult');
     fortuneResult.classList.remove('hidden');
-    fortuneResult.innerHTML = '<div class="loading">AI가 운세를 분석하고 있습니다...</div>';
+    SecureDOM.setInnerHTML(fortuneResult, '<div class="loading">AI가 운세를 분석하고 있습니다...</div>');
     
     // 선택된 별자리 강조
     document.querySelectorAll('.zodiac-card').forEach(card => {
@@ -72,7 +72,7 @@ async function showZodiacFortune(zodiac) {
             }
         }
     } catch (error) {
-        console.error('AI API 호출 오류:', error);
+        // console.error removed('AI API 호출 오류:', error);
     }
     
     // API 실패시 폴백 데이터 사용
@@ -149,7 +149,7 @@ function displayZodiacResult(zodiac, fortuneData, isAIGenerated = false) {
         <button class="fortune-btn" onclick="resetZodiac()">다른 별자리 보기</button>
     `;
     
-    document.getElementById('fortuneResult').innerHTML = resultHTML;
+    SecureDOM.setInnerHTML(document.getElementById('fortuneResult'), resultHTML);
 }
 
 // 모의 운세 생성 (실제로는 AI API 사용)

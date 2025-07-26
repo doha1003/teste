@@ -25,8 +25,7 @@
             this.setupGlobalErrorHandlers();
             this.setupPromiseRejectionHandler();
             this.setupResourceErrorHandlers();
-            console.log('Error handling system initialized');
-        },
+            },
         
         // Setup global error handlers
         setupGlobalErrorHandlers: function() {
@@ -109,7 +108,7 @@
             
             // Log to console if enabled
             if (this.config.enableConsoleLog) {
-                console.error('🚨 Error caught by global handler:', errorInfo);
+                // console.error removed('🚨 Error caught by global handler:', errorInfo);
             }
             
             // Send to analytics if enabled
@@ -251,8 +250,7 @@
                 }
                 
             } catch (analyticsError) {
-                console.warn('Failed to send error to analytics:', analyticsError);
-            }
+                }
         },
         
         // Attempt automatic recovery
@@ -277,7 +275,6 @@
             errorInfo.retryCount = (errorInfo.retryCount || 0) + 1;
             
             setTimeout(() => {
-                console.log(`Retrying failed request (attempt ${errorInfo.retryCount})`);
                 // Trigger retry logic here
             }, this.config.retryDelay * errorInfo.retryCount);
         },
@@ -352,38 +349,37 @@
     
     // CSS for notifications
     const style = document.createElement('style');
-    style.textContent = `
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
+    style.textContent = 
+        '@keyframes slideIn {' +
+            'from {' +
+                'transform: translateX(100%);' +
+                'opacity: 0;' +
+            '}' +
+            'to {' +
+                'transform: translateX(0);' +
+                'opacity: 1;' +
+            '}' +
+        '}' +
         
-        .error-notification .notification-content {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+        '.error-notification .notification-content {' +
+            'display: flex;' +
+            'align-items: center;' +
+            'gap: 10px;' +
+        '}' +
         
-        .error-notification .notification-close {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 18px;
-            cursor: pointer;
-            padding: 0;
-            margin-left: auto;
-        }
+        '.error-notification .notification-close {' +
+            'background: none;' +
+            'border: none;' +
+            'color: white;' +
+            'font-size: 18px;' +
+            'cursor: pointer;' +
+            'padding: 0;' +
+            'margin-left: auto;' +
+        '}' +
         
-        .error-notification .notification-close:hover {
-            opacity: 0.7;
-        }
-    `;
+        '.error-notification .notification-close:hover {' +
+            'opacity: 0.7;' +
+        '}';
     document.head.appendChild(style);
     
     // Expose to global scope
@@ -399,5 +395,4 @@
     }
     
     // Log successful initialization
-    console.log('Global error handler loaded successfully');
-})();
+    })();

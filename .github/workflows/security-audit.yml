@@ -1,0 +1,269 @@
+name: Security Audit & Dependency Check
+
+on:
+  schedule:
+    # 매일 오전 2시에 실행
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+  push:
+    paths:
+      - 'package*.json'
+      - '.github/workflows/security-audit.yml'
+
+jobs:
+  security-audit:
+    runs-on: ubuntu-latest
+    name: "🔒 Security & Dependency Audit"
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Run npm audit
+      run: |
+        echo "🔍 NPM 보안 감사 실행..."
+        npm audit --audit-level=low --json > audit-results.json || true
+        
+        # 심각도별 취약점 카운트
+        HIGH_VULNS=$(cat audit-results.json | jq '.metadata.vulnerabilities.high // 0')
+        CRITICAL_VULNS=$(cat audit-results.json | jq '.metadata.vulnerabilities.critical // 0')
+        
+        echo "📊 보안 감사 결과:"
+        echo "- Critical: $CRITICAL_VULNS"
+        echo "- High: $HIGH_VULNS"
+        
+        # Critical 취약점이 있으면 실패
+        if [ "$CRITICAL_VULNS" -gt 0 ]; then
+          echo "❌ Critical 취약점 발견! 즉시 수정이 필요합니다."
+          exit 1
+        fi
+        
+        # High 취약점이 있으면 경고
+        if [ "$HIGH_VULNS" -gt 0 ]; then
+          echo "⚠️  High 취약점 발견. 수정을 권장합니다."
+        fi
+        
+        echo "✅ 보안 감사 완료"
+        
+    - name: Check for outdated dependencies
+      run: |
+        echo "📦 의존성 업데이트 확인..."
+        npm outdated --json > outdated.json || true
+        
+        # 주요 의존성 체크
+        OUTDATED_COUNT=$(cat outdated.json | jq 'length')
+        echo "📊 업데이트 가능한 패키지: $OUTDATED_COUNT"
+        
+        if [ "$OUTDATED_COUNT" -gt 0 ]; then
+          echo "📋 업데이트 가능한 패키지들:"
+          cat outdated.json | jq -r 'keys[]'
+        fi
+        
+    - name: License compliance check
+      run: |
+        echo "📄 라이선스 컴플라이언스 확인..."
+        npx license-checker --json > licenses.json
+        
+        # 문제가 될 수 있는 라이선스 확인
+        PROBLEMATIC_LICENSES=$(cat licenses.json | jq -r 'to_entries[] | select(.value.licenses | test("GPL|AGPL|LGPL")) | .key')
+        
+        if [ -n "$PROBLEMATIC_LICENSES" ]; then
+          echo "⚠️  주의가 필요한 라이선스를 가진 패키지:"
+          echo "$PROBLEMATIC_LICENSES"
+        else
+          echo "✅ 라이선스 컴플라이언스 확인 완료"
+        fi
+        
+    - name: Code quality analysis
+      run: |
+        echo "🔍 코드 품질 분석..."
+        
+        # TypeScript 타입 검사
+        npm run typecheck
+        
+        # ESLint 검사
+        npm run lint
+        
+        echo "✅ 코드 품질 검사 완료"
+        
+    - name: Bundle analysis
+      run: |
+        echo "📦 번들 크기 분석..."
+        npm run build:ts
+        
+        # 각 파일 크기 체크
+        echo "📊 주요 파일 크기:"
+        ls -lh js/*.js | awk '{print "- " $9 ": " $5}'
+        
+        # 총 JavaScript 크기 계산
+        TOTAL_SIZE=$(du -ch js/*.js | tail -1 | cut -f1)
+        echo "📊 총 JavaScript 크기: $TOTAL_SIZE"
+        
+    - name: Performance budget check
+      run: |
+        echo "🚀 성능 예산 확인..."
+        
+        # 각 파일의 크기 제한 검사
+        check_file_size() {
+          local file=$1
+          local limit=$2
+          local actual=$(stat -c%s "$file" 2>/dev/null || echo "0")
+          
+          if [ "$actual" -gt "$limit" ]; then
+            echo "❌ $file 크기 초과: ${actual}B (제한: ${limit}B)"
+            return 1
+          else
+            echo "✅ $file 크기 적절: ${actual}B"
+            return 0
+          fi
+        }
+        
+        # 성능 예산 확인
+        ALL_GOOD=true
+        check_file_size "js/main.js" 51200 || ALL_GOOD=false  # 50KB
+        check_file_size "js/manseryeok-api-client.js" 20480 || ALL_GOOD=false  # 20KB
+        check_file_size "js/image-optimizer.js" 25600 || ALL_GOOD=false  # 25KB
+        check_file_size "js/bundle-optimizer.js" 30720 || ALL_GOOD=false  # 30KB
+        
+        if [ "$ALL_GOOD" = true ]; then
+          echo "✅ 모든 파일이 성능 예산 내에 있습니다"
+        else
+          echo "❌ 일부 파일이 성능 예산을 초과했습니다"
+          exit 1
+        fi
+
+  # 만세력 데이터 무결성 체크 (매우 중요!)
+  manseryeok-integrity-check:
+    runs-on: ubuntu-latest
+    name: "🗓️ 만세력 데이터 무결성 검증"
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Critical manseryeok data verification
+      run: |
+        echo "🔍 만세력 데이터 무결성 검증 시작..."
+        echo "⚠️  중요: 만세력 정확성은 절대 타협할 수 없습니다!"
+        
+        # 만세력 관련 테스트만 실행
+        npm test -- tests/manseryeok.test.ts --run
+        
+        # 만세력 데이터베이스 파일 체크
+        if [ -f "js/manseryeok-database.js" ]; then
+          echo "✅ 만세력 데이터베이스 파일 존재 확인"
+        else
+          echo "❌ 만세력 데이터베이스 파일이 없습니다!"
+          exit 1
+        fi
+        
+        echo "✅ 만세력 데이터 무결성 검증 완료"
+        
+    - name: API endpoint validation
+      run: |
+        echo "🌐 만세력 API 엔드포인트 검증..."
+        
+        # API 엔드포인트가 올바르게 설정되었는지 확인
+        if grep -q "doha-kr-ap.vercel.app/api/manseryeok" js/manseryeok-api-client.js; then
+          echo "✅ API 엔드포인트 설정 확인"
+        else
+          echo "❌ API 엔드포인트 설정 오류!"
+          exit 1
+        fi
+        
+        echo "✅ API 설정 검증 완료"
+
+  # 모니터링 시스템 검증
+  monitoring-validation:
+    runs-on: ubuntu-latest
+    name: "📊 Monitoring System Validation"
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Build and validate monitoring system
+      run: |
+        echo "📊 모니터링 시스템 검증..."
+        npm run build:ts
+        
+        # 모니터링 시스템 파일 존재 확인
+        if [ -f "js/monitoring-system.js" ]; then
+          echo "✅ 모니터링 시스템 파일 빌드 확인"
+        else
+          echo "❌ 모니터링 시스템 파일이 없습니다!"
+          exit 1
+        fi
+        
+        # 모니터링 시스템 핵심 기능 확인
+        if grep -q "MonitoringSystem" js/monitoring-system.js; then
+          echo "✅ 모니터링 시스템 클래스 존재 확인"
+        else
+          echo "❌ 모니터링 시스템 클래스가 없습니다!"
+          exit 1
+        fi
+        
+        echo "✅ 모니터링 시스템 검증 완료"
+
+  # 전체 결과 요약
+  summary:
+    runs-on: ubuntu-latest
+    name: "📋 Security Audit Summary"
+    needs: [security-audit, manseryeok-integrity-check, monitoring-validation]
+    if: always()
+    
+    steps:
+    - name: Generate summary
+      run: |
+        echo "📋 보안 감사 및 무결성 검증 요약"
+        echo "================================"
+        echo ""
+        
+        if [ "${{ needs.security-audit.result }}" = "success" ]; then
+          echo "✅ 보안 감사: 통과"
+        else
+          echo "❌ 보안 감사: 실패"
+        fi
+        
+        if [ "${{ needs.manseryeok-integrity-check.result }}" = "success" ]; then
+          echo "✅ 만세력 무결성: 통과"
+        else
+          echo "❌ 만세력 무결성: 실패"
+        fi
+        
+        if [ "${{ needs.monitoring-validation.result }}" = "success" ]; then
+          echo "✅ 모니터링 시스템: 통과"
+        else
+          echo "❌ 모니터링 시스템: 실패"
+        fi
+        
+        echo ""
+        echo "🗓️  만세력 데이터 정확성 보장이 가장 중요합니다!"
+        echo "🔒 정기적인 보안 점검을 통해 시스템 안전성을 유지합니다."

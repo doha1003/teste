@@ -118,12 +118,12 @@ function analyzePageContent(content) {
 }
 
 async function checkCategory(categoryName, pages) {
-    console.log(`\n=== ${categoryName.toUpperCase()} 페이지 검증 ===`);
+    // console.log removed(`\n=== ${categoryName.toUpperCase()} 페이지 검증 ===`);
     
     const results = [];
     
     for (const path of pages) {
-        console.log(`확인 중: ${path}`);
+        // console.log removed(`확인 중: ${path}`);
         
         const pageResult = await fetchPageContent(path);
         
@@ -131,14 +131,14 @@ async function checkCategory(categoryName, pages) {
             const analysis = analyzePageContent(pageResult.content);
             pageResult.analysis = analysis;
             
-            console.log(`  ✅ ${path} - ${pageResult.status}`);
-            console.log(`     CSS: ${analysis.css.length}개, JS: ${analysis.js.length}개`);
+            // console.log removed(`  ✅ ${path} - ${pageResult.status}`);
+            // console.log removed(`     CSS: ${analysis.css.length}개, JS: ${analysis.js.length}개`);
             
             if (analysis.errors.length > 0) {
-                console.log(`     ⚠️  경고: ${analysis.errors.join(', ')}`);
+                // console.log removed(`     ⚠️  경고: ${analysis.errors.join(', ')}`);
             }
         } else {
-            console.log(`  ❌ ${path} - ${pageResult.status || pageResult.error}`);
+            // console.log removed(`  ❌ ${path} - ${pageResult.status || pageResult.error}`);
         }
         
         results.push(pageResult);
@@ -238,7 +238,7 @@ async function generateReport(allResults) {
 }
 
 async function main() {
-    console.log('doha.kr 전체 사이트 검증 시작...');
+    // console.log removed('doha.kr 전체 사이트 검증 시작...');
     
     const allResults = {};
     
@@ -251,41 +251,43 @@ async function main() {
     const report = await generateReport(allResults);
     
     // 결과 출력
-    console.log('\n=== 전체 검증 결과 ===');
-    console.log(`총 페이지: ${report.summary.total}`);
-    console.log(`성공: ${report.summary.success}`);
-    console.log(`실패: ${report.summary.failed}`);
-    console.log(`경고: ${report.summary.warnings}`);
-    console.log(`성공률: ${(report.summary.success / report.summary.total * 100).toFixed(1)}%`);
+    // console.log removed('\n=== 전체 검증 결과 ===');
+    // console.log removed(`총 페이지: ${report.summary.total}`);
+    // console.log removed(`성공: ${report.summary.success}`);
+    // console.log removed(`실패: ${report.summary.failed}`);
+    // console.log removed(`경고: ${report.summary.warnings}`);
+    // console.log removed(`성공률: ${(report.summary.success / report.summary.total * 100).toFixed(1)}%`);
     
-    console.log('\n=== 카테고리별 결과 ===');
+    // console.log removed('\n=== 카테고리별 결과 ===');
     for (const [category, stats] of Object.entries(report.categories)) {
-        console.log(`${category}: ${stats.success}/${stats.total} 성공`);
+        // console.log removed(`${category}: ${stats.success}/${stats.total} 성공`);
     }
     
     if (report.commonIssues.length > 0) {
-        console.log('\n=== 공통 문제점 ===');
+        // console.log removed('\n=== 공통 문제점 ===');
         report.commonIssues.forEach(({ issue, count }) => {
-            console.log(`  - ${issue} (${count}회)`);
+            // console.log removed(`  - ${issue} (${count}회)`);
         });
     }
     
     if (report.recommendations.length > 0) {
-        console.log('\n=== 권장사항 ===');
+        // console.log removed('\n=== 권장사항 ===');
         report.recommendations.forEach(rec => {
-            console.log(`  - ${rec}`);
+            // console.log removed(`  - ${rec}`);
         });
     }
     
     // 보고서 파일로 저장
     fs.writeFileSync('site-validation-report.json', JSON.stringify(report, null, 2));
-    console.log('\n📊 상세 보고서가 site-validation-report.json에 저장되었습니다.');
+    // console.log removed('\n📊 상세 보고서가 site-validation-report.json에 저장되었습니다.');
     
     return report;
 }
 
 if (require.main === module) {
-    main().catch(console.error);
+    main().catch(err => {
+        // Error handling
+    });
 }
 
 module.exports = { main, checkCategory, analyzePageContent };

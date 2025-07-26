@@ -1,0 +1,350 @@
+name: CI/CD Pipeline for doha.kr
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  # 1단계: 타입 검사 및 린팅
+  type-check:
+    runs-on: ubuntu-latest
+    name: "🔍 Type Check & Lint"
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: TypeScript type checking
+      run: npm run typecheck
+      
+    - name: ESLint checking
+      run: npm run lint
+      
+    - name: Prettier format checking
+      run: npx prettier --check "**/*.{ts,js,css,html,md}"
+
+  # 2단계: 빌드 검증
+  build:
+    runs-on: ubuntu-latest
+    name: "🏗️ Build Verification"
+    needs: type-check
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Build TypeScript
+      run: npm run build:ts
+      
+    - name: Verify build artifacts
+      run: |
+        echo "Checking required JavaScript files..."
+        test -f js/main.js || (echo "❌ main.js not found" && exit 1)
+        test -f js/api-config.js || (echo "❌ api-config.js not found" && exit 1)
+        test -f js/manseryeok-api-client.js || (echo "❌ manseryeok-api-client.js not found" && exit 1)
+        test -f js/image-optimizer.js || (echo "❌ image-optimizer.js not found" && exit 1)
+        test -f js/bundle-optimizer.js || (echo "❌ bundle-optimizer.js not found" && exit 1)
+        test -f js/performance-optimizer.js || (echo "❌ performance-optimizer.js not found" && exit 1)
+        test -f js/monitoring-system.js || (echo "❌ monitoring-system.js not found" && exit 1)
+        echo "✅ All required files built successfully"
+        
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-artifacts
+        path: |
+          js/
+          types/
+        retention-days: 1
+
+  # 3단계: 만세력 데이터 정확성 테스트 (가장 중요!)
+  manseryeok-accuracy-test:
+    runs-on: ubuntu-latest
+    name: "🗓️ 만세력 정확성 검증 (CRITICAL)"
+    needs: build
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Download build artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: build-artifacts
+        
+    - name: Run Manseryeok accuracy tests
+      run: |
+        echo "🔍 만세력 데이터 정확성 테스트 시작..."
+        echo "⚠️  중요: 만세력이 축소하다가 잘못되게 나오면 절대안됨!"
+        npm test -- tests/manseryeok.test.ts --run --reporter=verbose
+        
+    - name: Verify Manseryeok test results
+      run: |
+        echo "✅ 만세력 테스트 결과 검증 완료"
+        echo "📊 모든 만세력 데이터가 정확함을 확인했습니다"
+
+  # 4단계: 전체 테스트 스위트
+  test:
+    runs-on: ubuntu-latest
+    name: "🧪 Full Test Suite"
+    needs: manseryeok-accuracy-test
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Download build artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: build-artifacts
+        
+    - name: Run all tests
+      run: npm test -- --run --reporter=verbose
+      
+    - name: Generate test coverage
+      run: npm run test:coverage
+      
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v4
+      with:
+        file: ./coverage/lcov.info
+        flags: unittests
+        name: codecov-umbrella
+        fail_ci_if_error: false
+
+  # 5단계: 성능 검증
+  performance-test:
+    runs-on: ubuntu-latest
+    name: "🚀 Performance Validation"
+    needs: test
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Download build artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: build-artifacts
+        
+    - name: Bundle size analysis
+      run: |
+        echo "📦 Bundle size analysis..."
+        npm run build:ts
+        
+        # Check main.js size (should be < 50KB)
+        MAIN_SIZE=$(stat -c%s "js/main.js")
+        if [ $MAIN_SIZE -gt 51200 ]; then
+          echo "❌ main.js is too large: ${MAIN_SIZE} bytes (limit: 50KB)"
+          exit 1
+        fi
+        
+        # Check manseryeok-api-client.js size (should be < 20KB after optimization)
+        MANSERYEOK_SIZE=$(stat -c%s "js/manseryeok-api-client.js")
+        if [ $MANSERYEOK_SIZE -gt 20480 ]; then
+          echo "❌ manseryeok-api-client.js is too large: ${MANSERYEOK_SIZE} bytes (limit: 20KB)"
+          exit 1
+        fi
+        
+        echo "✅ Bundle sizes within acceptable limits"
+        echo "📊 main.js: ${MAIN_SIZE} bytes"
+        echo "📊 manseryeok-api-client.js: ${MANSERYEOK_SIZE} bytes"
+
+  # 6단계: 보안 검사
+  security:
+    runs-on: ubuntu-latest
+    name: "🔒 Security Audit"
+    needs: type-check
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Run npm audit
+      run: npm audit --audit-level=moderate
+      
+    - name: Check for secrets in code
+      run: |
+        echo "🔍 Checking for potential secrets..."
+        if grep -r "sk-" src/ || grep -r "api_key" src/ || grep -r "secret" src/; then
+          echo "❌ Potential secrets found in source code!"
+          exit 1
+        fi
+        echo "✅ No secrets detected in source code"
+
+  # 7단계: 배포 (main 브랜치만)
+  deploy:
+    runs-on: ubuntu-latest
+    name: "🚀 Deploy to Production"
+    needs: [manseryeok-accuracy-test, test, performance-test, security]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Download build artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: build-artifacts
+        
+    - name: Final manseryeok verification before deploy
+      run: |
+        echo "🔍 배포 전 최종 만세력 정확성 검증..."
+        npm test -- tests/manseryeok.test.ts --run
+        echo "✅ 배포 전 만세력 검증 완료"
+        
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./
+        exclude_assets: |
+          node_modules/
+          src/
+          tests/
+          .git/
+          .github/
+          *.md
+          package*.json
+          tsconfig.json
+          vitest.config.ts
+          .eslintrc.json
+          .prettierrc
+          
+    - name: Deployment notification
+      run: |
+        echo "🎉 배포 완료!"
+        echo "🌍 사이트: https://doha.kr"
+        echo "📊 모든 검증 단계를 통과했습니다"
+        echo "✅ 만세력 데이터 정확성 보장됨"
+
+  # 8단계: 배포 후 검증
+  post-deploy-verification:
+    runs-on: ubuntu-latest
+    name: "✅ Post-Deploy Verification"
+    needs: deploy
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    
+    steps:
+    - name: Wait for deployment
+      run: sleep 60
+      
+    - name: Verify site accessibility
+      run: |
+        echo "🌍 배포된 사이트 접근성 확인..."
+        curl -f https://doha.kr || (echo "❌ 사이트 접근 실패" && exit 1)
+        echo "✅ 사이트 정상 접근 확인"
+        
+    - name: Basic functionality test
+      run: |
+        echo "⚡ 기본 기능 테스트..."
+        # Check if main JavaScript files are accessible
+        curl -f https://doha.kr/js/main.js > /dev/null || (echo "❌ main.js 로드 실패" && exit 1)
+        curl -f https://doha.kr/js/manseryeok-api-client.js > /dev/null || (echo "❌ manseryeok-api-client.js 로드 실패" && exit 1)
+        echo "✅ 주요 JavaScript 파일 로드 확인"
+        
+    - name: Performance check
+      run: |
+        echo "🚀 성능 체크..."
+        # Basic response time check
+        RESPONSE_TIME=$(curl -o /dev/null -s -w '%{time_total}' https://doha.kr)
+        echo "📊 응답 시간: ${RESPONSE_TIME}초"
+        
+        # Check if response time is under 3 seconds
+        if (( $(echo "$RESPONSE_TIME > 3.0" | bc -l) )); then
+          echo "⚠️  응답 시간이 3초를 초과했습니다"
+        else
+          echo "✅ 응답 시간 양호"
+        fi
+
+  # 9단계: 알림
+  notify:
+    runs-on: ubuntu-latest
+    name: "📢 Notification"
+    needs: [post-deploy-verification]
+    if: always()
+    
+    steps:
+    - name: Success notification
+      if: needs.post-deploy-verification.result == 'success'
+      run: |
+        echo "🎉 CI/CD 파이프라인 성공적으로 완료!"
+        echo "✅ 만세력 데이터 정확성 검증 완료"
+        echo "✅ 모든 테스트 통과"
+        echo "✅ 성능 검증 완료" 
+        echo "✅ 보안 검사 완료"
+        echo "✅ 배포 및 검증 완료"
+        echo "🌍 사이트: https://doha.kr"
+        
+    - name: Failure notification
+      if: failure()
+      run: |
+        echo "❌ CI/CD 파이프라인 실패"
+        echo "🔍 로그를 확인하여 문제를 해결해주세요"
+        echo "⚠️  특히 만세력 데이터 정확성을 다시 한번 확인해주세요"
