@@ -651,14 +651,23 @@ input.error, textarea.error {
      * 컴포넌트 로드 (ID 기반)
      */
     async loadComponentById(componentName, targetId) {
+        console.log(`Loading ${componentName} into ${targetId}`);
         try {
             const response = await fetch(`/includes/${componentName}.html`);
             if (response.ok) {
                 const html = await response.text();
                 const target = document.getElementById(targetId);
-                if (target && window.SecureDOM) {
-                    window.SecureDOM.setInnerHTML(target, html);
+                if (target) {
+                    // SecureDOM이 있으면 사용, 없으면 직접 innerHTML 사용
+                    if (window.SecureDOM && window.SecureDOM.setInnerHTML) {
+                        window.SecureDOM.setInnerHTML(target, html);
+                    } else {
+                        target.innerHTML = html;
+                    }
                     this.components.set(componentName, target);
+                    console.log(`✅ ${componentName} loaded successfully`);
+                } else {
+                    console.error(`Target element ${targetId} not found`);
                 }
             }
             else {
@@ -666,7 +675,7 @@ input.error, textarea.error {
             }
         }
         catch (error) {
-            console.warn(`Failed to load component ${componentName}:`, error);
+            console.error(`Failed to load component ${componentName}:`, error);
             this.loadFallbackComponent(componentName, targetId);
         }
     }
