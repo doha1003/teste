@@ -80,6 +80,19 @@ class APIManager {
         return this.securityConfig.allowedOrigins.includes(origin);
     }
     /**
+     * Fortune API 호출
+     */
+    async callFortuneAPI(payload) {
+        this.checkRateLimit('fortune-api');
+        
+        const apiUrl = this.config.endpoints.fortune || 'https://doha-kr-api.vercel.app/api/fortune';
+        
+        return this.secureRequest(apiUrl, {
+            method: 'POST',
+            body: JSON.stringify(payload)
+        });
+    }
+    /**
      * 카카오 SDK 초기화
      */
     initKakao() {
@@ -254,7 +267,7 @@ window.initKakao = initKakao;
 /**
  * 타입 안전 API 헬퍼 함수들
  */
-// export const apiHelpers = {
+const apiHelpers = {
     /**
      * Fortune API 호출
      */
@@ -286,6 +299,9 @@ window.initKakao = initKakao;
         return apiManager.detectEnvironment();
     }
 };
+
+// 전역으로 노출
+window.apiHelpers = apiHelpers;
 // export { APIManager, API_CONFIG, SECURITY_CONFIG, apiManager };
 // export default apiManager;
 //# sourceMappingURL=api-config.js.map
