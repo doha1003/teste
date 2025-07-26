@@ -1,7 +1,7 @@
 
 // Form submit handler
 document.addEventListener('DOMContentLoaded', function() {
-    const form = document.querySelector('form[data-form="true"]');
+    const form = document.getElementById('sajuForm');
     if (form) {
         form.addEventListener('submit', function(event) {
             generateSaju(event)
@@ -41,6 +41,7 @@ window.generateSaju = async function(event) {
     // 결과 표시 영역
     const resultDiv = document.getElementById('sajuResult');
     if (resultDiv) {
+        resultDiv.classList.remove('d-none-init');
         resultDiv.style.display = 'block';
         resultDiv.innerHTML = safeHTML('<div class="loading">AI가 당신의 사주를 분석하고 있습니다...</div>');
     }

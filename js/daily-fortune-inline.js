@@ -216,6 +216,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Show loading state
         const resultDiv = document.getElementById('fortuneResult');
         if (resultDiv) {
+            resultDiv.classList.remove('d-none-init');
             resultDiv.style.display = 'block';
             resultDiv.innerHTML = safeHTML('<div class="loading">AI가 당신의 운세를 분석하고 있습니다...</div>');
         }
