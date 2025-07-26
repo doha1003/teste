@@ -228,7 +228,7 @@ document.addEventListener('DOMContentLoaded', function() {
             birthMonth: parseInt(formData.get('birthMonth')),
             birthDay: parseInt(formData.get('birthDay')),
             birthHour: parseInt(formData.get('birthTime')) || null,
-            isLunar: formData.get('lunarCalendar') === 'on'
+            isLunar: formData.get('isLunar') === 'on'
         };
         
         try {
@@ -237,7 +237,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const birthDateStr = `${userData.birthYear}-${String(userData.birthMonth).padStart(2, '0')}-${String(userData.birthDay).padStart(2, '0')}`;
             const gender = userData.birthHour && userData.birthHour >= 0 && userData.birthHour <= 11 ? '남' : '여'; // 임시 성별 추정
             
-            // 만세력 데이터 가져오기 (API 호출)
+            // 만세력 데이터 가져오기
             let manseryeokData = null;
             try {
                 let targetYear = userData.birthYear, targetMonth = userData.birthMonth, targetDay = userData.birthDay;
@@ -251,76 +251,76 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 }
                 
-                // API 호출
-                const apiData = await window.manseryeokClient.getDate(
-                    targetYear, 
-                    targetMonth, 
-                    targetDay, 
-                    userData.birthHour
-                );
-                
-                if (apiData) {
-                    manseryeokData = {
-                        yearPillar: apiData.yearGanji,
-                        monthPillar: apiData.monthGanji,
-                        dayPillar: apiData.dayGanji,
-                        hourPillar: apiData.hourGanji || null,
-                        dayMaster: apiData.dayStem
-                    };
+                // 로컬 계산 사용 (CORS 문제 회피)
+                if (window.calculateSaju) {
+                    const sajuData = window.calculateSaju(targetYear, targetMonth, targetDay, userData.birthHour || 12);
+                    if (sajuData) {
+                        manseryeokData = {
+                            yearPillar: sajuData.year,
+                            monthPillar: sajuData.month,
+                            dayPillar: sajuData.day,
+                            hourPillar: sajuData.hour,
+                            dayMaster: sajuData.day ? sajuData.day.substring(0, 1) : null
+                        };
+                    }
                 }
             } catch (error) {
-                console.error('만세력 데이터 로드 실패:', error);
+                console.error('만세력 데이터 계산 실패:', error);
             }
             
             const today = new Date();
             const todayStr = `${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일`;
             
-            try {
-                const response = await fetch('https://doha-kr-api.vercel.app/api/fortune', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        type: 'daily',
-                        data: {
-                            name: userData.name,
-                            birthDate: birthDateStr,
-                            gender: gender,
-                            birthTime: userData.birthHour ? `${userData.birthHour}시` : null,
-                            manseryeok: manseryeokData ? JSON.stringify(manseryeokData) : null
-                        },
-                        todayDate: todayStr
-                    })
-                });
-                
-                if (response.ok) {
-                    const result = await response.json();
-                    if (result.success && result.data) {
-                        fortuneResult = {
-                            general: result.data.descriptions?.overall || '오늘은 새로운 기회가 찾아올 수 있는 날입니다.',
-                            love: result.data.descriptions?.love || '인연과의 만남에 주의를 기울여보세요.',
-                            money: result.data.descriptions?.money || '재정적인 결정은 신중하게 하는 것이 좋습니다.',
-                            work: result.data.descriptions?.work || '업무에서 좋은 성과를 기대할 수 있습니다.',
-                            advice: result.data.luck?.caution || '오늘은 긍정적인 마음가짐이 중요합니다.'
-                        };
-                    } else {
-                        throw new Error('Invalid API response');
-                    }
-                } else {
-                    throw new Error('API request failed');
-                }
-            } catch (apiError) {
-                console.error('AI API error:', apiError);
-                // 백업 운세 데이터
-                fortuneResult = {
-                    general: '오늘은 새로운 기회가 찾아올 수 있는 날입니다. 긍정적인 마음가짐으로 하루를 시작해보세요.',
-                    love: '인연과의 만남에 주의를 기울여보세요. 주변에 좋은 사람이 있을 수 있습니다.',
-                    money: '재정적인 결정은 신중하게 하는 것이 좋습니다. 충동적인 소비를 피하세요.',
-                    work: '업무에서 좋은 성과를 기대할 수 있습니다. 동료들과의 협력이 중요합니다.',
-                    advice: '오늘은 긍정적인 마음가짐이 중요합니다. 작은 일에도 감사하는 마음을 가져보세요.'
-                };
-            }
+            // CORS 문제로 인해 로컬 데이터 사용
+            const dayOfWeek = today.getDay();
+            const fortuneTemplates = {
+                general: [
+                    '오늘은 새로운 기회가 찾아올 수 있는 날입니다. 긍정적인 마음가짐으로 하루를 시작해보세요.',
+                    '평소보다 더 활기찬 에너지가 느껴지는 날입니다. 적극적으로 행동해보세요.',
+                    '조금은 휴식이 필요한 때입니다. 무리하지 말고 여유를 가져보세요.',
+                    '중요한 결정을 내리기 좋은 날입니다. 직감을 믿고 행동하세요.',
+                    '인간관계에서 좋은 소식이 있을 수 있습니다. 열린 마음으로 소통하세요.'
+                ],
+                love: [
+                    '인연과의 만남에 주의를 기울여보세요. 주변에 좋은 사람이 있을 수 있습니다.',
+                    '연인과의 관계가 더욱 깊어질 수 있는 날입니다. 진솔한 대화를 나눠보세요.',
+                    '혼자만의 시간도 소중합니다. 자신을 돌아보는 시간을 가져보세요.',
+                    '새로운 만남의 기회가 있을 수 있습니다. 적극적으로 나서보세요.',
+                    '사랑하는 사람에게 마음을 표현하기 좋은 날입니다.'
+                ],
+                money: [
+                    '재정적인 결정은 신중하게 하는 것이 좋습니다. 충동적인 소비를 피하세요.',
+                    '예상치 못한 수입이 있을 수 있습니다. 하지만 절약은 계속하세요.',
+                    '투자에 대해 신중하게 생각해볼 때입니다. 전문가의 조언을 구하세요.',
+                    '금전운이 상승하고 있습니다. 계획적인 소비를 하세요.',
+                    '저축을 시작하기 좋은 날입니다. 작은 금액부터 시작해보세요.'
+                ],
+                work: [
+                    '업무에서 좋은 성과를 기대할 수 있습니다. 동료들과의 협력이 중요합니다.',
+                    '새로운 프로젝트를 시작하기 좋은 날입니다. 창의적인 아이디어를 발휘하세요.',
+                    '집중력이 높아지는 날입니다. 중요한 업무를 처리하세요.',
+                    '팀워크가 빛을 발하는 날입니다. 소통을 중시하세요.',
+                    '자신의 능력을 인정받을 수 있는 기회가 올 수 있습니다.'
+                ],
+                advice: [
+                    '오늘은 긍정적인 마음가짐이 중요합니다. 작은 일에도 감사하는 마음을 가져보세요.',
+                    '건강 관리에 신경 쓰세요. 규칙적인 운동과 충분한 수면이 필요합니다.',
+                    '가족과의 시간을 소중히 여기세요. 따뜻한 대화가 힘이 됩니다.',
+                    '새로운 도전을 두려워하지 마세요. 실패도 성장의 과정입니다.',
+                    '주변 사람들에게 친절을 베푸세요. 좋은 에너지가 돌아올 것입니다.'
+                ]
+            };
+            
+            // 생일 기반으로 운세 선택
+            const index = (userData.birthDay + userData.birthMonth + dayOfWeek) % 5;
+            
+            fortuneResult = {
+                general: fortuneTemplates.general[index],
+                love: fortuneTemplates.love[(index + 1) % 5],
+                money: fortuneTemplates.money[(index + 2) % 5],
+                work: fortuneTemplates.work[(index + 3) % 5],
+                advice: fortuneTemplates.advice[(index + 4) % 5]
+            };
             
             // Display result
             if (resultDiv && fortuneResult) {
