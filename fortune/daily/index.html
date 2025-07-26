@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src 'self' https:; script-src 'self' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>오늘의 운세 - 사주 기반 정확한 일일운세 | doha.kr</title>
@@ -168,12 +168,12 @@ if ('IntersectionObserver' in window) {
         entries.forEach(function(entry) {
             if (entry.isIntersecting) {
                 const container = entry.target;
-                container.innerHTML = `<ins class="adsbygoogle"
+                container.innerHTML = safeHTML(`<ins class="adsbygoogle"
              style="display:block"
              data-ad-client="ca-pub-7905640648499222"
              data-ad-slot="2789891628"
              data-ad-format="auto"
-             data-full-width-responsive="true"></ins>`;
+             data-full-width-responsive="true"></ins>`);
                 if (typeof adsbygoogle !== 'undefined') {
                     (adsbygoogle = window.adsbygoogle || []).push({});
                 }
@@ -267,7 +267,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         // Clear existing options
-        yearSelect.innerHTML = '<option value="">연도 선택</option>';
+        yearSelect.innerHTML = safeHTML('<option value="">연도 선택</option>');
         
         // Add years
         const currentYear = new Date().getFullYear();
@@ -293,7 +293,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const month = parseInt(monthSelect.value);
         const year = parseInt(document.getElementById('birthYear').value) || new Date().getFullYear();
         
-        daySelect.innerHTML = '<option value="">일 선택</option>';
+        daySelect.innerHTML = safeHTML('<option value="">일 선택</option>');
         
         if (!month) return;
         
@@ -342,7 +342,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const resultDiv = document.getElementById('fortuneResult');
         if (resultDiv) {
             resultDiv.style.display = 'block';
-            resultDiv.innerHTML = '<div class="loading">AI가 당신의 운세를 분석하고 있습니다...</div>';
+            resultDiv.innerHTML = safeHTML('<div class="loading">AI가 당신의 운세를 분석하고 있습니다...</div>');
         }
         
         // Prepare user data
@@ -455,7 +455,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Display result
             if (resultDiv && fortuneResult) {
-                resultDiv.innerHTML = `
+                resultDiv.innerHTML = safeHTML(`
                     <div class="fortune-result-card">
                         <h3>${userData.name}님의 오늘의 운세</h3>
                         <div class="fortune-content">
@@ -481,17 +481,22 @@ document.addEventListener('DOMContentLoaded', function() {
                             </div>
                         </div>
                     </div>
-                `;
+                `);
             }
         } catch (error) {
             console.error('Fortune generation error:', error);
             if (resultDiv) {
-                resultDiv.innerHTML = '<div class="error">운세 생성 중 오류가 발생했습니다. 다시 시도해주세요.</div>';
+                resultDiv.innerHTML = safeHTML('<div class="error">운세 생성 중 오류가 발생했습니다. 다시 시도해주세요.</div>');
             }
         }
     };
 });
 </script>
 
+    <!-- DOMPurify for XSS protection -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js" integrity="sha512-H+rglffZ6f5gF7UJgvH4Naa+fGCgjrHKMgoFOGmcPTRwR6oILo5R+gtzNrpDp7iMV3udbymBVjkeZGNz1Em4rQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="/js/security-config.js"></script>
+    <script src="/js/form-validation.js"></script>
+    
 </body>
 </html>

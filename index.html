@@ -353,12 +353,12 @@ if ('IntersectionObserver' in window) {
         entries.forEach(function(entry) {
             if (entry.isIntersecting) {
                 const container = entry.target;
-                container.innerHTML = `<ins class="adsbygoogle"
+                container.innerHTML = safeHTML(`<ins class="adsbygoogle"
              style="display:block"
              data-ad-client="ca-pub-7905640648499222"
              data-ad-slot="3911401606"
              data-ad-format="auto"
-             data-full-width-responsive="true"></ins>`;
+             data-full-width-responsive="true"></ins>`);
                 if (typeof adsbygoogle !== 'undefined') {
                     (adsbygoogle = window.adsbygoogle || []).push({});
                 }

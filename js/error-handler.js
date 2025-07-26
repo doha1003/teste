@@ -205,13 +205,13 @@
             // Fallback notification
             const notification = document.createElement('div');
             notification.className = `notification notification-${type}`;
-            notification.innerHTML = `
+            notification.innerHTML = safeHTML(`
                 <div class="notification-content">
                     <span class="notification-icon">${type === 'error' ? '⚠️' : 'ℹ️'}</span>
                     <span class="notification-message">${this.escapeHtml(message)}</span>
                     <button class="notification-close" onclick="this.parentElement.parentElement.remove()">×</button>
                 </div>
-            `;
+            `);
             
             document.body.appendChild(notification);
             

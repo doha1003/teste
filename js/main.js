@@ -702,7 +702,7 @@ input.error, textarea.error {
                 window.SecureDOM.setInnerHTML(target, navbarHtml);
             }
             else {
-                target.innerHTML = navbarHtml;
+                target.innerHTML = safeHTML(navbarHtml);
             }
         }
         else if (componentName === 'footer') {
@@ -765,7 +765,7 @@ input.error, textarea.error {
                 window.SecureDOM.setInnerHTML(target, footerHtml);
             }
             else {
-                target.innerHTML = footerHtml;
+                target.innerHTML = safeHTML(footerHtml);
             }
         }
     }

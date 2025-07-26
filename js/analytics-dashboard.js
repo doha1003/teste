@@ -32,7 +32,7 @@ class AnalyticsDashboard {
         const dashboard = document.createElement('div');
         dashboard.id = 'analytics-dashboard';
         dashboard.className = 'analytics-dashboard';
-        dashboard.innerHTML = `
+        dashboard.innerHTML = safeHTML(`
             <div class="dashboard-header">
                 <h3>📊 실시간 분석 대시보드</h3>
                 <div class="dashboard-controls">
@@ -99,7 +99,7 @@ class AnalyticsDashboard {
                     </div>
                 </div>
             </div>
-        `;
+        `);
 
         // 스타일 추가
         this.injectDashboardStyles();
@@ -593,13 +593,13 @@ class AnalyticsDashboard {
         const recentEvents = this.data.realtime.events.slice(0, 10);
         recentEvents.forEach(event => {
             const row = document.createElement('tr');
-            row.innerHTML = `
+            row.innerHTML = safeHTML(`
                 <td>${this.formatTime(event.timestamp)}</td>
                 <td>${this.formatEventName(event.event)}</td>
                 <td>${event.url}</td>
                 <td>${event.data.userId ? event.data.userId.substring(0, 8) + '...' : 'Anonymous'}</td>
                 <td><span class="status-${this.getEventStatus(event.event)}">${this.getEventStatusText(event.event)}</span></td>
-            `;
+            `);
             tbody.appendChild(row);
         });
     }

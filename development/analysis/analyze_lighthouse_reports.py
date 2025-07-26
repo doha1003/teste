@@ -1,7 +1,7 @@
 import os
 import json
 
-REPORTS_DIR = "C:/Users/pc/teste/reports"
+REPORTS_DIR = "C:/Users/pc/teste/development/reports/page-reports"
 LIGHTHOUSE_REPORT_FILENAME = "lighthouse_report.json"
 
 def analyze_lighthouse_reports():
