@@ -276,7 +276,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const todayStr = `${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일`;
             
             try {
-                const response = await fetch('https://doha-kr-ap.vercel.app/api/fortune', {
+                const response = await fetch('https://doha-kr-api.vercel.app/api/fortune', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
