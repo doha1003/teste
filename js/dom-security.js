@@ -533,3 +533,11 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // export default SecureDOM;
+// Safe HTML helper function
+window.safeHTML = function(html) {
+    if (typeof DOMPurify !== 'undefined') {
+        return DOMPurify.sanitize(html);
+    }
+    // Fallback: just return the HTML if DOMPurify is not loaded
+    return html;
+};
