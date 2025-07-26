@@ -175,7 +175,7 @@
                 </div>
                 
                 <!-- 결과 영역 -->
-                <div class="bmi-result-section hidden" id="resultSection">
+                <div class="bmi-result-section fortune-result-card hidden" id="resultSection">
                     <div class="bmi-value" id="bmiValue">0</div>
                     <div class="bmi-status" id="bmiStatus">-</div>
                     <div class="bmi-description" id="bmiDescription">
@@ -375,6 +375,7 @@ if ('IntersectionObserver' in window) {
         }
         
         function calculateBMI() {
+            console.log("BMI calculation started");
 
             const heightInput = document.getElementById('height').value;
             const weightInput = document.getElementById('weight').value;
@@ -463,7 +464,12 @@ if ('IntersectionObserver' in window) {
 
             showPersonalizedAdvice(personalizedAdvice, status);
 
-            document.getElementById('resultSection').classList.remove('hidden');
+            const resultSection = document.getElementById('resultSection');
+            console.log("Showing result section", resultSection);
+            if (resultSection) {
+                resultSection.classList.remove('hidden');
+                resultSection.style.display = 'block';
+            }
             document.getElementById('bmiChart').classList.remove('hidden');
 
             document.getElementById('resultSection').scrollIntoView({ 

@@ -73,6 +73,13 @@
     <section class="tarot-section">
         <div class="container">
             <div id="tarotForm" class="tarot-form">
+                <!-- 타로 카드 선택 영역 -->
+                <div class="tarot-cards-section" style="display: none;">
+                    <h3>카드를 선택하세요</h3>
+                    <div class="tarot-cards">
+                        <!-- 카드가 JavaScript로 생성됩니다 -->
+                    </div>
+                </div>
                 <h2 class="text-center mb-32">타로 리딩 시작하기</h2>
                 
                 <div class="form-group">
@@ -584,5 +591,140 @@ document.addEventListener('DOMContentLoaded', function() {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js" integrity="sha512-H+rglffZ6f5gF7UJgvH4Naa+fGCgjrHKMgoFOGmcPTRwR6oILo5R+gtzNrpDp7iMV3udbymBVjkeZGNz1Em4rQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="/js/security-config.js"></script>
     
+
+    <script>
+    
+    // 타로 리딩 시작 함수 재정의
+    window.startTarotReading = function() {
+        const question = document.getElementById('question').value.trim();
+        const spreadType = document.getElementById('spreadType').value;
+        
+        if (!question) {
+            alert('질문을 입력해주세요.');
+            return;
+        }
+        
+        // 카드 섹션 표시
+        const cardSection = document.querySelector('.tarot-cards-section');
+        if (cardSection) {
+            cardSection.style.display = 'block';
+            
+            // 카드 생성
+            const cardContainer = document.querySelector('.tarot-cards');
+            if (cardContainer && cardContainer.children.length === 0) {
+                for (let i = 0; i < 22; i++) {
+                    const card = document.createElement('div');
+                    card.className = 'tarot-card';
+                    card.dataset.cardId = i;
+                    card.innerHTML = `
+                        <div class="tarot-card-inner">
+                            <div class="tarot-card-front">
+                                <span class="card-number">${i}</span>
+                            </div>
+                            <div class="tarot-card-back">
+                                <span>?</span>
+                            </div>
+                        </div>
+                    `;
+                    cardContainer.appendChild(card);
+                }
+            }
+            
+            // 카드 선택 이벤트
+            const cards = document.querySelectorAll('.tarot-card');
+            const spread = spreads[spreadType];
+            let selectedCards = [];
+            
+            cards.forEach(card => {
+                card.addEventListener('click', function() {
+                    if (this.classList.contains('selected')) {
+                        this.classList.remove('selected');
+                        selectedCards = selectedCards.filter(c => c.id !== parseInt(this.dataset.cardId));
+                    } else if (selectedCards.length < spread.count) {
+                        this.classList.add('selected');
+                        selectedCards.push({
+                            id: parseInt(this.dataset.cardId),
+                            ...majorArcana[parseInt(this.dataset.cardId)]
+                        });
+                        
+                        // 필요한 카드를 모두 선택했으면 결과 표시
+                        if (selectedCards.length === spread.count) {
+                            setTimeout(() => {
+                                proceedWithReading(question, spreadType, selectedCards);
+                            }, 500);
+                        }
+                    }
+                });
+            });
+        } else {
+            // 카드 섹션이 없으면 자동으로 진행
+            proceedWithReading(question, spreadType, null);
+        }
+    };
+    
+    // 리딩 진행 함수
+    window.proceedWithReading = async function(question, spreadType, selectedCards) {
+        document.getElementById('tarotForm').style.display = 'none';
+        
+        const resultDiv = document.getElementById('tarotResult');
+        resultDiv.style.display = 'block';
+        resultDiv.innerHTML = safeHTML(`
+            <div class="tarot-ai-analyzing">
+                🔮 AI가 타로 카드를 분석하고 있습니다...
+                <div class="fortune-loading-info">
+                    질문: "${question}"
+                </div>
+            </div>
+        `);
+        
+        try {
+            const cards = selectedCards || drawCards(question, spreadType);
+            const aiAnalysis = await generateTarotAnalysisWithAI(question, cards, spreadType);
+            displayTarotResult(question, cards, spreadType, aiAnalysis);
+        } catch (error) {
+            console.error('타로 분석 오류:', error);
+            const cards = selectedCards || drawCards(question, spreadType);
+            const fallbackAnalysis = generateFallbackAnalysis(question, cards, spreadType);
+            displayTarotResult(question, cards, spreadType, fallbackAnalysis);
+        }
+    };
+
+    // 타로 카드 생성 보장
+    document.addEventListener('DOMContentLoaded', function() {
+        const cardContainer = document.querySelector('.tarot-cards');
+        if (cardContainer && cardContainer.children.length === 0) {
+            // 카드가 없으면 생성
+            for (let i = 0; i < 22; i++) {
+                const card = document.createElement('div');
+                card.className = 'tarot-card';
+                card.dataset.cardId = i;
+                card.innerHTML = `
+                    <div class="tarot-card-inner">
+                        <div class="tarot-card-front">
+                            <span class="card-number">${i}</span>
+                        </div>
+                        <div class="tarot-card-back">
+                            <span>?</span>
+                        </div>
+                    </div>
+                `;
+                cardContainer.appendChild(card);
+            }
+            console.log('타로 카드 생성 완료');
+        }
+        
+        // 카드 선택 이벤트 재등록
+        const cards = document.querySelectorAll('.tarot-card');
+        cards.forEach(card => {
+            card.addEventListener('click', function() {
+                if (this.classList.contains('selected')) {
+                    this.classList.remove('selected');
+                } else if (document.querySelectorAll('.tarot-card.selected').length < 3) {
+                    this.classList.add('selected');
+                }
+            });
+        });
+    });
+    </script>
 </body>
 </html>

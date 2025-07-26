@@ -465,3 +465,44 @@
         width: 40px;
     }
 }
+/* BMI 계산기 결과 카드 스타일 */
+.bmi-result-section.fortune-result-card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 2rem;
+}
+
+.bmi-result-section.fortune-result-card.hidden {
+    display: none !important;
+}
+
+/* 타로 카드 컨테이너 스타일 */
+.tarot-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 1rem;
+    margin: 2rem 0;
+}
+
+.tarot-card {
+    aspect-ratio: 2/3;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.3s;
+}
+
+.tarot-card:hover {
+    transform: translateY(-5px);
+}
+
+.tarot-card.selected {
+    border: 3px solid var(--primary-color);
+    border-radius: 8px;
+}
+
+/* 사주 결과 카드 스타일 */
+#sajuResult.fortune-result-card {
+    margin-top: 2rem;
+}
