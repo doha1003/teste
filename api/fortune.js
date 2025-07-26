@@ -14,7 +14,7 @@ if (!process.env.GEMINI_API_KEY) {
 // Gemini API 초기화
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
-export default async function handler(req, res) {
+// export default async function handler(req, res) {
     // CORS 설정
     const allowedOrigins = ['https://doha.kr', 'http://localhost:3000'];
     const origin = req.headers.origin;

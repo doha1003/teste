@@ -620,6 +620,6 @@ window.getPerformanceReport = () => {
 window.optimizePerformance = () => {
     window.performanceOptimizer.optimizePerformance();
 };
-export { PerformanceOptimizer, performanceOptimizer };
-export default performanceOptimizer;
+// export { PerformanceOptimizer, performanceOptimizer };
+// export default performanceOptimizer;
 //# sourceMappingURL=performance-optimizer.js.map

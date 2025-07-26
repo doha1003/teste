@@ -95,7 +95,7 @@ function getManseryeokData(year, month, day, hour) {
 }
 
 // API 핸들러
-export default function handler(req, res) {
+// export default function handler(req, res) {
     // CORS 헤더 설정
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');

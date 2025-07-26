@@ -244,7 +244,7 @@ class MonitoringSystem {
         if (!this.config.enableManseryeokMonitoring)
             return;
         // 만세력 API 이벤트 리스너 설정
-        document.addEventListener('manseryeok:request', (event) => {
+        document.addEventListener('manseryeok) => {
             const customEvent = event;
             this.recordManseryeokEvent({
                 action: 'request',
@@ -254,7 +254,7 @@ class MonitoringSystem {
                 metadata: customEvent.detail
             });
         });
-        document.addEventListener('manseryeok:response', (event) => {
+        document.addEventListener('manseryeok) => {
             const customEvent = event;
             this.recordManseryeokEvent({
                 action: 'response',
@@ -265,7 +265,7 @@ class MonitoringSystem {
                 metadata: customEvent.detail
             });
         });
-        document.addEventListener('manseryeok:error', (event) => {
+        document.addEventListener('manseryeok) => {
             const customEvent = event;
             this.recordManseryeokEvent({
                 action: 'error',
@@ -275,7 +275,7 @@ class MonitoringSystem {
                 metadata: customEvent.detail
             });
         });
-        document.addEventListener('manseryeok:cache_hit', (event) => {
+        document.addEventListener('manseryeok) => {
             const customEvent = event;
             this.recordManseryeokEvent({
                 action: 'cache_hit',
@@ -285,7 +285,7 @@ class MonitoringSystem {
                 metadata: customEvent.detail
             });
         });
-        document.addEventListener('manseryeok:fallback', (event) => {
+        document.addEventListener('manseryeok) => {
             const customEvent = event;
             this.recordManseryeokEvent({
                 action: 'fallback',
@@ -558,6 +558,6 @@ if (window.location.hostname === 'localhost' ||
         recordCustomEvent: (type, target) => monitoring.recordCustomEvent(type, target)
     };
 }
-export { MonitoringSystem, monitoring };
-export default monitoring;
+// export { MonitoringSystem, monitoring };
+// export default monitoring;
 //# sourceMappingURL=monitoring-system.js.map

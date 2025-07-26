@@ -187,16 +187,8 @@ async function performReading(selectedCards) {
     
     try {
         // AI API 호출
-        const response = await fetch('https://doha-kr-ap.vercel.app/api/fortune', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                type: 'general',
-                prompt: `타로 리딩: ${spread.name} 스프레드
-질문: ${question}
-카드: ${selectedCards.map((card, idx) => `${idx+1}. ${card.name}${card.isReversed ? '(역방향)' : '(정방향)'} - ${spread.positions[idx]}`).join(', ')}
+        const response = await fetch('https, {
+            method, headers, body, prompt) => `${idx+1}. ${card.name}${card.isReversed ? '(역방향)' : '(정방향)'} - ${spread.positions[idx]}`).join(', ')}
 
 각 카드의 의미를 해석하고 전체적인 메시지를 전달해주세요.`
             })
