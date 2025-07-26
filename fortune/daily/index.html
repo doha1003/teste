@@ -28,8 +28,8 @@
     <!-- Google AdSense -->
     <!-- Moved to end of body -->
     
-    <!-- 만세력 데이터 먼저 로드 -->
-    <script src="/js/manseryeok-database.js"></script>
+    <!-- 만세력 API 클라이언트 -->
+    <script src="/js/manseryeok-client.js"></script>
     <script src="/js/lunar-calendar-compact.js"></script>
     <script src="/js/saju-calculator.js"></script>
     
@@ -41,6 +41,7 @@
     <link rel="stylesheet" href="/css/pages/fortune-common.css">
     
     <link rel="stylesheet" href="/css/pages/result-detail.css">
+    <link rel="stylesheet" href="/css/fortune-result-cards.css">
     <link rel="stylesheet" href="/css/layout-fixes.css">
 
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
@@ -214,6 +215,29 @@ if ('IntersectionObserver' in window) {
     <!-- AdSense initialization -->
     
 
+    <!-- Share Function -->
+    <script>
+    function shareResult(platform) {
+        const title = '오늘의 운세 결과';
+        const url = window.location.href;
+        
+        if (platform === 'kakao' && window.Kakao) {
+            Kakao.Link.sendDefault({
+                objectType: 'feed',
+                content: {
+                    title: title,
+                    description: '나의 오늘 운세를 확인해보세요!',
+                    imageUrl: 'https://doha.kr/images/og-image.jpg',
+                    link: {
+                        mobileWebUrl: url,
+                        webUrl: url
+                    }
+                }
+            });
+        }
+    }
+    </script>
+    
     <!-- Non-critical scripts moved here for performance -->
     
 <!-- Google AdSense 지연 로딩 -->
@@ -361,46 +385,39 @@ document.addEventListener('DOMContentLoaded', function() {
             const birthDateStr = `${userData.birthYear}-${String(userData.birthMonth).padStart(2, '0')}-${String(userData.birthDay).padStart(2, '0')}`;
             const gender = userData.birthHour && userData.birthHour >= 0 && userData.birthHour <= 11 ? '남' : '여'; // 임시 성별 추정
             
-            // 만세력 데이터 계산
+            // 만세력 데이터 가져오기 (API 호출)
             let manseryeokData = null;
-            if (window.sajuCalculator && window.sajuCalculator.calculateSaju) {
-                const saju = window.sajuCalculator.calculateSaju(
-                    userData.birthYear, 
-                    userData.birthMonth, 
-                    userData.birthDay, 
-                    userData.birthHour || 0, 
-                    userData.isLunar
-                );
+            try {
+                let targetYear = userData.birthYear, targetMonth = userData.birthMonth, targetDay = userData.birthDay;
                 
-                // 만세력 데이터로 일주 보정
-                if (window.getManseryeokData) {
-                    let targetYear = userData.birthYear, targetMonth = userData.birthMonth, targetDay = userData.birthDay;
-                    
-                    if (userData.isLunar && window.lunarToSolar) {
-                        const solarDate = window.lunarToSolar(userData.birthYear, userData.birthMonth, userData.birthDay);
-                        if (solarDate) {
-                            targetYear = solarDate.year;
-                            targetMonth = solarDate.month;
-                            targetDay = solarDate.day;
-                        }
-                    }
-                    
-                    const manseryeokResult = window.getManseryeokData(targetYear, targetMonth, targetDay);
-                    if (manseryeokResult && manseryeokResult.dayGanji) {
-                        saju.dayPillar = {
-                            stem: manseryeokResult.dayGanji.charAt(0),
-                            branch: manseryeokResult.dayGanji.charAt(1)
-                        };
+                if (userData.isLunar && window.lunarToSolar) {
+                    const solarDate = window.lunarToSolar(userData.birthYear, userData.birthMonth, userData.birthDay);
+                    if (solarDate) {
+                        targetYear = solarDate.year;
+                        targetMonth = solarDate.month;
+                        targetDay = solarDate.day;
                     }
                 }
                 
-                manseryeokData = {
-                    yearPillar: `${saju.yearPillar.stem || saju.yearPillar.charAt?.(0)}${saju.yearPillar.branch || saju.yearPillar.charAt?.(1)}`,
-                    monthPillar: `${saju.monthPillar.stem || saju.monthPillar.charAt?.(0)}${saju.monthPillar.branch || saju.monthPillar.charAt?.(1)}`,
-                    dayPillar: `${saju.dayPillar.stem || saju.dayPillar.charAt?.(0)}${saju.dayPillar.branch || saju.dayPillar.charAt?.(1)}`,
-                    hourPillar: userData.birthHour ? `${saju.hourPillar.stem || saju.hourPillar.charAt?.(0)}${saju.hourPillar.branch || saju.hourPillar.charAt?.(1)}` : null,
-                    dayMaster: saju.dayPillar?.stem || saju.dayMaster
-                };
+                // API 호출
+                const apiData = await window.manseryeokClient.getDate(
+                    targetYear, 
+                    targetMonth, 
+                    targetDay, 
+                    userData.birthHour
+                );
+                
+                if (apiData) {
+                    manseryeokData = {
+                        yearPillar: apiData.yearGanji,
+                        monthPillar: apiData.monthGanji,
+                        dayPillar: apiData.dayGanji,
+                        hourPillar: apiData.hourGanji || null,
+                        dayMaster: apiData.dayStem
+                    };
+                }
+            } catch (error) {
+                console.error('만세력 데이터 로드 실패:', error);
             }
             
             const today = new Date();
@@ -456,29 +473,40 @@ document.addEventListener('DOMContentLoaded', function() {
             // Display result
             if (resultDiv && fortuneResult) {
                 resultDiv.innerHTML = safeHTML(`
-                    <div class="fortune-result-card">
-                        <h3>${userData.name}님의 오늘의 운세</h3>
-                        <div class="fortune-content">
-                            <div class="fortune-section">
-                                <h4>📅 종합운</h4>
-                                <p>${fortuneResult.general || '오늘은 새로운 기회가 찾아올 수 있는 날입니다.'}</p>
+                    <div class="fortune-result-container">
+                        <div class="fortune-result-card">
+                            <h3>✨ ${userData.name}님의 오늘의 운세 ✨</h3>
+                            <div class="fortune-content">
+                                <div class="fortune-section">
+                                    <h4>📅 종합운</h4>
+                                    <p>${fortuneResult.general || '오늘은 새로운 기회가 찾아올 수 있는 날입니다.'}</p>
+                                </div>
+                                <div class="fortune-section">
+                                    <h4>💕 애정운</h4>
+                                    <p>${fortuneResult.love || '인연과의 만남에 주의를 기울여보세요.'}</p>
+                                </div>
+                                <div class="fortune-section">
+                                    <h4>💰 재물운</h4>
+                                    <p>${fortuneResult.money || '재정적인 결정은 신중하게 하는 것이 좋습니다.'}</p>
+                                </div>
+                                <div class="fortune-section">
+                                    <h4>💼 직장운</h4>
+                                    <p>${fortuneResult.work || '업무에서 좋은 성과를 기대할 수 있습니다.'}</p>
+                                </div>
+                                <div class="fortune-section">
+                                    <h4>🍀 행운의 조언</h4>
+                                    <p>${fortuneResult.advice || '오늘은 긍정적인 마음가짐이 중요합니다.'}</p>
+                                </div>
                             </div>
-                            <div class="fortune-section">
-                                <h4>💕 애정운</h4>
-                                <p>${fortuneResult.love || '인연과의 만남에 주의를 기울여보세요.'}</p>
-                            </div>
-                            <div class="fortune-section">
-                                <h4>💰 재물운</h4>
-                                <p>${fortuneResult.money || '재정적인 결정은 신중하게 하는 것이 좋습니다.'}</p>
-                            </div>
-                            <div class="fortune-section">
-                                <h4>💼 직장운</h4>
-                                <p>${fortuneResult.work || '업무에서 좋은 성과를 기대할 수 있습니다.'}</p>
-                            </div>
-                            <div class="fortune-section">
-                                <h4>🍀 행운의 조언</h4>
-                                <p>${fortuneResult.advice || '오늘은 긍정적인 마음가짐이 중요합니다.'}</p>
-                            </div>
+                        </div>
+                        
+                        <div class="action-buttons">
+                            <button onclick="shareResult('kakao')" class="btn-share">
+                                <span>📱</span> 카카오톡 공유
+                            </button>
+                            <button onclick="location.reload()" class="btn-retry">
+                                <span>🔄</span> 다시 보기
+                            </button>
                         </div>
                     </div>
                 `);

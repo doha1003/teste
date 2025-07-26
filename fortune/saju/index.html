@@ -28,8 +28,8 @@
     <!-- Google AdSense -->
     <!-- Moved to end of body -->
     
-    <!-- 만세력 데이터 먼저 로드 -->
-    <script src="/js/manseryeok-database.js"></script>
+    <!-- 만세력 API 클라이언트 -->
+    <script src="/js/manseryeok-client.js"></script>
     <script src="/js/lunar-calendar-compact.js"></script>
     <script src="/js/saju-calculator.js"></script>
     
@@ -41,6 +41,7 @@
     <link rel="stylesheet" href="/css/pages/saju.css">
     
     <link rel="stylesheet" href="/css/pages/result-detail.css">
+    <link rel="stylesheet" href="/css/fortune-result-cards.css">
 
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
 
@@ -547,11 +548,12 @@ if ('IntersectionObserver' in window) {
             }, 2000);
         }
 
-        function calculateSajuWithManseryeok(year, month, day, hour, isLunar) {
+        async function calculateSajuWithManseryeok(year, month, day, hour, isLunar) {
 
             let saju = window.sajuCalculator.calculateSaju(year, month, day, hour, isLunar);
 
-            if (window.getManseryeokData) {
+            // 만세력 API로 정확한 데이터 가져오기
+            try {
                 let targetYear = year, targetMonth = month, targetDay = day;
 
                 if (isLunar && window.lunarToSolar) {
@@ -563,18 +565,28 @@ if ('IntersectionObserver' in window) {
                     }
                 }
 
-                const manseryeokData = window.getManseryeokData(targetYear, targetMonth, targetDay);
+                const manseryeokData = await window.manseryeokClient.getDate(targetYear, targetMonth, targetDay, hour);
                 if (manseryeokData) {
 
                     saju.dayPillar = {
-                        stem: manseryeokData.dayGanji.charAt(0),
-                        branch: manseryeokData.dayGanji.charAt(1)
+                        stem: manseryeokData.dayStem,
+                        branch: manseryeokData.dayBranch
                     };
 
-                    if (manseryeokData.yearGanji) {
-                        saju.yearPillar = {
-                            stem: manseryeokData.yearGanji.charAt(0),
-                            branch: manseryeokData.yearGanji.charAt(1)
+                    saju.yearPillar = {
+                        stem: manseryeokData.yearStem,
+                        branch: manseryeokData.yearBranch
+                    };
+                    
+                    saju.monthPillar = {
+                        stem: manseryeokData.monthStem,
+                        branch: manseryeokData.monthBranch
+                    };
+                    
+                    if (hour >= 0 && manseryeokData.hourStem) {
+                        saju.hourPillar = {
+                            stem: manseryeokData.hourStem,
+                            branch: manseryeokData.hourBranch
                         };
                     }
 
@@ -594,6 +606,8 @@ if ('IntersectionObserver' in window) {
                         saju.hourPillar.stem, saju.hourPillar.branch
                     ]);
                 }
+            } catch (error) {
+                console.error('만세력 API 오류:', error);
             }
             
             return saju;
@@ -605,7 +619,8 @@ if ('IntersectionObserver' in window) {
             const today = new Date();
             
             const resultHTML = `
-                <div class="saju-result-container">
+                <div class="fortune-result-container">
+                    <div class="fortune-result-card">
                     <h2 class="result-title">${userName}님의 사주팔자 분석 결과</h2>
                     <p class="result-date">분석일: ${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일</p>
                     
@@ -636,22 +651,29 @@ if ('IntersectionObserver' in window) {
                         </div>
                     </div>
                     
-                    <!-- 오행 분석 -->
-                    <div class="element-analysis-section">
-                        <h3>🌟 오행 분석</h3>
-                        <div class="element-bars">
-                            ${Object.entries(interpretation.elements.distribution).map(([element, count]) => `
-                                <div class="element-bar">
-                                    <span class="element-name">${element}</span>
-                                    <div class="bar-container">
-                                        <div class="bar-fill" style="width: ${count * 25}%"></div>
+                    <!-- 오행 분석 카드 -->
+                    <div class="elements-card">
+                        <h3>🌊 오행 분석</h3>
+                        <div class="elements-chart">
+                            ${Object.entries(interpretation.elements.distribution).map(([element, count]) => {
+                                const elementClass = element.includes('목') ? 'wood' : 
+                                                   element.includes('화') ? 'fire' : 
+                                                   element.includes('토') ? 'earth' : 
+                                                   element.includes('금') ? 'metal' : 'water';
+                                return `
+                                    <div class="element-bar ${elementClass}" 
+                                         style="height: ${Math.max(30, count * 40)}px">
+                                        <div class="element-value">${count}</div>
+                                        <div class="element-label">${element}</div>
                                     </div>
-                                    <span class="element-count">${count}</span>
-                                </div>
-                            `).join('')}
+                                `;
+                            }).join('')}
                         </div>
-                        <p class="element-balance">오행 균형도: ${interpretation.elements.balance}</p>
-                        <p class="element-advice">가장 강한 원소는 <strong>${interpretation.elements.dominant}</strong>이며, <strong>${interpretation.elements.lacking}</strong>이 부족합니다.</p>
+                        <div style="margin-top: 40px; padding: 20px; background: #f7f8fc; border-radius: 10px;">
+                            <h4 style="margin-bottom: 10px;">오행 분석</h4>
+                            <p style="margin-bottom: 10px;">오행 균형도: <strong>${interpretation.elements.balance}</strong></p>
+                            <p>가장 강한 원소는 <strong>${interpretation.elements.dominant}</strong>이며, <strong>${interpretation.elements.lacking}</strong>이 부족합니다.</p>
+                        </div>
                     </div>
                     
                     <!-- 성격 분석 -->
@@ -747,10 +769,16 @@ if ('IntersectionObserver' in window) {
                         </div>
                     </div>
                     
-                    <!-- 다시하기 버튼 -->
-                    <button onclick="resetSajuForm()" class="btn btn-secondary mt-30">
-                        🔄 다시 분석하기
-                    </button>
+                    <!-- 액션 버튼 -->
+                    <div class="action-buttons">
+                        <button onclick="shareSajuResult()" class="btn-share">
+                            <span>📱</span> 결과 공유하기
+                        </button>
+                        <button onclick="resetSajuForm()" class="btn-retry">
+                            <span>🔄</span> 다시 분석하기
+                        </button>
+                    </div>
+                    </div>
                 </div>
             `;
             
@@ -761,6 +789,23 @@ if ('IntersectionObserver' in window) {
             document.getElementById('sajuForm').style.display = 'block';
             document.getElementById('sajuResult').style.display = 'none';
             document.getElementById('sajuForm').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function shareSajuResult() {
+            if (window.Kakao) {
+                Kakao.Link.sendDefault({
+                    objectType: 'feed',
+                    content: {
+                        title: '사주팔자 분석 결과',
+                        description: '나의 사주팔자 분석 결과를 확인해보세요!',
+                        imageUrl: 'https://doha.kr/images/saju-og.jpg',
+                        link: {
+                            mobileWebUrl: window.location.href,
+                            webUrl: window.location.href
+                        }
+                    }
+                });
+            }
         }
     </script>
     

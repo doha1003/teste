@@ -35,6 +35,7 @@
     <link rel="stylesheet" href="/css/pages/tarot.css">
     
     <link rel="stylesheet" href="/css/pages/result-detail.css">
+    <link rel="stylesheet" href="/css/fortune-result-cards.css">
 
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
 
@@ -469,7 +470,8 @@ if ('IntersectionObserver' in window) {
             }
             
             resultDiv.innerHTML = safeHTML(`
-                <div class="tarot-result-container">
+                <div class="fortune-result-container">
+                    <div class="fortune-result-card tarot-theme">
                     <h2 class="text-center mb-30">🔮 타로 리딩 결과</h2>
                     
                     <div class="question-display">
@@ -505,9 +507,30 @@ if ('IntersectionObserver' in window) {
                         <button onclick="location.reload()" class="btn btn-secondary">
                             다시 점보기
                         </button>
+                        <button onclick="shareTarotResult()" class="btn-share">
+                            <span>📱</span> 카카오톡 공유
+                        </button>
+                    </div>
                     </div>
                 </div>
             `);
+        }
+        
+        function shareTarotResult() {
+            if (window.Kakao) {
+                Kakao.Link.sendDefault({
+                    objectType: 'feed',
+                    content: {
+                        title: 'AI 타로 점 결과',
+                        description: '나의 타로 카드 결과를 확인해보세요!',
+                        imageUrl: 'https://doha.kr/images/tarot-og.jpg',
+                        link: {
+                            mobileWebUrl: window.location.href,
+                            webUrl: window.location.href
+                        }
+                    }
+                });
+            }
         }
     </script>
     
