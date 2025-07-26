@@ -1,1 +1,85 @@
-<!DOCTYPE html> <html lang="ko"> <head> <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src 'self' https:; script-src 'unsafe-inline' 'self' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'unsafe-inline' 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;"> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>AI 타로 리딩 - AI 운세 | doha.kr</title> <meta name="description" content="질문을 입력하면 AI가 타로 카드를 뽑아 심층적인 해석을 제공합니다."> <meta name="robots" content="index, follow"> <meta name="author" content="doha.kr"> <!-- Security Headers --> <meta http-equiv="X-Content-Type-Options" content="nosniff"> <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin"> <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), accelerometer=(), gyroscope=()"> <!-- Open Graph --> <meta property="og:title" content="AI 타로 리딩 | doha.kr"> <meta property="og:description" content="질문을 입력하면 AI가 타로 카드를 뽑아 심층적인 해석을 제공합니다."> <meta property="og:image" content="https://doha.kr/images/egen-male-card.jpg"> <meta property="og:url" content="https://doha.kr/fortune/tarot/"> <!-- Google Fonts --> <link rel="preconnect" href="https://fonts.googleapis.com"> <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> <link rel="preconnect" crossorigin href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet"> <!-- Google AdSense --> <!-- Moved to end of body --> <!-- 만세력 API 클라이언트 (타로에서도 날짜 관련 기능에 사용) --> <script src="/js/manseryeok-client.js?v=1753565110842"></script> <!-- Optimized CSS System --> <link rel="stylesheet" href="/css/styles-cleaned.css"> <link rel="stylesheet" href="/css/css-cleanup.css"> <link rel="stylesheet" href="/css/inline-style-replacement.css"> <link rel="stylesheet" href="/css/mobile-optimizations.css"> <link rel="stylesheet" href="/css/pages/tarot.css"> <link rel="stylesheet" href="/css/pages/result-detail.css"> <link rel="stylesheet" href="/css/fortune-result-cards.css"> <meta http-equiv="X-Content-Type-Options" content="nosniff"> </head> <body class="fortune-page"> <!-- 네비게이션 바 --> <div id="navbar-placeholder"></div> <!-- 페이지 헤더 --> <section class="page-header"> <div class="container"> <h1 class="page-title fade-in">AI 타로 리딩</h1> <p class="page-subtitle fade-in stagger-1"> AI가 해석하는 신비로운 타로 카드의 메시지 </p> </div> </section> <!-- 타로 리딩 섹션 --> <section class="tarot-section"> <div class="container"> <div id="tarotForm" class="tarot-form"> <!-- 타로 카드 선택 영역 --> <div class="tarot-cards-section" style="display: none;"> <h3>카드를 선택하세요</h3> <div class="tarot-cards"> <!-- 카드가 JavaScript로 생성됩니다 --> </div> </div> <h2 class="text-center mb-32">타로 리딩 시작하기</h2> <div class="form-group"> <label for="question">질문을 입력하세요</label> <textarea id="question" name="question" class="form-control" rows="4" required placeholder="타로에게 묻고 싶은 질문을 구체적으로 적어주세요. 예: 현재 연애 관계가 어떻게 발전할까요?" ></textarea> </div> <div class="form-group"> <label for="spreadType">스프레드 선택</label> <select id="spreadType" name="spreadType" class="form-control"> <option value="oneCard">원 카드 (1장) - 간단한 질문</option> <option value="threeCard">쓰리 카드 (3장) - 과거/현재/미래</option> <option value="celtic">켈틱 크로스 (10장) - 상세한 분석</option> </select> </div> <button type="button" id="startTarotBtn" class="btn btn-primary btn-full-width"> 🔮 타로 리딩 시작 </button> </div> <!-- 타로 결과 영역 --> <div id="tarotResult" class="tarot-result d-none-init"> <!-- 결과가 여기에 표시됩니다 --> </div> </div> </section> <!-- 타로 안내 섹션 --> <section class="info-section"> <div class="container"> <div class="info-box"> <h3>AI 타로 리딩 안내</h3> <ul> <li>타로 카드는 현재 상황에 대한 통찰과 가이드를 제공합니다.</li> <li>질문은 구체적일수록 더 명확한 답변을 받을 수 있습니다.</li> <li>카드의 해석은 참고용이며, 최종 결정은 본인이 내리셔야 합니다.</li> <li>메이저 아르카나 22장을 사용하여 리딩을 진행합니다.</li> <li>AI가 실제로 분석하여 개인화된 해석을 제공합니다.</li> </ul> </div> </div> </section> <!-- 광고 영역 --> <div class="ad-container"> <div class="ad-label">광고</div> <div id="ad-container-ewz82l37p" class="ad-container-min"> <div class="ad-placeholder ad-container-styled"> 광고 로딩 중... </div> </div> </div> <!-- 푸터 --> <div id="footer-placeholder"></div> <!-- External JavaScript --> <script src="/js/main.js?v=1753565110842"></script> <script src="/js/simple-loader.js?v=1753565110842"></script> <script src="/js/api-config.js?v=1753565110842"></script> <!-- AdSense initialization --> <!-- Non-critical scripts moved here for performance --> <!-- Google AdSense 지연 로딩 --> <!-- DOMPurify for XSS protection --> <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js" integrity="sha512-H+rglffZ6f5gF7UJgvH4Naa+fGCgjrHKMgoFOGmcPTRwR6oILo5R+gtzNrpDp7iMV3udbymBVjkeZGNz1Em4rQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> <script src="/js/security-config.js?v=1753565110842"></script> <script src="/js/tarot-fortune-inline.js?v=1753565110842"></script> </body> </html>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 타로 리딩 - 무료 온라인 타로 카드 | doha.kr</title>
+    <meta name="description" content="AI가 해석하는 정확한 타로 리딩. 사랑, 직업, 미래에 대한 질문에 타로 카드가 답해드립니다.">
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" href="/css/styles-cleaned.css">
+    <link rel="stylesheet" href="/css/pages/tarot.css">
+    <link rel="stylesheet" href="/css/fortune-result-cards.css">
+    
+    <!-- DOMPurify -->
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script>
+</head>
+<body class="fortune-page">
+    <!-- 네비게이션 -->
+    <div id="navbar-placeholder"></div>
+    
+    <!-- 페이지 헤더 -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title fade-in">🃏 AI 타로 리딩</h1>
+            <p class="page-subtitle fade-in stagger-1">
+                고민이나 궁금한 점을 물어보세요. AI가 타로 카드로 답을 찾아드립니다.
+            </p>
+        </div>
+    </section>
+    
+    <!-- 타로 입력 폼 -->
+    <section class="fortune-section">
+        <div class="container">
+            <div class="fortune-form-container" id="tarotForm">
+                <h2>질문을 입력해주세요</h2>
+                <form id="tarotFormElement" data-form="true">
+                    <div class="form-group">
+                        <label for="question">질문</label>
+                        <textarea id="question" name="question" class="form-control" rows="4" 
+                                  placeholder="예: 새로운 직장으로의 이직이 좋을까요?" required></textarea>
+                        <small class="form-text">구체적으로 질문할수록 더 정확한 답을 얻을 수 있습니다.</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>스프레드 선택</label>
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="spread" value="oneCard" checked>
+                                <span>원 카드 (간단한 답변)</span>
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="spread" value="threeCard">
+                                <span>쓰리 카드 (과거-현재-미래)</span>
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="spread" value="celtic">
+                                <span>켈틱 크로스 (상세 분석)</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div id="spreadDescription" class="spread-description" style="display: none;"></div>
+                    
+                    <button type="submit" class="btn btn-primary">타로 카드 뽑기</button>
+                </form>
+            </div>
+            
+            <!-- 타로 결과 -->
+            <div id="tarotResult" class="fortune-result" style="display: none;">
+                <!-- 결과가 여기에 표시됩니다 -->
+            </div>
+        </div>
+    </section>
+    
+    <!-- 푸터 -->
+    <div id="footer-placeholder"></div>
+    
+    <!-- JavaScript -->
+    <script src="/js/main.js"></script>
+    <script src="/js/simple-loader.js"></script>
+    <script src="/js/api-config.js"></script>
+    <script src="/js/dom-security.js"></script>
+    <script src="/js/tarot.js"></script>
+</body>
+</html>

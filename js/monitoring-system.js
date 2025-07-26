@@ -244,7 +244,7 @@ class MonitoringSystem {
         if (!this.config.enableManseryeokMonitoring)
             return;
         // 만세력 API 이벤트 리스너 설정
-        document.addEventListener('manseryeok) => {
+        document.addEventListener('manseryeok', (event) => {
             const customEvent = event;
             this.recordManseryeokEvent({
                 action: 'request',

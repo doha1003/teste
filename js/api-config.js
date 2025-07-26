@@ -195,6 +195,10 @@ function getEnvValue(key, fallback) {
  * API 설정 객체
  */
 const API_CONFIG = {
+    // API Keys - Vercel 환경변수에서 주입됨
+    KAKAO_JS_KEY: window.KAKAO_JS_KEY || '',
+    GEMINI_API_KEY: window.GEMINI_API_KEY || '',
+    
     // Gemini API
     gemini: {
         endpoint: 'https://doha-kr-ap.vercel.app/api/fortune',

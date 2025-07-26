@@ -35,7 +35,7 @@ const spreads = {
 
 // 페이지 로드 시 초기화
 document.addEventListener('DOMContentLoaded', function() {
-    const tarotForm = document.getElementById('tarotForm');
+    const tarotForm = document.getElementById('tarotFormElement');
     if (tarotForm) {
         tarotForm.addEventListener('submit', handleTarotReading);
     }
@@ -58,7 +58,7 @@ function updateSpreadDescription(e) {
             desc += `<li>${idx + 1}번째 카드: ${pos}</li>`;
         });
         desc += '</ul>';
-        SecureDOM.setInnerHTML(descDiv, desc);
+        descDiv.innerHTML = desc;
         descDiv.style.display = 'block';
     }
 }
@@ -81,7 +81,7 @@ function showCardSelectionAnimation(spreadType) {
     const spread = spreads[spreadType];
     
     resultDiv.style.display = 'block';
-    SecureDOM.setInnerHTML(resultDiv, `
+    resultDiv.innerHTML = `
         <div class="tarot-animation">
             <h3>카드를 선택해주세요</h3>
             <p>마음을 가다듬고 ${spread.count}장의 카드를 선택하세요.</p>
@@ -110,7 +110,7 @@ function createCardDeck(requiredCards) {
     for (let i = 0; i < 22; i++) {
         const card = document.createElement('div');
         card.className = 'tarot-card card-back';
-        SecureDOM.setInnerHTML(card, '🎴');
+        card.innerHTML = '🎴';
         card.dataset.index = i;
         
         card.addEventListener('click', function() {
@@ -131,7 +131,7 @@ function createCardDeck(requiredCards) {
                 
                 // 애니메이션 후 카드 뒤집기
                 setTimeout(() => {
-                    SecureDOM.setInnerHTML(this, `
+                    this.innerHTML = `
                         <div class="card-content ${isReversed ? 'reversed' : ''}">
                             <div class="card-emoji">${cardData.emoji}</div>
                             <div class="card-name">${cardData.name}</div>
@@ -161,7 +161,7 @@ function updateSelectedCards(selectedCards, requiredCards) {
     
     header.textContent = `선택된 카드 (${selectedCards.length}/${requiredCards})`;
     
-    SecureDOM.setInnerHTML(container, selectedCards.map((card, idx) => `
+    container.innerHTML = selectedCards.map((card, idx) => `
         <div class="mini-card ${card.isReversed ? 'reversed' : ''}">
             <span class="mini-emoji">${card.emoji}</span>
             <span class="mini-name">${card.name}</span>
@@ -178,7 +178,7 @@ async function performReading(selectedCards) {
     const question = document.getElementById('question').value;
     
     // 로딩 표시
-    SecureDOM.setInnerHTML(resultDiv, `
+    resultDiv.innerHTML = `
         <div class="loading">
             <div class="loading-spinner"></div>
             <p>AI가 카드를 해석하고 있습니다...</p>
@@ -187,10 +187,16 @@ async function performReading(selectedCards) {
     
     try {
         // AI API 호출
-        const response = await fetch('https, {
-            method, headers, body, prompt) => `${idx+1}. ${card.name}${card.isReversed ? '(역방향)' : '(정방향)'} - ${spread.positions[idx]}`).join(', ')}
-
-각 카드의 의미를 해석하고 전체적인 메시지를 전달해주세요.`
+        const response = await fetch('https://doha-kr-ap.vercel.app/api/fortune', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                type: 'tarot',
+                question: question,
+                cards: selectedCards.map((card, idx) => `${idx+1}. ${card.name}${card.isReversed ? '(역방향)' : '(정방향)'} - ${spread.positions[idx]}`).join(', '),
+                prompt: `타로 질문: ${question}\n\n뽑은 카드:\n${selectedCards.map((card, idx) => `${idx+1}. ${card.name}${card.isReversed ? '(역방향)' : '(정방향)'} - ${spread.positions[idx]}`).join('\n')}\n\n각 카드의 의미를 해석하고 전체적인 메시지를 전달해주세요.`
             })
         });
         
@@ -419,7 +425,7 @@ function displayTarotResult(interpretation, cards, spread, isAIGenerated = false
         </div>
     `;
     
-    SecureDOM.setInnerHTML(resultDiv, resultHTML);
+    resultDiv.innerHTML = resultHTML;
 }
 
 // 리딩 공유

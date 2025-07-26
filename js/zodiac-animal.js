@@ -236,7 +236,7 @@ function displayAnimalResult(animal, fortuneData, isAIGenerated = false) {
             </div>
             
             <div class="ai-disclaimer">
-                <small>※ 본 운세는 ${isAIGenerated ? 'AI가 실시간으로 분석한' : '전문가가 해석한'} 참고용 정보입니다. doha.kr 독자적인 해석을 제공합니다.</small>
+                <small>※ 본 운세는 ${isAIGenerated ? 'AI가 실시간으로 분석한' : '전문가가 해석한'} 참고용 정보입니다. doha.kr 독자적인 해석을 제공합니다.</small>`
             </div>
         </div>
         
