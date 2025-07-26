@@ -1,3 +1,4 @@
+// Browser-compatible version - no ES6 exports
 /**
  * API 설정 및 보안 관리 모듈 (TypeScript)
  * 안전한 API 호출과 환경별 설정을 관리합니다
@@ -253,7 +254,7 @@ window.initKakao = initKakao;
 /**
  * 타입 안전 API 헬퍼 함수들
  */
-export const apiHelpers = {
+// export const apiHelpers = {
     /**
      * Fortune API 호출
      */
@@ -285,6 +286,6 @@ export const apiHelpers = {
         return apiManager.detectEnvironment();
     }
 };
-export { APIManager, API_CONFIG, SECURITY_CONFIG, apiManager };
-export default apiManager;
+// export { APIManager, API_CONFIG, SECURITY_CONFIG, apiManager };
+// export default apiManager;
 //# sourceMappingURL=api-config.js.map

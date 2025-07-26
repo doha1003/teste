@@ -1,3 +1,4 @@
+// Browser-compatible version - no ES6 exports
 /**
  * JavaScript 번들 최적화 시스템 (TypeScript)
  * 코드 분할, 지연 로딩, Tree Shaking을 통한 성능 최적화
@@ -547,6 +548,6 @@ if (bundleOptimizer['isDevelopmentEnvironment']()) {
         destroy: () => window.BundleOptimizer.destroy()
     };
 }
-export { BundleOptimizer, bundleOptimizer };
-export default bundleOptimizer;
+// export { BundleOptimizer, bundleOptimizer };
+// export default bundleOptimizer;
 //# sourceMappingURL=bundle-optimizer.js.map

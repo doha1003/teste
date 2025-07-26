@@ -1,3 +1,4 @@
+// Browser-compatible version - no ES6 exports
 /**
  * doha.kr 메인 애플리케이션 모듈 (TypeScript)
  * 전체 사이트의 핵심 기능들을 관리하는 TypeScript 버전
@@ -961,5 +962,5 @@ window.formatDate = (date, format) => dohaApp.formatDate(date, format);
 window.formatNumber = (num) => dohaApp.formatNumber(num);
 window.toggleDarkMode = () => dohaApp.toggleDarkMode();
 window.fortuneHelpers = dohaApp.fortuneHelpers;
-export default dohaApp;
+// export default dohaApp;
 //# sourceMappingURL=main.js.map

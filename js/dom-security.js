@@ -1,3 +1,4 @@
+// Browser-compatible version - no ES6 exports
 /**
  * SecureDOM - XSS 방어를 위한 안전한 DOM 조작 래퍼 클래스
  * DOMPurify 기반으로 모든 innerHTML 사용을 안전하게 처리
@@ -531,4 +532,4 @@ document.addEventListener('DOMContentLoaded', () => {
     SecureDOM.init();
 });
 
-export default SecureDOM;
+// export default SecureDOM;

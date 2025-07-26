@@ -1,3 +1,4 @@
+// Browser-compatible version - no ES6 exports
 /**
  * 만세력 API 클라이언트 (TypeScript)
  * 점진적 마이그레이션을 위한 하이브리드 접근법
@@ -369,6 +370,6 @@ if (manseryeokAPI['isDevelopmentEnvironment']()) {
         }
     };
 }
-export { ManseryeokAPIClient, manseryeokAPI };
-export default manseryeokAPI;
+// export { ManseryeokAPIClient, manseryeokAPI };
+// export default manseryeokAPI;
 //# sourceMappingURL=manseryeok-api-client.js.map

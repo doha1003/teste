@@ -1,3 +1,4 @@
+// Browser-compatible version - no ES6 exports
 /**
  * 이미지 최적화 및 지연 로딩 시스템 (TypeScript)
  * 성능 최적화를 위한 포괄적 이미지 관리
@@ -476,6 +477,6 @@ if (imageOptimizer['isDevelopmentEnvironment']()) {
         destroy: () => window.ImageOptimizer.destroy()
     };
 }
-export { ImageOptimizer, imageOptimizer };
-export default imageOptimizer;
+// export { ImageOptimizer, imageOptimizer };
+// export default imageOptimizer;
 //# sourceMappingURL=image-optimizer.js.map
