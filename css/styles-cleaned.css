@@ -469,6 +469,11 @@ a:focus {
     transition: all var(--duration-300) var(--ease-out);
 }
 
+/* Body padding to account for sticky navbar */
+body {
+    padding-top: 72px;
+}
+
 .navbar-container {
     max-width: 1280px;
     margin: 0 auto;
@@ -3058,22 +3063,9 @@ input[type="reset"],
         line-height: 1.6 !important;
     }
     
-    .navbar {
-        padding: 0.5rem 1rem;
-    }
+    /* Removed duplicate navbar styles - see lines 460-480 for main navbar styles */
     
-    .navbar-brand {
-        font-size: 1.2rem;
-    }
-    
-    .navbar-nav {
-        text-align: center;
-    }
-    
-    .navbar-nav .nav-link {
-        padding: 0.75rem 1rem;
-        font-size: 1rem;
-    }
+    /* Removed duplicate nav-link styles - see lines 514-536 for main nav-link styles */
 
     section {
         padding: 3rem 0 !important;
