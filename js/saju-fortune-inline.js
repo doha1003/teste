@@ -38,6 +38,20 @@ window.generateSaju = async function(event) {
     const form = event.target;
     const formData = new FormData(form);
     
+    // safeHTML 함수 가용성 확인
+    if (typeof safeHTML === 'undefined') {
+        console.error('safeHTML function not available');
+        const resultDiv = document.getElementById('sajuResult');
+        if (resultDiv) {
+            resultDiv.classList.remove('d-none-init');
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = '<div class="loading">보안 기능 로딩 중...</div>';
+        }
+        // 잠시 후 다시 시도
+        setTimeout(() => generateSaju(event), 500);
+        return;
+    }
+    
     // 결과 표시 영역
     const resultDiv = document.getElementById('sajuResult');
     if (resultDiv) {
