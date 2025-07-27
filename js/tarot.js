@@ -388,7 +388,8 @@ function displayTarotResult(interpretation, cards, spread, isAIGenerated = false
     const resultDiv = document.getElementById('tarotResult');
     
     let resultHTML = `
-        <div class="tarot-result-wrapper">
+        <div class="fortune-result-container">
+        <div class="fortune-result-card">
             <h3>🔮 타로 리딩 결과</h3>
             
             <div class="spread-layout ${spread.name.replace(/\s+/g, '-').toLowerCase()}">
@@ -422,6 +423,7 @@ function displayTarotResult(interpretation, cards, spread, isAIGenerated = false
                 <button onclick="shareReading()" class="btn btn-share">공유하기</button>
                 <button onclick="newReading()" class="btn btn-primary">새로운 리딩</button>
             </div>
+        </div>
         </div>
     `;
     
