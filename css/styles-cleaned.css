@@ -501,6 +501,14 @@ a:focus {
     gap: var(--space-8);
     list-style: none;
     align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-menu li {
+    margin: 0;
+    padding: 0;
+    white-space: nowrap;
 }
 
 .nav-link {
@@ -595,9 +603,20 @@ a:focus {
         box-shadow: var(--shadow-2xl);
         transform: translateY(-100%);
         transition: transform var(--duration-300) var(--ease-out);
-        gap: var(--space-6);
+        gap: var(--space-4);
         z-index: var(--z-40);
         border-bottom: 1px solid var(--gray-200);
+        align-items: stretch;
+    }
+    
+    .nav-menu li {
+        width: 100%;
+        text-align: center;
+        border-bottom: 1px solid var(--gray-100);
+    }
+    
+    .nav-menu li:last-child {
+        border-bottom: none;
     }
     
     .nav-menu.active {
@@ -610,9 +629,10 @@ a:focus {
     
     .nav-link {
         font-size: 1.125rem;
-        padding: var(--space-3) 0;
+        padding: var(--space-4) var(--space-3);
         text-align: center;
         width: 100%;
+        display: block;
     }
 }
 
@@ -3273,80 +3293,8 @@ a:hover {
 }
 
 /* =========================================================================
-   4. NAVIGATION
+   4. NAVIGATION - Removed duplicate definitions (see lines 460-636)
    ========================================================================= */
-.navbar {
-    background: var(--bg-primary);
-    border-bottom: 1px solid var(--border-color);
-    padding: 1rem 0;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
-
-.nav-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.logo {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--text-primary);
-}
-
-.nav-menu {
-    display: flex;
-    list-style: none;
-    gap: 2rem;
-}
-
-.nav-link {
-    color: var(--text-secondary);
-    font-weight: 500;
-    transition: color 0.2s;
-}
-
-.nav-link:hover {
-    color: var(--primary-color);
-    text-decoration: none;
-}
-
-.nav-toggle {
-    display: none;
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-}
-
-/* Mobile Navigation */
-@media (max-width: 768px) {
-    .nav-menu {
-        position: fixed;
-        left: -100%;
-        top: 70px;
-        flex-direction: column;
-        background-color: var(--bg-primary);
-        width: 100%;
-        text-align: center;
-        transition: 0.3s;
-        box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
-        padding: 2rem 0;
-    }
-
-    .nav-menu.active {
-        left: 0;
-    }
-
-    .nav-toggle {
-        display: block;
-    }
-}
 
 .btn-secondary:hover {
     background: var(--gray-300);
