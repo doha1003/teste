@@ -1,0 +1,77 @@
+{
+  "timestamp": "2025-07-27 17:20:36",
+  "tests": {
+    "text_counter": {
+      "name": "글자수세기",
+      "status": "fail",
+      "details": {
+        "functions": {
+          "handleTextInput": "undefined",
+          "updateCount": "undefined",
+          "clearText": "undefined"
+        },
+        "input": "안녕하세요 Hello 123",
+        "expected_length": 15,
+        "displayed_length": "0",
+        "no_spaces": "0"
+      }
+    },
+    "zodiac_fortune": {
+      "name": "별자리 운세",
+      "status": "pass",
+      "details": {
+        "card_count": 12,
+        "result_shown": true,
+        "result_length": 1107
+      }
+    },
+    "zodiac_animal_fortune": {
+      "name": "띠별 운세",
+      "status": "fail",
+      "details": {
+        "card_count": 12,
+        "result_shown": true,
+        "result_length": 2
+      }
+    },
+    "saju_fortune": {
+      "name": "사주팔자",
+      "status": "fail",
+      "details": {},
+      "error": "Page.fill: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\"#name\")\n"
+    },
+    "console_errors": {
+      "name": "콘솔 에러",
+      "status": "pass",
+      "details": {
+        "pages": {
+          "메인": {
+            "url": "https://doha.kr/",
+            "errors": 0,
+            "error_messages": []
+          },
+          "운세 메인": {
+            "url": "https://doha.kr/fortune/",
+            "errors": 0,
+            "error_messages": []
+          },
+          "심리테스트 메인": {
+            "url": "https://doha.kr/tests/",
+            "errors": 0,
+            "error_messages": []
+          },
+          "실용도구 메인": {
+            "url": "https://doha.kr/tools/",
+            "errors": 0,
+            "error_messages": []
+          }
+        }
+      }
+    }
+  },
+  "summary": {
+    "total": 5,
+    "passed": 2,
+    "failed": 3
+  }
+}

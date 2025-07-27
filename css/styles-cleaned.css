@@ -469,9 +469,22 @@ a:focus {
     transition: all var(--duration-300) var(--ease-out);
 }
 
-/* Body padding to account for sticky navbar */
+/* Body padding to account for sticky navbar - Important to override other definitions */
 body {
-    padding-top: 72px;
+    padding-top: 72px !important;
+}
+
+/* Mobile body padding adjustment - Increased for mobile navbar height */
+@media (max-width: 768px) {
+    body {
+        padding-top: 100px !important; /* Mobile navbar is taller (97px) */
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding-top: 100px !important; /* Mobile navbar is taller (97px) */
+    }
 }
 
 .navbar-container {
