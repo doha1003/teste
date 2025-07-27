@@ -12,4 +12,181 @@
     
     // Initial update
     updateCount();
-}); </script> <!-- Non-critical scripts moved here for performance --> <!-- Google AdSense 지연 로딩 --> <script> window.addEventListener('load', function() { setTimeout(function() { var adsScript = document.createElement('script'); adsScript.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222'; adsScript.crossOrigin = 'anonymous'; adsScript.defer = true; document.head.appendChild(adsScript); }, 2000); }); </script> <script> window.adsenseInitialized = window.adsenseInitialized || false; function initializeAdSense() { if (window.adsenseInitialized) { console.log('AdSense already initialized'); return; } window.adsenseInitialized = true; const adBlocks = document.querySelectorAll('.adsbygoogle'); adBlocks.forEach((ad, index) => { if (!ad.dataset.adsbygoogleStatus) { try { (adsbygoogle = window.adsbygoogle || []).push({}); console.log('AdSense block initialized:', index); } catch (error) { console.warn('AdSense initialization error:', error); } } }); } window.addEventListener('load', function() { setTimeout(initializeAdSense, 1000); }); </script> <script> (function() { 'use strict'; window.__adsenseLoaded = window.__adsenseLoaded || false; window.__adsenseQueue = window.__adsenseQueue || []; function initAdsense() { if (window.__adsenseLoaded) return; const ads = document.querySelectorAll('.adsbygoogle:not([data-adsbygoogle-status])'); if (ads.length === 0) return; if (typeof adsbygoogle === 'undefined') { setTimeout(initAdsense, 500); return; } window.__adsenseLoaded = true; ads.forEach((ad, index) => { try { if (ad.getAttribute('data-adsbygoogle-status')) return; (adsbygoogle = window.adsbygoogle || []).push({}); ad.setAttribute('data-adsbygoogle-status', 'done'); } catch (e) { console.warn('AdSense 초기화 실패:', index, e.message); } }); } if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', function() { setTimeout(initAdsense, 1000); }); } else { setTimeout(initAdsense, 1000); } window.addEventListener('error', function(e) { if (e.message && e.message.includes('adsbygoogle.push() error')) { e.preventDefault(); console.warn('AdSense 중복 초기화 방지됨'); return false; } }, true); })(); </script> <!-- AdSense 중복 방지 최종 버전 --> <script> (function() { 'use strict'; if (window.__adsenseFullyInitialized) return; window.__adsenseFullyInitialized = true; let originalPush = null; function safeInitAds() { const ads = document.querySelectorAll('.adsbygoogle'); if (ads.length === 0) return; if (typeof adsbygoogle === 'undefined') { setTimeout(safeInitAds, 200); return; } if (!originalPush && window.adsbygoogle && window.adsbygoogle.push) { originalPush = window.adsbygoogle.push; window.adsbygoogle.push = function(config) { try { const hasAds = Array.from(document.querySelectorAll('.adsbygoogle')).every(el => el.getAttribute('data-adsbygoogle-status') === 'done' ); if (hasAds) { console.log('모든 광고 슬롯이 이미 채워짐'); return; } return originalPush.call(this, config); } catch (e) { console.warn('AdSense push 차단됨:', e.message); } }; } let initialized = 0; ads.forEach((ad) => { if (!ad.getAttribute('data-adsbygoogle-status')) { try { (adsbygoogle = window.adsbygoogle || []).push({}); initialized++; } catch (e) { } } }); console.log('AdSense 초기화 완료:', initialized, '개 슬롯'); } const errorHandler = function(e) { if (e.message && e.message.includes('adsbygoogle.push() error')) { e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation(); return false; } }; window.addEventListener('error', errorHandler, true); window.addEventListener('unhandledrejection', function(e) { if (e.reason && e.reason.message && e.reason.message.includes('adsbygoogle')) { e.preventDefault(); return false; } }); if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', function() { setTimeout(safeInitAds, 1000); }); } else { setTimeout(safeInitAds, 1000); } })(); </script> <script> // 네비게이션 및 푸터 로드 - main.js의 loadComponents가 실행되지 않은 경우를 위한 폴백 document.addEventListener('DOMContentLoaded', function() { // main.js가 로드되었고 loadComponents 함수가 있는지 확인 if (typeof loadComponents === 'function') { // main.js의 DOMContentLoaded가 이미 실행되었을 수 있으므로 // navbar-placeholder가 비어있으면 다시 실행 const navPlaceholder = document.getElementById('navbar-placeholder'); const footerPlaceholder = document.getElementById('footer-placeholder'); if ((navPlaceholder && !navPlaceholder.innerHTML.trim()) || (footerPlaceholder && !footerPlaceholder.innerHTML.trim())) { console.log('Loading components...'); loadComponents().catch(function(error) { console.error('Failed to load components:', error); }); } } }); </script> </main> </body> </html>
+});
+</script>
+<!-- Non-critical scripts moved here for performance -->
+<!-- Google AdSense 지연 로딩 -->
+<script>
+window.addEventListener('load', function() {
+    setTimeout(function() {
+        var adsScript = document.createElement('script');
+        adsScript.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222';
+        adsScript.crossOrigin = 'anonymous';
+        adsScript.defer = true;
+        document.head.appendChild(adsScript);
+    }, 2000);
+});
+</script>
+<script>
+window.adsenseInitialized = window.adsenseInitialized || false;
+function initializeAdSense() {
+    if (window.adsenseInitialized) {
+        console.log('AdSense already initialized');
+        return;
+    }
+    window.adsenseInitialized = true;
+    const adBlocks = document.querySelectorAll('.adsbygoogle');
+    adBlocks.forEach((ad, index) => {
+        if (!ad.dataset.adsbygoogleStatus) {
+            try {
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                console.log('AdSense block initialized:', index);
+            } catch (error) {
+                console.warn('AdSense initialization error:', error);
+            }
+        }
+    });
+}
+window.addEventListener('load', function() {
+    setTimeout(initializeAdSense, 1000);
+});
+</script>
+<script>
+(function() {
+    'use strict';
+    window.__adsenseLoaded = window.__adsenseLoaded || false;
+    window.__adsenseQueue = window.__adsenseQueue || [];
+    
+    function initAdsense() {
+        if (window.__adsenseLoaded) return;
+        const ads = document.querySelectorAll('.adsbygoogle:not([data-adsbygoogle-status])');
+        if (ads.length === 0) return;
+        if (typeof adsbygoogle === 'undefined') {
+            setTimeout(initAdsense, 500);
+            return;
+        }
+        window.__adsenseLoaded = true;
+        ads.forEach((ad, index) => {
+            try {
+                if (ad.getAttribute('data-adsbygoogle-status')) return;
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                ad.setAttribute('data-adsbygoogle-status', 'done');
+            } catch (e) {
+                console.warn('AdSense 초기화 실패:', index, e.message);
+            }
+        });
+    }
+    
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(initAdsense, 1000);
+        });
+    } else {
+        setTimeout(initAdsense, 1000);
+    }
+    
+    window.addEventListener('error', function(e) {
+        if (e.message && e.message.includes('adsbygoogle.push() error')) {
+            e.preventDefault();
+            console.warn('AdSense 중복 초기화 방지됨');
+            return false;
+        }
+    }, true);
+})();
+</script>
+<!-- AdSense 중복 방지 최종 버전 -->
+<script>
+(function() {
+    'use strict';
+    if (window.__adsenseFullyInitialized) return;
+    window.__adsenseFullyInitialized = true;
+    let originalPush = null;
+    
+    function safeInitAds() {
+        const ads = document.querySelectorAll('.adsbygoogle');
+        if (ads.length === 0) return;
+        
+        if (typeof adsbygoogle === 'undefined') {
+            setTimeout(safeInitAds, 200);
+            return;
+        }
+        
+        if (!originalPush && window.adsbygoogle && window.adsbygoogle.push) {
+            originalPush = window.adsbygoogle.push;
+            window.adsbygoogle.push = function(config) {
+                try {
+                    const hasAds = Array.from(document.querySelectorAll('.adsbygoogle')).every(el => 
+                        el.getAttribute('data-adsbygoogle-status') === 'done'
+                    );
+                    if (hasAds) {
+                        console.log('모든 광고 슬롯이 이미 채워짐');
+                        return;
+                    }
+                    return originalPush.call(this, config);
+                } catch (e) {
+                    console.warn('AdSense push 차단됨:', e.message);
+                }
+            };
+        }
+        
+        let initialized = 0;
+        ads.forEach((ad) => {
+            if (!ad.getAttribute('data-adsbygoogle-status')) {
+                try {
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                    initialized++;
+                } catch (e) {
+                }
+            }
+        });
+        console.log('AdSense 초기화 완료:', initialized, '개 슬롯');
+    }
+    
+    const errorHandler = function(e) {
+        if (e.message && e.message.includes('adsbygoogle.push() error')) {
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            return false;
+        }
+    };
+    
+    window.addEventListener('error', errorHandler, true);
+    window.addEventListener('unhandledrejection', function(e) {
+        if (e.reason && e.reason.message && e.reason.message.includes('adsbygoogle')) {
+            e.preventDefault();
+            return false;
+        }
+    });
+    
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(safeInitAds, 1000);
+        });
+    } else {
+        setTimeout(safeInitAds, 1000);
+    }
+})();
+</script>
+<script>
+// 네비게이션 및 푸터 로드 - main.js의 loadComponents가 실행되지 않은 경우를 위한 폴백
+document.addEventListener('DOMContentLoaded', function() {
+    // main.js가 로드되었고 loadComponents 함수가 있는지 확인
+    if (typeof loadComponents === 'function') {
+        // main.js의 DOMContentLoaded가 이미 실행되었을 수 있으므로
+        // navbar-placeholder가 비어있으면 다시 실행
+        const navPlaceholder = document.getElementById('navbar-placeholder');
+        const footerPlaceholder = document.getElementById('footer-placeholder');
+        if ((navPlaceholder && !navPlaceholder.innerHTML.trim()) ||
+            (footerPlaceholder && !footerPlaceholder.innerHTML.trim())) {
+            console.log('Loading components...');
+            loadComponents().catch(function(error) {
+                console.error('Failed to load components:', error);
+            });
+        }
+    }
+});
+</script>
+</main>
+</body>
+</html>
