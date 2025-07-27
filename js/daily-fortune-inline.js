@@ -93,7 +93,7 @@ function shareResult(platform) {
 
 window.addEventListener('load', function() {
     setTimeout(function() {
-        var adsScript = document.createElement('script');
+        const adsScript = document.createElement('script');
         adsScript.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222';
         adsScript.crossOrigin = 'anonymous';
         adsScript.defer = true;
