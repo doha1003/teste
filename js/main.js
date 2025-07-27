@@ -722,8 +722,11 @@
               if (window.SecureDOM) {
                   window.SecureDOM.setInnerHTML(target, navbarHtml);
               }
-              else {
+              else if (typeof safeHTML === 'function') {
                   target.innerHTML = safeHTML(navbarHtml);
+              }
+              else {
+                  target.innerHTML = navbarHtml;
               }
           }
           else if (componentName === 'footer') {
@@ -785,8 +788,11 @@
               if (window.SecureDOM) {
                   window.SecureDOM.setInnerHTML(target, footerHtml);
               }
-              else {
+              else if (typeof safeHTML === 'function') {
                   target.innerHTML = safeHTML(footerHtml);
+              }
+              else {
+                  target.innerHTML = footerHtml;
               }
           }
       }
