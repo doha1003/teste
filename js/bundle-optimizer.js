@@ -13,11 +13,9 @@
 class BundleOptimizer {
     constructor() {
         this.config = {
-            // 코드 분할 설정
+            // 코드 분할 설정 - main.js, dom-security.js, api-config.js는 HTML에서 이미 로드됨
             criticalModules: [
-                '/js/main.js',
-                '/js/dom-security.js',
-                '/js/api-config.js'
+                // 중복 로딩 방지를 위해 HTML에서 이미 로드되는 스크립트들은 제외
             ],
             // 지연 로딩 모듈
             lazyModules: {
