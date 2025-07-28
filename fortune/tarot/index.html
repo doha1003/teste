@@ -5,16 +5,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI 타로 리딩 - 무료 온라인 타로 카드 | doha.kr</title>
     <meta name="description" content="AI가 해석하는 정확한 타로 리딩. 사랑, 직업, 미래에 대한 질문에 타로 카드가 답해드립니다.">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="doha.kr">
     
-    <!-- External CSS -->
-    <link rel="stylesheet" href="/css/styles-cleaned.css">
-    <link rel="stylesheet" href="/css/pages/tarot.css">
-    <link rel="stylesheet" href="/css/fortune-result-cards.css">
+    <!-- Security Headers -->
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src 'self' https:; script-src 'self' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://cdn.jsdelivr.net; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https: https://doha-kr-ap.vercel.app;">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
     
-    <!-- DOMPurify -->
-    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script>
+    <!-- Open Graph -->
+    <meta property="og:title" content="AI 타로 리딩 - 무료 온라인 타로 | doha.kr">
+    <meta property="og:description" content="AI가 해석하는 정확한 타로 리딩">
+    <meta property="og:image" content="https://doha.kr/images/tarot-og.jpg">
+    <meta property="og:url" content="https://doha.kr/fortune/tarot/">
+    <meta property="og:type" content="website">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://doha.kr/fortune/tarot/">
+    
+    <!-- Preconnect for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">
+    <link rel="dns-prefetch" href="https://developers.kakao.com">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Core CSS (모듈 구조) -->
+    <link rel="stylesheet" href="/css/core/variables.css">
+    <link rel="stylesheet" href="/css/core/reset.css">
+    <link rel="stylesheet" href="/css/core/typography.css">
+    
+    <!-- Layout CSS -->
+    <link rel="stylesheet" href="/css/layout/grid.css">
+    <link rel="stylesheet" href="/css/layout/header.css">
+    <link rel="stylesheet" href="/css/layout/footer.css">
+    
+    <!-- Component CSS -->
+    <link rel="stylesheet" href="/css/components/buttons.css">
+    <link rel="stylesheet" href="/css/components/cards.css">
+    <link rel="stylesheet" href="/css/components/forms.css">
+    <link rel="stylesheet" href="/css/components/result-cards.css">
+    
+    <!-- Feature CSS -->
+    <link rel="stylesheet" href="/css/features/fortune-common.css">
+    <link rel="stylesheet" href="/css/features/fortune-result.css">
+    <link rel="stylesheet" href="/css/features/tarot-specific.css">
+    
+    <!-- Page Data Attributes -->
+    <script>
+        document.documentElement.dataset.page = 'fortune-tarot';
+    </script>
 </head>
-<body class="fortune-page">
+<body class="fortune-page" data-page="fortune-tarot">
     <!-- 네비게이션 -->
     <div id="navbar-placeholder"></div>
     
@@ -33,7 +77,7 @@
         <div class="container">
             <div class="fortune-form-container" id="tarotForm">
                 <h2>질문을 입력해주세요</h2>
-                <form id="tarotFormElement" data-form="true">
+                <form data-form="tarot">
                     <div class="form-group">
                         <label for="question">질문</label>
                         <textarea id="question" name="question" class="form-control" rows="4" 
@@ -66,7 +110,7 @@
             </div>
             
             <!-- 타로 결과 -->
-            <div id="tarotResult" class="fortune-result d-none-init">
+            <div id="tarotResult" class="d-none-init">
                 <!-- 결과가 여기에 표시됩니다 -->
             </div>
         </div>
@@ -75,11 +119,36 @@
     <!-- 푸터 -->
     <div id="footer-placeholder"></div>
     
-    <!-- JavaScript -->
-    <script src="/js/main.js"></script>
-    <script src="/js/simple-loader.js"></script>
+    <!-- Core JavaScript -->
+    <script src="/js/core/common-init.js"></script>
+    <script src="/js/core/service-base.js"></script>
+    
+    <!-- Feature JavaScript -->
     <script src="/js/api-config.js"></script>
-    <script src="/js/dom-security.js"></script>
-    <script src="/js/tarot.js"></script>
+    <script src="/js/features/fortune/fortune-service.js"></script>
+    <script src="/js/features/fortune/tarot-fortune.js"></script>
+    
+    <!-- External SDKs (지연 로딩) -->
+    <script async src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
+    <script async src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js" integrity="sha512-H+rglffZ6f5gF7UJgvH4Naa+fGCgjrHKMgoFOGmcPTRwR6oILo5R+gtzNrpDp7iMV3udbymBVjkeZGNz1Em4rQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "AI 타로 리딩",
+        "url": "https://doha.kr/fortune/tarot/",
+        "applicationCategory": "Entertainment",
+        "operatingSystem": "All",
+        "description": "AI가 해석하는 정확한 타로 리딩 서비스",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "KRW"
+        }
+    }
+    </script>
 </body>
 </html>

@@ -23,22 +23,32 @@
   <link href="https://fonts.googleapis.com" rel="preconnect"/>
   <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
   <link crossorigin="" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-  <!-- Google AdSense -->
-  <!-- Moved to end of body -->
-  <!-- Optimized CSS System -->
-  <link href="/css/styles-cleaned.css" rel="stylesheet"/>
-  <link href="/css/css-cleanup.css" rel="stylesheet"/>
-  <link href="/css/inline-style-replacement.css" rel="stylesheet"/>
-  <link href="/css/mobile-optimizations.css" rel="stylesheet"/>
-  <link href="/css/pages/zodiac.css" rel="stylesheet"/>
-  <link href="/css/pages/result-detail.css" rel="stylesheet"/>
-  <meta content="nosniff" http-equiv="X-Content-Type-Options"/>
-  <script id="performance-monitor">
-   window.addEventListener('load', function() { if (window.performance && window.performance.timing) { const loadTime = window.performance.timing.loadEventEnd - window.performance.timing.navigationStart; if (loadTime > 5000) { console.warn('Page loading is slow:', loadTime + 'ms'); } } });
+  <!-- Core CSS (모듈 구조) -->
+  <link rel="stylesheet" href="/css/core/variables.css">
+  <link rel="stylesheet" href="/css/core/reset.css">
+  <link rel="stylesheet" href="/css/core/typography.css">
+  
+  <!-- Layout CSS -->
+  <link rel="stylesheet" href="/css/layout/grid.css">
+  <link rel="stylesheet" href="/css/layout/header.css">
+  <link rel="stylesheet" href="/css/layout/footer.css">
+  
+  <!-- Component CSS -->
+  <link rel="stylesheet" href="/css/components/buttons.css">
+  <link rel="stylesheet" href="/css/components/cards.css">
+  <link rel="stylesheet" href="/css/components/forms.css">
+  <link rel="stylesheet" href="/css/components/result-cards.css">
+  
+  <!-- Feature CSS -->
+  <link rel="stylesheet" href="/css/features/fortune-common.css">
+  <link rel="stylesheet" href="/css/features/fortune-result.css">
+  
+  <!-- Page Data Attributes -->
+  <script>
+      document.documentElement.dataset.page = 'fortune-zodiac';
   </script>
-  <link href="/css/fortune-result-cards.css" rel="stylesheet"/>
  </head>
- <body class="fortune-page">
+ <body class="fortune-page" data-page="fortune-zodiac">
   <!-- 네비게이션 바 -->
   <div id="navbar-placeholder">
   </div>
@@ -61,7 +71,7 @@
       당신의 별자리를 선택하세요
      </h2>
      <div class="zodiac-grid">
-      <div class="zodiac-card" onclick="selectZodiac('aries')">
+      <div class="zodiac-card" data-zodiac="aries">
        <div class="zodiac-symbol">
         ♈
        </div>
@@ -72,7 +82,7 @@
         3.21 - 4.19
        </div>
       </div>
-      <div class="zodiac-card" onclick="selectZodiac('taurus')">
+      <div class="zodiac-card" data-zodiac="taurus">
        <div class="zodiac-symbol">
         ♉
        </div>
@@ -83,7 +93,7 @@
         4.20 - 5.20
        </div>
       </div>
-      <div class="zodiac-card" onclick="selectZodiac('gemini')">
+      <div class="zodiac-card" data-zodiac="gemini">
        <div class="zodiac-symbol">
         ♊
        </div>
@@ -94,7 +104,7 @@
         5.21 - 6.21
        </div>
       </div>
-      <div class="zodiac-card" onclick="selectZodiac('cancer')">
+      <div class="zodiac-card" data-zodiac="cancer">
        <div class="zodiac-symbol">
         ♋
        </div>
@@ -105,7 +115,7 @@
         6.22 - 7.22
        </div>
       </div>
-      <div class="zodiac-card" onclick="selectZodiac('leo')">
+      <div class="zodiac-card" data-zodiac="leo">
        <div class="zodiac-symbol">
         ♌
        </div>
@@ -116,7 +126,7 @@
         7.23 - 8.22
        </div>
       </div>
-      <div class="zodiac-card" onclick="selectZodiac('virgo')">
+      <div class="zodiac-card" data-zodiac="virgo">
        <div class="zodiac-symbol">
         ♍
        </div>
@@ -127,7 +137,7 @@
         8.23 - 9.22
        </div>
       </div>
-      <div class="zodiac-card" onclick="selectZodiac('libra')">
+      <div class="zodiac-card" data-zodiac="libra">
        <div class="zodiac-symbol">
         ♎
        </div>
@@ -138,7 +148,7 @@
         9.23 - 10.22
        </div>
       </div>
-      <div class="zodiac-card" onclick="selectZodiac('scorpio')">
+      <div class="zodiac-card" data-zodiac="scorpio">
        <div class="zodiac-symbol">
         ♏
        </div>
@@ -149,7 +159,7 @@
         10.23 - 11.22
        </div>
       </div>
-      <div class="zodiac-card" onclick="selectZodiac('sagittarius')">
+      <div class="zodiac-card" data-zodiac="sagittarius">
        <div class="zodiac-symbol">
         ♐
        </div>
@@ -160,7 +170,7 @@
         11.23 - 12.21
        </div>
       </div>
-      <div class="zodiac-card" onclick="selectZodiac('capricorn')">
+      <div class="zodiac-card" data-zodiac="capricorn">
        <div class="zodiac-symbol">
         ♑
        </div>
@@ -171,7 +181,7 @@
         12.22 - 1.19
        </div>
       </div>
-      <div class="zodiac-card" onclick="selectZodiac('aquarius')">
+      <div class="zodiac-card" data-zodiac="aquarius">
        <div class="zodiac-symbol">
         ♒
        </div>
@@ -182,7 +192,7 @@
         1.20 - 2.18
        </div>
       </div>
-      <div class="zodiac-card" onclick="selectZodiac('pisces')">
+      <div class="zodiac-card" data-zodiac="pisces">
        <div class="zodiac-symbol">
         ♓
        </div>
@@ -233,46 +243,46 @@
    <div class="ad-label">
     광고
    </div>
-   <div class="ad-container-min" id="ad-container-zn06v1879">
+   <div id="ad-container-zn06v1879" class="ad-container-min" data-ad-slot="2789891628">
     <div class="ad-placeholder ad-container-styled">
      광고 로딩 중...
     </div>
    </div>
-   <script>
-    if ('IntersectionObserver' in window) { const adObserver = new IntersectionObserver(function(entries) { entries.forEach(function(entry) { if (entry.isIntersecting) { const container = entry.target; container.innerHTML = `<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-7905640648499222" data-ad-slot="2789891628" data-ad-format="auto" data-full-width-responsive="true"></ins>`; if (typeof adsbygoogle !== 'undefined') { (adsbygoogle = window.adsbygoogle || []).push({}); } adObserver.unobserve(container); } }); }, { rootMargin: '50px' }); const adContainer = document.getElementById('ad-container-zn06v1879'); if (adContainer) { adObserver.observe(adContainer); } }
-   </script>
   </div>
   <!-- 푸터 -->
   <div id="footer-placeholder">
   </div>
-  <!-- External JavaScript -->
-  <script src="/js/api-config.js?v=1753565110842">
-  </script>
-  <script src="/js/main.js?v=1753565110842">
-  </script>
-  <script src="/js/simple-loader.js?v=1753565110842">
-  </script>
-  <script src="/js/gemini-api.js?v=1753565110842">
-  </script>
-  <!-- 카카오 초기화 -->
-  <script>
-   if (typeof Kakao !== 'undefined' && window.API_CONFIG) { try { if (!Kakao.isInitialized()) { Kakao.init(window.API_CONFIG.KAKAO_JS_KEY); } } catch (error) { console.warn('카카오 초기화 오류:', error); } }
-  </script>
-  <script src="/js/zodiac.js?v=1753565110842">
-  </script>
-  <!-- AdSense initialization -->
-  <!-- Non-critical scripts moved here for performance -->
-  <!-- Google AdSense 지연 로딩 -->
-  <script>
-   window.addEventListener('load', function() { setTimeout(function() { var adsScript = document.createElement('script'); adsScript.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222'; adsScript.crossOrigin = 'anonymous'; adsScript.defer = true; document.head.appendChild(adsScript); }, 2000); });
-  </script>
-  <script>
-   // 네비게이션 및 푸터 로드 - main.js의 loadComponents가 실행되지 않은 경우를 위한 폴백 document.addEventListener('DOMContentLoaded', function() { // main.js가 로드되었고 loadComponents 함수가 있는지 확인 if (typeof loadComponents === 'function') { // main.js의 DOMContentLoaded가 이미 실행되었을 수 있으므로 // navbar-placeholder가 비어있으면 다시 실행 const navPlaceholder = document.getElementById('navbar-placeholder'); const footerPlaceholder = document.getElementById('footer-placeholder'); if ((navPlaceholder && !navPlaceholder.innerHTML.trim()) || (footerPlaceholder && !footerPlaceholder.innerHTML.trim())) { console.log('Loading components...'); loadComponents().catch(function(error) { console.error('Failed to load components:', error); }); } } });
-  </script>
-  <!-- DOMPurify for XSS protection -->
-  <script crossorigin="anonymous" integrity="sha512-H+rglffZ6f5gF7UJgvH4Naa+fGCgjrHKMgoFOGmcPTRwR6oILo5R+gtzNrpDp7iMV3udbymBVjkeZGNz1Em4rQ==" referrerpolicy="no-referrer" src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js">
-  </script>
-  <script src="/js/security-config.js?v=1753565110842">
+  <!-- Core JavaScript -->
+  <script src="/js/core/common-init.js"></script>
+  <script src="/js/core/service-base.js"></script>
+  
+  <!-- Feature JavaScript -->
+  <script src="/js/api-config.js"></script>
+  <script src="/js/gemini-api.js"></script>
+  <script src="/js/features/fortune/fortune-service.js"></script>
+  <script src="/js/features/fortune/zodiac-fortune.js"></script>
+  
+  <!-- External SDKs (지연 로딩) -->
+  <script async src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js"></script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
+  <script async src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js" integrity="sha512-H+rglffZ6f5gF7UJgvH4Naa+fGCgjrHKMgoFOGmcPTRwR6oILo5R+gtzNrpDp7iMV3udbymBVjkeZGNz1Em4rQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "별자리 운세",
+      "url": "https://doha.kr/fortune/zodiac/",
+      "applicationCategory": "Entertainment",
+      "operatingSystem": "All",
+      "description": "12개 별자리별 AI 운세 분석 서비스",
+      "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "KRW"
+      }
+  }
   </script>
  </body>
 </html>

@@ -1,0 +1,497 @@
+/**
+ * Teto-Egen Test Specific Styles
+ * 테토-에겐 성격 테스트 전용 스타일
+ */
+
+/* 테토-에겐 테스트 컨테이너 */
+.teto-egen-container {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+/* 성별 선택 화면 */
+.gender-selection {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 60px 40px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.gender-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--gray-800);
+    margin-bottom: 15px;
+}
+
+.gender-subtitle {
+    font-size: 1.1rem;
+    color: var(--gray-600);
+    margin-bottom: 40px;
+}
+
+.gender-options {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.gender-card {
+    background: var(--gray-50);
+    border: 3px solid transparent;
+    border-radius: 20px;
+    padding: 40px 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.gender-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, var(--primary-light) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.gender-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.gender-card:hover::before {
+    opacity: 0.5;
+}
+
+.gender-card.selected {
+    background: var(--primary-light);
+    border-color: var(--primary-color);
+    transform: scale(1.05);
+}
+
+.gender-icon {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.1));
+}
+
+.gender-label {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--gray-800);
+}
+
+/* 테스트 질문 카드 */
+.teto-question-card {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    margin-bottom: 30px;
+}
+
+/* 진행률 표시 */
+.progress-header {
+    margin-bottom: 30px;
+}
+
+.progress-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.progress-count {
+    font-size: 0.9rem;
+    color: var(--gray-600);
+}
+
+.progress-percentage {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.progress-visual {
+    height: 10px;
+    background: var(--gray-200);
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #ff6b6b, #ffd93d);
+    border-radius: 5px;
+    transition: width 0.5s ease;
+    position: relative;
+}
+
+.progress-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* 질문 영역 */
+.question-content {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.question-category {
+    display: inline-block;
+    background: var(--primary-light);
+    color: var(--primary-color);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.question-text {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--gray-800);
+    line-height: 1.6;
+}
+
+/* 답변 선택지 */
+.answer-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.answer-box {
+    background: var(--gray-50);
+    border: 2px solid var(--gray-200);
+    border-radius: 15px;
+    padding: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.answer-box:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.answer-box.selected {
+    background: var(--primary-light);
+    border-color: var(--primary-color);
+}
+
+.answer-emoji {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    display: block;
+}
+
+.answer-text {
+    font-size: 1.1rem;
+    color: var(--gray-700);
+    line-height: 1.5;
+}
+
+/* 테토-에겐 결과 화면 */
+.teto-result {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+/* 결과 타입 표시 */
+.result-type-section {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ffd93d 100%);
+    color: white;
+    padding: 50px 40px;
+    text-align: center;
+    position: relative;
+}
+
+.result-type-section::before {
+    content: '';
+    position: absolute;
+    bottom: -50px;
+    left: 0;
+    right: 0;
+    height: 100px;
+    background: white;
+    border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+}
+
+.result-emoji {
+    font-size: 5rem;
+    margin-bottom: 20px;
+    filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.2));
+    animation: bounce 2s ease-in-out infinite;
+}
+
+.result-type-name {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+    text-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.result-subtitle {
+    font-size: 1.2rem;
+    opacity: 0.95;
+}
+
+/* 성격 분석 */
+.personality-analysis {
+    padding: 60px 40px 40px;
+    position: relative;
+    z-index: 1;
+}
+
+.analysis-grid {
+    display: grid;
+    gap: 30px;
+}
+
+.analysis-card {
+    background: var(--gray-50);
+    border-radius: 15px;
+    padding: 30px;
+    position: relative;
+    overflow: hidden;
+}
+
+.analysis-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5px;
+    height: 100%;
+    background: linear-gradient(180deg, #ff6b6b, #ffd93d);
+}
+
+.analysis-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--gray-800);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.analysis-icon {
+    font-size: 1.5rem;
+}
+
+.analysis-content {
+    color: var(--gray-700);
+    line-height: 1.8;
+}
+
+.trait-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 15px;
+}
+
+.trait-list li {
+    padding: 8px 0;
+    padding-left: 25px;
+    position: relative;
+}
+
+.trait-list li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+/* 관계 매칭 */
+.relationship-section {
+    background: var(--gray-50);
+    padding: 40px;
+}
+
+.relationship-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--gray-800);
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.match-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.match-card {
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.match-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.match-emoji {
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
+
+.match-type {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--gray-800);
+    margin-bottom: 10px;
+}
+
+.match-score {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.score-hearts {
+    color: #ff6b6b;
+    font-size: 1.2rem;
+}
+
+.match-description {
+    font-size: 0.9rem;
+    color: var(--gray-600);
+    line-height: 1.5;
+}
+
+/* 조언 카드 */
+.advice-cards {
+    padding: 40px;
+    display: grid;
+    gap: 20px;
+}
+
+.advice-card {
+    background: linear-gradient(135deg, var(--primary-light), var(--primary-lighter));
+    border-radius: 15px;
+    padding: 25px;
+    position: relative;
+}
+
+.advice-card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--primary-dark);
+    margin-bottom: 15px;
+}
+
+.advice-card-content {
+    color: var(--gray-700);
+    line-height: 1.7;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .teto-egen-container {
+        padding: 0 15px;
+    }
+    
+    .gender-selection {
+        padding: 40px 30px;
+    }
+    
+    .gender-options {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .gender-card {
+        padding: 30px;
+    }
+    
+    .teto-question-card {
+        padding: 30px 20px;
+    }
+    
+    .question-text {
+        font-size: 1.3rem;
+    }
+    
+    .answer-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .result-type-section {
+        padding: 40px 30px;
+    }
+    
+    .result-type-name {
+        font-size: 2rem;
+    }
+    
+    .personality-analysis {
+        padding: 50px 30px 30px;
+    }
+    
+    .match-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .gender-title {
+        font-size: 1.5rem;
+    }
+    
+    .answer-box {
+        padding: 20px;
+    }
+    
+    .answer-emoji {
+        font-size: 2rem;
+    }
+    
+    .answer-text {
+        font-size: 1rem;
+    }
+    
+    .analysis-card {
+        padding: 20px;
+    }
+    
+    .relationship-section,
+    .advice-cards {
+        padding: 30px 20px;
+    }
+}

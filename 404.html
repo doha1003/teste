@@ -1,1 +1,171 @@
-<!DOCTYPE html> <html lang="ko"> <head> <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src 'self' https:; script-src 'unsafe-inline' 'self' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'unsafe-inline' 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;"> window.addEventListener('load', function() { if (window.performance && window.performance.timing) { const loadTime = window.performance.timing.loadEventEnd - window.performance.timing.navigationStart; console.log('페이지 로딩 시간:', loadTime + 'ms'); if (loadTime > 10000) { console.warn('페이지 로딩이 느립니다:', loadTime + 'ms'); } const resources = performance.getEntriesByType('resource'); const slowResources = resources.filter(r => r.duration > 1000); if (slowResources.length > 0) { console.warn('느린 리소스들:', slowResources.map(r => ({ name: r.name, duration: r.duration }))); } } }); window.addEventListener('securitypolicyviolation', function(e) { console.warn('CSP 위반 감지:', { directive: e.violatedDirective, source: e.sourceFile, line: e.lineNumber }); }); </script> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>404 - 페이지를 찾을 수 없습니다 | doha.kr</title> <meta name="description" content="요청하신 페이지를 찾을 수 없습니다. doha.kr의 심리테스트, 실용도구, AI운세 서비스를 이용해보세요."> <meta name="robots" content="noindex, nofollow"> <!-- Security Headers --> <meta http-equiv="X-Content-Type-Options" content="nosniff"> <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin"> <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), accelerometer=(), gyroscope=()"> <!-- Canonical URL --> <link rel="canonical" href="https://doha.kr/404.html"> <!-- Google AdSense --> <!-- Moved to end of body --> <!-- Optimized CSS System --> <link rel="stylesheet" href="/css/styles-cleaned.css"> <link rel="stylesheet" href="/css/pages/404.css"> <meta http-equiv="X-Content-Type-Options" content="nosniff"> <script id="performance-monitor"> window.addEventListener('load', function() { if (window.performance && window.performance.timing) { const loadTime = window.performance.timing.loadEventEnd - window.performance.timing.navigationStart; if (loadTime > 5000) { console.warn('Page loading is slow:', loadTime + 'ms'); } } }); </script> </head> <body> <!-- 네비게이션 --> <div id="navbar-placeholder"></div> <main class="error-main"> <div class="error-container"> <div class="error-illustration"></div> <h1>404</h1> <h2>페이지를 찾을 수 없습니다</h2> <p>요청하신 페이지가 존재하지 않거나 이동되었습니다.</p> <div class="error-actions"> <a href="/" class="btn btn-primary">홈으로 돌아가기</a> <a href="/tests/" class="btn btn-secondary">인기 테스트 보기</a> </div> <!-- 광고 영역 --> <div style="margin-top: 40px; max-width: 600px; width: 100%;"> <div style="font-size: 12px; color: rgba(255,255,255,0.7); margin-bottom: 8px;">광고</div> <div id="ad-container-g0o7mx6io" style="min-height: 100px;"> <div class="ad-placeholder" style="display: flex; align-items: center; justify-content: center; background: #f5f5f5; min-height: 100px; color: #999;"> 광고 로딩 중... </div> </div> <script> if ('IntersectionObserver' in window) { const adObserver = new IntersectionObserver(function(entries) { entries.forEach(function(entry) { if (entry.isIntersecting) { const container = entry.target; container.innerHTML = `<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-7905640648499222" data-ad-slot="3911401606" data-ad-format="auto" data-full-width-responsive="true"></ins>`; if (typeof adsbygoogle !== 'undefined') { (adsbygoogle = window.adsbygoogle || []).push({}); } adObserver.unobserve(container); } }); }, { rootMargin: '50px' }); const adContainer = document.getElementById('ad-container-g0o7mx6io'); if (adContainer) { adObserver.observe(adContainer); } } </script> </div> </div> <!-- AdSense initialization --> <!-- Core JavaScript -->  <script src="/js/simple-loader.js?v=1753565110842"></script> <script src="/js/api-config.js?v=1753565110842"></script> <!-- Non-critical scripts moved here for performance --> <!-- Google AdSense 지연 로딩 --> <script> window.addEventListener('load', function() { setTimeout(function() { var adsScript = document.createElement('script'); adsScript.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222'; adsScript.crossOrigin = 'anonymous'; adsScript.defer = true; document.head.appendChild(adsScript); }, 2000); }); </script> <script> window.adsenseInitialized = window.adsenseInitialized || false; function initializeAdSense() { if (window.adsenseInitialized) { console.log('AdSense already initialized'); return; } window.adsenseInitialized = true; const adBlocks = document.querySelectorAll('.adsbygoogle'); adBlocks.forEach((ad, index) => { if (!ad.dataset.adsbygoogleStatus) { try { (adsbygoogle = window.adsbygoogle || []).push({}); console.log('AdSense block initialized:', index); } catch (error) { console.warn('AdSense initialization error:', error); } } }); } window.addEventListener('load', function() { setTimeout(initializeAdSense, 1000); }); </script> <script> (function() { 'use strict'; window.__adsenseLoaded = window.__adsenseLoaded || false; window.__adsenseQueue = window.__adsenseQueue || []; function initAdsense() { if (window.__adsenseLoaded) return; const ads = document.querySelectorAll('.adsbygoogle:not([data-adsbygoogle-status])'); if (ads.length === 0) return; if (typeof adsbygoogle === 'undefined') { setTimeout(initAdsense, 500); return; } window.__adsenseLoaded = true; ads.forEach((ad, index) => { try { if (ad.getAttribute('data-adsbygoogle-status')) return; (adsbygoogle = window.adsbygoogle || []).push({}); ad.setAttribute('data-adsbygoogle-status', 'done'); } catch (e) { console.warn('AdSense 초기화 실패:', index, e.message); } }); } if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', function() { setTimeout(initAdsense, 1000); }); } else { setTimeout(initAdsense, 1000); } window.addEventListener('error', function(e) { if (e.message && e.message.includes('adsbygoogle.push() error')) { e.preventDefault(); console.warn('AdSense 중복 초기화 방지됨'); return false; } }, true); })(); </script> <!-- AdSense 통합 초기화 --> <script> (function() { 'use strict'; window.__adsInitialized = false; function initializeAds() { if (window.__adsInitialized) return; const ads = document.querySelectorAll('.adsbygoogle:not([data-adsbygoogle-status])'); if (ads.length === 0) return; if (typeof adsbygoogle === 'undefined') { setTimeout(initializeAds, 100); return; } window.__adsInitialized = true; ads.forEach((ad) => { try { (adsbygoogle = window.adsbygoogle || []).push({}); ad.setAttribute('data-adsbygoogle-status', 'done'); } catch (e) { } }); } if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', function() { setTimeout(initializeAds, 500); }); } else { setTimeout(initializeAds, 500); } window.addEventListener('error', function(e) { if (e.message && e.message.includes('adsbygoogle.push() error')) { e.preventDefault(); e.stopPropagation(); return false; } }, true); })(); </script> </main> <!-- 푸터 --> <div id="footer-placeholder"></div> <!-- 네비게이션과 푸터 로드 --> <script src="/js/main.js?v=1753565110842"></script> <!-- DOMPurify for XSS protection --> <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js" integrity="sha512-H+rglffZ6f5gF7UJgvH4Naa+fGCgjrHKMgoFOGmcPTRwR6oILo5R+gtzNrpDp7iMV3udbymBVjkeZGNz1Em4rQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> <script src="/js/security-config.js?v=1753565110842"></script> </body> </html>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src 'self' https:; script-src 'unsafe-inline' 'self' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; style-src 'unsafe-inline' 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - 페이지를 찾을 수 없습니다 | doha.kr</title>
+    <meta name="description" content="요청하신 페이지를 찾을 수 없습니다. doha.kr의 심리테스트, 실용도구, AI운세 서비스를 이용해보세요.">
+    <meta name="keywords" content="404, 페이지 없음, 오류, doha.kr">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="author" content="doha.kr">
+    
+    <!-- Security Headers -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), accelerometer=(), gyroscope=()">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://doha.kr/404.html">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="404 - 페이지를 찾을 수 없습니다">
+    <meta property="og:description" content="요청하신 페이지를 찾을 수 없습니다. doha.kr 홈페이지로 돌아가세요.">
+    <meta property="og:image" content="https://doha.kr/images/404-og.jpg">
+    <meta property="og:url" content="https://doha.kr/404.html">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ko_KR">
+    <meta property="og:site_name" content="doha.kr">
+    
+    <!-- 파비콘 -->
+    <link rel="icon" type="image/svg+xml" href="/images/logo.svg">
+    <link rel="apple-touch-icon" href="/images/android-chrome-192x192.png">
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- 폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" crossorigin href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Core CSS (모듈 구조) -->
+    <link rel="stylesheet" href="/css/core/variables.css">
+    <link rel="stylesheet" href="/css/core/reset.css">
+    <link rel="stylesheet" href="/css/core/typography.css">
+    
+    <!-- Layout CSS -->
+    <link rel="stylesheet" href="/css/layout/grid.css">
+    <link rel="stylesheet" href="/css/layout/header.css">
+    <link rel="stylesheet" href="/css/layout/footer.css">
+    
+    <!-- Component CSS -->
+    <link rel="stylesheet" href="/css/components/buttons.css">
+    <link rel="stylesheet" href="/css/components/cards.css">
+    <link rel="stylesheet" href="/css/components/animations.css">
+    
+    <!-- Page Specific CSS -->
+    <link rel="stylesheet" href="/css/pages/404.css">
+    
+    <!-- Page Data Attributes -->
+    <script>
+        document.documentElement.dataset.page = '404';
+    </script>
+</head>
+<body class="error-page" data-page="404">
+    <main class="page-main">
+        <!-- 네비게이션 -->
+        <div id="navbar-placeholder"></div>
+        
+        <!-- 404 에러 섹션 -->
+        <section class="error-container">
+            <div class="error-content">
+                <!-- 404 일러스트 -->
+                <div class="error-illustration fade-in">
+                    <div class="error-number">404</div>
+                    <div class="error-emoji">😵</div>
+                </div>
+                
+                <!-- 에러 메시지 -->
+                <div class="error-message fade-in stagger-1">
+                    <h1 class="error-title">페이지를 찾을 수 없습니다</h1>
+                    <p class="error-description">
+                        요청하신 페이지가 존재하지 않거나 이동되었습니다.<br>
+                        URL을 다시 확인하시거나 아래 버튼을 통해 다른 페이지로 이동해보세요.
+                    </p>
+                </div>
+                
+                <!-- 액션 버튼들 -->
+                <div class="error-actions fade-in stagger-2">
+                    <a href="/" class="btn btn-primary" data-action="home">
+                        <span>🏠</span> 홈으로 돌아가기
+                    </a>
+                    <a href="/tests/" class="btn btn-secondary" data-action="tests">
+                        <span>🧠</span> 인기 테스트 보기
+                    </a>
+                    <a href="/fortune/" class="btn btn-secondary" data-action="fortune">
+                        <span>🔮</span> 운세 보러가기
+                    </a>
+                </div>
+                
+                <!-- 인기 링크 -->
+                <div class="popular-links fade-in stagger-3">
+                    <h2>인기 페이지</h2>
+                    <div class="popular-links-grid">
+                        <a href="/tests/mbti/" class="popular-link" data-link="mbti">
+                            <span class="popular-link-emoji">🧠</span>
+                            <span class="popular-link-text">MBTI 테스트</span>
+                        </a>
+                        <a href="/tests/teto-egen/" class="popular-link" data-link="teto-egen">
+                            <span class="popular-link-emoji">😊</span>
+                            <span class="popular-link-text">테토-에겐 테스트</span>
+                        </a>
+                        <a href="/fortune/tarot/" class="popular-link" data-link="tarot">
+                            <span class="popular-link-emoji">🔮</span>
+                            <span class="popular-link-text">타로 운세</span>
+                        </a>
+                        <a href="/tools/text-counter.html" class="popular-link" data-link="text-counter">
+                            <span class="popular-link-emoji">📝</span>
+                            <span class="popular-link-text">글자수 세기</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 광고 영역 -->
+        <div class="ad-container">
+            <div class="ad-label">광고</div>
+            <div id="ad-container-404-1" class="ad-container-min" data-ad-slot="3911401606">
+                <div class="ad-placeholder ad-container-styled">
+                    광고 로딩 중...
+                </div>
+            </div>
+        </div>
+        
+        <!-- 푸터 -->
+        <div id="footer-placeholder"></div>
+    </main>
+    
+    <!-- Core JavaScript -->
+    <script src="/js/core/common-init.js"></script>
+    
+    <!-- Page JavaScript -->
+    <script src="/js/pages/404.js"></script>
+    
+    <!-- External SDKs (지연 로딩) -->
+    <script async src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
+    <script async src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js" integrity="sha512-H+rglffZ6f5gF7UJgvH4Naa+fGCgjrHKMgoFOGmcPTRwR6oILo5R+gtzNrpDp7iMV3udbymBVjkeZGNz1Em4rQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "404 - 페이지를 찾을 수 없습니다",
+        "description": "요청하신 페이지를 찾을 수 없습니다. doha.kr의 다른 서비스를 이용해보세요.",
+        "url": "https://doha.kr/404.html",
+        "inLanguage": "ko-KR",
+        "isPartOf": {
+            "@type": "WebSite",
+            "name": "doha.kr",
+            "url": "https://doha.kr"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "doha.kr",
+            "url": "https://doha.kr"
+        }
+    }
+    </script>
+</body>
+</html>

@@ -1,0 +1,193 @@
+/* =========================================================================
+   Button Components - 통합 및 정리된 버전
+   ========================================================================= */
+
+/* Base Button Styles */
+.btn {
+    display: inline-block;
+    padding: var(--spacing-3) var(--spacing-6);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    line-height: var(--line-height-normal);
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none;
+    border: 1px solid transparent;
+    border-radius: var(--radius-lg);
+    transition: all var(--transition-base);
+    
+    /* Mobile touch optimization */
+    min-height: 44px;
+    min-width: 88px;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn:active {
+    transform: translateY(0);
+    box-shadow: var(--shadow-sm);
+}
+
+.btn:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+.btn:disabled,
+.btn.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Button Variants */
+.btn-primary {
+    color: var(--color-white);
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.btn-primary:hover {
+    background-color: var(--color-primary-dark);
+    border-color: var(--color-primary-dark);
+}
+
+.btn-secondary {
+    color: var(--color-white);
+    background-color: var(--color-secondary);
+    border-color: var(--color-secondary);
+}
+
+.btn-secondary:hover {
+    background-color: var(--color-secondary-dark);
+    border-color: var(--color-secondary-dark);
+}
+
+.btn-success {
+    color: var(--color-white);
+    background-color: var(--color-success);
+    border-color: var(--color-success);
+}
+
+.btn-danger {
+    color: var(--color-white);
+    background-color: var(--color-danger);
+    border-color: var(--color-danger);
+}
+
+.btn-outline {
+    color: var(--color-primary);
+    background-color: transparent;
+    border-color: var(--color-primary);
+}
+
+.btn-outline:hover {
+    color: var(--color-white);
+    background-color: var(--color-primary);
+}
+
+/* Button Sizes */
+.btn-sm {
+    padding: var(--spacing-2) var(--spacing-4);
+    font-size: var(--font-size-sm);
+    min-height: 36px;
+}
+
+.btn-lg {
+    padding: var(--spacing-4) var(--spacing-8);
+    font-size: var(--font-size-lg);
+    min-height: 52px;
+}
+
+/* Full Width Button */
+.btn-block {
+    display: block;
+    width: 100%;
+}
+
+/* Special Purpose Buttons */
+.btn-cta {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    color: var(--color-white);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    padding: var(--spacing-4) var(--spacing-8);
+    box-shadow: var(--shadow-lg);
+}
+
+.btn-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-xl);
+}
+
+/* Share Buttons */
+.share-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    padding: var(--spacing-2) var(--spacing-4);
+    background-color: #fee500;
+    color: #3c1e1e;
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+}
+
+.share-btn:hover {
+    background-color: #fdd835;
+    text-decoration: none;
+}
+
+.share-btn-kakao {
+    background-color: #fee500;
+}
+
+.share-btn-facebook {
+    background-color: #1877f2;
+    color: var(--color-white);
+}
+
+.share-btn-twitter {
+    background-color: #1da1f2;
+    color: var(--color-white);
+}
+
+/* Button Groups */
+.btn-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-3);
+    margin-top: var(--spacing-4);
+}
+
+.btn-group-center {
+    justify-content: center;
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+    .btn {
+        font-size: var(--font-size-base);
+        padding: var(--spacing-3) var(--spacing-5);
+        width: 100%;
+        max-width: 300px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .btn-group {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .btn-group .btn {
+        width: 100%;
+        max-width: 300px;
+    }
+}

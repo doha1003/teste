@@ -1,0 +1,210 @@
+/**
+ * Test Result Common Styles
+ * 모든 테스트 결과 페이지에서 사용하는 공통 스타일
+ */
+
+/* 테스트 결과 컨테이너 */
+.test-result-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* 결과 카드 기본 스타일 */
+.test-result-card {
+    background: var(--white);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+/* 결과 타입 표시 */
+.test-result-type {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+.test-result-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--gray-800);
+    margin-bottom: 20px;
+}
+
+.test-result-description {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--gray-700);
+    margin-bottom: 30px;
+}
+
+/* 특성 표시 */
+.test-traits {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.test-trait-item {
+    background: var(--primary-light);
+    color: var(--primary-color);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* 상세 분석 카드 */
+.test-analysis-card {
+    background: var(--gray-50);
+    border-radius: 15px;
+    padding: 30px;
+    margin: 20px 0;
+    text-align: left;
+}
+
+.test-analysis-card h4 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--gray-800);
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* 공유 섹션 */
+.test-share-section {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.test-share-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.test-share-btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.test-share-btn-kakao {
+    background: #FEE500;
+    color: #000;
+}
+
+.test-share-btn-kakao:hover {
+    background: #FDD835;
+    transform: translateY(-2px);
+}
+
+.test-share-btn-copy {
+    background: var(--gray-200);
+    color: var(--gray-700);
+}
+
+.test-share-btn-copy:hover {
+    background: var(--gray-300);
+    transform: translateY(-2px);
+}
+
+/* 액션 버튼 */
+.test-action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.test-btn {
+    padding: 14px 28px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.test-btn-primary {
+    background: var(--primary-color);
+    color: white;
+}
+
+.test-btn-primary:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+.test-btn-secondary {
+    background: var(--gray-200);
+    color: var(--gray-700);
+}
+
+.test-btn-secondary:hover {
+    background: var(--gray-300);
+    transform: translateY(-2px);
+}
+
+/* 애니메이션 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .test-result-container {
+        padding: 20px 15px;
+    }
+    
+    .test-result-card {
+        padding: 30px 20px;
+    }
+    
+    .test-result-type {
+        font-size: 1.5rem;
+    }
+    
+    .test-result-title {
+        font-size: 1.2rem;
+    }
+    
+    .test-share-buttons,
+    .test-action-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .test-share-btn,
+    .test-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}

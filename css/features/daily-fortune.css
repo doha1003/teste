@@ -1,0 +1,299 @@
+/**
+ * Daily Fortune Specific Styles
+ * 일일 운세 전용 스타일
+ */
+
+/* 일일 운세 컨테이너 */
+.daily-fortune-container {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+/* 날짜 선택 영역 */
+.date-selector {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.today-date {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+.date-info {
+    font-size: 1rem;
+    color: var(--gray-600);
+    margin-bottom: 10px;
+}
+
+/* 일일 운세 카드 */
+.daily-fortune-card {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+/* 전체 운세 요약 */
+.fortune-summary {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: white;
+    padding: 30px;
+    text-align: center;
+}
+
+.fortune-summary-title {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    margin-bottom: 15px;
+}
+
+.fortune-main-message {
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.overall-score {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-size: 1.1rem;
+}
+
+/* 카테고리별 운세 */
+.fortune-details {
+    padding: 30px;
+}
+
+.fortune-category {
+    margin-bottom: 25px;
+    padding: 20px;
+    background: var(--gray-50);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.fortune-category:hover {
+    transform: translateX(5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.category-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.category-name {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    color: var(--gray-800);
+}
+
+.category-icon {
+    font-size: 1.3rem;
+}
+
+.category-score {
+    display: flex;
+    gap: 3px;
+}
+
+.score-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--gray-300);
+    transition: all 0.3s ease;
+}
+
+.score-dot.active {
+    background: var(--primary-color);
+    transform: scale(1.2);
+}
+
+.category-description {
+    color: var(--gray-700);
+    line-height: 1.7;
+    font-size: 0.95rem;
+}
+
+/* 행운의 요소들 */
+.lucky-elements {
+    background: var(--primary-light);
+    border-radius: 15px;
+    padding: 25px;
+    margin-top: 30px;
+}
+
+.lucky-elements-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--primary-dark);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.lucky-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 15px;
+}
+
+.lucky-element {
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.lucky-element:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.element-icon {
+    font-size: 2rem;
+    margin-bottom: 8px;
+}
+
+.element-label {
+    font-size: 0.85rem;
+    color: var(--gray-600);
+    margin-bottom: 5px;
+}
+
+.element-value {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+/* 조언 카드 */
+.advice-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 15px;
+    padding: 25px;
+    margin-top: 30px;
+    position: relative;
+    overflow: hidden;
+}
+
+.advice-card::before {
+    content: '"';
+    position: absolute;
+    top: -20px;
+    left: 20px;
+    font-size: 100px;
+    opacity: 0.1;
+}
+
+.advice-title {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.advice-text {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    position: relative;
+    z-index: 1;
+}
+
+/* 띠별 특별 운세 */
+.zodiac-special {
+    background: var(--gray-50);
+    border-radius: 15px;
+    padding: 25px;
+    margin-top: 30px;
+    border: 2px solid var(--primary-light);
+}
+
+.zodiac-special-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.zodiac-icon {
+    width: 50px;
+    height: 50px;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.zodiac-info h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--gray-800);
+}
+
+.zodiac-year {
+    font-size: 0.9rem;
+    color: var(--gray-600);
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .daily-fortune-container {
+        padding: 0 15px;
+    }
+    
+    .date-selector {
+        padding: 20px;
+    }
+    
+    .today-date {
+        font-size: 1.5rem;
+    }
+    
+    .fortune-summary {
+        padding: 25px 20px;
+    }
+    
+    .fortune-main-message {
+        font-size: 1.3rem;
+    }
+    
+    .fortune-details {
+        padding: 20px;
+    }
+    
+    .fortune-category {
+        padding: 15px;
+    }
+    
+    .lucky-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .advice-card {
+        padding: 20px;
+    }
+    
+    .advice-card::before {
+        font-size: 60px;
+    }
+}

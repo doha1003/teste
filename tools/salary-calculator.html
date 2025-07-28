@@ -1,1 +1,264 @@
-<!DOCTYPE html> <html lang="ko"> <head> <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src 'self' https:; script-src 'unsafe-inline' 'self' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'unsafe-inline' 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;"> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>연봉 실수령액 계산기 - 2025년 최신 세율 | doha.kr</title> <meta name="description" content="2025년 최신 간이세액표 적용! 연봉, 세금, 4대보험료를 정확하게 계산하여 실제 월급을 확인하세요. 소득세, 지방소득세, 국민연금, 건강보험료, 장기요양보험료, 고용보험료 등 모든 공제항목을 포함한 정확한 계산으로 실수령액을 확인하세요. 부양가족 수, 20세 이하 자녀 수를 고려한 세액공제도 반영됩니다. 근로소득세액공제 및 비과세 한도까지 모두 적용하여 가장 정확한 실수령액을 제공합니다. 2025년 최신 보험요율과 상한액을 반영하여 대기업, 중소기업, 스타트업 등 모든 직장에서 활용 가능합니다. 월급 또는 연봉 협상 시 필수 도구로 활용하세요. 무료로 제공되며 회원가입 없이 바로 사용 가능합니다."> <meta name="keywords" content="연봉계산기, 실수령액, 세금계산, 월급계산, 소득세, 지방소득세, 국민연금, 건강보험료, 2025년"> <!-- Open Graph --> <meta property="og:title" content="연봉 실수령액 계산기 - 2025년 최신 세율 반영"> <meta property="og:description" content="2025년 최신 간이세액표 및 4대보험 요율을 반영한 정확한 연봉 실수령액 계산기. 세금, 보험료 모두 포함"> <meta property="og:image" content="https://doha.kr/images/egen-male-card.jpg"> <meta property="og:url" content="https://doha.kr/tools/salary-calculator.html"> <meta property="og:type" content="website"> <meta property="og:locale" content="ko_KR"> <meta property="og:site_name" content="doha.kr"> <!-- Twitter Card --> <meta name="twitter:card" content="summary_large_image"> <meta name="twitter:title" content="연봉 실수령액 계산기 - 2025년 최신 세율 반영"> <meta name="twitter:description" content="2025년 최신 간이세액표 및 4대보험 요율을 반영한 정확한 연봉 실수령액 계산기. 세금, 보험료 모두 포함"> <meta name="twitter:image" content="https://doha.kr/images/egen-male-card.jpg"> <!-- Canonical URL --> <link rel="canonical" href="https://doha.kr/tools/salary-calculator.html"> <!-- Google Fonts --> <link rel="preconnect" href="https://fonts.googleapis.com"> <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> <link rel="preconnect" crossorigin href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet"> <!-- External CSS --> <link rel="stylesheet" href="/css/styles-cleaned.css"> <link rel="stylesheet" href="/css/pages/salary-calculator.css"> <link rel="stylesheet" href="/css/pages/result-detail.css"> <!-- Google AdSense --> <!-- Moved to end of body --> <!-- Favicon --> <link rel="icon" href="/images/logo.svg" type="image/svg+xml"> <!-- DOMPurify for XSS protection --> <!-- Content Security Policy --> <!-- Structured Data --> <script type="application/ld+json"> { "@context": "https://schema.org", "@type": "WebApplication", "name": "연봉 실수령액 계산기", "url": "https://doha.kr/tools/salary-calculator.html", "description": "2025년 최신 간이세액표 및 4대보험 요율을 반영한 정확한 연봉 실수령액 계산기", "applicationCategory": "FinanceApplication", "operatingSystem": "Any", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "KRW" }, "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.8", "ratingCount": "3420" }, "featureList": [ "2025년 최신 세율 적용", "4대보험 요율 자동 계산", "부양가족 및 자녀 세액공제", "비과세 한도 적용", "월급 및 연봉 동시 표시" ] } </script> <!-- Optimized CSS System --> <meta http-equiv="X-Content-Type-Options" content="nosniff"> <script id="performance-monitor"> window.addEventListener('load', function() { if (window.performance && window.performance.timing) { const loadTime = window.performance.timing.loadEventEnd - window.performance.timing.navigationStart; if (loadTime > 5000) { console.warn('Page loading is slow:', loadTime + 'ms'); } } }); </script> <link rel="stylesheet" href="/css/fortune-result-cards.css"> </head> <body> <main class="page-main"> <!-- 네비게이션 바 --> <div id="navbar-placeholder"></div> <div class="salary-calculator-container"> <div class="calculator-header"> <h1>💰 연봉 실수령액 계산기 <span class="year-badge">2025년</span></h1> <p>2025년 최신 간이세액표 기준으로 정확한 실수령액을 계산해드립니다.<br> 세금과 4대보험료를 모두 반영한 실제 월급을 확인하세요.</p> </div> <form class="calculator-form" id="salaryForm"> <div class="form-group"> <label for="annualSalary">연봉 (만원 단위)</label> <div class="input-wrapper"> <input type="number" id="annualSalary" placeholder="예: 4000" value="4000" required min="0" max="1000000" aria-label="연봉 입력 (만원 단위)"> <span class="input-unit">만원</span> </div> </div> <div class="form-row"> <div class="form-group"> <label for="familyCount">부양가족 수</label> <select id="familyCount" aria-label="부양가족 수 선택"> <option value="1" selected>본인만 (1명)</option> <option value="2">2명</option> <option value="3">3명</option> <option value="4">4명</option> <option value="5">5명</option> <option value="6">6명 이상</option> </select> </div> <div class="form-group"> <label for="childCount">20세 이하 자녀 수</label> <select id="childCount" aria-label="20세 이하 자녀 수 선택"> <option value="0" selected>없음</option> <option value="1">1명</option> <option value="2">2명</option> <option value="3">3명</option> <option value="4">4명 이상</option> </select> </div> </div> <button type="submit" class="calculate-btn">💰 실수령액 계산하기</button> </form> <div class="result-container" id="resultContainer"> <div class="result-header"> <h2>💸 2025년 기준 계산 결과</h2> <p id="resultSummary"></p> </div> <div class="result-main"> <div class="result-item highlight"> <div class="result-label">월 실수령액</div> <div class="result-value" id="monthlyNet">-</div> <div class="result-detail">세후 실제 수령액</div> </div> <div class="result-item"> <div class="result-label">연 실수령액</div> <div class="result-value" id="annualNet">-</div> <div class="result-detail">연간 총 수령액</div> </div> </div> <div class="deduction-details"> <h3 class="deduction-title">📊 공제 내역 (2025년 기준)</h3> <div class="deduction-grid"> <div class="deduction-item"> <div class="deduction-item-name">소득세</div> <div class="deduction-item-value" id="incomeTax">-</div> </div> <div class="deduction-item"> <div class="deduction-item-name">지방소득세</div> <div class="deduction-item-value" id="localTax">-</div> </div> <div class="deduction-item"> <div class="deduction-item-name">국민연금</div> <div class="deduction-item-value" id="nationalPension">-</div> </div> <div class="deduction-item"> <div class="deduction-item-name">건강보험료</div> <div class="deduction-item-value" id="healthInsurance">-</div> </div> <div class="deduction-item"> <div class="deduction-item-name">장기요양보험료</div> <div class="deduction-item-value" id="longTermCare">-</div> </div> <div class="deduction-item"> <div class="deduction-item-name">고용보험료</div> <div class="deduction-item-value" id="employmentInsurance">-</div> </div> <div class="deduction-item"> <div class="deduction-item-name">총 공제액</div> <div class="deduction-item-value" id="totalDeduction">-</div> </div> </div> </div> <div class="info-box"> <h3>⚠️ 안내사항</h3> <p> 이 계산기는 2025년 간이세액표와 4대보험 요율을 기준으로 계산됩니다.<br> • 국민연금: 4.5% (상한액 적용)<br> • 건강보험: 3.545% (2025년 기준)<br> • 장기요양: 건강보험료의 12.95%<br> • 고용보험: 0.9%<br> • 비과세: 월 20만원 기본 적용 </p> </div> </div> </div> <!-- 광고 영역 --> <div class="ad-container"> <div class="ad-label" aria-label="광고 영역">광고</div> <div id="ad-container-fb3cf1keg" style="min-height: 100px;"> <div class="ad-placeholder" style="display: flex; align-items: center; justify-content: center; background: #f5f5f5; min-height: 100px; color: #999;"> 광고 로딩 중... </div> </div> <script> if ('IntersectionObserver' in window) { const adObserver = new IntersectionObserver(function(entries) { entries.forEach(function(entry) { if (entry.isIntersecting) { const container = entry.target; container.innerHTML = `<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-7905640648499222" data-ad-slot="8912541604" data-ad-format="auto" data-full-width-responsive="true"></ins>`; if (typeof adsbygoogle !== 'undefined') { (adsbygoogle = window.adsbygoogle || []).push({}); } adObserver.unobserve(container); } }); }, { rootMargin: '50px' }); const adContainer = document.getElementById('ad-container-fb3cf1keg'); if (adContainer) { adObserver.observe(adContainer); } } </script> </div> <!-- 푸터 --> <div id="footer-placeholder"></div> <!-- External JavaScript --> <script src="/js/api-config.js?v=1753565110842"></script> <script src="/js/main.js?v=1753565110842"></script> <script src="/js/simple-loader.js?v=1753565110842"></script> <!-- Kakao SDK Initialization --> <script> try { if (typeof Kakao !== 'undefined' && window.API_CONFIG && window.API_CONFIG.KAKAO_JS_KEY) { if (!Kakao.isInitialized()) { Kakao.init(window.API_CONFIG.KAKAO_JS_KEY); console.log('Kakao SDK initialized successfully'); } } } catch (error) { console.warn('Kakao SDK initialization failed:', error); } </script> <!-- 계산기 JavaScript --> <script> function escapeHtml(unsafe) { return unsafe .replace(/&/g, "&amp;") .replace(/</g, "&lt;") .replace(/>/g, "&gt;") .replace(/"/g, "&quot;") .replace(/'/g, "&#039;"); } function validateSalaryInput(value) { const num = parseFloat(String(value).replace(/[^0-9.]/g, '')); if (isNaN(num) || num < 0 || num > 1000000) { return null; } return parseInt(num); } function validateNumber(value, min, max) { const num = parseInt(String(value).replace(/[^0-9]/g, '')); if (isNaN(num) || num < min || num > max) { return min; } return num; } function calculateSalary(annualSalary, familyCount, childCount) { const monthlySalary = annualSalary / 12; // 국민연금 (상한액: 월 654만원, 하한액: 월 37만원) const pensionBase = Math.min(Math.max(monthlySalary, 370000), 6540000); const nationalPension = Math.round(pensionBase * 0.045); // 건강보험료 const healthInsurance = Math.round(monthlySalary * 0.03545); // 장기요양보험료 (건강보험료의 12.95%) const longTermCare = Math.round(healthInsurance * 0.1295); // 고용보험료 const employmentInsurance = Math.round(monthlySalary * 0.009); const totalInsurance = nationalPension + healthInsurance + longTermCare + employmentInsurance; // 과세표준 (비과세 월 20만원 적용) const monthlyTaxBase = monthlySalary - 200000 - totalInsurance; let monthlyIncomeTax = 0; // 간이세액표 기준 계산 if (familyCount === 1) { if (monthlyTaxBase <= 1470000) { monthlyIncomeTax = 0; } else if (monthlyTaxBase <= 1940000) { monthlyIncomeTax = (monthlyTaxBase - 1470000) * 0.06; } else if (monthlyTaxBase <= 2875000) { monthlyIncomeTax = 28200 + (monthlyTaxBase - 1940000) * 0.15; } else if (monthlyTaxBase <= 4030000) { monthlyIncomeTax = 168450 + (monthlyTaxBase - 2875000) * 0.24; } else if (monthlyTaxBase <= 5970000) { monthlyIncomeTax = 445650 + (monthlyTaxBase - 4030000) * 0.35; } else if (monthlyTaxBase <= 14440000) { monthlyIncomeTax = 1124650 + (monthlyTaxBase - 5970000) * 0.38; } else { monthlyIncomeTax = 4343250 + (monthlyTaxBase - 14440000) * 0.40; } } else { // 부양가족 2인 이상 if (monthlyTaxBase <= 2040000) { monthlyIncomeTax = 0; } else if (monthlyTaxBase <= 2850000) { monthlyIncomeTax = (monthlyTaxBase - 2040000) * 0.06; } else if (monthlyTaxBase <= 4020000) { monthlyIncomeTax = 48600 + (monthlyTaxBase - 2850000) * 0.15; } else if (monthlyTaxBase <= 5970000) { monthlyIncomeTax = 224100 + (monthlyTaxBase - 4020000) * 0.24; } else if (monthlyTaxBase <= 14440000) { monthlyIncomeTax = 692100 + (monthlyTaxBase - 5970000) * 0.35; } else { monthlyIncomeTax = 3656600 + (monthlyTaxBase - 14440000) * 0.38; } } // 추가 공제 if (familyCount > 2) { const additionalDeduction = (familyCount - 2) * 12500; monthlyIncomeTax = Math.max(0, monthlyIncomeTax - additionalDeduction); } if (childCount > 0) { const childDeduction = childCount * 15000; monthlyIncomeTax = Math.max(0, monthlyIncomeTax - childDeduction); } // 근로소득세액공제 80% 적용 monthlyIncomeTax = Math.round(monthlyIncomeTax * 0.8); // 지방소득세 const monthlyLocalTax = Math.round(monthlyIncomeTax * 0.1); const totalMonthlyDeduction = monthlyIncomeTax + monthlyLocalTax + totalInsurance; const monthlyNet = monthlySalary - totalMonthlyDeduction; const annualNet = monthlyNet * 12; return { monthlyNet: monthlyNet, annualNet: annualNet, incomeTax: monthlyIncomeTax, localTax: monthlyLocalTax, nationalPension: nationalPension, healthInsurance: healthInsurance, longTermCare: longTermCare, employmentInsurance: employmentInsurance, totalMonthlyDeduction: totalMonthlyDeduction }; } function displayResult(result, originalSalary) { document.getElementById('monthlyNet').textContent = formatCurrency(result.monthlyNet); document.getElementById('annualNet').textContent = formatCurrency(result.annualNet); document.getElementById('incomeTax').textContent = formatCurrency(result.incomeTax); document.getElementById('localTax').textContent = formatCurrency(result.localTax); document.getElementById('nationalPension').textContent = formatCurrency(result.nationalPension); document.getElementById('healthInsurance').textContent = formatCurrency(result.healthInsurance); document.getElementById('longTermCare').textContent = formatCurrency(result.longTermCare); document.getElementById('employmentInsurance').textContent = formatCurrency(result.employmentInsurance); document.getElementById('totalDeduction').textContent = formatCurrency(result.totalMonthlyDeduction); const deductionRate = ((result.totalMonthlyDeduction * 12) / originalSalary * 100).toFixed(1); document.getElementById('resultSummary').textContent = `연봉 ${formatCurrency(originalSalary)}에서 ${deductionRate}%가 공제되어 ${formatCurrency(result.annualNet)}을 실수령합니다.`; document.getElementById('resultContainer').classList.add('show'); document.getElementById('resultContainer').scrollIntoView({ behavior: 'smooth' }); } function formatCurrency(amount) { return new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW', maximumFractionDigits: 0 }).format(amount); } // 폼 이벤트 리스너 document.addEventListener('DOMContentLoaded', function() { const form = document.getElementById('salaryForm'); form.addEventListener('submit', function(e) { e.preventDefault(); const annualSalaryManwon = validateSalaryInput(document.getElementById('annualSalary').value); const familyCount = parseInt(document.getElementById('familyCount').value) || 1; const childCount = parseInt(document.getElementById('childCount').value) || 0; if (!annualSalaryManwon) { alert('연봉을 올바르게 입력해주세요. (0 ~ 1,000,000만원)'); return; } const annualSalary = annualSalaryManwon * 10000; const result = calculateSalary(annualSalary, familyCount, childCount); displayResult(result, annualSalary); }); // 초기 계산 실행 const initialSalary = 40000000; // 기본값 4000만원 const result = calculateSalary(initialSalary, 1, 0); displayResult(result, initialSalary); }); </script> <!-- Non-critical scripts moved here for performance --> <!-- Google AdSense 지연 로딩 --> <script> window.addEventListener('load', function() { setTimeout(function() { var adsScript = document.createElement('script'); adsScript.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222'; adsScript.crossOrigin = 'anonymous'; adsScript.defer = true; document.head.appendChild(adsScript); }, 2000); }); </script> <script> window.adsenseInitialized = window.adsenseInitialized || false; function initializeAdSense() { if (window.adsenseInitialized) { console.log('AdSense already initialized'); return; } window.adsenseInitialized = true; const adBlocks = document.querySelectorAll('.adsbygoogle'); adBlocks.forEach((ad, index) => { if (!ad.dataset.adsbygoogleStatus) { try { (adsbygoogle = window.adsbygoogle || []).push({}); console.log('AdSense block initialized:', index); } catch (error) { console.warn('AdSense initialization error:', error); } } }); } window.addEventListener('load', function() { setTimeout(initializeAdSense, 1000); }); </script> <script> (function() { 'use strict'; window.__adsenseLoaded = window.__adsenseLoaded || false; window.__adsenseQueue = window.__adsenseQueue || []; function initAdsense() { if (window.__adsenseLoaded) return; const ads = document.querySelectorAll('.adsbygoogle:not([data-adsbygoogle-status])'); if (ads.length === 0) return; if (typeof adsbygoogle === 'undefined') { setTimeout(initAdsense, 500); return; } window.__adsenseLoaded = true; ads.forEach((ad, index) => { try { if (ad.getAttribute('data-adsbygoogle-status')) return; (adsbygoogle = window.adsbygoogle || []).push({}); ad.setAttribute('data-adsbygoogle-status', 'done'); } catch (e) { console.warn('AdSense 초기화 실패:', index, e.message); } }); } if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', function() { setTimeout(initAdsense, 1000); }); } else { setTimeout(initAdsense, 1000); } window.addEventListener('error', function(e) { if (e.message && e.message.includes('adsbygoogle.push() error')) { e.preventDefault(); console.warn('AdSense 중복 초기화 방지됨'); return false; } }, true); })(); </script> <!-- AdSense 중복 방지 최종 버전 --> <script> (function() { 'use strict'; if (window.__adsenseFullyInitialized) return; window.__adsenseFullyInitialized = true; let originalPush = null; function safeInitAds() { const ads = document.querySelectorAll('.adsbygoogle'); if (ads.length === 0) return; if (typeof adsbygoogle === 'undefined') { setTimeout(safeInitAds, 200); return; } if (!originalPush && window.adsbygoogle && window.adsbygoogle.push) { originalPush = window.adsbygoogle.push; window.adsbygoogle.push = function(config) { try { const hasAds = Array.from(document.querySelectorAll('.adsbygoogle')).every(el => el.getAttribute('data-adsbygoogle-status') === 'done' ); if (hasAds) { console.log('모든 광고 슬롯이 이미 채워짐'); return; } return originalPush.call(this, config); } catch (e) { console.warn('AdSense push 차단됨:', e.message); } }; } let initialized = 0; ads.forEach((ad) => { if (!ad.getAttribute('data-adsbygoogle-status')) { try { (adsbygoogle = window.adsbygoogle || []).push({}); initialized++; } catch (e) { } } }); console.log('AdSense 초기화 완료:', initialized, '개 슬롯'); } const errorHandler = function(e) { if (e.message && e.message.includes('adsbygoogle.push() error')) { e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation(); return false; } }; window.addEventListener('error', errorHandler, true); window.addEventListener('unhandledrejection', function(e) { if (e.reason && e.reason.message && e.reason.message.includes('adsbygoogle')) { e.preventDefault(); return false; } }); if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', function() { setTimeout(safeInitAds, 1000); }); } else { setTimeout(safeInitAds, 1000); } })(); </script> <script> // 네비게이션 및 푸터 로드 - main.js의 loadComponents가 실행되지 않은 경우를 위한 폴백 document.addEventListener('DOMContentLoaded', function() { // main.js가 로드되었고 loadComponents 함수가 있는지 확인 if (typeof loadComponents === 'function') { // main.js의 DOMContentLoaded가 이미 실행되었을 수 있으므로 // navbar-placeholder가 비어있으면 다시 실행 const navPlaceholder = document.getElementById('navbar-placeholder'); const footerPlaceholder = document.getElementById('footer-placeholder'); if ((navPlaceholder && !navPlaceholder.innerHTML.trim()) || (footerPlaceholder && !footerPlaceholder.innerHTML.trim())) { console.log('Loading components...'); loadComponents().catch(function(error) { console.error('Failed to load components:', error); }); } } }); </script> </main> <!-- DOMPurify for XSS protection --> <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js" integrity="sha512-H+rglffZ6f5gF7UJgvH4Naa+fGCgjrHKMgoFOGmcPTRwR6oILo5R+gtzNrpDp7iMV3udbymBVjkeZGNz1Em4rQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> <script src="/js/security-config.js?v=1753565110842"></script> </body> </html>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src 'self' https:; script-src 'unsafe-inline' 'self' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'unsafe-inline' 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>연봉 실수령액 계산기 - 2025년 최신 세율 | doha.kr</title>
+    <meta name="description" content="2025년 최신 간이세액표 적용! 연봉, 세금, 4대보험료를 정확하게 계산하여 실제 월급을 확인하세요.">
+    <meta name="keywords" content="연봉계산기, 실수령액, 세금계산, 월급계산, 소득세, 지방소득세, 국민연금, 건강보험료, 2025년">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="doha.kr">
+    
+    <!-- Security Headers -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), accelerometer=(), gyroscope=()">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://doha.kr/tools/salary-calculator.html">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="연봉 실수령액 계산기 - 2025년 최신 세율 반영">
+    <meta property="og:description" content="2025년 최신 간이세액표 및 4대보험 요율을 반영한 정확한 연봉 실수령액 계산기. 세금, 보험료 모두 포함">
+    <meta property="og:image" content="https://doha.kr/images/salary-calculator-share.jpg">
+    <meta property="og:url" content="https://doha.kr/tools/salary-calculator.html">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ko_KR">
+    <meta property="og:site_name" content="doha.kr">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="연봉 실수령액 계산기 - 2025년 최신 세율 반영">
+    <meta name="twitter:description" content="2025년 최신 간이세액표 및 4대보험 요율을 반영한 정확한 연봉 실수령액 계산기. 세금, 보험료 모두 포함">
+    <meta name="twitter:image" content="https://doha.kr/images/salary-calculator-share.jpg">
+    
+    <!-- 파비콘 -->
+    <link rel="icon" type="image/svg+xml" href="/images/logo.svg">
+    <link rel="apple-touch-icon" href="/images/android-chrome-192x192.png">
+    
+    <!-- 폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" crossorigin href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Core CSS (모듈 구조) -->
+    <link rel="stylesheet" href="/css/core/variables.css">
+    <link rel="stylesheet" href="/css/core/reset.css">
+    <link rel="stylesheet" href="/css/core/typography.css">
+    
+    <!-- Layout CSS -->
+    <link rel="stylesheet" href="/css/layout/grid.css">
+    <link rel="stylesheet" href="/css/layout/header.css">
+    <link rel="stylesheet" href="/css/layout/footer.css">
+    
+    <!-- Component CSS -->
+    <link rel="stylesheet" href="/css/components/buttons.css">
+    <link rel="stylesheet" href="/css/components/cards.css">
+    <link rel="stylesheet" href="/css/components/forms.css">
+    
+    <!-- Feature CSS -->
+    <link rel="stylesheet" href="/css/features/tool-common.css">
+    <link rel="stylesheet" href="/css/features/salary-calculator.css">
+    
+    <!-- Page Data Attributes -->
+    <script>
+        document.documentElement.dataset.page = 'tool-salary-calculator';
+    </script>
+</head>
+<body class="tool-page" data-page="tool-salary-calculator">
+    <main class="page-main">
+        <!-- 네비게이션 바 -->
+        <div id="navbar-placeholder"></div>
+        
+        <div class="salary-calculator-container">
+            <div class="calculator-header">
+                <h1>💰 연봉 실수령액 계산기 <span class="year-badge">2025년</span></h1>
+                <p>2025년 최신 간이세액표 기준으로 정확한 실수령액을 계산해드립니다.<br>
+                세금과 4대보험료를 모두 반영한 실제 월급을 확인하세요.</p>
+            </div>
+            
+            <form class="calculator-form" id="salaryForm" data-form="tool-input">
+                <div class="form-group">
+                    <label for="annualSalary">연봉 (만원 단위)</label>
+                    <div class="input-wrapper">
+                        <input 
+                            type="number" 
+                            id="annualSalary" 
+                            name="annualSalary"
+                            placeholder="예: 4000" 
+                            value="4000" 
+                            required 
+                            min="0" 
+                            max="1000000"
+                            aria-label="연봉 입력 (만원 단위)"
+                        >
+                        <span class="input-unit">만원</span>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="familyCount">부양가족 수</label>
+                        <select id="familyCount" name="familyCount" aria-label="부양가족 수 선택">
+                            <option value="1" selected>본인만 (1명)</option>
+                            <option value="2">2명</option>
+                            <option value="3">3명</option>
+                            <option value="4">4명</option>
+                            <option value="5">5명</option>
+                            <option value="6">6명 이상</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="childCount">20세 이하 자녀 수</label>
+                        <select id="childCount" name="childCount" aria-label="20세 이하 자녀 수 선택">
+                            <option value="0" selected>없음</option>
+                            <option value="1">1명</option>
+                            <option value="2">2명</option>
+                            <option value="3">3명</option>
+                            <option value="4">4명 이상</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <button type="submit" class="calculate-btn" data-action="calculate">
+                    💰 실수령액 계산하기
+                </button>
+            </form>
+            
+            <div class="result-container" id="resultContainer">
+                <div class="result-header">
+                    <h2>💸 2025년 기준 계산 결과</h2>
+                    <p id="resultSummary"></p>
+                </div>
+                
+                <div class="result-main">
+                    <div class="result-item highlight">
+                        <div class="result-label">월 실수령액</div>
+                        <div class="result-value" id="monthlyNet">-</div>
+                        <div class="result-detail">세후 실제 수령액</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-label">연 실수령액</div>
+                        <div class="result-value" id="annualNet">-</div>
+                        <div class="result-detail">연간 총 수령액</div>
+                    </div>
+                </div>
+                
+                <div class="deduction-details">
+                    <h3 class="deduction-title">📊 공제 내역 (2025년 기준)</h3>
+                    <div class="deduction-grid">
+                        <div class="deduction-item">
+                            <div class="deduction-item-name">소득세</div>
+                            <div class="deduction-item-value" id="incomeTax">-</div>
+                        </div>
+                        <div class="deduction-item">
+                            <div class="deduction-item-name">지방소득세</div>
+                            <div class="deduction-item-value" id="localTax">-</div>
+                        </div>
+                        <div class="deduction-item">
+                            <div class="deduction-item-name">국민연금</div>
+                            <div class="deduction-item-value" id="nationalPension">-</div>
+                        </div>
+                        <div class="deduction-item">
+                            <div class="deduction-item-name">건강보험료</div>
+                            <div class="deduction-item-value" id="healthInsurance">-</div>
+                        </div>
+                        <div class="deduction-item">
+                            <div class="deduction-item-name">장기요양보험료</div>
+                            <div class="deduction-item-value" id="longTermCare">-</div>
+                        </div>
+                        <div class="deduction-item">
+                            <div class="deduction-item-name">고용보험료</div>
+                            <div class="deduction-item-value" id="employmentInsurance">-</div>
+                        </div>
+                        <div class="deduction-item">
+                            <div class="deduction-item-name">총 공제액</div>
+                            <div class="deduction-item-value" id="totalDeduction">-</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="result-actions">
+                    <button class="result-action-btn result-action-secondary" data-action="copy-result">
+                        <span>📋</span> 결과 복사
+                    </button>
+                    <button class="result-action-btn result-action-secondary" data-action="share-kakao">
+                        <span>📱</span> 공유하기
+                    </button>
+                </div>
+                
+                <div class="info-box">
+                    <h3>⚠️ 안내사항</h3>
+                    <p>
+                        이 계산기는 2025년 간이세액표와 4대보험 요율을 기준으로 계산됩니다.<br>
+                        • 국민연금: 4.5% (상한액 적용)<br>
+                        • 건강보험: 3.545% (2025년 기준)<br>
+                        • 장기요양: 건강보험료의 12.95%<br>
+                        • 고용보험: 0.9%<br>
+                        • 비과세: 월 20만원 기본 적용
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 광고 영역 -->
+        <div class="ad-container">
+            <div class="ad-label">광고</div>
+            <div id="ad-container-fb3cf1keg" class="ad-container-min" data-ad-slot="8912541604">
+                <div class="ad-placeholder ad-container-styled">
+                    광고 로딩 중...
+                </div>
+            </div>
+        </div>
+        
+        <!-- 푸터 -->
+        <div id="footer-placeholder"></div>
+    </main>
+    
+    <!-- Core JavaScript -->
+    <script src="/js/core/common-init.js"></script>
+    <script src="/js/core/service-base.js"></script>
+    
+    <!-- Feature JavaScript -->
+    <script src="/js/api-config.js"></script>
+    <script src="/js/features/tools/tool-service.js"></script>
+    <script src="/js/features/tools/salary-calculator.js"></script>
+    
+    <!-- External SDKs (지연 로딩) -->
+    <script async src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
+    <script async src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js" integrity="sha512-H+rglffZ6f5gF7UJgvH4Naa+fGCgjrHKMgoFOGmcPTRwR6oILo5R+gtzNrpDp7iMV3udbymBVjkeZGNz1Em4rQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "연봉 실수령액 계산기",
+        "url": "https://doha.kr/tools/salary-calculator.html",
+        "description": "2025년 최신 간이세액표 및 4대보험 요율을 반영한 정확한 연봉 실수령액 계산기",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "Any",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "KRW"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "ratingCount": "3420"
+        },
+        "featureList": [
+            "2025년 최신 세율 적용",
+            "4대보험 요율 자동 계산",
+            "부양가족 및 자녀 세액공제",
+            "비과세 한도 적용",
+            "월급 및 연봉 동시 표시"
+        ]
+    }
+    </script>
+</body>
+</html>

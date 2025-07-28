@@ -27,21 +27,33 @@
   <link href="/images/logo.svg" rel="icon" type="image/svg+xml"/>
   <!-- Google AdSense -->
   <!-- Moved to end of body -->
-  <!-- Optimized CSS System -->
-  <link href="/css/styles-cleaned.css" rel="stylesheet"/>
-  <link href="/css/css-cleanup.css" rel="stylesheet"/>
-  <link href="/css/inline-style-replacement.css" rel="stylesheet"/>
-  <link href="/css/mobile-optimizations.css" rel="stylesheet"/>
-  <link href="/css/pages/fortune.css" rel="stylesheet"/>
-  <link href="/css/pages/result-detail.css" rel="stylesheet"/>
-  <link href="/css/pages/zodiac-animal.css" rel="stylesheet"/>
+  <!-- Core CSS (모듈 구조) -->
+  <link rel="stylesheet" href="/css/core/variables.css">
+  <link rel="stylesheet" href="/css/core/reset.css">
+  <link rel="stylesheet" href="/css/core/typography.css">
+  
+  <!-- Layout CSS -->
+  <link rel="stylesheet" href="/css/layout/grid.css">
+  <link rel="stylesheet" href="/css/layout/header.css">
+  <link rel="stylesheet" href="/css/layout/footer.css">
+  
+  <!-- Component CSS -->
+  <link rel="stylesheet" href="/css/components/buttons.css">
+  <link rel="stylesheet" href="/css/components/cards.css">
+  <link rel="stylesheet" href="/css/components/forms.css">
+  <link rel="stylesheet" href="/css/components/result-cards.css">
+  
+  <!-- Feature CSS -->
+  <link rel="stylesheet" href="/css/features/fortune-common.css">
+  <link rel="stylesheet" href="/css/features/fortune-result.css">
   <meta content="nosniff" http-equiv="X-Content-Type-Options"/>
-  <script id="performance-monitor">
-   window.addEventListener('load', function() { if (window.performance && window.performance.timing) { const loadTime = window.performance.timing.loadEventEnd - window.performance.timing.navigationStart; if (loadTime > 5000) { console.warn('Page loading is slow:', loadTime + 'ms'); } } });
+  
+  <!-- Page Data Attributes -->
+  <script>
+      document.documentElement.dataset.page = 'fortune-zodiac-animal';
   </script>
-  <link href="/css/fortune-result-cards.css" rel="stylesheet"/>
  </head>
- <body class="fortune-page">
+ <body class="fortune-page" data-page="fortune-zodiac-animal">
   <!-- 네비게이션 -->
   <div id="navbar-placeholder">
   </div>
@@ -66,7 +78,7 @@
     </div>
     <!-- 띠 선택 그리드 -->
     <div class="zodiac-grid fortune-grid grid-6">
-     <div class="zodiac-card fortune-card" data-animal="rat" onclick="showAnimalFortune('rat')">
+     <div class="zodiac-card fortune-card" data-animal="rat">
       <div class="zodiac-emoji fortune-emoji">
        🐀
       </div>
@@ -77,7 +89,7 @@
        子
       </div>
      </div>
-     <div class="zodiac-card fortune-card" data-animal="ox" onclick="showAnimalFortune('ox')">
+     <div class="zodiac-card fortune-card" data-animal="ox">
       <div class="zodiac-emoji fortune-emoji">
        🐂
       </div>
@@ -88,7 +100,7 @@
        丑
       </div>
      </div>
-     <div class="zodiac-card fortune-card" data-animal="tiger" onclick="showAnimalFortune('tiger')">
+     <div class="zodiac-card fortune-card" data-animal="tiger">
       <div class="zodiac-emoji fortune-emoji">
        🐅
       </div>
@@ -99,7 +111,7 @@
        寅
       </div>
      </div>
-     <div class="zodiac-card fortune-card" data-animal="rabbit" onclick="showAnimalFortune('rabbit')">
+     <div class="zodiac-card fortune-card" data-animal="rabbit">
       <div class="zodiac-emoji fortune-emoji">
        🐇
       </div>
@@ -110,7 +122,7 @@
        卯
       </div>
      </div>
-     <div class="zodiac-card fortune-card" data-animal="dragon" onclick="showAnimalFortune('dragon')">
+     <div class="zodiac-card fortune-card" data-animal="dragon">
       <div class="zodiac-emoji fortune-emoji">
        🐉
       </div>
@@ -121,7 +133,7 @@
        辰
       </div>
      </div>
-     <div class="zodiac-card fortune-card" data-animal="snake" onclick="showAnimalFortune('snake')">
+     <div class="zodiac-card fortune-card" data-animal="snake">
       <div class="zodiac-emoji fortune-emoji">
        🐍
       </div>
@@ -132,7 +144,7 @@
        巳
       </div>
      </div>
-     <div class="zodiac-card fortune-card" data-animal="horse" onclick="showAnimalFortune('horse')">
+     <div class="zodiac-card fortune-card" data-animal="horse">
       <div class="zodiac-emoji fortune-emoji">
        🐎
       </div>
@@ -143,7 +155,7 @@
        午
       </div>
      </div>
-     <div class="zodiac-card fortune-card" data-animal="sheep" onclick="showAnimalFortune('sheep')">
+     <div class="zodiac-card fortune-card" data-animal="sheep">
       <div class="zodiac-emoji fortune-emoji">
        🐑
       </div>
@@ -154,7 +166,7 @@
        未
       </div>
      </div>
-     <div class="zodiac-card fortune-card" data-animal="monkey" onclick="showAnimalFortune('monkey')">
+     <div class="zodiac-card fortune-card" data-animal="monkey">
       <div class="zodiac-emoji fortune-emoji">
        🐒
       </div>
@@ -165,7 +177,7 @@
        申
       </div>
      </div>
-     <div class="zodiac-card fortune-card" data-animal="rooster" onclick="showAnimalFortune('rooster')">
+     <div class="zodiac-card fortune-card" data-animal="rooster">
       <div class="zodiac-emoji fortune-emoji">
        🐓
       </div>
@@ -176,7 +188,7 @@
        酉
       </div>
      </div>
-     <div class="zodiac-card fortune-card" data-animal="dog" onclick="showAnimalFortune('dog')">
+     <div class="zodiac-card fortune-card" data-animal="dog">
       <div class="zodiac-emoji fortune-emoji">
        🐕
       </div>
@@ -187,7 +199,7 @@
        戌
       </div>
      </div>
-     <div class="zodiac-card fortune-card" data-animal="pig" onclick="showAnimalFortune('pig')">
+     <div class="zodiac-card fortune-card" data-animal="pig">
       <div class="zodiac-emoji fortune-emoji">
        🐖
       </div>
@@ -215,42 +227,68 @@
      광고 로딩 중...
     </div>
    </div>
-   <script>
-    if ('IntersectionObserver' in window) { const adObserver = new IntersectionObserver(function(entries) { entries.forEach(function(entry) { if (entry.isIntersecting) { const container = entry.target; container.innerHTML = `<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-7905640648499222" data-ad-slot="2789891628" data-ad-format="auto" data-full-width-responsive="true"></ins>`; if (typeof adsbygoogle !== 'undefined') { (adsbygoogle = window.adsbygoogle || []).push({}); } adObserver.unobserve(container); } }); }, { rootMargin: '50px' }); const adContainer = document.getElementById('ad-container-bigisizmm'); if (adContainer) { adObserver.observe(adContainer); } }
-   </script>
   </div>
+  <!-- 띠별 운세 안내 섹션 -->
+  <section class="info-section">
+   <div class="container">
+    <div class="info-box">
+     <h3>
+      띠별 운세 안내
+     </h3>
+     <ul>
+      <li>
+       12지신의 특성과 AI 분석을 결합한 정확한 운세를 제공합니다.
+      </li>
+      <li>
+       각 띠별 고유의 성격과 특징에 맞는 맞춤형 조언을 받아보세요.
+      </li>
+      <li>
+       오늘의 행운 숫자, 색깔, 방향 등 구체적인 정보를 포함합니다.
+      </li>
+      <li>
+       띠별 운세는 참고용이며, 긍정적인 마음가짐이 중요합니다.
+      </li>
+      <li>
+       AI가 실시간으로 분석하여 개인화된 운세를 제공합니다.
+      </li>
+     </ul>
+    </div>
+   </div>
+  </section>
   <!-- 푸터 -->
   <div id="footer-placeholder">
   </div>
-  <!-- External JavaScript -->
-  <script src="/js/main.js?v=1753565110842">
-  </script>
-  <script src="/js/simple-loader.js?v=1753565110842">
-  </script>
-  <script src="/js/api-config.js?v=1753565110842">
-  </script>
-  <script src="/js/gemini-api.js?v=1753565110842">
-  </script>
-  <script src="/js/zodiac-animal.js?v=1753565110842"></script>
-  <script>
-   // 카카오 초기화
-   if (window.initKakao) { 
-       window.initKakao(); 
-   }
-  </script>
-  <!-- AdSense initialization -->
-  <!-- Non-critical scripts moved here for performance -->
-  <!-- Google AdSense 지연 로딩 -->
-  <script>
-   window.addEventListener('load', function() { setTimeout(function() { var adsScript = document.createElement('script'); adsScript.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222'; adsScript.crossOrigin = 'anonymous'; adsScript.defer = true; document.head.appendChild(adsScript); }, 2000); });
-  </script>
-  <script>
-   // 네비게이션 및 푸터 로드 - main.js의 loadComponents가 실행되지 않은 경우를 위한 폴백 document.addEventListener('DOMContentLoaded', function() { // main.js가 로드되었고 loadComponents 함수가 있는지 확인 if (typeof loadComponents === 'function') { // main.js의 DOMContentLoaded가 이미 실행되었을 수 있으므로 // navbar-placeholder가 비어있으면 다시 실행 const navPlaceholder = document.getElementById('navbar-placeholder'); const footerPlaceholder = document.getElementById('footer-placeholder'); if ((navPlaceholder && !navPlaceholder.innerHTML.trim()) || (footerPlaceholder && !footerPlaceholder.innerHTML.trim())) { console.log('Loading components...'); loadComponents().catch(function(error) { console.error('Failed to load components:', error); }); } } });
-  </script>
-  <!-- DOMPurify for XSS protection -->
-  <script crossorigin="anonymous" integrity="sha512-H+rglffZ6f5gF7UJgvH4Naa+fGCgjrHKMgoFOGmcPTRwR6oILo5R+gtzNrpDp7iMV3udbymBVjkeZGNz1Em4rQ==" referrerpolicy="no-referrer" src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js">
-  </script>
-  <script src="/js/security-config.js?v=1753565110842">
+  <!-- Core JavaScript -->
+  <script src="/js/core/common-init.js"></script>
+  <script src="/js/core/service-base.js"></script>
+  
+  <!-- Feature JavaScript -->
+  <script src="/js/api-config.js"></script>
+  <script src="/js/gemini-api.js"></script>
+  <script src="/js/features/fortune/fortune-service.js"></script>
+  <script src="/js/features/fortune/zodiac-animal-fortune.js"></script>
+  
+  <!-- External SDKs (지연 로딩) -->
+  <script async src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js"></script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
+  <script async src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js" integrity="sha512-H+rglffZ6f5gF7UJgvH4Naa+fGCgjrHKMgoFOGmcPTRwR6oILo5R+gtzNrpDp7iMV3udbymBVjkeZGNz1Em4rQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "띠별 운세",
+      "url": "https://doha.kr/fortune/zodiac-animal/",
+      "applicationCategory": "Entertainment",
+      "operatingSystem": "All",
+      "description": "12지신 띠별 AI 운세 분석 서비스",
+      "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "KRW"
+      }
+  }
   </script>
  </body>
 </html>
