@@ -1,0 +1,292 @@
+/* ==========================================================================
+   Typography - 타이포그래피 기본 설정
+   한글 최적화 포함
+   ========================================================================== */
+
+/* ===== BASE TYPOGRAPHY ===== */
+/* 기본 타이포그래피 설정 */
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "kern" 1;
+  font-kerning: normal;
+}
+
+body {
+  font-family: var(--font-family-korean);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-korean);
+  letter-spacing: var(--letter-spacing-korean);
+  color: var(--text-primary);
+  
+  /* 한글 최적화 */
+  word-break: keep-all;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* ===== HEADINGS ===== */
+/* 제목 스타일 */
+
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0;
+  margin-bottom: var(--space-4);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--text-primary);
+}
+
+h1 {
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-bold);
+}
+
+h2 {
+  font-size: var(--font-size-3xl);
+}
+
+h3 {
+  font-size: var(--font-size-2xl);
+}
+
+h4 {
+  font-size: var(--font-size-xl);
+}
+
+h5 {
+  font-size: var(--font-size-lg);
+}
+
+h6 {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+}
+
+/* ===== PARAGRAPHS ===== */
+/* 단락 스타일 */
+
+p {
+  margin-top: 0;
+  margin-bottom: var(--space-4);
+  line-height: var(--line-height-korean);
+}
+
+/* 단락 간격 조정 */
+p + p {
+  margin-top: var(--space-4);
+}
+
+/* ===== LINKS ===== */
+/* 링크 스타일 */
+
+a {
+  color: var(--text-link);
+  text-decoration: none;
+  transition: var(--transition-colors);
+}
+
+a:hover {
+  color: var(--text-link-hover);
+  text-decoration: underline;
+}
+
+a:focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
+  border-radius: var(--radius-sm);
+}
+
+/* ===== LISTS ===== */
+/* 목록 스타일 */
+
+ul, ol {
+  margin-top: 0;
+  margin-bottom: var(--space-4);
+  padding-left: var(--space-6);
+}
+
+ul {
+  list-style-type: disc;
+}
+
+ol {
+  list-style-type: decimal;
+}
+
+li {
+  margin-bottom: var(--space-2);
+  line-height: var(--line-height-korean);
+}
+
+/* 중첩 목록 */
+ul ul, ol ol, ul ol, ol ul {
+  margin-top: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+/* ===== EMPHASIS ===== */
+/* 강조 스타일 */
+
+strong, b {
+  font-weight: var(--font-weight-semibold);
+}
+
+em, i {
+  font-style: italic;
+}
+
+mark {
+  background-color: var(--color-warning-light);
+  color: var(--text-primary);
+  padding: 0.125em 0.25em;
+  border-radius: var(--radius-sm);
+}
+
+/* ===== QUOTES ===== */
+/* 인용문 스타일 */
+
+blockquote {
+  margin: var(--space-6) 0;
+  padding: var(--space-4) var(--space-6);
+  border-left: var(--border-4) solid var(--border-primary);
+  background-color: var(--bg-secondary);
+  font-style: italic;
+}
+
+blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+q {
+  quotes: """ """ "'" "'";
+}
+
+/* ===== CODE ===== */
+/* 코드 스타일 */
+
+code, kbd, samp, pre {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+}
+
+code {
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+  padding: 0.125em 0.375em;
+  border-radius: var(--radius-sm);
+}
+
+pre {
+  display: block;
+  margin: var(--space-4) 0;
+  padding: var(--space-4);
+  background-color: var(--bg-tertiary);
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+  line-height: var(--line-height-normal);
+}
+
+pre code {
+  background-color: transparent;
+  padding: 0;
+  font-size: inherit;
+}
+
+/* ===== SMALL TEXT ===== */
+/* 작은 텍스트 */
+
+small {
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
+}
+
+/* ===== ABBREVIATIONS ===== */
+/* 약어 스타일 */
+
+abbr[title] {
+  text-decoration: underline dotted;
+  cursor: help;
+}
+
+/* ===== TIME ===== */
+/* 시간 요소 */
+
+time {
+  color: var(--text-secondary);
+}
+
+/* ===== HORIZONTAL RULE ===== */
+/* 수평선 */
+
+hr {
+  margin: var(--space-8) 0;
+  border: 0;
+  border-top: var(--border-1) solid var(--border-primary);
+}
+
+/* ===== RESPONSIVE TYPOGRAPHY ===== */
+/* 반응형 타이포그래피 */
+
+@media (max-width: 768px) {
+  /* 모바일 제목 크기 조정 */
+  h1 {
+    font-size: var(--font-size-3xl);
+  }
+  
+  h2 {
+    font-size: var(--font-size-2xl);
+  }
+  
+  h3 {
+    font-size: var(--font-size-xl);
+  }
+  
+  h4 {
+    font-size: var(--font-size-lg);
+  }
+  
+  h5 {
+    font-size: var(--font-size-base);
+  }
+  
+  h6 {
+    font-size: var(--font-size-sm);
+  }
+  
+  /* 모바일 단락 간격 */
+  p {
+    margin-bottom: var(--space-3);
+  }
+}
+
+/* ===== PRINT TYPOGRAPHY ===== */
+/* 인쇄용 타이포그래피 */
+
+@media print {
+  body {
+    font-size: 12pt;
+    line-height: 1.5;
+    color: #000;
+  }
+  
+  h1 { font-size: 24pt; }
+  h2 { font-size: 20pt; }
+  h3 { font-size: 16pt; }
+  h4 { font-size: 14pt; }
+  h5, h6 { font-size: 12pt; }
+  
+  a {
+    color: #000;
+    text-decoration: underline;
+  }
+  
+  a[href^="http"]:after {
+    content: " (" attr(href) ")";
+    font-size: 10pt;
+  }
+}

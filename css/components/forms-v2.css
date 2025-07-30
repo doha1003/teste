@@ -1,0 +1,382 @@
+/* ==========================================================================
+   Form Components v2.0 - Linear.app 기반 폼 시스템
+   ========================================================================== */
+
+/* ===== FORM LAYOUT ===== */
+/* 폼 레이아웃 */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--form-gap);
+}
+
+.form--inline {
+  flex-direction: row;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+/* ===== FORM GROUP ===== */
+/* 폼 그룹 */
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--form-label-margin);
+}
+
+.form-group--horizontal {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+/* ===== FORM LABEL ===== */
+/* 폼 라벨 */
+
+.form-label {
+  display: inline-block;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+  line-height: var(--line-height-normal);
+}
+
+.form-label--required::after {
+  content: " *";
+  color: var(--semantic-danger);
+}
+
+/* ===== FORM INPUT BASE ===== */
+/* 폼 입력 기본 스타일 */
+
+.form-input,
+.form-select,
+.form-textarea {
+  /* Layout */
+  display: block;
+  width: 100%;
+  
+  /* Sizing */
+  padding: var(--input-padding-y) var(--input-padding-x);
+  min-height: var(--input-height);
+  
+  /* Typography */
+  font-family: var(--font-family-korean);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
+  
+  /* Visual */
+  color: var(--text-primary);
+  background-color: var(--surface-primary);
+  border: var(--input-border-width) solid var(--border-primary);
+  border-radius: var(--input-radius);
+  
+  /* Behavior */
+  transition: var(--transition-all);
+  
+  /* Korean optimization */
+  word-break: keep-all;
+}
+
+/* Input States */
+.form-input:hover:not(:disabled),
+.form-select:hover:not(:disabled),
+.form-textarea:hover:not(:disabled) {
+  border-color: var(--border-secondary);
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px var(--color-primary-subtle);
+}
+
+.form-input:disabled,
+.form-select:disabled,
+.form-textarea:disabled {
+  opacity: var(--disabled-opacity);
+  cursor: not-allowed;
+  background-color: var(--bg-disabled);
+}
+
+/* Placeholder */
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: var(--text-tertiary);
+}
+
+/* ===== FORM INPUT VARIANTS ===== */
+/* 입력 필드 변형 */
+
+/* Size Variants */
+.form-input--sm,
+.form-select--sm {
+  padding: var(--space-1) var(--space-2);
+  min-height: 32px;
+  font-size: var(--font-size-sm);
+}
+
+.form-input--lg,
+.form-select--lg {
+  padding: var(--space-3) var(--space-4);
+  min-height: 48px;
+  font-size: var(--font-size-lg);
+}
+
+/* Status Variants */
+.form-input--error,
+.form-select--error,
+.form-textarea--error {
+  border-color: var(--border-error);
+}
+
+.form-input--error:focus,
+.form-select--error:focus,
+.form-textarea--error:focus {
+  box-shadow: 0 0 0 3px var(--semantic-danger-bg);
+}
+
+.form-input--success,
+.form-select--success,
+.form-textarea--success {
+  border-color: var(--border-success);
+}
+
+.form-input--success:focus,
+.form-select--success:focus,
+.form-textarea--success:focus {
+  box-shadow: 0 0 0 3px var(--semantic-success-bg);
+}
+
+/* ===== FORM SELECT ===== */
+/* 셀렉트 박스 */
+
+.form-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right var(--space-3) center;
+  background-size: 16px;
+  padding-right: var(--space-10);
+}
+
+/* ===== FORM TEXTAREA ===== */
+/* 텍스트 영역 */
+
+.form-textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.form-textarea--fixed {
+  resize: none;
+}
+
+/* ===== FORM CHECKBOX & RADIO ===== */
+/* 체크박스 & 라디오 */
+
+.form-check {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.form-check-input {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  appearance: none;
+  background-color: var(--surface-primary);
+  border: var(--border-2) solid var(--border-primary);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition-all);
+}
+
+.form-check-input[type="radio"] {
+  border-radius: var(--radius-full);
+}
+
+.form-check-input:hover {
+  border-color: var(--border-secondary);
+}
+
+.form-check-input:checked {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='20 6 9 17 4 12'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 14px;
+}
+
+.form-check-input[type="radio"]:checked {
+  background-image: none;
+}
+
+.form-check-input[type="radio"]:checked::after {
+  content: "";
+  display: block;
+  width: 8px;
+  height: 8px;
+  margin: 4px;
+  background-color: white;
+  border-radius: var(--radius-full);
+}
+
+.form-check-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--color-primary-subtle);
+}
+
+.form-check-input:disabled {
+  opacity: var(--disabled-opacity);
+  cursor: not-allowed;
+}
+
+.form-check-label {
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
+  cursor: pointer;
+  user-select: none;
+}
+
+/* ===== FORM HELP TEXT ===== */
+/* 도움말 텍스트 */
+
+.form-help {
+  margin-top: var(--space-1);
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  line-height: var(--line-height-normal);
+}
+
+.form-help--error {
+  color: var(--semantic-danger);
+}
+
+.form-help--success {
+  color: var(--semantic-success);
+}
+
+/* ===== FORM FIELD ===== */
+/* 폼 필드 (라벨 + 입력 + 도움말) */
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+/* ===== INPUT GROUP ===== */
+/* 입력 그룹 */
+
+.input-group {
+  display: flex;
+  align-items: stretch;
+}
+
+.input-group .form-input {
+  flex: 1;
+  border-radius: 0;
+}
+
+.input-group .form-input:first-child {
+  border-top-left-radius: var(--input-radius);
+  border-bottom-left-radius: var(--input-radius);
+}
+
+.input-group .form-input:last-child {
+  border-top-right-radius: var(--input-radius);
+  border-bottom-right-radius: var(--input-radius);
+}
+
+.input-group-text {
+  display: flex;
+  align-items: center;
+  padding: var(--input-padding-y) var(--input-padding-x);
+  font-size: var(--font-size-base);
+  color: var(--text-secondary);
+  background-color: var(--bg-tertiary);
+  border: var(--input-border-width) solid var(--border-primary);
+  border-radius: var(--input-radius);
+}
+
+.input-group-text:first-child {
+  border-right: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.input-group-text:last-child {
+  border-left: 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+/* ===== FORM ACTIONS ===== */
+/* 폼 액션 버튼 영역 */
+
+.form-actions {
+  display: flex;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+}
+
+.form-actions--right {
+  justify-content: flex-end;
+}
+
+.form-actions--center {
+  justify-content: center;
+}
+
+.form-actions--between {
+  justify-content: space-between;
+}
+
+/* ===== RESPONSIVE FORMS ===== */
+/* 반응형 폼 */
+
+@media (max-width: 640px) {
+  .form--inline {
+    flex-direction: column;
+  }
+  
+  .form-group--horizontal {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+  }
+  
+  .form-actions .btn {
+    width: 100%;
+  }
+  
+  /* iOS zoom prevention */
+  .form-input,
+  .form-select,
+  .form-textarea {
+    font-size: 16px;
+  }
+}
+
+/* ===== PRINT STYLES ===== */
+/* 인쇄 스타일 */
+
+@media print {
+  .form-input,
+  .form-select,
+  .form-textarea {
+    border: 1px solid #999;
+    background: none;
+  }
+}

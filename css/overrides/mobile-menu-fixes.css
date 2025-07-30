@@ -1,0 +1,225 @@
+/* ==========================================================================
+   Mobile Menu Fixes - 모바일 메뉴 문제 해결
+   ========================================================================== */
+
+/* ===== MOBILE MENU STRUCTURE ===== */
+/* 모바일 메뉴 기본 구조 */
+
+.mobile-menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  margin-left: auto;
+  z-index: 1001;
+}
+
+.mobile-menu-toggle span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background-color: var(--text-primary, #333);
+  margin: 5px 0;
+  transition: transform 0.3s ease;
+}
+
+/* 모바일 메뉴 활성화 상태 */
+.mobile-menu-toggle.active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.mobile-menu-toggle.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.mobile-menu-toggle.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* ===== MOBILE NAVIGATION ===== */
+/* 모바일 네비게이션 */
+
+@media (max-width: 768px) {
+  /* 햄버거 메뉴 표시 */
+  .mobile-menu-toggle {
+    display: block;
+  }
+  
+  /* 기본 네비게이션 숨김 */
+  .navbar-menu,
+  .nav-menu,
+  .header-nav {
+    display: none;
+    position: fixed;
+    top: 64px;
+    left: 0;
+    right: 0;
+    background-color: var(--bg-primary, #fff);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    max-height: calc(100vh - 64px);
+    overflow-y: auto;
+  }
+  
+  /* 모바일 메뉴 활성화 */
+  .navbar-menu.active,
+  .nav-menu.active,
+  .header-nav.active {
+    display: block;
+  }
+  
+  /* 모바일 메뉴 아이템 */
+  .navbar-menu li,
+  .nav-menu li,
+  .header-nav li {
+    display: block;
+    margin: 0;
+    border-bottom: 1px solid var(--border-color, #eee);
+  }
+  
+  .navbar-menu a,
+  .nav-menu a,
+  .header-nav a {
+    display: block;
+    padding: 1rem 1.5rem;
+    text-decoration: none;
+    color: var(--text-primary, #333);
+    transition: background-color 0.3s ease;
+  }
+  
+  .navbar-menu a:hover,
+  .nav-menu a:hover,
+  .header-nav a:hover {
+    background-color: var(--bg-secondary, #f5f5f5);
+  }
+  
+  /* 드롭다운 메뉴 모바일 최적화 */
+  .dropdown-menu,
+  .submenu {
+    position: static;
+    width: 100%;
+    box-shadow: none;
+    background-color: var(--bg-tertiary, #fafafa);
+  }
+  
+  .dropdown-menu a,
+  .submenu a {
+    padding-left: 2.5rem;
+  }
+}
+
+/* ===== HEADER FIXES FOR MOBILE ===== */
+/* 모바일 헤더 수정 */
+
+@media (max-width: 768px) {
+  .header,
+  .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--bg-primary, #fff);
+    z-index: 1000;
+  }
+  
+  .logo {
+    flex-shrink: 0;
+    max-width: 150px;
+  }
+  
+  /* 메인 컨텐츠 패딩 조정 */
+  main {
+    padding-top: 80px; /* 헤더 높이 + 여백 */
+  }
+}
+
+/* ===== TABLET OPTIMIZATION ===== */
+/* 태블릿 최적화 (768px ~ 1024px) */
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .navbar-menu,
+  .nav-menu {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .navbar-menu li,
+  .nav-menu li {
+    font-size: 0.9rem;
+  }
+  
+  .navbar-menu a,
+  .nav-menu a {
+    padding: 0.5rem 0.75rem;
+  }
+}
+
+/* ===== ACCESSIBILITY ===== */
+/* 접근성 개선 */
+
+.mobile-menu-toggle {
+  /* 스크린 리더를 위한 텍스트 */
+  position: relative;
+  overflow: hidden;
+}
+
+.mobile-menu-toggle::before {
+  content: "메뉴";
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* 포커스 스타일 */
+.mobile-menu-toggle:focus {
+  outline: 2px solid var(--color-primary, #5c5ce0);
+  outline-offset: 2px;
+}
+
+/* ===== DARK MODE SUPPORT ===== */
+/* 다크 모드 지원 */
+
+[data-theme="dark"] .mobile-menu-toggle span {
+  background-color: var(--text-primary-dark, #fff);
+}
+
+[data-theme="dark"] .navbar-menu,
+[data-theme="dark"] .nav-menu {
+  background-color: var(--bg-primary-dark, #1a1a1a);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] .navbar-menu a:hover,
+[data-theme="dark"] .nav-menu a:hover {
+  background-color: var(--bg-secondary-dark, #2a2a2a);
+}
+
+/* ===== PERFORMANCE OPTIMIZATION ===== */
+/* 성능 최적화 */
+
+.navbar-menu,
+.nav-menu {
+  /* GPU 가속 */
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* 애니메이션 최적화 */
+.mobile-menu-toggle span,
+.navbar-menu,
+.nav-menu {
+  transition-property: transform, opacity;
+  transition-duration: 0.3s;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}

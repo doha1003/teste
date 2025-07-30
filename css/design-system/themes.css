@@ -1,0 +1,228 @@
+/* ==========================================================================
+   Themes - 라이트/다크 테마 정의
+   ========================================================================== */
+
+/* ===== LIGHT THEME (DEFAULT) ===== */
+:root,
+[data-theme="light"] {
+  /* Primary Palette */
+  --color-primary: var(--color-brand-500);
+  --color-primary-hover: var(--color-brand-600);
+  --color-primary-active: var(--color-brand-700);
+  --color-primary-subtle: var(--color-brand-100);
+  --color-primary-subtle-hover: var(--color-brand-200);
+  
+  /* Text Colors */
+  --text-primary: var(--color-gray-900);
+  --text-secondary: var(--color-gray-600);
+  --text-tertiary: var(--color-gray-500);
+  --text-disabled: var(--color-gray-400);
+  --text-inverse: var(--color-gray-0);
+  --text-link: var(--color-brand-600);
+  --text-link-hover: var(--color-brand-700);
+  
+  /* Background Colors */
+  --bg-primary: var(--color-gray-0);
+  --bg-secondary: var(--color-gray-50);
+  --bg-tertiary: var(--color-gray-100);
+  --bg-hover: var(--color-gray-50);
+  --bg-active: var(--color-gray-100);
+  --bg-disabled: var(--color-gray-100);
+  --bg-overlay: rgba(0, 0, 0, 0.5);
+  --bg-inverse: var(--color-gray-900);
+  
+  /* Surface Colors */
+  --surface-primary: var(--color-gray-0);
+  --surface-secondary: var(--color-gray-50);
+  --surface-tertiary: var(--color-gray-100);
+  --surface-elevated: var(--color-gray-0);
+  
+  /* Border Colors */
+  --border-primary: var(--color-gray-200);
+  --border-secondary: var(--color-gray-300);
+  --border-focus: var(--color-brand-500);
+  --border-error: var(--color-danger);
+  --border-success: var(--color-success);
+  
+  /* Semantic Colors */
+  --semantic-success: var(--color-success);
+  --semantic-success-bg: #10b98120;
+  --semantic-warning: var(--color-warning);
+  --semantic-warning-bg: #f59e0b20;
+  --semantic-danger: var(--color-danger);
+  --semantic-danger-bg: #ef444420;
+  --semantic-info: var(--color-info);
+  --semantic-info-bg: #3b82f620;
+  
+  /* Component Specific */
+  --button-primary-bg: var(--color-brand-500);
+  --button-primary-text: var(--color-gray-0);
+  --button-primary-hover: var(--color-brand-600);
+  --button-secondary-bg: var(--color-gray-100);
+  --button-secondary-text: var(--color-gray-700);
+  --button-secondary-hover: var(--color-gray-200);
+  
+  /* Shadow Colors */
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --shadow-color-subtle: rgba(0, 0, 0, 0.05);
+}
+
+/* ===== DARK THEME ===== */
+[data-theme="dark"] {
+  /* Primary Palette */
+  --color-primary: var(--color-brand-400);
+  --color-primary-hover: var(--color-brand-300);
+  --color-primary-active: var(--color-brand-200);
+  --color-primary-subtle: var(--color-brand-900);
+  --color-primary-subtle-hover: var(--color-brand-800);
+  
+  /* Text Colors */
+  --text-primary: var(--color-gray-100);
+  --text-secondary: var(--color-gray-300);
+  --text-tertiary: var(--color-gray-400);
+  --text-disabled: var(--color-gray-600);
+  --text-inverse: var(--color-gray-900);
+  --text-link: var(--color-brand-400);
+  --text-link-hover: var(--color-brand-300);
+  
+  /* Background Colors */
+  --bg-primary: var(--color-gray-900);
+  --bg-secondary: var(--color-gray-800);
+  --bg-tertiary: var(--color-gray-700);
+  --bg-hover: var(--color-gray-800);
+  --bg-active: var(--color-gray-700);
+  --bg-disabled: var(--color-gray-800);
+  --bg-overlay: rgba(0, 0, 0, 0.7);
+  --bg-inverse: var(--color-gray-100);
+  
+  /* Surface Colors */
+  --surface-primary: var(--color-gray-800);
+  --surface-secondary: var(--color-gray-700);
+  --surface-tertiary: var(--color-gray-600);
+  --surface-elevated: var(--color-gray-700);
+  
+  /* Border Colors */
+  --border-primary: var(--color-gray-700);
+  --border-secondary: var(--color-gray-600);
+  --border-focus: var(--color-brand-400);
+  --border-error: var(--color-danger-light);
+  --border-success: var(--color-success-light);
+  
+  /* Semantic Colors */
+  --semantic-success: var(--color-success-light);
+  --semantic-success-bg: #10b98130;
+  --semantic-warning: var(--color-warning-light);
+  --semantic-warning-bg: #f59e0b30;
+  --semantic-danger: var(--color-danger-light);
+  --semantic-danger-bg: #ef444430;
+  --semantic-info: var(--color-info-light);
+  --semantic-info-bg: #3b82f630;
+  
+  /* Component Specific */
+  --button-primary-bg: var(--color-brand-400);
+  --button-primary-text: var(--color-gray-900);
+  --button-primary-hover: var(--color-brand-300);
+  --button-secondary-bg: var(--color-gray-700);
+  --button-secondary-text: var(--color-gray-200);
+  --button-secondary-hover: var(--color-gray-600);
+  
+  /* Shadow Colors */
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --shadow-color-subtle: rgba(0, 0, 0, 0.2);
+}
+
+/* ===== SYSTEM THEME ===== */
+/* 시스템 설정에 따라 자동으로 테마 전환 */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    /* Primary Palette */
+    --color-primary: var(--color-brand-400);
+    --color-primary-hover: var(--color-brand-300);
+    --color-primary-active: var(--color-brand-200);
+    --color-primary-subtle: var(--color-brand-900);
+    --color-primary-subtle-hover: var(--color-brand-800);
+    
+    /* Text Colors */
+    --text-primary: var(--color-gray-100);
+    --text-secondary: var(--color-gray-300);
+    --text-tertiary: var(--color-gray-400);
+    --text-disabled: var(--color-gray-600);
+    --text-inverse: var(--color-gray-900);
+    --text-link: var(--color-brand-400);
+    --text-link-hover: var(--color-brand-300);
+    
+    /* Background Colors */
+    --bg-primary: var(--color-gray-900);
+    --bg-secondary: var(--color-gray-800);
+    --bg-tertiary: var(--color-gray-700);
+    --bg-hover: var(--color-gray-800);
+    --bg-active: var(--color-gray-700);
+    --bg-disabled: var(--color-gray-800);
+    --bg-overlay: rgba(0, 0, 0, 0.7);
+    --bg-inverse: var(--color-gray-100);
+    
+    /* Surface Colors */
+    --surface-primary: var(--color-gray-800);
+    --surface-secondary: var(--color-gray-700);
+    --surface-tertiary: var(--color-gray-600);
+    --surface-elevated: var(--color-gray-700);
+    
+    /* Border Colors */
+    --border-primary: var(--color-gray-700);
+    --border-secondary: var(--color-gray-600);
+    --border-focus: var(--color-brand-400);
+    --border-error: var(--color-danger-light);
+    --border-success: var(--color-success-light);
+    
+    /* Semantic Colors */
+    --semantic-success: var(--color-success-light);
+    --semantic-success-bg: #10b98130;
+    --semantic-warning: var(--color-warning-light);
+    --semantic-warning-bg: #f59e0b30;
+    --semantic-danger: var(--color-danger-light);
+    --semantic-danger-bg: #ef444430;
+    --semantic-info: var(--color-info-light);
+    --semantic-info-bg: #3b82f630;
+    
+    /* Component Specific */
+    --button-primary-bg: var(--color-brand-400);
+    --button-primary-text: var(--color-gray-900);
+    --button-primary-hover: var(--color-brand-300);
+    --button-secondary-bg: var(--color-gray-700);
+    --button-secondary-text: var(--color-gray-200);
+    --button-secondary-hover: var(--color-gray-600);
+    
+    /* Shadow Colors */
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --shadow-color-subtle: rgba(0, 0, 0, 0.2);
+  }
+}
+
+/* ===== THEME TRANSITIONS ===== */
+/* 테마 전환 시 부드러운 트랜지션 */
+:root {
+  transition: var(--transition-colors);
+}
+
+/* 트랜지션 비활성화 옵션 */
+[data-theme-transition="false"] :root {
+  transition: none;
+}
+
+/* ===== HIGH CONTRAST MODE ===== */
+/* 고대비 모드 지원 */
+@media (prefers-contrast: high) {
+  :root {
+    --text-primary: var(--color-gray-1000);
+    --text-secondary: var(--color-gray-800);
+    --bg-primary: var(--color-gray-0);
+    --border-primary: var(--color-gray-900);
+  }
+  
+  [data-theme="dark"] {
+    --text-primary: var(--color-gray-0);
+    --text-secondary: var(--color-gray-200);
+    --bg-primary: var(--color-gray-1000);
+    --border-primary: var(--color-gray-0);
+  }
+}

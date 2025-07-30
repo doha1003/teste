@@ -1,0 +1,351 @@
+/* ==========================================================================
+   Card Components v2.0 - Linear.app 기반 카드 시스템
+   ========================================================================== */
+
+/* ===== BASE CARD ===== */
+/* 기본 카드 컴포넌트 */
+
+.card {
+  /* Layout */
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  
+  /* Sizing */
+  width: 100%;
+  min-height: var(--space-32);
+  
+  /* Visual */
+  background-color: var(--surface-primary);
+  border: var(--border-1) solid var(--border-primary);
+  border-radius: var(--radius-lg);
+  
+  /* Behavior */
+  overflow: hidden;
+  transition: var(--transition-all);
+}
+
+/* Card Hover State */
+.card--hover:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--border-secondary);
+}
+
+/* Card Focus State */
+.card--clickable {
+  cursor: pointer;
+}
+
+.card--clickable:focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
+}
+
+/* ===== CARD STRUCTURE ===== */
+/* 카드 내부 구조 */
+
+.card__header {
+  padding: var(--space-6) var(--space-6) var(--space-4);
+  border-bottom: var(--border-1) solid var(--border-primary);
+}
+
+.card__body {
+  flex: 1;
+  padding: var(--space-6);
+}
+
+.card__footer {
+  padding: var(--space-4) var(--space-6) var(--space-6);
+  border-top: var(--border-1) solid var(--border-primary);
+  background-color: var(--bg-secondary);
+}
+
+/* Compact padding */
+.card--compact .card__header,
+.card--compact .card__body,
+.card--compact .card__footer {
+  padding: var(--space-4);
+}
+
+/* No borders */
+.card--borderless {
+  border: none;
+}
+
+.card--borderless .card__header,
+.card--borderless .card__footer {
+  border: none;
+}
+
+/* ===== CARD CONTENT ===== */
+/* 카드 콘텐츠 요소 */
+
+.card__title {
+  margin: 0 0 var(--space-2) 0;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+  color: var(--text-primary);
+}
+
+.card__subtitle {
+  margin: 0 0 var(--space-3) 0;
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  line-height: var(--line-height-normal);
+}
+
+.card__text {
+  margin: 0;
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-relaxed);
+  color: var(--text-primary);
+}
+
+.card__meta {
+  display: flex;
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+  font-size: var(--font-size-sm);
+  color: var(--text-tertiary);
+}
+
+/* ===== CARD MEDIA ===== */
+/* 카드 미디어 요소 */
+
+.card__image {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  background-color: var(--bg-tertiary);
+}
+
+.card__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Top image variant */
+.card__image--top {
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  margin: -1px -1px 0 -1px;
+}
+
+/* Aspect ratios */
+.card__image--square {
+  aspect-ratio: 1;
+  height: auto;
+}
+
+.card__image--wide {
+  aspect-ratio: 16 / 9;
+  height: auto;
+}
+
+/* ===== CARD ACTIONS ===== */
+/* 카드 액션 영역 */
+
+.card__actions {
+  display: flex;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-6);
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.card__actions--start {
+  justify-content: flex-start;
+}
+
+.card__actions--center {
+  justify-content: center;
+}
+
+.card__actions--between {
+  justify-content: space-between;
+}
+
+/* ===== CARD VARIANTS ===== */
+/* 카드 변형 */
+
+/* Elevated Card */
+.card--elevated {
+  border: none;
+  box-shadow: var(--shadow-md);
+}
+
+.card--elevated:hover {
+  box-shadow: var(--shadow-xl);
+}
+
+/* Ghost Card */
+.card--ghost {
+  background-color: transparent;
+  border: var(--border-1) dashed var(--border-primary);
+}
+
+/* Highlighted Card */
+.card--highlighted {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 1px var(--color-primary);
+}
+
+/* Status Cards */
+.card--success {
+  border-color: var(--semantic-success);
+  background-color: var(--semantic-success-bg);
+}
+
+.card--warning {
+  border-color: var(--semantic-warning);
+  background-color: var(--semantic-warning-bg);
+}
+
+.card--danger {
+  border-color: var(--semantic-danger);
+  background-color: var(--semantic-danger-bg);
+}
+
+.card--info {
+  border-color: var(--semantic-info);
+  background-color: var(--semantic-info-bg);
+}
+
+/* ===== CARD GRID ===== */
+/* 카드 그리드 레이아웃 */
+
+.card-grid {
+  display: grid;
+  gap: var(--space-6);
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.card-grid--2 {
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+}
+
+.card-grid--3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.card-grid--4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* ===== SERVICE CARD ===== */
+/* 서비스 카드 (특수 변형) */
+
+.service-card {
+  text-align: center;
+  padding: var(--space-8) var(--space-6);
+  transition: var(--transition-all);
+}
+
+.service-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-xl);
+}
+
+.service-card__icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto var(--space-4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-tertiary);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-2xl);
+}
+
+.service-card__title {
+  margin: 0 0 var(--space-3) 0;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+}
+
+.service-card__description {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: var(--line-height-relaxed);
+}
+
+/* ===== RESULT CARD ===== */
+/* 결과 카드 (특수 변형) */
+
+.result-card {
+  background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+  border: none;
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-8);
+}
+
+.result-card__badge {
+  display: inline-block;
+  padding: var(--space-1) var(--space-3);
+  background-color: var(--color-primary);
+  color: var(--color-gray-0);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--space-4);
+}
+
+.result-card__score {
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+  margin: var(--space-4) 0;
+}
+
+/* ===== RESPONSIVE CARDS ===== */
+/* 반응형 카드 */
+
+@media (max-width: 768px) {
+  .card__header,
+  .card__body,
+  .card__footer {
+    padding: var(--space-4);
+  }
+  
+  .card-grid,
+  .card-grid--2,
+  .card-grid--3,
+  .card-grid--4 {
+    grid-template-columns: 1fr;
+  }
+  
+  .card__actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .card__actions .btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 1024px) {
+  .card-grid--3,
+  .card-grid--4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ===== PRINT STYLES ===== */
+/* 인쇄 스타일 */
+
+@media print {
+  .card {
+    break-inside: avoid;
+    box-shadow: none;
+    border: 1px solid #ddd;
+  }
+  
+  .card--elevated {
+    border: 1px solid #ddd;
+  }
+}
