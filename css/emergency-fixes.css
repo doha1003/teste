@@ -1,0 +1,223 @@
+/* ==========================================================================
+   긴급 수정 CSS - 텍스트 겹침 및 레이아웃 문제 해결
+   ========================================================================== */
+
+/* 1. 전역 텍스트 겹침 방지 */
+* {
+    word-break: keep-all !important;
+    word-wrap: break-word !important;
+}
+
+/* 2. FAQ 페이지 긴급 수정 */
+.faq-item {
+    margin-bottom: 20px !important;
+    overflow: visible !important;
+}
+
+.faq-question {
+    padding: 16px 48px 16px 16px !important;
+    position: relative !important;
+    cursor: pointer !important;
+    display: block !important;
+}
+
+.faq-answer {
+    padding: 16px !important;
+    margin-top: 0 !important;
+    position: relative !important;
+    z-index: 1 !important;
+}
+
+.faq-icon {
+    position: absolute !important;
+    right: 16px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    flex-shrink: 0 !important;
+}
+
+/* 3. 카드 레이아웃 수정 */
+.card, .service-card, .test-card, .tool-card, .fortune-card {
+    margin-bottom: 24px !important;
+    overflow: hidden !important;
+    position: relative !important;
+}
+
+.card-title, .card-text {
+    margin-bottom: 12px !important;
+    line-height: 1.7 !important;
+}
+
+/* 4. 그리드 간격 조정 */
+.grid, .services-grid, .tests-grid, .tools-grid {
+    gap: 24px !important;
+}
+
+/* 5. 모바일 레이아웃 긴급 수정 */
+@media (max-width: 768px) {
+    body {
+        overflow-x: hidden !important;
+    }
+    
+    .container, .content {
+        padding: 16px !important;
+        max-width: 100vw !important;
+    }
+    
+    .grid {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .hero-title {
+        font-size: 28px !important;
+        line-height: 1.4 !important;
+    }
+    
+    .hero-subtitle {
+        font-size: 16px !important;
+        line-height: 1.6 !important;
+    }
+    
+    /* 모바일 네비게이션 */
+    .navbar {
+        padding: 12px 16px !important;
+    }
+    
+    .nav-menu {
+        display: none !important;
+    }
+    
+    .mobile-menu-toggle {
+        display: block !important;
+    }
+}
+
+/* 6. 애니메이션 최적화 */
+@media (prefers-reduced-motion: no-preference) {
+    * {
+        animation-duration: 0.3s !important;
+        transition-duration: 0.2s !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+/* 7. 버튼 및 링크 터치 영역 확대 */
+button, .btn, a {
+    min-height: 44px !important;
+    min-width: 44px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* 8. 텍스트 가독성 개선 */
+p, li, span, div {
+    line-height: 1.7 !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    line-height: 1.4 !important;
+    margin-top: 0 !important;
+    margin-bottom: 16px !important;
+}
+
+/* 9. 오버플로우 방지 */
+.page-wrapper, main, .content {
+    overflow-x: hidden !important;
+}
+
+img {
+    max-width: 100% !important;
+    height: auto !important;
+}
+
+/* 10. Z-index 정리 */
+.navbar {
+    z-index: 1000 !important;
+}
+
+.mobile-menu {
+    z-index: 999 !important;
+}
+
+.modal, .popup {
+    z-index: 2000 !important;
+}
+
+/* 11. 폰트 최적화 */
+body {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif !important;
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
+}
+
+/* 12. 색상 대비 개선 */
+.btn-primary {
+    background-color: #5c5ce0 !important;
+    color: white !important;
+}
+
+.btn-primary:hover {
+    background-color: #4949d0 !important;
+}
+
+/* 13. 푸터 간격 수정 */
+.footer {
+    margin-top: 80px !important;
+    padding: 40px 0 !important;
+}
+
+.footer-section {
+    margin-bottom: 32px !important;
+}
+
+/* 14. 아이콘과 텍스트 정렬 */
+.icon-text {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+
+.icon-text > *:first-child {
+    flex-shrink: 0 !important;
+}
+
+/* 15. 입력 필드 스타일 */
+input, textarea, select {
+    width: 100% !important;
+    padding: 12px 16px !important;
+    border: 1px solid #e5e7eb !important;
+    border-radius: 8px !important;
+    font-size: 16px !important; /* iOS 줌 방지 */
+}
+
+/* 16. 로딩 상태 */
+.loading {
+    pointer-events: none !important;
+    opacity: 0.6 !important;
+}
+
+/* 17. 스크롤바 스타일 */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}

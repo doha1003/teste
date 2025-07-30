@@ -209,6 +209,11 @@
         // 페이지별 초기화
         DohaKR.initPage();
         
+        // 모바일 메뉴 초기화
+        import('./mobile-menu.js').catch(err => {
+            console.warn('모바일 메뉴 로드 실패:', err);
+        });
+        
         // 이미지 지연 로딩 polyfill
         if ('loading' in HTMLImageElement.prototype) {
             const images = document.querySelectorAll('img[loading="lazy"]');
