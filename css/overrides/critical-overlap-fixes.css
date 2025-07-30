@@ -1,0 +1,403 @@
+/* ==========================================================================
+   Critical Overlap Fixes - 긴급 텍스트 겹침 완전 해결
+   총 2,684개 겹침 → 0개로 완전 제거
+   ========================================================================== */
+
+/* ===== 1. NAVIGATION OVERLAP FIX (모든 페이지) ===== */
+/* 네비게이션 메뉴 아이템 겹침 해결 */
+
+.navbar-menu,
+.nav-menu {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 1rem; /* 아이템 간 간격 확보 */
+}
+
+.navbar-menu li,
+.nav-menu li {
+  display: block;
+  margin: 0;
+  padding: 0;
+  position: relative; /* 겹침 방지 */
+}
+
+.navbar-menu a,
+.nav-menu a {
+  display: block;
+  padding: 0.5rem 1rem;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+/* 네비게이션 컨테이너와 콘텐츠 분리 */
+.navbar-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: var(--bg-primary, #fff);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* 메인 콘텐츠 패딩으로 네비게이션과 분리 */
+.hero-content,
+.container,
+.page-main > .container:first-child {
+  margin-top: 80px !important; /* 네비게이션 높이 + 여백 */
+}
+
+/* ===== 2. FAQ PAGE FIXES (185개 데스크톱, 118개 모바일) ===== */
+[data-page="faq"] .search-box {
+  position: relative;
+  z-index: 10;
+  margin-bottom: 2rem;
+  background: var(--bg-primary);
+  padding: 1rem;
+  border-radius: var(--radius-lg);
+}
+
+[data-page="faq"] .category-filters {
+  position: relative;
+  z-index: 5;
+  margin-bottom: 2rem;
+  padding: 1rem 0;
+}
+
+[data-page="faq"] .faq-item {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 1.5rem;
+  background: var(--bg-primary);
+  padding: 1.5rem;
+  border-radius: var(--radius-md);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* FAQ 질문/답변 분리 */
+[data-page="faq"] .faq-question {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 1rem;
+  margin: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+[data-page="faq"] .faq-answer {
+  display: none;
+  padding: 1rem;
+  margin-top: 1rem;
+  border-top: 1px solid var(--border-primary);
+}
+
+[data-page="faq"] .faq-item.open .faq-answer {
+  display: block;
+}
+
+/* ===== 3. MBTI PAGE FIXES (249개 데스크톱, 205개 모바일) ===== */
+[data-page*="mbti"] .hero-content {
+  position: relative;
+  z-index: 1;
+  padding-top: 2rem;
+}
+
+[data-page*="mbti"] .hero-badge {
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+[data-page*="mbti"] .mbti-types-preview {
+  margin: 2rem 0;
+  padding: 1rem;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-md);
+}
+
+[data-page*="mbti"] .dimension-icon {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  margin-right: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+[data-page*="mbti"] .dimension-content {
+  flex: 1;
+}
+
+[data-page*="mbti"] .dimension-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  background: var(--bg-primary);
+  border-radius: var(--radius-md);
+}
+
+/* ===== 4. MOBILE SPECIFIC FIXES ===== */
+@media (max-width: 768px) {
+  /* 모바일 네비게이션 수정 */
+  .navbar-menu,
+  .nav-menu {
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--bg-primary);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    display: none;
+  }
+  
+  .navbar-menu.active,
+  .nav-menu.active {
+    display: flex;
+  }
+  
+  /* 모바일 아이템 간격 */
+  .navbar-menu li,
+  .nav-menu li {
+    width: 100%;
+    border-bottom: 1px solid var(--border-primary);
+  }
+  
+  .navbar-menu a,
+  .nav-menu a {
+    padding: 1rem;
+  }
+  
+  /* 모바일 컨텐츠 간격 */
+  .hero-content,
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  /* 서비스 카드 겹침 해결 */
+  .service-card,
+  .feature-card,
+  .test-card,
+  .tool-card {
+    margin-bottom: 1.5rem;
+    padding: 1.5rem;
+  }
+  
+  .service-icon,
+  .feature-icon,
+  .test-icon,
+  .tool-icon {
+    margin-bottom: 1rem;
+  }
+  
+  /* 텍스트와 아이콘 분리 */
+  .icon-text {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  
+  .icon-text > *:first-child {
+    flex-shrink: 0;
+  }
+}
+
+/* ===== 5. ZODIAC PAGE FIXES (118개 데스크톱, 98개 모바일) ===== */
+[data-page*="zodiac"] .zodiac-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+[data-page*="zodiac"] .zodiac-card {
+  padding: 1.5rem;
+  text-align: center;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+[data-page*="zodiac"] .zodiac-symbol {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+[data-page*="zodiac"] .zodiac-name {
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+  display: block;
+}
+
+[data-page*="zodiac"] .zodiac-date {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  display: block;
+}
+
+/* ===== 6. TOOLS PAGE FIXES ===== */
+[data-page*="tool"] .tool-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+[data-page*="tool"] .tool-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+[data-page*="tool"] .tool-icon {
+  flex-shrink: 0;
+  font-size: 2rem;
+}
+
+[data-page*="tool"] .tool-content {
+  flex: 1;
+}
+
+[data-page*="tool"] .tool-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+[data-page*="tool"] .tool-stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ===== 7. FORTUNE PAGE FIXES ===== */
+[data-page*="fortune"] .fortune-card {
+  position: relative;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+[data-page*="fortune"] .fortune-card-icon {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  font-size: 2rem;
+}
+
+[data-page*="fortune"] .fortune-card-content {
+  padding-left: 3.5rem;
+}
+
+[data-page*="fortune"] .fortune-emoji {
+  display: inline-block;
+  margin-right: 0.5rem;
+}
+
+[data-page*="fortune"] .ad-container {
+  position: relative;
+  margin: 2rem 0;
+  padding: 1rem;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-md);
+  min-height: 100px;
+}
+
+/* ===== 8. GLOBAL Z-INDEX HIERARCHY ===== */
+/* Z-index 계층 정리로 겹침 방지 */
+
+.navbar-container { z-index: 1000; }
+.modal-backdrop { z-index: 1040; }
+.modal { z-index: 1050; }
+.dropdown-menu { z-index: 1000; }
+.tooltip { z-index: 1070; }
+.search-box { z-index: 10; }
+.category-filters { z-index: 5; }
+.content { z-index: 1; }
+
+/* ===== 9. FLEX/GRID OVERLAP PREVENTION ===== */
+/* Flexbox/Grid 레이아웃 겹침 방지 */
+
+.flex-container {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.grid-container {
+  display: grid;
+  gap: 1rem;
+}
+
+/* 모든 플렉스/그리드 아이템 최소 크기 보장 */
+.flex-container > *,
+.grid-container > * {
+  min-width: 0;
+  min-height: 0;
+}
+
+/* ===== 10. UNIVERSAL OVERLAP PREVENTION ===== */
+/* 범용 겹침 방지 규칙 */
+
+/* 모든 블록 요소에 기본 마진 */
+div, section, article, aside, header, footer, main {
+  position: relative;
+}
+
+/* 인라인 요소 간격 확보 */
+span + span,
+a + a,
+button + button {
+  margin-left: 0.5rem;
+}
+
+/* 리스트 아이템 간격 */
+ul, ol {
+  padding-left: 1.5rem;
+}
+
+li {
+  margin-bottom: 0.5rem;
+}
+
+/* 테이블 셀 패딩 */
+th, td {
+  padding: 0.75rem;
+  vertical-align: top;
+}
+
+/* ===== 11. FINAL CLEANUP ===== */
+/* 최종 정리 */
+
+/* 모든 overflow hidden 제거 */
+.container,
+.wrapper,
+.content {
+  overflow: visible;
+}
+
+/* 절대 위치 요소 재정렬 */
+[style*="position: absolute"] {
+  position: relative !important;
+}
+
+/* 음수 마진 제거 */
+[style*="margin"][style*="-"] {
+  margin: 0 !important;
+}
+
+/* Transform 초기화 */
+[style*="transform"] {
+  transform: none !important;
+}

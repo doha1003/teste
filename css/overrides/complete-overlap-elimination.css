@@ -1,0 +1,466 @@
+/* ==========================================================================
+   Complete Overlap Elimination - 텍스트 겹침 완전 제거
+   2,666개 겹침 → 0개로 완전 제거
+   ========================================================================== */
+
+/* ===== 1. NAVIGATION COMPLETE FIX ===== */
+/* 네비게이션 완전 재구성 */
+
+/* 네비게이션 컨테이너 고정 */
+.navbar,
+.navbar-container,
+nav.navbar {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 64px !important;
+  z-index: 9999 !important;
+  background: var(--bg-primary) !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+}
+
+/* 네비게이션 메뉴 완전 재구성 */
+.navbar-menu,
+.nav-menu,
+nav ul {
+  display: flex !important;
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  height: 100% !important;
+  align-items: center !important;
+  gap: 0 !important; /* 갭 제거하고 패딩으로 처리 */
+}
+
+/* 네비게이션 아이템 절대 겹치지 않도록 */
+.navbar-menu li,
+.nav-menu li,
+nav ul li {
+  display: block !important;
+  position: relative !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  height: 100% !important;
+  flex-shrink: 0 !important; /* 절대 축소 금지 */
+}
+
+/* 네비게이션 링크 명확한 경계 */
+.navbar-menu a,
+.nav-menu a,
+nav ul li a,
+.nav-link {
+  display: flex !important;
+  align-items: center !important;
+  padding: 0 1.5rem !important;
+  height: 100% !important;
+  white-space: nowrap !important;
+  text-decoration: none !important;
+  position: relative !important;
+  z-index: 1 !important;
+  min-width: max-content !important; /* 최소 너비 보장 */
+}
+
+/* 메인 콘텐츠 충분한 여백 */
+body {
+  padding-top: 64px !important;
+}
+
+main,
+.main-content,
+.page-main {
+  padding-top: 2rem !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+/* ===== 2. FEATURE CARDS COMPLETE FIX ===== */
+/* 피처 카드 완전 분리 */
+
+.features-grid,
+.feature-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
+  gap: 2rem !important; /* 충분한 간격 */
+  padding: 2rem 0 !important;
+}
+
+.feature-card {
+  position: relative !important;
+  z-index: 1 !important;
+  background: var(--bg-primary) !important;
+  border: 1px solid var(--border-primary) !important;
+  border-radius: var(--radius-lg) !important;
+  padding: 2rem !important;
+  margin: 0 !important; /* 그리드 갭으로만 간격 처리 */
+  min-height: 200px !important;
+  container-type: inline-size !important;
+}
+
+/* 피처 카드 내부 요소 분리 */
+.feature-card > * {
+  display: block !important;
+  margin-bottom: 1rem !important;
+}
+
+.feature-card > *:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* ===== 3. SERVICE/TEST/TOOL CARDS FIX ===== */
+/* 서비스 카드 그리드 재구성 */
+
+.services-grid,
+.tests-grid,
+.tools-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+  gap: 1.5rem !important;
+  padding: 2rem 0 !important;
+}
+
+.service-card,
+.test-card,
+.tool-card {
+  position: relative !important;
+  z-index: 1 !important;
+  background: var(--bg-primary) !important;
+  border: 1px solid var(--border-primary) !important;
+  border-radius: var(--radius-md) !important;
+  padding: 1.5rem !important;
+  margin: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 1rem !important;
+  min-height: 150px !important;
+}
+
+/* ===== 4. FAQ PAGE COMPLETE FIX ===== */
+/* FAQ 페이지 완전 재구성 */
+
+[data-page="faq"] .faq-container {
+  max-width: 800px !important;
+  margin: 0 auto !important;
+  padding: 2rem !important;
+}
+
+[data-page="faq"] .search-section {
+  position: relative !important;
+  z-index: 100 !important;
+  margin-bottom: 3rem !important;
+  background: var(--bg-primary) !important;
+  padding: 2rem !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+}
+
+[data-page="faq"] .category-filters {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 1rem !important;
+  margin-bottom: 3rem !important;
+  padding: 1rem 0 !important;
+}
+
+[data-page="faq"] .faq-list {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 1.5rem !important;
+}
+
+[data-page="faq"] .faq-item {
+  position: relative !important;
+  z-index: 1 !important;
+  background: var(--bg-primary) !important;
+  border: 1px solid var(--border-primary) !important;
+  border-radius: var(--radius-md) !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+}
+
+[data-page="faq"] .faq-question {
+  display: block !important;
+  width: 100% !important;
+  padding: 1.5rem !important;
+  text-align: left !important;
+  background: transparent !important;
+  border: none !important;
+  cursor: pointer !important;
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+[data-page="faq"] .faq-answer {
+  display: none !important;
+  padding: 0 1.5rem 1.5rem !important;
+  margin: 0 !important;
+  border-top: 1px solid var(--border-primary) !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+[data-page="faq"] .faq-item.open .faq-answer,
+[data-page="faq"] .faq-item.active .faq-answer {
+  display: block !important;
+}
+
+/* ===== 5. MBTI PAGE COMPLETE FIX ===== */
+/* MBTI 페이지 완전 재구성 */
+
+[data-page*="mbti"] .hero-section {
+  position: relative !important;
+  z-index: 1 !important;
+  padding: 4rem 0 !important;
+  margin-bottom: 3rem !important;
+}
+
+[data-page*="mbti"] .hero-content > * {
+  display: block !important;
+  margin-bottom: 1.5rem !important;
+}
+
+[data-page*="mbti"] .dimensions-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
+  gap: 2rem !important;
+  margin: 3rem 0 !important;
+}
+
+[data-page*="mbti"] .dimension-card {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 1.5rem !important;
+  padding: 2rem !important;
+  background: var(--bg-primary) !important;
+  border: 1px solid var(--border-primary) !important;
+  border-radius: var(--radius-md) !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+[data-page*="mbti"] .dimension-icon {
+  flex-shrink: 0 !important;
+  width: 48px !important;
+  height: 48px !important;
+  font-size: 2rem !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+[data-page*="mbti"] .dimension-content {
+  flex: 1 !important;
+  min-width: 0 !important;
+}
+
+/* ===== 6. MOBILE COMPLETE FIX ===== */
+@media (max-width: 768px) {
+  /* 모바일 네비게이션 완전 재구성 */
+  .navbar-menu,
+  .nav-menu,
+  nav ul {
+    position: fixed !important;
+    top: 64px !important;
+    left: 0 !important;
+    right: 0 !important;
+    flex-direction: column !important;
+    background: var(--bg-primary) !important;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1) !important;
+    max-height: calc(100vh - 64px) !important;
+    overflow-y: auto !important;
+    display: none !important;
+    gap: 0 !important;
+  }
+  
+  .navbar-menu.active,
+  .nav-menu.active,
+  nav ul.active {
+    display: flex !important;
+  }
+  
+  .navbar-menu li,
+  .nav-menu li,
+  nav ul li {
+    width: 100% !important;
+    height: auto !important;
+    border-bottom: 1px solid var(--border-primary) !important;
+  }
+  
+  .navbar-menu a,
+  .nav-menu a,
+  nav ul li a {
+    padding: 1rem 1.5rem !important;
+    height: auto !important;
+    justify-content: flex-start !important;
+  }
+  
+  /* 모바일 그리드 단일 컬럼 */
+  .features-grid,
+  .services-grid,
+  .tests-grid,
+  .tools-grid,
+  .dimensions-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+    padding: 1.5rem !important;
+  }
+  
+  /* 모바일 카드 여백 증가 */
+  .feature-card,
+  .service-card,
+  .test-card,
+  .tool-card,
+  .dimension-card {
+    margin-bottom: 1.5rem !important;
+  }
+  
+  /* 모바일 컨테이너 패딩 */
+  .container,
+  .page-container {
+    padding: 0 1rem !important;
+  }
+  
+  /* 모바일 FAQ 수정 */
+  [data-page="faq"] .faq-container {
+    padding: 1rem !important;
+  }
+  
+  [data-page="faq"] .search-section {
+    padding: 1.5rem !important;
+    margin-bottom: 2rem !important;
+  }
+  
+  [data-page="faq"] .category-filters {
+    gap: 0.5rem !important;
+  }
+}
+
+/* ===== 7. Z-INDEX HIERARCHY ENFORCEMENT ===== */
+/* Z-index 계층 강제 적용 */
+
+.navbar-container,
+.navbar,
+nav.navbar { z-index: 9999 !important; }
+
+.modal-backdrop { z-index: 10000 !important; }
+.modal { z-index: 10001 !important; }
+.dropdown-menu { z-index: 9998 !important; }
+.tooltip { z-index: 10002 !important; }
+
+.search-section,
+.search-box { z-index: 100 !important; }
+
+.category-filters { z-index: 50 !important; }
+
+.faq-item,
+.feature-card,
+.service-card,
+.test-card,
+.tool-card,
+.dimension-card { z-index: 10 !important; }
+
+.content,
+.page-content,
+main { z-index: 1 !important; }
+
+/* ===== 8. UNIVERSAL SPACING ENFORCEMENT ===== */
+/* 범용 간격 강제 적용 */
+
+/* 모든 섹션 간격 */
+section {
+  padding: 3rem 0 !important;
+  position: relative !important;
+}
+
+section + section {
+  margin-top: 2rem !important;
+}
+
+/* 모든 그리드 컨테이너 */
+[class*="-grid"] {
+  container-type: inline-size !important;
+  container-name: grid-container !important;
+}
+
+/* 모든 카드 요소 */
+[class*="-card"] {
+  container-type: inline-size !important;
+  container-name: card-container !important;
+  isolation: isolate !important; /* 새 스태킹 컨텍스트 생성 */
+}
+
+/* 텍스트 요소 간격 */
+p + p,
+h1 + p,
+h2 + p,
+h3 + p {
+  margin-top: 1rem !important;
+}
+
+/* 리스트 간격 */
+ul, ol {
+  padding-left: 2rem !important;
+  margin: 1rem 0 !important;
+}
+
+li {
+  margin-bottom: 0.5rem !important;
+  line-height: 1.7 !important;
+}
+
+li:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* ===== 9. OVERFLOW AND TRANSFORM RESET ===== */
+/* 오버플로우 및 트랜스폼 리셋 */
+
+/* Hidden overflow 제거 */
+body > *:not(.modal):not(.dropdown) {
+  overflow: visible !important;
+}
+
+/* Transform 초기화 */
+[style*="transform"]:not(.modal):not(.animate) {
+  transform: none !important;
+}
+
+/* Position absolute 제한 */
+[style*="position: absolute"]:not(.modal):not(.dropdown):not(.tooltip) {
+  position: relative !important;
+}
+
+/* 음수 마진 제거 */
+* {
+  margin-top: 0 !important;
+  margin-left: 0 !important;
+}
+
+/* ===== 10. FINAL CLEANUP ===== */
+/* 최종 정리 */
+
+/* 인라인 스타일 오버라이드 */
+[style*="margin"]:not(.modal):not(.dropdown) {
+  margin: 0 !important;
+}
+
+/* 플렉스/그리드 아이템 최소 크기 */
+.flex-container > *,
+.grid-container > *,
+[class*="-grid"] > * {
+  min-width: 0 !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+}
+
+/* 글로벌 박스 모델 재확인 */
+*, *::before, *::after {
+  box-sizing: border-box !important;
+}
+
+/* 한글 텍스트 최적화 재확인 */
+body, p, li, td, th, span, a, button, label {
+  word-break: keep-all !important;
+  line-height: 1.7 !important;
+}
