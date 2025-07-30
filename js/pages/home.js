@@ -401,7 +401,7 @@
             if (!Kakao.isInitialized()) {
                 try {
                     Kakao.init(window.API_CONFIG.KAKAO_JS_KEY);
-                    console.log('Kakao SDK initialized');
+                    
                 } catch (e) {
                     console.error('Kakao SDK init error:', e);
                 }
@@ -433,7 +433,7 @@
             
             // 개발 환경에서 로그
             if (window.location.hostname === 'localhost') {
-                console.log('Track event:', eventName, eventData);
+                
             }
         }
     

@@ -3,8 +3,13 @@
 <head>
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src 'self' https:; script-src 'unsafe-inline' 'self' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; style-src 'unsafe-inline' 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>MBTI 성격유형 검사 - 24문항 성격 분석 | doha.kr</title>
+    <!-- 폰트 프리로드 -->
+    <link rel="preload" href="/fonts/Pretendard-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/Pretendard-Medium.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/Pretendard-Bold.woff2" as="font" type="font/woff2" crossorigin>
+    
     <meta name="description" content="24개의 심층적인 문항으로 분석하는 MBTI 성격유형 검사. 16가지 성격 유형 중 당신의 유형을 찾아보세요.">
     <meta name="robots" content="index, follow">
     <meta name="author" content="doha.kr">
@@ -33,25 +38,26 @@
     <link rel="preconnect" crossorigin href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <!-- Core CSS (모듈 구조) -->
-    <link rel="stylesheet" href="/css/core/variables.css?v=1753880198522">
-    <link rel="stylesheet" href="/css/core/reset.css?v=1753880198522">
-    <link rel="stylesheet" href="/css/core/typography.css?v=1753880198522">
+    <link rel="stylesheet" href="/css/foundation/variables.css?v=1753882798237">
+    <link rel="stylesheet" href="/css/foundation/reset.css?v=1753882798237">
+    <link rel="stylesheet" href="/css/foundation/typography.css?v=1753882798237">
+    <link rel="stylesheet" href="/css/korean-optimization.css">
     
     <!-- Layout CSS -->
-    <link rel="stylesheet" href="/css/layout/grid.css?v=1753880198522">
-    <link rel="stylesheet" href="/css/layout/header.css?v=1753880198522">
-    <link rel="stylesheet" href="/css/layout/footer.css?v=1753880198522">
+    <link rel="stylesheet" href="/css/layout/grid.css?v=1753882798237">
+    <link rel="stylesheet" href="/css/layout/header.css?v=1753882798237">
+    <link rel="stylesheet" href="/css/layout/footer.css?v=1753882798237">
     
     <!-- Component CSS -->
-    <link rel="stylesheet" href="/css/components/buttons.css?v=1753880198522">
-    <link rel="stylesheet" href="/css/components/cards.css?v=1753880198522">
-    <link rel="stylesheet" href="/css/components/forms.css?v=1753880198522">
-    <link rel="stylesheet" href="/css/components/result-cards.css?v=1753880198522">
+    <link rel="stylesheet" href="/css/components/buttons-v2.css?v=1753882798237">
+    <link rel="stylesheet" href="/css/components/cards-v2.css?v=1753882798237">
+    <link rel="stylesheet" href="/css/components/forms-v2.css?v=1753882798237">
+    <link rel="stylesheet" href="/css/components/result-cards.css?v=1753882798237">
     
     <!-- Feature CSS -->
-    <link rel="stylesheet" href="/css/features/test-common.css?v=1753880198522">
-    <link rel="stylesheet" href="/css/features/test-result.css?v=1753880198522">
-    <link rel="stylesheet" href="/css/features/mbti-test.css?v=1753880198522">
+    <link rel="stylesheet" href="/css/features/test-common.css?v=1753882798237">
+    <link rel="stylesheet" href="/css/features/test-result.css?v=1753882798237">
+    <link rel="stylesheet" href="/css/features/mbti-test.css?v=1753882798237">
     
     <!-- Page Data Attributes -->
     <script>

@@ -1,3 +1,6 @@
+/* Korean Optimization - 최우선 적용 */
+@import 'korean-optimization.css';
+
 /* ==========================================================================
    Main CSS - 통합 CSS 아키텍처 v2.0
    연관성(Relevance), 의존성(Dependency), 일관성(Consistency) 기반 설계
@@ -61,6 +64,7 @@
 
 /* ===== 8. OVERRIDE LAYER (오버라이드 계층) ===== */
 /* 특정 문제 해결을 위한 오버라이드 */
+@import 'overrides/korean-optimized-nav.css'; /* 한글 최적화 네비게이션 - 최우선 적용 */
 @import 'overrides/navbar-structure-fix.css'; /* 네비게이션 HTML 구조와 함께 겹침 완전 제거 */
 @import 'overrides/complete-overlap-elimination.css'; /* 2,666개 텍스트 겹침 완전 제거 */
 @import 'overrides/critical-overlap-fixes.css'; /* 2,684개 텍스트 겹침 완전 해결 */

@@ -43,7 +43,7 @@
             // GitHub Actions에서 주입된 API 키 사용
             const apiKey = window.KAKAO_API_KEY || 'YOUR_JAVASCRIPT_KEY';
             Kakao.init(apiKey);
-            console.log('Kakao SDK 초기화 완료');
+            
         }
     };
     
@@ -54,28 +54,56 @@
         // 네비게이션 로드
         const navPlaceholder = document.getElementById('navbar-placeholder');
         if (navPlaceholder) {
-            fetch('/includes/navbar.html')
-                .then(response => response.text())
-                .then(data => {
-                    navPlaceholder.innerHTML = data;
-                    DohaKR.initMobileMenu();
-                })
-                .catch(error => {
-                    console.error('네비게이션 로드 실패:', error);
-                });
+            const navXhr = new XMLHttpRequest();
+            navXhr.open('GET', '/includes/navbar.html', true);
+            navXhr.onreadystatechange = function() {
+                if (navXhr.readyState === 4) {
+                    if (navXhr.status === 200 || navXhr.status === 0) { // 0은 file:// 프로토콜
+                        navPlaceholder.innerHTML = navXhr.responseText;
+                        DohaKR.initMobileMenu();
+                    } else {
+                        // file:// 프로토콜에서 실패하면 직접 삽입
+                        navPlaceholder.innerHTML = `<nav class="navbar navbar-fixed">
+    <div class="navbar-container navbar-flex">
+        <a href="/" class="logo navbar-logo">doha.kr</a>
+        <ul class="nav-menu navbar-menu nav-flex" id="nav-menu">
+            <li class="nav-item"><a href="/" class="nav-link nav-link-padded">홈</a></li>
+            <li class="nav-item"><a href="/tests/" class="nav-link nav-link-padded">심리테스트</a></li>
+            <li class="nav-item"><a href="/fortune/" class="nav-link nav-link-padded">운세</a></li>
+            <li class="nav-item"><a href="/tools/" class="nav-link nav-link-padded">실용도구</a></li>
+            <li class="nav-item"><a href="/contact/" class="nav-link nav-link-padded">문의</a></li>
+            <li class="nav-item"><a href="/about/" class="nav-link nav-link-padded">소개</a></li>
+        </ul>
+        <button class="mobile-menu-btn navbar-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="메뉴 열기">
+            <span class="menu-bar"></span>
+            <span class="menu-bar"></span>
+            <span class="menu-bar"></span>
+        </button>
+    </div>
+</nav>`;
+                        DohaKR.initMobileMenu();
+                    }
+                }
+            };
+            navXhr.send();
         }
         
         // 푸터 로드
         const footerPlaceholder = document.getElementById('footer-placeholder');
         if (footerPlaceholder) {
-            fetch('/includes/footer.html')
-                .then(response => response.text())
-                .then(data => {
-                    footerPlaceholder.innerHTML = data;
-                })
-                .catch(error => {
-                    console.error('푸터 로드 실패:', error);
-                });
+            const footerXhr = new XMLHttpRequest();
+            footerXhr.open('GET', '/includes/footer.html', true);
+            footerXhr.onreadystatechange = function() {
+                if (footerXhr.readyState === 4) {
+                    if (footerXhr.status === 200 || footerXhr.status === 0) {
+                        footerPlaceholder.innerHTML = footerXhr.responseText;
+                    } else {
+                        // file:// 프로토콜에서 실패하면 직접 삽입
+                        footerPlaceholder.innerHTML = `<footer class="footer"> <div class="footer-content"> <div class="footer-section"> <h3>doha.kr</h3> <p class="text-gray-400 mt-8"> 일상을 더 재미있게 만드는 공간<br> 심리테스트, 운세, 실용도구의 만남 </p> <div class="footer-social"> <a href="mailto:youtubdoha@gmail.com" class="social-link">📧</a> </div> </div> <div class="footer-section"> <h3>서비스</h3> <ul class="footer-links"> <li><a href="/">홈</a></li> <li><a href="/tests/">심리테스트</a></li> <li><a href="/fortune/">운세</a></li> <li><a href="/tools/">실용도구</a></li> <li><a href="/about/">사이트 소개</a></li> </ul> </div> <div class="footer-section"> <h3>인기 콘텐츠</h3> <ul class="footer-links"> <li><a href="/tests/teto-egen/">테토-에겐 테스트</a></li> <li><a href="/tests/mbti/">MBTI 테스트</a></li> <li><a href="/fortune/daily/">오늘의 운세</a></li> <li><a href="/tools/text-counter.html">글자수 세기</a></li> </ul> </div> <div class="footer-section"> <h3>운세 서비스</h3> <ul class="footer-links"> <li><a href="/fortune/daily/">오늘의 운세</a></li> <li><a href="/fortune/zodiac/">별자리 운세</a></li> <li><a href="/fortune/zodiac-animal/">띠별 운세</a></li> <li><a href="/fortune/tarot/">AI 타로</a></li> </ul> </div> <div class="footer-section"> <h3>고객지원</h3> <ul class="footer-links"> <li><a href="/contact/">문의하기</a></li> <li><a href="/faq/">자주 묻는 질문</a></li> </ul> </div> </div> <div class="footer-bottom"> <div class="footer-legal"> <a href="/privacy/">개인정보처리방침</a> <a href="/terms/">이용약관</a> </div> <p>&copy; 2025 doha.kr. All rights reserved.</p> </div> </footer>`;
+                    }
+                }
+            };
+            footerXhr.send();
         }
     };
     

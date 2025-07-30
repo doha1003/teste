@@ -2,8 +2,13 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>오늘의 운세 - 사주 기반 정확한 일일운세 | doha.kr</title>
+    <!-- 폰트 프리로드 -->
+    <link rel="preload" href="/fonts/Pretendard-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/Pretendard-Medium.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/Pretendard-Bold.woff2" as="font" type="font/woff2" crossorigin>
+    
     <meta name="description" content="정확한 만세력 사주팔자를 기반으로 분석하는 오늘의 운세. 생년월일시를 입력하여 상세한 일일 운세를 확인하세요.">
     <meta name="robots" content="index, follow">
     <meta name="author" content="doha.kr">
@@ -33,11 +38,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Main CSS -->
-    <link rel="stylesheet" href="/css/main.css?v=1753880198522">
+    <link rel="stylesheet" href="/css/korean-optimization.css">
+    <link rel="stylesheet" href="/css/main.css?v=1753882798246">
     
     <!-- Feature CSS -->
-    <link rel="stylesheet" href="/css/features/fortune-common.css?v=1753880198522">
-    <link rel="stylesheet" href="/css/features/fortune-result.css?v=1753880198522">
+    <link rel="stylesheet" href="/css/features/fortune-common.css?v=1753882798246">
+    <link rel="stylesheet" href="/css/features/fortune-result.css?v=1753882798246">
     
     <!-- Page Data Attributes -->
     <script>
@@ -46,7 +52,7 @@
 </head>
 <body class="fortune-page" data-page="fortune-daily">
     <!-- 네비게이션 바 -->
-    <div id="navbar-placeholder"></div>
+        <div id="navbar-placeholder"></div>
     
     <!-- 페이지 헤더 -->
     <section class="page-header">
@@ -156,7 +162,7 @@
     </div>
     
     <!-- 푸터 -->
-    <div id="footer-placeholder"></div>
+        <div id="footer-placeholder"></div>
     
     <!-- Core JavaScript -->
     <script src="/js/core/common-init.js"></script>
