@@ -1,0 +1,58 @@
+/* ==========================================================================
+   Main CSS - 모든 스타일의 진입점 (충돌 해결 버전)
+   ========================================================================== */
+
+/* =================================
+   1. Design System (최우선)
+   ================================= */
+@import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap');
+@import 'design-system.css';
+
+/* =================================
+   2. Core Reset & Base
+   ================================= */
+@import 'core/reset.css';
+
+/* =================================
+   3. Layout Components
+   ================================= */
+@import 'layout/header.css';
+@import 'layout/footer.css';
+
+/* =================================
+   4. Global Styles
+   ================================= */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+/* Main Content Area */
+main {
+  min-height: calc(100vh - 64px - 200px); /* navbar + footer */
+  padding-top: 64px; /* navbar height */
+}
+
+/* =================================
+   5. Page Scoped Styles
+   ================================= */
+
+/* 페이지별 스타일은 data-page 속성으로 스코프 지정 */
+/* 예: <body data-page="home"> */
+
+/* 이렇게 하면 충돌 없음! */
