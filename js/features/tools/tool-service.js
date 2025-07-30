@@ -21,6 +21,10 @@
                 currentValues: {},
                 result: null
             };
+            
+            // config에도 저장 (하위 호환성)
+            this.config.toolType = this.toolState.toolType;
+            this.config.isRealtime = this.toolState.isRealtime;
         }
         
         /**

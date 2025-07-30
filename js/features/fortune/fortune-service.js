@@ -19,6 +19,9 @@
                 birthData: null,
                 fortuneType: config.fortuneType || 'daily' // daily, saju, tarot, zodiac, zodiac-animal
             };
+            
+            // config에도 fortuneType 저장 (하위 호환성)
+            this.config.fortuneType = this.fortuneState.fortuneType;
         }
         
         /**
