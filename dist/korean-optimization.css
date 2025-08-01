@@ -1,0 +1,515 @@
+/* ==========================================================================
+   Korean Optimization Master CSS
+   한글 웹사이트 통합 최적화 - 26개 페이지 전체 적용
+   ========================================================================== */
+
+/* ===== 1. 한글 폰트 최적화 ===== */
+@font-face {
+  font-family: "Pretendard";
+  font-weight: 300;
+  font-display: swap;
+  src:
+    local("Pretendard Light"),
+    url("/fonts/Pretendard-Light.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Pretendard";
+  font-weight: 400;
+  font-display: swap;
+  src:
+    local("Pretendard Regular"),
+    url("/fonts/Pretendard-Regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Pretendard";
+  font-weight: 500;
+  font-display: swap;
+  src:
+    local("Pretendard Medium"),
+    url("/fonts/Pretendard-Medium.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Pretendard";
+  font-weight: 600;
+  font-display: swap;
+  src:
+    local("Pretendard SemiBold"),
+    url("/fonts/Pretendard-SemiBold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Pretendard";
+  font-weight: 700;
+  font-display: swap;
+  src:
+    local("Pretendard Bold"),
+    url("/fonts/Pretendard-Bold.woff2") format("woff2");
+}
+
+/* ===== 2. CSS 변수 - 한글 최적화 값 ===== */
+:root {
+  /* 색상 */
+  --color-primary: #0066ff;
+  --color-secondary: #6c757d;
+  --color-success: #28a745;
+  --color-danger: #dc3545;
+  --color-warning: #ffc107;
+  --color-info: #17a2b8;
+
+  /* 배경색 */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+
+  /* 텍스트 색상 */
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --text-muted: #adb5bd;
+
+  /* 테두리 */
+  --border-color: #dee2e6;
+  --border-radius: 8px;
+  --border-radius-sm: 4px;
+  --border-radius-lg: 12px;
+
+  /* 그림자 */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 4px 8px rgba(0, 0, 0, 0.12);
+
+  /* 폰트 - 한글 최적화 */
+  --font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-size-xs: 0.75rem; /* 12px */
+  --font-size-sm: 0.875rem; /* 14px */
+  --font-size-base: 1rem; /* 16px */
+  --font-size-lg: 1.125rem; /* 18px */
+  --font-size-xl: 1.25rem; /* 20px */
+  --font-size-2xl: 1.5rem; /* 24px */
+  --font-size-3xl: 1.875rem; /* 30px */
+  --font-size-4xl: 2.25rem; /* 36px */
+
+  /* 행간 - 한글 가독성 */
+  --line-height-tight: 1.3;
+  --line-height-normal: 1.6;
+  --line-height-relaxed: 1.8;
+
+  /* 자간 - 한글 최적화 */
+  --letter-spacing-tight: -0.02em;
+  --letter-spacing-normal: -0.01em;
+  --letter-spacing-wide: 0;
+
+  /* 간격 */
+  --spacing-xs: 0.25rem; /* 4px */
+  --spacing-sm: 0.5rem; /* 8px */
+  --spacing-md: 1rem; /* 16px */
+  --spacing-lg: 1.5rem; /* 24px */
+  --spacing-xl: 2rem; /* 32px */
+  --spacing-2xl: 3rem; /* 48px */
+  --spacing-3xl: 4rem; /* 64px */
+
+  /* 레이아웃 */
+  --container-max-width: 1200px;
+  --navbar-height: 60px;
+
+  /* 애니메이션 */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 350ms ease;
+}
+
+/* 다크 모드 */
+[data-theme="dark"] {
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #3a3a3a;
+  --text-primary: #f0f0f0;
+  --text-secondary: #b0b0b0;
+  --text-muted: #808080;
+  --border-color: #404040;
+}
+
+/* ===== 3. 기본 리셋 및 설정 ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  letter-spacing: var(--letter-spacing-normal);
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* ===== 4. 한글 타이포그래피 ===== */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 700;
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--letter-spacing-tight);
+  word-break: keep-all;
+  margin-bottom: var(--spacing-md);
+}
+
+h1 {
+  font-size: var(--font-size-4xl);
+}
+
+h2 {
+  font-size: var(--font-size-3xl);
+}
+
+h3 {
+  font-size: var(--font-size-2xl);
+}
+
+h4 {
+  font-size: var(--font-size-xl);
+}
+
+h5 {
+  font-size: var(--font-size-lg);
+}
+
+h6 {
+  font-size: var(--font-size-base);
+}
+
+/* 반응형 폰트 크기 */
+@media (max-width: 768px) {
+  h1 {
+    font-size: var(--font-size-3xl);
+  }
+  h2 {
+    font-size: var(--font-size-2xl);
+  }
+  h3 {
+    font-size: var(--font-size-xl);
+  }
+  h4 {
+    font-size: var(--font-size-lg);
+  }
+}
+
+p {
+  margin-bottom: var(--spacing-md);
+  line-height: var(--line-height-relaxed);
+}
+
+/* ===== 5. 네비게이션 최적화 ===== */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--navbar-height);
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border-color);
+  z-index: 1000;
+  transition: var(--transition-base);
+}
+
+.navbar-container {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar-logo {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  color: var(--text-primary);
+  text-decoration: none;
+}
+
+.navbar-menu {
+  display: flex;
+  list-style: none;
+  gap: var(--spacing-xs);
+  align-items: center;
+  height: 100%;
+}
+
+.navbar-menu a {
+  display: flex;
+  align-items: center;
+  padding: 0 var(--spacing-md);
+  height: 100%;
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  transition: var(--transition-fast);
+  white-space: nowrap;
+}
+
+.navbar-menu a:hover {
+  color: var(--color-primary);
+}
+
+/* ===== 6. 메인 레이아웃 ===== */
+body {
+  padding-top: var(--navbar-height);
+}
+
+main {
+  min-height: calc(100vh - var(--navbar-height));
+}
+
+.container {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+}
+
+section {
+  padding: var(--spacing-3xl) 0;
+}
+
+/* ===== 7. 카드 컴포넌트 ===== */
+.card {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+  transition: var(--transition-base);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+
+/* ===== 8. 버튼 최적화 ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  line-height: 1.5;
+  border-radius: var(--border-radius);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  text-decoration: none;
+  white-space: nowrap;
+  min-height: 44px; /* 터치 타겟 */
+}
+
+.btn-primary {
+  background: var(--color-primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #0052cc;
+}
+
+/* ===== 9. 폼 요소 ===== */
+input,
+textarea,
+select {
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  line-height: 1.5;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  background: var(--bg-primary);
+  transition: var(--transition-fast);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
+}
+
+/* ===== 10. 그리드 시스템 ===== */
+.grid {
+  display: grid;
+  gap: var(--spacing-lg);
+}
+
+.grid-2 {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.grid-3 {
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.grid-4 {
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+/* ===== 11. 모바일 최적화 ===== */
+@media (max-width: 768px) {
+  .navbar-menu {
+    position: fixed;
+    top: var(--navbar-height);
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    background: var(--bg-primary);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-100%);
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition-base);
+  }
+
+  .navbar-menu.active {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .container {
+    padding: 0 var(--spacing-md);
+  }
+
+  section {
+    padding: var(--spacing-2xl) 0;
+  }
+
+  .grid-2,
+  .grid-3,
+  .grid-4 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===== 12. 유틸리티 클래스 ===== */
+.text-center {
+  text-align: center;
+}
+.text-left {
+  text-align: left;
+}
+.text-right {
+  text-align: right;
+}
+
+.mt-1 {
+  margin-top: var(--spacing-sm);
+}
+.mt-2 {
+  margin-top: var(--spacing-md);
+}
+.mt-3 {
+  margin-top: var(--spacing-lg);
+}
+
+.mb-1 {
+  margin-bottom: var(--spacing-sm);
+}
+.mb-2 {
+  margin-bottom: var(--spacing-md);
+}
+.mb-3 {
+  margin-bottom: var(--spacing-lg);
+}
+
+.hidden {
+  display: none;
+}
+.block {
+  display: block;
+}
+.flex {
+  display: flex;
+}
+.grid {
+  display: grid;
+}
+
+/* ===== 강화된 한글 줄바꿈 최적화 - 높은 특이성으로 !important 제거 ===== */
+html * {
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+html body {
+  word-break: keep-all;
+  line-height: 1.7;
+  letter-spacing: -0.01em;
+}
+
+html p,
+html h1,
+html h2,
+html h3,
+html h4,
+html h5,
+html h6,
+html li,
+html td,
+html th,
+html span,
+html a,
+html div {
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+/* 네비게이션 한글 최적화 - 높은 특이성으로 !important 제거 */
+html .navbar,
+html .nav-menu,
+html .nav-link {
+  word-break: keep-all;
+}
+
+/* 푸터 한글 최적화 - 높은 특이성으로 !important 제거 */
+html .footer,
+html .footer-content,
+html .footer-links {
+  word-break: keep-all;
+}
+
+/* 버튼 한글 최적화 - 높은 특이성으로 !important 제거 */
+html .btn,
+html button {
+  word-break: keep-all;
+  white-space: nowrap;
+}
+
+/* 카드 한글 최적화 - 높은 특이성으로 !important 제거 */
+html .card,
+html .card-title,
+html .card-content {
+  word-break: keep-all;
+}
