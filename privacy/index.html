@@ -12,9 +12,6 @@
     />
     <title>개인정보처리방침 - doha.kr</title>
     <!-- 폰트 프리로드 -->
-    <link rel="preload" href="/fonts/Pretendard-Regular.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/Pretendard-Medium.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/Pretendard-Bold.woff2" as="font" type="font/woff2" crossorigin />
 
     <meta
       name="description"
@@ -63,19 +60,8 @@
     />
 
     <!-- Main CSS -->
-    <link rel="stylesheet" href="/css/korean-optimization.css" />
     <!-- CSS Bundle - Automatically selects development or production version -->
     <link rel="stylesheet" href="/dist/styles.css" id="main-styles">
-    <script>
-      // Automatically load minified CSS in production
-      (function() {
-        const link = document.getElementById('main-styles');
-        const isProd = window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
-        if (isProd && link) {
-          link.href = '/dist/styles.min.css';
-        }
-      })();
-    </script>
 
     <!-- Page Specific CSS -->
     <link rel="stylesheet" href="/css/pages/legal.css?v=1753882798234" />

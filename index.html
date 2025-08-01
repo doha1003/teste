@@ -11,10 +11,10 @@
       content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=yes"
     />
     <title>doha.kr - 일상을 더 재미있게 만드는 공간</title>
-    <!-- 폰트 프리로드 -->
-    <link rel="preload" href="/fonts/Pretendard-Regular.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/Pretendard-Medium.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/Pretendard-Bold.woff2" as="font" type="font/woff2" crossorigin />
+    <!-- 폰트 프리로드 (CDN) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <meta
       name="description"
@@ -59,27 +59,8 @@
       rel="stylesheet"
     />
 
-    <!-- Main CSS (새로운 구조) -->
-    <link rel="stylesheet" href="/css/korean-optimization.css" />
-    <!-- CSS Bundle - Automatically selects development or production version -->
-    <link rel="stylesheet" href="/dist/styles.css" id="main-styles">
-    <script>
-      // Automatically load minified CSS in production
-      (function() {
-        const link = document.getElementById('main-styles');
-        const isProd = window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
-        if (isProd && link) {
-          link.href = '/dist/styles.min.css';
-        }
-      })();
-    </script>
-    <link rel="stylesheet" href="/css/components/buttons.css?v=1753882798229" />
-    <link rel="stylesheet" href="/css/components/cards.css?v=1753882798229" />
-    <link rel="stylesheet" href="/css/components/animations.css?v=1753882798229" />
-    <link rel="stylesheet" href="/css/components/pwa-ui.css?v=1753882798229" />
-
-    <!-- Page Specific CSS -->
-    <link rel="stylesheet" href="/css/pages/home.css?v=1753882798229" />
+    <!-- Main CSS Bundle (모든 CSS 포함) -->
+    <link rel="stylesheet" href="/dist/styles.min.css" id="main-styles">
 
     <!-- Page Data Attributes -->
     <script>
