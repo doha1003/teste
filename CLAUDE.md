@@ -2,6 +2,45 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## 🚨 중요: 멀티 에이전트 작업 시 필수 지침
+
+### 팀리더의 역할과 책임
+멀티 에이전트를 사용할 때는 **반드시** 팀리더(doha-project-lead)가:
+
+1. **통합 검증 책임**
+   - 각 에이전트의 작업이 전체 시스템과 호환되는지 검증
+   - 파일 참조 관계(HTML→CSS→JS) 일관성 확인
+   - 빌드 시스템 변경 시 모든 관련 파일 업데이트 확인
+
+2. **작업 조율**
+   - 에이전트 간 작업 의존성 파악 및 관리
+   - 병렬 작업 가능한 항목 식별 및 동시 진행
+   - 실시간 피드백 및 문제 조기 발견
+
+3. **통합 지시서 작성**
+   - 각 에이전트별 구체적 작업 범위 명시
+   - 검증 기준 및 완료 조건 명확화
+   - 작업 순서 및 의존성 관계 정의
+
+### 실패 사례 (교훈)
+- ❌ 각 에이전트가 독립적으로 CSS/JS 파일 생성
+- ❌ 번들링 전환 시 HTML 참조 업데이트 누락
+- ❌ 최종 통합 테스트 미수행
+- 결과: 클래스는 있지만 CSS 미적용, 404 오류 다수 발생
+
+### 올바른 프로세스
+1. **계획 단계**: 팀리더가 전체 아키텍처 검토 및 작업 계획 수립
+2. **실행 단계**: 
+   - 병렬 작업 진행 (블로킹 없이)
+   - 실시간 통합 검증
+   - 즉각적 피드백 루프
+3. **검증 단계**: 통합 테스트 및 전체 시스템 검증
+4. **완료 단계**: 모든 참조 관계 및 의존성 최종 확인
+
+**기억하세요**: 팀리더는 단순 관리자가 아니라 **통합의 책임자**입니다!
+
+---
+
 ## Environment Overview
 
 This is doha.kr - a Korean-language web platform offering psychological tests, fortune-telling services, and utility tools. Built as a static website with serverless backend, optimized for Korean users with PWA features.
