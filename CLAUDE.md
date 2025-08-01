@@ -39,6 +39,60 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **기억하세요**: 팀리더는 단순 관리자가 아니라 **통합의 책임자**입니다!
 
+## 🚨 필수: 모든 작업에서 팀리더 우선 원칙
+
+### 작업 시작 전 필수 사항
+**모든 작업**(테스트, 검증, 배포, 커밋/푸시 포함)은 반드시:
+
+1. **팀리더(doha-project-lead) 먼저 호출**
+   - 전체 상황 파악 및 분석
+   - 각 에이전트별 구체적 작업 지시서 작성
+   - 작업 순서 및 우선순위 결정
+
+2. **지시에 따른 에이전트 실행**
+   - 팀리더의 지시서에 명시된 에이전트만 호출
+   - 할당된 작업 범위 내에서만 수행
+   - 결과를 팀리더에게 보고
+
+3. **팀리더의 최종 검증**
+   - 모든 작업 결과 종합 검토
+   - 통합 검증 수행
+   - 최종 승인 및 다음 단계 결정
+
+### 적용 예시
+
+#### 배포 작업
+```
+1. doha-project-lead: 배포 준비 상태 점검 및 지시서 작성
+2. qa-test-automation: 배포 전 테스트 실행
+3. devops-deployment-engineer: 배포 수행
+4. qa-test-automation: 배포 후 검증
+5. doha-project-lead: 최종 확인 및 보고
+```
+
+#### 테스트 작업
+```
+1. doha-project-lead: 테스트 범위 및 전략 수립
+2. qa-test-automation: 지정된 테스트 수행
+3. doha-project-lead: 결과 분석 및 조치 사항 결정
+```
+
+#### 커밋/푸시 작업
+```
+1. doha-project-lead: 변경사항 검토 및 커밋 전략 수립
+2. qa-test-automation: 커밋 전 최종 검증
+3. devops-deployment-engineer: 커밋 및 푸시 수행
+4. doha-project-lead: 배포 파이프라인 확인
+```
+
+### 절대 금지 사항
+- ❌ 팀리더 없이 직접 에이전트 호출
+- ❌ 단독으로 테스트, 배포, 커밋 수행
+- ❌ 팀리더의 검증 없이 작업 완료 선언
+- ❌ 긴급하다는 이유로 프로세스 생략
+
+**이 원칙은 예외 없이 모든 작업에 적용됩니다!**
+
 ---
 
 ## Environment Overview
@@ -420,3 +474,9 @@ GEMINI_API_KEY=your_api_key_here
 - Run `npm install` to ensure dependencies
 - Check Node version (should be 20.11.0)
 - For E2E tests, run `npm run playwright:install` first
+
+# important-instruction-reminders
+Do what has been asked; nothing more, nothing less.
+NEVER create files unless they're absolutely necessary for achieving your goal.
+ALWAYS prefer editing an existing file to creating a new one.
+NEVER proactively create documentation files (*.md) or README files. Only create documentation files if explicitly requested by the User.
