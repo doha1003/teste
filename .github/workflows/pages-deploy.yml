@@ -1,0 +1,57 @@
+name: GitHub Pages 단순 배포
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'dist/**'
+      - '*.html'
+      - 'css/**'
+      - 'js/**'
+      - 'api/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: GitHub Pages 배포
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: 체크아웃
+        uses: actions/checkout@v4
+
+      - name: GitHub Pages 설정
+        uses: actions/configure-pages@v4
+
+      - name: 배포용 파일 준비
+        run: |
+          echo "📦 GitHub Pages 배포용 파일 정리..."
+          # 불필요한 파일은 유지하되 node_modules만 제거
+          rm -rf node_modules || true
+          echo "✅ 파일 정리 완료"
+
+      - name: GitHub Pages 아티팩트 업로드
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - name: GitHub Pages 배포
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: 배포 완료 확인
+        run: |
+          echo "🎉 GitHub Pages 배포 완료!"
+          echo "🌍 사이트: ${{ steps.deployment.outputs.page_url }}"
+          echo "📦 CSS 번들: https://doha.kr/dist/styles.min.css"
