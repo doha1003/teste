@@ -3,10 +3,9 @@
  * 오늘의 운세 서비스 구현
  */
 
-(function() {
-    'use strict';
-    
-    class DailyFortuneService extends FortuneService {
+import { FortuneService } from './fortune-service.js';
+
+export class DailyFortuneService extends FortuneService {
         constructor() {
             super({
                 serviceName: 'daily-fortune',
@@ -55,32 +54,29 @@
                 const fortuneData = this.generateDailyFortune(birthData, manseryeokData);
                 
                 // API 호출 시도 (선택사항)
-                if (window.API_CONFIG && window.API_CONFIG.FORTUNE_API_URL) {
+                if (window.generateDailyFortuneWithAI) {
                     try {
-                        const response = await fetch(`${window.API_CONFIG.FORTUNE_API_URL}/daily`, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({
-                                birthData: birthData,
-                                manseryeokData: manseryeokData
-                            })
-                        });
+                        const apiData = await window.generateDailyFortuneWithAI(
+                            birthData.name,
+                            `${birthData.year}-${String(birthData.month).padStart(2, '0')}-${String(birthData.day).padStart(2, '0')}`,
+                            birthData.gender || 'unknown',
+                            birthData.hour
+                        );
                         
-                        if (response.ok) {
-                            const apiData = await response.json();
-                            return { ...fortuneData, ...apiData };
+                        if (apiData) {
+                            return { ...fortuneData, ...apiData, manseryeokData };
                         }
                     } catch (error) {
-                        console.warn('API 호출 실패, 기본 데이터 사용');
+                        // API 에러 발생시 사용자에게 알리고 기본 데이터 사용
+                        
+                        // 에러가 발생해도 기본 운세 데이터를 사용하여 서비스 계속 제공
                     }
                 }
                 
                 return fortuneData;
                 
             } catch (error) {
-                console.error('Fortune generation error:', error);
+                
                 throw error;
             }
         }
@@ -276,14 +272,9 @@
             return colors[colorName] || '#8b5cf6';
         }
     }
-    
-    // 페이지 로드 시 자동 초기화
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => {
-            new DailyFortuneService();
-        });
-    } else {
-        new DailyFortuneService();
-    }
-    
-})();
+
+// 인스턴스 생성 및 export
+export const dailyFortune = new DailyFortuneService();
+
+// 전역에도 연결 (레거시 코드 호환성)
+window.dailyFortune = dailyFortune;

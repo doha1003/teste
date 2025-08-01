@@ -1,398 +1,613 @@
-/* =========================================================================
-   Form Components
-   ========================================================================= */
+/* ==========================================================================
+   Form Components - Linear.app 기반 통합 폼 시스템
+   ========================================================================== */
 
-/* Form Group */
+/* ===== FORM LAYOUT ===== */
+/* 폼 레이아웃 */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--form-gap, var(--spacing-6));
+}
+
+.form--inline {
+  flex-direction: row;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+/* ===== FORM GROUP ===== */
+/* 폼 그룹 */
 .form-group {
-    margin-bottom: var(--spacing-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--form-label-margin, var(--spacing-2));
+  margin-bottom: var(--spacing-6);
 }
 
+.form-group--horizontal {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-4, var(--spacing-4));
+}
+
+/* ===== FORM LABEL ===== */
+/* 폼 라벨 */
 .form-label {
-    display: block;
-    margin-bottom: var(--spacing-2);
-    font-weight: var(--font-weight-medium);
-    color: var(--color-gray-700);
-    font-size: var(--font-size-sm);
+  display: inline-block;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary, var(--color-gray-700));
+  line-height: var(--line-height-normal);
 }
 
-.form-label-required::after {
-    content: ' *';
-    color: var(--color-danger);
+.form-label-required::after,
+.form-label--required::after {
+  content: " *";
+  color: var(--semantic-danger, var(--color-danger));
 }
 
-/* Form Controls */
-.form-control {
-    width: 100%;
-    padding: var(--spacing-3) var(--spacing-4);
-    font-size: var(--font-size-base);
-    line-height: 1.5;
-    color: var(--color-gray-900);
-    background-color: var(--color-white);
-    background-clip: padding-box;
-    border: 1px solid var(--color-gray-300);
-    border-radius: var(--radius-md);
-    transition: border-color var(--transition-base), box-shadow var(--transition-base);
+/* ===== FORM INPUT BASE ===== */
+/* 폼 입력 기본 스타일 */
+.form-control,
+.form-input,
+.form-select,
+.form-textarea {
+  /* Layout */
+  display: block;
+  width: 100%;
+
+  /* Sizing */
+  padding: var(--input-padding-y, var(--spacing-3)) var(--input-padding-x, var(--spacing-4));
+  min-height: var(--input-height, 40px);
+
+  /* Typography */
+  font-family: var(--font-family-korean, var(--font-family-base));
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal, 1.5);
+
+  /* Visual */
+  color: var(--text-primary, var(--color-gray-900));
+  background-color: var(--surface-primary, var(--color-white));
+  background-clip: padding-box;
+  border: var(--input-border-width, 1px) solid var(--border-primary, var(--color-gray-300));
+  border-radius: var(--input-radius, var(--radius-md));
+
+  /* Behavior */
+  transition: var(--transition-all, all 0.2s ease);
+
+  /* Korean optimization */
+  word-break: keep-all;
 }
 
-.form-control:focus {
-    color: var(--color-gray-900);
-    background-color: var(--color-white);
-    border-color: var(--color-primary);
-    outline: 0;
-    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+/* Input States */
+.form-control:hover:not(:disabled),
+.form-input:hover:not(:disabled),
+.form-select:hover:not(:disabled),
+.form-textarea:hover:not(:disabled) {
+  border-color: var(--border-secondary, var(--color-gray-400));
 }
 
-.form-control::placeholder {
-    color: var(--color-gray-400);
-    opacity: 1;
+.form-control:focus,
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  outline: none;
+  color: var(--text-primary, var(--color-gray-900));
+  background-color: var(--surface-primary, var(--color-white));
+  border-color: var(--border-focus, var(--color-primary));
+  box-shadow: 0 0 0 3px var(--color-primary-subtle, rgba(139, 92, 246, 0.1));
 }
 
 .form-control:disabled,
+.form-input:disabled,
+.form-select:disabled,
+.form-textarea:disabled,
 .form-control[readonly] {
-    background-color: var(--color-gray-50);
-    opacity: 1;
-    cursor: not-allowed;
+  opacity: var(--disabled-opacity, 0.6);
+  cursor: not-allowed;
+  background-color: var(--bg-disabled, var(--color-gray-50));
 }
 
-/* Textarea */
-textarea.form-control {
-    min-height: 120px;
-    resize: vertical;
+/* Placeholder */
+.form-control::placeholder,
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: var(--text-tertiary, var(--color-gray-400));
+  opacity: 1;
 }
 
-/* Select */
-select.form-control {
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%236b7280'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right var(--spacing-3) center;
-    background-size: 20px;
-    padding-right: var(--spacing-10);
+/* ===== FORM INPUT VARIANTS ===== */
+/* Size Variants */
+.form-control-sm,
+.form-input--sm,
+.form-select--sm {
+  padding: var(--space-1, var(--spacing-2)) var(--space-2, var(--spacing-3));
+  min-height: 32px;
+  font-size: var(--font-size-sm);
 }
 
-select.form-control::-ms-expand {
-    display: none;
+.form-control-lg,
+.form-input--lg,
+.form-select--lg {
+  padding: var(--space-3, var(--spacing-4)) var(--space-4, var(--spacing-6));
+  min-height: 48px;
+  font-size: var(--font-size-lg);
 }
 
-/* Checkbox and Radio */
+/* ===== TEXTAREA ===== */
+/* 텍스트 영역 */
+textarea.form-control,
+.form-textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.form-textarea--fixed {
+  resize: none;
+}
+
+/* ===== SELECT ===== */
+/* 셀렉트 박스 */
+select.form-control,
+.form-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right var(--spacing-3) center;
+  background-size: 20px;
+  padding-right: var(--space-10, var(--spacing-10));
+}
+
+select.form-control::-ms-expand,
+.form-select::-ms-expand {
+  display: none;
+}
+
+/* ===== CHECKBOX & RADIO ===== */
+/* 체크박스 & 라디오 */
 .form-check {
-    display: flex;
-    align-items: flex-start;
-    margin-bottom: var(--spacing-3);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2, var(--spacing-2));
+  margin-bottom: var(--spacing-3);
 }
 
 .form-check-input {
-    flex-shrink: 0;
-    width: 20px;
-    height: 20px;
-    margin-top: 0.125rem;
-    margin-right: var(--spacing-2);
-    background-color: var(--color-white);
-    border: 1px solid var(--color-gray-300);
-    border-radius: var(--radius-sm);
-    appearance: none;
-    cursor: pointer;
-    transition: all var(--transition-base);
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  appearance: none;
+  background-color: var(--surface-primary, var(--color-white));
+  border: var(--border-2, 2px) solid var(--border-primary, var(--color-gray-300));
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition-all, all 0.2s ease);
 }
 
 .form-check-input[type="radio"] {
-    border-radius: var(--radius-full);
+  border-radius: var(--radius-full, 50%);
+}
+
+.form-check-input:hover:not(:disabled) {
+  border-color: var(--border-secondary, var(--color-gray-400));
 }
 
 .form-check-input:checked {
-    background-color: var(--color-primary);
-    border-color: var(--color-primary);
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='white'%3E%3Cpath fill-rule='evenodd' d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z' clip-rule='evenodd'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 14px;
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='20 6 9 17 4 12'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 14px;
 }
 
 .form-check-input[type="radio"]:checked {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='white'%3E%3Ccircle cx='10' cy='10' r='4'/%3E%3C/svg%3E");
+  background-image: none;
+}
+
+.form-check-input[type="radio"]:checked::after {
+  content: "";
+  display: block;
+  width: 8px;
+  height: 8px;
+  margin: 4px;
+  background-color: white;
+  border-radius: var(--radius-full, 50%);
 }
 
 .form-check-input:focus {
-    border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-subtle, rgba(139, 92, 246, 0.1));
 }
 
 .form-check-input:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
+  opacity: var(--disabled-opacity, 0.5);
+  cursor: not-allowed;
 }
 
 .form-check-label {
-    color: var(--color-gray-700);
-    cursor: pointer;
-    user-select: none;
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
+  color: var(--color-gray-700);
+  cursor: pointer;
+  user-select: none;
 }
 
 .form-check-input:disabled ~ .form-check-label {
-    opacity: 0.5;
-    cursor: not-allowed;
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
-/* Form Help Text */
-.form-help {
-    display: block;
-    margin-top: var(--spacing-1);
-    font-size: var(--font-size-sm);
-    color: var(--color-gray-600);
+/* ===== FORM HELP TEXT ===== */
+/* 도움말 텍스트 */
+.form-help,
+.form-text {
+  display: block;
+  margin-top: var(--space-1, var(--spacing-1));
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary, var(--color-gray-600));
+  line-height: var(--line-height-normal);
 }
 
-/* Form Validation States */
-.form-control.is-invalid {
-    border-color: var(--color-danger);
+.form-help--error {
+  color: var(--semantic-danger, var(--color-danger));
 }
 
-.form-control.is-invalid:focus {
-    border-color: var(--color-danger);
-    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+.form-help--success {
+  color: var(--semantic-success, var(--color-success));
 }
 
-.form-control.is-valid {
-    border-color: var(--color-success);
+/* ===== FORM VALIDATION STATES ===== */
+/* Status Variants */
+.form-control.is-invalid,
+.form-input--error,
+.form-select--error,
+.form-textarea--error {
+  border-color: var(--border-error, var(--color-danger));
 }
 
-.form-control.is-valid:focus {
-    border-color: var(--color-success);
-    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+.form-control.is-invalid:focus,
+.form-input--error:focus,
+.form-select--error:focus,
+.form-textarea--error:focus {
+  border-color: var(--border-error, var(--color-danger));
+  box-shadow: 0 0 0 3px var(--semantic-danger-bg, rgba(239, 68, 68, 0.1));
+}
+
+.form-control.is-valid,
+.form-input--success,
+.form-select--success,
+.form-textarea--success {
+  border-color: var(--border-success, var(--color-success));
+}
+
+.form-control.is-valid:focus,
+.form-input--success:focus,
+.form-select--success:focus,
+.form-textarea--success:focus {
+  border-color: var(--border-success, var(--color-success));
+  box-shadow: 0 0 0 3px var(--semantic-success-bg, rgba(34, 197, 94, 0.1));
 }
 
 .invalid-feedback {
-    display: block;
-    margin-top: var(--spacing-1);
-    font-size: var(--font-size-sm);
-    color: var(--color-danger);
+  display: block;
+  margin-top: var(--spacing-1);
+  font-size: var(--font-size-sm);
+  color: var(--color-danger);
 }
 
 .valid-feedback {
-    display: block;
-    margin-top: var(--spacing-1);
-    font-size: var(--font-size-sm);
-    color: var(--color-success);
+  display: block;
+  margin-top: var(--spacing-1);
+  font-size: var(--font-size-sm);
+  color: var(--color-success);
 }
 
-/* Input Group */
+/* ===== INPUT GROUP ===== */
+/* 입력 그룹 */
 .input-group {
-    position: relative;
-    display: flex;
-    width: 100%;
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+}
+
+.input-group > .form-control,
+.input-group > .form-input {
+  position: relative;
+  flex: 1 1 auto;
+  width: 1%;
+  min-width: 0;
+  border-radius: 0;
+}
+
+.input-group > .form-control:first-child,
+.input-group > .form-input:first-child {
+  border-top-left-radius: var(--input-radius, var(--radius-md));
+  border-bottom-left-radius: var(--input-radius, var(--radius-md));
+}
+
+.input-group > .form-control:last-child,
+.input-group > .form-input:last-child {
+  border-top-right-radius: var(--input-radius, var(--radius-md));
+  border-bottom-right-radius: var(--input-radius, var(--radius-md));
 }
 
 .input-group-prepend,
-.input-group-append {
-    display: flex;
-    align-items: center;
-    padding: var(--spacing-3) var(--spacing-4);
-    font-size: var(--font-size-base);
-    font-weight: var(--font-weight-normal);
-    line-height: 1.5;
-    color: var(--color-gray-700);
-    text-align: center;
-    white-space: nowrap;
-    background-color: var(--color-gray-50);
-    border: 1px solid var(--color-gray-300);
+.input-group-append,
+.input-group-text {
+  display: flex;
+  align-items: center;
+  padding: var(--input-padding-y, var(--spacing-3)) var(--input-padding-x, var(--spacing-4));
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal, 1.5);
+  color: var(--text-secondary, var(--color-gray-700));
+  text-align: center;
+  white-space: nowrap;
+  background-color: var(--bg-tertiary, var(--color-gray-50));
+  border: var(--input-border-width, 1px) solid var(--border-primary, var(--color-gray-300));
 }
 
-.input-group-prepend {
-    border-right: 0;
-    border-radius: var(--radius-md) 0 0 var(--radius-md);
+.input-group-prepend,
+.input-group-text:first-child {
+  border-right: 0;
+  border-radius: var(--radius-md) 0 0 var(--radius-md);
 }
 
-.input-group-append {
-    border-left: 0;
-    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+.input-group-append,
+.input-group-text:last-child {
+  border-left: 0;
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
 }
 
-.input-group > .form-control {
-    position: relative;
-    flex: 1 1 auto;
-    width: 1%;
-    min-width: 0;
+/* ===== FORM FIELD ===== */
+/* 폼 필드 (라벨 + 입력 + 도움말) */
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2, var(--spacing-2));
 }
 
-.input-group > .form-control:not(:first-child) {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
+/* ===== FORM ACTIONS ===== */
+/* 폼 액션 버튼 영역 */
+.form-actions {
+  display: flex;
+  gap: var(--space-3, var(--spacing-3));
+  margin-top: var(--space-6, var(--spacing-6));
 }
 
-.input-group > .form-control:not(:last-child) {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
+.form-actions--right {
+  justify-content: flex-end;
 }
 
+.form-actions--center {
+  justify-content: center;
+}
+
+.form-actions--between {
+  justify-content: space-between;
+}
+
+/* ===== FORM GRID ===== */
 /* Form Grid */
 .form-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--spacing-4);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-4);
 }
 
 .form-col {
-    flex: 1;
-    min-width: 0;
+  flex: 1;
+  min-width: 0;
 }
 
+/* ===== FILE INPUT ===== */
 /* File Input */
 .form-file {
-    position: relative;
-    display: inline-block;
-    cursor: pointer;
-    overflow: hidden;
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  overflow: hidden;
 }
 
 .form-file-input {
-    position: absolute;
-    z-index: -1;
-    opacity: 0;
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
 }
 
 .form-file-label {
-    display: inline-block;
-    padding: var(--spacing-3) var(--spacing-4);
-    font-weight: var(--font-weight-medium);
-    line-height: 1.5;
-    color: var(--color-gray-700);
-    background-color: var(--color-white);
-    border: 1px solid var(--color-gray-300);
-    border-radius: var(--radius-md);
-    transition: all var(--transition-base);
+  display: inline-block;
+  padding: var(--spacing-3) var(--spacing-4);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.5;
+  color: var(--color-gray-700);
+  background-color: var(--color-white);
+  border: 1px solid var(--color-gray-300);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-base);
 }
 
 .form-file:hover .form-file-label {
-    background-color: var(--color-gray-50);
+  background-color: var(--color-gray-50);
 }
 
 .form-file-input:focus ~ .form-file-label {
-    border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
 }
 
+/* ===== RANGE INPUT ===== */
 /* Range Input */
 .form-range {
-    width: 100%;
-    height: 6px;
-    padding: 0;
-    background-color: transparent;
-    appearance: none;
-    cursor: pointer;
+  width: 100%;
+  height: 6px;
+  padding: 0;
+  background-color: transparent;
+  appearance: none;
+  cursor: pointer;
 }
 
 .form-range::-webkit-slider-track {
-    width: 100%;
-    height: 6px;
-    background: var(--color-gray-200);
-    border-radius: var(--radius-full);
+  width: 100%;
+  height: 6px;
+  background: var(--color-gray-200);
+  border-radius: var(--radius-full);
 }
 
 .form-range::-webkit-slider-thumb {
-    width: 20px;
-    height: 20px;
-    background: var(--color-primary);
-    border: 0;
-    border-radius: var(--radius-full);
-    cursor: pointer;
-    appearance: none;
-    margin-top: -7px;
-    transition: all var(--transition-base);
+  width: 20px;
+  height: 20px;
+  background: var(--color-primary);
+  border: 0;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  appearance: none;
+  margin-top: -7px;
+  transition: all var(--transition-base);
 }
 
 .form-range::-webkit-slider-thumb:hover {
-    background: var(--color-primary-dark);
-    transform: scale(1.1);
+  background: var(--color-primary-dark);
+  transform: scale(1.1);
 }
 
 .form-range::-moz-range-track {
-    width: 100%;
-    height: 6px;
-    background: var(--color-gray-200);
-    border-radius: var(--radius-full);
+  width: 100%;
+  height: 6px;
+  background: var(--color-gray-200);
+  border-radius: var(--radius-full);
 }
 
 .form-range::-moz-range-thumb {
-    width: 20px;
-    height: 20px;
-    background: var(--color-primary);
-    border: 0;
-    border-radius: var(--radius-full);
-    cursor: pointer;
-    transition: all var(--transition-base);
+  width: 20px;
+  height: 20px;
+  background: var(--color-primary);
+  border: 0;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all var(--transition-base);
 }
 
+/* ===== SWITCH ===== */
 /* Switch */
 .form-switch {
-    display: inline-flex;
-    align-items: center;
-    cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
 }
 
 .form-switch-input {
-    position: absolute;
-    opacity: 0;
-    pointer-events: none;
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .form-switch-label {
-    position: relative;
-    display: inline-block;
-    width: 48px;
-    height: 24px;
-    background-color: var(--color-gray-300);
-    border-radius: var(--radius-full);
-    transition: background-color var(--transition-base);
-    margin-right: var(--spacing-2);
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 24px;
+  background-color: var(--color-gray-300);
+  border-radius: var(--radius-full);
+  transition: background-color var(--transition-base);
+  margin-right: var(--spacing-2);
 }
 
 .form-switch-label::after {
-    content: '';
-    position: absolute;
-    top: 2px;
-    left: 2px;
-    width: 20px;
-    height: 20px;
-    background-color: var(--color-white);
-    border-radius: var(--radius-full);
-    transition: transform var(--transition-base);
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  background-color: var(--color-white);
+  border-radius: var(--radius-full);
+  transition: transform var(--transition-base);
 }
 
 .form-switch-input:checked ~ .form-switch-label {
-    background-color: var(--color-primary);
+  background-color: var(--color-primary);
 }
 
 .form-switch-input:checked ~ .form-switch-label::after {
-    transform: translateX(24px);
+  transform: translateX(24px);
 }
 
 .form-switch-input:focus ~ .form-switch-label {
-    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
 }
 
-/* Mobile Responsive */
+/* ===== RESPONSIVE FORMS ===== */
+/* 반응형 폼 */
 @media (max-width: 768px) {
-    .form-row {
-        flex-direction: column;
-    }
-    
-    .form-col {
-        width: 100%;
-    }
-    
-    .input-group {
-        flex-direction: column;
-    }
-    
-    .input-group-prepend,
-    .input-group-append {
-        width: 100%;
-        border-radius: var(--radius-md);
-        border: 1px solid var(--color-gray-300);
-        margin-bottom: -1px;
-    }
-    
-    .input-group > .form-control {
-        border-radius: var(--radius-md);
-        width: 100%;
-    }
+  .form--inline {
+    flex-direction: column;
+  }
+
+  .form-group--horizontal {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .form-row {
+    flex-direction: column;
+  }
+
+  .form-col {
+    width: 100%;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .form-actions .btn {
+    width: 100%;
+  }
+
+  .input-group {
+    flex-direction: column;
+  }
+
+  .input-group-prepend,
+  .input-group-append,
+  .input-group-text {
+    width: 100%;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-gray-300);
+    margin-bottom: -1px;
+  }
+
+  .input-group > .form-control,
+  .input-group > .form-input {
+    border-radius: var(--radius-md);
+    width: 100%;
+  }
+}
+
+/* iOS zoom prevention */
+@media (max-width: 640px) {
+  .form-control,
+  .form-input,
+  .form-select,
+  .form-textarea {
+    font-size: 16px;
+  }
+}
+
+/* ===== PRINT STYLES ===== */
+/* 인쇄 스타일 */
+@media print {
+  .form-control,
+  .form-input,
+  .form-select,
+  .form-textarea {
+    border: 1px solid #999;
+    background: none;
+  }
 }

@@ -3,10 +3,10 @@
  * 운세 서비스 공통 기능 (각 운세별 고유 기능 유지)
  */
 
-(function() {
-    'use strict';
-    
-    class FortuneService extends ServiceBase {
+import { ServiceBase } from '../../core/service-base.js';
+import { logger } from '../../utils/logger.js';
+
+export class FortuneService extends ServiceBase {
         constructor(config) {
             super({
                 serviceType: 'fortune',
@@ -28,6 +28,11 @@
          * 운세 서비스 초기화
          */
         initializeService() {
+            logger.info('Fortune Service Initializing', {
+                fortuneType: this.fortuneState.fortuneType,
+                serviceId: this.serviceId
+            });
+
             // 각 운세 타입별 초기화
             switch(this.fortuneState.fortuneType) {
                 case 'daily':
@@ -44,6 +49,11 @@
                     this.initZodiacAnimalSelection();
                     break;
             }
+
+            logger.info('Fortune Service Initialized', {
+                fortuneType: this.fortuneState.fortuneType,
+                serviceId: this.serviceId
+            });
         }
         
         /**
@@ -171,12 +181,17 @@
          * 생년월일 폼 제출 처리
          */
         async handleBirthDataSubmit(event) {
+            const timer = logger.startTimer('Fortune Birth Data Submit');
             const formData = new FormData(event.target);
             
             // 유효성 검사
             const required = ['userName', 'birthYear', 'birthMonth', 'birthDay'];
             for (const field of required) {
                 if (!formData.get(field)) {
+                    logger.warn('Missing required birth data field', { 
+                        field, 
+                        fortuneType: this.fortuneState.fortuneType 
+                    });
                     this.showNotification('모든 필수 항목을 입력해주세요.', 'error');
                     return;
                 }
@@ -192,6 +207,14 @@
                 isLunar: formData.get('isLunar') === 'on'
             };
             
+            logger.logUserAction('fortune_birth_data_submit', {
+                fortuneType: this.fortuneState.fortuneType,
+                hasName: !!this.fortuneState.birthData.name,
+                year: this.fortuneState.birthData.year,
+                hasHour: !!this.fortuneState.birthData.hour,
+                isLunar: this.fortuneState.birthData.isLunar
+            });
+            
             this.showLoading();
             
             try {
@@ -203,8 +226,20 @@
                     result = await this.fetchSajuFortune();
                 }
                 
+                timer.end();
+                logger.info('Fortune analysis completed', {
+                    fortuneType: this.fortuneState.fortuneType,
+                    hasResult: !!result
+                });
+                
                 this.showResult(result);
             } catch (error) {
+                timer.end();
+                logger.error('Fortune analysis failed', {
+                    fortuneType: this.fortuneState.fortuneType,
+                    error: error.message,
+                    birthData: this.fortuneState.birthData
+                });
                 this.showError('운세 분석 중 오류가 발생했습니다.');
             }
         }
@@ -344,8 +379,6 @@
         
         // ... 기타 운세별 메서드
     }
-    
-    // 전역으로 내보내기
-    window.FortuneService = FortuneService;
-    
-})();
+
+// 전역으로도 내보내기 (레거시 코드 호환성)
+window.FortuneService = FortuneService;

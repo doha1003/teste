@@ -1,0 +1,111 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "node": true,
+    "jest": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "prettier"
+  ],
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": [
+    "prettier"
+  ],
+  "rules": {
+    "prettier/prettier": "error",
+    "prefer-const": "error",
+    "no-var": "error",
+    "prefer-arrow-callback": "error",
+    "prefer-template": "error",
+    "object-shorthand": "error",
+    "array-callback-return": "error",
+    "no-console": ["warn", { "allow": ["warn", "error"] }],
+    "no-debugger": "error",
+    "no-unused-vars": ["error", { 
+      "argsIgnorePattern": "^_",
+      "varsIgnorePattern": "^_"
+    }],
+    "no-undef": "error",
+    "no-redeclare": "error",
+    "no-shadow": "error",
+    "eqeqeq": ["error", "always"],
+    "curly": ["error", "all"],
+    "no-eval": "error",
+    "no-implied-eval": "error",
+    "no-new-func": "error",
+    "no-return-await": "off",
+    "require-await": "off",
+    "no-throw-literal": "error",
+    "camelcase": ["error", { 
+      "properties": "never",
+      "ignoreDestructuring": true,
+      "allow": ["API_CONFIG", "KAKAO_API_KEY", "KAKAO_JS_KEY"]
+    }],
+    "new-cap": ["error", { 
+      "newIsCap": true,
+      "capIsNew": false 
+    }],
+    "no-duplicate-imports": "error",
+    "sort-imports": ["error", {
+      "ignoreCase": true,
+      "ignoreDeclarationSort": true
+    }],
+    "no-empty": ["error", { "allowEmptyCatch": true }],
+    "no-self-assign": "off",
+    "no-useless-escape": "off"
+  },
+  "globals": {
+    "gtag": "readonly",
+    "dataLayer": "readonly",
+    "DOHA_CONFIG": "readonly",
+    "DOHA_VERSION": "readonly",
+    "adsbygoogle": "readonly",
+    "Kakao": "readonly",
+    "DOMPurify": "readonly",
+    "SecureDOM": "readonly",
+    "API_CONFIG": "readonly",
+    "KAKAO_API_KEY": "readonly"
+  },
+  "overrides": [
+    {
+      "files": [
+        "*.config.js",
+        "tools/**/*.js",
+        "api/**/*.js"
+      ],
+      "env": {
+        "node": true,
+        "browser": false
+      }
+    },
+    {
+      "files": [
+        "**/*.test.js",
+        "**/*.spec.js",
+        "tests/**/*.js"
+      ],
+      "env": {
+        "jest": true,
+        "mocha": true
+      },
+      "rules": {
+        "no-console": "off"
+      }
+    }
+  ],
+  "ignorePatterns": [
+    "node_modules/",
+    "dist/",
+    "build/",
+    "coverage/",
+    "*.min.js",
+    "design-system/",
+    "data/Lunar.php",
+    "data/Lunar/Lunar_API.php"
+  ]
+}

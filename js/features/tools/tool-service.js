@@ -3,10 +3,9 @@
  * 도구 서비스 공통 기능 (각 도구별 고유 기능 유지)
  */
 
-(function() {
-    'use strict';
-    
-    class ToolService extends ServiceBase {
+import { ServiceBase } from '../../core/service-base.js';
+
+export class ToolService extends ServiceBase {
         constructor(config) {
             super({
                 serviceType: 'tool',
@@ -329,9 +328,12 @@
             const result = this.toolState.result;
             if (!result) return;
             
-            const text = `글자수: ${result.charCount}\n` +
-                        `공백제외: ${result.charCountNoSpace}\n` +
-                        `단어수: ${result.wordCount}\n` +
+            const text = `글자수: ${result.charCount}
+` +
+                        `공백제외: ${result.charCountNoSpace}
+` +
+                        `단어수: ${result.wordCount}
+` +
                         `바이트: ${result.byteCount}`;
             
             if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -380,8 +382,6 @@
             });
         }
     }
-    
-    // 전역으로 내보내기
-    window.ToolService = ToolService;
-    
-})();
+
+// 전역으로도 내보내기 (레거시 코드 호환성)
+window.ToolService = ToolService;

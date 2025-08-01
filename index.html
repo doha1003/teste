@@ -1,287 +1,463 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
-<head>
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src 'self' https:; script-src 'unsafe-inline' 'self' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; style-src 'unsafe-inline' 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <head>
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="upgrade-insecure-requests; default-src 'self' https:; script-src 'unsafe-inline' 'self' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; style-src 'unsafe-inline' 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;"
+    />
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=yes"
+    />
     <title>doha.kr - 일상을 더 재미있게 만드는 공간</title>
     <!-- 폰트 프리로드 -->
-    <link rel="preload" href="/fonts/Pretendard-Regular.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="/fonts/Pretendard-Medium.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="/fonts/Pretendard-Bold.woff2" as="font" type="font/woff2" crossorigin>
-    
-    <meta name="description" content="심리테스트, 실용도구, 커뮤니티가 한곳에! 테토-에겐 테스트, MBTI 검사, 연봉계산기, 글자수세기 등 다양한 무료 서비스를 제공합니다.">
-    <meta name="keywords" content="심리테스트, MBTI, 테토에겐, 성격테스트, 연봉계산기, 글자수세기, 무료테스트">
-    <meta name="robots" content="index, follow">
-    <meta name="author" content="doha.kr">
-    
+    <link rel="preload" href="/fonts/Pretendard-Regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/Pretendard-Medium.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/Pretendard-Bold.woff2" as="font" type="font/woff2" crossorigin />
+
+    <meta
+      name="description"
+      content="심리테스트, 실용도구, 커뮤니티가 한곳에! 테토-에겐 테스트, MBTI 검사, 연봉계산기, 글자수세기 등 다양한 무료 서비스를 제공합니다."
+    />
+    <meta name="keywords" content="심리테스트, MBTI, 테토에겐, 성격테스트, 연봉계산기, 글자수세기, 무료테스트" />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="doha.kr" />
+
     <!-- Security Headers -->
-    <meta http-equiv="X-Content-Type-Options" content="nosniff">
-    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
-    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), accelerometer=(), gyroscope=()">
-    
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+    <meta
+      http-equiv="Permissions-Policy"
+      content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), accelerometer=(), gyroscope=()"
+    />
+
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://doha.kr/">
-    
+    <link rel="canonical" href="https://doha.kr/" />
+
     <!-- Open Graph -->
-    <meta property="og:title" content="doha.kr - 일상을 더 재미있게">
-    <meta property="og:description" content="재미있는 심리테스트와 실용적인 도구들을 무료로 이용하세요!">
-    <meta property="og:image" content="https://doha.kr/images/og-main.jpg">
-    <meta property="og:url" content="https://doha.kr">
-    <meta property="og:type" content="website">
-    <meta property="og:locale" content="ko_KR">
-    <meta property="og:site_name" content="doha.kr">
-    
+    <meta property="og:title" content="doha.kr - 일상을 더 재미있게" />
+    <meta property="og:description" content="재미있는 심리테스트와 실용적인 도구들을 무료로 이용하세요!" />
+    <meta property="og:image" content="https://doha.kr/images/og-main.jpg" />
+    <meta property="og:url" content="https://doha.kr" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ko_KR" />
+    <meta property="og:site_name" content="doha.kr" />
+
     <!-- 파비콘 -->
-    <link rel="icon" type="image/svg+xml" href="/images/logo.svg">
-    <link rel="apple-touch-icon" href="/images/android-chrome-192x192.png">
-    <link rel="manifest" href="/manifest.json">
-    
+    <link rel="icon" type="image/svg+xml" href="/images/logo.svg" />
+    <link rel="apple-touch-icon" href="/images/android-chrome-192x192.png" />
+    <link rel="manifest" href="/manifest.json" />
+
     <!-- 폰트 -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" crossorigin href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preconnect"
+      crossorigin
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
     <!-- Main CSS (새로운 구조) -->
-    <link rel="stylesheet" href="/css/korean-optimization.css">
-    <link rel="stylesheet" href="/css/main.css?v=1753882798229">
-    <link rel="stylesheet" href="/css/components/buttons-v2.css?v=1753882798229">
-    <link rel="stylesheet" href="/css/components/cards-v2.css?v=1753882798229">
-    <link rel="stylesheet" href="/css/components/animations.css?v=1753882798229">
-    
+    <link rel="stylesheet" href="/css/korean-optimization.css" />
+    <!-- CSS Bundle - Automatically selects development or production version -->
+    <link rel="stylesheet" href="/dist/styles.css" id="main-styles">
+    <script>
+      // Automatically load minified CSS in production
+      (function() {
+        const link = document.getElementById('main-styles');
+        const isProd = window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
+        if (isProd && link) {
+          link.href = '/dist/styles.min.css';
+        }
+      })();
+    </script>
+    <link rel="stylesheet" href="/css/components/buttons.css?v=1753882798229" />
+    <link rel="stylesheet" href="/css/components/cards.css?v=1753882798229" />
+    <link rel="stylesheet" href="/css/components/animations.css?v=1753882798229" />
+    <link rel="stylesheet" href="/css/components/pwa-ui.css?v=1753882798229" />
+
     <!-- Page Specific CSS -->
-    <link rel="stylesheet" href="/css/pages/home-v2.css?v=1753882798229">
-    
+    <link rel="stylesheet" href="/css/pages/home.css?v=1753882798229" />
+
     <!-- Page Data Attributes -->
     <script>
-        document.documentElement.dataset.page = 'home';
+      document.documentElement.dataset.page = 'home';
     </script>
-</head>
-<body data-page="home">
-    <main class="page-main">
-        <!-- 네비게이션 -->
-        <div id="navbar-placeholder"></div>
-        
-        <!-- 히어로 섹션 -->
-        <section class="hero">
-            <div class="hero-content">
-                <h1 class="hero-title fade-in">
-                    일상을 더 재미있게 만드는<br>
-                    <span class="hero-title-highlight">doha.kr</span>
-                </h1>
-                <p class="hero-subtitle fade-in stagger-1">
-                    심리테스트로 나를 발견하고, 실용도구로 일상을 편리하게!<br>
-                    무료로 제공되는 다양한 서비스를 지금 바로 경험해보세요.
-                </p>
-                <div class="hero-buttons fade-in stagger-2">
-                    <a href="/tests/" class="btn btn-primary" data-category="tests">
-                        <span>🧠</span> 심리테스트
-                    </a>
-                    <a href="/tools/" class="btn btn-primary btn-tools" data-category="tools">
-                        <span>🛠️</span> 실용도구
-                    </a>
-                    <a href="/fortune/" class="btn btn-primary btn-fortune" data-category="fortune">
-                        <span>🔮</span> AI 운세
-                    </a>
-                </div>
-            </div>
-        </section>
-        
-        <!-- 특징 섹션 -->
-        <section class="features">
-            <div class="container">
-                <h2 class="section-title fade-in">왜 doha.kr인가요?</h2>
-                <p class="section-subtitle fade-in stagger-1">
-                    단순한 테스트 사이트가 아닙니다. 여러분의 일상에 가치를 더하는 종합 플랫폼입니다.
-                </p>
-                <div class="features-grid">
-                    <div class="feature-card fade-in stagger-1">
-                        <div class="feature-icon">🧠</div>
-                        <h3 class="feature-title">과학적인 심리테스트</h3>
-                        <p class="feature-description">
-                            심리학 이론에 기반한 정확한 분석으로 자신을 더 깊이 이해할 수 있습니다. 테토-에겐, MBTI 등 다양한 성격 유형 검사를 제공합니다.
-                        </p>
-                        <a href="/tests/" class="feature-link">테스트 보러가기 →</a>
-                    </div>
-                    <div class="feature-card fade-in stagger-2">
-                        <div class="feature-icon">🛠️</div>
-                        <h3 class="feature-title">실용적인 도구모음</h3>
-                        <p class="feature-description">
-                            글자수 세기, 연봉 계산기, BMI 계산기 등 일상에서 필요한 다양한 도구를 한 곳에서 무료로 이용할 수 있습니다.
-                        </p>
-                        <a href="/tools/" class="feature-link">도구 사용하기 →</a>
-                    </div>
-                    <div class="feature-card fade-in stagger-3">
-                        <div class="feature-icon">🔮</div>
-                        <h3 class="feature-title">AI 운세 & 타로</h3>
-                        <p class="feature-description">
-                            AI가 분석하는 오늘의 운세와 타로 카드로 미래를 예측해보세요. 개인 맞춤형 인사이트를 제공합니다.
-                        </p>
-                        <a href="/fortune/" class="feature-link">운세 보러가기 →</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- 인기 서비스 섹션 -->
-        <section id="services" class="popular-services">
-            <div class="container">
-                <h2 class="section-title fade-in">인기 서비스</h2>
-                <p class="section-subtitle fade-in stagger-1">
-                    가장 많이 이용하는 서비스들을 만나보세요
-                </p>
-                
-                <!-- 서비스 탭 -->
-                <div class="services-tabs fade-in stagger-2" data-tabs="services">
-                    <button class="tab-button active" data-tab="all">전체</button>
-                    <button class="tab-button" data-tab="tests">심리테스트</button>
-                    <button class="tab-button" data-tab="tools">실용도구</button>
-                    <button class="tab-button" data-tab="fortune">AI 운세</button>
-                    <button class="tab-button" data-tab="new">최신</button>
-                </div>
-                
-                <!-- 서비스 그리드 -->
-                <div class="services-grid fade-in stagger-3 animated" id="services-grid">
-                    <!-- 심리테스트 -->
-                    <a href="/tests/teto-egen/" class="service-card" data-category="tests">
-                        <span class="service-emoji">🦋</span>
-                        <h3 class="service-name">테토-에겐 테스트</h3>
-                        <p class="service-desc">당신의 성격이 테토형인지 에겐형인지 알아보세요</p>
-                        <span class="service-badge">HOT</span>
-                    </a>
-                    <a href="/tests/mbti/" class="service-card" data-category="tests">
-                        <span class="service-emoji">🎭</span>
-                        <h3 class="service-name">MBTI 성격유형 검사</h3>
-                        <p class="service-desc">16가지 성격 유형 중 나는 어떤 유형일까?</p>
-                        <span class="service-badge">인기</span>
-                    </a>
-                    <a href="/tests/love-dna/" class="service-card" data-category="tests new">
-                        <span class="service-emoji">💕</span>
-                        <h3 class="service-name">러브 DNA 테스트</h3>
-                        <p class="service-desc">당신만의 연애 스타일을 5축 DNA로 분석해보세요</p>
-                        <span class="service-badge new-pink">NEW</span>
-                    </a>
-                    
-                    <!-- 실용도구 -->
-                    <a href="/tools/text-counter.html" class="service-card" data-category="tools">
-                        <span class="service-emoji">📝</span>
-                        <h3 class="service-name">글자수 세기</h3>
-                        <p class="service-desc">자소서, 리포트 작성 시 필수! 글자수를 확인하세요</p>
-                    </a>
-                    <a href="/tools/salary-calculator.html" class="service-card" data-category="tools">
-                        <span class="service-emoji">💰</span>
-                        <h3 class="service-name">연봉 실수령액 계산기</h3>
-                        <p class="service-desc">세금 공제 후 실제 받는 금액을 계산해보세요</p>
-                        <span class="service-badge new-green">NEW</span>
-                    </a>
-                    <a href="/tools/bmi-calculator.html" class="service-card" data-category="tools">
-                        <span class="service-emoji">🏃</span>
-                        <h3 class="service-name">BMI 계산기</h3>
-                        <p class="service-desc">키와 몸무게로 체질량지수를 확인하세요</p>
-                        <span class="service-badge new-green">NEW</span>
-                    </a>
-                    
-                    <!-- AI 운세 -->
-                    <a href="/fortune/daily/" class="service-card" data-category="fortune">
-                        <span class="service-emoji">🔮</span>
-                        <h3 class="service-name">오늘의 운세</h3>
-                        <p class="service-desc">AI가 분석하는 개인 맞춤형 상세 운세를 확인하세요</p>
-                        <span class="service-badge fortune-gradient">HOT</span>
-                    </a>
-                    <a href="/fortune/saju/" class="service-card" data-category="fortune">
-                        <span class="service-emoji">🎴</span>
-                        <h3 class="service-name">AI 사주팔자</h3>
-                        <p class="service-desc">생년월일시로 AI가 분석하는 상세한 사주팔자 풀이</p>
-                        <span class="service-badge fortune-gradient">인기</span>
-                    </a>
-                    <a href="/fortune/zodiac/" class="service-card" data-category="fortune">
-                        <span class="service-emoji">♈</span>
-                        <h3 class="service-name">별자리 운세</h3>
-                        <p class="service-desc">12궁도 별자리별 오늘의 상세 운세를 확인하세요</p>
-                        <span class="service-badge fortune-gradient">인기</span>
-                    </a>
-                    <a href="/fortune/tarot/" class="service-card" data-category="fortune">
-                        <span class="service-emoji">🃏</span>
-                        <h3 class="service-name">AI 타로 리딩</h3>
-                        <p class="service-desc">질문을 입력하면 AI가 타로카드로 답을 찾아드려요</p>
-                        <span class="service-badge fortune-gradient">NEW</span>
-                    </a>
-                    <a href="/fortune/zodiac-animal/" class="service-card" data-category="fortune new">
-                        <span class="service-emoji">🐲</span>
-                        <h3 class="service-name">띠별 운세</h3>
-                        <p class="service-desc">12간지 띠별 상세한 오늘의 운세를 확인하세요</p>
-                        <span class="service-badge fortune-gradient">NEW</span>
-                    </a>
-                </div>
-            </div>
-        </section>
-        
-        <!-- 통계 섹션 -->
-        <section class="stats">
-            <div class="container">
-                <div class="stats-grid">
-                    <div class="stat-item fade-in stagger-1 animated">
-                        <div class="stat-number">무료</div>
-                        <div class="stat-label">모든 서비스 이용</div>
-                    </div>
-                    <div class="stat-item fade-in stagger-2 animated">
-                        <div class="stat-number" id="service-count">0개</div>
-                        <div class="stat-label">다양한 서비스</div>
-                    </div>
-                    <div class="stat-item fade-in stagger-3 animated">
-                        <div class="stat-number">간편</div>
-                        <div class="stat-label">가입 없이 이용</div>
-                    </div>
-                    <div class="stat-item fade-in stagger-4 animated">
-                        <div class="stat-number">24/7</div>
-                        <div class="stat-label">언제나 이용가능</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- 광고 영역 -->
-        <div class="ad-container">
-            <div class="ad-label">광고</div>
-            <div id="ad-container-home-1" class="ad-container-min" data-ad-slot="3911401606">
-                <div class="ad-placeholder ad-container-styled">
-                    광고 로딩 중...
-                </div>
-            </div>
+  </head>
+  <body data-page="home">
+    <!-- Skip to main content for screen readers -->
+    <a href="#main-content" class="skip-link">본문으로 바로가기</a>
+
+    <!-- 네비게이션 -->
+    <nav id="navbar-placeholder" role="navigation" aria-label="주 메뉴"></nav>
+
+    <main id="main-content" class="page-main" role="main">
+      <!-- 히어로 섹션 -->
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-content">
+          <h1 id="hero-title" class="hero-title fade-in">
+            일상을 더 재미있게 만드는
+            <br />
+            <span class="hero-title-highlight">doha.kr</span>
+          </h1>
+          <p class="hero-subtitle fade-in stagger-1">
+            심리테스트로 나를 발견하고, 실용도구로 일상을 편리하게!
+            <br />
+            무료로 제공되는 다양한 서비스를 지금 바로 경험해보세요.
+          </p>
+          <div class="hero-buttons fade-in stagger-2">
+            <a href="/tests/" class="btn btn-primary" data-category="tests" aria-label="심리테스트 페이지로 이동">
+              <span aria-hidden="true">🧠</span>
+              심리테스트
+            </a>
+            <a
+              href="/tools/"
+              class="btn btn-primary btn-tools"
+              data-category="tools"
+              aria-label="실용도구 페이지로 이동"
+            >
+              <span aria-hidden="true">🛠️</span>
+              실용도구
+            </a>
+            <a
+              href="/fortune/"
+              class="btn btn-primary btn-fortune"
+              data-category="fortune"
+              aria-label="AI 운세 페이지로 이동"
+            >
+              <span aria-hidden="true">🔮</span>
+              AI 운세
+            </a>
+          </div>
         </div>
-        
-        <!-- CTA 섹션 -->
-        <section class="cta">
-            <div class="container">
-                <div class="cta-box">
-                    <h2 class="cta-title">지금 바로 시작하세요!</h2>
-                    <p class="cta-description">
-                        가입 없이 무료로 모든 서비스를 이용할 수 있습니다.<br>
-                        당신을 기다리는 흥미로운 발견이 있을 거예요.
-                    </p>
-                    <a href="/tests/" class="cta-button">테스트 시작하기</a>
-                </div>
+      </section>
+
+      <!-- 특징 섹션 -->
+      <section class="features" aria-labelledby="features-title">
+        <div class="container">
+          <h2 id="features-title" class="section-title fade-in">왜 doha.kr인가요?</h2>
+          <p class="section-subtitle fade-in stagger-1">
+            단순한 테스트 사이트가 아닙니다. 여러분의 일상에 가치를 더하는 종합 플랫폼입니다.
+          </p>
+          <div class="features-grid">
+            <article class="feature-card fade-in stagger-1">
+              <div class="feature-icon" role="img" aria-label="뇌 아이콘">🧠</div>
+              <h3 class="feature-title">과학적인 심리테스트</h3>
+              <p class="feature-description">
+                심리학 이론에 기반한 정확한 분석으로 자신을 더 깊이 이해할 수 있습니다. 테토-에겐, MBTI 등 다양한 성격
+                유형 검사를 제공합니다.
+              </p>
+              <a href="/tests/" class="feature-link" aria-label="심리테스트 페이지로 이동">
+                테스트 보러가기
+                <span aria-hidden="true">→</span>
+              </a>
+            </article>
+            <article class="feature-card fade-in stagger-2">
+              <div class="feature-icon" role="img" aria-label="도구 아이콘">🛠️</div>
+              <h3 class="feature-title">실용적인 도구모음</h3>
+              <p class="feature-description">
+                글자수 세기, 연봉 계산기, BMI 계산기 등 일상에서 필요한 다양한 도구를 한 곳에서 무료로 이용할 수
+                있습니다.
+              </p>
+              <a href="/tools/" class="feature-link" aria-label="실용도구 페이지로 이동">
+                도구 사용하기
+                <span aria-hidden="true">→</span>
+              </a>
+            </article>
+            <article class="feature-card fade-in stagger-3">
+              <div class="feature-icon" role="img" aria-label="수정구 아이콘">🔮</div>
+              <h3 class="feature-title">AI 운세 & 타로</h3>
+              <p class="feature-description">
+                AI가 분석하는 오늘의 운세와 타로 카드로 미래를 예측해보세요. 개인 맞춤형 인사이트를 제공합니다.
+              </p>
+              <a href="/fortune/" class="feature-link" aria-label="AI 운세 페이지로 이동">
+                운세 보러가기
+                <span aria-hidden="true">→</span>
+              </a>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- 인기 서비스 섹션 -->
+      <section id="services" class="popular-services" aria-labelledby="services-title">
+        <div class="container">
+          <h2 id="services-title" class="section-title fade-in">인기 서비스</h2>
+          <p class="section-subtitle fade-in stagger-1">가장 많이 이용하는 서비스들을 만나보세요</p>
+
+          <!-- 서비스 탭 -->
+          <div class="services-tabs fade-in stagger-2" data-tabs="services" role="tablist" aria-label="서비스 카테고리">
+            <button
+              class="tab-button active"
+              data-tab="all"
+              role="tab"
+              aria-selected="true"
+              aria-controls="services-grid"
+              tabindex="0"
+            >
+              전체
+            </button>
+            <button
+              class="tab-button"
+              data-tab="tests"
+              role="tab"
+              aria-selected="false"
+              aria-controls="services-grid"
+              tabindex="-1"
+            >
+              심리테스트
+            </button>
+            <button
+              class="tab-button"
+              data-tab="tools"
+              role="tab"
+              aria-selected="false"
+              aria-controls="services-grid"
+              tabindex="-1"
+            >
+              실용도구
+            </button>
+            <button
+              class="tab-button"
+              data-tab="fortune"
+              role="tab"
+              aria-selected="false"
+              aria-controls="services-grid"
+              tabindex="-1"
+            >
+              AI 운세
+            </button>
+            <button
+              class="tab-button"
+              data-tab="new"
+              role="tab"
+              aria-selected="false"
+              aria-controls="services-grid"
+              tabindex="-1"
+            >
+              최신
+            </button>
+          </div>
+
+          <!-- 서비스 그리드 -->
+          <div
+            class="services-grid fade-in stagger-3 animated"
+            id="services-grid"
+            role="tabpanel"
+            aria-labelledby="services-title"
+          >
+            <!-- 심리테스트 -->
+            <a
+              href="/tests/teto-egen/"
+              class="service-card"
+              data-category="tests"
+              aria-label="테토-에겐 테스트 - 당신의 성격이 테토형인지 에겐형인지 알아보세요"
+            >
+              <span class="service-emoji" aria-hidden="true">🦋</span>
+              <h3 class="service-name">테토-에겐 테스트</h3>
+              <p class="service-desc">당신의 성격이 테토형인지 에겐형인지 알아보세요</p>
+              <span class="service-badge" aria-label="인기 서비스">HOT</span>
+            </a>
+            <a
+              href="/tests/mbti/"
+              class="service-card"
+              data-category="tests"
+              aria-label="MBTI 성격유형 검사 - 16가지 성격 유형 중 나는 어떤 유형일까?"
+            >
+              <span class="service-emoji" aria-hidden="true">🎭</span>
+              <h3 class="service-name">MBTI 성격유형 검사</h3>
+              <p class="service-desc">16가지 성격 유형 중 나는 어떤 유형일까?</p>
+              <span class="service-badge">인기</span>
+            </a>
+            <a
+              href="/tests/love-dna/"
+              class="service-card"
+              data-category="tests new"
+              aria-label="러브 DNA 테스트 - 당신만의 연애 스타일을 5축 DNA로 분석해보세요"
+            >
+              <span class="service-emoji" aria-hidden="true">💕</span>
+              <h3 class="service-name">러브 DNA 테스트</h3>
+              <p class="service-desc">당신만의 연애 스타일을 5축 DNA로 분석해보세요</p>
+              <span class="service-badge new-pink" aria-label="신규 서비스">NEW</span>
+            </a>
+
+            <!-- 실용도구 -->
+            <a
+              href="/tools/text-counter.html"
+              class="service-card"
+              data-category="tools"
+              aria-label="글자수 세기 - 자소서, 리포트 작성 시 필수! 글자수를 확인하세요"
+            >
+              <span class="service-emoji" aria-hidden="true">📝</span>
+              <h3 class="service-name">글자수 세기</h3>
+              <p class="service-desc">자소서, 리포트 작성 시 필수! 글자수를 확인하세요</p>
+            </a>
+            <a
+              href="/tools/salary-calculator.html"
+              class="service-card"
+              data-category="tools"
+              aria-label="연봉 실수령액 계산기 - 세금 공제 후 실제 받는 금액을 계산해보세요"
+            >
+              <span class="service-emoji" aria-hidden="true">💰</span>
+              <h3 class="service-name">연봉 실수령액 계산기</h3>
+              <p class="service-desc">세금 공제 후 실제 받는 금액을 계산해보세요</p>
+              <span class="service-badge new-green" aria-label="신규 서비스">NEW</span>
+            </a>
+            <a
+              href="/tools/bmi-calculator.html"
+              class="service-card"
+              data-category="tools"
+              aria-label="BMI 계산기 - 키와 몸무게로 체질량지수를 확인하세요"
+            >
+              <span class="service-emoji" aria-hidden="true">🏃</span>
+              <h3 class="service-name">BMI 계산기</h3>
+              <p class="service-desc">키와 몸무게로 체질량지수를 확인하세요</p>
+              <span class="service-badge new-green" aria-label="신규 서비스">NEW</span>
+            </a>
+
+            <!-- AI 운세 -->
+            <a
+              href="/fortune/daily/"
+              class="service-card"
+              data-category="fortune"
+              aria-label="오늘의 운세 - AI가 분석하는 개인 맞춤형 상세 운세를 확인하세요"
+            >
+              <span class="service-emoji" aria-hidden="true">🔮</span>
+              <h3 class="service-name">오늘의 운세</h3>
+              <p class="service-desc">AI가 분석하는 개인 맞춤형 상세 운세를 확인하세요</p>
+              <span class="service-badge fortune-gradient" aria-label="인기 서비스">HOT</span>
+            </a>
+            <a
+              href="/fortune/saju/"
+              class="service-card"
+              data-category="fortune"
+              aria-label="AI 사주팔자 - 생년월일시로 AI가 분석하는 상세한 사주팔자 풀이"
+            >
+              <span class="service-emoji" aria-hidden="true">🎴</span>
+              <h3 class="service-name">AI 사주팔자</h3>
+              <p class="service-desc">생년월일시로 AI가 분석하는 상세한 사주팔자 풀이</p>
+              <span class="service-badge fortune-gradient">인기</span>
+            </a>
+            <a
+              href="/fortune/zodiac/"
+              class="service-card"
+              data-category="fortune"
+              aria-label="별자리 운세 - 12궁도 별자리별 오늘의 상세 운세를 확인하세요"
+            >
+              <span class="service-emoji" aria-hidden="true">♈</span>
+              <h3 class="service-name">별자리 운세</h3>
+              <p class="service-desc">12궁도 별자리별 오늘의 상세 운세를 확인하세요</p>
+              <span class="service-badge fortune-gradient">인기</span>
+            </a>
+            <a
+              href="/fortune/tarot/"
+              class="service-card"
+              data-category="fortune"
+              aria-label="AI 타로 리딩 - 질문을 입력하면 AI가 타로카드로 답을 찾아드려요"
+            >
+              <span class="service-emoji" aria-hidden="true">🃏</span>
+              <h3 class="service-name">AI 타로 리딩</h3>
+              <p class="service-desc">질문을 입력하면 AI가 타로카드로 답을 찾아드려요</p>
+              <span class="service-badge fortune-gradient" aria-label="신규 서비스">NEW</span>
+            </a>
+            <a
+              href="/fortune/zodiac-animal/"
+              class="service-card"
+              data-category="fortune new"
+              aria-label="띠별 운세 - 12간지 띠별 상세한 오늘의 운세를 확인하세요"
+            >
+              <span class="service-emoji" aria-hidden="true">🐲</span>
+              <h3 class="service-name">띠별 운세</h3>
+              <p class="service-desc">12간지 띠별 상세한 오늘의 운세를 확인하세요</p>
+              <span class="service-badge fortune-gradient" aria-label="신규 서비스">NEW</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- 통계 섹션 -->
+      <section class="stats" aria-labelledby="stats-title">
+        <h2 id="stats-title" class="visually-hidden">서비스 통계</h2>
+        <div class="container">
+          <div class="stats-grid">
+            <div class="stat-item fade-in stagger-1 animated">
+              <div class="stat-number" aria-describedby="stat-label-1">무료</div>
+              <div id="stat-label-1" class="stat-label">모든 서비스 이용</div>
             </div>
-        </section>
-        
-        <!-- 푸터 -->
-        <div id="footer-placeholder"></div>
+            <div class="stat-item fade-in stagger-2 animated">
+              <div class="stat-number" id="service-count" aria-describedby="stat-label-2" aria-live="polite">0개</div>
+              <div id="stat-label-2" class="stat-label">다양한 서비스</div>
+            </div>
+            <div class="stat-item fade-in stagger-3 animated">
+              <div class="stat-number" aria-describedby="stat-label-3">간편</div>
+              <div id="stat-label-3" class="stat-label">가입 없이 이용</div>
+            </div>
+            <div class="stat-item fade-in stagger-4 animated">
+              <div class="stat-number" aria-describedby="stat-label-4">24/7</div>
+              <div id="stat-label-4" class="stat-label">언제나 이용가능</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 광고 영역 -->
+      <aside class="ad-container" aria-label="광고 영역">
+        <div class="ad-label">광고</div>
+        <div id="ad-container-home-1" class="ad-container-min" data-ad-slot="3911401606">
+          <div class="ad-placeholder ad-container-styled">광고 로딩 중...</div>
+        </div>
+      </aside>
+
+      <!-- CTA 섹션 -->
+      <section class="cta" aria-labelledby="cta-title">
+        <div class="container">
+          <div class="cta-box">
+            <h2 id="cta-title" class="cta-title">지금 바로 시작하세요!</h2>
+            <p class="cta-description">
+              가입 없이 무료로 모든 서비스를 이용할 수 있습니다.
+              <br />
+              당신을 기다리는 흥미로운 발견이 있을 거예요.
+            </p>
+            <a href="/tests/" class="cta-button" aria-label="심리테스트 페이지로 이동하여 테스트 시작하기">
+              테스트 시작하기
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- 푸터 -->
+      <footer id="footer-placeholder" role="contentinfo" aria-label="사이트 정보"></footer>
     </main>
-    
+
+    <!-- Logger Initialization (Load First) -->
+    <script src="/js/logger-init.js"></script>
+
     <!-- Core JavaScript -->
-    <script src="/js/core/common-init.js"></script>
-    
+    <script type="module" src="/js/app.js"></script>
+
     <!-- Page JavaScript -->
-    <script src="/js/pages/home.js"></script>
-    
+    <script type="module" src="/js/pages/home.js"></script>
+
     <!-- External SDKs (지연 로딩) -->
     <script async src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js"></script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
-    <script async src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js" integrity="sha512-H+rglffZ6f5gF7UJgvH4Naa+fGCgjrHKMgoFOGmcPTRwR6oILo5R+gtzNrpDp7iMV3udbymBVjkeZGNz1Em4rQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      async
+      src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"
+      integrity="sha512-H+rglffZ6f5gF7UJgvH4Naa+fGCgjrHKMgoFOGmcPTRwR6oILo5R+gtzNrpDp7iMV3udbymBVjkeZGNz1Em4rQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
     <!-- Structured Data -->
     <script type="application/ld+json">
-    {
+      {
         "@context": "https://schema.org",
         "@type": "WebSite",
         "name": "doha.kr",
@@ -289,19 +465,19 @@
         "url": "https://doha.kr",
         "description": "심리테스트, 실용도구, AI 운세가 한곳에! 재미있고 유용한 서비스를 무료로 제공합니다.",
         "potentialAction": {
-            "@type": "SearchAction",
-            "target": {
-                "@type": "EntryPoint",
-                "urlTemplate": "https://doha.kr/search?q={search_term_string}"
-            },
-            "query-input": "required name=search_term_string"
+          "@type": "SearchAction",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": "https://doha.kr/search?q={search_term_string}"
+          },
+          "query-input": "required name=search_term_string"
         }
-    }
+      }
     </script>
-    
+
     <!-- Organization Schema -->
     <script type="application/ld+json">
-    {
+      {
         "@context": "https://schema.org",
         "@type": "Organization",
         "name": "doha.kr",
@@ -310,12 +486,12 @@
         "description": "심리테스트, 실용도구, AI 운세를 무료로 제공하는 종합 엔터테인먼트 플랫폼",
         "foundingDate": "2024",
         "contactPoint": {
-            "@type": "ContactPoint",
-            "email": "contact@doha.kr",
-            "contactType": "customer service",
-            "availableLanguage": "Korean"
+          "@type": "ContactPoint",
+          "email": "contact@doha.kr",
+          "contactType": "customer service",
+          "availableLanguage": "Korean"
         }
-    }
+      }
     </script>
-</body>
+  </body>
 </html>

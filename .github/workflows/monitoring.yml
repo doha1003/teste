@@ -1,0 +1,389 @@
+name: 📊 실시간 모니터링 및 알림
+
+on:
+  schedule:
+    # 매 15분마다 실행
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+    inputs:
+      check_type:
+        description: '모니터링 타입 선택'
+        required: true
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - uptime
+          - performance
+          - security
+          - api
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  # 1️⃣ 업타임 모니터링
+  uptime-check:
+    name: 🌍 사이트 가용성 확인
+    runs-on: ubuntu-latest
+    if: github.event.inputs.check_type == 'uptime' || github.event.inputs.check_type == 'all' || github.event_name == 'schedule'
+    outputs:
+      site-status: ${{ steps.check.outputs.status }}
+      response-time: ${{ steps.check.outputs.response-time }}
+    steps:
+      - name: 메인 사이트 상태 확인
+        id: check
+        run: |
+          echo "🌍 doha.kr 접근성 테스트..."
+          
+          # 메인 사이트 확인
+          MAIN_STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://doha.kr || echo "000")
+          MAIN_TIME=$(curl -s -o /dev/null -w "%{time_total}" https://doha.kr || echo "999")
+          
+          echo "main-status=${MAIN_STATUS}" >> $GITHUB_OUTPUT
+          echo "main-time=${MAIN_TIME}" >> $GITHUB_OUTPUT
+          
+          # API 엔드포인트 확인
+          API_STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://doha.kr/api/health || echo "000")
+          echo "api-status=${API_STATUS}" >> $GITHUB_OUTPUT
+          
+          # 전체 상태 판단
+          if [[ "${MAIN_STATUS}" == "200" && "${API_STATUS}" == "200" ]]; then
+            echo "status=healthy" >> $GITHUB_OUTPUT
+            echo "response-time=${MAIN_TIME}" >> $GITHUB_OUTPUT
+          else
+            echo "status=unhealthy" >> $GITHUB_OUTPUT
+            echo "response-time=999" >> $GITHUB_OUTPUT
+          fi
+          
+          echo "✅ 상태 체크 완료"
+          echo "📊 메인 사이트: ${MAIN_STATUS} (${MAIN_TIME}s)"
+          echo "📊 API 상태: ${API_STATUS}"
+
+      - name: 주요 페이지 상태 확인
+        run: |
+          echo "🔍 주요 페이지 상태 확인..."
+          
+          PAGES=("/fortune/daily" "/tests/mbti" "/tools/bmi-calculator.html")
+          FAILED_PAGES=()
+          
+          for page in "${PAGES[@]}"; do
+            STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://doha.kr${page}" || echo "000")
+            if [[ "${STATUS}" != "200" ]]; then
+              FAILED_PAGES+=("${page}")
+              echo "❌ ${page}: ${STATUS}"
+            else
+              echo "✅ ${page}: ${STATUS}"
+            fi
+          done
+          
+          if [[ ${#FAILED_PAGES[@]} -gt 0 ]]; then
+            echo "::warning::일부 페이지에 접근할 수 없습니다: ${FAILED_PAGES[*]}"
+          fi
+
+  # 2️⃣ 성능 모니터링
+  performance-check:
+    name: 🚀 성능 분석
+    runs-on: ubuntu-latest
+    if: github.event.inputs.check_type == 'performance' || github.event.inputs.check_type == 'all' || github.event_name == 'schedule'
+    needs: uptime-check
+    steps:
+      - name: 페이지 속도 테스트
+        run: |
+          echo "⚡ 페이지 로딩 속도 분석..."
+          
+          # 메인 페이지 성능 측정
+          LOAD_TIME=$(curl -s -o /dev/null -w "%{time_total}" https://doha.kr)
+          TTFB=$(curl -s -o /dev/null -w "%{time_starttransfer}" https://doha.kr)
+          DNS_TIME=$(curl -s -o /dev/null -w "%{time_namelookup}" https://doha.kr)
+          
+          echo "📊 성능 메트릭:"
+          echo "- 전체 로딩 시간: ${LOAD_TIME}초"
+          echo "- TTFB: ${TTFB}초"
+          echo "- DNS 조회: ${DNS_TIME}초"
+          
+          # 성능 임계값 확인 (3초)
+          if (( $(echo "$LOAD_TIME > 3.0" | bc -l) )); then
+            echo "::warning::페이지 로딩 시간이 3초를 초과했습니다: ${LOAD_TIME}초"
+          else
+            echo "✅ 페이지 로딩 시간 양호: ${LOAD_TIME}초"
+          fi
+
+      - name: API 응답 시간 측정
+        run: |
+          echo "📡 API 응답 시간 측정..."
+          
+          # Health API 응답 시간
+          HEALTH_TIME=$(curl -s -o /dev/null -w "%{time_total}" https://doha.kr/api/health)
+          echo "🏥 Health API: ${HEALTH_TIME}초"
+          
+          # Fortune API 테스트 (가벼운 요청)
+          FORTUNE_TIME=$(curl -s -o /dev/null -w "%{time_total}" -X POST \
+            -H "Content-Type: application/json" \
+            -d '{"type":"daily","userData":{"name":"테스트"}}' \
+            https://doha.kr/api/fortune || echo "999")
+          echo "🔮 Fortune API: ${FORTUNE_TIME}초"
+          
+          # API 성능 경고 (5초)
+          if (( $(echo "$HEALTH_TIME > 5.0" | bc -l) )); then
+            echo "::warning::Health API 응답이 느립니다: ${HEALTH_TIME}초"
+          fi
+
+  # 3️⃣ 보안 모니터링
+  security-check:
+    name: 🔒 보안 상태 확인
+    runs-on: ubuntu-latest
+    if: github.event.inputs.check_type == 'security' || github.event.inputs.check_type == 'all' || github.event_name == 'schedule'
+    steps:
+      - name: SSL 인증서 확인
+        run: |
+          echo "🔐 SSL 인증서 상태 확인..."
+          
+          # SSL 인증서 만료일 확인
+          CERT_INFO=$(echo | openssl s_client -servername doha.kr -connect doha.kr:443 2>/dev/null | openssl x509 -noout -dates)
+          echo "📋 인증서 정보:"
+          echo "${CERT_INFO}"
+          
+          # 만료일 추출 및 확인
+          EXPIRE_DATE=$(echo "${CERT_INFO}" | grep "notAfter" | cut -d= -f2)
+          EXPIRE_TIMESTAMP=$(date -d "${EXPIRE_DATE}" +%s)
+          CURRENT_TIMESTAMP=$(date +%s)
+          DAYS_LEFT=$(( (EXPIRE_TIMESTAMP - CURRENT_TIMESTAMP) / 86400 ))
+          
+          echo "📅 인증서 만료까지: ${DAYS_LEFT}일"
+          
+          if [[ ${DAYS_LEFT} -lt 30 ]]; then
+            echo "::warning::SSL 인증서 만료가 30일 이내입니다: ${DAYS_LEFT}일 남음"
+          else
+            echo "✅ SSL 인증서 상태 양호: ${DAYS_LEFT}일 남음"
+          fi
+
+      - name: 보안 헤더 확인
+        run: |
+          echo "🛡️ 보안 헤더 확인..."
+          
+          HEADERS=$(curl -s -I https://doha.kr)
+          
+          # 필수 보안 헤더 확인
+          SECURITY_HEADERS=(
+            "Strict-Transport-Security"
+            "X-Content-Type-Options"
+            "X-Frame-Options"
+            "Content-Security-Policy"
+            "Referrer-Policy"
+          )
+          
+          MISSING_HEADERS=()
+          
+          for header in "${SECURITY_HEADERS[@]}"; do
+            if echo "${HEADERS}" | grep -qi "${header}"; then
+              echo "✅ ${header}: 설정됨"
+            else
+              MISSING_HEADERS+=("${header}")
+              echo "❌ ${header}: 누락"
+            fi
+          done
+          
+          if [[ ${#MISSING_HEADERS[@]} -gt 0 ]]; then
+            echo "::warning::누락된 보안 헤더: ${MISSING_HEADERS[*]}"
+          else
+            echo "✅ 모든 보안 헤더 설정 완료"
+          fi
+
+  # 4️⃣ API 기능 테스트
+  api-functionality:
+    name: 🔧 API 기능 테스트
+    runs-on: ubuntu-latest
+    if: github.event.inputs.check_type == 'api' || github.event.inputs.check_type == 'all' || github.event_name == 'schedule'
+    steps:
+      - name: Fortune API 테스트
+        run: |
+          echo "🔮 Fortune API 기능 테스트..."
+          
+          # 일일 운세 API 테스트
+          RESPONSE=$(curl -s -X POST \
+            -H "Content-Type: application/json" \
+            -d '{
+              "type": "daily",
+              "userData": {
+                "name": "모니터링테스트",
+                "birthDate": "1990-01-01",
+                "gender": "male"
+              }
+            }' \
+            https://doha.kr/api/fortune)
+          
+          if echo "${RESPONSE}" | grep -q "fortune\|운세\|오늘"; then
+            echo "✅ Fortune API 정상 작동"
+          else
+            echo "❌ Fortune API 응답 이상"
+            echo "Response: ${RESPONSE}"
+            echo "::error::Fortune API가 예상된 응답을 반환하지 않습니다"
+          fi
+
+      - name: Manseryeok API 테스트
+        run: |
+          echo "📅 Manseryeok API 기능 테스트..."
+          
+          # 만세력 API 테스트
+          RESPONSE=$(curl -s -X POST \
+            -H "Content-Type: application/json" \
+            -d '{
+              "year": 1990,
+              "month": 5,
+              "day": 15,
+              "hour": 12,
+              "minute": 0,
+              "isLunar": false
+            }' \
+            https://doha.kr/api/manseryeok)
+          
+          if echo "${RESPONSE}" | grep -q "year\|month\|day"; then
+            echo "✅ Manseryeok API 정상 작동"
+          else
+            echo "❌ Manseryeok API 응답 이상"
+            echo "Response: ${RESPONSE}"
+            echo "::error::Manseryeok API가 예상된 응답을 반환하지 않습니다"
+          fi
+
+  # 5️⃣ 종합 상태 리포트
+  monitoring-report:
+    name: 📋 모니터링 리포트
+    runs-on: ubuntu-latest
+    needs: [uptime-check, performance-check, security-check, api-functionality]
+    if: always()
+    steps:
+      - name: 리포트 생성
+        run: |
+          echo "📊 doha.kr 모니터링 리포트 생성..."
+          
+          # 현재 시각 (한국 시간)
+          CURRENT_TIME=$(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M:%S KST')
+          echo "⏰ 모니터링 시간: ${CURRENT_TIME}"
+          
+          # 전체 상태 요약
+          echo ""
+          echo "## 🏥 시스템 상태 요약"
+          echo "- 사이트 상태: ${{ needs.uptime-check.outputs.site-status || '확인 필요' }}"
+          echo "- 응답 시간: ${{ needs.uptime-check.outputs.response-time || '측정 실패' }}초"
+          
+          # 각 작업 상태 확인
+          UPTIME_STATUS="${{ needs.uptime-check.result }}"
+          PERF_STATUS="${{ needs.performance-check.result }}"
+          SECURITY_STATUS="${{ needs.security-check.result }}"
+          API_STATUS="${{ needs.api-functionality.result }}"
+          
+          echo ""
+          echo "## 📋 세부 검사 결과"
+          echo "- 🌍 업타임 체크: ${UPTIME_STATUS}"
+          echo "- 🚀 성능 체크: ${PERF_STATUS}"
+          echo "- 🔒 보안 체크: ${SECURITY_STATUS}"
+          echo "- 🔧 API 체크: ${API_STATUS}"
+          
+          # 실패한 작업이 있는지 확인
+          if [[ "${UPTIME_STATUS}" == "failure" || "${PERF_STATUS}" == "failure" || "${SECURITY_STATUS}" == "failure" || "${API_STATUS}" == "failure" ]]; then
+            echo ""
+            echo "⚠️ 일부 모니터링 항목에서 문제가 발견되었습니다."
+            echo "자세한 내용은 워크플로우 로그를 확인해주세요."
+            exit 1
+          else
+            echo ""
+            echo "✅ 모든 모니터링 항목이 정상입니다."
+          fi
+
+      - name: 실패 시 이슈 생성
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const title = `🚨 모니터링 알림: doha.kr 시스템 이상 감지`;
+            const body = `## 🚨 시스템 모니터링 알림
+            
+            **감지 시간**: ${new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' })}
+            
+            ### 📊 상태 요약
+            - 업타임 체크: ${{ needs.uptime-check.result }}
+            - 성능 체크: ${{ needs.performance-check.result }}
+            - 보안 체크: ${{ needs.security-check.result }}
+            - API 체크: ${{ needs.api-functionality.result }}
+            
+            ### 🔍 확인 필요사항
+            1. 사이트 접근성 확인
+            2. API 응답 상태 점검
+            3. 성능 지표 분석
+            4. 보안 설정 검토
+            
+            ### 📞 대응 절차
+            - [ ] 즉시 사이트 상태 확인
+            - [ ] 로그 분석 및 원인 파악
+            - [ ] 필요시 긴급 패치 적용
+            - [ ] 사용자 공지 여부 결정
+            
+            **워크플로우**: [링크](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+            
+            ---
+            *자동 생성된 모니터링 알림입니다.*`;
+            
+            // 기존에 열린 모니터링 이슈가 있는지 확인
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: 'monitoring,alert'
+            });
+            
+            const existingIssue = issues.find(issue => issue.title.includes('모니터링 알림'));
+            
+            if (existingIssue) {
+              // 기존 이슈에 댓글 추가
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: existingIssue.number,
+                body: `## 🔄 모니터링 업데이트\n\n${body}`
+              });
+            } else {
+              // 새 이슈 생성
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: title,
+                body: body,
+                labels: ['monitoring', 'alert', 'high-priority']
+              });
+            }
+            
+      - name: 성공 시 기존 이슈 닫기
+        if: success()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // 열린 모니터링 이슈들 찾기
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: 'monitoring,alert'
+            });
+            
+            const monitoringIssues = issues.filter(issue => 
+              issue.title.includes('모니터링 알림')
+            );
+            
+            // 모니터링 이슈들 닫기
+            for (const issue of monitoringIssues) {
+              await github.rest.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                state: 'closed'
+              });
+              
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                body: `✅ **모니터링 정상화 확인**\n\n모든 시스템이 정상 상태로 복구되었습니다.\n\n**확인 시간**: ${new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' })}`
+              });
+            }

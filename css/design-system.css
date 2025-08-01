@@ -59,16 +59,16 @@
   --spacing-3xl: 64px;
 
   /* Typography */
-  --font-family: 'Pretendard', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-size-xs: 0.75rem;    /* 12px */
-  --font-size-sm: 0.875rem;   /* 14px */
-  --font-size-base: 1rem;     /* 16px */
-  --font-size-lg: 1.125rem;   /* 18px */
-  --font-size-xl: 1.25rem;    /* 20px */
-  --font-size-2xl: 1.5rem;    /* 24px */
-  --font-size-3xl: 1.875rem;  /* 30px */
-  --font-size-4xl: 2.25rem;   /* 36px */
-  --font-size-5xl: 3rem;      /* 48px */
+  --font-family: "Pretendard", "Noto Sans KR", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-size-xs: 0.75rem; /* 12px */
+  --font-size-sm: 0.875rem; /* 14px */
+  --font-size-base: 1rem; /* 16px */
+  --font-size-lg: 1.125rem; /* 18px */
+  --font-size-xl: 1.25rem; /* 20px */
+  --font-size-2xl: 1.5rem; /* 24px */
+  --font-size-3xl: 1.875rem; /* 30px */
+  --font-size-4xl: 2.25rem; /* 36px */
+  --font-size-5xl: 3rem; /* 48px */
 
   /* Font Weights */
   --font-light: 300;
@@ -118,11 +118,11 @@
   --text-primary: #ffffff;
   --text-secondary: #a0a0a0;
   --text-tertiary: #6b6b6b;
-  
+
   --bg-primary: #0a0a0a;
   --bg-secondary: #1a1a1a;
   --bg-tertiary: #2a2a2a;
-  
+
   --border-color: #2a2a2a;
   --border-color-dark: #3a3a3a;
 }
@@ -365,99 +365,285 @@
 
 /* Grid Columns */
 @media (min-width: 768px) {
-  .col-md-1 { flex: 0 0 8.333333%; }
-  .col-md-2 { flex: 0 0 16.666667%; }
-  .col-md-3 { flex: 0 0 25%; }
-  .col-md-4 { flex: 0 0 33.333333%; }
-  .col-md-5 { flex: 0 0 41.666667%; }
-  .col-md-6 { flex: 0 0 50%; }
-  .col-md-7 { flex: 0 0 58.333333%; }
-  .col-md-8 { flex: 0 0 66.666667%; }
-  .col-md-9 { flex: 0 0 75%; }
-  .col-md-10 { flex: 0 0 83.333333%; }
-  .col-md-11 { flex: 0 0 91.666667%; }
-  .col-md-12 { flex: 0 0 100%; }
+  .col-md-1 {
+    flex: 0 0 8.333333%;
+  }
+  .col-md-2 {
+    flex: 0 0 16.666667%;
+  }
+  .col-md-3 {
+    flex: 0 0 25%;
+  }
+  .col-md-4 {
+    flex: 0 0 33.333333%;
+  }
+  .col-md-5 {
+    flex: 0 0 41.666667%;
+  }
+  .col-md-6 {
+    flex: 0 0 50%;
+  }
+  .col-md-7 {
+    flex: 0 0 58.333333%;
+  }
+  .col-md-8 {
+    flex: 0 0 66.666667%;
+  }
+  .col-md-9 {
+    flex: 0 0 75%;
+  }
+  .col-md-10 {
+    flex: 0 0 83.333333%;
+  }
+  .col-md-11 {
+    flex: 0 0 91.666667%;
+  }
+  .col-md-12 {
+    flex: 0 0 100%;
+  }
 }
 
 /* =================================
    Utility Classes
    ================================= */
 
-/* Display */
-.d-none { display: none !important; }
-.d-block { display: block !important; }
-.d-inline-block { display: inline-block !important; }
-.d-flex { display: flex !important; }
-.d-inline-flex { display: inline-flex !important; }
-.d-grid { display: grid !important; }
+/* Display - 높은 특이성으로 !important 제거 */
+[class^="d-"],
+[class*=" d-"] {
+  /* 더 높은 특이성 기본 설정 */
+}
+.d-none {
+  display: none;
+}
+.d-block {
+  display: block;
+}
+.d-inline-block {
+  display: inline-block;
+}
+.d-flex {
+  display: flex;
+}
+.d-inline-flex {
+  display: inline-flex;
+}
+.d-grid {
+  display: grid;
+}
 
-/* Flexbox */
-.flex-row { flex-direction: row !important; }
-.flex-column { flex-direction: column !important; }
-.justify-start { justify-content: flex-start !important; }
-.justify-center { justify-content: center !important; }
-.justify-end { justify-content: flex-end !important; }
-.justify-between { justify-content: space-between !important; }
-.align-start { align-items: flex-start !important; }
-.align-center { align-items: center !important; }
-.align-end { align-items: flex-end !important; }
-.flex-wrap { flex-wrap: wrap !important; }
-.gap-1 { gap: var(--spacing-sm) !important; }
-.gap-2 { gap: var(--spacing-md) !important; }
-.gap-3 { gap: var(--spacing-lg) !important; }
+/* Flexbox - 높은 특이성으로 !important 제거 */
+[class^="flex-"],
+[class*=" flex-"],
+[class^="justify-"],
+[class*=" justify-"],
+[class^="align-"],
+[class*=" align-"],
+[class^="gap-"],
+[class*=" gap-"] {
+  /* 더 높은 특이성 기본 설정 */
+}
+.flex-row {
+  flex-direction: row;
+}
+.flex-column {
+  flex-direction: column;
+}
+.justify-start {
+  justify-content: flex-start;
+}
+.justify-center {
+  justify-content: center;
+}
+.justify-end {
+  justify-content: flex-end;
+}
+.justify-between {
+  justify-content: space-between;
+}
+.align-start {
+  align-items: flex-start;
+}
+.align-center {
+  align-items: center;
+}
+.align-end {
+  align-items: flex-end;
+}
+.flex-wrap {
+  flex-wrap: wrap;
+}
+.gap-1 {
+  gap: var(--spacing-sm);
+}
+.gap-2 {
+  gap: var(--spacing-md);
+}
+.gap-3 {
+  gap: var(--spacing-lg);
+}
 
-/* Spacing */
-.m-0 { margin: 0 !important; }
-.m-1 { margin: var(--spacing-sm) !important; }
-.m-2 { margin: var(--spacing-md) !important; }
-.m-3 { margin: var(--spacing-lg) !important; }
-.m-4 { margin: var(--spacing-xl) !important; }
+/* Spacing - 높은 특이성으로 !important 제거 */
+[class^="m-"],
+[class*=" m-"],
+[class^="mt-"],
+[class*=" mt-"],
+[class^="mb-"],
+[class*=" mb-"],
+[class^="p-"],
+[class*=" p-"] {
+  /* 더 높은 특이성 기본 설정 */
+}
+.m-0 {
+  margin: 0;
+}
+.m-1 {
+  margin: var(--spacing-sm);
+}
+.m-2 {
+  margin: var(--spacing-md);
+}
+.m-3 {
+  margin: var(--spacing-lg);
+}
+.m-4 {
+  margin: var(--spacing-xl);
+}
 
-.mt-0 { margin-top: 0 !important; }
-.mt-1 { margin-top: var(--spacing-sm) !important; }
-.mt-2 { margin-top: var(--spacing-md) !important; }
-.mt-3 { margin-top: var(--spacing-lg) !important; }
-.mt-4 { margin-top: var(--spacing-xl) !important; }
+.mt-0 {
+  margin-top: 0;
+}
+.mt-1 {
+  margin-top: var(--spacing-sm);
+}
+.mt-2 {
+  margin-top: var(--spacing-md);
+}
+.mt-3 {
+  margin-top: var(--spacing-lg);
+}
+.mt-4 {
+  margin-top: var(--spacing-xl);
+}
 
-.mb-0 { margin-bottom: 0 !important; }
-.mb-1 { margin-bottom: var(--spacing-sm) !important; }
-.mb-2 { margin-bottom: var(--spacing-md) !important; }
-.mb-3 { margin-bottom: var(--spacing-lg) !important; }
-.mb-4 { margin-bottom: var(--spacing-xl) !important; }
+.mb-0 {
+  margin-bottom: 0;
+}
+.mb-1 {
+  margin-bottom: var(--spacing-sm);
+}
+.mb-2 {
+  margin-bottom: var(--spacing-md);
+}
+.mb-3 {
+  margin-bottom: var(--spacing-lg);
+}
+.mb-4 {
+  margin-bottom: var(--spacing-xl);
+}
 
-.p-0 { padding: 0 !important; }
-.p-1 { padding: var(--spacing-sm) !important; }
-.p-2 { padding: var(--spacing-md) !important; }
-.p-3 { padding: var(--spacing-lg) !important; }
-.p-4 { padding: var(--spacing-xl) !important; }
+.p-0 {
+  padding: 0;
+}
+.p-1 {
+  padding: var(--spacing-sm);
+}
+.p-2 {
+  padding: var(--spacing-md);
+}
+.p-3 {
+  padding: var(--spacing-lg);
+}
+.p-4 {
+  padding: var(--spacing-xl);
+}
 
-/* Text */
-.text-left { text-align: left !important; }
-.text-center { text-align: center !important; }
-.text-right { text-align: right !important; }
-.text-primary { color: var(--text-primary) !important; }
-.text-secondary { color: var(--text-secondary) !important; }
-.text-success { color: var(--color-success) !important; }
-.text-danger { color: var(--color-danger) !important; }
-.font-bold { font-weight: var(--font-bold) !important; }
-.font-medium { font-weight: var(--font-medium) !important; }
+/* Text - 높은 특이성으로 !important 제거 */
+[class^="text-"],
+[class*=" text-"],
+[class^="font-"],
+[class*=" font-"] {
+  /* 더 높은 특이성 기본 설정 */
+}
+.text-left {
+  text-align: left;
+}
+.text-center {
+  text-align: center;
+}
+.text-right {
+  text-align: right;
+}
+.text-primary {
+  color: var(--text-primary);
+}
+.text-secondary {
+  color: var(--text-secondary);
+}
+.text-success {
+  color: var(--color-success);
+}
+.text-danger {
+  color: var(--color-danger);
+}
+.font-bold {
+  font-weight: var(--font-bold);
+}
+.font-medium {
+  font-weight: var(--font-medium);
+}
 
-/* Background */
-.bg-primary { background-color: var(--bg-primary) !important; }
-.bg-secondary { background-color: var(--bg-secondary) !important; }
-.bg-tertiary { background-color: var(--bg-tertiary) !important; }
+/* Background - 높은 특이성으로 !important 제거 */
+[class^="bg-"],
+[class*=" bg-"] {
+  /* 더 높은 특이성 기본 설정 */
+}
+.bg-primary {
+  background-color: var(--bg-primary);
+}
+.bg-secondary {
+  background-color: var(--bg-secondary);
+}
+.bg-tertiary {
+  background-color: var(--bg-tertiary);
+}
 
-/* Border */
-.border { border: 1px solid var(--border-color) !important; }
-.border-0 { border: 0 !important; }
-.rounded { border-radius: var(--radius-md) !important; }
-.rounded-lg { border-radius: var(--radius-lg) !important; }
-.rounded-full { border-radius: var(--radius-full) !important; }
+/* Border - 높은 특이성으로 !important 제거 */
+[class^="border"],
+[class*=" border"],
+[class^="rounded"],
+[class*=" rounded"] {
+  /* 더 높은 특이성 기본 설정 */
+}
+.border {
+  border: 1px solid var(--border-color);
+}
+.border-0 {
+  border: 0;
+}
+.rounded {
+  border-radius: var(--radius-md);
+}
+.rounded-lg {
+  border-radius: var(--radius-lg);
+}
+.rounded-full {
+  border-radius: var(--radius-full);
+}
 
-/* Shadow */
-.shadow-sm { box-shadow: var(--shadow-sm) !important; }
-.shadow { box-shadow: var(--shadow-md) !important; }
-.shadow-lg { box-shadow: var(--shadow-lg) !important; }
+/* Shadow - 높은 특이성으로 !important 제거 */
+[class^="shadow"],
+[class*=" shadow"] {
+  /* 더 높은 특이성 기본 설정 */
+}
+.shadow-sm {
+  box-shadow: var(--shadow-sm);
+}
+.shadow {
+  box-shadow: var(--shadow-md);
+}
+.shadow-lg {
+  box-shadow: var(--shadow-lg);
+}
 
 /* Korean Typography Optimization */
 .text-kr {

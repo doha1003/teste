@@ -5,438 +5,438 @@
 
 /* 텍스트 카운터 컨테이너 */
 .text-counter-container {
-    max-width: 900px;
-    margin: 0 auto;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 /* 입력 영역 */
 .text-input-section {
-    background: white;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    padding: 40px;
-    margin-bottom: 30px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  margin-bottom: 30px;
 }
 
 /* 텍스트 입력 필드 */
 .text-input {
-    width: 100%;
-    min-height: 300px;
-    padding: 20px;
-    border: 2px solid var(--gray-200);
-    border-radius: 12px;
-    font-size: 1rem;
-    line-height: 1.6;
-    resize: vertical;
-    transition: all 0.3s ease;
-    font-family: 'Noto Sans KR', sans-serif;
+  width: 100%;
+  min-height: 300px;
+  padding: 20px;
+  border: 2px solid var(--gray-200);
+  border-radius: 12px;
+  font-size: 1rem;
+  line-height: 1.6;
+  resize: vertical;
+  transition: all 0.3s ease;
+  font-family: "Noto Sans KR", sans-serif;
 }
 
 .text-input:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.1);
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.1);
 }
 
 /* 실시간 카운터 표시 */
 .counter-display {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 15px;
-    padding: 15px 20px;
-    background: var(--gray-50);
-    border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+  padding: 15px 20px;
+  background: var(--gray-50);
+  border-radius: 10px;
 }
 
 .counter-item {
-    text-align: center;
+  text-align: center;
 }
 
 .counter-label {
-    display: block;
-    font-size: 0.85rem;
-    color: var(--gray-600);
-    margin-bottom: 5px;
+  display: block;
+  font-size: 0.85rem;
+  color: var(--gray-600);
+  margin-bottom: 5px;
 }
 
 .counter-value {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--primary-color);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary-color);
 }
 
 /* 상세 통계 섹션 */
 .stats-section {
-    background: white;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    padding: 40px;
-    margin-bottom: 30px;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.5s ease;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  margin-bottom: 30px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.5s ease;
 }
 
 .stats-section.show {
-    opacity: 1;
-    transform: translateY(0);
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .stats-title {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: var(--gray-800);
-    margin-bottom: 30px;
-    text-align: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--gray-800);
+  margin-bottom: 30px;
+  text-align: center;
 }
 
 /* 통계 그리드 */
 .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 20px;
-    margin-bottom: 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
 }
 
 .stat-card {
-    background: var(--gray-50);
-    border-radius: 12px;
-    padding: 20px;
-    text-align: center;
-    transition: all 0.3s ease;
+  background: var(--gray-50);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  transition: all 0.3s ease;
 }
 
 .stat-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .stat-value {
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--primary-color);
-    margin-bottom: 5px;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 5px;
 }
 
 .stat-label {
-    font-size: 0.9rem;
-    color: var(--gray-600);
+  font-size: 0.9rem;
+  color: var(--gray-600);
 }
 
 /* 단어 빈도 분석 */
 .word-frequency {
-    margin-top: 40px;
-    padding: 30px;
-    background: var(--gray-50);
-    border-radius: 15px;
+  margin-top: 40px;
+  padding: 30px;
+  background: var(--gray-50);
+  border-radius: 15px;
 }
 
 .word-frequency h3 {
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: var(--gray-800);
-    margin-bottom: 20px;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--gray-800);
+  margin-bottom: 20px;
 }
 
 .word-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .word-tag {
-    display: inline-flex;
-    align-items: center;
-    background: white;
-    border: 1px solid var(--gray-200);
-    border-radius: 20px;
-    padding: 8px 16px;
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  background: white;
+  border: 1px solid var(--gray-200);
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
 }
 
 .word-tag:hover {
-    border-color: var(--primary-color);
-    background: var(--primary-light);
+  border-color: var(--primary-color);
+  background: var(--primary-light);
 }
 
 .word-text {
-    color: var(--gray-700);
-    margin-right: 8px;
+  color: var(--gray-700);
+  margin-right: 8px;
 }
 
 .word-count {
-    background: var(--primary-color);
-    color: white;
-    padding: 2px 8px;
-    border-radius: 10px;
-    font-size: 0.8rem;
-    font-weight: 600;
+  background: var(--primary-color);
+  color: white;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  font-weight: 600;
 }
 
 /* 언어 감지 */
 .language-detection {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding: 15px 20px;
-    background: var(--info-light);
-    border-left: 4px solid var(--info-color);
-    border-radius: 8px;
-    margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px 20px;
+  background: var(--info-light);
+  border-left: 4px solid var(--info-color);
+  border-radius: 8px;
+  margin-top: 20px;
 }
 
 .language-icon {
-    font-size: 1.5rem;
+  font-size: 1.5rem;
 }
 
 .language-info {
-    flex: 1;
+  flex: 1;
 }
 
 .language-label {
-    font-size: 0.9rem;
-    color: var(--gray-600);
+  font-size: 0.9rem;
+  color: var(--gray-600);
 }
 
 .language-value {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--info-dark);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--info-dark);
 }
 
 /* 도구 버튼 */
 .tool-buttons {
-    display: flex;
-    gap: 15px;
-    margin-top: 20px;
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
 }
 
 .tool-btn {
-    flex: 1;
-    padding: 12px 24px;
-    border: none;
-    border-radius: 10px;
-    font-size: 1rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
+  flex: 1;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
 .tool-btn-primary {
-    background: var(--primary-color);
-    color: white;
+  background: var(--primary-color);
+  color: white;
 }
 
 .tool-btn-primary:hover {
-    background: var(--primary-dark);
-    transform: translateY(-2px);
+  background: var(--primary-dark);
+  transform: translateY(-2px);
 }
 
 .tool-btn-secondary {
-    background: var(--gray-200);
-    color: var(--gray-700);
+  background: var(--gray-200);
+  color: var(--gray-700);
 }
 
 .tool-btn-secondary:hover {
-    background: var(--gray-300);
+  background: var(--gray-300);
 }
 
 /* 설정 패널 */
 .settings-panel {
-    background: white;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    padding: 30px;
-    margin-bottom: 30px;
-    display: none;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  margin-bottom: 30px;
+  display: none;
 }
 
 .settings-panel.show {
-    display: block;
-    animation: slideDown 0.3s ease-out;
+  display: block;
+  animation: slideDown 0.3s ease-out;
 }
 
 .settings-title {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: var(--gray-800);
-    margin-bottom: 20px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--gray-800);
+  margin-bottom: 20px;
 }
 
 .setting-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 15px 0;
-    border-bottom: 1px solid var(--gray-200);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 0;
+  border-bottom: 1px solid var(--gray-200);
 }
 
 .setting-item:last-child {
-    border-bottom: none;
+  border-bottom: none;
 }
 
 .setting-label {
-    font-size: 1rem;
-    color: var(--gray-700);
+  font-size: 1rem;
+  color: var(--gray-700);
 }
 
 /* 토글 스위치 */
 .toggle-switch {
-    position: relative;
-    width: 50px;
-    height: 26px;
+  position: relative;
+  width: 50px;
+  height: 26px;
 }
 
 .toggle-switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
+  opacity: 0;
+  width: 0;
+  height: 0;
 }
 
 .toggle-slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: var(--gray-300);
-    transition: 0.4s;
-    border-radius: 26px;
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--gray-300);
+  transition: 0.4s;
+  border-radius: 26px;
 }
 
 .toggle-slider:before {
-    position: absolute;
-    content: "";
-    height: 20px;
-    width: 20px;
-    left: 3px;
-    bottom: 3px;
-    background-color: white;
-    transition: 0.4s;
-    border-radius: 50%;
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
 }
 
 input:checked + .toggle-slider {
-    background-color: var(--primary-color);
+  background-color: var(--primary-color);
 }
 
 input:checked + .toggle-slider:before {
-    transform: translateX(24px);
+  transform: translateX(24px);
 }
 
 /* 가이드 섹션 */
 .guide-section {
-    background: white;
-    border-radius: 20px;
-    padding: 40px;
-    margin-bottom: 30px;
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  margin-bottom: 30px;
 }
 
 .guide-content {
-    display: grid;
-    gap: 20px;
+  display: grid;
+  gap: 20px;
 }
 
 .guide-item {
-    display: flex;
-    gap: 15px;
-    padding: 20px;
-    background: var(--gray-50);
-    border-radius: 12px;
+  display: flex;
+  gap: 15px;
+  padding: 20px;
+  background: var(--gray-50);
+  border-radius: 12px;
 }
 
 .guide-icon {
-    font-size: 2rem;
-    color: var(--primary-color);
+  font-size: 2rem;
+  color: var(--primary-color);
 }
 
 .guide-text h4 {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--gray-800);
-    margin-bottom: 5px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--gray-800);
+  margin-bottom: 5px;
 }
 
 .guide-text p {
-    font-size: 0.95rem;
-    color: var(--gray-600);
-    line-height: 1.6;
+  font-size: 0.95rem;
+  color: var(--gray-600);
+  line-height: 1.6;
 }
 
 /* 애니메이션 */
 @keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* 반응형 디자인 */
 @media (max-width: 768px) {
-    .text-input-section,
-    .stats-section,
-    .guide-section {
-        padding: 30px 20px;
-    }
-    
-    .text-input {
-        min-height: 200px;
-        font-size: 0.95rem;
-    }
-    
-    .counter-display {
-        flex-wrap: wrap;
-        gap: 10px;
-    }
-    
-    .counter-item {
-        flex: 1 0 45%;
-    }
-    
-    .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 15px;
-    }
-    
-    .stat-value {
-        font-size: 1.5rem;
-    }
-    
-    .tool-buttons {
-        flex-direction: column;
-    }
-    
-    .word-frequency {
-        padding: 20px;
-    }
+  .text-input-section,
+  .stats-section,
+  .guide-section {
+    padding: 30px 20px;
+  }
+
+  .text-input {
+    min-height: 200px;
+    font-size: 0.95rem;
+  }
+
+  .counter-display {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .counter-item {
+    flex: 1 0 45%;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+
+  .stat-value {
+    font-size: 1.5rem;
+  }
+
+  .tool-buttons {
+    flex-direction: column;
+  }
+
+  .word-frequency {
+    padding: 20px;
+  }
 }
 
 @media (max-width: 480px) {
-    .text-counter-container {
-        padding: 0 10px;
-    }
-    
-    .counter-value {
-        font-size: 1.2rem;
-    }
-    
-    .stats-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .guide-item {
-        flex-direction: column;
-        text-align: center;
-    }
+  .text-counter-container {
+    padding: 0 10px;
+  }
+
+  .counter-value {
+    font-size: 1.2rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .guide-item {
+    flex-direction: column;
+    text-align: center;
+  }
 }

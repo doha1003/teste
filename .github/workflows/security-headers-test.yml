@@ -1,0 +1,109 @@
+name: Security Headers Test
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    # 매주 월요일 오전 9시 실행 (KST)
+    - cron: '0 0 * * 1'
+
+jobs:
+  test-security-headers:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Test CORS configuration
+      run: |
+        # CORS 설정 테스트 스크립트 실행
+        node tests/cors-test.js
+      env:
+        NODE_ENV: test
+        
+    - name: Check security headers in production
+      if: github.ref == 'refs/heads/main'
+      run: |
+        # 프로덕션 도메인의 보안 헤더 확인
+        echo "Checking security headers for doha.kr..."
+        
+        # X-Content-Type-Options
+        curl -s -I https://doha.kr | grep -i "x-content-type-options: nosniff" || \
+          (echo "❌ Missing X-Content-Type-Options header" && exit 1)
+        
+        # X-Frame-Options
+        curl -s -I https://doha.kr | grep -i "x-frame-options" || \
+          (echo "❌ Missing X-Frame-Options header" && exit 1)
+        
+        # X-XSS-Protection
+        curl -s -I https://doha.kr | grep -i "x-xss-protection" || \
+          (echo "❌ Missing X-XSS-Protection header" && exit 1)
+        
+        # Referrer-Policy
+        curl -s -I https://doha.kr | grep -i "referrer-policy" || \
+          (echo "❌ Missing Referrer-Policy header" && exit 1)
+        
+        echo "✅ All security headers are present"
+        
+    - name: Test API CORS policy
+      run: |
+        # 허용된 origin 테스트
+        echo "Testing allowed origin..."
+        response=$(curl -s -X OPTIONS \
+          -H "Origin: https://doha.kr" \
+          -H "Access-Control-Request-Method: POST" \
+          -w "\n%{http_code}" \
+          https://doha.kr/api/fortune)
+        
+        http_code=$(echo "$response" | tail -n 1)
+        if [ "$http_code" != "204" ] && [ "$http_code" != "200" ]; then
+          echo "❌ CORS preflight failed for allowed origin"
+          exit 1
+        fi
+        
+        # 허용되지 않은 origin 테스트
+        echo "Testing disallowed origin..."
+        response=$(curl -s -X OPTIONS \
+          -H "Origin: https://malicious-site.com" \
+          -H "Access-Control-Request-Method: POST" \
+          -I \
+          https://doha.kr/api/fortune)
+        
+        if echo "$response" | grep -i "access-control-allow-origin: https://malicious-site.com"; then
+          echo "❌ CORS policy allows unauthorized origin"
+          exit 1
+        fi
+        
+        echo "✅ CORS policy is correctly configured"
+        
+    - name: Generate security report
+      if: always()
+      run: |
+        echo "## Security Headers Report" > security-report.md
+        echo "Date: $(date)" >> security-report.md
+        echo "" >> security-report.md
+        
+        # 상세 보고서 생성
+        curl -s -I https://doha.kr > headers.txt
+        
+        echo "### Response Headers:" >> security-report.md
+        echo '```' >> security-report.md
+        cat headers.txt >> security-report.md
+        echo '```' >> security-report.md
+        
+    - name: Upload security report
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: security-headers-report
+        path: security-report.md

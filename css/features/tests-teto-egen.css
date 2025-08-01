@@ -4,480 +4,492 @@
 
 /* Animated Background */
 .teto-animated-background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    overflow: hidden;
-    z-index: 0;
-    pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
 }
 
 .teto-particle {
-    position: absolute;
-    top: -50px;
-    font-size: 30px;
-    animation: teto-fall 15s linear infinite;
-    opacity: 0.3;
+  position: absolute;
+  top: -50px;
+  font-size: 30px;
+  animation: teto-fall 15s linear infinite;
+  opacity: 0.3;
 }
 
 @keyframes teto-fall {
-    to {
-        transform: translateY(calc(100vh + 50px)) rotate(360deg);
-    }
+  to {
+    transform: translateY(calc(100vh + 50px)) rotate(360deg);
+  }
 }
 
 /* Teto Page Specific */
 .teto-test-page {
-    background: linear-gradient(135deg, #fef3c7 0%, #fecaca 100%);
-    min-height: 100vh;
+  background: linear-gradient(135deg, #fef3c7 0%, #fecaca 100%);
+  min-height: 100vh;
 }
 
 .teto-test-wrapper {
-    position: relative;
-    z-index: 1;
-    min-height: 100vh;
-    padding-bottom: var(--spacing-16);
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  padding-bottom: var(--spacing-16);
 }
 
 /* Header Section */
 .teto-header-section {
-    text-align: center;
-    padding: var(--spacing-12) 0;
-    position: relative;
+  text-align: center;
+  padding: var(--spacing-12) 0;
+  position: relative;
 }
 
 .teto-header-decoration {
-    position: absolute;
-    font-size: 60px;
-    opacity: 0.1;
-    animation: float 3s ease-in-out infinite;
+  position: absolute;
+  font-size: 60px;
+  opacity: 0.1;
+  animation: float 3s ease-in-out infinite;
 }
 
 .teto-header-decoration:first-child {
-    top: 20px;
-    left: 10%;
+  top: 20px;
+  left: 10%;
 }
 
 .teto-header-decoration:last-child {
-    top: 40px;
-    right: 10%;
-    animation-delay: 1.5s;
+  top: 40px;
+  right: 10%;
+  animation-delay: 1.5s;
 }
 
 @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-20px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
 }
 
 .teto-header-content {
-    position: relative;
-    z-index: 1;
+  position: relative;
+  z-index: 1;
 }
 
 .teto-header-title {
-    font-size: var(--font-size-4xl);
-    font-weight: var(--font-weight-bold);
-    background: linear-gradient(135deg, #f59e0b 0%, #dc2626 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: var(--spacing-4);
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-bold);
+  background: linear-gradient(135deg, #f59e0b 0%, #dc2626 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: var(--spacing-4);
 }
 
 .teto-header-subtitle {
-    font-size: var(--font-size-lg);
-    color: var(--color-gray-600);
+  font-size: var(--font-size-lg);
+  color: var(--color-gray-600);
 }
 
 /* Gender Selection */
 .teto-gender-selection {
-    margin-top: var(--spacing-8);
+  margin-top: var(--spacing-8);
 }
 
 .teto-gender-buttons {
-    display: flex;
-    gap: var(--spacing-6);
-    justify-content: center;
-    flex-wrap: wrap;
+  display: flex;
+  gap: var(--spacing-6);
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .teto-gender-btn {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--spacing-3);
-    padding: var(--spacing-8);
-    background-color: var(--color-white);
-    border: 3px solid transparent;
-    border-radius: var(--radius-2xl);
-    cursor: pointer;
-    transition: all var(--transition-base);
-    min-width: 150px;
-    box-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-8);
+  background-color: var(--color-white);
+  border: 3px solid transparent;
+  border-radius: var(--radius-2xl);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  min-width: 150px;
+  box-shadow: var(--shadow-md);
 }
 
 .teto-gender-btn:hover {
-    border-color: var(--color-primary);
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-xl);
+  border-color: var(--color-primary);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-xl);
 }
 
 .teto-gender-emoji {
-    font-size: 48px;
+  font-size: 48px;
 }
 
 .teto-gender-text {
-    font-size: var(--font-size-lg);
-    font-weight: var(--font-weight-semibold);
-    color: var(--color-gray-900);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-gray-900);
 }
 
 /* Test Container Override */
 .teto-test-container {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 0 var(--spacing-6);
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-6);
 }
 
 /* Progress Override */
 .teto-progress-container {
-    background: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
 }
 
 .teto-progress-fill {
-    background: linear-gradient(90deg, #f59e0b 0%, #dc2626 100%);
+  background: linear-gradient(90deg, #f59e0b 0%, #dc2626 100%);
 }
 
 /* Question Card Override */
 .teto-question-container {
-    margin-bottom: var(--spacing-8);
+  margin-bottom: var(--spacing-8);
 }
 
 .teto-question-card {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(245, 158, 11, 0.2);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(245, 158, 11, 0.2);
 }
 
 .teto-question-number {
-    color: #f59e0b;
+  color: #f59e0b;
 }
 
 /* Options Override */
 .teto-options {
-    display: grid;
-    gap: var(--spacing-3);
+  display: grid;
+  gap: var(--spacing-3);
 }
 
 .teto-option {
-    width: 100%;
-    padding: var(--spacing-4) var(--spacing-6);
-    text-align: left;
-    font-size: var(--font-size-base);
-    color: var(--color-gray-700);
-    background-color: rgba(255, 255, 255, 0.9);
-    border: 2px solid rgba(245, 158, 11, 0.2);
-    border-radius: var(--radius-xl);
-    cursor: pointer;
-    transition: all var(--transition-base);
-    backdrop-filter: blur(5px);
+  width: 100%;
+  padding: var(--spacing-4) var(--spacing-6);
+  text-align: left;
+  font-size: var(--font-size-base);
+  color: var(--color-gray-700);
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 2px solid rgba(245, 158, 11, 0.2);
+  border-radius: var(--radius-xl);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  backdrop-filter: blur(5px);
 }
 
 .teto-option:hover {
-    border-color: #f59e0b;
-    background-color: rgba(254, 243, 199, 0.5);
-    transform: translateX(4px);
+  border-color: #f59e0b;
+  background-color: rgba(254, 243, 199, 0.5);
+  transform: translateX(4px);
 }
 
 .teto-option.selected {
-    border-color: #f59e0b;
-    background: linear-gradient(135deg, #f59e0b 0%, #dc2626 100%);
-    color: var(--color-white);
-    font-weight: var(--font-weight-medium);
+  border-color: #f59e0b;
+  background: linear-gradient(135deg, #f59e0b 0%, #dc2626 100%);
+  color: var(--color-white);
+  font-weight: var(--font-weight-medium);
 }
 
 /* Navigation Override */
 .teto-navigation {
-    display: flex;
-    justify-content: space-between;
-    gap: var(--spacing-4);
-    margin-top: var(--spacing-6);
+  display: flex;
+  justify-content: space-between;
+  gap: var(--spacing-4);
+  margin-top: var(--spacing-6);
 }
 
 .teto-btn {
-    padding: var(--spacing-3) var(--spacing-6);
-    font-size: var(--font-size-base);
-    font-weight: var(--font-weight-medium);
-    border-radius: var(--radius-full);
-    border: none;
-    cursor: pointer;
-    transition: all var(--transition-base);
-    min-width: 120px;
+  padding: var(--spacing-3) var(--spacing-6);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  border-radius: var(--radius-full);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  min-width: 120px;
 }
 
 .teto-btn-primary {
-    background: linear-gradient(135deg, #f59e0b 0%, #dc2626 100%);
-    color: var(--color-white);
+  background: linear-gradient(135deg, #f59e0b 0%, #dc2626 100%);
+  color: var(--color-white);
 }
 
 .teto-btn-secondary {
-    background-color: rgba(255, 255, 255, 0.8);
-    color: #dc2626;
-    border: 2px solid #fecaca;
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #dc2626;
+  border: 2px solid #fecaca;
 }
 
 /* Result Type Card */
 .teto-type-card {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(254, 243, 199, 0.95) 100%);
-    border-radius: var(--radius-2xl);
-    padding: var(--spacing-10);
-    text-align: center;
-    margin-bottom: var(--spacing-8);
-    box-shadow: var(--shadow-xl);
-    position: relative;
-    overflow: hidden;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(254, 243, 199, 0.95) 100%);
+  border-radius: var(--radius-2xl);
+  padding: var(--spacing-10);
+  text-align: center;
+  margin-bottom: var(--spacing-8);
+  box-shadow: var(--shadow-xl);
+  position: relative;
+  overflow: hidden;
 }
 
 .teto-type-card::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    right: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(245, 158, 11, 0.1) 0%, transparent 70%);
-    animation: pulse 3s ease-in-out infinite;
+  content: "";
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.1) 0%, transparent 70%);
+  animation: pulse 3s ease-in-out infinite;
 }
 
 @keyframes pulse {
-    0%, 100% { transform: scale(1); opacity: 0.5; }
-    50% { transform: scale(1.1); opacity: 0.3; }
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.3;
+  }
 }
 
 .teto-result-emoji {
-    font-size: 80px;
-    margin-bottom: var(--spacing-4);
-    display: block;
+  font-size: 80px;
+  margin-bottom: var(--spacing-4);
+  display: block;
 }
 
 .teto-result-type {
-    font-size: var(--font-size-3xl);
-    font-weight: var(--font-weight-bold);
-    color: #dc2626;
-    margin-bottom: var(--spacing-2);
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  color: #dc2626;
+  margin-bottom: var(--spacing-2);
 }
 
 .teto-result-title {
-    font-size: var(--font-size-2xl);
-    font-weight: var(--font-weight-semibold);
-    color: var(--color-gray-900);
-    margin-bottom: var(--spacing-2);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-gray-900);
+  margin-bottom: var(--spacing-2);
 }
 
 .teto-result-subtitle {
-    font-size: var(--font-size-lg);
-    color: var(--color-gray-600);
-    font-style: italic;
-    margin-bottom: var(--spacing-4);
+  font-size: var(--font-size-lg);
+  color: var(--color-gray-600);
+  font-style: italic;
+  margin-bottom: var(--spacing-4);
 }
 
 .teto-result-rarity {
-    display: inline-block;
-    padding: var(--spacing-1) var(--spacing-3);
-    background-color: rgba(245, 158, 11, 0.2);
-    color: #dc2626;
-    border-radius: var(--radius-full);
-    font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-medium);
+  display: inline-block;
+  padding: var(--spacing-1) var(--spacing-3);
+  background-color: rgba(245, 158, 11, 0.2);
+  color: #dc2626;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
 }
 
 /* Result Detail */
 .teto-result-detail-box {
-    background-color: rgba(255, 255, 255, 0.9);
-    border-radius: var(--radius-2xl);
-    padding: var(--spacing-8);
-    margin-bottom: var(--spacing-8);
-    backdrop-filter: blur(10px);
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: var(--radius-2xl);
+  padding: var(--spacing-8);
+  margin-bottom: var(--spacing-8);
+  backdrop-filter: blur(10px);
 }
 
 .teto-result-description {
-    font-size: var(--font-size-lg);
-    color: var(--color-gray-700);
-    line-height: 1.8;
-    margin-bottom: var(--spacing-6);
-    text-align: center;
+  font-size: var(--font-size-lg);
+  color: var(--color-gray-700);
+  line-height: 1.8;
+  margin-bottom: var(--spacing-6);
+  text-align: center;
 }
 
 .teto-result-detail-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: var(--spacing-6);
-    margin-bottom: var(--spacing-6);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--spacing-6);
+  margin-bottom: var(--spacing-6);
 }
 
 .teto-result-detail-card {
-    background-color: rgba(254, 243, 199, 0.3);
-    border-radius: var(--radius-xl);
-    padding: var(--spacing-6);
-    text-align: center;
+  background-color: rgba(254, 243, 199, 0.3);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-6);
+  text-align: center;
 }
 
 .teto-result-detail-card h4 {
-    font-size: var(--font-size-lg);
-    font-weight: var(--font-weight-semibold);
-    color: #dc2626;
-    margin-bottom: var(--spacing-4);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: #dc2626;
+  margin-bottom: var(--spacing-4);
 }
 
 /* Traits */
 .teto-trait-item {
-    text-align: left;
-    color: var(--color-gray-700);
-    margin-bottom: var(--spacing-2);
-    font-size: var(--font-size-base);
+  text-align: left;
+  color: var(--color-gray-700);
+  margin-bottom: var(--spacing-2);
+  font-size: var(--font-size-base);
 }
 
 /* Hobbies */
 .teto-hobby-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--spacing-2);
-    justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-2);
+  justify-content: center;
 }
 
 .teto-hobby-tag {
-    display: inline-block;
-    padding: var(--spacing-2) var(--spacing-3);
-    background-color: rgba(245, 158, 11, 0.1);
-    color: #dc2626;
-    border-radius: var(--radius-full);
-    font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-medium);
+  display: inline-block;
+  padding: var(--spacing-2) var(--spacing-3);
+  background-color: rgba(245, 158, 11, 0.1);
+  color: #dc2626;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
 }
 
 /* Analysis Cards */
 .teto-result-analysis-card {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(254, 226, 226, 0.3) 100%);
-    border-radius: var(--radius-xl);
-    padding: var(--spacing-6);
-    margin-bottom: var(--spacing-4);
-    text-align: left;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(254, 226, 226, 0.3) 100%);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-6);
+  margin-bottom: var(--spacing-4);
+  text-align: left;
 }
 
 .teto-result-analysis-card h4 {
-    font-size: var(--font-size-lg);
-    font-weight: var(--font-weight-semibold);
-    color: #dc2626;
-    margin-bottom: var(--spacing-3);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: #dc2626;
+  margin-bottom: var(--spacing-3);
 }
 
 .teto-result-analysis-card p {
-    color: var(--color-gray-700);
-    line-height: 1.6;
+  color: var(--color-gray-700);
+  line-height: 1.6;
 }
 
 /* Celebrity List */
 .teto-celebrity-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--spacing-3);
-    justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-3);
+  justify-content: center;
 }
 
 .teto-celebrity-item {
-    display: inline-block;
-    padding: var(--spacing-2) var(--spacing-4);
-    background-color: rgba(245, 158, 11, 0.1);
-    color: var(--color-gray-800);
-    border-radius: var(--radius-md);
-    font-size: var(--font-size-base);
-    font-weight: var(--font-weight-medium);
+  display: inline-block;
+  padding: var(--spacing-2) var(--spacing-4);
+  background-color: rgba(245, 158, 11, 0.1);
+  color: var(--color-gray-800);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
 }
 
 /* Compatibility */
 .teto-compatibility-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--spacing-4);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-4);
 }
 
 .teto-compatibility-section h5 {
-    font-size: var(--font-size-sm);
-    color: var(--color-gray-600);
-    margin-bottom: var(--spacing-2);
-    text-transform: uppercase;
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-600);
+  margin-bottom: var(--spacing-2);
+  text-transform: uppercase;
 }
 
 .teto-compatibility-type {
-    display: inline-block;
-    padding: var(--spacing-2) var(--spacing-4);
-    background-color: #dc2626;
-    color: var(--color-white);
-    border-radius: var(--radius-md);
-    font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-medium);
+  display: inline-block;
+  padding: var(--spacing-2) var(--spacing-4);
+  background-color: #dc2626;
+  color: var(--color-white);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
 }
 
 .teto-compatibility-type-good {
-    background-color: #f59e0b;
+  background-color: #f59e0b;
 }
 
 /* Share Section Override */
 .teto-share-section {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(254, 243, 199, 0.5) 100%);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(254, 243, 199, 0.5) 100%);
 }
 
 .teto-action-buttons {
-    display: flex;
-    gap: var(--spacing-4);
-    justify-content: center;
-    flex-wrap: wrap;
+  display: flex;
+  gap: var(--spacing-4);
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 /* Utilities */
 .teto-hidden {
-    display: none !important;
+  display: none !important;
 }
 
 /* Mobile Responsive */
 @media (max-width: 768px) {
-    .teto-header-title {
-        font-size: var(--font-size-3xl);
-    }
-    
-    .teto-gender-buttons {
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    .teto-gender-btn {
-        width: 200px;
-    }
-    
-    .teto-result-emoji {
-        font-size: 60px;
-    }
-    
-    .teto-result-type {
-        font-size: var(--font-size-2xl);
-    }
-    
-    .teto-result-title {
-        font-size: var(--font-size-xl);
-    }
-    
-    .teto-compatibility-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .teto-action-buttons {
-        flex-direction: column;
-    }
-    
-    .teto-action-buttons .teto-btn {
-        width: 100%;
-    }
+  .teto-header-title {
+    font-size: var(--font-size-3xl);
+  }
+
+  .teto-gender-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .teto-gender-btn {
+    width: 200px;
+  }
+
+  .teto-result-emoji {
+    font-size: 60px;
+  }
+
+  .teto-result-type {
+    font-size: var(--font-size-2xl);
+  }
+
+  .teto-result-title {
+    font-size: var(--font-size-xl);
+  }
+
+  .teto-compatibility-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .teto-action-buttons {
+    flex-direction: column;
+  }
+
+  .teto-action-buttons .teto-btn {
+    width: 100%;
+  }
 }

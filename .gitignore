@@ -1,112 +1,97 @@
-# API 키 및 설정 파일
-js/config.js
-.env
-.env.*
-.env.mcp
-mcp-config.json
-
-# 로그 파일
-*.log
-
-# 임시 파일
-*.tmp
-*.temp
-
-# 에디터 설정
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# 운영체제 파일
-.DS_Store
-Thumbs.db
-
-# 백업 파일
-*.backup
-*.bak
-*_backup*
-*_old*
-
-# 테스트 파일
-test_*.py
-test_*.js
-*_test_results.json
-test-*.html
-test-*.js
-*-test.js
-check-*.js
-fix-*.js
-add-*.js
-simple-*.js
-full-*.js
-comprehensive-*.js
-complete-*.js
-quick-*.js
-function-*.js
-playwright_*.js
-playwright_*.cjs
-*.py
-final-verification/
-doha_kr_validation_summary.md
-
-# 임시 파일
-*.tmp
-temp_*
-tmp_*
-
-# Python 캐시
-__pycache__/
-*.pyc
-
-# 스크린샷
-sample_screenshots/
-test_screenshots/
-validation_screenshots/
-screenshots/
-*.png
-
-# 중복 보고서
-reports/
-*AUDIT_REPORT*.md
-*validation_report*.md
-fortune_pages_validation_report.md
-remove-console-logs.js
-nul
-
-# Minified CSS (webpack이 생성)
-css/**/*.min.css
-!css/styles.min.css
-
-# Vercel
-.vercel
-
-# TypeScript 관련
-.tsbuildinfo
-*.tsbuildinfo
-src/**/*.js
-src/**/*.js.map
-types/**/*.js
-types/**/*.js.map
-
-# Node.js
+# Dependencies
 node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-.pnpm-debug.log*
-package-lock.json
 
-# 빌드 및 배포
+# Production
 dist/
 build/
-coverage/
-.cache/
-.webpack/
 
-# 개발 도구 캐시
-.eslintcache
-.rpt2_cache/
-.rts2_cache_cjs/
-.rts2_cache_es/
-.rts2_cache_umd/
+# Editor directories and files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment variables
+.env
+.env.local
+.env.production.local
+
+# Test coverage
+coverage/
+*.lcov
+
+# Cache
+.cache/
+.parcel-cache/
+.vercel/
+
+# Logs
+logs/
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+.prettierrc.bak
+
+# Reports
+*-report.md
+*-report.json
+*-analysis.md
+
+# Backup files
+backup/
+*.backup
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Design system build
+design-system/build/
+design-system/dist/
+design-system/.next/
+
+# Test results
+test-results/
+playwright-report/
+
+# Local test files
+test-*.html
+demo-*.html
+
+# IDE specific
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# macOS
+.AppleDouble
+.LSOverride
+Icon
+._*
+
+# Windows
+Desktop.ini
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+
+# Linux
+.directory
+.Trash-*
+.nfs*

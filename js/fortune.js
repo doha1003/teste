@@ -1,21 +1,26 @@
-
 // 입력값 검증 함수
 function sanitizeInput(value, type = 'string') {
-    if (type === 'number') {
-        return parseFloat(String(value).replace(/[^0-9.-]/g, ''));
-    }
-    return String(value).replace(/[<>&"']/g, (match) => {
-        const entityMap = {'<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;', "'": '&#39;'};
-        return entityMap[match];
-    });
+  if (type === 'number') {
+    return parseFloat(String(value).replace(/[^0-9.-]/g, ''));
+  }
+  return String(value).replace(/[<>&"']/g, (match) => {
+    const entityMap = {
+      '<': '&lt;',
+      '>': '&gt;',
+      '&': '&amp;',
+      '"': '&quot;',
+      "'": '&#39;',
+    };
+    return entityMap[match];
+  });
 }
 
 function validateNumber(value, min = 0, max = Number.MAX_SAFE_INTEGER) {
-    const num = parseFloat(String(value).replace(/[^0-9.-]/g, ''));
-    if (isNaN(num) || num < min || num > max) {
-        return min;
-    }
-    return num;
+  const num = parseFloat(String(value).replace(/[^0-9.-]/g, ''));
+  if (isNaN(num) || num < min || num > max) {
+    return min;
+  }
+  return num;
 }
 
 // =============================================
@@ -24,167 +29,165 @@ function validateNumber(value, min = 0, max = Number.MAX_SAFE_INTEGER) {
 // Created: 2025-01-10
 // Purpose: 종합 AI 운세 기능
 
-(function() {
-    'use strict';
-    
-    // Security check
-    if (typeof Security === 'undefined') {
-        // Security library required for Fortune system
-        return;
-    }
-    
-    const Fortune = {
-        // Configuration
-        config: {
-            apiEndpoint: 'https://doha-kr-ap.vercel.app/api/fortune',
-            maxRetries: 3,
-            timeout: 30000,
-            rateLimitWindow: 60000, // 1 minute
-            maxRequestsPerWindow: 10
-        },
-        
-        // Rate limiting
-        requests: [],
-        
-        // Initialize
-        init: function() {
-            try {
-                this.setupEventListeners();
-                this.checkAPIConfig();
-                } catch (error) {
-                // Fortune initialization failed
-            }
-        },
-        
-        // Check API configuration
-        checkAPIConfig: function() {
-            if (typeof APIConfig !== 'undefined') {
-                const geminiConfig = APIConfig.getConfig('gemini');
-                if (geminiConfig && geminiConfig.apiKey) {
-                    this.config.hasAPI = true;
-                    } else {
-                    }
-            }
-        },
-        
-        // Setup event listeners
-        setupEventListeners: function() {
-            // Daily fortune
-            const dailyBtn = document.getElementById('daily-fortune-btn');
-            if (dailyBtn) {
-                dailyBtn.addEventListener('click', this.getDailyFortune.bind(this));
-            }
-            
-            // Saju analysis
-            const sajuForm = document.getElementById('saju-form');
-            if (sajuForm) {
-                sajuForm.addEventListener('submit', this.handleSajuSubmit.bind(this));
-            }
-            
-            // Tarot reading
-            const tarotBtn = document.getElementById('tarot-reading-btn');
-            if (tarotBtn) {
-                tarotBtn.addEventListener('click', this.startTarotReading.bind(this));
-            }
-            
-            // Zodiac analysis
-            const zodiacForm = document.getElementById('zodiac-form');
-            if (zodiacForm) {
-                zodiacForm.addEventListener('submit', this.handleZodiacSubmit.bind(this));
-            }
-        },
-        
-        // Rate limiting check
-        checkRateLimit: function() {
-            const now = Date.now();
-            const cutoff = now - this.config.rateLimitWindow;
-            
-            // Remove old requests
-            this.requests = this.requests.filter(time => time > cutoff);
-            
-            if (this.requests.length >= this.config.maxRequestsPerWindow) {
-                throw new Error('너무 많은 요청입니다. 잠시 후 다시 시도해주세요.');
-            }
-            
-            this.requests.push(now);
-        },
-        
-        // Make API request
-        makeRequest: async function(endpoint, data) {
-            try {
-                this.checkRateLimit();
-                
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), this.config.timeout);
-                
-                const response = await fetch(endpoint, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-Requested-With': 'XMLHttpRequest'
-                    },
-                    body: JSON.stringify(data),
-                    signal: controller.signal
-                });
-                
-                clearTimeout(timeoutId);
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                }
-                
-                return await response.json();
-                
-            } catch (error) {
-                if (error.name === 'AbortError') {
-                    throw new Error('요청 시간이 초과되었습니다.');
-                }
-                throw error;
-            }
-        },
-        
-        // Get daily fortune
-        getDailyFortune: async function() {
-            const button = document.getElementById('daily-fortune-btn');
-            const resultDiv = document.getElementById('daily-fortune-result');
-            
-            if (!button || !resultDiv) return;
-            
-            try {
-                button.disabled = true;
-                button.textContent = '운세 분석 중...';
-                SecureDOM.setInnerHTML(resultDiv, '<div class="loading">운세를 분석하고 있습니다...</div>');
-                
-                const today = new Date();
-                const data = {
-                    type: 'daily',
-                    date: today.toISOString().split('T')[0],
-                    user_id: this.generateUserId()
-                };
-                
-                const result = await this.makeRequest(this.config.apiEndpoint, data);
-                
-                if (result.success) {
-                    this.displayDailyFortune(result.fortune);
-                } else {
-                    throw new Error(result.message || '운세 분석에 실패했습니다.');
-                }
-                
-            } catch (error) {
-                // Daily fortune error
-                SecureDOM.setInnerHTML(resultDiv, `<div class="error-message">${error.message}</div>`);
-            } finally {
-                button.disabled = false;
-                button.textContent = '오늘의 운세 보기';
-            }
-        },
-        
-        // Display daily fortune
-        displayDailyFortune: function(fortune) {
-            const resultDiv = document.getElementById('daily-fortune-result');
-            if (!resultDiv) return;
-            
-            const html = `
+(function () {
+  'use strict';
+
+  // Security check
+  if (typeof Security === 'undefined') {
+    // Security library required for Fortune system
+    return;
+  }
+
+  const Fortune = {
+    // Configuration
+    config: {
+      apiEndpoint: 'https://doha-kr-ap.vercel.app/api/fortune',
+      maxRetries: 3,
+      timeout: 30000,
+      rateLimitWindow: 60000, // 1 minute
+      maxRequestsPerWindow: 10,
+    },
+
+    // Rate limiting
+    requests: [],
+
+    // Initialize
+    init: function () {
+      try {
+        this.setupEventListeners();
+        this.checkAPIConfig();
+      } catch (error) {
+        // Fortune initialization failed
+      }
+    },
+
+    // Check API configuration
+    checkAPIConfig: function () {
+      if (typeof APIConfig !== 'undefined') {
+        const geminiConfig = APIConfig.getConfig('gemini');
+        if (geminiConfig && geminiConfig.apiKey) {
+          this.config.hasAPI = true;
+        } else {
+        }
+      }
+    },
+
+    // Setup event listeners
+    setupEventListeners: function () {
+      // Daily fortune
+      const dailyBtn = document.getElementById('daily-fortune-btn');
+      if (dailyBtn) {
+        dailyBtn.addEventListener('click', this.getDailyFortune.bind(this));
+      }
+
+      // Saju analysis
+      const sajuForm = document.getElementById('saju-form');
+      if (sajuForm) {
+        sajuForm.addEventListener('submit', this.handleSajuSubmit.bind(this));
+      }
+
+      // Tarot reading
+      const tarotBtn = document.getElementById('tarot-reading-btn');
+      if (tarotBtn) {
+        tarotBtn.addEventListener('click', this.startTarotReading.bind(this));
+      }
+
+      // Zodiac analysis
+      const zodiacForm = document.getElementById('zodiac-form');
+      if (zodiacForm) {
+        zodiacForm.addEventListener('submit', this.handleZodiacSubmit.bind(this));
+      }
+    },
+
+    // Rate limiting check
+    checkRateLimit: function () {
+      const now = Date.now();
+      const cutoff = now - this.config.rateLimitWindow;
+
+      // Remove old requests
+      this.requests = this.requests.filter((time) => time > cutoff);
+
+      if (this.requests.length >= this.config.maxRequestsPerWindow) {
+        throw new Error('너무 많은 요청입니다. 잠시 후 다시 시도해주세요.');
+      }
+
+      this.requests.push(now);
+    },
+
+    // Make API request
+    makeRequest: async function (endpoint, data) {
+      try {
+        this.checkRateLimit();
+
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), this.config.timeout);
+
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+          },
+          body: JSON.stringify(data),
+          signal: controller.signal,
+        });
+
+        clearTimeout(timeoutId);
+
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+
+        return await response.json();
+      } catch (error) {
+        if (error.name === 'AbortError') {
+          throw new Error('요청 시간이 초과되었습니다.');
+        }
+        throw error;
+      }
+    },
+
+    // Get daily fortune
+    getDailyFortune: async function () {
+      const button = document.getElementById('daily-fortune-btn');
+      const resultDiv = document.getElementById('daily-fortune-result');
+
+      if (!button || !resultDiv) return;
+
+      try {
+        button.disabled = true;
+        button.textContent = '운세 분석 중...';
+        SecureDOM.setInnerHTML(resultDiv, '<div class="loading">운세를 분석하고 있습니다...</div>');
+
+        const today = new Date();
+        const data = {
+          type: 'daily',
+          date: today.toISOString().split('T')[0],
+          user_id: this.generateUserId(),
+        };
+
+        const result = await this.makeRequest(this.config.apiEndpoint, data);
+
+        if (result.success) {
+          this.displayDailyFortune(result.fortune);
+        } else {
+          throw new Error(result.message || '운세 분석에 실패했습니다.');
+        }
+      } catch (error) {
+        // Daily fortune error
+        SecureDOM.setInnerHTML(resultDiv, `<div class="error-message">${error.message}</div>`);
+      } finally {
+        button.disabled = false;
+        button.textContent = '오늘의 운세 보기';
+      }
+    },
+
+    // Display daily fortune
+    displayDailyFortune: function (fortune) {
+      const resultDiv = document.getElementById('daily-fortune-result');
+      if (!resultDiv) return;
+
+      const html = `
                 <div class="fortune-result">
                     <h3>🌟 오늘의 운세</h3>
                     <div class="fortune-section">
@@ -209,75 +212,77 @@ function validateNumber(value, min = 0, max = Number.MAX_SAFE_INTEGER) {
                     </div>
                 </div>
             `;
-            
-            SecureDOM.setInnerHTML(resultDiv, html);
-            
-            // Track event
-            if (typeof Analytics !== 'undefined') {
-                Analytics.trackEvent('Fortune', 'daily_fortune_viewed', 'success');
-            }
-        },
-        
-        // Handle Saju form submission
-        handleSajuSubmit: async function(event) {
-            event.preventDefault();
-            
-            const form = event.target;
-            const formData = new FormData(form);
-            const submitBtn = form.querySelector('button[type="submit"]');
-            const resultDiv = document.getElementById('saju-result');
-            
-            if (!submitBtn || !resultDiv) return;
-            
-            try {
-                // Validate input
-                const birthYear = Security.validateNumber(formData.get('birth_year'), 1900, 2100);
-                const birthMonth = Security.validateNumber(formData.get('birth_month'), 1, 12);
-                const birthDay = Security.validateNumber(formData.get('birth_day'), 1, 31);
-                const birthHour = Security.validateNumber(formData.get('birth_hour'), 0, 23);
-                const gender = Security.sanitizeHTML(formData.get('gender'));
-                
-                if (!birthYear || !birthMonth || !birthDay || !gender) {
-                    throw new Error('모든 필드를 올바르게 입력해주세요.');
-                }
-                
-                submitBtn.disabled = true;
-                submitBtn.textContent = '사주 분석 중...';
-                SecureDOM.setInnerHTML(resultDiv, '<div class="loading">AI가 사주를 분석하고 있습니다...</div>');
-                
-                const data = {
-                    type: 'saju',
-                    birth_year: birthYear,
-                    birth_month: birthMonth,
-                    birth_day: birthDay,
-                    birth_hour: birthHour,
-                    gender: gender,
-                    user_id: this.generateUserId()
-                };
-                
-                const result = await this.makeRequest(this.config.apiEndpoint, data);
-                
-                if (result.success) {
-                    this.displaySajuResult(result.saju);
-                } else {
-                    throw new Error(result.message || '사주 분석에 실패했습니다.');
-                }
-                
-            } catch (error) {
-                // Saju analysis error
-                SecureDOM.setInnerHTML(resultDiv, `<div class="error-message">${error.message}</div>`);
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'AI 사주 분석';
-            }
-        },
-        
-        // Display Saju result
-        displaySajuResult: function(saju) {
-            const resultDiv = document.getElementById('saju-result');
-            if (!resultDiv) return;
-            
-            const html = `
+
+      SecureDOM.setInnerHTML(resultDiv, html);
+
+      // Track event
+      if (typeof Analytics !== 'undefined') {
+        Analytics.trackEvent('Fortune', 'daily_fortune_viewed', 'success');
+      }
+    },
+
+    // Handle Saju form submission
+    handleSajuSubmit: async function (event) {
+      event.preventDefault();
+
+      const form = event.target;
+      const formData = new FormData(form);
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const resultDiv = document.getElementById('saju-result');
+
+      if (!submitBtn || !resultDiv) return;
+
+      try {
+        // Validate input
+        const birthYear = Security.validateNumber(formData.get('birth_year'), 1900, 2100);
+        const birthMonth = Security.validateNumber(formData.get('birth_month'), 1, 12);
+        const birthDay = Security.validateNumber(formData.get('birth_day'), 1, 31);
+        const birthHour = Security.validateNumber(formData.get('birth_hour'), 0, 23);
+        const gender = Security.sanitizeHTML(formData.get('gender'));
+
+        if (!birthYear || !birthMonth || !birthDay || !gender) {
+          throw new Error('모든 필드를 올바르게 입력해주세요.');
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = '사주 분석 중...';
+        SecureDOM.setInnerHTML(
+          resultDiv,
+          '<div class="loading">AI가 사주를 분석하고 있습니다...</div>'
+        );
+
+        const data = {
+          type: 'saju',
+          birth_year: birthYear,
+          birth_month: birthMonth,
+          birth_day: birthDay,
+          birth_hour: birthHour,
+          gender: gender,
+          user_id: this.generateUserId(),
+        };
+
+        const result = await this.makeRequest(this.config.apiEndpoint, data);
+
+        if (result.success) {
+          this.displaySajuResult(result.saju);
+        } else {
+          throw new Error(result.message || '사주 분석에 실패했습니다.');
+        }
+      } catch (error) {
+        // Saju analysis error
+        SecureDOM.setInnerHTML(resultDiv, `<div class="error-message">${error.message}</div>`);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'AI 사주 분석';
+      }
+    },
+
+    // Display Saju result
+    displaySajuResult: function (saju) {
+      const resultDiv = document.getElementById('saju-result');
+      if (!resultDiv) return;
+
+      const html = `
                 <div class="saju-result">
                     <h3>🔮 AI 사주팔자 분석</h3>
                     <div class="saju-pillars">
@@ -313,68 +318,72 @@ function validateNumber(value, min = 0, max = Number.MAX_SAFE_INTEGER) {
                     </div>
                 </div>
             `;
-            
-            SecureDOM.setInnerHTML(resultDiv, html);
-            
-            // Track event
-            if (typeof Analytics !== 'undefined') {
-                Analytics.trackEvent('Fortune', 'saju_analysis_completed', 'success');
-            }
-        },
-        
-        // Start tarot reading
-        startTarotReading: async function() {
-            const button = document.getElementById('tarot-reading-btn');
-            const resultDiv = document.getElementById('tarot-result');
-            
-            if (!button || !resultDiv) return;
-            
-            try {
-                button.disabled = true;
-                button.textContent = '카드 뽑는 중...';
-                SecureDOM.setInnerHTML(resultDiv, '<div class="loading">타로 카드를 뽑고 있습니다...</div>');
-                
-                const data = {
-                    type: 'tarot',
-                    spread_type: '3_card',
-                    user_id: this.generateUserId()
-                };
-                
-                const result = await this.makeRequest(this.config.apiEndpoint, data);
-                
-                if (result.success) {
-                    this.displayTarotResult(result.tarot);
-                } else {
-                    throw new Error(result.message || '타로 리딩에 실패했습니다.');
-                }
-                
-            } catch (error) {
-                // Tarot reading error
-                SecureDOM.setInnerHTML(resultDiv, `<div class="error-message">${error.message}</div>`);
-            } finally {
-                button.disabled = false;
-                button.textContent = 'AI 타로 보기';
-            }
-        },
-        
-        // Display tarot result
-        displayTarotResult: function(tarot) {
-            const resultDiv = document.getElementById('tarot-result');
-            if (!resultDiv) return;
-            
-            const cards = tarot.cards || [];
-            const cardsHtml = cards.map((card, index) => {
-                const positions = ['과거', '현재', '미래'];
-                return `
+
+      SecureDOM.setInnerHTML(resultDiv, html);
+
+      // Track event
+      if (typeof Analytics !== 'undefined') {
+        Analytics.trackEvent('Fortune', 'saju_analysis_completed', 'success');
+      }
+    },
+
+    // Start tarot reading
+    startTarotReading: async function () {
+      const button = document.getElementById('tarot-reading-btn');
+      const resultDiv = document.getElementById('tarot-result');
+
+      if (!button || !resultDiv) return;
+
+      try {
+        button.disabled = true;
+        button.textContent = '카드 뽑는 중...';
+        SecureDOM.setInnerHTML(
+          resultDiv,
+          '<div class="loading">타로 카드를 뽑고 있습니다...</div>'
+        );
+
+        const data = {
+          type: 'tarot',
+          spread_type: '3_card',
+          user_id: this.generateUserId(),
+        };
+
+        const result = await this.makeRequest(this.config.apiEndpoint, data);
+
+        if (result.success) {
+          this.displayTarotResult(result.tarot);
+        } else {
+          throw new Error(result.message || '타로 리딩에 실패했습니다.');
+        }
+      } catch (error) {
+        // Tarot reading error
+        SecureDOM.setInnerHTML(resultDiv, `<div class="error-message">${error.message}</div>`);
+      } finally {
+        button.disabled = false;
+        button.textContent = 'AI 타로 보기';
+      }
+    },
+
+    // Display tarot result
+    displayTarotResult: function (tarot) {
+      const resultDiv = document.getElementById('tarot-result');
+      if (!resultDiv) return;
+
+      const cards = tarot.cards || [];
+      const cardsHtml = cards
+        .map((card, index) => {
+          const positions = ['과거', '현재', '미래'];
+          return `
                     <div class="tarot-card">
                         <div class="card-position">${positions[index] || `카드 ${index + 1}`}</div>
                         <div class="card-name">${Security.sanitizeHTML(card.name || '')}</div>
                         <div class="card-meaning">${Security.sanitizeHTML(card.meaning || '')}</div>
                     </div>
                 `;
-            }).join('');
-            
-            const html = `
+        })
+        .join('');
+
+      const html = `
                 <div class="tarot-result">
                     <h3>🔯 AI 타로 리딩</h3>
                     <div class="tarot-cards">
@@ -389,36 +398,35 @@ function validateNumber(value, min = 0, max = Number.MAX_SAFE_INTEGER) {
                     </div>
                 </div>
             `;
-            
-            SecureDOM.setInnerHTML(resultDiv, html);
-            
-            // Track event
-            if (typeof Analytics !== 'undefined') {
-                Analytics.trackEvent('Fortune', 'tarot_reading_completed', 'success');
-            }
-        },
-        
-        // Generate user ID
-        generateUserId: function() {
-            const stored = localStorage.getItem('fortune_user_id');
-            if (stored) return stored;
-            
-            const userId = Date.now().toString(36) + Math.random().toString(36).substr(2);
-            localStorage.setItem('fortune_user_id', userId);
-            return userId;
-        }
-    };
-    
-    // Auto-initialize
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', function() {
-            Fortune.init();
-        });
-    } else {
-        Fortune.init();
-    }
-    
-    // Expose to global scope
-    window.Fortune = Fortune;
-    
-    })();
+
+      SecureDOM.setInnerHTML(resultDiv, html);
+
+      // Track event
+      if (typeof Analytics !== 'undefined') {
+        Analytics.trackEvent('Fortune', 'tarot_reading_completed', 'success');
+      }
+    },
+
+    // Generate user ID
+    generateUserId: function () {
+      const stored = localStorage.getItem('fortune_user_id');
+      if (stored) return stored;
+
+      const userId = Date.now().toString(36) + Math.random().toString(36).substr(2);
+      localStorage.setItem('fortune_user_id', userId);
+      return userId;
+    },
+  };
+
+  // Auto-initialize
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () {
+      Fortune.init();
+    });
+  } else {
+    Fortune.init();
+  }
+
+  // Expose to global scope
+  window.Fortune = Fortune;
+})();

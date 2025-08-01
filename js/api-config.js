@@ -1,10 +1,10 @@
 // Prevent multiple declarations
-(function() {
+(function () {
   'use strict';
 
   // Check if APIManager already exists
   if (window.APIManager) {
-    console.log('APIManager already initialized, skipping...');
+    
     return;
   }
 
@@ -22,234 +22,282 @@
    * API 헬퍼 클래스
    */
   class APIManager {
-      constructor(config, securityConfig) {
-          this.config = config;
-          this.securityConfig = securityConfig;
-          this.rateLimits = new Map();
+    constructor(config, securityConfig) {
+      this.config = config;
+      this.securityConfig = securityConfig;
+      this.rateLimits = new Map();
+    }
+    /**
+     * 안전한 API 호출
+     */
+    async secureRequest(url, options = {}) {
+      const startTime = performance.now();
+      const requestId = `api_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      
+      const defaultOptions = {
+        headers: {
+          'Content-Type': 'application/json',
+          ...options.headers,
+        },
+        credentials: 'same-origin',
+      };
+      
+      // CSRF 토큰 추가
+      if (this.securityConfig.csrf.enabled && window.csrfToken) {
+        defaultOptions.headers[this.securityConfig.csrf.headerName] = window.csrfToken;
       }
-      /**
-       * 안전한 API 호출
-       */
-      async secureRequest(url, options = {}) {
-          const defaultOptions = {
-              headers: {
-                  'Content-Type': 'application/json',
-                  ...options.headers
-              },
-              credentials: 'same-origin'
-          };
-          // CSRF 토큰 추가
-          if (this.securityConfig.csrf.enabled && window.csrfToken) {
-              defaultOptions.headers[this.securityConfig.csrf.headerName] = window.csrfToken;
-          }
-          try {
-              const response = await fetch(url, { ...defaultOptions, ...options });
-              if (!response.ok) {
-                  throw new Error(`API Error: ${response.status} ${response.statusText}`);
-              }
-              const data = await response.json();
-              return data;
-          }
-          catch (error) {
-              console.warn('API Request Failed:', error);
-              throw error;
-          }
+      
+      // 로깅이 가능한 경우 요청 로그
+      if (typeof window.DohaLogger !== 'undefined') {
+        window.DohaLogger.info('API Request Started', {
+          requestId,
+          url,
+          method: options.method || 'GET',
+          hasBody: !!options.body
+        });
       }
-      /**
-       * Rate Limiting 체크
-       */
-      checkRateLimit(key) {
-          const now = Date.now();
-          const limit = this.rateLimits.get(key) || { count: 0, resetTime: now };
-          if (now > limit.resetTime) {
-              limit.count = 0;
-              limit.resetTime = now + this.securityConfig.rateLimit.windowMs;
-          }
-          if (limit.count >= this.securityConfig.rateLimit.maxRequests) {
-              throw new Error('Rate limit exceeded. Please try again later.');
-          }
-          limit.count++;
-          this.rateLimits.set(key, limit);
-      }
-      /**
-       * 현재 환경 감지
-       */
-      detectEnvironment() {
-          const hostname = window.location.hostname;
-          if (hostname === 'localhost' || hostname === '127.0.0.1') {
-              return 'development';
-          }
-          else if (hostname.includes('test') || hostname.includes('staging')) {
-              return 'test';
-          }
-          return 'production';
-      }
-      /**
-       * 도메인 검증
-       */
-      isOriginAllowed(origin) {
-          return this.securityConfig.allowedOrigins.includes(origin);
-      }
-      /**
-       * Fortune API 호출
-       */
-      async callFortuneAPI(payload) {
-          this.checkRateLimit('fortune-api');
+      
+      try {
+        const response = await fetch(url, { ...defaultOptions, ...options });
+        const duration = performance.now() - startTime;
+        
+        if (!response.ok) {
+          const error = new Error(`API Error: ${response.status} ${response.statusText}`);
           
-          const apiUrl = this.config.endpoints.fortune || 'https://doha-kr-api.vercel.app/api/fortune';
+          // 에러 로깅
+          if (typeof window.DohaLogger !== 'undefined') {
+            window.DohaLogger.logApiCall(url, options.method || 'GET', response.status, duration, {
+              requestId,
+              statusText: response.statusText,
+              error: true
+            });
+          }
           
-          return this.secureRequest(apiUrl, {
-              method: 'POST',
-              body: JSON.stringify(payload)
+          throw error;
+        }
+        
+        const data = await response.json();
+        
+        // 성공 로깅
+        if (typeof window.DohaLogger !== 'undefined') {
+          window.DohaLogger.logApiCall(url, options.method || 'GET', response.status, duration, {
+            requestId,
+            responseSize: JSON.stringify(data).length,
+            success: true
           });
-      }
-      /**
-       * 카카오 SDK 초기화
-       */
-      initKakao() {
-          try {
-              if (typeof window.Kakao === 'undefined') {
-                  if (this.detectEnvironment() === 'development') {
-                      console.info('Kakao SDK not loaded');
-                  }
-                  else {
-                      console.warn('Kakao SDK not available');
-                  }
-                  return;
-              }
-              if (window.Kakao.isInitialized && window.Kakao.isInitialized()) {
-                  if (this.detectEnvironment() === 'development') {
-                      console.info('Kakao SDK already initialized');
-                  }
-                  return;
-              }
-              const kakaoKey = this.getKakaoKey();
-              if (kakaoKey && kakaoKey !== 'KAKAO_APP_KEY_PLACEHOLDER') {
-                  window.Kakao.init(kakaoKey);
-                  if (this.detectEnvironment() === 'development') {
-                      console.info('Kakao SDK initialized successfully');
-                  }
-              }
-              else {
-                  if (this.detectEnvironment() === 'development') {
-                      console.info('Kakao SDK key not configured for development');
-                  }
-                  else {
-                      console.warn('Kakao SDK key not configured');
-                  }
-              }
-          }
-          catch (error) {
-              console.warn('Failed to initialize Kakao SDK:', error);
-          }
-      }
-      /**
-       * 카카오 키 가져오기
-       */
-      getKakaoKey() {
-          return (window.KAKAO_APP_KEY ||
-              (window.API_CONFIG && window.API_CONFIG.KAKAO_JS_KEY) ||
-              (window.API_CONFIG && window.API_CONFIG.kakao && window.API_CONFIG.kakao.appKey) ||
-              this.config.KAKAO_JS_KEY);
-      }
-      /**
-       * Fortune API 호출
-       */
-      async callFortuneAPI(payload) {
-          this.checkRateLimit('fortune-api');
-          return this.secureRequest(this.config.gemini.endpoint, {
-              method: 'POST',
-              body: JSON.stringify(payload),
-              signal: AbortSignal.timeout(this.config.gemini.timeout)
+        }
+        
+        return data;
+      } catch (error) {
+        const duration = performance.now() - startTime;
+        
+        // 에러 로깅
+        if (typeof window.DohaLogger !== 'undefined') {
+          window.DohaLogger.error('API Request Failed', {
+            requestId,
+            url,
+            method: options.method || 'GET',
+            error: error.message,
+            duration
           });
+        } else {
+          
+        }
+        
+        throw error;
       }
-      /**
-       * 설정 정보 반환
-       */
-      getConfig() {
-          return Object.freeze({ ...this.config });
+    }
+    /**
+     * Rate Limiting 체크
+     */
+    checkRateLimit(key) {
+      const now = Date.now();
+      const limit = this.rateLimits.get(key) || { count: 0, resetTime: now };
+      if (now > limit.resetTime) {
+        limit.count = 0;
+        limit.resetTime = now + this.securityConfig.rateLimit.windowMs;
       }
-      /**
-       * 보안 설정 정보 반환
-       */
-      getSecurityConfig() {
-          return Object.freeze({ ...this.securityConfig });
+      if (limit.count >= this.securityConfig.rateLimit.maxRequests) {
+        throw new Error('Rate limit exceeded. Please try again later.');
       }
-      /**
-       * Rate Limit 상태 반환
-       */
-      getRateLimitStatus(key) {
-          return this.rateLimits.get(key);
+      limit.count++;
+      this.rateLimits.set(key, limit);
+    }
+    /**
+     * 현재 환경 감지
+     */
+    detectEnvironment() {
+      const hostname = window.location.hostname;
+      if (hostname === 'localhost' || hostname === '127.0.0.1') {
+        return 'development';
+      } else if (hostname.includes('test') || hostname.includes('staging')) {
+        return 'test';
       }
-      /**
-       * Rate Limit 초기화
-       */
-      clearRateLimit(key) {
-          if (key) {
-              this.rateLimits.delete(key);
+      return 'production';
+    }
+    /**
+     * 도메인 검증
+     */
+    isOriginAllowed(origin) {
+      return this.securityConfig.allowedOrigins.includes(origin);
+    }
+    /**
+     * Fortune API 호출
+     */
+    async callFortuneAPI(payload) {
+      // API 키 확인
+      if (!this.config.GEMINI_API_KEY) {
+        throw new Error('운세 서비스를 이용하려면 API 키가 필요합니다. 관리자에게 문의해주세요.');
+      }
+
+      this.checkRateLimit('fortune-api');
+
+      const apiUrl = this.config.endpoints.fortune || 'https://doha-kr-api.vercel.app/api/fortune';
+
+      return this.secureRequest(apiUrl, {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      });
+    }
+    /**
+     * 카카오 SDK 초기화
+     */
+    initKakao() {
+      try {
+        if (typeof window.Kakao === 'undefined') {
+          if (this.detectEnvironment() === 'development') {
+            
+          } else {
+            
           }
-          else {
-              this.rateLimits.clear();
+          return;
+        }
+        if (window.Kakao.isInitialized && window.Kakao.isInitialized()) {
+          if (this.detectEnvironment() === 'development') {
+            
           }
+          return;
+        }
+        const kakaoKey = this.getKakaoKey();
+        if (kakaoKey && kakaoKey !== 'KAKAO_APP_KEY_PLACEHOLDER') {
+          window.Kakao.init(kakaoKey);
+          if (this.detectEnvironment() === 'development') {
+            
+          }
+        } else {
+          if (this.detectEnvironment() === 'development') {
+            
+          } else {
+            
+          }
+        }
+      } catch (error) {
+        
       }
+    }
+    /**
+     * 카카오 키 가져오기
+     */
+    getKakaoKey() {
+      return (
+        window.KAKAO_APP_KEY ||
+        (window.API_CONFIG && window.API_CONFIG.KAKAO_JS_KEY) ||
+        (window.API_CONFIG && window.API_CONFIG.kakao && window.API_CONFIG.kakao.appKey) ||
+        this.config.KAKAO_JS_KEY
+      );
+    }
+    /**
+     * 설정 정보 반환
+     */
+    getConfig() {
+      return Object.freeze({ ...this.config });
+    }
+    /**
+     * 보안 설정 정보 반환
+     */
+    getSecurityConfig() {
+      return Object.freeze({ ...this.securityConfig });
+    }
+    /**
+     * Rate Limit 상태 반환
+     */
+    getRateLimitStatus(key) {
+      return this.rateLimits.get(key);
+    }
+    /**
+     * Rate Limit 초기화
+     */
+    clearRateLimit(key) {
+      if (key) {
+        this.rateLimits.delete(key);
+      } else {
+        this.rateLimits.clear();
+      }
+    }
   }
   /**
    * 환경 변수에서 설정값 가져오기
    */
   function getEnvValue(key, fallback) {
-      // 브라우저 환경에서는 process.env가 빌드 시점에 주입됨
-      // TypeScript에서는 any로 캐스팅하여 에러 방지
-      const env = globalThis.process?.env || {};
-      return env[key] || fallback;
+    // 브라우저 환경에서는 process.env가 빌드 시점에 주입됨
+    // TypeScript에서는 any로 캐스팅하여 에러 방지
+    const env = globalThis.process?.env || {};
+    return env[key] || fallback;
   }
   /**
    * API 설정 객체
    */
   const API_CONFIG = {
-      // API Keys - Vercel 환경변수에서 주입됨
-      KAKAO_JS_KEY: window.KAKAO_JS_KEY || '',
-      GEMINI_API_KEY: window.GEMINI_API_KEY || '',
-      
-      // Gemini API
-      gemini: {
-          endpoint: 'https://doha-kr-ap.vercel.app/api/fortune',
-          timeout: 30000
-      },
-      // 카카오 SDK - 환경변수나 빌드 시 주입되어야 함
-      kakao: {
-          appKey: window.KAKAO_APP_KEY || getEnvValue('KAKAO_APP_KEY', 'KAKAO_APP_KEY_PLACEHOLDER')
-      },
-      // 카카오 JS 키 (호환성을 위해 추가)
-      KAKAO_JS_KEY: window.KAKAO_APP_KEY || getEnvValue('KAKAO_APP_KEY', 'KAKAO_APP_KEY_PLACEHOLDER'),
-      // Google AdSense - 공개되어도 상대적으로 안전
-      adsense: {
-          client: 'ca-pub-7905640648499222'
-      },
-      // Vercel API 베이스 URL
-      VERCEL_API_BASE: 'https://doha-kr-ap.vercel.app/api'
+    // API Keys - Vercel 환경변수에서 주입됨
+    // API 키는 빈 문자열 폴백 없이 명시적으로 체크
+    KAKAO_JS_KEY: window.KAKAO_JS_KEY || null,
+    GEMINI_API_KEY: window.GEMINI_API_KEY || null,
+
+    // Gemini API
+    gemini: {
+      endpoint: 'https://doha-kr-ap.vercel.app/api/fortune',
+      timeout: 30000,
+    },
+
+    // Fortune API 엔드포인트 (레거시 호환성)
+    endpoints: {
+      fortune: 'https://doha-kr-ap.vercel.app/api/fortune',
+    },
+    // 카카오 SDK - 환경변수나 빌드 시 주입되어야 함
+    kakao: {
+      appKey: window.KAKAO_APP_KEY || getEnvValue('KAKAO_APP_KEY', null),
+    },
+    // 카카오 JS 키 (호환성을 위해 추가)
+    KAKAO_JS_KEY: window.KAKAO_APP_KEY || getEnvValue('KAKAO_APP_KEY', null),
+    // Google AdSense - 공개되어도 상대적으로 안전
+    adsense: {
+      client: 'ca-pub-7905640648499222',
+    },
+    // Vercel API 베이스 URL
+    VERCEL_API_BASE: 'https://doha-kr-ap.vercel.app/api',
   };
   /**
    * API 보안 설정
    */
   const SECURITY_CONFIG = {
-      // CSRF 토큰 설정
-      csrf: {
-          enabled: true,
-          headerName: 'X-CSRF-Token'
-      },
-      // Rate Limiting
-      rateLimit: {
-          maxRequests: 100,
-          windowMs: 60000 // 1분
-      },
-      // 허용된 도메인
-      allowedOrigins: [
-          'https://doha.kr',
-          'https://www.doha.kr',
-          'http://localhost:8000', // 개발용
-          'http://localhost:3000', // 개발용 대체
-          'http://127.0.0.1:8000' // 개발용 대체
-      ]
+    // CSRF 토큰 설정
+    csrf: {
+      enabled: true,
+      headerName: 'X-CSRF-Token',
+    },
+    // Rate Limiting
+    rateLimit: {
+      maxRequests: 100,
+      windowMs: 60000, // 1분
+    },
+    // 허용된 도메인
+    allowedOrigins: [
+      'https://doha.kr',
+      'https://www.doha.kr',
+      'http://localhost:8000', // 개발용
+      'http://localhost:3000', // 개발용 대체
+      'http://127.0.0.1:8000', // 개발용 대체
+    ],
   };
   /**
    * API 매니저 인스턴스 생성
@@ -259,20 +307,19 @@
    * 카카오 SDK 초기화 함수 (전역)
    */
   function initKakao() {
-      apiManager.initKakao();
+    apiManager.initKakao();
   }
   /**
    * DOM 로드 후 초기화
    */
   function initializeAPIConfig() {
-      if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', () => {
-              setTimeout(initKakao, 100);
-          });
-      }
-      else {
-          setTimeout(initKakao, 100);
-      }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(initKakao, 100);
+      });
+    } else {
+      setTimeout(initKakao, 100);
+    }
   }
   // 즉시 초기화
   initializeAPIConfig();
@@ -283,38 +330,38 @@
    * 타입 안전 API 헬퍼 함수들
    */
   const apiHelpers = {
-      /**
-       * Fortune API 호출
-       */
-      fortune: (payload) => {
-          return apiManager.callFortuneAPI(payload);
-      },
-      /**
-       * 일반 API 호출
-       */
-      request: (url, options) => {
-          return apiManager.secureRequest(url, options);
-      },
-      /**
-       * Rate Limit 체크
-       */
-      checkRateLimit: (key) => {
-          apiManager.checkRateLimit(key);
-      },
-      /**
-       * 설정 가져오기
-       */
-      getConfig: () => {
-          return apiManager.getConfig();
-      },
-      /**
-       * 환경 감지
-       */
-      getEnvironment: () => {
-          return apiManager.detectEnvironment();
-      }
+    /**
+     * Fortune API 호출
+     */
+    fortune: (payload) => {
+      return apiManager.callFortuneAPI(payload);
+    },
+    /**
+     * 일반 API 호출
+     */
+    request: (url, options) => {
+      return apiManager.secureRequest(url, options);
+    },
+    /**
+     * Rate Limit 체크
+     */
+    checkRateLimit: (key) => {
+      apiManager.checkRateLimit(key);
+    },
+    /**
+     * 설정 가져오기
+     */
+    getConfig: () => {
+      return apiManager.getConfig();
+    },
+    /**
+     * 환경 감지
+     */
+    getEnvironment: () => {
+      return apiManager.detectEnvironment();
+    },
   };
-  
+
   // 전역으로 노출
   window.apiHelpers = apiHelpers;
   // export { APIManager, API_CONFIG, SECURITY_CONFIG, apiManager };
@@ -323,5 +370,4 @@
 
   // Export to global scope
   window.APIManager = APIManager;
-
 })();

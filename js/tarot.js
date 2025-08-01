@@ -196,7 +196,13 @@ async function performReading(selectedCards) {
                 type: 'tarot',
                 question: question,
                 cards: selectedCards.map((card, idx) => `${idx+1}. ${card.name}${card.isReversed ? '(역방향)' : '(정방향)'} - ${spread.positions[idx]}`).join(', '),
-                prompt: `타로 질문: ${question}\n\n뽑은 카드:\n${selectedCards.map((card, idx) => `${idx+1}. ${card.name}${card.isReversed ? '(역방향)' : '(정방향)'} - ${spread.positions[idx]}`).join('\n')}\n\n각 카드의 의미를 해석하고 전체적인 메시지를 전달해주세요.`
+                prompt: `타로 질문: ${question}
+
+뽑은 카드:
+${selectedCards.map((card, idx) => `${idx+1}. ${card.name}${card.isReversed ? '(역방향)' : '(정방향)'} - ${spread.positions[idx]}`).join('
+')}
+
+각 카드의 의미를 해석하고 전체적인 메시지를 전달해주세요.`
             })
         });
         

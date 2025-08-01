@@ -5,357 +5,364 @@
 
 /* 히어로 섹션 */
 .fortune-hero {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    padding: 120px 0 100px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 120px 0 100px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
 }
 
 .fortune-hero::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 2px, transparent 2px);
-    background-size: 30px 30px;
-    animation: drift 40s linear infinite;
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 2px, transparent 2px);
+  background-size: 30px 30px;
+  animation: drift 40s linear infinite;
 }
 
 @keyframes drift {
-    to { transform: translate(30px, 30px); }
+  to {
+    transform: translate(30px, 30px);
+  }
 }
 
 .fortune-hero-content {
-    position: relative;
-    z-index: 1;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 0 20px;
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
 .fortune-hero h1 {
-    font-size: 3.5rem;
-    font-weight: 800;
-    margin-bottom: 25px;
-    line-height: 1.2;
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin-bottom: 25px;
+  line-height: 1.2;
 }
 
 .gradient-text {
-    background: linear-gradient(45deg, #fff, rgba(255, 255, 255, 0.7));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+  background: linear-gradient(45deg, #fff, rgba(255, 255, 255, 0.7));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .fortune-hero p {
-    font-size: 1.3rem;
-    line-height: 1.8;
-    margin-bottom: 40px;
-    opacity: 0.95;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
+  font-size: 1.3rem;
+  line-height: 1.8;
+  margin-bottom: 40px;
+  opacity: 0.95;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .fortune-cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 18px 40px;
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(10px);
-    color: white;
-    text-decoration: none;
-    border-radius: 30px;
-    font-size: 1.2rem;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    border: 2px solid rgba(255, 255, 255, 0.3);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 40px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  color: white;
+  text-decoration: none;
+  border-radius: 30px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
 .fortune-cta:hover {
-    background: rgba(255, 255, 255, 0.3);
-    transform: translateY(-3px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-3px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
 }
 
 .fortune-cta span {
-    font-size: 1.5rem;
+  font-size: 1.5rem;
 }
 
 /* 운세 서비스 섹션 */
 .fortune-services {
-    padding: 80px 0;
-    background: var(--gray-50);
+  padding: 80px 0;
+  background: var(--gray-50);
 }
 
 .fortune-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 30px;
-    max-width: 1200px;
-    margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 /* 운세 카드 */
 .fortune-card {
-    background: white;
-    border-radius: 20px;
-    padding: 35px;
-    text-decoration: none;
-    color: inherit;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+  background: white;
+  border-radius: 20px;
+  padding: 35px;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
 }
 
 .fortune-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 5px;
-    background: linear-gradient(90deg, #667eea, #764ba2);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.3s ease;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, #667eea, #764ba2);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
 }
 
 .fortune-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
 }
 
 .fortune-card:hover::before {
-    transform: scaleX(1);
+  transform: scaleX(1);
 }
 
 .fortune-card-icon {
-    font-size: 4rem;
-    margin-bottom: 20px;
-    display: block;
-    transition: all 0.3s ease;
+  font-size: 4rem;
+  margin-bottom: 20px;
+  display: block;
+  transition: all 0.3s ease;
 }
 
 .fortune-card h3 {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--gray-800);
-    margin-bottom: 15px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--gray-800);
+  margin-bottom: 15px;
 }
 
 .fortune-card p {
-    font-size: 1rem;
-    color: var(--gray-600);
-    line-height: 1.7;
-    margin-bottom: 20px;
+  font-size: 1rem;
+  color: var(--gray-600);
+  line-height: 1.7;
+  margin-bottom: 20px;
 }
 
 /* 운세 카드 배지 */
 .fortune-card-badge {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    padding: 6px 16px;
-    background: var(--primary-color);
-    color: white;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    font-weight: 600;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 6px 16px;
+  background: var(--primary-color);
+  color: white;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
 }
 
 .fortune-card-badge.premium {
-    background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, #667eea, #764ba2);
 }
 
 .fortune-card-badge.new {
-    background: var(--success-color);
+  background: var(--success-color);
 }
 
 .fortune-card-badge.hot {
-    background: #ff6b6b;
+  background: #ff6b6b;
 }
 
 .fortune-card-badge.traditional {
-    background: #8b7355;
+  background: #8b7355;
 }
 
 /* 특징 섹션 */
 .service-highlights {
-    padding: 80px 0;
-    background: white;
+  padding: 80px 0;
+  background: white;
 }
 
 .highlights-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 40px;
-    max-width: 1000px;
-    margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 40px;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 .highlight-card {
-    text-align: center;
-    padding: 30px;
-    border-radius: 15px;
-    background: var(--gray-50);
-    transition: all 0.3s ease;
+  text-align: center;
+  padding: 30px;
+  border-radius: 15px;
+  background: var(--gray-50);
+  transition: all 0.3s ease;
 }
 
 .highlight-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
 
 .highlight-icon {
-    font-size: 3.5rem;
-    margin-bottom: 20px;
-    display: inline-block;
-    animation: float 3s ease-in-out infinite;
+  font-size: 3.5rem;
+  margin-bottom: 20px;
+  display: inline-block;
+  animation: float 3s ease-in-out infinite;
 }
 
 @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 .highlight-card:nth-child(2) .highlight-icon {
-    animation-delay: 0.5s;
+  animation-delay: 0.5s;
 }
 
 .highlight-card:nth-child(3) .highlight-icon {
-    animation-delay: 1s;
+  animation-delay: 1s;
 }
 
 .highlight-card:nth-child(4) .highlight-icon {
-    animation-delay: 1.5s;
+  animation-delay: 1.5s;
 }
 
 .highlight-title {
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: var(--gray-800);
-    margin-bottom: 10px;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--gray-800);
+  margin-bottom: 10px;
 }
 
 .highlight-desc {
-    font-size: 1rem;
-    color: var(--gray-600);
-    line-height: 1.6;
+  font-size: 1rem;
+  color: var(--gray-600);
+  line-height: 1.6;
 }
 
 /* CTA 섹션 */
 .cta {
-    padding: 80px 0;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    text-align: center;
+  padding: 80px 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  text-align: center;
 }
 
 .cta-box {
-    max-width: 700px;
-    margin: 0 auto;
-    padding: 0 20px;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
 .cta-title {
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin-bottom: 20px;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 20px;
 }
 
 .cta-description {
-    font-size: 1.2rem;
-    line-height: 1.8;
-    margin-bottom: 35px;
-    opacity: 0.95;
+  font-size: 1.2rem;
+  line-height: 1.8;
+  margin-bottom: 35px;
+  opacity: 0.95;
 }
 
 .cta-button {
-    display: inline-block;
-    padding: 18px 45px;
-    background: white;
-    color: var(--primary-color);
-    border-radius: 30px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    text-decoration: none;
-    transition: all 0.3s ease;
+  display: inline-block;
+  padding: 18px 45px;
+  background: white;
+  color: var(--primary-color);
+  border-radius: 30px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
 }
 
 .cta-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+  transform: translateY(-3px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
 }
 
 /* 반응형 디자인 */
 @media (max-width: 768px) {
-    .fortune-hero {
-        padding: 80px 0 60px;
-    }
-    
-    .fortune-hero h1 {
-        font-size: 2.5rem;
-    }
-    
-    .fortune-hero p {
-        font-size: 1.1rem;
-    }
-    
-    .fortune-cta {
-        padding: 15px 30px;
-        font-size: 1.1rem;
-    }
-    
-    .fortune-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-        padding: 0 15px;
-    }
-    
-    .fortune-card {
-        padding: 30px 25px;
-    }
-    
-    .fortune-card-icon {
-        font-size: 3rem;
-    }
-    
-    .highlights-grid {
-        grid-template-columns: 1fr;
-        gap: 25px;
-    }
-    
-    .cta-title {
-        font-size: 2rem;
-    }
-    
-    .cta-description {
-        font-size: 1rem;
-    }
+  .fortune-hero {
+    padding: 80px 0 60px;
+  }
+
+  .fortune-hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .fortune-hero p {
+    font-size: 1.1rem;
+  }
+
+  .fortune-cta {
+    padding: 15px 30px;
+    font-size: 1.1rem;
+  }
+
+  .fortune-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 0 15px;
+  }
+
+  .fortune-card {
+    padding: 30px 25px;
+  }
+
+  .fortune-card-icon {
+    font-size: 3rem;
+  }
+
+  .highlights-grid {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+
+  .cta-title {
+    font-size: 2rem;
+  }
+
+  .cta-description {
+    font-size: 1rem;
+  }
 }
 
 @media (max-width: 480px) {
-    .fortune-hero h1 {
-        font-size: 2rem;
-    }
-    
-    .fortune-cta {
-        padding: 12px 25px;
-        font-size: 1rem;
-    }
-    
-    .fortune-card h3 {
-        font-size: 1.3rem;
-    }
-    
-    .fortune-card p {
-        font-size: 0.95rem;
-    }
+  .fortune-hero h1 {
+    font-size: 2rem;
+  }
+
+  .fortune-cta {
+    padding: 12px 25px;
+    font-size: 1rem;
+  }
+
+  .fortune-card h3 {
+    font-size: 1.3rem;
+  }
+
+  .fortune-card p {
+    font-size: 0.95rem;
+  }
 }

@@ -22,7 +22,7 @@ body {
   line-height: var(--line-height-korean);
   letter-spacing: var(--letter-spacing-korean);
   color: var(--text-primary);
-  
+
   /* 한글 최적화 */
   word-break: keep-all;
   word-wrap: break-word;
@@ -32,7 +32,12 @@ body {
 /* ===== HEADINGS ===== */
 /* 제목 스타일 */
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin-top: 0;
   margin-bottom: var(--space-4);
   font-weight: var(--font-weight-semibold);
@@ -104,7 +109,8 @@ a:focus-visible {
 /* ===== LISTS ===== */
 /* 목록 스타일 */
 
-ul, ol {
+ul,
+ol {
   margin-top: 0;
   margin-bottom: var(--space-4);
   padding-left: var(--space-6);
@@ -124,7 +130,10 @@ li {
 }
 
 /* 중첩 목록 */
-ul ul, ol ol, ul ol, ol ul {
+ul ul,
+ol ol,
+ul ol,
+ol ul {
   margin-top: var(--space-2);
   margin-bottom: var(--space-2);
 }
@@ -132,11 +141,13 @@ ul ul, ol ol, ul ol, ol ul {
 /* ===== EMPHASIS ===== */
 /* 강조 스타일 */
 
-strong, b {
+strong,
+b {
   font-weight: var(--font-weight-semibold);
 }
 
-em, i {
+em,
+i {
   font-style: italic;
 }
 
@@ -163,13 +174,16 @@ blockquote p:last-child {
 }
 
 q {
-  quotes: """ """ "'" "'";
+  quotes: "" " " "" "'" "'";
 }
 
 /* ===== CODE ===== */
 /* 코드 스타일 */
 
-code, kbd, samp, pre {
+code,
+kbd,
+samp,
+pre {
   font-family: var(--font-mono);
   font-size: 0.875em;
 }
@@ -237,27 +251,27 @@ hr {
   h1 {
     font-size: var(--font-size-3xl);
   }
-  
+
   h2 {
     font-size: var(--font-size-2xl);
   }
-  
+
   h3 {
     font-size: var(--font-size-xl);
   }
-  
+
   h4 {
     font-size: var(--font-size-lg);
   }
-  
+
   h5 {
     font-size: var(--font-size-base);
   }
-  
+
   h6 {
     font-size: var(--font-size-sm);
   }
-  
+
   /* 모바일 단락 간격 */
   p {
     margin-bottom: var(--space-3);
@@ -273,18 +287,29 @@ hr {
     line-height: 1.5;
     color: #000;
   }
-  
-  h1 { font-size: 24pt; }
-  h2 { font-size: 20pt; }
-  h3 { font-size: 16pt; }
-  h4 { font-size: 14pt; }
-  h5, h6 { font-size: 12pt; }
-  
+
+  h1 {
+    font-size: 24pt;
+  }
+  h2 {
+    font-size: 20pt;
+  }
+  h3 {
+    font-size: 16pt;
+  }
+  h4 {
+    font-size: 14pt;
+  }
+  h5,
+  h6 {
+    font-size: 12pt;
+  }
+
   a {
     color: #000;
     text-decoration: underline;
   }
-  
+
   a[href^="http"]:after {
     content: " (" attr(href) ")";
     font-size: 10pt;

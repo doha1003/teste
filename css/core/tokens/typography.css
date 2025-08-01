@@ -1,0 +1,397 @@
+/**
+ * Typography Tokens for doha.kr Linear Design System
+ * Korean-optimized typography with modern font stacks
+ * Includes responsive scaling and accessibility features
+ * Version: 2.0.0
+ */
+
+:root {
+  /* ========== FONT FAMILIES ========== */
+  
+  /* Primary Korean Font Stack */
+  --font-korean-primary: 
+    "Pretendard Variable", 
+    Pretendard, 
+    -apple-system, 
+    BlinkMacSystemFont, 
+    system-ui, 
+    Roboto, 
+    "Helvetica Neue", 
+    "Segoe UI", 
+    "Apple SD Gothic Neo", 
+    "Noto Sans KR", 
+    "Malgun Gothic", 
+    "Apple Color Emoji", 
+    "Segoe UI Emoji", 
+    "Segoe UI Symbol", 
+    sans-serif;
+  
+  /* Fallback Korean Font Stack */
+  --font-korean-fallback: 
+    Pretendard, 
+    -apple-system, 
+    BlinkMacSystemFont, 
+    system-ui, 
+    "Apple SD Gothic Neo", 
+    "Noto Sans KR", 
+    "Malgun Gothic", 
+    sans-serif;
+  
+  /* Monospace Font Stack */
+  --font-mono: 
+    "JetBrains Mono", 
+    "SF Mono", 
+    Monaco, 
+    Inconsolata, 
+    "Roboto Mono", 
+    "Oxygen Mono", 
+    "Ubuntu Monospace", 
+    monospace;
+  
+  /* Display Font Stack (For headings) */
+  --font-display: 
+    "Pretendard Variable", 
+    Pretendard, 
+    -apple-system, 
+    BlinkMacSystemFont, 
+    system-ui, 
+    sans-serif;
+  
+  /* ========== DISPLAY TYPOGRAPHY ========== */
+  
+  /* Display 1 - Hero titles */
+  --display-1-size: clamp(2.5rem, 4vw + 1rem, 4rem);
+  --display-1-line-height: 1.1;
+  --display-1-weight: 700;
+  --display-1-letter-spacing: -0.02em;
+  --display-1-font-family: var(--font-display);
+  
+  /* Display 2 - Large headlines */
+  --display-2-size: clamp(2rem, 3.5vw + 0.5rem, 3rem);
+  --display-2-line-height: 1.2;
+  --display-2-weight: 600;
+  --display-2-letter-spacing: -0.015em;
+  --display-2-font-family: var(--font-display);
+  
+  /* Display 3 - Medium headlines */
+  --display-3-size: clamp(1.75rem, 3vw + 0.25rem, 2.25rem);
+  --display-3-line-height: 1.25;
+  --display-3-weight: 600;
+  --display-3-letter-spacing: -0.01em;
+  --display-3-font-family: var(--font-display);
+  
+  /* ========== TITLE TYPOGRAPHY ========== */
+  
+  /* Title 1 - Section headings */
+  --title-1-size: clamp(1.75rem, 3vw, 2.25rem);
+  --title-1-line-height: 1.3;
+  --title-1-weight: 600;
+  --title-1-letter-spacing: -0.01em;
+  --title-1-font-family: var(--font-korean-primary);
+  
+  /* Title 2 - Subsection headings */
+  --title-2-size: clamp(1.5rem, 2.5vw, 1.875rem);
+  --title-2-line-height: 1.35;
+  --title-2-weight: 600;
+  --title-2-letter-spacing: -0.005em;
+  --title-2-font-family: var(--font-korean-primary);
+  
+  /* Title 3 - Card titles */
+  --title-3-size: clamp(1.25rem, 2vw, 1.5rem);
+  --title-3-line-height: 1.4;
+  --title-3-weight: 600;
+  --title-3-letter-spacing: 0;
+  --title-3-font-family: var(--font-korean-primary);
+  
+  /* Title 4 - Component titles */
+  --title-4-size: clamp(1.125rem, 1.5vw, 1.25rem);
+  --title-4-line-height: 1.45;
+  --title-4-weight: 600;
+  --title-4-letter-spacing: 0;
+  --title-4-font-family: var(--font-korean-primary);
+  
+  /* Title 5 - Small headings */
+  --title-5-size: 1rem;
+  --title-5-line-height: 1.5;
+  --title-5-weight: 600;
+  --title-5-letter-spacing: 0;
+  --title-5-font-family: var(--font-korean-primary);
+  
+  /* Title 6 - Micro headings */
+  --title-6-size: 0.875rem;
+  --title-6-line-height: 1.5;
+  --title-6-weight: 600;
+  --title-6-letter-spacing: 0.01em;
+  --title-6-font-family: var(--font-korean-primary);
+  
+  /* ========== BODY TEXT TYPOGRAPHY ========== */
+  
+  /* Text Large - Emphasized body */
+  --text-lg-size: 1.125rem;
+  --text-lg-line-height: 1.7;
+  --text-lg-weight: 400;
+  --text-lg-letter-spacing: 0;
+  --text-lg-font-family: var(--font-korean-primary);
+  
+  /* Text Base - Default body */
+  --text-base-size: 1rem;
+  --text-base-line-height: 1.7;
+  --text-base-weight: 400;
+  --text-base-letter-spacing: 0;
+  --text-base-font-family: var(--font-korean-primary);
+  
+  /* Text Small - Secondary info */
+  --text-sm-size: 0.875rem;
+  --text-sm-line-height: 1.6;
+  --text-sm-weight: 400;
+  --text-sm-letter-spacing: 0;
+  --text-sm-font-family: var(--font-korean-primary);
+  
+  /* Text Extra Small - Captions */
+  --text-xs-size: 0.75rem;
+  --text-xs-line-height: 1.5;
+  --text-xs-weight: 400;
+  --text-xs-letter-spacing: 0.01em;
+  --text-xs-font-family: var(--font-korean-primary);
+  
+  /* Text Tiny - Micro text */
+  --text-2xs-size: 0.6875rem;
+  --text-2xs-line-height: 1.4;
+  --text-2xs-weight: 400;
+  --text-2xs-letter-spacing: 0.02em;
+  --text-2xs-font-family: var(--font-korean-primary);
+  
+  /* ========== LABEL TYPOGRAPHY ========== */
+  
+  /* Label Large */
+  --label-lg-size: 0.875rem;
+  --label-lg-line-height: 1.5;
+  --label-lg-weight: 500;
+  --label-lg-letter-spacing: 0.01em;
+  --label-lg-font-family: var(--font-korean-primary);
+  
+  /* Label Medium */
+  --label-md-size: 0.75rem;
+  --label-md-line-height: 1.4;
+  --label-md-weight: 500;
+  --label-md-letter-spacing: 0.02em;
+  --label-md-font-family: var(--font-korean-primary);
+  
+  /* Label Small */
+  --label-sm-size: 0.6875rem;
+  --label-sm-line-height: 1.3;
+  --label-sm-weight: 500;
+  --label-sm-letter-spacing: 0.03em;
+  --label-sm-font-family: var(--font-korean-primary);
+  
+  /* ========== SPECIAL PURPOSE TYPOGRAPHY ========== */
+  
+  /* Button Text */
+  --button-text-size: 0.875rem;
+  --button-text-line-height: 1.2;
+  --button-text-weight: 500;
+  --button-text-letter-spacing: 0.01em;
+  --button-text-font-family: var(--font-korean-primary);
+  
+  /* Input Text */
+  --input-text-size: 1rem;
+  --input-text-line-height: 1.5;
+  --input-text-weight: 400;
+  --input-text-letter-spacing: 0;
+  --input-text-font-family: var(--font-korean-primary);
+  
+  /* Code Text */
+  --code-text-size: 0.875rem;
+  --code-text-line-height: 1.6;
+  --code-text-weight: 400;
+  --code-text-letter-spacing: 0;
+  --code-text-font-family: var(--font-mono);
+  
+  /* ========== KOREAN TYPOGRAPHY OPTIMIZATION ========== */
+  
+  /* Korean-specific properties */
+  --korean-word-break: keep-all;
+  --korean-word-wrap: break-word;
+  --korean-overflow-wrap: break-word;
+  --korean-hanging-punctuation: force-end;
+  --korean-text-underline-position: under;
+  --korean-text-decoration-skip-ink: auto;
+  
+  /* Korean line height variations */
+  --korean-line-height-tight: 1.5;
+  --korean-line-height-normal: 1.7;
+  --korean-line-height-relaxed: 1.8;
+  --korean-line-height-loose: 2.0;
+  
+  /* Korean font weight mappings */
+  --korean-weight-thin: 100;
+  --korean-weight-light: 300;
+  --korean-weight-normal: 400;
+  --korean-weight-medium: 500;
+  --korean-weight-semibold: 600;
+  --korean-weight-bold: 700;
+  --korean-weight-extrabold: 800;
+  --korean-weight-black: 900;
+  
+  /* ========== RESPONSIVE TYPOGRAPHY SCALES ========== */
+  
+  /* Mobile-first responsive scaling */
+  --scale-mobile: 0.875;
+  --scale-tablet: 1;
+  --scale-desktop: 1.125;
+  --scale-large: 1.25;
+  
+  /* Fluid typography ratios */
+  --type-scale-ratio: 1.25; /* Major third */
+  --type-scale-base: 1rem;
+}
+
+/* ========== RESPONSIVE TYPOGRAPHY ADJUSTMENTS ========== */
+
+/* Tablet adjustments */
+@media (min-width: 768px) {
+  :root {
+    --text-base-size: calc(1rem * var(--scale-tablet));
+    --text-lg-size: calc(1.125rem * var(--scale-tablet));
+    --text-sm-size: calc(0.875rem * var(--scale-tablet));
+  }
+}
+
+/* Desktop adjustments */
+@media (min-width: 1024px) {
+  :root {
+    --text-base-size: calc(1rem * var(--scale-desktop));
+    --text-lg-size: calc(1.125rem * var(--scale-desktop));
+    --text-sm-size: calc(0.875rem * var(--scale-desktop));
+  }
+}
+
+/* Large screen adjustments */
+@media (min-width: 1440px) {
+  :root {
+    --text-base-size: calc(1rem * var(--scale-large));
+    --text-lg-size: calc(1.125rem * var(--scale-large));
+    --text-sm-size: calc(0.875rem * var(--scale-large));
+  }
+}
+
+/* ========== ACCESSIBILITY IMPROVEMENTS ========== */
+
+/* High contrast mode adjustments */
+@media (prefers-contrast: high) {
+  :root {
+    --text-base-weight: 500;
+    --text-lg-weight: 500;
+    --text-sm-weight: 500;
+    --title-3-weight: 700;
+    --title-4-weight: 700;
+    --title-5-weight: 700;
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --korean-text-decoration-skip-ink: none;
+  }
+}
+
+/* ========== TYPOGRAPHY UTILITY CLASSES ========== */
+
+/* Font family utilities */
+.font-korean { font-family: var(--font-korean-primary); }
+.font-mono { font-family: var(--font-mono); }
+.font-display { font-family: var(--font-display); }
+
+/* Font size utilities */
+.text-display-1 { 
+  font-size: var(--display-1-size);
+  line-height: var(--display-1-line-height);
+  font-weight: var(--display-1-weight);
+  letter-spacing: var(--display-1-letter-spacing);
+}
+
+.text-display-2 { 
+  font-size: var(--display-2-size);
+  line-height: var(--display-2-line-height);
+  font-weight: var(--display-2-weight);
+  letter-spacing: var(--display-2-letter-spacing);
+}
+
+.text-title-1 { 
+  font-size: var(--title-1-size);
+  line-height: var(--title-1-line-height);
+  font-weight: var(--title-1-weight);
+  letter-spacing: var(--title-1-letter-spacing);
+}
+
+.text-title-2 { 
+  font-size: var(--title-2-size);
+  line-height: var(--title-2-line-height);
+  font-weight: var(--title-2-weight);
+  letter-spacing: var(--title-2-letter-spacing);
+}
+
+.text-title-3 { 
+  font-size: var(--title-3-size);
+  line-height: var(--title-3-line-height);
+  font-weight: var(--title-3-weight);
+  letter-spacing: var(--title-3-letter-spacing);
+}
+
+.text-lg { 
+  font-size: var(--text-lg-size);
+  line-height: var(--text-lg-line-height);
+  font-weight: var(--text-lg-weight);
+}
+
+.text-base { 
+  font-size: var(--text-base-size);
+  line-height: var(--text-base-line-height);
+  font-weight: var(--text-base-weight);
+}
+
+.text-sm { 
+  font-size: var(--text-sm-size);
+  line-height: var(--text-sm-line-height);
+  font-weight: var(--text-sm-weight);
+}
+
+.text-xs { 
+  font-size: var(--text-xs-size);
+  line-height: var(--text-xs-line-height);
+  font-weight: var(--text-xs-weight);
+}
+
+/* Font weight utilities */
+.font-thin { font-weight: var(--korean-weight-thin); }
+.font-light { font-weight: var(--korean-weight-light); }
+.font-normal { font-weight: var(--korean-weight-normal); }
+.font-medium { font-weight: var(--korean-weight-medium); }
+.font-semibold { font-weight: var(--korean-weight-semibold); }
+.font-bold { font-weight: var(--korean-weight-bold); }
+.font-extrabold { font-weight: var(--korean-weight-extrabold); }
+.font-black { font-weight: var(--korean-weight-black); }
+
+/* Korean text utilities */
+.korean-text {
+  word-break: var(--korean-word-break);
+  overflow-wrap: var(--korean-overflow-wrap);
+  hanging-punctuation: var(--korean-hanging-punctuation);
+  text-underline-position: var(--korean-text-underline-position);
+  text-decoration-skip-ink: var(--korean-text-decoration-skip-ink);
+}
+
+/* Line height utilities */
+.leading-tight { line-height: var(--korean-line-height-tight); }
+.leading-normal { line-height: var(--korean-line-height-normal); }
+.leading-relaxed { line-height: var(--korean-line-height-relaxed); }
+.leading-loose { line-height: var(--korean-line-height-loose); }
+
+/* Letter spacing utilities */
+.tracking-tighter { letter-spacing: -0.02em; }
+.tracking-tight { letter-spacing: -0.01em; }
+.tracking-normal { letter-spacing: 0; }
+.tracking-wide { letter-spacing: 0.01em; }
+.tracking-wider { letter-spacing: 0.02em; }
+.tracking-widest { letter-spacing: 0.03em; }

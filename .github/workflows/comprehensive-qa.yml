@@ -1,0 +1,533 @@
+name: Comprehensive QA Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    # Daily QA run at 2 AM KST
+    - cron: '0 17 * * *'
+
+env:
+  NODE_VERSION: '20'
+  PYTHON_VERSION: '3.11'
+
+jobs:
+  # 코드 품질 및 정적 분석
+  code-quality:
+    runs-on: ubuntu-latest
+    name: Code Quality & Static Analysis
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: |
+        npm ci
+        npm run playwright:install --with-deps
+
+    - name: Code formatting check
+      run: |
+        npm run format:check
+        echo "코드 포맷팅 검사 완료"
+
+    - name: ESLint analysis
+      run: |
+        npm run lint 2>&1 | tee eslint-report.txt
+        echo "ESLint 분석 완료"
+
+    - name: CSS validation
+      run: |
+        npm run validate:css 2>&1 | tee css-validation.txt
+        echo "CSS 유효성 검사 완료"
+
+    - name: HTML validation
+      run: |
+        npm run validate:html 2>&1 | tee html-validation.txt || true
+        echo "HTML 유효성 검사 완료"
+
+    - name: Security audit
+      run: |
+        npm audit --audit-level high 2>&1 | tee security-audit.txt || true
+        echo "보안 감사 완료"
+
+    - name: Upload code quality reports
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: code-quality-reports
+        path: |
+          eslint-report.txt
+          css-validation.txt
+          html-validation.txt
+          security-audit.txt
+        retention-days: 30
+
+  # 단위 테스트 및 통합 테스트
+  unit-integration-tests:
+    runs-on: ubuntu-latest
+    name: Unit & Integration Tests
+    needs: code-quality
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Build project
+      run: |
+        npm run build
+        npm run update:html
+
+    - name: Run unit tests
+      run: |
+        npm run test:unit -- --reporter=verbose --coverage
+        echo "단위 테스트 완료"
+
+    - name: Run integration tests
+      run: |
+        npm run test:integration -- --reporter=verbose
+        echo "통합 테스트 완료"
+
+    - name: Upload test coverage
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./coverage/lcov.info
+        flags: unittests
+        name: codecov-umbrella
+
+    - name: Upload test results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: unit-integration-results
+        path: |
+          coverage/
+          test-results/
+        retention-days: 30
+
+  # E2E 테스트 (크로스 브라우저)
+  e2e-tests:
+    runs-on: ubuntu-latest
+    name: E2E Tests (Cross-Browser)
+    needs: unit-integration-tests
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox, webkit, mobile-chrome]
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: |
+        npm ci
+        npm run playwright:install --with-deps
+
+    - name: Build project
+      run: |
+        npm run build
+        npm run update:html
+
+    - name: Start local server
+      run: |
+        npm run serve &
+        sleep 10
+      env:
+        CI: true
+
+    - name: Wait for server
+      run: |
+        npx wait-on http://localhost:3000 --timeout 60000
+
+    - name: Run E2E tests
+      run: |
+        npx playwright test --project=${{ matrix.browser }} --reporter=html
+        echo "${{ matrix.browser }} E2E 테스트 완료"
+      env:
+        PLAYWRIGHT_HTML_REPORT: playwright-report-${{ matrix.browser }}
+
+    - name: Upload E2E test results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: e2e-results-${{ matrix.browser }}
+        path: |
+          playwright-report-${{ matrix.browser }}/
+          test-results/
+        retention-days: 30
+
+  # 접근성 테스트
+  accessibility-tests:
+    runs-on: ubuntu-latest
+    name: Accessibility Tests (WCAG 2.1)
+    needs: unit-integration-tests
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: |
+        npm ci
+        npm run playwright:install --with-deps
+
+    - name: Build project
+      run: |
+        npm run build
+        npm run update:html
+
+    - name: Start local server
+      run: |
+        npm run serve &
+        sleep 10
+
+    - name: Run accessibility tests
+      run: |
+        npx playwright test --project=chromium tests/accessibility/ --reporter=html
+        echo "접근성 테스트 완료"
+      env:
+        PLAYWRIGHT_HTML_REPORT: accessibility-report
+
+    - name: Upload accessibility results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: accessibility-results
+        path: |
+          accessibility-report/
+          test-results/
+        retention-days: 30
+
+  # 보안 테스트
+  security-tests:
+    runs-on: ubuntu-latest
+    name: Security Vulnerability Tests
+    needs: unit-integration-tests
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: |
+        npm ci
+        npm run playwright:install --with-deps
+
+    - name: Build project
+      run: |
+        npm run build
+        npm run update:html
+
+    - name: Start local server
+      run: |
+        npm run serve &
+        sleep 10
+
+    - name: Run security tests
+      run: |
+        npx playwright test --project=chromium tests/security/ --reporter=html
+        echo "보안 테스트 완료"
+      env:
+        PLAYWRIGHT_HTML_REPORT: security-report
+
+    - name: OWASP ZAP Baseline Scan
+      uses: zaproxy/action-baseline@v0.10.0
+      with:
+        target: 'http://localhost:3000'
+        rules_file_name: '.zap/rules.tsv'
+        cmd_options: '-a'
+      continue-on-error: true
+
+    - name: Upload security results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: security-results
+        path: |
+          security-report/
+          report_html.html
+          report_md.md
+          test-results/
+        retention-days: 30
+
+  # 성능 테스트
+  performance-tests:
+    runs-on: ubuntu-latest
+    name: Performance Tests (Lighthouse CI)
+    needs: unit-integration-tests
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: |
+        npm ci
+        npm run playwright:install --with-deps
+
+    - name: Build project
+      run: |
+        npm run build
+        npm run update:html
+
+    - name: Start local server
+      run: |
+        npm run serve &
+        sleep 10
+
+    - name: Wait for server
+      run: |
+        npx wait-on http://localhost:3000 --timeout 60000
+
+    - name: Run Lighthouse CI (Desktop)
+      run: |
+        npm install -g @lhci/cli@0.13.x
+        lhci autorun
+        echo "데스크톱 Lighthouse 테스트 완료"
+      env:
+        LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+        LHCI_TOKEN: ${{ secrets.LHCI_TOKEN }}
+
+    - name: Run Lighthouse CI (Mobile)
+      run: |
+        lhci autorun --config=./lighthouserc-mobile.js
+        echo "모바일 Lighthouse 테스트 완료"
+      env:
+        LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+        LHCI_TOKEN: ${{ secrets.LHCI_TOKEN }}
+
+    - name: Run custom performance tests
+      run: |
+        npx playwright test --project=performance tests/performance/ --reporter=html
+        echo "커스텀 성능 테스트 완료"
+      env:
+        PLAYWRIGHT_HTML_REPORT: performance-report
+
+    - name: Upload performance results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: performance-results
+        path: |
+          .lighthouseci/
+          performance-report/
+          test-results/
+        retention-days: 30
+
+  # 한국어 특화 테스트
+  korean-localization-tests:
+    runs-on: ubuntu-latest
+    name: Korean Localization Tests
+    needs: unit-integration-tests
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+
+    - name: Install Korean fonts
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y fonts-noto-cjk fonts-noto-cjk-extra
+
+    - name: Install dependencies
+      run: |
+        npm ci
+        npm run playwright:install --with-deps
+
+    - name: Build project
+      run: |
+        npm run build
+        npm run update:html
+
+    - name: Start local server
+      run: |
+        npm run serve &
+        sleep 10
+
+    - name: Set Korean locale
+      run: |
+        sudo locale-gen ko_KR.UTF-8
+        export LANG=ko_KR.UTF-8
+        export LC_ALL=ko_KR.UTF-8
+
+    - name: Run Korean localization tests
+      run: |
+        npx playwright test --project=localization tests/localization/ --reporter=html
+        echo "한국어 특화 테스트 완료"
+      env:
+        LANG: ko_KR.UTF-8
+        LC_ALL: ko_KR.UTF-8
+        TZ: Asia/Seoul
+        PLAYWRIGHT_HTML_REPORT: korean-localization-report
+
+    - name: Upload localization results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: korean-localization-results
+        path: |
+          korean-localization-report/
+          test-results/
+        retention-days: 30
+
+  # 종합 리포트 생성
+  generate-qa-report:
+    runs-on: ubuntu-latest
+    name: Generate QA Report
+    needs: [
+      code-quality,
+      unit-integration-tests,
+      e2e-tests,
+      accessibility-tests,
+      security-tests,
+      performance-tests,
+      korean-localization-tests
+    ]
+    if: always()
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Download all artifacts
+      uses: actions/download-artifact@v4
+      with:
+        path: ./qa-artifacts
+
+    - name: Generate comprehensive QA report
+      run: |
+        mkdir -p qa-report
+        node scripts/generate-qa-report.js
+        echo "종합 QA 리포트 생성 완료"
+
+    - name: Upload QA report
+      uses: actions/upload-artifact@v4
+      with:
+        name: comprehensive-qa-report
+        path: |
+          qa-report/
+          qa-artifacts/
+        retention-days: 90
+
+    - name: Comment PR with QA summary
+      uses: actions/github-script@v7
+      if: github.event_name == 'pull_request'
+      with:
+        script: |
+          const fs = require('fs');
+          const path = './qa-report/summary.md';
+          
+          if (fs.existsSync(path)) {
+            const summary = fs.readFileSync(path, 'utf8');
+            
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `## 🔍 품질 검증 결과\n\n${summary}\n\n🤖 자동화된 QA 파이프라인에 의해 생성됨`
+            });
+          }
+
+  # 배포 전 최종 검증 (main 브랜치만)
+  deployment-readiness:
+    runs-on: ubuntu-latest
+    name: Deployment Readiness Check
+    needs: generate-qa-report
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+
+    - name: Download QA report
+      uses: actions/download-artifact@v4
+      with:
+        name: comprehensive-qa-report
+        path: ./qa-results
+
+    - name: Check deployment criteria
+      run: |
+        node scripts/check-deployment-readiness.js
+        echo "배포 준비 상태 확인 완료"
+
+    - name: Create deployment summary
+      run: |
+        echo "# 🚀 배포 준비 완료" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "✅ 모든 품질 검증 단계를 통과했습니다." >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "## 검증 완료 항목" >> $GITHUB_STEP_SUMMARY
+        echo "- ✅ 코드 품질 및 정적 분석" >> $GITHUB_STEP_SUMMARY
+        echo "- ✅ 단위 테스트 및 통합 테스트" >> $GITHUB_STEP_SUMMARY
+        echo "- ✅ E2E 테스트 (크로스 브라우저)" >> $GITHUB_STEP_SUMMARY
+        echo "- ✅ 접근성 테스트 (WCAG 2.1)" >> $GITHUB_STEP_SUMMARY
+        echo "- ✅ 보안 취약점 검사" >> $GITHUB_STEP_SUMMARY
+        echo "- ✅ 성능 테스트 (Lighthouse)" >> $GITHUB_STEP_SUMMARY
+        echo "- ✅ 한국어 특화 테스트" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "🌐 **doha.kr**이 프로덕션 배포 준비가 완료되었습니다!" >> $GITHUB_STEP_SUMMARY

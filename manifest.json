@@ -1,111 +1,232 @@
 {
-    "name": "doha.kr - 일상을 더 재미있게",
+    "name": "doha.kr - 심리테스트, 실용도구, AI 운세",
     "short_name": "doha.kr",
-    "description": "심리테스트, 실용도구, 운세가 한곳에! 테토-에겐 테스트, MBTI 검사, AI 운세 등 다양한 무료 서비스",
-    "start_url": "/",
+    "description": "MBTI 성격검사, 테토-에겐 테스트, 사주 운세, 타로 카드, BMI 계산기, 텍스트 카운터 등 다양한 무료 서비스를 제공합니다. 오프라인에서도 이용 가능한 PWA 앱입니다.",
+    "id": "/?utm_source=pwa&utm_medium=install",
+    "start_url": "/?utm_source=pwa&utm_medium=install",
     "display": "standalone",
-    "background_color": "#ffffff",
-    "theme_color": "#6366f1",
-    "orientation": "portrait-primary",
-    "categories": ["entertainment", "lifestyle", "utilities"],
-    "lang": "ko",
+    "display_override": ["window-controls-overlay", "standalone", "minimal-ui", "browser"],
+    "background_color": "#f9fafb",
+    "theme_color": "#5c5ce0",
+    "orientation": "any",
+    "categories": ["entertainment", "lifestyle", "utilities", "education", "health"],
+    "lang": "ko-KR",
     "dir": "ltr",
     "scope": "/",
+    "handle_links": "preferred",
+    "launch_handler": {
+        "client_mode": "focus-existing"
+    },
+    "edge_side_panel": {
+        "preferred_width": 400
+    },
     "icons": [
+        {
+            "src": "/images/icon-48x48.png",
+            "sizes": "48x48",
+            "type": "image/png",
+            "purpose": "any"
+        },
         {
             "src": "/images/icon-72x72.png",
             "sizes": "72x72",
-            "type": "image/png"
+            "type": "image/png",
+            "purpose": "any"
         },
         {
             "src": "/images/icon-96x96.png",
             "sizes": "96x96",
-            "type": "image/png"
+            "type": "image/png",
+            "purpose": "any"
         },
         {
             "src": "/images/icon-128x128.png",
             "sizes": "128x128",
-            "type": "image/png"
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "/images/icon-144x144.png",
+            "sizes": "144x144",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "/images/icon-152x152.png",
+            "sizes": "152x152",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "/images/icon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "/images/icon-256x256.png",
+            "sizes": "256x256",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "/images/icon-384x384.png",
+            "sizes": "384x384",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "/images/icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "/images/icon-maskable-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "/images/icon-maskable-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
         },
         {
             "src": "/images/logo.svg",
             "sizes": "any",
             "type": "image/svg+xml",
-            "purpose": "any maskable"
-        },
-        {
-            "src": "/images/icon-152x152.png",
-            "sizes": "152x152",
-            "type": "image/png"
-        },
-        {
-            "src": "/images/icon-192x192.png",
-            "sizes": "192x192",
-            "type": "image/png"
-        },
-        {
-            "src": "/images/icon-384x384.png",
-            "sizes": "384x384",
-            "type": "image/png"
-        },
-        {
-            "src": "/images/icon-512x512.png",
-            "sizes": "512x512",
-            "type": "image/png"
+            "purpose": "any"
         }
     ],
     "screenshots": [
         {
-            "src": "/images/screenshot-mobile.png",
+            "src": "/images/screenshots/mobile-home.png",
             "sizes": "390x844",
             "type": "image/png",
-            "form_factor": "narrow"
+            "form_factor": "narrow",
+            "label": "doha.kr 홈 화면 - 모바일"
         },
         {
-            "src": "/images/screenshot-desktop.png", 
-            "sizes": "1280x720",
+            "src": "/images/screenshots/mobile-tests.png",
+            "sizes": "390x844",
             "type": "image/png",
-            "form_factor": "wide"
+            "form_factor": "narrow",
+            "label": "심리테스트 화면 - 모바일"
+        },
+        {
+            "src": "/images/screenshots/mobile-tools.png",
+            "sizes": "390x844",
+            "type": "image/png",
+            "form_factor": "narrow",
+            "label": "실용도구 화면 - 모바일"
+        },
+        {
+            "src": "/images/screenshots/desktop-home.png",
+            "sizes": "1280x800",
+            "type": "image/png",
+            "form_factor": "wide",
+            "label": "doha.kr 홈 화면 - 데스크톱"
+        },
+        {
+            "src": "/images/screenshots/desktop-mbti.png",
+            "sizes": "1280x800",
+            "type": "image/png",
+            "form_factor": "wide",
+            "label": "MBTI 테스트 화면 - 데스크톱"
         }
     ],
     "related_applications": [],
     "prefer_related_applications": false,
+    "iarc_rating_id": "e58c174a-81d2-5c3c-32cc-34b8de4a52e9",
     "shortcuts": [
         {
-            "name": "심리테스트",
-            "short_name": "테스트",
-            "description": "MBTI, 테토-에겐 등 다양한 심리테스트",
-            "url": "/tests/",
+            "name": "MBTI 성격검사",
+            "short_name": "MBTI",
+            "description": "16가지 성격유형을 알아보는 MBTI 테스트",
+            "url": "/tests/mbti/?utm_source=pwa&utm_medium=shortcut",
             "icons": [
                 {
-                    "src": "/images/icon-96x96.png",
-                    "sizes": "96x96"
+                    "src": "/images/shortcuts/mbti-icon.png",
+                    "sizes": "96x96",
+                    "type": "image/png"
+                }
+            ]
+        },
+        {
+            "name": "테토-에겐 테스트",
+            "short_name": "테토-에겐",
+            "description": "성격과 행동양식을 분석하는 테토-에겐 테스트",
+            "url": "/tests/teto-egen/?utm_source=pwa&utm_medium=shortcut",
+            "icons": [
+                {
+                    "src": "/images/shortcuts/teto-icon.png",
+                    "sizes": "96x96",
+                    "type": "image/png"
+                }
+            ]
+        },
+        {
+            "name": "AI 사주 운세",
+            "short_name": "사주",
+            "description": "생년월일로 보는 개인맞춤 사주 운세",
+            "url": "/fortune/saju/?utm_source=pwa&utm_medium=shortcut",
+            "icons": [
+                {
+                    "src": "/images/shortcuts/saju-icon.png",
+                    "sizes": "96x96",
+                    "type": "image/png"
                 }
             ]
         },
         {
             "name": "실용도구",
             "short_name": "도구",
-            "description": "글자수 세기, BMI 계산기 등",
-            "url": "/tools/",
+            "description": "텍스트 카운터, BMI 계산기, 연봉 계산기",
+            "url": "/tools/?utm_source=pwa&utm_medium=shortcut",
             "icons": [
                 {
-                    "src": "/images/icon-96x96.png",
-                    "sizes": "96x96"
-                }
-            ]
-        },
-        {
-            "name": "AI 운세",
-            "short_name": "운세",
-            "description": "오늘의 운세, 타로 카드",
-            "url": "/fortune/",
-            "icons": [
-                {
-                    "src": "/images/icon-96x96.png",
-                    "sizes": "96x96"
+                    "src": "/images/shortcuts/tools-icon.png",
+                    "sizes": "96x96",
+                    "type": "image/png"
                 }
             ]
         }
-    ]
+    ],
+    "protocol_handlers": [
+        {
+            "protocol": "web+doha",
+            "url": "/?handler=%s"
+        }
+    ],
+    "file_handlers": [
+        {
+            "action": "/tools/text-counter",
+            "accept": {
+                "text/plain": [".txt"],
+                "text/markdown": [".md"]
+            }
+        }
+    ],
+    "share_target": {
+        "action": "/tools/text-counter",
+        "method": "GET",
+        "params": {
+            "title": "title",
+            "text": "text",
+            "url": "url"
+        }
+    },
+    "version": "4.0.0",
+    "manifest_version": 3,
+    "permissions": [
+        "notifications",
+        "background-sync",
+        "periodic-background-sync"
+    ],
+    "gcm_sender_id": "103953800507",
+    "fcm_options": {
+        "analytics_label": "doha-kr-pwa"
+    }
 }

@@ -1,285 +1,346 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
-<head>
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src 'self' https:; script-src 'unsafe-inline' 'self' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; style-src 'unsafe-inline' 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <head>
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="upgrade-insecure-requests; default-src 'self' https:; script-src 'unsafe-inline' 'self' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; style-src 'unsafe-inline' 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;"
+    />
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=yes"
+    />
     <title>테토-에겐 성격 유형 테스트 - 재미있는 성격 분석 | doha.kr</title>
     <!-- 폰트 프리로드 -->
-    <link rel="preload" href="/fonts/Pretendard-Regular.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="/fonts/Pretendard-Medium.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="/fonts/Pretendard-Bold.woff2" as="font" type="font/woff2" crossorigin>
-    
-    <meta name="description" content="테토형과 에겐형으로 나뉘는 독특한 성격 분석 테스트. 10가지 질문으로 당신의 성격 유형을 발견하세요. 무료 성격테스트, 심리테스트">
-    <meta name="keywords" content="테토에겐, 테토형, 에겐형, 성격테스트, 심리테스트, 무료테스트, 성격유형, 테토남, 테토녀, 에겐남, 에겐녀">
-    <meta name="robots" content="index, follow">
-    <meta name="author" content="doha.kr">
-    
+    <link rel="preload" href="/fonts/Pretendard-Regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/Pretendard-Medium.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/Pretendard-Bold.woff2" as="font" type="font/woff2" crossorigin />
+
+    <meta
+      name="description"
+      content="테토형과 에겐형으로 나뉘는 독특한 성격 분석 테스트. 10가지 질문으로 당신의 성격 유형을 발견하세요. 무료 성격테스트, 심리테스트"
+    />
+    <meta
+      name="keywords"
+      content="테토에겐, 테토형, 에겐형, 성격테스트, 심리테스트, 무료테스트, 성격유형, 테토남, 테토녀, 에겐남, 에겐녀"
+    />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="doha.kr" />
+
     <!-- Security Headers -->
-    <meta http-equiv="X-Content-Type-Options" content="nosniff">
-    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
-    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), accelerometer=(), gyroscope=()">
-    
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+    <meta
+      http-equiv="Permissions-Policy"
+      content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), accelerometer=(), gyroscope=()"
+    />
+
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://doha.kr/tests/teto-egen/">
-    
+    <link rel="canonical" href="https://doha.kr/tests/teto-egen/" />
+
     <!-- Open Graph -->
-    <meta property="og:title" content="테토-에겐 성격 유형 테스트 - 재미있는 성격분석">
-    <meta property="og:description" content="당신은 주도적인 테토형? 조화로운 에겐형? 10가지 질문으로 알아보는 독특한 성격분석 테스트">
-    <meta property="og:image" content="https://doha.kr/images/teto-og.jpg">
-    <meta property="og:url" content="https://doha.kr/tests/teto-egen/">
-    <meta property="og:type" content="website">
-    <meta property="og:locale" content="ko_KR">
-    <meta property="og:site_name" content="doha.kr">
-    
+    <meta property="og:title" content="테토-에겐 성격 유형 테스트 - 재미있는 성격분석" />
+    <meta
+      property="og:description"
+      content="당신은 주도적인 테토형? 조화로운 에겐형? 10가지 질문으로 알아보는 독특한 성격분석 테스트"
+    />
+    <meta property="og:image" content="https://doha.kr/images/teto-og.jpg" />
+    <meta property="og:url" content="https://doha.kr/tests/teto-egen/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ko_KR" />
+    <meta property="og:site_name" content="doha.kr" />
+
     <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="테토-에겐 성격 유형 테스트 - 재미있는 성격분석">
-    <meta name="twitter:description" content="당신은 주도적인 테토형? 조화로운 에겐형? 10가지 질문으로 알아보는 독특한 성격분석 테스트">
-    <meta name="twitter:image" content="https://doha.kr/images/teto-og.jpg">
-    
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="테토-에겐 성격 유형 테스트 - 재미있는 성격분석" />
+    <meta
+      name="twitter:description"
+      content="당신은 주도적인 테토형? 조화로운 에겐형? 10가지 질문으로 알아보는 독특한 성격분석 테스트"
+    />
+    <meta name="twitter:image" content="https://doha.kr/images/teto-og.jpg" />
+
     <!-- 파비콘 -->
-    <link rel="icon" type="image/svg+xml" href="/images/logo.svg">
-    <link rel="apple-touch-icon" href="/images/android-chrome-192x192.png">
-    <link rel="manifest" href="/manifest.json">
-    
+    <link rel="icon" type="image/svg+xml" href="/images/logo.svg" />
+    <link rel="apple-touch-icon" href="/images/android-chrome-192x192.png" />
+    <link rel="manifest" href="/manifest.json" />
+
     <!-- 폰트 -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" crossorigin href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preconnect"
+      crossorigin
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
     <!-- Main CSS -->
-    <link rel="stylesheet" href="/css/korean-optimization.css">
-    <link rel="stylesheet" href="/css/main.css?v=1753882798240">
-    
+    <link rel="stylesheet" href="/css/korean-optimization.css" />
+    <!-- CSS Bundle - Automatically selects development or production version -->
+    <link rel="stylesheet" href="/dist/styles.css" id="main-styles">
+    <script>
+      // Automatically load minified CSS in production
+      (function() {
+        const link = document.getElementById('main-styles');
+        const isProd = window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
+        if (isProd && link) {
+          link.href = '/dist/styles.min.css';
+        }
+      })();
+    </script>
+
     <!-- Page Specific CSS -->
-    <link rel="stylesheet" href="/css/pages/teto-egen-intro.css?v=1753882798240">
-    
+    <link rel="stylesheet" href="/css/pages/teto-egen-intro.css?v=1753882798240" />
+
     <!-- Page Data Attributes -->
     <script>
-        document.documentElement.dataset.page = 'teto-egen-intro';
+      document.documentElement.dataset.page = 'teto-egen-intro';
     </script>
-</head>
-<body class="test-intro-page teto-intro-page" data-page="teto-egen-intro">
+  </head>
+  <body class="test-intro-page teto-intro-page" data-page="teto-egen-intro">
     <main class="page-main">
-        <!-- 네비게이션 -->
-        <div id="navbar-placeholder"></div>
-        
-        <!-- 히어로 섹션 -->
-        <section class="hero fade-in">
-            <div class="hero-content">
-                <div class="hero-badge">🎯 재미있는 성격 유형 테스트</div>
-                <h1 class="hero-title">테토-에겐 성격 유형 테스트</h1>
-                <p class="hero-subtitle">
-                    당신은 주도적인 테토형? 아니면 조화로운 에겐형?<br>
-                    10가지 질문으로 알아보는 독특한 성격 분석
-                </p>
-                <a href="test.html" class="test-start-btn" data-action="start-test">지금 테스트 시작하기</a>
-            </div>
-        </section>
-        
-        <!-- 소개 섹션 -->
-        <section class="intro fade-in">
-            <div class="container">
-                <div class="content-wrapper">
-                    <h2 class="section-title">테토-에겐 테스트란?</h2>
-                    <p class="intro-text">
-                        테토-에겐 성격 유형 테스트는 인간의 성격을 <span class="highlight">테토형</span>과 <span class="highlight">에겐형</span> 두 가지 주요 유형으로 분류하는 재미있는 성격 분석 도구입니다.
-                    </p>
-                    <p class="intro-text">
-                        이 테스트는 개인의 의사결정 방식, 대인관계 패턴, 문제 해결 접근법 등을 통해 당신의 성격 경향을 확인해볼 수 있습니다.
-                    </p>
-                </div>
-            </div>
-        </section>
-        
-        <!-- 이론적 배경 섹션 -->
-        <section class="theory fade-in">
-            <div class="container">
-                <div class="theory-box">
-                    <h3 class="theory-title">테스트 특징</h3>
-                    <div class="theory-content">
-                        <p>테토-에겐 테스트는 간단하지만 흥미로운 성격 분류 방식을 제공합니다.</p>
-                        <h4>테스트 특징:</h4>
-                        <ul class="theory-list">
-                            <li>10개의 상황별 질문</li>
-                            <li>이분법적 성격 분류</li>
-                            <li>직관적이고 재미있는 결과</li>
-                            <li>간단한 공유 기능</li>
-                        </ul>
-                        <p>이 테스트는 오락적 목적으로 제작되었으며, 심리학적 진단 도구가 아닙니다.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- 유형 설명 섹션 -->
-        <section class="types fade-in">
-            <div class="container">
-                <h2 class="section-title">두 가지 성격 유형</h2>
-                <div class="types-grid">
-                    <div class="type-card teto-card" data-type="teto">
-                        <div class="type-icon">🦁</div>
-                        <h3 class="type-name">테토형 (Teto Type)</h3>
-                        <p class="type-description">
-                            주도적이고 적극적인 성향을 가진 유형입니다. 목표 지향적이며 리더십을 발휘하는 것을 선호합니다.
-                        </p>
-                        <div class="type-traits">
-                            <div class="type-trait">
-                                <span class="trait-icon">⚡</span>
-                                <span>빠른 의사결정</span>
-                            </div>
-                            <div class="type-trait">
-                                <span class="trait-icon">🎯</span>
-                                <span>목표 중심적</span>
-                            </div>
-                            <div class="type-trait">
-                                <span class="trait-icon">🚀</span>
-                                <span>도전을 즐김</span>
-                            </div>
-                            <div class="type-trait">
-                                <span class="trait-icon">👥</span>
-                                <span>리더십 발휘</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="type-card egen-card" data-type="egen">
-                        <div class="type-icon">🕊️</div>
-                        <h3 class="type-name">에겐형 (Egen Type)</h3>
-                        <p class="type-description">
-                            조화롭고 균형잡힌 성향을 가진 유형입니다. 협력을 중시하며 안정성을 추구합니다.
-                        </p>
-                        <div class="type-traits">
-                            <div class="type-trait">
-                                <span class="trait-icon">🤝</span>
-                                <span>협력 중시</span>
-                            </div>
-                            <div class="type-trait">
-                                <span class="trait-icon">⚖️</span>
-                                <span>균형 추구</span>
-                            </div>
-                            <div class="type-trait">
-                                <span class="trait-icon">🛡️</span>
-                                <span>안정성 선호</span>
-                            </div>
-                            <div class="type-trait">
-                                <span class="trait-icon">💫</span>
-                                <span>조화로운 관계</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- 테스트 과정 섹션 -->
-        <section class="process fade-in">
-            <div class="container">
-                <h2 class="section-title">테스트 진행 과정</h2>
-                <div class="process-steps">
-                    <div class="process-step">
-                        <div class="step-number step-1">1</div>
-                        <h3 class="step-title">질문 응답</h3>
-                        <p class="step-desc">10가지 상황별 질문에 솔직하게 답변하세요</p>
-                    </div>
-                    <div class="process-step">
-                        <div class="step-number step-2">2</div>
-                        <h3 class="step-title">자동 분석</h3>
-                        <p class="step-desc">답변을 바탕으로 성격 유형을 분석합니다</p>
-                    </div>
-                    <div class="process-step">
-                        <div class="step-number step-3">3</div>
-                        <h3 class="step-title">결과 확인</h3>
-                        <p class="step-desc">당신의 성격 유형 결과를 확인하세요</p>
-                    </div>
-                    <div class="process-step">
-                        <div class="step-number step-4">4</div>
-                        <h3 class="step-title">공유하기</h3>
-                        <p class="step-desc">친구들과 결과를 공유하고 비교해보세요</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- 광고 영역 -->
-        <div class="ad-container">
-            <div class="ad-label">광고</div>
-            <div id="ad-container-teto-intro-1" class="ad-container-min" data-ad-slot="2789891628">
-                <div class="ad-placeholder ad-container-styled">
-                    광고 로딩 중...
-                </div>
-            </div>
+      <!-- 네비게이션 -->
+      <div id="navbar-placeholder"></div>
+
+      <!-- 히어로 섹션 -->
+      <section class="hero fade-in">
+        <div class="hero-content">
+          <div class="hero-badge">🎯 재미있는 성격 유형 테스트</div>
+          <h1 class="hero-title">테토-에겐 성격 유형 테스트</h1>
+          <p class="hero-subtitle">
+            당신은 주도적인 테토형? 아니면 조화로운 에겐형?
+            <br />
+            10가지 질문으로 알아보는 독특한 성격 분석
+          </p>
+          <a href="test.html" class="test-start-btn" data-action="start-test">지금 테스트 시작하기</a>
         </div>
-        
-        <!-- FAQ 섹션 -->
-        <section class="faq fade-in">
-            <div class="container">
-                <h2 class="section-title">자주 묻는 질문</h2>
-                <div class="faq-list">
-                    <div class="faq-item" data-faq="purpose">
-                        <div class="faq-question">
-                            테토-에겐 테스트는 어떤 목적으로 만들어졌나요?
-                            <span class="faq-arrow">▼</span>
-                        </div>
-                        <div class="faq-answer">
-                            <p>테토-에겐 테스트는 재미있는 성격 분류를 통해 자신의 성향을 간단히 확인해볼 수 있는 오락적 목적의 테스트입니다. 전문적인 심리학적 진단 도구가 아닙니다.</p>
-                        </div>
-                    </div>
-                    <div class="faq-item" data-faq="better-type">
-                        <div class="faq-question">
-                            테토형과 에겐형 중 어느 쪽이 더 좋은가요?
-                            <span class="faq-arrow">▼</span>
-                        </div>
-                        <div class="faq-answer">
-                            <p>테토형과 에겐형은 각각 고유한 특징을 가지고 있으며, 어느 한 쪽이 더 우수하다고 할 수 없습니다. 상황과 환경에 따라 각 유형의 특성이 다르게 발휘될 수 있습니다.</p>
-                        </div>
-                    </div>
-                    <div class="faq-item" data-faq="change">
-                        <div class="faq-question">
-                            테스트 결과는 변할 수 있나요?
-                            <span class="faq-arrow">▼</span>
-                        </div>
-                        <div class="faq-answer">
-                            <p>기본적인 성격 경향은 비교적 안정적이지만, 개인의 경험과 성장에 따라 답변이 달라질 수 있습니다. 시간이 지난 후 다시 테스트해보는 것도 흥미로울 수 있습니다.</p>
-                        </div>
-                    </div>
-                </div>
+      </section>
+
+      <!-- 소개 섹션 -->
+      <section class="intro fade-in">
+        <div class="container">
+          <div class="content-wrapper">
+            <h2 class="section-title">테토-에겐 테스트란?</h2>
+            <p class="intro-text">
+              테토-에겐 성격 유형 테스트는 인간의 성격을
+              <span class="highlight">테토형</span>
+              과
+              <span class="highlight">에겐형</span>
+              두 가지 주요 유형으로 분류하는 재미있는 성격 분석 도구입니다.
+            </p>
+            <p class="intro-text">
+              이 테스트는 개인의 의사결정 방식, 대인관계 패턴, 문제 해결 접근법 등을 통해 당신의 성격 경향을 확인해볼 수
+              있습니다.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 이론적 배경 섹션 -->
+      <section class="theory fade-in">
+        <div class="container">
+          <div class="theory-box">
+            <h3 class="theory-title">테스트 특징</h3>
+            <div class="theory-content">
+              <p>테토-에겐 테스트는 간단하지만 흥미로운 성격 분류 방식을 제공합니다.</p>
+              <h4>테스트 특징:</h4>
+              <ul class="theory-list">
+                <li>10개의 상황별 질문</li>
+                <li>이분법적 성격 분류</li>
+                <li>직관적이고 재미있는 결과</li>
+                <li>간단한 공유 기능</li>
+              </ul>
+              <p>이 테스트는 오락적 목적으로 제작되었으며, 심리학적 진단 도구가 아닙니다.</p>
             </div>
-        </section>
-        
-        <!-- CTA 섹션 -->
-        <section class="cta gradient fade-in">
-            <div class="container">
-                <h2 class="cta-title">당신의 성격 유형을 발견하세요!</h2>
-                <p class="cta-description">
-                    테토형인지 에겐형인지 지금 바로 확인해보세요.<br>
-                    단 10개의 질문으로 당신의 성격 경향을 알아볼 수 있습니다.
+          </div>
+        </div>
+      </section>
+
+      <!-- 유형 설명 섹션 -->
+      <section class="types fade-in">
+        <div class="container">
+          <h2 class="section-title">두 가지 성격 유형</h2>
+          <div class="types-grid">
+            <div class="type-card teto-card" data-type="teto">
+              <div class="type-icon">🦁</div>
+              <h3 class="type-name">테토형 (Teto Type)</h3>
+              <p class="type-description">
+                주도적이고 적극적인 성향을 가진 유형입니다. 목표 지향적이며 리더십을 발휘하는 것을 선호합니다.
+              </p>
+              <div class="type-traits">
+                <div class="type-trait">
+                  <span class="trait-icon">⚡</span>
+                  <span>빠른 의사결정</span>
+                </div>
+                <div class="type-trait">
+                  <span class="trait-icon">🎯</span>
+                  <span>목표 중심적</span>
+                </div>
+                <div class="type-trait">
+                  <span class="trait-icon">🚀</span>
+                  <span>도전을 즐김</span>
+                </div>
+                <div class="type-trait">
+                  <span class="trait-icon">👥</span>
+                  <span>리더십 발휘</span>
+                </div>
+              </div>
+            </div>
+            <div class="type-card egen-card" data-type="egen">
+              <div class="type-icon">🕊️</div>
+              <h3 class="type-name">에겐형 (Egen Type)</h3>
+              <p class="type-description">
+                조화롭고 균형잡힌 성향을 가진 유형입니다. 협력을 중시하며 안정성을 추구합니다.
+              </p>
+              <div class="type-traits">
+                <div class="type-trait">
+                  <span class="trait-icon">🤝</span>
+                  <span>협력 중시</span>
+                </div>
+                <div class="type-trait">
+                  <span class="trait-icon">⚖️</span>
+                  <span>균형 추구</span>
+                </div>
+                <div class="type-trait">
+                  <span class="trait-icon">🛡️</span>
+                  <span>안정성 선호</span>
+                </div>
+                <div class="type-trait">
+                  <span class="trait-icon">💫</span>
+                  <span>조화로운 관계</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 테스트 과정 섹션 -->
+      <section class="process fade-in">
+        <div class="container">
+          <h2 class="section-title">테스트 진행 과정</h2>
+          <div class="process-steps">
+            <div class="process-step">
+              <div class="step-number step-1">1</div>
+              <h3 class="step-title">질문 응답</h3>
+              <p class="step-desc">10가지 상황별 질문에 솔직하게 답변하세요</p>
+            </div>
+            <div class="process-step">
+              <div class="step-number step-2">2</div>
+              <h3 class="step-title">자동 분석</h3>
+              <p class="step-desc">답변을 바탕으로 성격 유형을 분석합니다</p>
+            </div>
+            <div class="process-step">
+              <div class="step-number step-3">3</div>
+              <h3 class="step-title">결과 확인</h3>
+              <p class="step-desc">당신의 성격 유형 결과를 확인하세요</p>
+            </div>
+            <div class="process-step">
+              <div class="step-number step-4">4</div>
+              <h3 class="step-title">공유하기</h3>
+              <p class="step-desc">친구들과 결과를 공유하고 비교해보세요</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 광고 영역 -->
+      <div class="ad-container">
+        <div class="ad-label">광고</div>
+        <div id="ad-container-teto-intro-1" class="ad-container-min" data-ad-slot="2789891628">
+          <div class="ad-placeholder ad-container-styled">광고 로딩 중...</div>
+        </div>
+      </div>
+
+      <!-- FAQ 섹션 -->
+      <section class="faq fade-in">
+        <div class="container">
+          <h2 class="section-title">자주 묻는 질문</h2>
+          <div class="faq-list">
+            <div class="faq-item" data-faq="purpose">
+              <div class="faq-question">
+                테토-에겐 테스트는 어떤 목적으로 만들어졌나요?
+                <span class="faq-arrow">▼</span>
+              </div>
+              <div class="faq-answer">
+                <p>
+                  테토-에겐 테스트는 재미있는 성격 분류를 통해 자신의 성향을 간단히 확인해볼 수 있는 오락적 목적의
+                  테스트입니다. 전문적인 심리학적 진단 도구가 아닙니다.
                 </p>
-                <div class="cta-buttons">
-                    <a href="test.html" class="cta-btn cta-btn-primary" data-action="start-test">무료 테스트 시작</a>
-                    <a href="/tests/" class="cta-btn cta-btn-secondary" data-action="other-tests">다른 테스트 보기</a>
-                </div>
+              </div>
             </div>
-        </section>
-        
-        <!-- 푸터 -->
-        <div id="footer-placeholder"></div>
+            <div class="faq-item" data-faq="better-type">
+              <div class="faq-question">
+                테토형과 에겐형 중 어느 쪽이 더 좋은가요?
+                <span class="faq-arrow">▼</span>
+              </div>
+              <div class="faq-answer">
+                <p>
+                  테토형과 에겐형은 각각 고유한 특징을 가지고 있으며, 어느 한 쪽이 더 우수하다고 할 수 없습니다. 상황과
+                  환경에 따라 각 유형의 특성이 다르게 발휘될 수 있습니다.
+                </p>
+              </div>
+            </div>
+            <div class="faq-item" data-faq="change">
+              <div class="faq-question">
+                테스트 결과는 변할 수 있나요?
+                <span class="faq-arrow">▼</span>
+              </div>
+              <div class="faq-answer">
+                <p>
+                  기본적인 성격 경향은 비교적 안정적이지만, 개인의 경험과 성장에 따라 답변이 달라질 수 있습니다. 시간이
+                  지난 후 다시 테스트해보는 것도 흥미로울 수 있습니다.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA 섹션 -->
+      <section class="cta gradient fade-in">
+        <div class="container">
+          <h2 class="cta-title">당신의 성격 유형을 발견하세요!</h2>
+          <p class="cta-description">
+            테토형인지 에겐형인지 지금 바로 확인해보세요.
+            <br />
+            단 10개의 질문으로 당신의 성격 경향을 알아볼 수 있습니다.
+          </p>
+          <div class="cta-buttons">
+            <a href="test.html" class="cta-btn cta-btn-primary" data-action="start-test">무료 테스트 시작</a>
+            <a href="/tests/" class="cta-btn cta-btn-secondary" data-action="other-tests">다른 테스트 보기</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- 푸터 -->
+      <div id="footer-placeholder"></div>
     </main>
-    
+
     <!-- Core JavaScript -->
-    <script src="/js/core/common-init.js"></script>
-    
+    <script type="module" src="/js/app.js"></script>
+
     <!-- Page JavaScript -->
-    <script src="/js/pages/teto-egen-intro.js"></script>
-    
+    <script type="module" src="/js/pages/teto-egen-intro.js"></script>
+
     <!-- External SDKs (지연 로딩) -->
     <script async src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js"></script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
-    <script async src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js" integrity="sha512-H+rglffZ6f5gF7UJgvH4Naa+fGCgjrHKMgoFOGmcPTRwR6oILo5R+gtzNrpDp7iMV3udbymBVjkeZGNz1Em4rQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      async
+      src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"
+      integrity="sha512-H+rglffZ6f5gF7UJgvH4Naa+fGCgjrHKMgoFOGmcPTRwR6oILo5R+gtzNrpDp7iMV3udbymBVjkeZGNz1Em4rQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
     <!-- Structured Data -->
     <script type="application/ld+json">
-    {
+      {
         "@context": "https://schema.org",
         "@type": "Quiz",
         "name": "테토-에겐 성격 유형 테스트",
@@ -288,18 +349,18 @@
         "numberOfQuestions": 10,
         "timeRequired": "PT5M",
         "provider": {
-            "@type": "Organization",
-            "name": "doha.kr",
-            "url": "https://doha.kr"
+          "@type": "Organization",
+          "name": "doha.kr",
+          "url": "https://doha.kr"
         },
         "url": "https://doha.kr/tests/teto-egen/",
         "inLanguage": "ko-KR",
         "isPartOf": {
-            "@type": "WebSite",
-            "name": "doha.kr",
-            "url": "https://doha.kr"
+          "@type": "WebSite",
+          "name": "doha.kr",
+          "url": "https://doha.kr"
         }
-    }
+      }
     </script>
-</body>
+  </body>
 </html>

@@ -1,0 +1,215 @@
+[
+  {
+    "path": "/*",
+    "comment": "doha.kr 전체 페이지 성능 예산 - 한국어 최적화",
+    "timings": [
+      {
+        "metric": "interactive",
+        "budget": 4000,
+        "tolerance": 500,
+        "comment": "상호작용 가능 시간 - 한국어 폰트 로딩 고려"
+      },
+      {
+        "metric": "first-contentful-paint",
+        "budget": 2000,
+        "tolerance": 300,
+        "comment": "첫 콘텐츠 페인트 - 모바일 최적화"
+      },
+      {
+        "metric": "largest-contentful-paint",
+        "budget": 3000,
+        "tolerance": 500,
+        "comment": "최대 콘텐츠 페인트 - Core Web Vitals"
+      },
+      {
+        "metric": "total-blocking-time",
+        "budget": 400,
+        "tolerance": 100,
+        "comment": "총 차단 시간"
+      },
+      {
+        "metric": "cumulative-layout-shift",
+        "budget": 0.1,
+        "tolerance": 0.05,
+        "comment": "누적 레이아웃 이동"
+      },
+      {
+        "metric": "speed-index",
+        "budget": 3500,
+        "tolerance": 500,
+        "comment": "속도 지수"
+      },
+      {
+        "metric": "first-meaningful-paint",
+        "budget": 2500,
+        "tolerance": 400,
+        "comment": "첫 의미있는 페인트"
+      }
+    ],
+    "resourceSizes": [
+      {
+        "resourceType": "script",
+        "budget": 200,
+        "tolerance": 50,
+        "comment": "JavaScript 번들 크기 (KB)"
+      },
+      {
+        "resourceType": "stylesheet",
+        "budget": 100,
+        "tolerance": 25,
+        "comment": "CSS 번들 크기 (KB)"
+      },
+      {
+        "resourceType": "image",
+        "budget": 500,
+        "tolerance": 100,
+        "comment": "이미지 총 크기 (KB) - 최적화된 WebP"
+      },
+      {
+        "resourceType": "font",
+        "budget": 150,
+        "tolerance": 30,
+        "comment": "폰트 크기 (KB) - Pretendard Variable 포함"
+      },
+      {
+        "resourceType": "document",
+        "budget": 50,
+        "tolerance": 10,
+        "comment": "HTML 문서 크기 (KB)"
+      },
+      {
+        "resourceType": "total",
+        "budget": 1000,
+        "tolerance": 200,
+        "comment": "전체 리소스 크기 (KB)"
+      }
+    ],
+    "resourceCounts": [
+      {
+        "resourceType": "script",
+        "budget": 10,
+        "tolerance": 2,
+        "comment": "JavaScript 파일 개수"
+      },
+      {
+        "resourceType": "stylesheet",
+        "budget": 5,
+        "tolerance": 1,
+        "comment": "CSS 파일 개수"
+      },
+      {
+        "resourceType": "image",
+        "budget": 20,
+        "tolerance": 5,
+        "comment": "이미지 파일 개수"
+      },
+      {
+        "resourceType": "font",
+        "budget": 4,
+        "tolerance": 1,
+        "comment": "폰트 파일 개수"
+      },
+      {
+        "resourceType": "third-party",
+        "budget": 8,
+        "tolerance": 2,
+        "comment": "서드파티 리소스 개수 (Analytics, Ads 등)"
+      },
+      {
+        "resourceType": "total",
+        "budget": 50,
+        "tolerance": 10,
+        "comment": "전체 리소스 개수"
+      }
+    ]
+  },
+  {
+    "path": "/fortune/*",
+    "comment": "운세 서비스 페이지 - AI API 호출 최적화",
+    "timings": [
+      {
+        "metric": "interactive",
+        "budget": 4500,
+        "tolerance": 600,
+        "comment": "AI 응답 대기 시간 포함"
+      },
+      {
+        "metric": "first-contentful-paint",
+        "budget": 2200,
+        "tolerance": 400
+      },
+      {
+        "metric": "largest-contentful-paint",
+        "budget": 3500,
+        "tolerance": 600
+      }
+    ],
+    "resourceSizes": [
+      {
+        "resourceType": "script",
+        "budget": 250,
+        "tolerance": 60,
+        "comment": "AI 클라이언트 라이브러리 포함"
+      },
+      {
+        "resourceType": "total",
+        "budget": 1200,
+        "tolerance": 250
+      }
+    ]
+  },
+  {
+    "path": "/tests/*",
+    "comment": "심리테스트 페이지 - 인터랙티브 기능",
+    "timings": [
+      {
+        "metric": "interactive",
+        "budget": 4000,
+        "tolerance": 500
+      },
+      {
+        "metric": "total-blocking-time",
+        "budget": 500,
+        "tolerance": 150,
+        "comment": "테스트 로직 실행 시간"
+      }
+    ],
+    "resourceSizes": [
+      {
+        "resourceType": "script",
+        "budget": 300,
+        "tolerance": 75,
+        "comment": "텍스트 처리 및 결과 계산 로직"
+      }
+    ]
+  },
+  {
+    "path": "/tools/*",
+    "comment": "실용 도구 페이지 - 계산기 최적화",
+    "timings": [
+      {
+        "metric": "interactive",
+        "budget": 3500,
+        "tolerance": 400
+      },
+      {
+        "metric": "first-contentful-paint",
+        "budget": 1800,
+        "tolerance": 300
+      }
+    ],
+    "resourceSizes": [
+      {
+        "resourceType": "script",
+        "budget": 180,
+        "tolerance": 40,
+        "comment": "계산 로직만 포함"
+      },
+      {
+        "resourceType": "total",
+        "budget": 800,
+        "tolerance": 150
+      }
+    ]
+  }
+]

@@ -1,261 +1,243 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
- <head>
-  <meta content="upgrade-insecure-requests; default-src 'self' https:; script-src 'unsafe-inline' 'self' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'unsafe-inline' 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;" http-equiv="Content-Security-Policy"/>
-  <meta charset="utf-8"/>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <title>
-   AI 사주팔자 - 정확한 만세력 기반 사주 분석 | doha.kr
-  </title>
+  <head>
+    <meta
+      content="upgrade-insecure-requests; default-src 'self' https:; script-src 'unsafe-inline' 'self' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'unsafe-inline' 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;"
+      http-equiv="Content-Security-Policy"
+    />
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>AI 사주팔자 - 정확한 만세력 기반 사주 분석 | doha.kr</title>
     <!-- 폰트 프리로드 -->
-    <link rel="preload" href="/fonts/Pretendard-Regular.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="/fonts/Pretendard-Medium.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="/fonts/Pretendard-Bold.woff2" as="font" type="font/woff2" crossorigin>
-    
-  <meta content="만세력 기반 정확한 사주팔자 분석. 생년월일과 출생시간으로 연주, 월주, 일주, 시주를 계산하고 AI가 상세하게 해석합니다." name="description"/>
-  <meta content="index, follow" name="robots"/>
-  <meta content="doha.kr" name="author"/>
-  <!-- Security Headers -->
-  <meta content="nosniff" http-equiv="X-Content-Type-Options"/>
-  <meta content="strict-origin-when-cross-origin" http-equiv="Referrer-Policy"/>
-  <meta content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), accelerometer=(), gyroscope=()" http-equiv="Permissions-Policy"/>
-  <!-- Open Graph -->
-  <meta content="AI 사주팔자 - 정확한 만세력 기반 사주 분석" property="og:title"/>
-  <meta content="만세력 기반 정확한 사주팔자 분석. AI가 십신, 오행, 성격, 운세를 상세하게 해석합니다." property="og:description"/>
-  <meta content="https://doha.kr/images/saju-og.png" property="og:image"/>
-  <meta content="https://doha.kr/fortune/saju/" property="og:url"/>
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com" rel="preconnect"/>
-  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-  <link crossorigin="" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-  <!-- Preconnect for Performance -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">
-  <link rel="dns-prefetch" href="https://developers.kakao.com">
-  
-  <!-- Main CSS -->
-  <link rel="stylesheet" href="/css/korean-optimization.css">
-    <link rel="stylesheet" href="/css/main.css?v=1753882798247">
-  
-  <!-- Feature CSS -->
-  <link rel="stylesheet" href="/css/features/fortune-common.css?v=1753882798247">
-  <link rel="stylesheet" href="/css/features/fortune-result.css?v=1753882798247">
-  
-  <!-- Page Data Attributes -->
-  <script>
+    <link rel="preload" href="/fonts/Pretendard-Regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/Pretendard-Medium.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/Pretendard-Bold.woff2" as="font" type="font/woff2" crossorigin />
+
+    <meta
+      content="만세력 기반 정확한 사주팔자 분석. 생년월일과 출생시간으로 연주, 월주, 일주, 시주를 계산하고 AI가 상세하게 해석합니다."
+      name="description"
+    />
+    <meta content="index, follow" name="robots" />
+    <meta content="doha.kr" name="author" />
+    <!-- Security Headers -->
+    <meta content="nosniff" http-equiv="X-Content-Type-Options" />
+    <meta content="strict-origin-when-cross-origin" http-equiv="Referrer-Policy" />
+    <meta
+      content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), accelerometer=(), gyroscope=()"
+      http-equiv="Permissions-Policy"
+    />
+    <!-- Open Graph -->
+    <meta content="AI 사주팔자 - 정확한 만세력 기반 사주 분석" property="og:title" />
+    <meta
+      content="만세력 기반 정확한 사주팔자 분석. AI가 십신, 오행, 성격, 운세를 상세하게 해석합니다."
+      property="og:description"
+    />
+    <meta content="https://doha.kr/images/saju-og.png" property="og:image" />
+    <meta content="https://doha.kr/fortune/saju/" property="og:url" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      crossorigin=""
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <!-- Preconnect for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
+    <link rel="dns-prefetch" href="https://developers.kakao.com" />
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="/css/korean-optimization.css" />
+    <!-- CSS Bundle - Automatically selects development or production version -->
+    <link rel="stylesheet" href="/dist/styles.css" id="main-styles">
+    <script>
+      // Automatically load minified CSS in production
+      (function() {
+        const link = document.getElementById('main-styles');
+        const isProd = window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
+        if (isProd && link) {
+          link.href = '/dist/styles.min.css';
+        }
+      })();
+    </script>
+
+    <!-- Feature CSS -->
+    <link rel="stylesheet" href="/css/features/fortune-common.css?v=1753882798247" />
+    <link rel="stylesheet" href="/css/features/fortune-result.css?v=1753882798247" />
+
+    <!-- Page Data Attributes -->
+    <script>
       document.documentElement.dataset.page = 'fortune-saju';
-  </script>
-  <meta content="nosniff" http-equiv="X-Content-Type-Options"/>
- </head>
- <body class="fortune-page" data-page="fortune-saju">
-  <!-- 네비게이션 바 -->
-  <div id="navbar-placeholder">
-  </div>
-  <!-- 페이지 헤더 -->
-  <section class="page-header">
-   <div class="container">
-    <h1 class="page-title fade-in">
-     🔮 AI 사주팔자
-    </h1>
-    <p class="page-subtitle fade-in stagger-1">
-     만세력 기반 정확한 사주팔자 분석
-     <br/>
-     AI가 당신의 타고난 운명과 성격을 상세하게 해석합니다
-    </p>
-   </div>
-  </section>
-  <!-- 사주 입력 폼 -->
-  <section class="saju-section">
-   <div class="container">
-    <div class="saju-form-container" id="sajuForm">
-     <h2>
-      사주팔자 정보 입력
-     </h2>
-     <form data-form="birth-data">
-      <div class="form-row">
-       <div class="form-group">
-        <label for="userName">
-         이름
-        </label>
-        <input class="form-control" id="userName" name="userName" required="" type="text"/>
-       </div>
-       <div class="form-group">
-        <label for="gender">
-         성별
-        </label>
-        <select class="form-control" id="gender" name="gender" required="">
-         <option value="">
-          선택해주세요
-         </option>
-         <option value="male">
-          남성
-         </option>
-         <option value="female">
-          여성
-         </option>
-        </select>
-       </div>
+    </script>
+    <meta content="nosniff" http-equiv="X-Content-Type-Options" />
+  </head>
+  <body class="fortune-page" data-page="fortune-saju">
+    <!-- 네비게이션 바 -->
+    <div id="navbar-placeholder"></div>
+    <!-- 페이지 헤더 -->
+    <section class="page-header">
+      <div class="container">
+        <h1 class="page-title fade-in">🔮 AI 사주팔자</h1>
+        <p class="page-subtitle fade-in stagger-1">
+          만세력 기반 정확한 사주팔자 분석
+          <br />
+          AI가 당신의 타고난 운명과 성격을 상세하게 해석합니다
+        </p>
       </div>
-      <div class="form-row">
-       <div class="form-group">
-        <label for="birthYear">
-         생년
-        </label>
-        <input class="form-control" id="birthYear" max="2025" min="1900" name="birthYear" required="" type="number"/>
-       </div>
-       <div class="form-group">
-        <label for="birthMonth">
-         생월
-        </label>
-        <input class="form-control" id="birthMonth" max="12" min="1" name="birthMonth" required="" type="number"/>
-       </div>
-       <div class="form-group">
-        <label for="birthDay">
-         생일
-        </label>
-        <input class="form-control" id="birthDay" max="31" min="1" name="birthDay" required="" type="number"/>
-       </div>
+    </section>
+    <!-- 사주 입력 폼 -->
+    <section class="saju-section">
+      <div class="container">
+        <div class="saju-form-container" id="sajuForm">
+          <h2>사주팔자 정보 입력</h2>
+          <form data-form="birth-data">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="userName">이름</label>
+                <input class="form-control" id="userName" name="userName" required="" type="text" />
+              </div>
+              <div class="form-group">
+                <label for="gender">성별</label>
+                <select class="form-control" id="gender" name="gender" required="">
+                  <option value="">선택해주세요</option>
+                  <option value="male">남성</option>
+                  <option value="female">여성</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="birthYear">생년</label>
+                <input
+                  class="form-control"
+                  id="birthYear"
+                  max="2025"
+                  min="1900"
+                  name="birthYear"
+                  required=""
+                  type="number"
+                />
+              </div>
+              <div class="form-group">
+                <label for="birthMonth">생월</label>
+                <input
+                  class="form-control"
+                  id="birthMonth"
+                  max="12"
+                  min="1"
+                  name="birthMonth"
+                  required=""
+                  type="number"
+                />
+              </div>
+              <div class="form-group">
+                <label for="birthDay">생일</label>
+                <input class="form-control" id="birthDay" max="31" min="1" name="birthDay" required="" type="number" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="birthTime">출생시간</label>
+              <select class="form-control" id="birthTime" name="birthTime" required="">
+                <option value="">선택해주세요</option>
+                <option value="23">자시 (23:00-00:59)</option>
+                <option value="1">축시 (01:00-02:59)</option>
+                <option value="3">인시 (03:00-04:59)</option>
+                <option value="5">묘시 (05:00-06:59)</option>
+                <option value="7">진시 (07:00-08:59)</option>
+                <option value="9">사시 (09:00-10:59)</option>
+                <option value="11">오시 (11:00-12:59)</option>
+                <option value="13">미시 (13:00-14:59)</option>
+                <option value="15">신시 (15:00-16:59)</option>
+                <option value="17">유시 (17:00-18:59)</option>
+                <option value="19">술시 (19:00-20:59)</option>
+                <option value="21">해시 (21:00-22:59)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="checkbox-label">
+                <input id="isLunar" name="isLunar" type="checkbox" />
+                <span class="checkmark"></span>
+                음력 생일입니다
+              </label>
+            </div>
+            <button class="btn btn-primary btn-full-width" type="submit">🔮 사주팔자 분석하기</button>
+          </form>
+        </div>
+        <!-- 사주 결과 영역 -->
+        <div id="sajuResult" class="d-none-init">
+          <!-- 결과가 여기에 표시됩니다 -->
+        </div>
       </div>
-      <div class="form-group">
-       <label for="birthTime">
-        출생시간
-       </label>
-       <select class="form-control" id="birthTime" name="birthTime" required="">
-        <option value="">
-         선택해주세요
-        </option>
-        <option value="23">
-         자시 (23:00-00:59)
-        </option>
-        <option value="1">
-         축시 (01:00-02:59)
-        </option>
-        <option value="3">
-         인시 (03:00-04:59)
-        </option>
-        <option value="5">
-         묘시 (05:00-06:59)
-        </option>
-        <option value="7">
-         진시 (07:00-08:59)
-        </option>
-        <option value="9">
-         사시 (09:00-10:59)
-        </option>
-        <option value="11">
-         오시 (11:00-12:59)
-        </option>
-        <option value="13">
-         미시 (13:00-14:59)
-        </option>
-        <option value="15">
-         신시 (15:00-16:59)
-        </option>
-        <option value="17">
-         유시 (17:00-18:59)
-        </option>
-        <option value="19">
-         술시 (19:00-20:59)
-        </option>
-        <option value="21">
-         해시 (21:00-22:59)
-        </option>
-       </select>
+    </section>
+    <!-- 광고 영역 -->
+    <div class="ad-container">
+      <div class="ad-label">광고</div>
+      <div id="ad-container-35a37wzct" class="ad-container-min" data-ad-slot="2789891628">
+        <div class="ad-placeholder ad-container-styled">광고 로딩 중...</div>
       </div>
-      <div class="form-group">
-       <label class="checkbox-label">
-        <input id="isLunar" name="isLunar" type="checkbox"/>
-        <span class="checkmark">
-        </span>
-        음력 생일입니다
-       </label>
+    </div>
+    <!-- 사주팔자 안내 -->
+    <section class="info-section">
+      <div class="container">
+        <div class="info-box">
+          <h3>AI 사주팔자 분석 안내</h3>
+          <ul>
+            <li>만세력 기반 정확한 사주팔자 계산으로 연주, 월주, 일주, 시주를 산출합니다.</li>
+            <li>십신 분석을 통해 성격, 적성, 인간관계를 파악합니다.</li>
+            <li>오행 균형 분석으로 건강, 운세, 개선점을 제시합니다.</li>
+            <li>AI가 전통 사주학과 현대적 해석을 결합하여 상세한 분석을 제공합니다.</li>
+            <li>출생시간이 정확할수록 더 정밀한 분석이 가능합니다.</li>
+          </ul>
+        </div>
       </div>
-      <button class="btn btn-primary btn-full-width" type="submit">
-       🔮 사주팔자 분석하기
-      </button>
-     </form>
-    </div>
-    <!-- 사주 결과 영역 -->
-    <div id="sajuResult" class="d-none-init">
-     <!-- 결과가 여기에 표시됩니다 -->
-    </div>
-   </div>
-  </section>
-  <!-- 광고 영역 -->
-  <div class="ad-container">
-   <div class="ad-label">
-    광고
-   </div>
-   <div id="ad-container-35a37wzct" class="ad-container-min" data-ad-slot="2789891628">
-    <div class="ad-placeholder ad-container-styled">
-     광고 로딩 중...
-    </div>
-   </div>
-  </div>
-  <!-- 사주팔자 안내 -->
-  <section class="info-section">
-   <div class="container">
-    <div class="info-box">
-     <h3>
-      AI 사주팔자 분석 안내
-     </h3>
-     <ul>
-      <li>
-       만세력 기반 정확한 사주팔자 계산으로 연주, 월주, 일주, 시주를 산출합니다.
-      </li>
-      <li>
-       십신 분석을 통해 성격, 적성, 인간관계를 파악합니다.
-      </li>
-      <li>
-       오행 균형 분석으로 건강, 운세, 개선점을 제시합니다.
-      </li>
-      <li>
-       AI가 전통 사주학과 현대적 해석을 결합하여 상세한 분석을 제공합니다.
-      </li>
-      <li>
-       출생시간이 정확할수록 더 정밀한 분석이 가능합니다.
-      </li>
-     </ul>
-    </div>
-   </div>
-  </section>
-  <!-- 푸터 -->
-  <div id="footer-placeholder">
-  </div>
-  <!-- Core JavaScript -->
-  <script src="/js/core/common-init.js"></script>
-  <script src="/js/core/service-base.js"></script>
-  
-  <!-- Feature JavaScript -->
-  <script src="/js/manseryeok-client.js"></script>
-  <script src="/js/lunar-calendar-compact.js"></script>
-  <script src="/js/saju-calculator.js"></script>
-  <script src="/js/api-config.js"></script>
-  <script src="/js/features/fortune/fortune-service.js"></script>
-  <script src="/js/features/fortune/saju-fortune.js"></script>
-  
-  <!-- External SDKs (지연 로딩) -->
-  <script async src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js"></script>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
-  <script async src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js" integrity="sha512-H+rglffZ6f5gF7UJgvH4Naa+fGCgjrHKMgoFOGmcPTRwR6oILo5R+gtzNrpDp7iMV3udbymBVjkeZGNz1Em4rQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  
-  <!-- Structured Data -->
-  <script type="application/ld+json">
-  {
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      "name": "AI 사주팔자",
-      "url": "https://doha.kr/fortune/saju/",
-      "applicationCategory": "Entertainment",
-      "operatingSystem": "All",
-      "description": "만세력 기반 정확한 사주팔자 분석 서비스",
-      "offers": {
+    </section>
+    <!-- 푸터 -->
+    <div id="footer-placeholder"></div>
+    <!-- Core JavaScript -->
+    <script type="module" src="/js/app.js"></script>
+    <script type="module" src="/js/core/service-base.js"></script>
+
+    <!-- Feature JavaScript -->
+    <script type="module" src="/js/manseryeok-client.js"></script>
+    <script type="module" src="/js/lunar-calendar-compact.js"></script>
+    <script type="module" src="/js/saju-calculator.js"></script>
+    <script type="module" src="/js/api-config.js"></script>
+    <script type="module" src="/js/features/fortune/fortune-service.js"></script>
+    <script type="module" src="/js/features/fortune/saju-fortune.js"></script>
+
+    <!-- External SDKs (지연 로딩) -->
+    <script async src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js"></script>
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      async
+      src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"
+      integrity="sha512-H+rglffZ6f5gF7UJgvH4Naa+fGCgjrHKMgoFOGmcPTRwR6oILo5R+gtzNrpDp7iMV3udbymBVjkeZGNz1Em4rQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "AI 사주팔자",
+        "url": "https://doha.kr/fortune/saju/",
+        "applicationCategory": "Entertainment",
+        "operatingSystem": "All",
+        "description": "만세력 기반 정확한 사주팔자 분석 서비스",
+        "offers": {
           "@type": "Offer",
           "price": "0",
           "priceCurrency": "KRW"
+        }
       }
-  }
-  </script>
- </body>
+    </script>
+  </body>
 </html>

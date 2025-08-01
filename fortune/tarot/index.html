@@ -1,134 +1,173 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=yes"
+    />
     <title>AI 타로 리딩 - 무료 온라인 타로 카드 | doha.kr</title>
     <!-- 폰트 프리로드 -->
-    <link rel="preload" href="/fonts/Pretendard-Regular.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="/fonts/Pretendard-Medium.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="/fonts/Pretendard-Bold.woff2" as="font" type="font/woff2" crossorigin>
-    
-    <meta name="description" content="AI가 해석하는 정확한 타로 리딩. 사랑, 직업, 미래에 대한 질문에 타로 카드가 답해드립니다.">
-    <meta name="robots" content="index, follow">
-    <meta name="author" content="doha.kr">
-    
+    <link rel="preload" href="/fonts/Pretendard-Regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/Pretendard-Medium.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/Pretendard-Bold.woff2" as="font" type="font/woff2" crossorigin />
+
+    <meta
+      name="description"
+      content="AI가 해석하는 정확한 타로 리딩. 사랑, 직업, 미래에 대한 질문에 타로 카드가 답해드립니다."
+    />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="doha.kr" />
+
     <!-- Security Headers -->
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src 'self' https:; script-src 'self' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://cdn.jsdelivr.net; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https: https://doha-kr-ap.vercel.app;">
-    <meta http-equiv="X-Content-Type-Options" content="nosniff">
-    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
-    
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="upgrade-insecure-requests; default-src 'self' https:; script-src 'self' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://cdn.jsdelivr.net; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https: https://doha-kr-ap.vercel.app;"
+    />
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+
     <!-- Open Graph -->
-    <meta property="og:title" content="AI 타로 리딩 - 무료 온라인 타로 | doha.kr">
-    <meta property="og:description" content="AI가 해석하는 정확한 타로 리딩">
-    <meta property="og:image" content="https://doha.kr/images/tarot-og.jpg">
-    <meta property="og:url" content="https://doha.kr/fortune/tarot/">
-    <meta property="og:type" content="website">
-    
+    <meta property="og:title" content="AI 타로 리딩 - 무료 온라인 타로 | doha.kr" />
+    <meta property="og:description" content="AI가 해석하는 정확한 타로 리딩" />
+    <meta property="og:image" content="https://doha.kr/images/tarot-og.jpg" />
+    <meta property="og:url" content="https://doha.kr/fortune/tarot/" />
+    <meta property="og:type" content="website" />
+
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://doha.kr/fortune/tarot/">
-    
+    <link rel="canonical" href="https://doha.kr/fortune/tarot/" />
+
     <!-- Preconnect for Performance -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">
-    <link rel="dns-prefetch" href="https://developers.kakao.com">
-    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
+    <link rel="dns-prefetch" href="https://developers.kakao.com" />
+
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
     <!-- Main CSS -->
-    <link rel="stylesheet" href="/css/korean-optimization.css">
-    <link rel="stylesheet" href="/css/main.css?v=1753882798248">
-    
+    <link rel="stylesheet" href="/css/korean-optimization.css" />
+    <!-- CSS Bundle - Automatically selects development or production version -->
+    <link rel="stylesheet" href="/dist/styles.css" id="main-styles">
+    <script>
+      // Automatically load minified CSS in production
+      (function() {
+        const link = document.getElementById('main-styles');
+        const isProd = window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
+        if (isProd && link) {
+          link.href = '/dist/styles.min.css';
+        }
+      })();
+    </script>
+
     <!-- Feature CSS -->
-    <link rel="stylesheet" href="/css/features/fortune-common.css?v=1753882798248">
-    <link rel="stylesheet" href="/css/features/fortune-result.css?v=1753882798248">
-    <link rel="stylesheet" href="/css/features/tarot-specific.css?v=1753882798248">
-    
+    <link rel="stylesheet" href="/css/features/fortune-common.css?v=1753882798248" />
+    <link rel="stylesheet" href="/css/features/fortune-result.css?v=1753882798248" />
+    <link rel="stylesheet" href="/css/features/tarot-specific.css?v=1753882798248" />
+
     <!-- Page Data Attributes -->
     <script>
-        document.documentElement.dataset.page = 'fortune-tarot';
+      document.documentElement.dataset.page = 'fortune-tarot';
     </script>
-</head>
-<body class="fortune-page" data-page="fortune-tarot">
+  </head>
+  <body class="fortune-page" data-page="fortune-tarot">
     <!-- 네비게이션 -->
-        <div id="navbar-placeholder"></div>
-    
+    <div id="navbar-placeholder"></div>
+
     <!-- 페이지 헤더 -->
     <section class="page-header">
-        <div class="container">
-            <h1 class="page-title fade-in">🃏 AI 타로 리딩</h1>
-            <p class="page-subtitle fade-in stagger-1">
-                고민이나 궁금한 점을 물어보세요. AI가 타로 카드로 답을 찾아드립니다.
-            </p>
-        </div>
+      <div class="container">
+        <h1 class="page-title fade-in">🃏 AI 타로 리딩</h1>
+        <p class="page-subtitle fade-in stagger-1">
+          고민이나 궁금한 점을 물어보세요. AI가 타로 카드로 답을 찾아드립니다.
+        </p>
+      </div>
     </section>
-    
+
     <!-- 타로 입력 폼 -->
     <section class="fortune-section">
-        <div class="container">
-            <div class="fortune-form-container" id="tarotForm">
-                <h2>질문을 입력해주세요</h2>
-                <form data-form="tarot">
-                    <div class="form-group">
-                        <label for="question">질문</label>
-                        <textarea id="question" name="question" class="form-control" rows="4" 
-                                  placeholder="예: 새로운 직장으로의 이직이 좋을까요?" required></textarea>
-                        <small class="form-text">구체적으로 질문할수록 더 정확한 답을 얻을 수 있습니다.</small>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>스프레드 선택</label>
-                        <div class="radio-group">
-                            <label class="radio-label">
-                                <input type="radio" name="spread" value="oneCard" checked>
-                                <span>원 카드 (간단한 답변)</span>
-                            </label>
-                            <label class="radio-label">
-                                <input type="radio" name="spread" value="threeCard">
-                                <span>쓰리 카드 (과거-현재-미래)</span>
-                            </label>
-                            <label class="radio-label">
-                                <input type="radio" name="spread" value="celtic">
-                                <span>켈틱 크로스 (상세 분석)</span>
-                            </label>
-                        </div>
-                    </div>
-                    
-                    <div id="spreadDescription" class="spread-description d-none-init"></div>
-                    
-                    <button type="submit" class="btn btn-primary">타로 카드 뽑기</button>
-                </form>
+      <div class="container">
+        <div class="fortune-form-container" id="tarotForm">
+          <h2>질문을 입력해주세요</h2>
+          <form data-form="tarot">
+            <div class="form-group">
+              <label for="question">질문</label>
+              <textarea
+                id="question"
+                name="question"
+                class="form-control"
+                rows="4"
+                placeholder="예: 새로운 직장으로의 이직이 좋을까요?"
+                required
+              ></textarea>
+              <small class="form-text">구체적으로 질문할수록 더 정확한 답을 얻을 수 있습니다.</small>
             </div>
-            
-            <!-- 타로 결과 -->
-            <div id="tarotResult" class="d-none-init">
-                <!-- 결과가 여기에 표시됩니다 -->
+
+            <div class="form-group">
+              <label>스프레드 선택</label>
+              <div class="radio-group">
+                <label class="radio-label">
+                  <input type="radio" name="spread" value="oneCard" checked />
+                  <span>원 카드 (간단한 답변)</span>
+                </label>
+                <label class="radio-label">
+                  <input type="radio" name="spread" value="threeCard" />
+                  <span>쓰리 카드 (과거-현재-미래)</span>
+                </label>
+                <label class="radio-label">
+                  <input type="radio" name="spread" value="celtic" />
+                  <span>켈틱 크로스 (상세 분석)</span>
+                </label>
+              </div>
             </div>
+
+            <div id="spreadDescription" class="spread-description d-none-init"></div>
+
+            <button type="submit" class="btn btn-primary">타로 카드 뽑기</button>
+          </form>
         </div>
+
+        <!-- 타로 결과 -->
+        <div id="tarotResult" class="d-none-init">
+          <!-- 결과가 여기에 표시됩니다 -->
+        </div>
+      </div>
     </section>
-    
+
     <!-- 푸터 -->
-        <div id="footer-placeholder"></div>
-    
+    <div id="footer-placeholder"></div>
+
     <!-- Core JavaScript -->
-    <script src="/js/core/common-init.js"></script>
-    <script src="/js/core/service-base.js"></script>
-    
+    <script type="module" src="/js/app.js"></script>
+    <script type="module" src="/js/core/service-base.js"></script>
+
     <!-- Feature JavaScript -->
-    <script src="/js/api-config.js"></script>
-    <script src="/js/features/fortune/fortune-service.js"></script>
-    <script src="/js/features/fortune/tarot-fortune.js"></script>
-    
+    <script type="module" src="/js/api-config.js"></script>
+    <script type="module" src="/js/features/fortune/fortune-service.js"></script>
+    <script type="module" src="/js/features/fortune/tarot-fortune.js"></script>
+
     <!-- External SDKs (지연 로딩) -->
     <script async src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js"></script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
-    <script async src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js" integrity="sha512-H+rglffZ6f5gF7UJgvH4Naa+fGCgjrHKMgoFOGmcPTRwR6oILo5R+gtzNrpDp7iMV3udbymBVjkeZGNz1Em4rQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      async
+      src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"
+      integrity="sha512-H+rglffZ6f5gF7UJgvH4Naa+fGCgjrHKMgoFOGmcPTRwR6oILo5R+gtzNrpDp7iMV3udbymBVjkeZGNz1Em4rQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
     <!-- Structured Data -->
     <script type="application/ld+json">
-    {
+      {
         "@context": "https://schema.org",
         "@type": "WebApplication",
         "name": "AI 타로 리딩",
@@ -137,11 +176,11 @@
         "operatingSystem": "All",
         "description": "AI가 해석하는 정확한 타로 리딩 서비스",
         "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "KRW"
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "KRW"
         }
-    }
+      }
     </script>
-</body>
+  </body>
 </html>

@@ -3,10 +3,9 @@
  * 별자리 운세 서비스 구현
  */
 
-(function() {
-    'use strict';
-    
-    class ZodiacFortuneService extends FortuneService {
+undefined
+
+export class ZodiacFortuneService extends FortuneService {
         constructor() {
             super({
                 serviceName: 'zodiac-fortune',
@@ -139,48 +138,22 @@
                 const dateStr = today.toLocaleDateString('ko-KR');
                 
                 // AI API 호출 시도
-                if (window.API_CONFIG && window.API_CONFIG.FORTUNE_API_URL) {
+                if (window.generateZodiacFortuneWithAI) {
                     try {
-                        const response = await fetch(`${window.API_CONFIG.FORTUNE_API_URL}/fortune`, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({
-                                type: 'zodiac',
-                                zodiac: zodiacSign,
-                                zodiacData: zodiac,
-                                date: dateStr
-                            })
-                        });
+                        const aiResult = await window.generateZodiacFortuneWithAI(zodiacSign);
                         
-                        if (response.ok) {
-                            const result = await response.json();
-                            if (result.success && result.data) {
-                                const fortune = this.parseZodiacAIResponse(result.data);
-                                this.showResult({
-                                    zodiac: zodiac,
-                                    fortune: fortune,
-                                    isAIGenerated: true
-                                });
-                                return;
-                            }
+                        if (aiResult) {
+                            const fortune = this.parseZodiacAIResponse(aiResult);
+                            this.showResult({
+                                zodiac: zodiac,
+                                fortune: fortune,
+                                isAIGenerated: true
+                            });
+                            return;
                         }
                     } catch (error) {
-                        console.warn('AI API 호출 실패, 기본 운세 사용');
-                    }
-                }
-                
-                // Gemini API 호출 시도
-                if (window.callGeminiAPI) {
-                    const aiAnalysis = await this.generateZodiacFortuneWithGemini(zodiacSign);
-                    if (aiAnalysis) {
-                        this.showResult({
-                            zodiac: zodiac,
-                            fortune: aiAnalysis,
-                            isAIGenerated: true
-                        });
-                        return;
+                        
+                        // 에러가 발생해도 기본 운세로 계속 진행
                     }
                 }
                 
@@ -193,7 +166,7 @@
                 });
                 
             } catch (error) {
-                console.error('별자리 운세 분석 오류:', error);
+                
                 this.showError('운세 분석 중 오류가 발생했습니다.');
             }
         }
@@ -238,7 +211,7 @@
                     return JSON.parse(cleanResponse);
                 }
             } catch (error) {
-                console.error('Gemini API 파싱 오류:', error);
+                
             }
             
             return null;
@@ -576,5 +549,3 @@
     } else {
         new ZodiacFortuneService();
     }
-    
-})();
