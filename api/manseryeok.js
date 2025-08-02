@@ -1,7 +1,15 @@
 // Manseryeok API endpoint for Vercel
 // This file should be in /api/manseryeok.js for Vercel to recognize it
 
-const manseryeokData = require('../data/manseryeok-compact.json');
+// 만세력 데이터를 동적으로 로드
+let manseryeokData;
+try {
+  manseryeokData = require('../data/manseryeok-compact.json');
+  console.log('만세력 데이터 로드 완료');
+} catch (error) {
+  console.error('만세력 데이터 로드 실패:', error.message);
+  manseryeokData = {};
+}
 const { setCorsHeaders, validateRequest } = require('./cors-config.js');
 const { serverLogger, withLogging } = require('./logging-middleware.js');
 
@@ -119,6 +127,14 @@ function handler(req, res) {
   });
 
   try {
+    // 데이터 로드 확인
+    if (!manseryeokData || Object.keys(manseryeokData).length === 0) {
+      serverLogger.error('Manseryeok data not loaded', { requestId });
+      return res.status(503).json({
+        error: 'Service temporarily unavailable - data not loaded',
+      });
+    }
+
     // 쿼리 파라미터 추출
     const { year, month, day, hour } = req.query;
 
@@ -166,13 +182,23 @@ function handler(req, res) {
       });
     }
 
-    // 만세력 데이터 조회
+    // 만세력 데이터 조회 (타임아웃 보호)
+    const queryStartTime = performance.now();
     const manseryeok = getManseryeokData(y, m, d, h);
+    const queryDuration = performance.now() - queryStartTime;
 
     if (!manseryeok) {
-      serverLogger.warn('Manseryeok data not found', { requestId, year: y, month: m, day: d, hour: h });
+      serverLogger.warn('Manseryeok data not found', { 
+        requestId, 
+        year: y, 
+        month: m, 
+        day: d, 
+        hour: h,
+        queryDuration: Math.round(queryDuration)
+      });
       return res.status(404).json({
         error: 'Manseryeok data not found for this date',
+        date: `${y}-${m.toString().padStart(2, '0')}-${d.toString().padStart(2, '0')}`,
       });
     }
 

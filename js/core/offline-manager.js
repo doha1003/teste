@@ -268,12 +268,12 @@ class OfflineManager {
       item.retryCount++;
       
       if (item.retryCount >= this.maxRetries) {
-        
+        console.warn(`오프라인 요청 최대 재시도 횟수 초과: ${item.request.url}`);
         this.removeFromQueue(item.id);
         return false;
       }
       
-      : ${request.url}`);
+      console.warn(`오프라인 요청 재시도 실패: ${item.request.url}`);
       return false;
     }
   }
@@ -533,7 +533,7 @@ class OfflineManager {
         try {
           callback(data);
         } catch (error) {
-          :`, error);
+          console.warn(`오프라인 매니저 이벤트 콜백 오류:`, error);
         }
       });
     }

@@ -222,45 +222,65 @@ ${animalName}의 특성과 2025년 을사년(뱀의 해) 에너지를 고려하�
     });
 
     const aiStartTime = performance.now();
-    const result = await model.generateContent(aiPrompt);
-    const response = await result.response;
-    const text = response.text();
-    const aiDuration = performance.now() - aiStartTime;
-
-    serverLogger.info('AI content generated', { 
-      requestId, 
-      type, 
-      responseLength: text.length,
-      aiDuration: Math.round(aiDuration)
-    });
-
-    // 응답 파싱 - 각 타입별로 구조화된 JSON 반환
-    let parsedData;
-    if (type === 'general' || type === 'tarot') {
-      parsedData = text;
-    } else if (type === 'zodiac' || type === 'zodiac-animal') {
-      parsedData = parseZodiacResponse(text);
-    } else {
-      parsedData = parseFortuneResponse(text, type);
-    }
-
-    const totalDuration = performance.now() - startTime;
     
-    serverLogger.info('Fortune API Response', {
-      requestId,
-      type,
-      success: true,
-      totalDuration: Math.round(totalDuration),
-      aiDuration: Math.round(aiDuration),
-      responseSize: JSON.stringify(parsedData).length
+    // 타임아웃 설정 (25초, Vercel 함수 제한 고려)
+    const timeoutMs = 25000;
+    const timeoutPromise = new Promise((_, reject) => {
+      setTimeout(() => reject(new Error('AI 응답 타임아웃')), timeoutMs);
     });
+    
+    try {
+      const result = await Promise.race([
+        model.generateContent(aiPrompt),
+        timeoutPromise
+      ]);
+      const response = await result.response;
+      const text = response.text();
+      const aiDuration = performance.now() - aiStartTime;
 
-    res.status(200).json({
-      success: true,
-      data: parsedData,
-      aiGenerated: true,
-      date: todayDate || new Date().toLocaleDateString('ko-KR', { timeZone: 'Asia/Seoul' }),
-    });
+      serverLogger.info('AI content generated', { 
+        requestId, 
+        type, 
+        responseLength: text.length,
+        aiDuration: Math.round(aiDuration)
+      });
+
+      // 응답 파싱 - 각 타입별로 구조화된 JSON 반환
+      let parsedData;
+      if (type === 'general' || type === 'tarot') {
+        parsedData = text;
+      } else if (type === 'zodiac' || type === 'zodiac-animal') {
+        parsedData = parseZodiacResponse(text);
+      } else {
+        parsedData = parseFortuneResponse(text, type);
+      }
+
+      const totalDuration = performance.now() - startTime;
+      
+      serverLogger.info('Fortune API Response', {
+        requestId,
+        type,
+        success: true,
+        totalDuration: Math.round(totalDuration),
+        aiDuration: Math.round(aiDuration),
+        responseSize: JSON.stringify(parsedData).length
+      });
+
+      res.status(200).json({
+        success: true,
+        data: parsedData,
+        aiGenerated: true,
+        date: todayDate || new Date().toLocaleDateString('ko-KR', { timeZone: 'Asia/Seoul' }),
+      });
+      
+    } catch (aiError) {
+      serverLogger.warn('AI generation timeout or error', {
+        requestId,
+        error: aiError.message,
+        duration: Math.round(performance.now() - aiStartTime)
+      });
+      throw aiError; // 외부 catch로 전달
+    }
   } catch (error) {
     const totalDuration = performance.now() - startTime;
     

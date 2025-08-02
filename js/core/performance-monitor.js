@@ -94,7 +94,7 @@ class PerformanceMonitor {
       observer.observe({ entryTypes: ['largest-contentful-paint'] });
       this.observers.set('lcp', observer);
     } catch (error) {
-      
+      console.warn('PerformanceObserver not supported:', error.message);
     }
   }
 
@@ -114,7 +114,7 @@ class PerformanceMonitor {
       observer.observe({ entryTypes: ['first-input'] });
       this.observers.set('fid', observer);
     } catch (error) {
-      
+      console.warn('PerformanceObserver not supported:', error.message);
     }
   }
 
@@ -162,7 +162,7 @@ class PerformanceMonitor {
       observer.observe({ entryTypes: ['layout-shift'] });
       this.observers.set('cls', observer);
     } catch (error) {
-      
+      console.warn('PerformanceObserver not supported:', error.message);
     }
   }
 
@@ -214,7 +214,7 @@ class PerformanceMonitor {
       observer.observe({ entryTypes: ['navigation'] });
       this.observers.set('ttfb', observer);
     } catch (error) {
-      
+      console.warn('PerformanceObserver not supported:', error.message);
     }
   }
 
@@ -236,7 +236,7 @@ class PerformanceMonitor {
       observer.observe({ entryTypes: ['paint'] });
       this.observers.set('fcp', observer);
     } catch (error) {
-      
+      console.warn('PerformanceObserver not supported:', error.message);
     }
   }
 
@@ -275,7 +275,7 @@ class PerformanceMonitor {
         const duration = entry.responseEnd - entry.startTime;
         
         if (duration > 3000) { // 3초 이상
-          }ms)`);
+          console.warn(`느린 리소스 감지: ${entry.name} (${duration.toFixed(2)}ms)`);
           
           // 성능 개선 제안
           this.suggestResourceOptimization(entry);
@@ -287,7 +287,7 @@ class PerformanceMonitor {
       observer.observe({ entryTypes: ['resource'] });
       this.observers.set('resource', observer);
     } catch (error) {
-      
+      console.warn('PerformanceObserver not supported:', error.message);
     }
   }
 
@@ -302,7 +302,7 @@ class PerformanceMonitor {
       const usage = (usedMB / limitMB) * 100;
       
       if (usage > 80) { // 80% 이상 사용 시
-        }% (${usedMB}MB/${limitMB}MB)`);
+        console.warn(`메모리 사용량 높음: ${usage.toFixed(1)}% (${usedMB}MB/${limitMB}MB)`);
         this.suggestMemoryOptimization();
       }
     }, 30000); // 30초마다 체크
@@ -322,10 +322,10 @@ class PerformanceMonitor {
     
     const message = this.messages[metricName]?.[status === 'good' ? 'good' : 'poor'];
     
-    }: ${value}${this.getUnit(metricName)} (${status})`);
+    console.log(`성능 메트릭 ${metricName.toUpperCase()}: ${value}${this.getUnit(metricName)} (${status})`);
     
     if (message) {
-      
+      console.info(message);
     }
     
     // 성능 문제 시 최적화 제안
@@ -373,7 +373,7 @@ class PerformanceMonitor {
   collectCLSElementInfo(entry) {
     entry.sources?.forEach(source => {
       if (source.node) {
-        
+        console.log('CLS element:', source.node.tagName, source.node.className);
       }
     });
   }
@@ -409,10 +409,11 @@ class PerformanceMonitor {
     
     const metricSuggestions = suggestions[metricName];
     if (metricSuggestions) {
-      } 개선 제안:`);
+      console.group(`${metricName.toUpperCase()} 개선 제안:`);
       metricSuggestions.forEach((suggestion, index) => {
-        
+        console.log(`${index + 1}. ${suggestion}`);
       });
+      console.groupEnd();
     }
   }
 
@@ -437,7 +438,9 @@ class PerformanceMonitor {
     }
     
     if (suggestions.length > 0) {
-      
+      console.group('이미지 최적화 제안:');
+      suggestions.forEach(suggestion => console.log(`• ${suggestion}`));
+      console.groupEnd();
     }
   }
 
@@ -456,7 +459,9 @@ class PerformanceMonitor {
     
     const resourceSuggestions = suggestions[extension];
     if (resourceSuggestions) {
-      
+      console.group(`리소스 최적화 제안 (${extension}):`);
+      resourceSuggestions.forEach(suggestion => console.log(`• ${suggestion}`));
+      console.groupEnd();
     }
   }
 
@@ -469,6 +474,9 @@ class PerformanceMonitor {
       '메모리 누수를 확인하세요',
     ];
 
+    console.group('메모리 최적화 제안:');
+    suggestions.forEach(suggestion => console.log(`• ${suggestion}`));
+    console.groupEnd();
   }
 
   // Service Worker로 메트릭 전송
@@ -559,7 +567,7 @@ class PerformanceMonitor {
       
       localStorage.setItem('performance_reports', JSON.stringify(reports));
     } catch (error) {
-      
+      console.warn('PerformanceObserver not supported:', error.message);
     }
   }
 
@@ -571,7 +579,7 @@ class PerformanceMonitor {
         await window.sendPerformanceReport(report);
       }
     } catch (error) {
-      
+      console.warn('PerformanceObserver not supported:', error.message);
     }
   }
 
