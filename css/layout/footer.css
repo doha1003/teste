@@ -2,37 +2,38 @@
    Footer Styles
    ========================================================================= */
 
-footer {
-  background-color: var(--color-gray-900);
-  color: var(--color-gray-300);
-  padding-top: var(--spacing-16);
-  padding-bottom: var(--spacing-8);
-  margin-top: auto;
+/* 구체적인 클래스 선택자로 CSS 충돌 방지 */
+footer.footer {
+  background-color: var(--color-gray-900) !important;
+  color: var(--color-gray-300) !important;
+  padding-top: var(--spacing-16) !important;
+  padding-bottom: var(--spacing-8) !important;
+  margin-top: auto !important;
+  border-top: none !important;
 }
 
-.footer-container {
+/* Remove duplicate - now handled by .footer-content */
+
+/* Footer Content Container */
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--spacing-8);
+  margin-bottom: var(--spacing-12);
   max-width: 1320px;
   margin: 0 auto;
   padding: 0 var(--spacing-6);
 }
 
-/* Footer Grid */
-.footer-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: var(--spacing-8);
-  margin-bottom: var(--spacing-12);
-}
-
-/* Footer Column */
-.footer-column h3 {
+/* Footer Section */
+.footer-section h3 {
   color: var(--color-white);
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-semibold);
   margin-bottom: var(--spacing-4);
 }
 
-.footer-column p {
+.footer-section p {
   line-height: var(--line-height-relaxed);
   margin-bottom: var(--spacing-4);
 }
@@ -59,7 +60,7 @@ footer {
 }
 
 /* Social Links */
-.social-links {
+.footer-social {
   display: flex;
   gap: var(--spacing-3);
   margin-top: var(--spacing-4);
@@ -147,17 +148,14 @@ footer {
     padding-bottom: var(--spacing-6);
   }
 
-  .footer-container {
+  .footer-content {
     padding: 0 var(--spacing-4);
-  }
-
-  .footer-grid {
     grid-template-columns: 1fr;
     gap: var(--spacing-6);
     text-align: center;
   }
 
-  .social-links {
+  .footer-social {
     justify-content: center;
   }
 

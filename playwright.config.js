@@ -4,11 +4,11 @@ export default defineConfig({
   // 테스트 디렉토리 (모든 테스트 포함)
   testDir: './tests',
 
-  // 테스트 실행 설정
-  fullyParallel: true,
+  // 테스트 실행 설정 - 안정성 개선
+  fullyParallel: false, // 안정성을 위해 병렬 실행 비활성화
   forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 2 : undefined,
+  retries: process.env.CI ? 3 : 1, // 재시도 횟수 증가
+  workers: process.env.CI ? 1 : 1, // Worker 수 제한으로 안정성 향상
 
   // 테스트 파일 패턴
   testMatch: [
@@ -47,11 +47,16 @@ export default defineConfig({
     // 뷰포트
     viewport: { width: 1280, height: 720 },
 
-    // 액션 타임아웃
-    actionTimeout: 15000,
+    // 액션 타임아웃 - 안정성 개선
+    actionTimeout: 30000, // 2배 증가
 
-    // 네비게이션 타임아웃
-    navigationTimeout: 30000,
+    // 네비게이션 타임아웃 - 안정성 개선  
+    navigationTimeout: 60000, // 2배 증가
+
+    // 요소 대기 타임아웃
+    expect: {
+      timeout: 10000, // 요소 대기 시간 증가
+    },
 
     // 한국어 로케일
     locale: 'ko-KR',

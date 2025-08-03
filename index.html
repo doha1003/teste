@@ -14,6 +14,13 @@
     <!-- 폰트 최적화 (즉시 필요한 것만 preload) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- 성능 최적화: DNS Prefetch -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="//www.google-analytics.com">
+    
+
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600&display=swap"></noscript>
 
@@ -52,7 +59,18 @@
 
     <!-- Critical CSS (인라인) - Above-the-fold 렌더링 최적화 -->
     <style>
-:root{--color-primary:#5c5ce0;--color-white:#fff;--color-gray-900:#111827;--bg-primary:#fff;--text-primary:#1a1a1a;--font-family:"Pretendard",-apple-system,BlinkMacSystemFont,sans-serif;--font-size-base:1rem;--line-height-normal:1.7;--spacing-md:1rem;--radius-md:8px;--shadow-md:0 4px 6px -1px rgba(0,0,0,.1);--transition-base:200ms ease}*,*:before,*:after{box-sizing:border-box;margin:0;padding:0}*{word-break:keep-all;overflow-wrap:break-word}html{font-size:16px;-webkit-text-size-adjust:100%}body{font-family:var(--font-family);font-size:var(--font-size-base);line-height:var(--line-height-normal);color:var(--text-primary);background:var(--bg-primary);word-break:keep-all;margin:0;padding:0;min-height:100vh}.navbar{background:var(--bg-primary);position:sticky;top:0;z-index:1000}.header,.hero{text-align:center;padding:60px 20px}.header h1,.hero-title{font-size:3rem;font-weight:800;color:var(--text-primary);margin-bottom:20px}.header p,.hero-subtitle{font-size:1.25rem;color:var(--text-primary);margin-bottom:40px}.container{max-width:1200px;margin:0 auto;padding:0 20px}.btn,.btn-primary{display:inline-flex;align-items:center;justify-content:center;padding:12px 24px;border-radius:var(--radius-md);font-family:inherit;font-size:var(--font-size-base);text-decoration:none;transition:var(--transition-base);cursor:pointer;border:none}.btn-primary{background:var(--color-primary);color:var(--color-white)}.card{background:var(--bg-primary);border-radius:var(--radius-md);padding:var(--spacing-md);box-shadow:var(--shadow-md);transition:var(--transition-base)}.grid{display:grid;gap:var(--spacing-md)}@media (max-width:768px){.header h1,.hero-title{font-size:2rem}.header p,.hero-subtitle{font-size:1rem}.container{padding:0 16px}}
+/* Critical CSS - Design System Variables */
+:root{--color-primary:var(--color-brand-500, #5c5ce0);--color-white:var(--color-gray-0, #fff);--color-gray-900:var(--color-gray-900, #111827);--bg-primary:var(--bg-primary, #fff);--text-primary:var(--text-primary, #1a1a1a);--font-family:var(--font-sans, "Pretendard Variable","Pretendard",-apple-system,BlinkMacSystemFont,sans-serif);--font-size-base:var(--font-size-base, 1rem);--line-height-normal:var(--line-height-korean-body, 1.7);--spacing-md:var(--space-4, 1rem);--radius-md:var(--radius-md, 8px);--shadow-md:var(--shadow-md, 0 4px 6px -1px rgba(0,0,0,.1));--transition-base:var(--transition-all, 200ms ease)}*,*:before,*:after{box-sizing:border-box;margin:0;padding:0}*{word-break:keep-all;overflow-wrap:break-word}html{font-size:16px;-webkit-text-size-adjust:100%}body{font-family:var(--font-family);font-size:var(--font-size-base);line-height:var(--line-height-normal);color:var(--text-primary);background:var(--bg-primary);word-break:keep-all;margin:0;padding:0;min-height:100vh}.navbar{background:var(--bg-primary);position:sticky;top:0;z-index:1000}.header,.hero{text-align:center;padding:60px 20px}.header h1,.hero-title{font-size:3rem;font-weight:800;color:var(--text-primary);margin-bottom:20px}.header p,.hero-subtitle{font-size:1.25rem;color:var(--text-primary);margin-bottom:40px}.container{max-width:1200px;margin:0 auto;padding:0 20px}.btn,.btn-primary{display:inline-flex;align-items:center;justify-content:center;padding:12px 24px;border-radius:var(--radius-md);font-family:inherit;font-size:var(--font-size-base);text-decoration:none;transition:var(--transition-base);cursor:pointer;border:none}.btn-primary{background:var(--color-primary);color:var(--color-white)}.card{background:var(--bg-primary);border-radius:var(--radius-md);padding:var(--spacing-md);box-shadow:var(--shadow-md);transition:var(--transition-base)}.grid{display:grid;gap:var(--spacing-md)}@media (max-width:768px){.header h1,.hero-title{font-size:2rem}.header p,.hero-subtitle{font-size:1rem}.container{padding:0 16px}}
+
+/* 성능 최적화: 추가 Critical CSS */
+.hero-buttons{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:2rem}
+.service-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;padding:2rem 0}
+.service-card{display:flex;flex-direction:column;align-items:center;text-align:center;padding:2rem;border-radius:12px;background:var(--bg-primary);box-shadow:0 2px 8px rgba(0,0,0,0.1);transition:transform 0.2s ease,box-shadow 0.2s ease;text-decoration:none;color:inherit}
+.service-card:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,0.15)}
+.service-emoji{font-size:2.5rem;margin-bottom:1rem;flex-shrink:0}
+.service-name{font-size:1.25rem;font-weight:600;margin-bottom:0.5rem}
+.service-desc{color:var(--text-secondary);line-height:1.5;margin-bottom:1rem}
+.hero{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;min-height:60vh;display:flex;align-items:center}
     </style>
 
     <!-- 비동기 CSS 로딩 (성능 최적화) -->
@@ -406,11 +424,89 @@
       </section>
 
       <!-- 푸터 -->
-      <footer id="footer-placeholder" role="contentinfo" aria-label="사이트 정보"></footer>
+      <footer class="footer" role="contentinfo" aria-label="사이트 정보">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h3>doha.kr</h3>
+            <p class="text-gray-400 mt-8">
+              일상을 더 재미있게 만드는 공간
+              <br />
+              심리테스트, 운세, 실용도구의 만남
+            </p>
+            <div class="footer-social">
+              <a href="mailto:youtubdoha@gmail.com" class="social-link">📧</a>
+            </div>
+          </div>
+
+          <div class="footer-section">
+            <h3>서비스</h3>
+            <ul class="footer-links">
+              <li><a href="/">홈</a></li>
+              <li><a href="/tests/">심리테스트</a></li>
+              <li><a href="/fortune/">운세</a></li>
+              <li><a href="/tools/">실용도구</a></li>
+              <li><a href="/about/">사이트 소개</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-section">
+            <h3>인기 콘텐츠</h3>
+            <ul class="footer-links">
+              <li><a href="/tests/teto-egen/">테토-에겐 테스트</a></li>
+              <li><a href="/tests/mbti/">MBTI 테스트</a></li>
+              <li><a href="/fortune/daily/">오늘의 운세</a></li>
+              <li><a href="/tools/text-counter.html">글자수 세기</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-section">
+            <h3>운세 서비스</h3>
+            <ul class="footer-links">
+              <li><a href="/fortune/daily/">오늘의 운세</a></li>
+              <li><a href="/fortune/zodiac/">별자리 운세</a></li>
+              <li><a href="/fortune/zodiac-animal/">띠별 운세</a></li>
+              <li><a href="/fortune/tarot/">AI 타로</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-section">
+            <h3>고객지원</h3>
+            <ul class="footer-links">
+              <li><a href="/contact/">문의하기</a></li>
+              <li><a href="/faq/">자주 묻는 질문</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <div class="footer-legal">
+            <a href="/privacy/">개인정보처리방침</a>
+            <a href="/terms/">이용약관</a>
+          </div>
+          <p>&copy; 2025 doha.kr. All rights reserved.</p>
+        </div>
+      </footer>
     </main>
 
     <!-- Critical JavaScript (즉시 필요) -->
     <script src="/js/logger-init.js"></script>
+    <!-- 성능 최적화: Service Worker 즉시 등록 -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then(registration => {
+              console.log('SW registered: ', registration);
+            })
+            .catch(registrationError => {
+              console.log('SW registration failed: ', registrationError);
+            });
+        });
+      }
+    </script>
+
+    <script src="/js/emergency-api-mitigation.js" defer></script>
+    <script src="/js/mobile-navigation-enhancer.js" defer></script>
     <script type="module" src="/js/app.js" defer></script>
 
     <!-- Non-Critical JavaScript (지연 로딩으로 성능 최적화) -->
