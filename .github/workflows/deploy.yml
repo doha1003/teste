@@ -151,8 +151,22 @@ jobs:
       - name: PWA 빌드
         run: |
           echo "📱 PWA 설정 빌드..."
-          npm run build:pwa
-          echo "✅ PWA 빌드 완료"
+          if [ -f "build-pwa.cjs" ]; then
+            npm run build:pwa
+            echo "✅ PWA 빌드 완료"
+          else
+            echo "⚠️ PWA 빌드 스크립트 없음 - 기본 검증만 수행"
+            # 필수 PWA 파일 확인
+            if [ ! -f "manifest.json" ]; then
+              echo "❌ manifest.json 파일이 필요합니다"
+              exit 1
+            fi
+            if [ ! -f "sw.js" ]; then
+              echo "❌ sw.js 파일이 필요합니다"
+              exit 1
+            fi
+            echo "✅ PWA 기본 파일 확인 완료"
+          fi
 
       - name: 번들 크기 분석
         run: |

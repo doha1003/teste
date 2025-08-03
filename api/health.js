@@ -153,7 +153,7 @@ async function checkGeminiAPI() {
     }
 
     // 단순 연결 테스트 (실제 API 호출 없이)
-    const response = await fetch(
+    const response = await fetchWithTimeout(
       'https://generativelanguage.googleapis.com/v1beta/models?key=' + process.env.GEMINI_API_KEY,
       {
         method: 'GET',
@@ -215,7 +215,7 @@ async function checkCDNStatus() {
     const testStart = Date.now();
 
     // Cloudflare CDN 상태 확인
-    const response = await fetch('https://doha.kr/manifest.json', {
+    const response = await fetchWithTimeout('https://doha.kr/manifest.json', {
       method: 'HEAD',
       timeout: 3000,
       headers: {
@@ -263,14 +263,17 @@ function getCheckResult(settledResult) {
 /**
  * fetch with timeout 구현 (Node.js 환경 호환성)
  */
-async function fetch(url, options = {}) {
+async function fetchWithTimeout(url, options = {}) {
   const { timeout = 5000, ...fetchOptions } = options;
 
+  // Vercel의 Node.js 환경에서 fetch 사용
+  const fetchFn = globalThis.fetch || require('node-fetch');
+  
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), timeout);
 
   try {
-    const response = await globalThis.fetch(url, {
+    const response = await fetchFn(url, {
       ...fetchOptions,
       signal: controller.signal,
     });
