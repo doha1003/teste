@@ -12,6 +12,7 @@
 
   /* Sizing */
   width: 100%;
+  max-width: 100%; /* 부모 컨테이너 넘지 않도록 */
   min-height: var(--space-32, 8rem);
 
   /* Visual */
@@ -22,7 +23,9 @@
 
   /* Behavior */
   overflow: hidden;
+  overflow-x: hidden; /* 수평 스크롤 방지 */
   transition: var(--transition-all, all 0.2s ease);
+  box-sizing: border-box; /* 패딩 포함 너비 계산 */
 }
 
 /* Card States */

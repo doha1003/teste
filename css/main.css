@@ -102,7 +102,7 @@
 
 /* ===== 7. UTILITY LAYER (유틸리티 계층) ===== */
 /* 헬퍼 클래스 및 유틸리티 */
-/* utilities 폴더 생성 전까지 임시 주석 처리 */
+@import "utilities/horizontal-scroll-prevention.css"; /* 수평 스크롤 방지 - 최우선 적용 */
 /* @import 'utilities/helpers.css'; */
 /* @import 'utilities/responsive.css'; */
 
@@ -126,10 +126,14 @@
   box-sizing: border-box;
 }
 
+/* ===== HORIZONTAL SCROLL PREVENTION ===== */
+/* 수평 스크롤 방지 - 전역 적용 */
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
   font-size: 16px;
+  overflow-x: hidden; /* 수평 스크롤 방지 */
+  max-width: 100vw; /* 뷰포트 너비 초과 방지 */
 }
 
 body {
@@ -144,12 +148,14 @@ body {
   word-break: keep-all; /* 한글 줄바꿈 최적화 */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden; /* 수평 스크롤 방지 */
+  max-width: 100vw; /* 뷰포트 너비 초과 방지 */
 }
 
 /* Main Content Area */
 main {
   min-height: calc(100vh - 64px - 200px);
-  padding-top: 64px;
+  padding-top: 0; /* 패딩 제거 - 히어로 섹션이 네비바 바로 아래에 오도록 */
   position: relative;
   z-index: 1;
 }
@@ -170,6 +176,49 @@ a {
   word-wrap: break-word;
   overflow-wrap: break-word;
   hyphens: auto;
+  max-width: 100%; /* 요소가 부모 컨테이너를 넘지 않도록 */
+}
+
+/* 모든 컨테이너 요소 수평 스크롤 방지 */
+.container,
+.content,
+.wrapper,
+.section,
+main,
+header,
+footer,
+nav,
+article,
+section,
+div {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* 이미지 반응형 처리 */
+img,
+picture,
+video,
+canvas,
+svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* 테이블 반응형 처리 */
+table {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  display: block;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  table {
+    font-size: 0.9rem;
+  }
 }
 
 /* ===== ACCESSIBILITY UTILITIES ===== */

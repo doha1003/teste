@@ -47,6 +47,10 @@
 .grid {
   display: grid;
   gap: var(--spacing-4);
+  width: 100%;
+  max-width: 100%; /* 부모 컨테이너 넘지 않도록 */
+  overflow-x: hidden; /* 수평 스크롤 방지 */
+  box-sizing: border-box; /* 패딩 포함 너비 계산 */
 }
 
 .grid-cols-1 {

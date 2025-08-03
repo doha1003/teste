@@ -11,12 +11,13 @@
     var(--color-brand-700, #764ba2) 100%
   );
   color: var(--color-gray-0, var(--color-white));
-  padding: var(--space-24, 0) var(--space-4, 0) var(--space-20, 0);
+  padding: var(--space-16, 4rem) var(--space-4, 1rem) var(--space-20, 5rem);
   display: flex;
   align-items: center;
   text-align: center;
   position: relative;
   overflow: hidden;
+  margin-top: 0; /* 네비게이션 바로 아래 위치 */
 }
 
 .hero::before {
@@ -625,7 +626,8 @@
 @media (max-width: 768px) {
   .hero {
     min-height: 60vh;
-    padding: var(--space-16, var(--spacing-8)) var(--space-4, 0) var(--space-12, 0);
+    padding: var(--space-12, 3rem) var(--space-4, 1rem) var(--space-12, 3rem);
+    margin-top: 0; /* 모바일에서도 네비게이션 바로 아래 위치 */
   }
 
   .hero-title,
