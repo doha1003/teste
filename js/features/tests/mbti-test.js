@@ -3,7 +3,7 @@
  * MBTI 성격유형 검사 구현
  */
 
-undefined;
+import { TestService } from './test-service.js';
 
 export class MBTITestService extends TestService {
   constructor() {

@@ -1,18 +1,12 @@
 {
   "version": 2,
-  "name": "doha-kr-production",
   "alias": ["doha.kr", "www.doha.kr"],
   "regions": ["icn1"],
-  "buildCommand": "npm run build",
   "outputDirectory": ".",
-  "installCommand": "npm ci --production=false",
   "framework": null,
   "public": false,
   "env": {
-    "NODE_ENV": "production",
-    "VERCEL_ENV": "@vercel-env",
-    "GEMINI_API_KEY": "@gemini-api-key",
-    "ANALYTICS_ID": "@analytics-id"
+    "NODE_ENV": "production"
   },
   "build": {
     "env": {
@@ -23,28 +17,23 @@
   "functions": {
     "api/fortune.js": {
       "maxDuration": 15,
-      "memory": 1024,
-      "runtime": "nodejs20.x"
+      "memory": 1024
     },
     "api/manseryeok.js": {
       "maxDuration": 8,
-      "memory": 512,
-      "runtime": "nodejs20.x"
+      "memory": 512
     },
     "api/csp-report.js": {
       "maxDuration": 5,
-      "memory": 256,
-      "runtime": "nodejs20.x"
+      "memory": 256
     },
     "api/health.js": {
       "maxDuration": 5,
-      "memory": 256,
-      "runtime": "nodejs20.x"
+      "memory": 256
     },
     "api/analytics.js": {
       "maxDuration": 10,
-      "memory": 512,
-      "runtime": "nodejs20.x"
+      "memory": 512
     }
   },
   "headers": [
@@ -227,10 +216,6 @@
     "autoJobCancelation": true
   },
   "crons": [
-    {
-      "path": "/api/health",
-      "schedule": "0 */6 * * *"
-    },
     {
       "path": "/api/analytics/daily-report",
       "schedule": "0 9 * * *"

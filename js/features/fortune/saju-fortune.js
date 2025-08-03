@@ -3,7 +3,7 @@
  * 사주팔자 서비스 구현
  */
 
-undefined;
+import { FortuneService } from './fortune-service.js';
 
 export class SajuFortuneService extends FortuneService {
   constructor() {

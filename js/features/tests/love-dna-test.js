@@ -3,7 +3,7 @@
  * 러브 DNA 테스트 구현
  */
 
-undefined;
+import { TestService } from "./test-service.js";
 
 export class LoveDNATestService extends TestService {
   constructor() {

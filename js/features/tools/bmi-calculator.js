@@ -3,7 +3,7 @@
  * 체질량지수(BMI) 계산기 구현
  */
 
-undefined;
+import { ToolService } from "../service-base.js";
 
 export class BMICalculatorService extends ToolService {
   constructor() {

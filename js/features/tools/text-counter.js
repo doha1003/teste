@@ -3,7 +3,7 @@
  * 글자수 세기 도구 구현
  */
 
-undefined;
+import { ToolService } from '../service-base.js';
 
 export class TextCounterService extends ToolService {
   constructor() {

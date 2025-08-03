@@ -3,7 +3,7 @@
  * 테토-에겐 성격유형 테스트 구현
  */
 
-undefined;
+import { TestService } from "./test-service.js";
 
 export class TetoEgenTestService extends TestService {
   constructor() {

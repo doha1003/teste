@@ -3,7 +3,7 @@
  * 연봉 실수령액 계산기 구현
  */
 
-undefined;
+import { ToolService } from "../service-base.js";
 
 export class SalaryCalculatorService extends ToolService {
   constructor() {
