@@ -139,7 +139,7 @@ export class ServiceBase {
   /**
    * 결과 HTML 생성 - 하위 클래스에서 구현
    */
-  createResultHTML(result) {
+  createResultHTML(_result) {
     // Override in subclass
     return '';
   }
@@ -309,7 +309,8 @@ export class ServiceBase {
       try {
         (window.adsbygoogle = window.adsbygoogle || []).push({});
       } catch (e) {
-        
+        // AdSense 로딩 실패 시 무시
+        console.warn('AdSense loading failed:', e);
       }
     }
   }
@@ -331,13 +332,118 @@ export class ServiceBase {
   }
 
   /**
-   * 날짜 포맷팅
+   * 한국식 날짜 포맷팅
    */
-  formatDate(date) {
-    return new Intl.DateTimeFormat('ko-KR', {
+  formatDate(date, options = {}) {
+    const defaultOptions = {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
-    }).format(date);
+      weekday: options.includeWeekday ? 'long' : undefined,
+      ...options,
+    };
+
+    const formatted = new Intl.DateTimeFormat('ko-KR', defaultOptions).format(date);
+
+    // 한국식 날짜 형식으로 변환 (YYYY년 MM월 DD일)
+    if (options.koreanStyle !== false) {
+      return formatted.replace(/\s/g, ' ');
+    }
+
+    return formatted;
+  }
+
+  /**
+   * 한국식 시간 포맷팅
+   */
+  formatTime(date, options = {}) {
+    const defaultOptions = {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: options.hour12 !== false, // 기본값: 12시간 형식
+      ...options,
+    };
+
+    return new Intl.DateTimeFormat('ko-KR', defaultOptions).format(date);
+  }
+
+  /**
+   * 상대적 시간 표시 (한국어)
+   */
+  formatRelativeTime(date) {
+    const now = new Date();
+    const diffMs = now - date;
+    const diffSec = Math.floor(diffMs / 1000);
+    const diffMin = Math.floor(diffSec / 60);
+    const diffHour = Math.floor(diffMin / 60);
+    const diffDay = Math.floor(diffHour / 24);
+
+    if (diffSec < 60) {
+      return '방금 전';
+    }
+    if (diffMin < 60) {
+      return `${diffMin}분 전`;
+    }
+    if (diffHour < 24) {
+      return `${diffHour}시간 전`;
+    }
+    if (diffDay < 7) {
+      return `${diffDay}일 전`;
+    }
+
+    return this.formatDate(date);
+  }
+
+  /**
+   * 존댓말/반말 설정에 따른 텍스트 변환
+   */
+  formatSpeechLevel(text, formal = true) {
+    if (!formal) {
+      // 반말 변환 규칙
+      return text
+        .replace(/습니다/g, '어')
+        .replace(/입니다/g, '야')
+        .replace(/됩니다/g, '돼')
+        .replace(/하세요/g, '해')
+        .replace(/해주세요/g, '해줘')
+        .replace(/드립니다/g, '줄게')
+        .replace(/십시오/g, '어');
+    }
+
+    return text; // 존댓말은 기본값
+  }
+
+  /**
+   * 한국 나이 계산 (만 나이)
+   */
+  calculateKoreanAge(birthDate) {
+    const today = new Date();
+    const birth = new Date(birthDate);
+
+    let age = today.getFullYear() - birth.getFullYear();
+    const monthDiff = today.getMonth() - birth.getMonth();
+
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
+      age--;
+    }
+
+    return {
+      age,
+      formatted: `만 ${age}세`,
+    };
+  }
+
+  /**
+   * 한국 전통 나이 계산 (세는 나이)
+   */
+  calculateTraditionalAge(birthDate) {
+    const today = new Date();
+    const birth = new Date(birthDate);
+    const age = today.getFullYear() - birth.getFullYear() + 1;
+
+    return {
+      age,
+      formatted: `${age}세`,
+    };
   }
 }

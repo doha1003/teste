@@ -24,7 +24,7 @@ class EventBus {
     }
 
     const listeners = this.events.get(eventName);
-    
+
     // 최대 리스너 수 확인
     if (listeners.length >= this.maxListeners) {
       console.warn(`Maximum listeners (${this.maxListeners}) exceeded for event: ${eventName}`);
@@ -34,11 +34,11 @@ class EventBus {
       fn: listener,
       once: options.once || false,
       priority: options.priority || 0,
-      context: options.context || null
+      context: options.context || null,
     };
 
     listeners.push(listenerInfo);
-    
+
     // 우선순위에 따라 정렬 (높은 숫자가 먼저 실행)
     listeners.sort((a, b) => b.priority - a.priority);
 
@@ -95,11 +95,11 @@ class EventBus {
     }
 
     const listeners = this.events.get(eventName);
-    const index = listeners.findIndex(l => l.fn === listener);
-    
+    const index = listeners.findIndex((l) => l.fn === listener);
+
     if (index !== -1) {
       listeners.splice(index, 1);
-      
+
       // 리스너가 없으면 이벤트 완전 제거
       if (listeners.length === 0) {
         this.events.delete(eventName);
@@ -124,7 +124,7 @@ class EventBus {
     if (!this.events.has(eventName)) {
       return [];
     }
-    return this.events.get(eventName).map(l => l.fn);
+    return this.events.get(eventName).map((l) => l.fn);
   }
 
   // 이벤트 리스너 수 조회
@@ -190,8 +190,8 @@ class NamespacedEventBus {
     } else {
       // 네임스페이스의 모든 이벤트 제거
       const allEvents = this.eventBus.eventNames();
-      const namespaceEvents = allEvents.filter(name => name.startsWith(`${this.namespace}:`));
-      namespaceEvents.forEach(name => this.eventBus.removeAllListeners(name));
+      const namespaceEvents = allEvents.filter((name) => name.startsWith(`${this.namespace}:`));
+      namespaceEvents.forEach((name) => this.eventBus.removeAllListeners(name));
       return this.eventBus;
     }
   }
@@ -219,7 +219,7 @@ describe('Event Bus System', () => {
   describe('기본 이벤트 등록 및 발생', () => {
     it('이벤트 리스너를 등록하고 실행할 수 있어야 함', () => {
       const listener = vi.fn();
-      
+
       eventBus.on('test-event', listener);
       eventBus.emit('test-event', 'test-data');
 
@@ -229,7 +229,7 @@ describe('Event Bus System', () => {
 
     it('여러 개의 인자를 전달할 수 있어야 함', () => {
       const listener = vi.fn();
-      
+
       eventBus.on('multi-args', listener);
       eventBus.emit('multi-args', 'arg1', 'arg2', 'arg3');
 
@@ -267,7 +267,7 @@ describe('Event Bus System', () => {
 
     it('리스너 실행 순서가 우선순위에 따라 결정되어야 함', () => {
       const executionOrder = [];
-      
+
       const listener1 = () => executionOrder.push('listener1');
       const listener2 = () => executionOrder.push('listener2');
       const listener3 = () => executionOrder.push('listener3');
@@ -294,9 +294,9 @@ describe('Event Bus System', () => {
   describe('일회성 이벤트 리스너', () => {
     it('once 리스너는 한 번만 실행되어야 함', () => {
       const listener = vi.fn();
-      
+
       eventBus.once('once-event', listener);
-      
+
       eventBus.emit('once-event', 'first');
       eventBus.emit('once-event', 'second');
 
@@ -306,11 +306,11 @@ describe('Event Bus System', () => {
 
     it('once 리스너는 실행 후 자동으로 제거되어야 함', () => {
       eventBus.once('auto-remove', () => {});
-      
+
       expect(eventBus.listenerCount('auto-remove')).toBe(1);
-      
+
       eventBus.emit('auto-remove');
-      
+
       expect(eventBus.listenerCount('auto-remove')).toBe(0);
     });
 
@@ -375,7 +375,7 @@ describe('Event Bus System', () => {
   describe('컨텍스트 바인딩', () => {
     it('리스너를 특정 컨텍스트로 실행할 수 있어야 함', () => {
       const context = { name: 'test-context', value: 42 };
-      const listener = function(data) {
+      const listener = function (data) {
         expect(this).toBe(context);
         expect(this.name).toBe('test-context');
         expect(this.value).toBe(42);
@@ -421,7 +421,7 @@ describe('Event Bus System', () => {
       vi.spyOn(console, 'warn').mockImplementation(() => {});
 
       eventBus.setMaxListeners(2);
-      
+
       eventBus.on('max-test', () => {});
       eventBus.on('max-test', () => {});
       eventBus.on('max-test', () => {}); // 초과
@@ -495,7 +495,7 @@ describe('Event Bus System', () => {
 
     it('네임스페이스의 모든 이벤트를 제거할 수 있어야 함', () => {
       const testNamespace = eventBus.namespace('test');
-      
+
       testNamespace.on('event1', () => {});
       testNamespace.on('event2', () => {});
       eventBus.on('global-event', () => {});
@@ -523,7 +523,7 @@ describe('Event Bus System', () => {
       eventBus.emit('test:progress', { step: 1, total: 10 });
       eventBus.emit('test:progress', { step: 5, total: 10 });
       eventBus.emit('test:progress', { step: 10, total: 10 });
-      
+
       // 테스트 완료
       eventBus.emit('test:complete', { type: 'mbti', result: 'ENFP' });
       eventBus.emit('test:complete', { type: 'love-dna', result: 'Type A' }); // 무시됨
@@ -540,15 +540,15 @@ describe('Event Bus System', () => {
       eventBus.on('theme:change', themeListener);
       eventBus.on('theme:change', storageListener);
 
-      eventBus.emit('theme:change', { 
-        from: 'light', 
+      eventBus.emit('theme:change', {
+        from: 'light',
         to: 'dark',
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       });
 
       expect(themeListener).toHaveBeenCalled();
       expect(storageListener).toHaveBeenCalled();
-      
+
       const [eventData] = themeListener.mock.calls[0];
       expect(eventData.from).toBe('light');
       expect(eventData.to).toBe('dark');
@@ -565,44 +565,44 @@ describe('Event Bus System', () => {
 
       // API 요청 시작
       eventBus.emit('api:loading', { endpoint: '/api/fortune' });
-      
+
       // API 에러 발생
-      eventBus.emit('api:error', { 
+      eventBus.emit('api:error', {
         endpoint: '/api/fortune',
         error: 'Network error',
-        status: 500 
+        status: 500,
       });
 
       expect(loadingListener).toHaveBeenCalledWith({ endpoint: '/api/fortune' });
       expect(errorListener).toHaveBeenCalledWith({
         endpoint: '/api/fortune',
         error: 'Network error',
-        status: 500
+        status: 500,
       });
       expect(successListener).not.toHaveBeenCalled();
     });
 
     it('사용자 인터랙션 이벤트를 추적할 수 있어야 함', () => {
       const analyticsListener = vi.fn();
-      
+
       eventBus.on('user:interaction', analyticsListener);
 
       // 버튼 클릭
       eventBus.emit('user:interaction', {
         type: 'click',
         element: 'start-test-button',
-        testType: 'mbti'
+        testType: 'mbti',
       });
 
       // 폼 제출
       eventBus.emit('user:interaction', {
         type: 'form-submit',
         form: 'user-info',
-        data: { age: 25, gender: 'female' }
+        data: { age: 25, gender: 'female' },
       });
 
       expect(analyticsListener).toHaveBeenCalledTimes(2);
-      
+
       const [clickEvent] = analyticsListener.mock.calls[0];
       expect(clickEvent.type).toBe('click');
       expect(clickEvent.testType).toBe('mbti');

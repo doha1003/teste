@@ -1,0 +1,1181 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>doha.kr 사용자 피드백 분석 대시보드</title>
+    <meta name="description" content="doha.kr 사용자 피드백 수집 및 분석 대시보드" />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --primary-color: #667eea;
+        --secondary-color: #764ba2;
+        --success-color: #10b981;
+        --warning-color: #f59e0b;
+        --danger-color: #ef4444;
+        --info-color: #3b82f6;
+        --background-color: #f8fafc;
+        --card-background: #ffffff;
+        --text-primary: #1a202c;
+        --text-secondary: #4a5568;
+        --text-muted: #718096;
+        --border-color: #e2e8f0;
+        --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        --border-radius: 8px;
+        --spacing-xs: 0.25rem;
+        --spacing-sm: 0.5rem;
+        --spacing-md: 1rem;
+        --spacing-lg: 1.5rem;
+        --spacing-xl: 2rem;
+        --spacing-2xl: 3rem;
+      }
+
+      body {
+        font-family:
+          'Pretendard Variable',
+          -apple-system,
+          BlinkMacSystemFont,
+          'Segoe UI',
+          sans-serif;
+        background: var(--background-color);
+        color: var(--text-primary);
+        line-height: 1.6;
+      }
+
+      .header {
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        color: white;
+        padding: var(--spacing-2xl);
+        text-align: center;
+        box-shadow: var(--shadow-lg);
+      }
+
+      .header h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: var(--spacing-sm);
+      }
+
+      .header .subtitle {
+        font-size: 1.125rem;
+        opacity: 0.9;
+        margin-bottom: var(--spacing-lg);
+      }
+
+      .header .stats-overview {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: var(--spacing-lg);
+        margin-top: var(--spacing-lg);
+      }
+
+      .stat-item {
+        text-align: center;
+        padding: var(--spacing-md);
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: var(--border-radius);
+        backdrop-filter: blur(10px);
+      }
+
+      .stat-value {
+        font-size: 2rem;
+        font-weight: 600;
+        margin-bottom: var(--spacing-xs);
+      }
+
+      .stat-label {
+        font-size: 0.875rem;
+        opacity: 0.8;
+      }
+
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: var(--spacing-2xl);
+      }
+
+      .dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        gap: var(--spacing-xl);
+      }
+
+      .card {
+        background: var(--card-background);
+        border-radius: var(--border-radius);
+        padding: var(--spacing-xl);
+        box-shadow: var(--shadow);
+        border: 1px solid var(--border-color);
+        transition: all 0.2s ease;
+      }
+
+      .card:hover {
+        box-shadow: var(--shadow-lg);
+        transform: translateY(-2px);
+      }
+
+      .card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: var(--spacing-lg);
+        padding-bottom: var(--spacing-md);
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .card-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-sm);
+      }
+
+      .card-action {
+        background: none;
+        border: none;
+        color: var(--text-muted);
+        cursor: pointer;
+        padding: var(--spacing-xs);
+        border-radius: 4px;
+        transition: all 0.2s ease;
+      }
+
+      .card-action:hover {
+        background: var(--background-color);
+        color: var(--primary-color);
+      }
+
+      .metric-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: var(--spacing-md);
+        margin-top: var(--spacing-lg);
+      }
+
+      .metric-item {
+        text-align: center;
+        padding: var(--spacing-lg);
+        background: var(--background-color);
+        border-radius: var(--border-radius);
+        border: 1px solid var(--border-color);
+      }
+
+      .metric-value {
+        font-size: 2rem;
+        font-weight: 700;
+        margin: var(--spacing-sm) 0;
+      }
+
+      .metric-label {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .rating-breakdown {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-sm);
+        margin-top: var(--spacing-lg);
+      }
+
+      .rating-bar {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-md);
+      }
+
+      .rating-label {
+        min-width: 60px;
+        font-size: 0.875rem;
+        font-weight: 500;
+      }
+
+      .progress-container {
+        flex: 1;
+        height: 8px;
+        background: var(--border-color);
+        border-radius: 4px;
+        overflow: hidden;
+      }
+
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--success-color), var(--primary-color));
+        transition: width 0.3s ease;
+        border-radius: 4px;
+      }
+
+      .rating-count {
+        min-width: 40px;
+        font-size: 0.875rem;
+        color: var(--text-muted);
+        text-align: right;
+      }
+
+      .feedback-list {
+        max-height: 400px;
+        overflow-y: auto;
+        margin-top: var(--spacing-lg);
+      }
+
+      .feedback-item {
+        padding: var(--spacing-md);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius);
+        margin-bottom: var(--spacing-sm);
+        background: var(--card-background);
+      }
+
+      .feedback-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: var(--spacing-sm);
+      }
+
+      .feedback-rating {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-xs);
+      }
+
+      .feedback-emoji {
+        font-size: 1.5rem;
+      }
+
+      .feedback-score {
+        font-weight: 600;
+        color: var(--text-secondary);
+      }
+
+      .feedback-date {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+      }
+
+      .feedback-categories {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--spacing-xs);
+        margin: var(--spacing-sm) 0;
+      }
+
+      .category-tag {
+        background: var(--primary-color);
+        color: white;
+        padding: 2px 8px;
+        border-radius: 12px;
+        font-size: 0.75rem;
+        font-weight: 500;
+      }
+
+      .feedback-comment {
+        font-size: 0.875rem;
+        line-height: 1.5;
+        color: var(--text-secondary);
+        margin-top: var(--spacing-sm);
+        padding: var(--spacing-sm);
+        background: var(--background-color);
+        border-radius: 4px;
+        border-left: 3px solid var(--primary-color);
+      }
+
+      .sentiment-analysis {
+        display: flex;
+        justify-content: space-around;
+        text-align: center;
+        margin-top: var(--spacing-lg);
+      }
+
+      .sentiment-item {
+        flex: 1;
+      }
+
+      .sentiment-emoji {
+        font-size: 2rem;
+        margin-bottom: var(--spacing-xs);
+      }
+
+      .sentiment-percent {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: var(--spacing-xs);
+      }
+
+      .sentiment-label {
+        font-size: 0.875rem;
+        color: var(--text-muted);
+      }
+
+      .trend-chart {
+        height: 200px;
+        background: var(--background-color);
+        border-radius: var(--border-radius);
+        margin-top: var(--spacing-lg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-muted);
+        font-style: italic;
+      }
+
+      .issue-list {
+        margin-top: var(--spacing-lg);
+      }
+
+      .issue-item {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-md);
+        padding: var(--spacing-md);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius);
+        margin-bottom: var(--spacing-sm);
+      }
+
+      .issue-severity {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+
+      .severity-high {
+        background: var(--danger-color);
+      }
+      .severity-medium {
+        background: var(--warning-color);
+      }
+      .severity-low {
+        background: var(--success-color);
+      }
+
+      .issue-content {
+        flex: 1;
+      }
+
+      .issue-title {
+        font-weight: 500;
+        margin-bottom: var(--spacing-xs);
+      }
+
+      .issue-description {
+        font-size: 0.875rem;
+        color: var(--text-muted);
+      }
+
+      .issue-count {
+        background: var(--background-color);
+        padding: var(--spacing-xs) var(--spacing-sm);
+        border-radius: 12px;
+        font-size: 0.75rem;
+        font-weight: 500;
+      }
+
+      .action-buttons {
+        display: flex;
+        gap: var(--spacing-sm);
+        margin-top: var(--spacing-lg);
+      }
+
+      .btn {
+        padding: var(--spacing-sm) var(--spacing-md);
+        border: none;
+        border-radius: var(--border-radius);
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: var(--spacing-xs);
+      }
+
+      .btn-primary {
+        background: var(--primary-color);
+        color: white;
+      }
+
+      .btn-primary:hover {
+        background: #5a67d8;
+        transform: translateY(-1px);
+      }
+
+      .btn-secondary {
+        background: var(--background-color);
+        color: var(--text-secondary);
+        border: 1px solid var(--border-color);
+      }
+
+      .btn-secondary:hover {
+        background: #e5e7eb;
+      }
+
+      .filters {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--spacing-md);
+        margin-bottom: var(--spacing-xl);
+        padding: var(--spacing-lg);
+        background: var(--card-background);
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow);
+      }
+
+      .filter-group {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-xs);
+      }
+
+      .filter-label {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--text-secondary);
+      }
+
+      .filter-select {
+        padding: var(--spacing-sm);
+        border: 1px solid var(--border-color);
+        border-radius: 4px;
+        background: white;
+      }
+
+      .export-options {
+        position: fixed;
+        bottom: var(--spacing-xl);
+        right: var(--spacing-xl);
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-sm);
+      }
+
+      .floating-btn {
+        background: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 50px;
+        padding: var(--spacing-md);
+        cursor: pointer;
+        box-shadow: var(--shadow-lg);
+        font-weight: 600;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-sm);
+        min-width: 120px;
+        justify-content: center;
+      }
+
+      .floating-btn:hover {
+        background: #5a67d8;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px -5px rgba(102, 126, 234, 0.4);
+      }
+
+      .tooltip {
+        position: relative;
+        cursor: help;
+      }
+
+      .tooltip::after {
+        content: attr(data-tooltip);
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--text-primary);
+        color: white;
+        padding: var(--spacing-xs) var(--spacing-sm);
+        border-radius: 4px;
+        font-size: 0.75rem;
+        white-space: nowrap;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s ease;
+        z-index: 1000;
+      }
+
+      .tooltip:hover::after {
+        opacity: 1;
+      }
+
+      @media (max-width: 768px) {
+        .header {
+          padding: var(--spacing-lg);
+        }
+
+        .header h1 {
+          font-size: 2rem;
+        }
+
+        .container {
+          padding: var(--spacing-lg);
+        }
+
+        .dashboard-grid {
+          grid-template-columns: 1fr;
+          gap: var(--spacing-lg);
+        }
+
+        .filters {
+          flex-direction: column;
+        }
+
+        .export-options {
+          bottom: var(--spacing-lg);
+          right: var(--spacing-lg);
+        }
+
+        .floating-btn {
+          min-width: auto;
+          padding: var(--spacing-sm) var(--spacing-md);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1>📝 사용자 피드백 분석</h1>
+      <p class="subtitle">doha.kr 사용자 경험 및 만족도 분석 대시보드</p>
+
+      <div class="stats-overview">
+        <div class="stat-item">
+          <div class="stat-value" id="total-feedback">247</div>
+          <div class="stat-label">총 피드백 수</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value" id="avg-rating">4.2</div>
+          <div class="stat-label">평균 만족도</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value" id="response-rate">23%</div>
+          <div class="stat-label">응답률</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value" id="this-week-feedback">42</div>
+          <div class="stat-label">이번 주 피드백</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <!-- 필터 -->
+      <div class="filters">
+        <div class="filter-group">
+          <label class="filter-label">기간</label>
+          <select class="filter-select" id="period-filter">
+            <option value="7">최근 7일</option>
+            <option value="30" selected>최근 30일</option>
+            <option value="90">최근 90일</option>
+            <option value="all">전체 기간</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label class="filter-label">기기 타입</label>
+          <select class="filter-select" id="device-filter">
+            <option value="all">전체</option>
+            <option value="mobile">모바일</option>
+            <option value="desktop">데스크톱</option>
+            <option value="tablet">태블릿</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label class="filter-label">평점</label>
+          <select class="filter-select" id="rating-filter">
+            <option value="all">전체</option>
+            <option value="5">5점 (매우 만족)</option>
+            <option value="4">4점 (만족)</option>
+            <option value="3">3점 (보통)</option>
+            <option value="2">2점 (불만)</option>
+            <option value="1">1점 (매우 불만)</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label class="filter-label">카테고리</label>
+          <select class="filter-select" id="category-filter">
+            <option value="all">전체</option>
+            <option value="korean-ui">한국어 UI</option>
+            <option value="mobile-layout">모바일 레이아웃</option>
+            <option value="test-experience">심리테스트</option>
+            <option value="fortune-service">운세 서비스</option>
+            <option value="performance">성능/속도</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="dashboard-grid">
+        <!-- 평점 분포 -->
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">⭐ 만족도 분포</h3>
+            <button class="card-action" onclick="refreshRatings()">🔄</button>
+          </div>
+
+          <div class="metric-grid">
+            <div class="metric-item">
+              <div class="metric-value" style="color: var(--success-color)">4.2</div>
+              <div class="metric-label">평균 평점</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-value" style="color: var(--primary-color)">89%</div>
+              <div class="metric-label">만족 이상</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-value" style="color: var(--warning-color)">7%</div>
+              <div class="metric-label">보통</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-value" style="color: var(--danger-color)">4%</div>
+              <div class="metric-label">불만</div>
+            </div>
+          </div>
+
+          <div class="rating-breakdown">
+            <div class="rating-bar">
+              <div class="rating-label">5점 😍</div>
+              <div class="progress-container">
+                <div class="progress-fill" style="width: 65%"></div>
+              </div>
+              <div class="rating-count">161</div>
+            </div>
+            <div class="rating-bar">
+              <div class="rating-label">4점 😊</div>
+              <div class="progress-container">
+                <div class="progress-fill" style="width: 24%"></div>
+              </div>
+              <div class="rating-count">59</div>
+            </div>
+            <div class="rating-bar">
+              <div class="rating-label">3점 😐</div>
+              <div class="progress-container">
+                <div class="progress-fill" style="width: 7%"></div>
+              </div>
+              <div class="rating-count">17</div>
+            </div>
+            <div class="rating-bar">
+              <div class="rating-label">2점 😕</div>
+              <div class="progress-container">
+                <div class="progress-fill" style="width: 3%"></div>
+              </div>
+              <div class="rating-count">7</div>
+            </div>
+            <div class="rating-bar">
+              <div class="rating-label">1점 😞</div>
+              <div class="progress-container">
+                <div class="progress-fill" style="width: 1%"></div>
+              </div>
+              <div class="rating-count">3</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 카테고리별 피드백 -->
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">📊 카테고리별 분석</h3>
+            <button class="card-action" onclick="refreshCategories()">🔄</button>
+          </div>
+
+          <div class="metric-grid">
+            <div class="metric-item">
+              <div class="metric-value" style="color: var(--primary-color)">84</div>
+              <div class="metric-label">UI/UX</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-value" style="color: var(--success-color)">67</div>
+              <div class="metric-label">모바일</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-value" style="color: var(--info-color)">52</div>
+              <div class="metric-label">심리테스트</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-value" style="color: var(--warning-color)">31</div>
+              <div class="metric-label">성능</div>
+            </div>
+          </div>
+
+          <div class="sentiment-analysis">
+            <div class="sentiment-item">
+              <div class="sentiment-emoji">😍</div>
+              <div class="sentiment-percent" style="color: var(--success-color)">72%</div>
+              <div class="sentiment-label">긍정적</div>
+            </div>
+            <div class="sentiment-item">
+              <div class="sentiment-emoji">😐</div>
+              <div class="sentiment-percent" style="color: var(--warning-color)">21%</div>
+              <div class="sentiment-label">중립적</div>
+            </div>
+            <div class="sentiment-item">
+              <div class="sentiment-emoji">😞</div>
+              <div class="sentiment-percent" style="color: var(--danger-color)">7%</div>
+              <div class="sentiment-label">부정적</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 최근 피드백 -->
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">💬 최근 피드백</h3>
+            <button class="card-action" onclick="refreshRecentFeedback()">🔄</button>
+          </div>
+
+          <div class="feedback-list" id="recent-feedback">
+            <div class="feedback-item">
+              <div class="feedback-header">
+                <div class="feedback-rating">
+                  <span class="feedback-emoji">😍</span>
+                  <span class="feedback-score">5점</span>
+                </div>
+                <span class="feedback-date">2025-08-02 14:30</span>
+              </div>
+              <div class="feedback-categories">
+                <span class="category-tag">한국어 UI</span>
+                <span class="category-tag">모바일</span>
+              </div>
+              <div class="feedback-comment">
+                MBTI 테스트가 정말 재미있었어요! 모바일에서도 사용하기 편하고 결과도 정확한 것 같습니다. 한국어로 잘
+                되어 있어서 이해하기 쉬웠어요.
+              </div>
+            </div>
+
+            <div class="feedback-item">
+              <div class="feedback-header">
+                <div class="feedback-rating">
+                  <span class="feedback-emoji">😊</span>
+                  <span class="feedback-score">4점</span>
+                </div>
+                <span class="feedback-date">2025-08-02 13:15</span>
+              </div>
+              <div class="feedback-categories">
+                <span class="category-tag">성능</span>
+                <span class="category-tag">운세 서비스</span>
+              </div>
+              <div class="feedback-comment">
+                운세 서비스가 흥미로워요. 다만 가끔 로딩이 조금 느린 것 같습니다. 전반적으로는 만족해요!
+              </div>
+            </div>
+
+            <div class="feedback-item">
+              <div class="feedback-header">
+                <div class="feedback-rating">
+                  <span class="feedback-emoji">😐</span>
+                  <span class="feedback-score">3점</span>
+                </div>
+                <span class="feedback-date">2025-08-02 11:45</span>
+              </div>
+              <div class="feedback-categories">
+                <span class="category-tag">테스트 경험</span>
+              </div>
+              <div class="feedback-comment">
+                테스트 종류는 다양한데, 결과 페이지에서 뒤로 가기가 좀 헷갈려요. 네비게이션을 개선해주세요.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 트렌드 분석 -->
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">📈 만족도 트렌드</h3>
+            <button class="card-action" onclick="refreshTrends()">🔄</button>
+          </div>
+
+          <div class="metric-grid">
+            <div class="metric-item">
+              <div class="metric-value" style="color: var(--success-color)">+0.3</div>
+              <div class="metric-label">이번 주 증가</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-value" style="color: var(--primary-color)">4.2</div>
+              <div class="metric-label">현재 평균</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-value" style="color: var(--info-color)">3.9</div>
+              <div class="metric-label">지난달 평균</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-value" style="color: var(--warning-color)">↗</div>
+              <div class="metric-label">추세</div>
+            </div>
+          </div>
+
+          <div class="trend-chart">📊 실제 환경에서는 Chart.js 또는 D3.js로 시각화</div>
+        </div>
+
+        <!-- 주요 이슈 -->
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">🚨 주요 이슈 및 개선점</h3>
+            <button class="card-action" onclick="refreshIssues()">🔄</button>
+          </div>
+
+          <div class="issue-list">
+            <div class="issue-item">
+              <div class="issue-severity severity-high"></div>
+              <div class="issue-content">
+                <div class="issue-title">모바일 테스트 진행 시 화면 스크롤 문제</div>
+                <div class="issue-description">특정 기기에서 세로 방향 스크롤이 원활하지 않음</div>
+              </div>
+              <div class="issue-count">12건</div>
+            </div>
+
+            <div class="issue-item">
+              <div class="issue-severity severity-medium"></div>
+              <div class="issue-content">
+                <div class="issue-title">운세 결과 로딩 시간 지연</div>
+                <div class="issue-description">AI 응답 생성 시 2초 이상 소요되는 경우 발생</div>
+              </div>
+              <div class="issue-count">8건</div>
+            </div>
+
+            <div class="issue-item">
+              <div class="issue-severity severity-medium"></div>
+              <div class="issue-content">
+                <div class="issue-title">테스트 결과 공유 기능 요청</div>
+                <div class="issue-description">SNS 공유 또는 결과 저장 기능에 대한 요청</div>
+              </div>
+              <div class="issue-count">6건</div>
+            </div>
+
+            <div class="issue-item">
+              <div class="issue-severity severity-low"></div>
+              <div class="issue-content">
+                <div class="issue-title">폰트 크기 조절 기능</div>
+                <div class="issue-description">시니어 사용자를 위한 접근성 개선 제안</div>
+              </div>
+              <div class="issue-count">4건</div>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button class="btn btn-primary" onclick="createIssueReport()">📋 이슈 보고서 생성</button>
+            <button class="btn btn-secondary" onclick="exportIssues()">📤 이슈 내보내기</button>
+          </div>
+        </div>
+
+        <!-- 디바이스별 분석 -->
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">📱 디바이스별 만족도</h3>
+            <button class="card-action" onclick="refreshDeviceAnalysis()">🔄</button>
+          </div>
+
+          <div class="metric-grid">
+            <div class="metric-item">
+              <div class="metric-value" style="color: var(--success-color)">4.3</div>
+              <div class="metric-label">모바일</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-value" style="color: var(--primary-color)">4.1</div>
+              <div class="metric-label">데스크톱</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-value" style="color: var(--info-color)">4.0</div>
+              <div class="metric-label">태블릿</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-value" style="color: var(--warning-color)">67%</div>
+              <div class="metric-label">모바일 비율</div>
+            </div>
+          </div>
+
+          <div class="rating-breakdown">
+            <div class="rating-bar">
+              <div class="rating-label">모바일</div>
+              <div class="progress-container">
+                <div class="progress-fill" style="width: 67%"></div>
+              </div>
+              <div class="rating-count">165건</div>
+            </div>
+            <div class="rating-bar">
+              <div class="rating-label">데스크톱</div>
+              <div class="progress-container">
+                <div class="progress-fill" style="width: 28%"></div>
+              </div>
+              <div class="rating-count">69건</div>
+            </div>
+            <div class="rating-bar">
+              <div class="rating-label">태블릿</div>
+              <div class="progress-container">
+                <div class="progress-fill" style="width: 5%"></div>
+              </div>
+              <div class="rating-count">13건</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 플로팅 액션 버튼 -->
+    <div class="export-options">
+      <button class="floating-btn" onclick="generateWeeklyReport()">📊 주간 보고서</button>
+      <button class="floating-btn" onclick="exportFeedbackData()">📁 데이터 내보내기</button>
+      <button class="floating-btn" onclick="openFeedbackSettings()">⚙️ 설정</button>
+    </div>
+
+    <script>
+      // 데이터 새로고침 함수들
+      function refreshRatings() {
+        console.log('평점 데이터 새로고침');
+        showToast('평점 데이터를 새로고침했습니다.');
+      }
+
+      function refreshCategories() {
+        console.log('카테고리 데이터 새로고침');
+        showToast('카테고리 분석을 업데이트했습니다.');
+      }
+
+      function refreshRecentFeedback() {
+        console.log('최근 피드백 새로고침');
+        showToast('최근 피드백을 새로고침했습니다.');
+      }
+
+      function refreshTrends() {
+        console.log('트렌드 데이터 새로고침');
+        showToast('트렌드 분석을 업데이트했습니다.');
+      }
+
+      function refreshIssues() {
+        console.log('이슈 데이터 새로고침');
+        showToast('이슈 목록을 새로고침했습니다.');
+      }
+
+      function refreshDeviceAnalysis() {
+        console.log('디바이스 분석 새로고침');
+        showToast('디바이스별 분석을 업데이트했습니다.');
+      }
+
+      // 액션 함수들
+      function createIssueReport() {
+        console.log('이슈 보고서 생성');
+        showToast('이슈 보고서를 생성하고 있습니다...');
+
+        // 실제 구현에서는 이슈 보고서 생성 로직
+        setTimeout(() => {
+          showToast('이슈 보고서가 생성되었습니다.');
+        }, 2000);
+      }
+
+      function exportIssues() {
+        console.log('이슈 데이터 내보내기');
+
+        const issueData = {
+          timestamp: new Date().toISOString(),
+          issues: [
+            {
+              title: '모바일 테스트 진행 시 화면 스크롤 문제',
+              severity: 'high',
+              count: 12,
+              description: '특정 기기에서 세로 방향 스크롤이 원활하지 않음',
+            },
+            {
+              title: '운세 결과 로딩 시간 지연',
+              severity: 'medium',
+              count: 8,
+              description: 'AI 응답 생성 시 2초 이상 소요되는 경우 발생',
+            },
+          ],
+        };
+
+        downloadJSON(issueData, 'feedback-issues.json');
+        showToast('이슈 데이터를 내보냈습니다.');
+      }
+
+      function generateWeeklyReport() {
+        console.log('주간 보고서 생성');
+        showToast('주간 피드백 보고서를 생성하고 있습니다...');
+
+        // 실제 구현에서는 보고서 생성 및 다운로드
+        setTimeout(() => {
+          showToast('주간 보고서가 준비되었습니다.');
+          // 보고서 다운로드 또는 새 창에서 열기
+        }, 3000);
+      }
+
+      function exportFeedbackData() {
+        console.log('피드백 데이터 내보내기');
+
+        const feedbackData = {
+          exportDate: new Date().toISOString(),
+          summary: {
+            totalFeedback: 247,
+            averageRating: 4.2,
+            responseRate: 23,
+            thisWeekFeedback: 42,
+          },
+          ratingDistribution: {
+            5: 161,
+            4: 59,
+            3: 17,
+            2: 7,
+            1: 3,
+          },
+          categoryBreakdown: {
+            'korean-ui': 84,
+            'mobile-layout': 67,
+            'test-experience': 52,
+            performance: 31,
+          },
+          deviceAnalysis: {
+            mobile: { rating: 4.3, count: 165 },
+            desktop: { rating: 4.1, count: 69 },
+            tablet: { rating: 4.0, count: 13 },
+          },
+        };
+
+        downloadJSON(feedbackData, 'feedback-analysis-export.json');
+        showToast('피드백 데이터를 내보냈습니다.');
+      }
+
+      function openFeedbackSettings() {
+        console.log('피드백 설정 열기');
+        showToast('피드백 수집 설정을 열고 있습니다...');
+
+        // 실제 구현에서는 설정 모달 또는 페이지 열기
+      }
+
+      // 필터 이벤트 리스너
+      document.addEventListener('DOMContentLoaded', function () {
+        const filters = ['period-filter', 'device-filter', 'rating-filter', 'category-filter'];
+
+        filters.forEach((filterId) => {
+          const element = document.getElementById(filterId);
+          if (element) {
+            element.addEventListener('change', function () {
+              console.log(`필터 변경: ${filterId} = ${this.value}`);
+              applyFilters();
+            });
+          }
+        });
+
+        // 자동 데이터 새로고침 (5분마다)
+        setInterval(refreshAllData, 300000);
+      });
+
+      function applyFilters() {
+        const filters = {
+          period: document.getElementById('period-filter').value,
+          device: document.getElementById('device-filter').value,
+          rating: document.getElementById('rating-filter').value,
+          category: document.getElementById('category-filter').value,
+        };
+
+        console.log('필터 적용:', filters);
+        showToast('필터를 적용하고 있습니다...');
+
+        // 실제 구현에서는 필터된 데이터로 대시보드 업데이트
+        setTimeout(() => {
+          showToast('필터가 적용되었습니다.');
+        }, 1000);
+      }
+
+      function refreshAllData() {
+        console.log('전체 데이터 자동 새로고침');
+
+        // 모든 섹션 새로고침
+        refreshRatings();
+        refreshCategories();
+        refreshRecentFeedback();
+        refreshTrends();
+        refreshIssues();
+        refreshDeviceAnalysis();
+      }
+
+      // 유틸리티 함수들
+      function downloadJSON(data, filename) {
+        const jsonString = JSON.stringify(data, null, 2);
+        const blob = new Blob([jsonString], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
+
+      function showToast(message) {
+        // 간단한 토스트 알림
+        const toast = document.createElement('div');
+        toast.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: var(--primary-color);
+                color: white;
+                padding: 12px 20px;
+                border-radius: 8px;
+                box-shadow: var(--shadow-lg);
+                z-index: 10000;
+                font-weight: 500;
+                opacity: 0;
+                transform: translateY(-20px);
+                transition: all 0.3s ease;
+            `;
+        toast.textContent = message;
+
+        document.body.appendChild(toast);
+
+        // 애니메이션
+        setTimeout(() => {
+          toast.style.opacity = '1';
+          toast.style.transform = 'translateY(0)';
+        }, 10);
+
+        // 자동 제거
+        setTimeout(() => {
+          toast.style.opacity = '0';
+          toast.style.transform = 'translateY(-20px)';
+          setTimeout(() => {
+            if (toast.parentNode) {
+              toast.parentNode.removeChild(toast);
+            }
+          }, 300);
+        }, 3000);
+      }
+
+      // 실시간 업데이트 시뮬레이션
+      function simulateRealTimeUpdates() {
+        const elements = [
+          { id: 'total-feedback', min: 240, max: 260 },
+          { id: 'avg-rating', min: 4.0, max: 4.5, decimal: 1 },
+          { id: 'response-rate', min: 20, max: 30, suffix: '%' },
+          { id: 'this-week-feedback', min: 35, max: 50 },
+        ];
+
+        elements.forEach((elem) => {
+          const element = document.getElementById(elem.id);
+          if (element) {
+            setInterval(() => {
+              let value = Math.random() * (elem.max - elem.min) + elem.min;
+              if (elem.decimal) {
+                value = value.toFixed(elem.decimal);
+              } else {
+                value = Math.floor(value);
+              }
+              element.textContent = value + (elem.suffix || '');
+            }, 30000); // 30초마다 업데이트
+          }
+        });
+      }
+
+      // 초기화
+      setTimeout(simulateRealTimeUpdates, 5000);
+    </script>
+  </body>
+</html>

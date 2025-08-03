@@ -82,9 +82,11 @@ export class TextCounterService extends ToolService {
     if (controlsContainer) {
       controlsContainer.addEventListener('click', (e) => {
         const button = e.target.closest('[data-action]');
-        if (!button) return;
+        if (!button) {
+          return;
+        }
 
-        const action = button.dataset.action;
+        const { action } = button.dataset;
         switch (action) {
           case 'clear':
             this.clearText();
@@ -131,7 +133,9 @@ export class TextCounterService extends ToolService {
    */
   updateCount() {
     const textInput = document.querySelector(this.ui.textInput);
-    if (!textInput) return;
+    if (!textInput) {
+      return;
+    }
 
     let text = textInput.value;
 
@@ -246,7 +250,9 @@ export class TextCounterService extends ToolService {
    */
   copyText() {
     const textInput = document.querySelector(this.ui.textInput);
-    if (!textInput) return;
+    if (!textInput) {
+      return;
+    }
 
     textInput.select();
 
@@ -254,7 +260,6 @@ export class TextCounterService extends ToolService {
       document.execCommand('copy');
       this.showNotification('텍스트가 복사되었습니다!');
     } catch (err) {
-      
       this.showNotification('복사에 실패했습니다.');
     }
   }
@@ -289,8 +294,10 @@ export class TextCounterService extends ToolService {
    * 결과 복사 (오버라이드)
    */
   copyResult() {
-    const result = this.toolState.result;
-    if (!result) return;
+    const { result } = this.toolState;
+    if (!result) {
+      return;
+    }
 
     const text =
       `글자수: ${result.totalChars.toLocaleString()}
@@ -314,15 +321,21 @@ export class TextCounterService extends ToolService {
    */
   initFAQAccordion() {
     const faqSection = document.querySelector('.faq-section');
-    if (!faqSection) return;
+    if (!faqSection) {
+      return;
+    }
 
     // 이벤트 위임 사용
     faqSection.addEventListener('click', (e) => {
       const question = e.target.closest('.faq-question');
-      if (!question) return;
+      if (!question) {
+        return;
+      }
 
       const item = question.closest('.faq-item');
-      if (!item) return;
+      if (!item) {
+        return;
+      }
 
       this.toggleFAQItem(item, question);
     });
@@ -330,7 +343,9 @@ export class TextCounterService extends ToolService {
     // 키보드 접근성
     faqSection.addEventListener('keydown', (e) => {
       const question = e.target.closest('.faq-question');
-      if (!question) return;
+      if (!question) {
+        return;
+      }
 
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
@@ -377,7 +392,7 @@ export class TextCounterService extends ToolService {
    * 공유 데이터 가져오기 (오버라이드)
    */
   getShareData() {
-    const result = this.toolState.result;
+    const { result } = this.toolState;
     if (!result) {
       return super.getShareData();
     }
@@ -447,7 +462,9 @@ export class TextCounterService extends ToolService {
    * 이벤트 리스너 추가 헬퍼
    */
   addEventListener(element, event, handler) {
-    if (!element) return;
+    if (!element) {
+      return;
+    }
 
     element.addEventListener(event, handler);
     this.eventListeners.push({ element, event, handler });

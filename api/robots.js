@@ -60,6 +60,6 @@ Sitemap: ${baseUrl}/sitemap.xml
 
   res.setHeader('Content-Type', 'text/plain; charset=utf-8');
   res.setHeader('Cache-Control', 'public, max-age=86400, s-maxage=86400'); // 24시간 캐시
-  
+
   return res.status(200).send(robotsTxt);
 }

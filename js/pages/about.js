@@ -189,7 +189,11 @@
         try {
           (window.adsbygoogle = window.adsbygoogle || []).push({});
         } catch (e) {
-          
+          // AdSense 로딩 실패 시 무시
+          // Development logging only
+          if (process.env.NODE_ENV === 'development' || window.location.hostname === 'localhost') {
+            console.warn('AdSense loading failed:', e);
+          }
         }
       });
     }
@@ -203,16 +207,18 @@
       }
 
       if (!window.API_CONFIG || !window.API_CONFIG.KAKAO_JS_KEY) {
-        
         return;
       }
 
       if (!Kakao.isInitialized()) {
         try {
           Kakao.init(window.API_CONFIG.KAKAO_JS_KEY);
-          
         } catch (e) {
-          
+          // Kakao SDK 초기화 실패 시 무시
+          // Development logging only
+          if (process.env.NODE_ENV === 'development' || window.location.hostname === 'localhost') {
+            console.warn('Kakao SDK initialization failed:', e);
+          }
         }
       }
     }
@@ -239,7 +245,7 @@
 
       // 개발 환경에서 로그
       if (window.location.hostname === 'localhost') {
-        
+        console.log('Analytics event:', eventName, eventData); // eslint-disable-line no-console
       }
     }
   }

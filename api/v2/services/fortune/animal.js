@@ -47,14 +47,15 @@ export class AnimalFortuneService {
         lucky: {
           numbers: [2, 3],
           colors: ['파랑', '금색', '초록'],
-          directions: ['동남', '동북']
+          directions: ['동남', '동북'],
         },
         compatibility: {
           best: ['dragon', 'monkey', 'ox'],
-          worst: ['horse', 'goat', 'rooster']
+          worst: ['horse', 'goat', 'rooster'],
         },
         career: ['비즈니스', '금융', '연구', '예술'],
-        personality: '똑똑하고 재치있으며 적응력이 뛰어남. 기회를 잘 포착하고 사교적이지만 때로는 이기적일 수 있음.'
+        personality:
+          '똑똑하고 재치있으며 적응력이 뛰어남. 기회를 잘 포착하고 사교적이지만 때로는 이기적일 수 있음.',
       },
       ox: {
         name: '소',
@@ -69,14 +70,15 @@ export class AnimalFortuneService {
         lucky: {
           numbers: [1, 9],
           colors: ['빨강', '파랑', '보라'],
-          directions: ['북', '남']
+          directions: ['북', '남'],
         },
         compatibility: {
           best: ['rat', 'snake', 'rooster'],
-          worst: ['tiger', 'dragon', 'goat', 'dog']
+          worst: ['tiger', 'dragon', 'goat', 'dog'],
         },
         career: ['농업', '부동산', '교육', '의료'],
-        personality: '근면하고 신뢰할 수 있으며 끈기가 있음. 전통을 중시하고 안정을 추구하지만 변화에 둔감할 수 있음.'
+        personality:
+          '근면하고 신뢰할 수 있으며 끈기가 있음. 전통을 중시하고 안정을 추구하지만 변화에 둔감할 수 있음.',
       },
       tiger: {
         name: '호랑이',
@@ -91,14 +93,15 @@ export class AnimalFortuneService {
         lucky: {
           numbers: [1, 3, 4],
           colors: ['파랑', '회색', '주황'],
-          directions: ['동', '남']
+          directions: ['동', '남'],
         },
         compatibility: {
           best: ['horse', 'dog', 'pig'],
-          worst: ['ox', 'tiger', 'snake', 'monkey']
+          worst: ['ox', 'tiger', 'snake', 'monkey'],
         },
         career: ['경영', '정치', '군사', '스포츠'],
-        personality: '용감하고 카리스마가 있으며 정의감이 강함. 리더십이 뛰어나지만 때로는 성급하고 고집스러울 수 있음.'
+        personality:
+          '용감하고 카리스마가 있으며 정의감이 강함. 리더십이 뛰어나지만 때로는 성급하고 고집스러울 수 있음.',
       },
       rabbit: {
         name: '토끼',
@@ -113,14 +116,15 @@ export class AnimalFortuneService {
         lucky: {
           numbers: [3, 4, 6],
           colors: ['빨강', '분홍', '보라', '파랑'],
-          directions: ['동', '남동', '남']
+          directions: ['동', '남동', '남'],
         },
         compatibility: {
           best: ['goat', 'pig', 'dog'],
-          worst: ['rat', 'ox', 'dragon', 'rooster']
+          worst: ['rat', 'ox', 'dragon', 'rooster'],
         },
         career: ['예술', '디자인', '상담', '교육'],
-        personality: '온순하고 배려심이 깊으며 예술적 감각이 뛰어남. 평화를 사랑하지만 때로는 우유부단하고 소극적일 수 있음.'
+        personality:
+          '온순하고 배려심이 깊으며 예술적 감각이 뛰어남. 평화를 사랑하지만 때로는 우유부단하고 소극적일 수 있음.',
       },
       dragon: {
         name: '용',
@@ -135,14 +139,15 @@ export class AnimalFortuneService {
         lucky: {
           numbers: [1, 6, 7],
           colors: ['금색', '은색', '회색'],
-          directions: ['동', '남', '서']
+          directions: ['동', '남', '서'],
         },
         compatibility: {
           best: ['rat', 'monkey', 'rooster'],
-          worst: ['ox', 'rabbit', 'dog', 'dragon']
+          worst: ['ox', 'rabbit', 'dog', 'dragon'],
         },
         career: ['경영', '연예', '정치', 'IT'],
-        personality: '카리스마가 넘치고 야심만만하며 창조적임. 리더 기질이 있지만 때로는 거만하고 독선적일 수 있음.'
+        personality:
+          '카리스마가 넘치고 야심만만하며 창조적임. 리더 기질이 있지만 때로는 거만하고 독선적일 수 있음.',
       },
       snake: {
         name: '뱀',
@@ -157,14 +162,15 @@ export class AnimalFortuneService {
         lucky: {
           numbers: [2, 8, 9],
           colors: ['빨강', '연노랑', '검정'],
-          directions: ['동북', '남서', '남']
+          directions: ['동북', '남서', '남'],
         },
         compatibility: {
           best: ['ox', 'rooster', 'dragon'],
-          worst: ['tiger', 'monkey', 'pig']
+          worst: ['tiger', 'monkey', 'pig'],
         },
         career: ['학술', '의학', '심리학', '금융'],
-        personality: '지혜롭고 직관력이 뛰어나며 신비로운 매력이 있음. 깊이 있는 사고를 하지만 때로는 의심이 많고 질투심이 강할 수 있음.'
+        personality:
+          '지혜롭고 직관력이 뛰어나며 신비로운 매력이 있음. 깊이 있는 사고를 하지만 때로는 의심이 많고 질투심이 강할 수 있음.',
       },
       horse: {
         name: '말',
@@ -179,14 +185,15 @@ export class AnimalFortuneService {
         lucky: {
           numbers: [2, 3, 7],
           colors: ['노랑', '초록'],
-          directions: ['남서', '서북']
+          directions: ['남서', '서북'],
         },
         compatibility: {
           best: ['tiger', 'goat', 'dog'],
-          worst: ['rat', 'ox', 'rabbit', 'horse']
+          worst: ['rat', 'ox', 'rabbit', 'horse'],
         },
         career: ['여행', '스포츠', '언론', '영업'],
-        personality: '활발하고 자유분방하며 열정적임. 모험을 좋아하고 독립적이지만 때로는 변덕스럽고 조급할 수 있음.'
+        personality:
+          '활발하고 자유분방하며 열정적임. 모험을 좋아하고 독립적이지만 때로는 변덕스럽고 조급할 수 있음.',
       },
       goat: {
         name: '양',
@@ -201,14 +208,15 @@ export class AnimalFortuneService {
         lucky: {
           numbers: [3, 4, 5],
           colors: ['초록', '빨강', '보라'],
-          directions: ['북', '서북']
+          directions: ['북', '서북'],
         },
         compatibility: {
           best: ['rabbit', 'horse', 'pig'],
-          worst: ['ox', 'tiger', 'dog']
+          worst: ['ox', 'tiger', 'dog'],
         },
         career: ['예술', '디자인', '복지', '종교'],
-        personality: '온순하고 창조적이며 감성이 풍부함. 협조적이고 친화력이 있지만 때로는 의존적이고 우유부단할 수 있음.'
+        personality:
+          '온순하고 창조적이며 감성이 풍부함. 협조적이고 친화력이 있지만 때로는 의존적이고 우유부단할 수 있음.',
       },
       monkey: {
         name: '원숭이',
@@ -223,14 +231,15 @@ export class AnimalFortuneService {
         lucky: {
           numbers: [1, 7, 8],
           colors: ['흰색', '금색', '파랑'],
-          directions: ['북', '서북', '서']
+          directions: ['북', '서북', '서'],
         },
         compatibility: {
           best: ['rat', 'dragon', 'snake'],
-          worst: ['tiger', 'snake', 'pig']
+          worst: ['tiger', 'snake', 'pig'],
         },
         career: ['IT', '연예', '교육', '연구'],
-        personality: '영리하고 재치있으며 호기심이 많음. 적응력이 뛰어나고 유머러스하지만 때로는 교활하고 일관성이 부족할 수 있음.'
+        personality:
+          '영리하고 재치있으며 호기심이 많음. 적응력이 뛰어나고 유머러스하지만 때로는 교활하고 일관성이 부족할 수 있음.',
       },
       rooster: {
         name: '닭',
@@ -245,14 +254,15 @@ export class AnimalFortuneService {
         lucky: {
           numbers: [5, 7, 8],
           colors: ['금색', '갈색', '노랑'],
-          directions: ['서', '남서', '동북']
+          directions: ['서', '남서', '동북'],
         },
         compatibility: {
           best: ['ox', 'dragon', 'snake'],
-          worst: ['rat', 'rabbit', 'horse', 'rooster']
+          worst: ['rat', 'rabbit', 'horse', 'rooster'],
         },
         career: ['회계', '법률', '행정', '언론'],
-        personality: '정직하고 근면하며 완벽주의적임. 시간 관념이 뚜렷하고 책임감이 강하지만 때로는 비판적이고 까다로울 수 있음.'
+        personality:
+          '정직하고 근면하며 완벽주의적임. 시간 관념이 뚜렷하고 책임감이 강하지만 때로는 비판적이고 까다로울 수 있음.',
       },
       dog: {
         name: '개',
@@ -267,14 +277,15 @@ export class AnimalFortuneService {
         lucky: {
           numbers: [3, 4, 9],
           colors: ['빨강', '초록', '보라'],
-          directions: ['동', '남', '서북']
+          directions: ['동', '남', '서북'],
         },
         compatibility: {
           best: ['tiger', 'rabbit', 'horse'],
-          worst: ['ox', 'dragon', 'goat', 'rooster']
+          worst: ['ox', 'dragon', 'goat', 'rooster'],
         },
         career: ['공무원', '사회복지', '보안', '법률'],
-        personality: '충성스럽고 정의감이 강하며 책임감이 있음. 신뢰할 수 있고 보호 본능이 있지만 때로는 비관적이고 걱정이 많을 수 있음.'
+        personality:
+          '충성스럽고 정의감이 강하며 책임감이 있음. 신뢰할 수 있고 보호 본능이 있지만 때로는 비관적이고 걱정이 많을 수 있음.',
       },
       pig: {
         name: '돼지',
@@ -289,15 +300,16 @@ export class AnimalFortuneService {
         lucky: {
           numbers: [2, 5, 8],
           colors: ['노랑', '회색', '갈색', '금색'],
-          directions: ['남서', '동북']
+          directions: ['남서', '동북'],
         },
         compatibility: {
           best: ['tiger', 'rabbit', 'goat'],
-          worst: ['snake', 'monkey', 'pig']
+          worst: ['snake', 'monkey', 'pig'],
         },
         career: ['요식업', '유통', '금융', '복지'],
-        personality: '관대하고 성실하며 낙천적임. 인정이 많고 포용력이 있지만 때로는 욕심이 많고 게으를 수 있음.'
-      }
+        personality:
+          '관대하고 성실하며 낙천적임. 인정이 많고 포용력이 있지만 때로는 욕심이 많고 게으를 수 있음.',
+      },
     };
 
     // 2025년 을사년(뱀의 해) 특별 운세 정보
@@ -305,7 +317,7 @@ export class AnimalFortuneService {
       yearAnimal: 'snake',
       yearElement: '목',
       yearName: '을사년',
-      characteristics: '지혜와 변화의 해, 내적 성장과 직관력 발달의 시기'
+      characteristics: '지혜와 변화의 해, 내적 성장과 직관력 발달의 시기',
     };
   }
 
@@ -317,7 +329,7 @@ export class AnimalFortuneService {
       includeYearly = true,
       includeMonthly = false,
       includeCompatibility = true,
-      todayDate = null
+      todayDate = null,
     } = options;
 
     if (!this.model) {
@@ -330,7 +342,7 @@ export class AnimalFortuneService {
     }
 
     const today = todayDate || new Date().toISOString().split('T')[0];
-    
+
     // 캐시 키 생성
     const cacheKey = keyBuilder.build('animal-fortune', animal, today);
 
@@ -342,12 +354,18 @@ export class AnimalFortuneService {
     }
 
     try {
-      const prompt = this.buildAnimalPrompt(animalData, today, includeYearly, includeMonthly, includeCompatibility);
-      
+      const prompt = this.buildAnimalPrompt(
+        animalData,
+        today,
+        includeYearly,
+        includeMonthly,
+        includeCompatibility
+      );
+
       logger.info('Generating animal fortune', {
         animal,
         date: today,
-        promptLength: prompt.length
+        promptLength: prompt.length,
       });
 
       const startTime = performance.now();
@@ -359,12 +377,12 @@ export class AnimalFortuneService {
       logger.info('Animal fortune generated', {
         animal,
         responseLength: text.length,
-        duration: Math.round(duration)
+        duration: Math.round(duration),
       });
 
       // 응답 파싱
       const parsedFortune = this.parseAnimalResponse(text);
-      
+
       const fortuneData = {
         ...parsedFortune,
         animal: {
@@ -373,24 +391,23 @@ export class AnimalFortuneService {
           hanja: animalData.hanja,
           element: animalData.element,
           direction: animalData.direction,
-          personality: animalData.personality
+          personality: animalData.personality,
         },
         date: today,
         year2025Influence: this.calculateYearInfluence(animal),
         generatedAt: new Date().toISOString(),
-        aiGenerated: true
+        aiGenerated: true,
       };
 
       // 캐시에 저장 (하루 동안)
       await cache.set(cacheKey, fortuneData, 24 * 60 * 60 * 1000);
 
       return fortuneData;
-
     } catch (error) {
       logger.error('Animal fortune generation failed', {
         error: error.message,
         animal,
-        date: today
+        date: today,
       });
       throw error;
     }
@@ -402,7 +419,7 @@ export class AnimalFortuneService {
   async analyzeAnimalCompatibility(animal1, animal2) {
     const animalData1 = this.animalInfo[animal1];
     const animalData2 = this.animalInfo[animal2];
-    
+
     if (!animalData1 || !animalData2) {
       throw new Error('유효하지 않은 띠입니다.');
     }
@@ -429,7 +446,7 @@ export class AnimalFortuneService {
       const compatibilityAnalysis = {
         animals: {
           animal1: { sign: animal1, name: animalData1.name, hanja: animalData1.hanja },
-          animal2: { sign: animal2, name: animalData2.name, hanja: animalData2.hanja }
+          animal2: { sign: animal2, name: animalData2.name, hanja: animalData2.hanja },
         },
         score: compatibility.score,
         level: compatibility.level,
@@ -437,18 +454,17 @@ export class AnimalFortuneService {
         analysis: text.trim(),
         strengths: compatibility.strengths,
         challenges: compatibility.challenges,
-        generatedAt: new Date().toISOString()
+        generatedAt: new Date().toISOString(),
       };
 
       // 캐시에 저장 (궁합은 변하지 않으므로 긴 캐시)
       await cache.set(cacheKey, compatibilityAnalysis, 7 * 24 * 60 * 60 * 1000);
 
       return compatibilityAnalysis;
-
     } catch (error) {
       logger.error('Animal compatibility analysis failed', {
         error: error.message,
-        animals: [animal1, animal2]
+        animals: [animal1, animal2],
       });
       throw error;
     }
@@ -525,18 +541,18 @@ ${animalData2.name}띠: ${animalData2.element} 오행, ${animalData2.direction} 
    * 12띠 응답 파싱
    */
   parseAnimalResponse(text) {
-    const lines = text.split('\n').filter(line => line.trim());
+    const lines = text.split('\n').filter((line) => line.trim());
     const result = {
       overall: '',
       scores: {},
       descriptions: {},
       advice: '',
-      lucky: {}
+      lucky: {},
     };
 
     for (const line of lines) {
       const trimmed = line.trim();
-      
+
       if (trimmed.includes('종합운:')) {
         result.overall = trimmed.replace(/종합운:\s*/, '').trim();
       } else if (trimmed.includes('애정운:')) {
@@ -567,7 +583,10 @@ ${animalData2.name}띠: ${animalData2.element} 오행, ${animalData2.direction} 
         result.advice = trimmed.replace(/오늘의 조언:\s*/, '').trim();
       } else if (trimmed.includes('행운의 숫자:')) {
         const numbers = trimmed.replace(/행운의 숫자:\s*/, '').trim();
-        result.lucky.numbers = numbers.split(/[,\s]+/).map(n => parseInt(n)).filter(n => !isNaN(n));
+        result.lucky.numbers = numbers
+          .split(/[,\s]+/)
+          .map((n) => parseInt(n))
+          .filter((n) => !isNaN(n));
       } else if (trimmed.includes('행운의 색상:')) {
         result.lucky.color = trimmed.replace(/행운의 색상:\s*/, '').trim();
       } else if (trimmed.includes('행운의 방향:')) {
@@ -582,7 +601,7 @@ ${animalData2.name}띠: ${animalData2.element} 오행, ${animalData2.direction} 
     }
 
     // 평균 점수 계산
-    const scores = Object.values(result.scores).filter(s => typeof s === 'number');
+    const scores = Object.values(result.scores).filter((s) => typeof s === 'number');
     if (scores.length > 0) {
       result.averageScore = Math.round(scores.reduce((a, b) => a + b, 0) / scores.length);
     }
@@ -598,21 +617,28 @@ ${animalData2.name}띠: ${animalData2.element} 오행, ${animalData2.direction} 
     let type = '보통';
 
     // 최고 궁합 확인
-    if (animalData1.compatibility.best.includes(animalData2.name.toLowerCase()) ||
-        animalData2.compatibility.best.includes(animalData1.name.toLowerCase())) {
+    if (
+      animalData1.compatibility.best.includes(animalData2.name.toLowerCase()) ||
+      animalData2.compatibility.best.includes(animalData1.name.toLowerCase())
+    ) {
       score += 30;
       type = '상생';
     }
 
     // 최악 궁합 확인
-    if (animalData1.compatibility.worst.includes(animalData2.name.toLowerCase()) ||
-        animalData2.compatibility.worst.includes(animalData1.name.toLowerCase())) {
+    if (
+      animalData1.compatibility.worst.includes(animalData2.name.toLowerCase()) ||
+      animalData2.compatibility.worst.includes(animalData1.name.toLowerCase())
+    ) {
       score -= 25;
       type = '상극';
     }
 
     // 오행 궁합
-    const elementCompatibility = this.getElementCompatibilityForAnimals(animalData1.element, animalData2.element);
+    const elementCompatibility = this.getElementCompatibilityForAnimals(
+      animalData1.element,
+      animalData2.element
+    );
     score += elementCompatibility;
 
     // 같은 띠인 경우
@@ -637,7 +663,7 @@ ${animalData2.name}띠: ${animalData2.element} 오행, ${animalData2.direction} 
       level,
       type,
       strengths: this.getAnimalCompatibilityStrengths(animalData1, animalData2),
-      challenges: this.getAnimalCompatibilityChallenges(animalData1, animalData2)
+      challenges: this.getAnimalCompatibilityChallenges(animalData1, animalData2),
     };
   }
 
@@ -648,13 +674,13 @@ ${animalData2.name}띠: ${animalData2.element} 오행, ${animalData2.direction} 
     // 오행 상생: 목→화→흙→금→물→목
     // 오행 상극: 목→흙, 화→금, 흙→물, 금→목, 물→화
     const compatibility = {
-      '목': { '목': 5, '화': 15, '흙': -10, '금': -5, '물': 10 },
-      '화': { '목': 10, '화': 5, '흙': 15, '금': -10, '물': -5 },
-      '흙': { '목': -5, '화': 10, '흙': 5, '금': 15, '물': -10 },
-      '금': { '목': -10, '화': -5, '흙': 10, '금': 5, '물': 15 },
-      '물': { '목': 15, '화': -10, '흙': -5, '금': 10, '물': 5 }
+      목: { 목: 5, 화: 15, 흙: -10, 금: -5, 물: 10 },
+      화: { 목: 10, 화: 5, 흙: 15, 금: -10, 물: -5 },
+      흙: { 목: -5, 화: 10, 흙: 5, 금: 15, 물: -10 },
+      금: { 목: -10, 화: -5, 흙: 10, 금: 5, 물: 15 },
+      물: { 목: 15, 화: -10, 흙: -5, 금: 10, 물: 5 },
     };
-    
+
     return compatibility[element1]?.[element2] || 0;
   }
 
@@ -664,13 +690,13 @@ ${animalData2.name}띠: ${animalData2.element} 오행, ${animalData2.direction} 
   calculateYearInfluence(animal) {
     const animalData = this.animalInfo[animal];
     const yearAnimal = this.yearInfo2025.yearAnimal; // snake
-    
+
     // 올해 동물인 경우
     if (animal === yearAnimal) {
       return {
         level: '본명년',
         influence: '높음',
-        description: '본명년으로 변화와 도전의 해. 신중한 판단과 적극적인 자세가 필요.'
+        description: '본명년으로 변화와 도전의 해. 신중한 판단과 적극적인 자세가 필요.',
       };
     }
 
@@ -679,7 +705,7 @@ ${animalData2.name}띠: ${animalData2.element} 오행, ${animalData2.direction} 
       return {
         level: '길년',
         influence: '좋음',
-        description: '뱀띠와 좋은 궁합으로 성장과 발전의 기회가 많은 해.'
+        description: '뱀띠와 좋은 궁합으로 성장과 발전의 기회가 많은 해.',
       };
     }
 
@@ -688,14 +714,14 @@ ${animalData2.name}띠: ${animalData2.element} 오행, ${animalData2.direction} 
       return {
         level: '주의년',
         influence: '주의',
-        description: '뱀띠와 상극으로 신중함과 인내심이 필요한 해.'
+        description: '뱀띠와 상극으로 신중함과 인내심이 필요한 해.',
       };
     }
 
     return {
       level: '평년',
       influence: '보통',
-      description: '안정적인 한 해. 꾸준한 노력으로 좋은 결과를 얻을 수 있음.'
+      description: '안정적인 한 해. 꾸준한 노력으로 좋은 결과를 얻을 수 있음.',
     };
   }
 
@@ -704,7 +730,11 @@ ${animalData2.name}띠: ${animalData2.element} 오행, ${animalData2.direction} 
    */
   getAnimalCompatibilityStrengths(animalData1, animalData2) {
     // 실제로는 더 복잡한 로직이 필요하지만 예시로 구현
-    return [`${animalData1.name}띠의 ${animalData1.traits[0]}과 ${animalData2.name}띠의 ${animalData2.traits[0]}이 조화`, '상호 보완적 관계', '공통 가치관'];
+    return [
+      `${animalData1.name}띠의 ${animalData1.traits[0]}과 ${animalData2.name}띠의 ${animalData2.traits[0]}이 조화`,
+      '상호 보완적 관계',
+      '공통 가치관',
+    ];
   }
 
   /**
@@ -725,7 +755,7 @@ ${animalData2.name}띠: ${animalData2.element} 오행, ${animalData2.direction} 
       model: this.model ? 'gemini-1.5-flash' : null,
       supportedAnimals: Object.keys(this.animalInfo),
       currentYear: this.yearInfo2025.yearName,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     };
   }
 }

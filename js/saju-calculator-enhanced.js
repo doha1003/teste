@@ -156,8 +156,8 @@ class SajuCalculatorEnhanced {
         year: solarDate.year,
         month: solarDate.month,
         day: solarDate.day,
-        hour: hour,
-        isLunar: isLunar,
+        hour,
+        isLunar,
       },
       yearPillar,
       monthPillar,
@@ -188,8 +188,12 @@ class SajuCalculatorEnhanced {
     let stemIndex = diff % 10;
     let branchIndex = diff % 12;
 
-    if (stemIndex < 0) stemIndex += 10;
-    if (branchIndex < 0) branchIndex += 12;
+    if (stemIndex < 0) {
+      stemIndex += 10;
+    }
+    if (branchIndex < 0) {
+      branchIndex += 12;
+    }
 
     return {
       stem: this.HEAVENLY_STEMS[stemIndex],
@@ -244,10 +248,14 @@ class SajuCalculatorEnhanced {
     const daysDiff = Math.floor((targetDate - referenceDate) / (1000 * 60 * 60 * 24));
 
     let stemIndex = (2 + daysDiff) % 10;
-    if (stemIndex < 0) stemIndex += 10;
+    if (stemIndex < 0) {
+      stemIndex += 10;
+    }
 
     let branchIndex = (6 + daysDiff) % 12;
-    if (branchIndex < 0) branchIndex += 12;
+    if (branchIndex < 0) {
+      branchIndex += 12;
+    }
 
     return {
       stem: this.HEAVENLY_STEMS[stemIndex],
@@ -413,7 +421,7 @@ class SajuCalculatorEnhanced {
    * 사주 해석 생성
    */
   generateInterpretation(saju) {
-    const dayMaster = saju.dayMaster;
+    const { dayMaster } = saju;
     const element = saju.dayMasterElement;
 
     // 일주별 기본 성격
@@ -450,7 +458,7 @@ class SajuCalculatorEnhanced {
       수: '지혜롭고 유연하며, 상황에 대한 적응력이 뛰어납니다.',
     };
 
-    const balance = saju.elements.balance.balance;
+    const { balance } = saju.elements.balance;
     const balanceDesc =
       balance === '균형'
         ? '균형 잡힌 성격으로 다양한 상황에서 안정적입니다.'
@@ -460,7 +468,7 @@ class SajuCalculatorEnhanced {
   }
 
   generateFortuneAnalysis(saju) {
-    const tenGods = saju.tenGods;
+    const { tenGods } = saju;
     const godCounts = {};
 
     // 십신 개수 세기
@@ -537,7 +545,7 @@ class SajuCalculatorEnhanced {
   }
 
   generateRelationshipAnalysis(saju) {
-    const dayMaster = saju.dayMaster;
+    const { dayMaster } = saju;
     const yinYang = this.YIN_YANG[dayMaster];
 
     let relationshipDesc =
@@ -553,7 +561,7 @@ class SajuCalculatorEnhanced {
       relationshipDesc += '연장자나 스승과의 인연이 깊습니다. ';
     }
 
-    return relationshipDesc + '서로를 이해하고 존중하는 관계를 구축하는 것이 중요합니다.';
+    return `${relationshipDesc}서로를 이해하고 존중하는 관계를 구축하는 것이 중요합니다.`;
   }
 
   /**

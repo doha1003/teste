@@ -22,7 +22,9 @@ class ManseryeokClient {
   // 캐시에서 데이터 가져오기
   getFromCache(key) {
     const cached = this.cache.get(key);
-    if (!cached) return null;
+    if (!cached) {
+      return null;
+    }
 
     // 만료 확인
     if (Date.now() > cached.expiry) {
@@ -36,7 +38,7 @@ class ManseryeokClient {
   // 캐시에 데이터 저장
   saveToCache(key, data) {
     this.cache.set(key, {
-      data: data,
+      data,
       expiry: Date.now() + this.cacheExpiry,
     });
   }
@@ -54,9 +56,9 @@ class ManseryeokClient {
     try {
       // API 호출
       const params = new URLSearchParams({
-        year: year,
-        month: month,
-        day: day,
+        year,
+        month,
+        day,
       });
 
       if (hour !== null) {
@@ -84,10 +86,8 @@ class ManseryeokClient {
         throw new Error(result.error || 'Unknown error');
       }
     } catch (error) {
-
       // 폴백: 로컬 데이터 사용 (있는 경우)
       if (window.getManseryeokData) {
-        
         return window.getManseryeokData(year, month, day);
       }
 
@@ -141,16 +141,13 @@ class ManseryeokClient {
           });
         }
       } catch (error) {
-        
         // 개별 조회로 폴백
         for (const date of uncachedDates) {
           try {
             const data = await this.getDate(date.year, date.month, date.day, date.hour);
             const cacheKey = this.getCacheKey(date.year, date.month, date.day, date.hour);
             results.set(cacheKey, data);
-          } catch (err) {
-            
-          }
+          } catch (err) {}
         }
       }
     }
@@ -181,14 +178,12 @@ window.getManseryeokDataAsync = async function (year, month, day) {
   try {
     return await window.manseryeokClient.getDate(year, month, day);
   } catch (error) {
-    
     return null;
   }
 };
 
 // 동기 버전 (기존 코드 호환성을 위해)
 window.getManseryeokData = function (year, month, day) {
-
   // 캐시 확인
   const cacheKey = window.manseryeokClient.getCacheKey(year, month, day);
   const cached = window.manseryeokClient.getFromCache(cacheKey);

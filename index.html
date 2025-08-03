@@ -11,10 +11,11 @@
       content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=yes"
     />
     <title>doha.kr - 일상을 더 재미있게 만드는 공간</title>
-    <!-- 폰트 프리로드 (CDN) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- 폰트 최적화 (즉시 필요한 것만 preload) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600&display=swap"></noscript>
 
     <meta
       name="description"
@@ -49,18 +50,14 @@
     <link rel="apple-touch-icon" href="/images/android-chrome-192x192.png" />
     <link rel="manifest" href="/manifest.json" />
 
-    <!-- 폰트 -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="preconnect"
-      crossorigin
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap"
-      rel="stylesheet"
-    />
+    <!-- Critical CSS (인라인) - Above-the-fold 렌더링 최적화 -->
+    <style>
+:root{--color-primary:#5c5ce0;--color-white:#fff;--color-gray-900:#111827;--bg-primary:#fff;--text-primary:#1a1a1a;--font-family:"Pretendard",-apple-system,BlinkMacSystemFont,sans-serif;--font-size-base:1rem;--line-height-normal:1.7;--spacing-md:1rem;--radius-md:8px;--shadow-md:0 4px 6px -1px rgba(0,0,0,.1);--transition-base:200ms ease}*,*:before,*:after{box-sizing:border-box;margin:0;padding:0}*{word-break:keep-all;overflow-wrap:break-word}html{font-size:16px;-webkit-text-size-adjust:100%}body{font-family:var(--font-family);font-size:var(--font-size-base);line-height:var(--line-height-normal);color:var(--text-primary);background:var(--bg-primary);word-break:keep-all;margin:0;padding:0;min-height:100vh}.navbar{background:var(--bg-primary);position:sticky;top:0;z-index:1000}.header,.hero{text-align:center;padding:60px 20px}.header h1,.hero-title{font-size:3rem;font-weight:800;color:var(--text-primary);margin-bottom:20px}.header p,.hero-subtitle{font-size:1.25rem;color:var(--text-primary);margin-bottom:40px}.container{max-width:1200px;margin:0 auto;padding:0 20px}.btn,.btn-primary{display:inline-flex;align-items:center;justify-content:center;padding:12px 24px;border-radius:var(--radius-md);font-family:inherit;font-size:var(--font-size-base);text-decoration:none;transition:var(--transition-base);cursor:pointer;border:none}.btn-primary{background:var(--color-primary);color:var(--color-white)}.card{background:var(--bg-primary);border-radius:var(--radius-md);padding:var(--spacing-md);box-shadow:var(--shadow-md);transition:var(--transition-base)}.grid{display:grid;gap:var(--spacing-md)}@media (max-width:768px){.header h1,.hero-title{font-size:2rem}.header p,.hero-subtitle{font-size:1rem}.container{padding:0 16px}}
+    </style>
 
-    <!-- Main CSS Bundle (모든 CSS 포함) -->
-    <link rel="stylesheet" href="/dist/styles.min.css" id="main-styles">
+    <!-- 비동기 CSS 로딩 (성능 최적화) -->
+    <link rel="preload" href="/dist/styles.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" id="main-styles">
+    <noscript><link rel="stylesheet" href="/dist/styles.min.css"></noscript>
 
     <!-- Page Data Attributes -->
     <script>
@@ -412,17 +409,31 @@
       <footer id="footer-placeholder" role="contentinfo" aria-label="사이트 정보"></footer>
     </main>
 
-    <!-- Logger Initialization (Load First) -->
+    <!-- Critical JavaScript (즉시 필요) -->
     <script src="/js/logger-init.js"></script>
+    <script type="module" src="/js/app.js" defer></script>
 
-    <!-- Core JavaScript -->
-    <script type="module" src="/js/app.js"></script>
-
-    <!-- Page JavaScript -->
-    <script type="module" src="/js/pages/home.js"></script>
-
-    <!-- External SDKs (지연 로딩) -->
-    <script async src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js"></script>
+    <!-- Non-Critical JavaScript (지연 로딩으로 성능 최적화) -->
+    <script>
+      // 페이지 로드 완료 후 비중요 스크립트 로딩
+      window.addEventListener('load', function() {
+        // 홈 페이지 스크립트 지연 로딩
+        const homeScript = document.createElement('script');
+        homeScript.type = 'module';
+        homeScript.src = '/js/pages/home.js';
+        document.head.appendChild(homeScript);
+      });
+      
+      // 카카오 SDK 조건부 로딩 함수
+      window.loadKakaoSDK = function() {
+        if (!window.Kakao) {
+          const script = document.createElement('script');
+          script.async = true;
+          script.src = 'https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js';
+          document.head.appendChild(script);
+        }
+      };
+    </script>
     <script
       async
       src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222"

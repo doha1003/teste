@@ -13,7 +13,7 @@ const LOG_LEVELS = {
   INFO: 1,
   WARN: 2,
   ERROR: 3,
-  CRITICAL: 4
+  CRITICAL: 4,
 };
 
 const LOG_LEVEL_NAMES = {
@@ -21,7 +21,7 @@ const LOG_LEVEL_NAMES = {
   1: 'INFO',
   2: 'WARN',
   3: 'ERROR',
-  4: 'CRITICAL'
+  4: 'CRITICAL',
 };
 
 // 환경별 설정
@@ -31,22 +31,22 @@ const CONFIG = {
     enableConsole: true,
     enableRemote: false,
     enablePerformance: true,
-    enableUserTracking: false
+    enableUserTracking: false,
   },
   production: {
     minLevel: LOG_LEVELS.INFO,
     enableConsole: false,
     enableRemote: true,
     enablePerformance: true,
-    enableUserTracking: true
+    enableUserTracking: true,
   },
   test: {
     minLevel: LOG_LEVELS.WARN,
     enableConsole: false,
     enableRemote: false,
     enablePerformance: false,
-    enableUserTracking: false
-  }
+    enableUserTracking: false,
+  },
 };
 
 class Logger {
@@ -59,7 +59,7 @@ class Logger {
     this.remoteUrl = '/api/logs';
     this.flushInterval = 5000; // 5초마다 원격 로그 전송
     this.maxBufferSize = 100;
-    
+
     this.initializeRemoteLogging();
     this.setupUnhandledErrorCapture();
     this.setupPerformanceMonitoring();
@@ -69,9 +69,11 @@ class Logger {
    * 환경 감지
    */
   detectEnvironment() {
-    if (typeof window === 'undefined') {return 'test';}
-    
-    const {hostname} = window.location;
+    if (typeof window === 'undefined') {
+      return 'test';
+    }
+
+    const { hostname } = window.location;
     if (hostname === 'localhost' || hostname === '127.0.0.1') {
       return 'development';
     }
@@ -82,18 +84,20 @@ class Logger {
    * 세션 ID 생성
    */
   generateSessionId() {
-    return `session_${  Date.now()  }_${  Math.random().toString(36).substr(2, 9)}`;
+    return `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
   }
 
   /**
    * 사용자 ID 가져오기 (익명화된 ID)
    */
   getUserId() {
-    if (!this.config.enableUserTracking) {return null;}
-    
+    if (!this.config.enableUserTracking) {
+      return null;
+    }
+
     let userId = localStorage.getItem('doha_user_id');
     if (!userId) {
-      userId = `user_${  Date.now()  }_${  Math.random().toString(36).substr(2, 9)}`;
+      userId = `user_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
       localStorage.setItem('doha_user_id', userId);
     }
     return userId;
@@ -103,7 +107,9 @@ class Logger {
    * 원격 로깅 초기화
    */
   initializeRemoteLogging() {
-    if (!this.config.enableRemote) {return;}
+    if (!this.config.enableRemote) {
+      return;
+    }
 
     // 주기적으로 원격 로그 전송
     this.flushTimer = setInterval(() => {
@@ -134,7 +140,7 @@ class Logger {
         lineno: event.lineno,
         colno: event.colno,
         stack: event.error?.stack,
-        type: 'javascript_error'
+        type: 'javascript_error',
       });
     });
 
@@ -142,7 +148,7 @@ class Logger {
       this.error('Unhandled Promise Rejection', {
         reason: event.reason,
         promise: event.promise,
-        type: 'promise_rejection'
+        type: 'promise_rejection',
       });
     });
   }
@@ -151,7 +157,9 @@ class Logger {
    * 성능 모니터링 설정
    */
   setupPerformanceMonitoring() {
-    if (!this.config.enablePerformance) {return;}
+    if (!this.config.enablePerformance) {
+      return;
+    }
 
     // 페이지 로드 성능
     window.addEventListener('load', () => {
@@ -177,7 +185,7 @@ class Logger {
         this.info('LCP Metric', {
           value: lastEntry.startTime,
           element: lastEntry.element?.tagName,
-          type: 'web_vital'
+          type: 'web_vital',
         });
       }).observe({ entryTypes: ['largest-contentful-paint'] });
 
@@ -186,7 +194,7 @@ class Logger {
         for (const entry of entryList.getEntries()) {
           this.info('FID Metric', {
             value: entry.processingStart - entry.startTime,
-            type: 'web_vital'
+            type: 'web_vital',
           });
         }
       }).observe({ entryTypes: ['first-input'] });
@@ -201,10 +209,9 @@ class Logger {
         }
         this.info('CLS Metric', {
           value: clsValue,
-          type: 'web_vital'
+          type: 'web_vital',
         });
       }).observe({ entryTypes: ['layout-shift'] });
-
     } catch (error) {
       this.debug('Web Vitals monitoring not supported', { error: error.message });
     }
@@ -217,8 +224,8 @@ class Logger {
     const navigation = performance.getEntriesByType('navigation')[0];
     const paint = performance.getEntriesByType('paint');
 
-    const fcp = paint.find(entry => entry.name === 'first-contentful-paint');
-    const lcp = paint.find(entry => entry.name === 'largest-contentful-paint');
+    const fcp = paint.find((entry) => entry.name === 'first-contentful-paint');
+    const lcp = paint.find((entry) => entry.name === 'largest-contentful-paint');
 
     return {
       page_load_time: navigation.loadEventEnd - navigation.fetchStart,
@@ -228,7 +235,7 @@ class Logger {
       dns_lookup: navigation.domainLookupEnd - navigation.domainLookupStart,
       tcp_connection: navigation.connectEnd - navigation.connectStart,
       request_response: navigation.responseEnd - navigation.requestStart,
-      type: 'performance_metrics'
+      type: 'performance_metrics',
     };
   }
 
@@ -251,23 +258,25 @@ class Logger {
         sessionId: this.sessionId,
         userId: this.userId,
         environment: this.environment,
-        ...context
+        ...context,
       },
       metadata: {
         viewport: {
           width: window.innerWidth || 0,
-          height: window.innerHeight || 0
+          height: window.innerHeight || 0,
         },
         screen: {
           width: screen.width || 0,
-          height: screen.height || 0
+          height: screen.height || 0,
         },
-        connection: navigator.connection ? {
-          effectiveType: navigator.connection.effectiveType,
-          downlink: navigator.connection.downlink,
-          rtt: navigator.connection.rtt
-        } : null
-      }
+        connection: navigator.connection
+          ? {
+              effectiveType: navigator.connection.effectiveType,
+              downlink: navigator.connection.downlink,
+              rtt: navigator.connection.rtt,
+            }
+          : null,
+      },
     };
   }
 
@@ -275,7 +284,9 @@ class Logger {
    * 로그 출력 (레벨별)
    */
   log(level, message, data = {}, context = {}) {
-    if (level < this.config.minLevel) {return;}
+    if (level < this.config.minLevel) {
+      return;
+    }
 
     const logEntry = this.createLogEntry(level, message, data, context);
 
@@ -298,14 +309,14 @@ class Logger {
   outputToConsole(logEntry) {
     const { level, message, data, context } = logEntry;
     const style = this.getConsoleStyle(level);
-    
+
     const prefix = `[${level}] ${new Date(logEntry.timestamp).toLocaleTimeString()}`;
-    
+
     if (Object.keys(data).length > 0) {
-      console.groupCollapsed(`%c${prefix} ${message}`, style);
-      console.log('Data:', data);
-      console.log('Context:', context);
-      console.groupEnd();
+      console.groupCollapsed(`%c${prefix} ${message}`, style); // eslint-disable-line no-console
+      console.log('Data:', data); // eslint-disable-line no-console
+      console.log('Context:', context); // eslint-disable-line no-console
+      console.groupEnd(); // eslint-disable-line no-console
     } else {
       const consoleFn = this.getConsoleFn(level);
       consoleFn(`%c${prefix} ${message}`, style);
@@ -321,7 +332,7 @@ class Logger {
       INFO: 'color: #2196F3; font-weight: bold;',
       WARN: 'color: #FF9800; font-weight: bold;',
       ERROR: 'color: #F44336; font-weight: bold; background: #ffebee; padding: 2px 4px;',
-      CRITICAL: 'color: white; background: #D32F2F; font-weight: bold; padding: 2px 4px;'
+      CRITICAL: 'color: white; background: #D32F2F; font-weight: bold; padding: 2px 4px;',
     };
     return styles[level] || styles.INFO;
   }
@@ -331,13 +342,13 @@ class Logger {
    */
   getConsoleFn(level) {
     const consoleFns = {
-      DEBUG: console.debug,
-      INFO: console.info,
-      WARN: console.warn,
-      ERROR: console.error,
-      CRITICAL: console.error
+      DEBUG: console.debug, // eslint-disable-line no-console
+      INFO: console.info, // eslint-disable-line no-console
+      WARN: console.warn, // eslint-disable-line no-console
+      ERROR: console.error, // eslint-disable-line no-console
+      CRITICAL: console.error, // eslint-disable-line no-console
     };
-    return consoleFns[level] || console.log;
+    return consoleFns[level] || console.log; // eslint-disable-line no-console
   }
 
   /**
@@ -345,7 +356,7 @@ class Logger {
    */
   addToRemoteBuffer(logEntry) {
     this.remoteBuffer.push(logEntry);
-    
+
     if (this.remoteBuffer.length >= this.maxBufferSize) {
       this.flushRemoteLogs();
     }
@@ -355,7 +366,9 @@ class Logger {
    * 원격 로그 전송
    */
   async flushRemoteLogs(isBeforeUnload = false) {
-    if (this.remoteBuffer.length === 0) {return;}
+    if (this.remoteBuffer.length === 0) {
+      return;
+    }
 
     const logs = [...this.remoteBuffer];
     this.remoteBuffer = [];
@@ -366,8 +379,8 @@ class Logger {
         session: {
           sessionId: this.sessionId,
           userId: this.userId,
-          environment: this.environment
-        }
+          environment: this.environment,
+        },
       };
 
       if (isBeforeUnload && navigator.sendBeacon) {
@@ -378,9 +391,9 @@ class Logger {
         await fetch(this.remoteUrl, {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
           },
-          body: JSON.stringify(payload)
+          body: JSON.stringify(payload),
         });
       }
     } catch (error) {
@@ -388,7 +401,7 @@ class Logger {
       if (!isBeforeUnload && this.remoteBuffer.length < this.maxBufferSize) {
         this.remoteBuffer.unshift(...logs.slice(0, this.maxBufferSize - this.remoteBuffer.length));
       }
-      console.warn('Failed to send remote logs:', error);
+      console.warn('Failed to send remote logs:', error); // eslint-disable-line no-console
     }
   }
 
@@ -428,10 +441,10 @@ class Logger {
         const duration = endTime - startTime;
         this.info(`Timer: ${label}`, {
           duration: Math.round(duration * 100) / 100,
-          type: 'performance_timer'
+          type: 'performance_timer',
         });
         return duration;
-      }
+      },
     };
   }
 
@@ -439,12 +452,14 @@ class Logger {
    * 사용자 행동 로깅
    */
   logUserAction(action, data = {}) {
-    if (!this.config.enableUserTracking) {return;}
-    
+    if (!this.config.enableUserTracking) {
+      return;
+    }
+
     this.info(`User Action: ${action}`, {
       ...data,
       type: 'user_action',
-      timestamp: Date.now()
+      timestamp: Date.now(),
     });
   }
 
@@ -459,7 +474,7 @@ class Logger {
       status,
       duration,
       type: 'api_call',
-      ...data
+      ...data,
     });
   }
 
@@ -496,13 +511,13 @@ const logger = {
   warn: (message, data, context) => getLogger().warn(message, data, context),
   error: (message, data, context) => getLogger().error(message, data, context),
   critical: (message, data, context) => getLogger().critical(message, data, context),
-  
+
   startTimer: (label) => getLogger().startTimer(label),
   logUserAction: (action, data) => getLogger().logUserAction(action, data),
-  logApiCall: (endpoint, method, status, duration, data) => 
+  logApiCall: (endpoint, method, status, duration, data) =>
     getLogger().logApiCall(endpoint, method, status, duration, data),
-  
-  getInstance: getLogger
+
+  getInstance: getLogger,
 };
 
 // ES6 모듈로 내보내기

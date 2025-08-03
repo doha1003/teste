@@ -7,7 +7,6 @@
 
   // 결과 상세 페이지 초기화
   function initResultDetail() {
-
     // URL 파라미터에서 결과 정보 가져오기
     const urlParams = new URLSearchParams(window.location.search);
     const resultType = urlParams.get('type');

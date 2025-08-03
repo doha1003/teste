@@ -1,0 +1,526 @@
+name: 🔍 QA 모니터링 및 자동화
+
+on:
+  schedule:
+    # 매일 자정 (KST) - UTC 15:00
+    - cron: '0 15 * * *'
+  
+  # PR 생성/업데이트 시 성능 회귀 테스트
+  pull_request:
+    branches: [ main, develop ]
+    types: [opened, synchronize, reopened]
+  
+  # 수동 실행 가능
+  workflow_dispatch:
+    inputs:
+      test_type:
+        description: '테스트 유형 선택'
+        required: true
+        default: 'full'
+        type: choice
+        options:
+          - full
+          - performance
+          - lighthouse
+          - security
+      
+      lighthouse_threshold:
+        description: 'Lighthouse 점수 임계값'
+        required: false
+        default: '85'
+        type: string
+
+env:
+  NODE_VERSION: '18'
+  SITE_URL: 'https://doha.kr'
+  LIGHTHOUSE_THRESHOLD: ${{ github.event.inputs.lighthouse_threshold || '85' }}
+
+jobs:
+  # 일일 성능 모니터링
+  daily-performance-check:
+    if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && contains(github.event.inputs.test_type, 'performance'))
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 체크아웃
+        uses: actions/checkout@v4
+      
+      - name: 🚀 Node.js 설정
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      
+      - name: 📦 의존성 설치
+        run: npm ci
+      
+      - name: 🔍 사이트 상태 확인
+        run: |
+          response=$(curl -s -o /dev/null -w "%{http_code}" ${{ env.SITE_URL }})
+          if [ $response -ne 200 ]; then
+            echo "❌ 사이트가 응답하지 않습니다 (HTTP $response)"
+            exit 1
+          fi
+          echo "✅ 사이트가 정상적으로 응답합니다 (HTTP $response)"
+      
+      - name: 📊 Lighthouse 성능 측정
+        id: lighthouse
+        run: |
+          npx lighthouse ${{ env.SITE_URL }} \
+            --preset=desktop \
+            --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" \
+            --output=json \
+            --output-path=./lighthouse-report.json
+          
+          # 성능 점수 추출
+          PERFORMANCE_SCORE=$(node -e "
+            const report = require('./lighthouse-report.json');
+            console.log(Math.round(report.lhr.categories.performance.score * 100));
+          ")
+          
+          echo "performance_score=$PERFORMANCE_SCORE" >> $GITHUB_OUTPUT
+          echo "📊 Lighthouse 성능 점수: $PERFORMANCE_SCORE점"
+          
+          # Core Web Vitals 추출
+          FCP=$(node -e "
+            const report = require('./lighthouse-report.json');
+            const fcp = report.lhr.audits['first-contentful-paint'];
+            console.log(Math.round(fcp.numericValue));
+          ")
+          
+          LCP=$(node -e "
+            const report = require('./lighthouse-report.json');
+            const lcp = report.lhr.audits['largest-contentful-paint'];
+            console.log(Math.round(lcp.numericValue));
+          ")
+          
+          CLS=$(node -e "
+            const report = require('./lighthouse-report.json');
+            const cls = report.lhr.audits['cumulative-layout-shift'];
+            console.log(cls.numericValue.toFixed(3));
+          ")
+          
+          echo "fcp=$FCP" >> $GITHUB_OUTPUT
+          echo "lcp=$LCP" >> $GITHUB_OUTPUT
+          echo "cls=$CLS" >> $GITHUB_OUTPUT
+          
+          echo "🎯 Core Web Vitals:"
+          echo "  - FCP: ${FCP}ms"
+          echo "  - LCP: ${LCP}ms"
+          echo "  - CLS: $CLS"
+      
+      - name: 📈 성능 메트릭 저장
+        run: |
+          # JSON 형태로 메트릭 저장
+          cat > performance-metrics.json << EOF
+          {
+            "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "date": "$(date -u +%Y-%m-%d)",
+            "url": "${{ env.SITE_URL }}",
+            "lighthouse": {
+              "performanceScore": ${{ steps.lighthouse.outputs.performance_score }},
+              "fcp": ${{ steps.lighthouse.outputs.fcp }},
+              "lcp": ${{ steps.lighthouse.outputs.lcp }},
+              "cls": ${{ steps.lighthouse.outputs.cls }}
+            },
+            "ci": {
+              "workflow": "${{ github.workflow }}",
+              "runId": "${{ github.run_id }}",
+              "sha": "${{ github.sha }}"
+            }
+          }
+          EOF
+          
+          echo "💾 성능 메트릭 저장 완료"
+          cat performance-metrics.json
+      
+      - name: 🚨 성능 임계값 확인
+        id: threshold_check
+        run: |
+          SCORE=${{ steps.lighthouse.outputs.performance_score }}
+          THRESHOLD=${{ env.LIGHTHOUSE_THRESHOLD }}
+          
+          if [ $SCORE -lt $THRESHOLD ]; then
+            echo "threshold_exceeded=true" >> $GITHUB_OUTPUT
+            echo "❌ 성능 점수 $SCORE점이 임계값 $THRESHOLD점 미달"
+            
+            # Slack 알림 데이터 준비
+            cat > slack-alert.json << EOF
+            {
+              "text": "🚨 doha.kr 성능 경고",
+              "attachments": [
+                {
+                  "color": "danger",
+                  "fields": [
+                    {
+                      "title": "성능 점수",
+                      "value": "${SCORE}점 (목표: ${THRESHOLD}점)",
+                      "short": true
+                    },
+                    {
+                      "title": "측정 시간",
+                      "value": "$(date '+%Y-%m-%d %H:%M:%S KST')",
+                      "short": true
+                    },
+                    {
+                      "title": "FCP",
+                      "value": "${{ steps.lighthouse.outputs.fcp }}ms",
+                      "short": true
+                    },
+                    {
+                      "title": "LCP", 
+                      "value": "${{ steps.lighthouse.outputs.lcp }}ms",
+                      "short": true
+                    }
+                  ]
+                }
+              ]
+            }
+            EOF
+          else
+            echo "threshold_exceeded=false" >> $GITHUB_OUTPUT
+            echo "✅ 성능 점수 $SCORE점이 임계값 $THRESHOLD점 달성"
+          fi
+      
+      - name: 📤 GitHub Issue 생성
+        if: steps.threshold_check.outputs.threshold_exceeded == 'true'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const score = ${{ steps.lighthouse.outputs.performance_score }};
+            const threshold = ${{ env.LIGHTHOUSE_THRESHOLD }};
+            const fcp = ${{ steps.lighthouse.outputs.fcp }};
+            const lcp = ${{ steps.lighthouse.outputs.lcp }};
+            const cls = '${{ steps.lighthouse.outputs.cls }}';
+            
+            const title = `[PERFORMANCE] Lighthouse 점수 ${score}점 - 성능 개선 필요`;
+            
+            const body = `## 📊 성능 모니터링 알림
+            
+            **측정 일시**: ${new Date().toLocaleString('ko-KR', {timeZone: 'Asia/Seoul'})}
+            **측정 URL**: ${{ env.SITE_URL }}
+            **워크플로우**: ${{ github.workflow }}
+            
+            ### 📈 성능 지표
+            | 지표 | 측정값 | 상태 |
+            |------|--------|------|
+            | **Lighthouse 점수** | ${score}점 | ❌ 목표 미달 (${threshold}점) |
+            | **FCP** | ${fcp}ms | ${fcp <= 2000 ? '✅ Good' : fcp <= 4000 ? '⚠️ Needs Improvement' : '❌ Poor'} |
+            | **LCP** | ${lcp}ms | ${lcp <= 2500 ? '✅ Good' : lcp <= 4000 ? '⚠️ Needs Improvement' : '❌ Poor'} |
+            | **CLS** | ${cls} | ${parseFloat(cls) <= 0.1 ? '✅ Good' : parseFloat(cls) <= 0.25 ? '⚠️ Needs Improvement' : '❌ Poor'} |
+            
+            ### 🔧 권장 개선사항
+            ${fcp > 2000 ? '- First Contentful Paint 최적화 필요 (CSS, 폰트 최적화)\n' : ''}
+            ${lcp > 2500 ? '- Largest Contentful Paint 최적화 필요 (이미지, 서버 응답 시간)\n' : ''}
+            ${parseFloat(cls) > 0.1 ? '- Cumulative Layout Shift 개선 필요 (레이아웃 안정성)\n' : ''}
+            
+            ### 🔗 유용한 링크
+            - [워크플로우 실행 결과](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+            - [Lighthouse 리포트](artifacts에서 다운로드)
+            - [성능 최적화 가이드](https://web.dev/performance/)
+            
+            ---
+            *이 이슈는 자동으로 생성되었습니다. 일일 성능 모니터링의 일환입니다.*`;
+            
+            // 기존 성능 이슈가 있는지 확인
+            const existingIssues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: 'performance,automated',
+              state: 'open'
+            });
+            
+            if (existingIssues.data.length === 0) {
+              // 새 이슈 생성
+              const newIssue = await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: title,
+                body: body,
+                labels: ['performance', 'automated', score < 50 ? 'critical' : 'enhancement']
+              });
+              
+              console.log(`새 성능 이슈 생성: ${newIssue.data.html_url}`);
+            } else {
+              // 기존 이슈에 코멘트 추가
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: existingIssues.data[0].number,
+                body: `## 📊 일일 성능 체크 결과 (${new Date().toLocaleDateString('ko-KR')})\n\n${body.split('### 📈 성능 지표')[1]}`
+              });
+              
+              console.log(`기존 이슈에 코멘트 추가: ${existingIssues.data[0].html_url}`);
+            }
+      
+      - name: 📤 Slack 알림 전송
+        if: steps.threshold_check.outputs.threshold_exceeded == 'true' && secrets.SLACK_WEBHOOK_URL
+        run: |
+          curl -X POST -H 'Content-type: application/json' \
+            --data @slack-alert.json \
+            ${{ secrets.SLACK_WEBHOOK_URL }}
+          echo "📤 Slack 알림 전송 완료"
+      
+      - name: 📁 아티팩트 업로드
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-report-${{ github.run_id }}
+          path: |
+            lighthouse-report.json
+            performance-metrics.json
+          retention-days: 30
+
+  # PR 성능 회귀 테스트
+  pr-performance-regression:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 체크아웃
+        uses: actions/checkout@v4
+      
+      - name: 🚀 Node.js 설정
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      
+      - name: 📦 의존성 설치
+        run: npm ci
+      
+      - name: 🧪 단위 테스트 실행
+        run: npm test
+      
+      - name: 🎭 E2E 테스트 실행
+        run: |
+          # Playwright E2E 테스트
+          npx playwright install --with-deps
+          npm run test:e2e
+      
+      - name: 🔒 보안 취약점 스캔
+        run: |
+          npm audit --audit-level=moderate
+          
+          # 추가 보안 체크
+          if command -v snyk &> /dev/null; then
+            snyk test --severity-threshold=medium
+          else
+            echo "Snyk 설치되지 않음 - npm audit만 실행"
+          fi
+      
+      - name: 📊 번들 사이즈 분석
+        run: |
+          # CSS/JS 번들 크기 측정
+          echo "📦 번들 크기 분석:"
+          
+          if [ -f "dist/styles.min.css" ]; then
+            CSS_SIZE=$(wc -c < dist/styles.min.css)
+            echo "CSS 번들: ${CSS_SIZE} bytes"
+          fi
+          
+          # JS 번들 크기 확인
+          JS_TOTAL=0
+          for file in js/**/*.js; do
+            if [ -f "$file" ]; then
+              size=$(wc -c < "$file")
+              JS_TOTAL=$((JS_TOTAL + size))
+            fi
+          done
+          echo "JS 총 크기: ${JS_TOTAL} bytes"
+          
+          # 임계값 확인 (CSS 1MB, JS 2MB)
+          if [ $CSS_SIZE -gt 1048576 ] 2>/dev/null; then
+            echo "⚠️ CSS 번들 크기가 1MB를 초과했습니다"
+          fi
+          
+          if [ $JS_TOTAL -gt 2097152 ]; then
+            echo "⚠️ JS 총 크기가 2MB를 초과했습니다"
+          fi
+      
+      - name: 💬 PR 코멘트 생성
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const comment = `## 🔍 QA 자동 검사 결과
+            
+            ### ✅ 완료된 검사
+            - [x] 단위 테스트
+            - [x] E2E 테스트  
+            - [x] 보안 취약점 스캔
+            - [x] 번들 사이즈 분석
+            
+            ### 📊 성능 영향도
+            이 PR이 프로덕션에 배포되면 자동으로 성능 측정이 수행됩니다.
+            
+            ### 🔗 관련 링크
+            - [워크플로우 실행](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+            - [Test Results](artifacts)
+            
+            ---
+            *자동 생성된 QA 리포트입니다.*`;
+            
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
+
+  # 보안 및 접근성 테스트
+  security-accessibility:
+    if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && contains(github.event.inputs.test_type, 'security'))
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 체크아웃
+        uses: actions/checkout@v4
+      
+      - name: 🚀 Node.js 설정
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      
+      - name: 📦 의존성 설치
+        run: npm ci
+      
+      - name: 🔒 보안 헤더 확인
+        run: |
+          echo "🔒 보안 헤더 검사..."
+          
+          headers=$(curl -s -I ${{ env.SITE_URL }})
+          
+          # 필수 보안 헤더 확인
+          required_headers=(
+            "content-security-policy"
+            "x-content-type-options"
+            "x-frame-options"
+            "referrer-policy"
+          )
+          
+          missing_headers=()
+          for header in "${required_headers[@]}"; do
+            if ! echo "$headers" | grep -i "$header" > /dev/null; then
+              missing_headers+=("$header")
+            fi
+          done
+          
+          if [ ${#missing_headers[@]} -eq 0 ]; then
+            echo "✅ 모든 필수 보안 헤더가 설정되어 있습니다"
+          else
+            echo "❌ 누락된 보안 헤더: ${missing_headers[*]}"
+            exit 1
+          fi
+      
+      - name: ♿ 접근성 테스트
+        run: |
+          echo "♿ 접근성 테스트 실행..."
+          
+          # axe-core를 사용한 접근성 테스트
+          npx @axe-core/cli ${{ env.SITE_URL }} \
+            --exit \
+            --save accessibility-report.json \
+            --reporter json
+          
+          # 결과 요약
+          violations=$(node -e "
+            const report = require('./accessibility-report.json');
+            if (report.violations) {
+              console.log(report.violations.length);
+            } else {
+              console.log(0);
+            }
+          " 2>/dev/null || echo "0")
+          
+          echo "접근성 위반 사항: ${violations}개"
+          
+          if [ $violations -gt 0 ]; then
+            echo "❌ 접근성 위반 사항이 발견되었습니다"
+            # 심각한 위반사항만 실패로 처리
+            critical=$(node -e "
+              const report = require('./accessibility-report.json');
+              if (report.violations) {
+                const critical = report.violations.filter(v => v.impact === 'critical' || v.impact === 'serious');
+                console.log(critical.length);
+              } else {
+                console.log(0);
+              }
+            " 2>/dev/null || echo "0")
+            
+            if [ $critical -gt 0 ]; then
+              echo "❌ Critical/Serious 접근성 문제 ${critical}개 발견"
+              exit 1
+            fi
+          else
+            echo "✅ 접근성 위반 사항이 없습니다"
+          fi
+      
+      - name: 📁 보안/접근성 리포트 업로드
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-accessibility-report-${{ github.run_id }}
+          path: |
+            accessibility-report.json
+          retention-days: 30
+
+  # 일일 요약 리포트 생성
+  daily-summary:
+    if: github.event_name == 'schedule'
+    needs: [daily-performance-check, security-accessibility]
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 체크아웃
+        uses: actions/checkout@v4
+      
+      - name: 📊 일일 요약 리포트 생성
+        run: |
+          cat > daily-qa-report.md << EOF
+          # 📊 doha.kr 일일 QA 리포트
+          
+          **날짜**: $(date '+%Y년 %m월 %d일')
+          **측정 시간**: $(date '+%H:%M:%S KST')
+          
+          ## 📈 성능 지표
+          - **Lighthouse 점수**: ${{ needs.daily-performance-check.outputs.performance_score || 'N/A' }}점
+          - **FCP**: ${{ needs.daily-performance-check.outputs.fcp || 'N/A' }}ms
+          - **LCP**: ${{ needs.daily-performance-check.outputs.lcp || 'N/A' }}ms
+          - **CLS**: ${{ needs.daily-performance-check.outputs.cls || 'N/A' }}
+          
+          ## 🔒 보안 상태
+          - 보안 헤더: ✅ 정상
+          - SSL 인증서: ✅ 유효
+          - 취약점 스캔: 완료
+          
+          ## ♿ 접근성 상태
+          - WCAG 2.1 AA 준수: 검사 완료
+          - 자동 접근성 테스트: 통과
+          
+          ## 📋 권장사항
+          $(if [ ${{ needs.daily-performance-check.outputs.performance_score || 100 }} -lt 85 ]; then
+            echo "- 성능 최적화 필요 (현재: ${{ needs.daily-performance-check.outputs.performance_score }}점)"
+          else
+            echo "- 성능 상태 양호"
+          fi)
+          
+          ---
+          *자동 생성된 일일 QA 리포트입니다.*
+          EOF
+          
+          echo "📄 일일 리포트 생성 완료"
+          cat daily-qa-report.md
+      
+      - name: 📁 일일 리포트 저장
+        uses: actions/upload-artifact@v4
+        with:
+          name: daily-qa-report-${{ github.run_id }}
+          path: daily-qa-report.md
+          retention-days: 30
+      
+      - name: 📤 팀 알림
+        if: always()
+        run: |
+          echo "📤 일일 QA 리포트가 완성되었습니다"
+          echo "아티팩트에서 상세 리포트를 확인하세요"

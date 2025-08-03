@@ -1,0 +1,368 @@
+/* ==========================================================================
+   Korean Layout Optimization CSS
+   한국어 레이아웃 최적화 - 이모지 정렬, 긴 텍스트 대응, 반응형 개선
+   ========================================================================== */
+
+/* ===== 1. 이모지와 한글 텍스트 정렬 최적화 ===== */
+
+/* 이모지 컨테이너 기본 설정 */
+.emoji-text-container {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2, 0.5rem);
+  word-break: keep-all;
+}
+
+/* 이모지 래퍼 - 크기 고정 및 정렬 최적화 */
+.emoji-icon {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.2em;
+  height: 1.2em;
+  font-size: inherit;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+/* 큰 이모지용 */
+.emoji-icon--lg {
+  width: 1.5em;
+  height: 1.5em;
+  font-size: 1.25em;
+}
+
+/* 작은 이모지용 */
+.emoji-icon--sm {
+  width: 1em;
+  height: 1em;
+  font-size: 0.875em;
+}
+
+/* 텍스트 부분 - 한글 최적화 */
+.emoji-text {
+  flex: 1;
+  word-break: keep-all;
+  line-height: var(--line-height-korean-body, 1.7);
+  letter-spacing: var(--letter-spacing-normal, -0.005em);
+}
+
+/* ===== 2. 한글 긴 텍스트 대응 레이아웃 ===== */
+
+/* 한글 텍스트 블록 */
+.korean-text-block {
+  word-break: keep-all;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: none;
+}
+
+/* 한글 제목 블록 - 긴 제목 처리 */
+.korean-title-block {
+  word-break: keep-all;
+  line-height: var(--line-height-korean-title, 1.3);
+  letter-spacing: var(--letter-spacing-tighter, -0.03em);
+  margin-bottom: var(--space-4, 1rem);
+}
+
+/* 반응형 한글 제목 */
+.korean-title-responsive {
+  font-size: clamp(1.25rem, 4vw, 2rem);
+  line-height: var(--line-height-korean-title, 1.3);
+  word-break: keep-all;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .korean-title-responsive {
+    font-size: clamp(1.125rem, 5vw, 1.5rem);
+    line-height: 1.4;
+    text-align: left;
+  }
+}
+
+/* ===== 3. 카드 레이아웃 한글 최적화 ===== */
+
+/* 서비스 카드 */
+.service-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3, 0.75rem);
+  padding: var(--space-6, 1.5rem);
+  border-radius: var(--radius-lg, 0.75rem);
+  background: var(--color-gray-0, #ffffff);
+  border: 1px solid var(--color-gray-200, #e5e7eb);
+  transition: var(--transition-all, all 150ms ease);
+}
+
+.service-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--color-brand-300, #a8a8ff);
+}
+
+/* 카드 헤더 - 이모지와 제목 */
+.service-card__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3, 0.75rem);
+  margin-bottom: var(--space-2, 0.5rem);
+}
+
+.service-card__icon {
+  flex-shrink: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  background: var(--color-brand-50, #f5f5ff);
+  border-radius: var(--radius-md, 0.5rem);
+}
+
+.service-card__title {
+  flex: 1;
+  font-size: var(--font-size-lg, 1.125rem);
+  font-weight: var(--font-weight-semibold, 600);
+  line-height: var(--line-height-korean-title, 1.3);
+  word-break: keep-all;
+  color: var(--color-gray-900, #111827);
+}
+
+/* 카드 설명 */
+.service-card__description {
+  font-size: var(--font-size-sm, 0.875rem);
+  line-height: var(--line-height-korean-body, 1.7);
+  color: var(--color-gray-600, #4b5563);
+  word-break: keep-all;
+  margin-bottom: var(--space-4, 1rem);
+}
+
+/* 카드 액션 버튼 */
+.service-card__action {
+  margin-top: auto;
+  padding: var(--space-3, 0.75rem) var(--space-4, 1rem);
+  background: var(--color-brand-500, #5c5ce0);
+  color: white;
+  border: none;
+  border-radius: var(--radius-md, 0.5rem);
+  font-weight: var(--font-weight-medium, 500);
+  word-break: keep-all;
+  text-align: center;
+  text-decoration: none;
+  transition: var(--transition-colors);
+  cursor: pointer;
+}
+
+.service-card__action:hover {
+  background: var(--color-brand-600, #4646d3);
+}
+
+/* ===== 4. 결과 카드 레이아웃 ===== */
+
+/* 결과 헤더 */
+.result-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: var(--space-8, 2rem);
+  gap: var(--space-4, 1rem);
+}
+
+.result-header__icon {
+  width: 4rem;
+  height: 4rem;
+  font-size: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-brand-50, #f5f5ff);
+  border-radius: var(--radius-full, 9999px);
+  flex-shrink: 0;
+}
+
+.result-header__title {
+  font-size: var(--font-size-2xl, 1.5rem);
+  font-weight: var(--font-weight-semibold, 600);
+  line-height: var(--line-height-korean-title, 1.3);
+  word-break: keep-all;
+  color: var(--color-gray-900, #111827);
+}
+
+.result-header__subtitle {
+  font-size: var(--font-size-base, 1rem);
+  line-height: var(--line-height-korean-body, 1.7);
+  color: var(--color-gray-600, #4b5563);
+  word-break: keep-all;
+  max-width: 32rem;
+}
+
+/* ===== 5. 리스트 아이템 레이아웃 ===== */
+
+/* 한글 리스트 아이템 */
+.korean-list-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3, 0.75rem);
+  padding: var(--space-4, 1rem);
+  border-radius: var(--radius-md, 0.5rem);
+  background: var(--color-gray-50, #f9fafb);
+  margin-bottom: var(--space-3, 0.75rem);
+}
+
+.korean-list-item__icon {
+  flex-shrink: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.125rem; /* 텍스트 첫 줄과 정렬 */
+}
+
+.korean-list-item__content {
+  flex: 1;
+  word-break: keep-all;
+  line-height: var(--line-height-korean-body, 1.7);
+}
+
+.korean-list-item__title {
+  font-weight: var(--font-weight-medium, 500);
+  color: var(--color-gray-900, #111827);
+  margin-bottom: var(--space-1, 0.25rem);
+  word-break: keep-all;
+}
+
+.korean-list-item__description {
+  font-size: var(--font-size-sm, 0.875rem);
+  color: var(--color-gray-600, #4b5563);
+  word-break: keep-all;
+  line-height: var(--line-height-korean-body, 1.7);
+}
+
+/* ===== 6. 반응형 그리드 시스템 - 한글 대응 ===== */
+
+/* 한글 카드 그리드 */
+.korean-grid {
+  display: grid;
+  gap: var(--space-6, 1.5rem);
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+@media (max-width: 640px) {
+  .korean-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-4, 1rem);
+  }
+}
+
+/* 2열 그리드 - 태블릿 대응 */
+.korean-grid--2 {
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+@media (max-width: 768px) {
+  .korean-grid--2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 3열 그리드 - 데스크톱 대응 */
+.korean-grid--3 {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+@media (max-width: 1024px) {
+  .korean-grid--3 {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .korean-grid--3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===== 7. 모바일 한글 최적화 ===== */
+
+@media (max-width: 768px) {
+  /* 모바일 텍스트 크기 조정 */
+  .korean-title-responsive {
+    font-size: clamp(1.125rem, 5vw, 1.375rem);
+  }
+
+  /* 모바일 카드 패딩 조정 */
+  .service-card {
+    padding: var(--space-4, 1rem);
+  }
+
+  /* 모바일 리스트 아이템 조정 */
+  .korean-list-item {
+    padding: var(--space-3, 0.75rem);
+    gap: var(--space-2, 0.5rem);
+  }
+
+  /* 모바일 결과 헤더 조정 */
+  .result-header__icon {
+    width: 3rem;
+    height: 3rem;
+    font-size: 2rem;
+  }
+
+  .result-header__title {
+    font-size: var(--font-size-xl, 1.25rem);
+  }
+}
+
+/* ===== 8. 접근성 및 사용성 향상 ===== */
+
+/* 포커스 가시성 개선 */
+.service-card:focus-within,
+.korean-list-item:focus-within {
+  outline: 2px solid var(--color-brand-500, #5c5ce0);
+  outline-offset: 2px;
+}
+
+/* 터치 타겟 크기 보장 */
+.service-card__action,
+button,
+.btn {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* 스크린 리더 지원 */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ===== 9. 프린트 최적화 ===== */
+
+@media print {
+  .service-card,
+  .korean-list-item {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .korean-title-block {
+    color: black !important;
+  }
+
+  .emoji-icon {
+    -webkit-print-color-adjust: exact;
+    color-adjust: exact;
+  }
+}

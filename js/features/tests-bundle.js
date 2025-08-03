@@ -17,4 +17,3 @@ import '../pages/love-dna-test.js';
 
 // 테스트 공통
 import '../pages/tests-index.js';
-

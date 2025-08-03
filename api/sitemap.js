@@ -8,9 +8,8 @@ export default function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const baseUrl = process.env.NODE_ENV === 'production' 
-    ? 'https://doha.kr' 
-    : 'http://localhost:3000';
+  const baseUrl =
+    process.env.NODE_ENV === 'production' ? 'https://doha.kr' : 'http://localhost:3000';
 
   const currentDate = new Date().toISOString().split('T')[0];
 
@@ -21,7 +20,7 @@ export default function handler(req, res) {
     { url: '/contact', priority: '0.6', changefreq: 'monthly' },
     { url: '/faq', priority: '0.7', changefreq: 'weekly' },
     { url: '/privacy', priority: '0.5', changefreq: 'yearly' },
-    { url: '/terms', priority: '0.5', changefreq: 'yearly' }
+    { url: '/terms', priority: '0.5', changefreq: 'yearly' },
   ];
 
   // 운세 서비스 페이지들
@@ -31,7 +30,7 @@ export default function handler(req, res) {
     { url: '/fortune/saju', priority: '0.8', changefreq: 'weekly' },
     { url: '/fortune/tarot', priority: '0.8', changefreq: 'weekly' },
     { url: '/fortune/zodiac', priority: '0.8', changefreq: 'weekly' },
-    { url: '/fortune/zodiac-animal', priority: '0.8', changefreq: 'weekly' }
+    { url: '/fortune/zodiac-animal', priority: '0.8', changefreq: 'weekly' },
   ];
 
   // 심리테스트 페이지들
@@ -42,7 +41,7 @@ export default function handler(req, res) {
     { url: '/tests/love-dna', priority: '0.8', changefreq: 'monthly' },
     { url: '/tests/love-dna/test', priority: '0.7', changefreq: 'monthly' },
     { url: '/tests/teto-egen', priority: '0.8', changefreq: 'monthly' },
-    { url: '/tests/teto-egen/test', priority: '0.7', changefreq: 'monthly' }
+    { url: '/tests/teto-egen/test', priority: '0.7', changefreq: 'monthly' },
   ];
 
   // 도구 페이지들
@@ -50,16 +49,11 @@ export default function handler(req, res) {
     { url: '/tools', priority: '0.8', changefreq: 'weekly' },
     { url: '/tools/bmi-calculator.html', priority: '0.7', changefreq: 'monthly' },
     { url: '/tools/salary-calculator.html', priority: '0.7', changefreq: 'monthly' },
-    { url: '/tools/text-counter.html', priority: '0.7', changefreq: 'monthly' }
+    { url: '/tools/text-counter.html', priority: '0.7', changefreq: 'monthly' },
   ];
 
   // 모든 페이지 합치기
-  const allPages = [
-    ...staticPages,
-    ...fortunePages,
-    ...testPages,
-    ...toolPages
-  ];
+  const allPages = [...staticPages, ...fortunePages, ...testPages, ...toolPages];
 
   // XML 사이트맵 생성
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
@@ -69,14 +63,18 @@ export default function handler(req, res) {
   <!-- 한국어 심리테스트 및 운세 서비스 -->
   <!-- 생성일: ${currentDate} -->
   
-  ${allPages.map(page => `
+  ${allPages
+    .map(
+      (page) => `
   <url>
     <loc>${baseUrl}${page.url}</loc>
     <lastmod>${currentDate}</lastmod>
     <changefreq>${page.changefreq}</changefreq>
     <priority>${page.priority}</priority>
     <xhtml:link rel="alternate" hreflang="ko" href="${baseUrl}${page.url}" />
-  </url>`).join('')}
+  </url>`
+    )
+    .join('')}
   
   <!-- 이미지 사이트맵 정보 -->
   <url>
@@ -90,6 +88,6 @@ export default function handler(req, res) {
 
   res.setHeader('Content-Type', 'application/xml; charset=utf-8');
   res.setHeader('Cache-Control', 'public, max-age=86400, s-maxage=86400'); // 24시간 캐시
-  
+
   return res.status(200).send(sitemap);
 }

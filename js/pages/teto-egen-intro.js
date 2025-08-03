@@ -195,7 +195,6 @@
 
       const info = typeInfo[typeId];
       if (info) {
-        
         // 향후 모달이나 상세 페이지 구현시 활용
       }
     }
@@ -354,7 +353,7 @@
         try {
           (window.adsbygoogle = window.adsbygoogle || []).push({});
         } catch (e) {
-          
+          // Error handling - see console
         }
       });
     }
@@ -368,16 +367,14 @@
       }
 
       if (!window.API_CONFIG || !window.API_CONFIG.KAKAO_JS_KEY) {
-        
         return;
       }
 
       if (!Kakao.isInitialized()) {
         try {
           Kakao.init(window.API_CONFIG.KAKAO_JS_KEY);
-          
         } catch (e) {
-          
+          // Error handling - see console
         }
       }
     }
@@ -404,7 +401,7 @@
 
       // 개발 환경에서 로그
       if (window.location.hostname === 'localhost') {
-        
+        console.log('Development mode'); // eslint-disable-line no-console
       }
     }
   }

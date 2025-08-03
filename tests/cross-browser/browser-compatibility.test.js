@@ -13,7 +13,7 @@ const TEST_URLS = [
   { url: '/fortune/saju/', name: 'Saju Fortune' },
   { url: '/tools/bmi-calculator.html', name: 'BMI Calculator' },
   { url: '/tools/salary-calculator.html', name: 'Salary Calculator' },
-  { url: '/contact/', name: 'Contact Page' }
+  { url: '/contact/', name: 'Contact Page' },
 ];
 
 // 브라우저별 테스트 설정
@@ -21,17 +21,11 @@ const BROWSER_CONFIGS = [
   { name: 'Chrome', browserName: 'chromium' },
   { name: 'Firefox', browserName: 'firefox' },
   { name: 'Safari', browserName: 'webkit' },
-  { name: 'Edge', browserName: 'chromium', channel: 'msedge' }
+  { name: 'Edge', browserName: 'chromium', channel: 'msedge' },
 ];
 
 // 모바일 디바이스 설정
-const MOBILE_DEVICES = [
-  'iPhone 13',
-  'iPhone 12',
-  'Samsung Galaxy S21',
-  'iPad Pro',
-  'Pixel 5'
-];
+const MOBILE_DEVICES = ['iPhone 13', 'iPhone 12', 'Samsung Galaxy S21', 'iPad Pro', 'Pixel 5'];
 
 // 뷰포트 크기 설정
 const VIEWPORT_SIZES = [
@@ -41,20 +35,20 @@ const VIEWPORT_SIZES = [
   { width: 768, height: 1024, name: 'Tablet Portrait' },
   { width: 414, height: 896, name: 'Mobile Large' },
   { width: 375, height: 667, name: 'Mobile Medium' },
-  { width: 320, height: 568, name: 'Mobile Small' }
+  { width: 320, height: 568, name: 'Mobile Small' },
 ];
 
 test.describe('브라우저 호환성 테스트', () => {
-  
   // 각 브라우저별 기본 호환성 테스트
   for (const browserConfig of BROWSER_CONFIGS) {
     test.describe(`${browserConfig.name} 브라우저 호환성`, () => {
-      test.use({ 
+      test.use({
         browserName: browserConfig.browserName,
-        channel: browserConfig.channel || undefined
+        channel: browserConfig.channel || undefined,
       });
 
-      for (const testUrl of TEST_URLS.slice(0, 4)) { // 주요 페이지만 테스트
+      for (const testUrl of TEST_URLS.slice(0, 4)) {
+        // 주요 페이지만 테스트
         test(`${browserConfig.name} - ${testUrl.name} 기본 로딩`, async ({ page }) => {
           console.log(`${browserConfig.name}에서 ${testUrl.name} 테스트 중...`);
 
@@ -74,7 +68,7 @@ test.describe('브라우저 호환성 테스트', () => {
               hasFooter: !!document.querySelector('footer, .footer'),
               hasMainContent: !!document.querySelector('main, .main, .content, .container'),
               hasKoreanText: /[가-힣]/.test(document.body.textContent || ''),
-              scriptErrors: window.scriptErrors || []
+              scriptErrors: window.scriptErrors || [],
             };
           });
 
@@ -87,18 +81,21 @@ test.describe('브라우저 호환성 테스트', () => {
 
           // JavaScript 오류 검사
           const jsErrors = [];
-          page.on('console', msg => {
+          page.on('console', (msg) => {
             if (msg.type() === 'error') {
               jsErrors.push(msg.text());
             }
           });
 
           // 치명적인 JavaScript 오류가 없어야 함
-          expect(jsErrors.filter(err => 
-            err.includes('ReferenceError') || 
-            err.includes('TypeError') ||
-            err.includes('SyntaxError')
-          ).length).toBeLessThan(3);
+          expect(
+            jsErrors.filter(
+              (err) =>
+                err.includes('ReferenceError') ||
+                err.includes('TypeError') ||
+                err.includes('SyntaxError')
+            ).length
+          ).toBeLessThan(3);
 
           if (jsErrors.length > 0) {
             console.warn(`${browserConfig.name} - ${testUrl.name} JS 오류:`, jsErrors.slice(0, 5));
@@ -117,7 +114,7 @@ test.describe('브라우저 호환성 테스트', () => {
             loadedStylesheets: 0,
             cssErrors: [],
             computedStyles: {},
-            layoutMetrics: {}
+            layoutMetrics: {},
           };
 
           // 스타일시트 로딩 확인
@@ -135,14 +132,15 @@ test.describe('브라우저 호환성 테스트', () => {
           // 주요 요소들의 computed style 확인
           const testElements = document.querySelectorAll('body, .btn, .card, .container');
           testElements.forEach((el, index) => {
-            if (index < 5) { // 처음 5개만
+            if (index < 5) {
+              // 처음 5개만
               const style = window.getComputedStyle(el);
               results.computedStyles[`element_${index}`] = {
                 display: style.display,
                 position: style.position,
                 fontSize: style.fontSize,
                 color: style.color,
-                backgroundColor: style.backgroundColor
+                backgroundColor: style.backgroundColor,
               };
             }
           });
@@ -152,7 +150,7 @@ test.describe('브라우저 호환성 테스트', () => {
             bodyWidth: document.body.offsetWidth,
             bodyHeight: document.body.offsetHeight,
             viewportWidth: window.innerWidth,
-            viewportHeight: window.innerHeight
+            viewportHeight: window.innerHeight,
           };
 
           return results;
@@ -161,7 +159,7 @@ test.describe('브라우저 호환성 테스트', () => {
         console.log(`${browserConfig.name} CSS 정보:`, {
           stylesheets: `${cssInfo.loadedStylesheets}/${cssInfo.totalStylesheets}`,
           errors: cssInfo.cssErrors.length,
-          layoutSize: `${cssInfo.layoutMetrics.bodyWidth}x${cssInfo.layoutMetrics.bodyHeight}`
+          layoutSize: `${cssInfo.layoutMetrics.bodyWidth}x${cssInfo.layoutMetrics.bodyHeight}`,
         });
 
         // CSS 로딩 검증
@@ -186,18 +184,19 @@ test.describe('브라우저 호환성 테스트', () => {
             'input[type="submit"]',
             '.btn',
             '.card[role="button"]',
-            '[onclick]'
+            '[onclick]',
           ];
 
-          selectors.forEach(selector => {
+          selectors.forEach((selector) => {
             const found = document.querySelectorAll(selector);
             found.forEach((el, index) => {
-              if (index < 3 && el.offsetParent !== null) { // 보이는 요소만, 최대 3개
+              if (index < 3 && el.offsetParent !== null) {
+                // 보이는 요소만, 최대 3개
                 elements.push({
                   tagName: el.tagName.toLowerCase(),
                   selector,
                   text: el.textContent?.trim().substring(0, 20) || '',
-                  href: el.href || null
+                  href: el.href || null,
                 });
               }
             });
@@ -214,13 +213,15 @@ test.describe('브라우저 호환성 테스트', () => {
             if (element.href && !element.href.startsWith('http')) {
               // 내부 링크인 경우만 클릭 테스트
               const elementLocator = page.locator(element.selector).first();
-              
+
               if (await elementLocator.isVisible()) {
                 await elementLocator.click();
                 await page.waitForTimeout(500);
-                
-                console.log(`✓ ${browserConfig.name} 클릭 성공: ${element.tagName} - "${element.text}"`);
-                
+
+                console.log(
+                  `✓ ${browserConfig.name} 클릭 성공: ${element.tagName} - "${element.text}"`
+                );
+
                 // 뒤로가기
                 await page.goBack();
                 await page.waitForLoadState('networkidle');
@@ -228,11 +229,11 @@ test.describe('브라우저 호환성 테스트', () => {
             } else if (!element.href) {
               // 버튼 등 non-navigation 요소
               const elementLocator = page.locator(element.selector).first();
-              
+
               if (await elementLocator.isVisible()) {
                 await elementLocator.click();
                 await page.waitForTimeout(300);
-                
+
                 console.log(`✓ ${browserConfig.name} 버튼 클릭 성공: "${element.text}"`);
               }
             }
@@ -247,7 +248,9 @@ test.describe('브라우저 호환성 테스트', () => {
   // 반응형 디자인 테스트
   test.describe('반응형 디자인 호환성', () => {
     for (const viewport of VIEWPORT_SIZES) {
-      test(`${viewport.name} (${viewport.width}x${viewport.height}) 반응형 테스트`, async ({ page }) => {
+      test(`${viewport.name} (${viewport.width}x${viewport.height}) 반응형 테스트`, async ({
+        page,
+      }) => {
         await page.setViewportSize({ width: viewport.width, height: viewport.height });
         await page.goto('/');
         await page.waitForLoadState('networkidle');
@@ -261,10 +264,12 @@ test.describe('브라우저 호환성 테스트', () => {
             bodyHeight: document.body.offsetHeight,
             hasHorizontalScroll: document.body.scrollWidth > window.innerWidth,
             hasVerticalScroll: document.body.scrollHeight > window.innerHeight,
-            mobileMenuVisible: !!document.querySelector('.mobile-menu:not([style*="display: none"])'),
+            mobileMenuVisible: !!document.querySelector(
+              '.mobile-menu:not([style*="display: none"])'
+            ),
             navigationVisible: !!document.querySelector('nav, .navigation'),
             headerHeight: document.querySelector('header')?.offsetHeight || 0,
-            footerHeight: document.querySelector('footer')?.offsetHeight || 0
+            footerHeight: document.querySelector('footer')?.offsetHeight || 0,
           };
         });
 
@@ -280,7 +285,9 @@ test.describe('브라우저 호환성 테스트', () => {
         // 모바일에서는 모바일 메뉴가 있어야 함
         if (viewport.width < 768) {
           // 모바일 메뉴나 햄버거 메뉴가 있는지 확인
-          const hasMobileNavigation = await page.locator('.mobile-menu, .hamburger, .menu-toggle, .navbar-toggle').count();
+          const hasMobileNavigation = await page
+            .locator('.mobile-menu, .hamburger, .menu-toggle, .navbar-toggle')
+            .count();
           if (hasMobileNavigation > 0) {
             console.log(`✓ ${viewport.name}: 모바일 네비게이션 존재`);
           }
@@ -292,13 +299,13 @@ test.describe('브라우저 호환성 테스트', () => {
           let smallTextCount = 0;
           let totalTextCount = 0;
 
-          textElements.forEach(el => {
+          textElements.forEach((el) => {
             const text = el.textContent?.trim();
             if (text && text.length > 10 && el.children.length === 0) {
               totalTextCount++;
               const style = window.getComputedStyle(el);
               const fontSize = parseFloat(style.fontSize);
-              
+
               if (fontSize < 14) {
                 smallTextCount++;
               }
@@ -307,7 +314,7 @@ test.describe('브라우저 호환성 테스트', () => {
 
           return {
             smallTextRatio: totalTextCount > 0 ? smallTextCount / totalTextCount : 0,
-            totalTextElements: totalTextCount
+            totalTextElements: totalTextCount,
           };
         });
 
@@ -323,15 +330,16 @@ test.describe('브라우저 호환성 테스트', () => {
 
   // 모바일 디바이스 특화 테스트
   test.describe('모바일 디바이스 호환성', () => {
-    for (const deviceName of MOBILE_DEVICES.slice(0, 3)) { // 주요 3개 디바이스만
+    for (const deviceName of MOBILE_DEVICES.slice(0, 3)) {
+      // 주요 3개 디바이스만
       test(`${deviceName} 디바이스 호환성`, async ({ browser }) => {
         const device = devices[deviceName];
         const context = await browser.newContext({
           ...device,
           locale: 'ko-KR',
-          timezoneId: 'Asia/Seoul'
+          timezoneId: 'Asia/Seoul',
         });
-        
+
         const page = await context.newPage();
 
         try {
@@ -345,16 +353,18 @@ test.describe('브라우저 호환성 테스트', () => {
             return {
               touchEventsSupported: 'ontouchstart' in window,
               viewportMeta: !!document.querySelector('meta[name="viewport"]'),
-              viewportContent: document.querySelector('meta[name="viewport"]')?.getAttribute('content'),
+              viewportContent: document
+                .querySelector('meta[name="viewport"]')
+                ?.getAttribute('content'),
               devicePixelRatio: window.devicePixelRatio,
               screenSize: {
                 width: window.screen.width,
-                height: window.screen.height
+                height: window.screen.height,
               },
               windowSize: {
                 width: window.innerWidth,
-                height: window.innerHeight
-              }
+                height: window.innerHeight,
+              },
             };
           });
 
@@ -370,17 +380,18 @@ test.describe('브라우저 호환성 테스트', () => {
             const interactiveElements = document.querySelectorAll(
               'button, a, input, select, textarea, [role="button"], [onclick]'
             );
-            
+
             const results = [];
             interactiveElements.forEach((el, index) => {
-              if (el.offsetParent !== null && index < 10) { // 보이는 요소만, 최대 10개
+              if (el.offsetParent !== null && index < 10) {
+                // 보이는 요소만, 최대 10개
                 const rect = el.getBoundingClientRect();
                 results.push({
                   width: rect.width,
                   height: rect.height,
                   area: rect.width * rect.height,
                   tagName: el.tagName.toLowerCase(),
-                  text: el.textContent?.trim().substring(0, 15) || ''
+                  text: el.textContent?.trim().substring(0, 15) || '',
                 });
               }
             });
@@ -389,15 +400,18 @@ test.describe('브라우저 호환성 테스트', () => {
           });
 
           // 터치 타겟 크기 검증 (최소 44px)
-          const smallTargets = touchTargets.filter(target => 
-            target.width < 44 || target.height < 44
+          const smallTargets = touchTargets.filter(
+            (target) => target.width < 44 || target.height < 44
           );
 
-          console.log(`${deviceName} 터치 타겟: ${touchTargets.length}개 중 ${smallTargets.length}개 작음`);
+          console.log(
+            `${deviceName} 터치 타겟: ${touchTargets.length}개 중 ${smallTargets.length}개 작음`
+          );
 
           // 80% 이상의 터치 타겟이 적절한 크기여야 함
           if (touchTargets.length > 0) {
-            const appropriateTargetRatio = (touchTargets.length - smallTargets.length) / touchTargets.length;
+            const appropriateTargetRatio =
+              (touchTargets.length - smallTargets.length) / touchTargets.length;
             expect(appropriateTargetRatio).toBeGreaterThan(0.8);
           }
 
@@ -410,7 +424,6 @@ test.describe('브라우저 호환성 테스트', () => {
           }
 
           console.log(`✓ ${deviceName}: 모바일 호환성 확인 완료`);
-
         } finally {
           await context.close();
         }
@@ -434,7 +447,7 @@ test.describe('브라우저 호환성 테스트', () => {
         filters: CSS.supports('filter', 'blur(5px)'),
         clipPath: CSS.supports('clip-path', 'circle(50%)'),
         objectFit: CSS.supports('object-fit', 'cover'),
-        aspectRatio: CSS.supports('aspect-ratio', '1/1')
+        aspectRatio: CSS.supports('aspect-ratio', '1/1'),
       };
 
       return results;
@@ -474,7 +487,7 @@ test.describe('브라우저 호환성 테스트', () => {
         serviceWorker: 'serviceWorker' in navigator,
         webWorker: typeof Worker !== 'undefined',
         es6Modules: typeof Symbol !== 'undefined',
-        es6Classes: (function() {
+        es6Classes: (function () {
           try {
             eval('class Test {}');
             return true;
@@ -482,7 +495,7 @@ test.describe('브라우저 호환성 테스트', () => {
             return false;
           }
         })(),
-        es6ArrowFunctions: (function() {
+        es6ArrowFunctions: (function () {
           try {
             eval('(() => {})');
             return true;
@@ -491,7 +504,7 @@ test.describe('브라우저 호환성 테스트', () => {
           }
         })(),
         intl: typeof Intl !== 'undefined',
-        dateTimeFormat: typeof Intl !== 'undefined' && typeof Intl.DateTimeFormat !== 'undefined'
+        dateTimeFormat: typeof Intl !== 'undefined' && typeof Intl.DateTimeFormat !== 'undefined',
       };
     });
 
@@ -529,17 +542,17 @@ test.describe('브라우저 호환성 테스트', () => {
         loadedFonts: [],
         fontFaceSupport: CSS.supports('font-display', 'swap'),
         koreanTextRendering: {},
-        fallbackFonts: []
+        fallbackFonts: [],
       };
 
       // 로딩된 폰트 확인
       if (document.fonts) {
-        document.fonts.forEach(font => {
+        document.fonts.forEach((font) => {
           results.loadedFonts.push({
             family: font.family,
             style: font.style,
             weight: font.weight,
-            status: font.status
+            status: font.status,
           });
         });
       }
@@ -563,11 +576,13 @@ test.describe('브라우저 호환성 테스트', () => {
           fontSize: style.fontSize,
           fontWeight: style.fontWeight,
           lineHeight: style.lineHeight,
-          textRendering: style.textRendering
+          textRendering: style.textRendering,
         };
 
         // 폰트 fallback 체인 분석
-        results.fallbackFonts = style.fontFamily.split(',').map(f => f.trim().replace(/['"]/g, ''));
+        results.fallbackFonts = style.fontFamily
+          .split(',')
+          .map((f) => f.trim().replace(/['"]/g, ''));
       }
 
       return results;
@@ -578,14 +593,15 @@ test.describe('브라우저 호환성 테스트', () => {
     // 한국어 텍스트 렌더링 확인
     if (fontInfo.koreanTextRendering.fontFamily) {
       console.log(`한국어 폰트: ${fontInfo.koreanTextRendering.fontFamily}`);
-      
+
       // 한국어 폰트가 적절히 적용되었는지 확인
-      const hasKoreanFont = fontInfo.fallbackFonts.some(font => 
-        font.includes('Pretendard') ||
-        font.includes('Noto Sans KR') ||
-        font.includes('Malgun Gothic') ||
-        font.includes('Apple SD Gothic Neo') ||
-        font.includes('sans-serif')
+      const hasKoreanFont = fontInfo.fallbackFonts.some(
+        (font) =>
+          font.includes('Pretendard') ||
+          font.includes('Noto Sans KR') ||
+          font.includes('Malgun Gothic') ||
+          font.includes('Apple SD Gothic Neo') ||
+          font.includes('sans-serif')
       );
 
       expect(hasKoreanFont).toBe(true);
@@ -609,7 +625,7 @@ test.describe('브라우저 호환성 테스트', () => {
         svg: true, // 대부분 지원
         png: true, // 기본 지원
         jpg: true, // 기본 지원
-        gif: true  // 기본 지원
+        gif: true, // 기본 지원
       };
 
       // WebP 지원 확인
@@ -627,10 +643,11 @@ test.describe('브라우저 호환성 테스트', () => {
       const avifPromise = new Promise((resolve) => {
         avifImage.onload = () => resolve(true);
         avifImage.onerror = () => resolve(false);
-        avifImage.src = 'data:image/avif;base64,AAAAIGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZk1BMUIAAADybWV0YQAAAAAAAAAoaGRscgAAAAAAAAAAcGljdAAAAAAAAAAAAAAAAGxpYmF2aWYAAAAADnBpdG0AAAAAAAEAAAAeaWxvYwAAAABEAAABAAEAAAABAAABGgAAAB0AAAAoaWluZgAAAAAAAQAAABppbmZlAgAAAAABAABhdjAxQ29sb3IAAAAAamlwcnAAAABLaXBjbwAAABRpc3BlAAAAAAAAAAIAAAACAAAAEHBpeGkAAAAAAwgICAAAAAxhdjFDgQ0MAAAAABNjb2xybmNseAACAAIAAYAAAAAXaXBtYQAAAAAAAAABAAEEAQKDBAAAACVtZGF0EgAKCBgABogQEAwgMg8f8D///8WfhwB8+ErK42A=';
+        avifImage.src =
+          'data:image/avif;base64,AAAAIGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZk1BMUIAAADybWV0YQAAAAAAAAAoaGRscgAAAAAAAAAAcGljdAAAAAAAAAAAAAAAAGxpYmF2aWYAAAAADnBpdG0AAAAAAAEAAAAeaWxvYwAAAABEAAABAAEAAAABAAABGgAAAB0AAAAoaWluZgAAAAAAAQAAABppbmZlAgAAAAABAABhdjAxQ29sb3IAAAAAamlwcnAAAABLaXBjbwAAABRpc3BlAAAAAAAAAAIAAAACAAAAEHBpeGkAAAAAAwgICAAAAAxhdjFDgQ0MAAAAABNjb2xybmNseAACAAIAAYAAAAAXaXBtYQAAAAAAAAABAAEEAQKDBAAAACVtZGF0EgAKCBgABogQEAwgMg8f8D///8WfhwB8+ErK42A=';
         setTimeout(() => resolve(false), 1000); // 타임아웃
       });
-      
+
       try {
         results.avif = await avifPromise;
       } catch (e) {
@@ -667,7 +684,7 @@ test.describe('브라우저 호환성 테스트', () => {
 
     // 오프라인 상태 시뮬레이션
     console.log('오프라인 상태 테스트...');
-    
+
     await page.context().setOffline(true);
     await page.waitForTimeout(1000);
 
@@ -677,7 +694,7 @@ test.describe('브라우저 호환성 테스트', () => {
         isOnline: navigator.onLine,
         hasServiceWorker: 'serviceWorker' in navigator,
         hasCachedPages: !!window.caches,
-        offlinePageExists: !!document.querySelector('.offline-message, .no-connection')
+        offlinePageExists: !!document.querySelector('.offline-message, .no-connection'),
       };
     });
 
@@ -689,7 +706,7 @@ test.describe('브라우저 호환성 테스트', () => {
 
     const onlineState = await page.evaluate(() => {
       return {
-        isOnline: navigator.onLine
+        isOnline: navigator.onLine,
       };
     });
 

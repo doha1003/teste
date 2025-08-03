@@ -52,7 +52,7 @@ function validateNumber(value, min = 0, max = Number.MAX_SAFE_INTEGER) {
     requests: [],
 
     // Initialize
-    init: function () {
+    init() {
       try {
         this.setupEventListeners();
         this.checkAPIConfig();
@@ -62,7 +62,7 @@ function validateNumber(value, min = 0, max = Number.MAX_SAFE_INTEGER) {
     },
 
     // Check API configuration
-    checkAPIConfig: function () {
+    checkAPIConfig() {
       if (typeof APIConfig !== 'undefined') {
         const geminiConfig = APIConfig.getConfig('gemini');
         if (geminiConfig && geminiConfig.apiKey) {
@@ -73,7 +73,7 @@ function validateNumber(value, min = 0, max = Number.MAX_SAFE_INTEGER) {
     },
 
     // Setup event listeners
-    setupEventListeners: function () {
+    setupEventListeners() {
       // Daily fortune
       const dailyBtn = document.getElementById('daily-fortune-btn');
       if (dailyBtn) {
@@ -100,7 +100,7 @@ function validateNumber(value, min = 0, max = Number.MAX_SAFE_INTEGER) {
     },
 
     // Rate limiting check
-    checkRateLimit: function () {
+    checkRateLimit() {
       const now = Date.now();
       const cutoff = now - this.config.rateLimitWindow;
 
@@ -115,7 +115,7 @@ function validateNumber(value, min = 0, max = Number.MAX_SAFE_INTEGER) {
     },
 
     // Make API request
-    makeRequest: async function (endpoint, data) {
+    async makeRequest(endpoint, data) {
       try {
         this.checkRateLimit();
 
@@ -148,11 +148,13 @@ function validateNumber(value, min = 0, max = Number.MAX_SAFE_INTEGER) {
     },
 
     // Get daily fortune
-    getDailyFortune: async function () {
+    async getDailyFortune() {
       const button = document.getElementById('daily-fortune-btn');
       const resultDiv = document.getElementById('daily-fortune-result');
 
-      if (!button || !resultDiv) return;
+      if (!button || !resultDiv) {
+        return;
+      }
 
       try {
         button.disabled = true;
@@ -183,9 +185,11 @@ function validateNumber(value, min = 0, max = Number.MAX_SAFE_INTEGER) {
     },
 
     // Display daily fortune
-    displayDailyFortune: function (fortune) {
+    displayDailyFortune(fortune) {
       const resultDiv = document.getElementById('daily-fortune-result');
-      if (!resultDiv) return;
+      if (!resultDiv) {
+        return;
+      }
 
       const html = `
                 <div class="fortune-result">
@@ -222,7 +226,7 @@ function validateNumber(value, min = 0, max = Number.MAX_SAFE_INTEGER) {
     },
 
     // Handle Saju form submission
-    handleSajuSubmit: async function (event) {
+    async handleSajuSubmit(event) {
       event.preventDefault();
 
       const form = event.target;
@@ -230,7 +234,9 @@ function validateNumber(value, min = 0, max = Number.MAX_SAFE_INTEGER) {
       const submitBtn = form.querySelector('button[type="submit"]');
       const resultDiv = document.getElementById('saju-result');
 
-      if (!submitBtn || !resultDiv) return;
+      if (!submitBtn || !resultDiv) {
+        return;
+      }
 
       try {
         // Validate input
@@ -257,7 +263,7 @@ function validateNumber(value, min = 0, max = Number.MAX_SAFE_INTEGER) {
           birth_month: birthMonth,
           birth_day: birthDay,
           birth_hour: birthHour,
-          gender: gender,
+          gender,
           user_id: this.generateUserId(),
         };
 
@@ -278,9 +284,11 @@ function validateNumber(value, min = 0, max = Number.MAX_SAFE_INTEGER) {
     },
 
     // Display Saju result
-    displaySajuResult: function (saju) {
+    displaySajuResult(saju) {
       const resultDiv = document.getElementById('saju-result');
-      if (!resultDiv) return;
+      if (!resultDiv) {
+        return;
+      }
 
       const html = `
                 <div class="saju-result">
@@ -328,11 +336,13 @@ function validateNumber(value, min = 0, max = Number.MAX_SAFE_INTEGER) {
     },
 
     // Start tarot reading
-    startTarotReading: async function () {
+    async startTarotReading() {
       const button = document.getElementById('tarot-reading-btn');
       const resultDiv = document.getElementById('tarot-result');
 
-      if (!button || !resultDiv) return;
+      if (!button || !resultDiv) {
+        return;
+      }
 
       try {
         button.disabled = true;
@@ -365,9 +375,11 @@ function validateNumber(value, min = 0, max = Number.MAX_SAFE_INTEGER) {
     },
 
     // Display tarot result
-    displayTarotResult: function (tarot) {
+    displayTarotResult(tarot) {
       const resultDiv = document.getElementById('tarot-result');
-      if (!resultDiv) return;
+      if (!resultDiv) {
+        return;
+      }
 
       const cards = tarot.cards || [];
       const cardsHtml = cards
@@ -408,9 +420,11 @@ function validateNumber(value, min = 0, max = Number.MAX_SAFE_INTEGER) {
     },
 
     // Generate user ID
-    generateUserId: function () {
+    generateUserId() {
       const stored = localStorage.getItem('fortune_user_id');
-      if (stored) return stored;
+      if (stored) {
+        return stored;
+      }
 
       const userId = Date.now().toString(36) + Math.random().toString(36).substr(2);
       localStorage.setItem('fortune_user_id', userId);
@@ -420,7 +434,7 @@ function validateNumber(value, min = 0, max = Number.MAX_SAFE_INTEGER) {
 
   // Auto-initialize
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', () => {
       Fortune.init();
     });
   } else {

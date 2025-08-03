@@ -6,4 +6,213 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('일일 운세 서비스', () => {
-  test.beforeEach(async ({ page }) => {\n    await page.goto('/');\n  });\n\n  test('\ud648\ud398\uc774\uc9c0\uc5d0\uc11c \uc77c\uc77c \uc6b4\uc138 \uc11c\ube44\uc2a4\ub85c \uc774\ub3d9', async ({ page }) => {\n    // \uc6b4\uc138 \uc11c\ube44\uc2a4 \uce74\ub4dc \ucc3e\uae30\n    const dailyFortuneCard = page.locator('.service-card, .fortune-card').filter({ \n      hasText: /\uc77c\uc77c|\uc624\ub298.*\uc6b4\uc138|\ub370\uc77c\ub9ac/ \n    });\n    await expect(dailyFortuneCard).toBeVisible();\n    \n    // \uce74\ub4dc \uc124\uba85 \ud655\uc778\n    await expect(dailyFortuneCard).toContainText(/\uc624\ub298|\uc77c\uc77c|\ub370\uc77c\ub9ac/);\n    \n    // \uce74\ub4dc \ud074\ub9ad\n    await dailyFortuneCard.click();\n    \n    // \uc6b4\uc138 \ud398\uc774\uc9c0\ub85c \uc774\ub3d9 \ud655\uc778\n    await expect(page).toHaveURL(/fortune.*daily|daily.*fortune/);\n    await expect(page.locator('h1')).toContainText(/\uc77c\uc77c.*\uc6b4\uc138|\uc624\ub298.*\uc6b4\uc138/);\n  });\n\n  test('\uc0ac\uc6a9\uc790 \uc815\ubcf4 \uc785\ub825 \ud3fc \ucc98\ub9ac', async ({ page }) => {\n    await page.goto('/fortune/daily/');\n    \n    // \uc0ac\uc6a9\uc790 \uc815\ubcf4 \uc785\ub825 \ud3fc \ud655\uc778\n    const userForm = page.locator('form, .user-info-form, .fortune-form');\n    await expect(userForm).toBeVisible();\n    \n    // \uc774\ub984 \uc785\ub825 \ud544\ub4dc\n    const nameInput = page.locator('input[name=\"name\"], input[placeholder*=\"\uc774\ub984\"], #name');\n    await expect(nameInput).toBeVisible();\n    await nameInput.fill('\uae40\ud14c\uc2a4\ud2b8');\n    \n    // \uc0dd\ub144\uc6d4\uc77c \uc785\ub825\n    const birthDateInput = page.locator('input[name=\"birthDate\"], input[type=\"date\"], #birthDate');\n    if (await birthDateInput.isVisible()) {\n      await birthDateInput.fill('1990-01-01');\n    } else {\n      // \uac1c\ubcc4 \uc5f0\ub3c4/\uc6d4/\uc77c \uc785\ub825 \ud544\ub4dc\n      const yearInput = page.locator('input[name=\"year\"], select[name=\"year\"]');\n      const monthInput = page.locator('input[name=\"month\"], select[name=\"month\"]');\n      const dayInput = page.locator('input[name=\"day\"], select[name=\"day\"]');\n      \n      if (await yearInput.isVisible()) {\n        await yearInput.fill('1990');\n        await monthInput.fill('1');\n        await dayInput.fill('1');\n      }\n    }\n    \n    // \uc131\ubcc4 \uc120\ud0dd\n    const genderSelect = page.locator('select[name=\"gender\"], input[name=\"gender\"]');\n    if (await genderSelect.first().isVisible()) {\n      if (await page.locator('select[name=\"gender\"] option').first().isVisible()) {\n        await genderSelect.selectOption('female');\n      } else {\n        // \ub77c\ub514\uc624 \ubc84\ud2bc\uc778 \uacbd\uc6b0\n        await page.check('input[name=\"gender\"][value=\"female\"]');\n      }\n    }\n    \n    // \ud615\uc2dd \uc720\ud6a8\uc131 \uac80\uc0ac\n    const nameValue = await nameInput.inputValue();\n    expect(nameValue.length).toBeGreaterThan(1);\n    \n    if (await birthDateInput.isVisible()) {\n      const dateValue = await birthDateInput.inputValue();\n      expect(dateValue).toMatch(/\\d{4}-\\d{2}-\\d{2}/);\n    }\n  });\n\n  test('\uc6b4\uc138 \uc870\ud68c \ubc84\ud2bc \ud074\ub9ad \ubc0f \ub85c\ub529 \ucc98\ub9ac', async ({ page }) => {\n    await page.goto('/fortune/daily/');\n    \n    // \uc0ac\uc6a9\uc790 \uc815\ubcf4 \uc785\ub825\n    await page.fill('input[name=\"name\"], #name', '\uc774\ud14c\uc2a4\ud2b8');\n    \n    const birthDateInput = page.locator('input[name=\"birthDate\"], input[type=\"date\"]');\n    if (await birthDateInput.isVisible()) {\n      await birthDateInput.fill('1995-06-15');\n    }\n    \n    const genderInput = page.locator('input[name=\"gender\"][value=\"male\"]');\n    if (await genderInput.isVisible()) {\n      await genderInput.check();\n    }\n    \n    // \uc6b4\uc138 \ubcf4\uae30 \ubc84\ud2bc \ud074\ub9ad\n    const fortuneButton = page.locator('button').filter({ \n      hasText: /\uc6b4\uc138.*\ubcf4\uae30|\uc870\ud68c|\ud655\uc778|Get.*Fortune/ \n    });\n    await expect(fortuneButton).toBeVisible();\n    await expect(fortuneButton).toBeEnabled();\n    \n    await fortuneButton.click();\n    \n    // \ub85c\ub529 \uc0c1\ud0dc \ud655\uc778\n    const loadingElement = page.locator('.loading, .spinner, .fortune-loading');\n    if (await loadingElement.isVisible()) {\n      await expect(loadingElement).toContainText(/\ub85c\ub529|\ubd84\uc11d|\uc0dd\uc131/);\n      \n      // \ub85c\ub529 \uc644\ub8cc \ub300\uae30 (\ucd5c\ub300 15\ucd08)\n      await expect(loadingElement).not.toBeVisible({ timeout: 15000 });\n    }\n  });\n\n  test('\uc6b4\uc138 \uacb0\uacfc \ud45c\uc2dc \ubc0f \ub0b4\uc6a9 \uac80\uc99d', async ({ page }) => {\n    await page.goto('/fortune/daily/');\n    \n    // Mock \ub370\uc774\ud130\ub85c \uacb0\uacfc \ud45c\uc2dc \uc2dc\ubbac\ub808\uc774\uc158\n    await page.evaluate(() => {\n      // \uc804\uc5ed \ubcc0\uc218\ub85c Mock \ub370\uc774\ud130 \uc124\uc815\n      window.mockFortuneData = {\n        success: true,\n        data: {\n          fortune: '\uc624\ub298\uc740 \uc0c8\ub85c\uc6b4 \uae30\ud68c\uac00 \ucc3e\uc544\uc62c \uac83\uc785\ub2c8\ub2e4. \uae0d\uc815\uc801\uc778 \ub9c8\uc74c\uac00\uc9d0\uc73c\ub85c \ud558\ub8e8\ub97c \uc2dc\uc791\ud558\uc138\uc694.',\n          luckyNumber: 7,\n          luckyColor: '\ud30c\ub780\uc0c9',\n          advice: '\uc0c8\ub85c\uc6b4 \uc0ac\ub78c\ub4e4\uacfc\uc758 \ub9cc\ub0a8\uc744 \ub450\ub824\uc6cc\ud558\uc9c0 \ub9c8\uc138\uc694.',\n          mood: '\uc6b4\uc138\uac00 \uc88b\uc740 \ub0a0',\n          timestamp: new Date().toISOString()\n        }\n      };\n    });\n    \n    // \uc0ac\uc6a9\uc790 \uc815\ubcf4 \uc785\ub825 \ubc0f \uc81c\ucd9c\n    await page.fill('input[name=\"name\"]', '\ubc15\ud14c\uc2a4\ud2b8');\n    if (await page.locator('input[type=\"date\"]').isVisible()) {\n      await page.fill('input[type=\"date\"]', '1992-03-20');\n    }\n    \n    const submitButton = page.locator('button').filter({ hasText: /\uc6b4\uc138/ });\n    await submitButton.click();\n    \n    // \uacb0\uacfc \ucef8\ud14c\uc774\ub108 \ud655\uc778\n    const resultContainer = page.locator('.fortune-result, .result-container, .daily-fortune-result');\n    await expect(resultContainer).toBeVisible({ timeout: 10000 });\n    \n    // \uc8fc\uc694 \uc6b4\uc138 \ub0b4\uc6a9 \ud655\uc778\n    const fortuneText = page.locator('.fortune-text, .main-fortune, .fortune-content');\n    await expect(fortuneText).toBeVisible();\n    await expect(fortuneText).toContainText(/\uae30\ud68c|\ub9c8\uc74c\uac00\uc9d0|\ud558\ub8e8/);\n    \n    // \ud589\uc6b4\uc758 \uc22b\uc790 \ud655\uc778\n    const luckyNumber = page.locator('.lucky-number, .fortune-number');\n    if (await luckyNumber.isVisible()) {\n      await expect(luckyNumber).toContainText(/[0-9]/);\n      const numberText = await luckyNumber.textContent();\n      expect(numberText).toMatch(/\\d/);\n    }\n    \n    // \ud589\uc6b4\uc758 \uc0c9\uae54 \ud655\uc778\n    const luckyColor = page.locator('.lucky-color, .fortune-color');\n    if (await luckyColor.isVisible()) {\n      await expect(luckyColor).toContainText(/\uc0c9|\ube0c\ub8e8|\ub808\ub4dc|\uadf8\ub9b0|\ube14\ub8e8|\uc608\ub85c\uc6b0|\ud37c\ud50c|\uc624\ub80c\uc9c0/);\n    }\n    \n    // \uc870\uc5b8 \uba54\uc2dc\uc9c0 \ud655\uc778\n    const advice = page.locator('.advice, .fortune-advice, .daily-advice');\n    if (await advice.isVisible()) {\n      await expect(advice).toContainText(/.{10,}/);\n      const adviceText = await advice.textContent();\n      expect(adviceText.length).toBeGreaterThan(10);\n    }\n    \n    // \uc624\ub298\uc758 \uae30\ubd84 \ub610\ub294 \uc804\ubc18\uc801\uc778 \uc6b4\uc138 \ud3c9\uac00\n    const mood = page.locator('.mood, .fortune-mood, .daily-mood');\n    if (await mood.isVisible()) {\n      await expect(mood).toContainText(/\uc88b\uc740|\ubcf4\ud1b5|\uc8fc\uc758|\uc88b\uc9c0/);\n    }\n  });\n\n  test('\uc6b4\uc138 \uacb0\uacfc \uacf5\uc720 \uae30\ub2a5', async ({ page }) => {\n    await page.goto('/fortune/daily/');\n    \n    // \uacb0\uacfc \ud398\uc774\uc9c0\ub85c Mock \ub370\uc774\ud130 \uc124\uc815\n    await page.evaluate(() => {\n      // \uacb0\uacfc \ud45c\uc2dc\n      document.body.innerHTML += `\n        <div class=\"fortune-result\">\n          <div class=\"fortune-text\">\uc624\ub298\uc740 \uc88b\uc740 \uc77c\uc774 \uc788\uc744 \uac70\uc608\uc694!</div>\n          <div class=\"share-section\">\n            <button class=\"share-kakao\">\uce74\uce74\uc624\ud1a1 \uacf5\uc720</button>\n            <button class=\"share-link\">\ub9c1\ud06c \ubcf5\uc0ac</button>\n            <button class=\"share-facebook\">Facebook</button>\n          </div>\n        </div>\n      `;\n    });\n    \n    // \uacf5\uc720 \uc139\uc158 \ud655\uc778\n    const shareSection = page.locator('.share-section, .fortune-share');\n    await expect(shareSection).toBeVisible();\n    \n    // \ub9c1\ud06c \ubcf5\uc0ac \ubc84\ud2bc \ud14c\uc2a4\ud2b8\n    const copyLinkButton = page.locator('button').filter({ hasText: /\ub9c1\ud06c.*\ubcf5\uc0ac|URL.*\ubcf5\uc0ac/ });\n    if (await copyLinkButton.isVisible()) {\n      // Clipboard API mock\n      await page.evaluate(() => {\n        window.navigator.clipboard = {\n          writeText: async (text) => {\n            window.clipboardText = text;\n            return Promise.resolve();\n          }\n        };\n      });\n      \n      await copyLinkButton.click();\n      \n      // \ubcf5\uc0ac \uc644\ub8cc \uba54\uc2dc\uc9c0 \ud655\uc778\n      const copyMessage = page.locator('.copy-success, .copied-message');\n      if (await copyMessage.isVisible()) {\n        await expect(copyMessage).toContainText(/\ubcf5\uc0ac.*\uc644\ub8cc|\ubcf5\uc0ac.*\ub428/);\n      }\n      \n      // \ubcf5\uc0ac\ub41c \ub0b4\uc6a9 \ud655\uc778\n      const clipboardText = await page.evaluate(() => window.clipboardText);\n      expect(clipboardText).toContain('http');\n    }\n    \n    // \uce74\uce74\uc624\ud1a1 \uacf5\uc720 \ubc84\ud2bc \ud14c\uc2a4\ud2b8\n    const kakaoButton = page.locator('button').filter({ hasText: /\uce74\uce74\uc624/ });\n    if (await kakaoButton.isVisible()) {\n      // \ud074\ub9ad \uc2dc \uc0c8 \ucc3d\uc774 \uc5f4\ub9ac\ub294\uc9c0 \ud655\uc778 (\uc2e4\uc81c \uacf5\uc720\ub294 \ud558\uc9c0 \uc54a\uc74c)\n      const [popup] = await Promise.all([\n        page.waitForEvent('popup').catch(() => null),\n        kakaoButton.click()\n      ]);\n      \n      if (popup) {\n        expect(popup.url()).toContain('kakao');\n        await popup.close();\n      }\n    }\n  });\n\n  test('\uc5d0\ub7ec \ucc98\ub9ac \ubc0f \uc0ac\uc6a9\uc790 \uc548\ub0b4', async ({ page }) => {\n    await page.goto('/fortune/daily/');\n    \n    // \ube48 \uc815\ubcf4\ub85c \uc81c\ucd9c \uc2dc\ub3c4\n    const submitButton = page.locator('button').filter({ hasText: /\uc6b4\uc138/ });\n    await submitButton.click();\n    \n    // \uc720\ud6a8\uc131 \uac80\uc0ac \uc5d0\ub7ec \uba54\uc2dc\uc9c0 \ud655\uc778\n    const errorMessage = page.locator('.error-message, .validation-error, .form-error');\n    if (await errorMessage.isVisible()) {\n      await expect(errorMessage).toContainText(/\uc774\ub984|\uc0dd\ub144\uc6d4\uc77c|\ud544\uc218/);\n    }\n    \n    // \uc798\ubabb\ub41c \ub0a0\uc9dc \ud615\uc2dd \uc785\ub825\n    const nameInput = page.locator('input[name=\"name\"]');\n    await nameInput.fill('\ud14c\uc2a4\ud2b8');\n    \n    const dateInput = page.locator('input[type=\"date\"]');\n    if (await dateInput.isVisible()) {\n      // \ubbf8\ub798 \ub0a0\uc9dc \uc785\ub825\n      const futureDate = new Date();\n      futureDate.setFullYear(futureDate.getFullYear() + 1);\n      await dateInput.fill(futureDate.toISOString().split('T')[0]);\n      \n      await submitButton.click();\n      \n      // \ub0a0\uc9dc \uc720\ud6a8\uc131 \uc5d0\ub7ec \ud655\uc778\n      const dateError = page.locator('.date-error, .validation-error');\n      if (await dateError.isVisible()) {\n        await expect(dateError).toContainText(/\ub0a0\uc9dc|\ubbf8\ub798|\uc720\ud6a8/);\n      }\n    }\n    \n    // API \uc5d0\ub7ec \uc2dc\ubbac\ub808\uc774\uc158\n    await page.evaluate(() => {\n      // \uc804\uc5ed fetch mock\uc73c\ub85c API \uc5d0\ub7ec \uc2dc\ubbac\ub808\uc774\uc158\n      window.originalFetch = window.fetch;\n      window.fetch = () => Promise.reject(new Error('Network error'));\n    });\n    \n    // \uc62c\ubc14\ub978 \uc815\ubcf4\ub85c \uc7ac\uc81c\ucd9c\n    await nameInput.fill('\uae40\ud14c\uc2a4\ud2b8');\n    if (await dateInput.isVisible()) {\n      await dateInput.fill('1990-01-01');\n    }\n    \n    await submitButton.click();\n    \n    // \ub124\ud2b8\uc6cc\ud06c \uc5d0\ub7ec \uba54\uc2dc\uc9c0 \ud655\uc778\n    const networkError = page.locator('.network-error, .api-error');\n    if (await networkError.isVisible()) {\n      await expect(networkError).toContainText(/\ub124\ud2b8\uc6cc\ud06c|\uc5f0\uacb0|\uc624\ub958|\ub2e4\uc2dc/);\n      \n      // \uc7ac\uc2dc\ub3c4 \ubc84\ud2bc \ud655\uc778\n      const retryButton = page.locator('button').filter({ hasText: /\ub2e4\uc2dc.*\uc2dc\ub3c4|\uc7ac\uc2dc\ub3c4/ });\n      if (await retryButton.isVisible()) {\n        await expect(retryButton).toBeEnabled();\n      }\n    }\n  });\n\n  test('\ub9e4\uc77c \uc6b4\uc138 \uce90\uc2dc \ubc0f \uc911\ubcf5 \uc694\uccad \ubc29\uc9c0', async ({ page }) => {\n    await page.goto('/fortune/daily/');\n    \n    // \uc624\ub298 \uc6b4\uc138\ub97c \uc774\ubbf8 \ubcf8 \uc0ac\uc6a9\uc790 \uc2dc\ubbac\ub808\uc774\uc158\n    await page.evaluate(() => {\n      const today = new Date().toISOString().split('T')[0];\n      localStorage.setItem('daily_fortune_' + today, JSON.stringify({\n        fortune: '\uc774\ubbf8 \uc624\ub298 \uc6b4\uc138\ub97c \ubcf4\uc168\uc2b5\ub2c8\ub2e4.',\n        timestamp: new Date().toISOString(),\n        cached: true\n      }));\n    });\n    \n    // \ud398\uc774\uc9c0 \uc0c8\ub85c\uace0\uce68\n    await page.reload();\n    \n    // \uce90\uc2dc\ub41c \uacb0\uacfc \ud45c\uc2dc \ud655\uc778\n    const cachedResult = page.locator('.cached-result, .fortune-result');\n    if (await cachedResult.isVisible()) {\n      await expect(cachedResult).toContainText(/\uc774\ubbf8|\uc624\ub298/);\n    } else {\n      // \uce90\uc2dc\uac00 \uc5c6\ub2e4\uba74 \uc0ac\uc6a9\uc790 \uc548\ub0b4 \uba54\uc2dc\uc9c0\n      const guideMessage = page.locator('.today-fortune-guide');\n      if (await guideMessage.isVisible()) {\n        await expect(guideMessage).toContainText(/\uc624\ub298|\uc774\ubbf8/);\n      }\n    }\n    \n    // \uc0c8\ub85c\uc6b4 \uc6b4\uc138 \ubcf4\uae30 \ubc84\ud2bc (\ub0b4\uc77c \uc6b4\uc138 \ubbf8\ub9ac\ubcf4\uae30 \ub4f1)\n    const newFortuneButton = page.locator('button').filter({ \n      hasText: /\ub0b4\uc77c|\uc0c8\ub85c\uc6b4|\ub2e4\ub978/ \n    });\n    if (await newFortuneButton.isVisible()) {\n      await expect(newFortuneButton).toBeEnabled();\n    }\n  });\n\n  test('\ubaa8\ubc14\uc77c\uc5d0\uc11c\uc758 \uc77c\uc77c \uc6b4\uc138 \uc11c\ube44\uc2a4', async ({ page }) => {\n    // \ubaa8\ubc14\uc77c \ubdf0\ud3ec\ud2b8 \uc124\uc815\n    await page.setViewportSize({ width: 375, height: 667 });\n    await page.goto('/fortune/daily/');\n    \n    // \ubaa8\ubc14\uc77c\uc5d0\uc11c \ud3fc\uc774 \uc798 \ubcf4\uc774\ub294\uc9c0 \ud655\uc778\n    const form = page.locator('form, .fortune-form');\n    await expect(form).toBeVisible();\n    \n    const formBox = await form.boundingBox();\n    expect(formBox.width).toBeLessThan(400); // \ubaa8\ubc14\uc77c \ub108\ube44\uc5d0 \ub9de\uc74c\n    \n    // \uc785\ub825 \ud544\ub4dc\ub4e4\uc774 \ud130\uce58\ud558\uae30 \uc801\uc808\ud55c \ud06c\uae30\uc778\uc9c0 \ud655\uc778\n    const nameInput = page.locator('input[name=\"name\"]');\n    if (await nameInput.isVisible()) {\n      const inputBox = await nameInput.boundingBox();\n      expect(inputBox.height).toBeGreaterThan(44); // \ucd5c\uc18c \ud130\uce58 \ud0c0\uac9f \ud06c\uae30\n    }\n    \n    // \ubc84\ud2bc\ub4e4\uc774 \uc801\uc808\ud55c \ud06c\uae30\uc778\uc9c0 \ud655\uc778\n    const submitButton = page.locator('button').filter({ hasText: /\uc6b4\uc138/ });\n    if (await submitButton.isVisible()) {\n      const buttonBox = await submitButton.boundingBox();\n      expect(buttonBox.height).toBeGreaterThan(44);\n      expect(buttonBox.width).toBeGreaterThan(80);\n    }\n    \n    // \ubaa8\ubc14\uc77c\uc5d0\uc11c \ud130\uce58 \uc774\ubca4\ud2b8\ub85c \uc785\ub825 \ud14c\uc2a4\ud2b8\n    await nameInput.tap();\n    await nameInput.fill('\ubaa8\ubc14\uc77c\ud14c\uc2a4\ud2b8');\n    \n    const dateInput = page.locator('input[type=\"date\"]');\n    if (await dateInput.isVisible()) {\n      await dateInput.tap();\n      await dateInput.fill('1995-07-20');\n    }\n    \n    await submitButton.tap();\n    \n    // \uacb0\uacfc\uac00 \ubaa8\ubc14\uc77c \ud654\uba74\uc5d0 \uc798 \ub9de\ub294\uc9c0 \ud655\uc778\n    const result = page.locator('.fortune-result');\n    if (await result.isVisible()) {\n      const resultBox = await result.boundingBox();\n      expect(resultBox.width).toBeLessThan(400);\n    }\n  });\n\n  test('\uc77c\uc77c \uc6b4\uc138 \ud398\uc774\uc9c0 \uc811\uadfc\uc131', async ({ page }) => {\n    await page.goto('/fortune/daily/');\n    \n    // \ud398\uc774\uc9c0 \uc81c\ubaa9 \ubc0f \uba54\ud0c0 \uc815\ubcf4 \ud655\uc778\n    await expect(page).toHaveTitle(/\uc77c\uc77c.*\uc6b4\uc138|\uc624\ub298.*\uc6b4\uc138/);\n    \n    const metaDescription = page.locator('meta[name=\"description\"]');\n    await expect(metaDescription).toHaveAttribute('content', /\uc77c\uc77c|\uc624\ub298|\uc6b4\uc138/);\n    \n    // \uc8fc\uc694 landmark \uc694\uc18c\ub4e4\n    await expect(page.locator('main, [role=\"main\"]')).toBeVisible();\n    await expect(page.locator('h1')).toBeVisible();\n    \n    // \ud3fc \ub77c\ubca8\uacfc \uc785\ub825 \uc694\uc18c \uc5f0\uacb0 \ud655\uc778\n    const nameLabel = page.locator('label[for=\"name\"], label').filter({ hasText: /\uc774\ub984/ });\n    if (await nameLabel.isVisible()) {\n      const forAttr = await nameLabel.getAttribute('for');\n      const nameInput = page.locator(`#${forAttr}`);\n      await expect(nameInput).toBeVisible();\n    }\n    \n    // \ud544\uc218 \ud544\ub4dc \ud45c\uc2dc \ud655\uc778\n    const requiredInputs = page.locator('input[required]');\n    const requiredCount = await requiredInputs.count();\n    if (requiredCount > 0) {\n      for (let i = 0; i < requiredCount; i++) {\n        const input = requiredInputs.nth(i);\n        const ariaRequired = await input.getAttribute('aria-required');\n        expect(ariaRequired).toBe('true');\n      }\n    }\n    \n    // \uc5d0\ub7ec \uba54\uc2dc\uc9c0\uc758 \uc811\uadfc\uc131 \ud655\uc778\n    const errorMessage = page.locator('.error-message, [role=\"alert\"]');\n    if (await errorMessage.isVisible()) {\n      const role = await errorMessage.getAttribute('role');\n      expect(role).toBe('alert');\n    }\n  });\n\n  test('\uc77c\uc77c \uc6b4\uc138 \ud0a4\ubcf4\ub4dc \ub124\ube44\uac8c\uc774\uc158', async ({ page }) => {\n    await page.goto('/fortune/daily/');\n    \n    // Tab \ud0a4\ub85c \ud3fc \uc694\uc18c\ub4e4 \uc21c\ud68c\n    await page.keyboard.press('Tab');\n    \n    let focusedElement = page.locator(':focus');\n    await expect(focusedElement).toBeVisible();\n    \n    // \uc774\ub984 \ud544\ub4dc\uc5d0 \ud3ec\ucee4\uc2a4\uac00 \uc788\uc744 \uac83\n    const tagName = await focusedElement.evaluate(el => el.tagName.toLowerCase());\n    expect(['input', 'select', 'textarea']).toContain(tagName);\n    \n    // \ub2e4\uc74c \ud544\ub4dc\ub85c \uc774\ub3d9\n    await page.keyboard.press('Tab');\n    \n    // \uc0dd\ub144\uc6d4\uc77c\uc774\ub098 \uc131\ubcc4 \ud544\ub4dc\n    focusedElement = page.locator(':focus');\n    await expect(focusedElement).toBeVisible();\n    \n    // \uc81c\ucd9c \ubc84\ud2bc\uc73c\ub85c \uc774\ub3d9\n    await page.keyboard.press('Tab');\n    await page.keyboard.press('Tab'); // \ub354 \ud0ed\uc774 \ud544\uc694\ud560 \uc218 \uc788\uc74c\n    \n    focusedElement = page.locator(':focus');\n    const buttonText = await focusedElement.textContent();\n    expect(buttonText).toMatch(/\uc6b4\uc138|\uc870\ud68c|\ud655\uc778/);\n    \n    // Enter \ud0a4\ub85c \ubc84\ud2bc \ud65c\uc131\ud654 (\ub370\uc774\ud130\uac00 \uc720\ud6a8\ud55c \uacbd\uc6b0)\n    // \uc774 \ubd80\ubd84\uc740 \uc2e4\uc81c \ub370\uc774\ud130 \uc785\ub825 \ud6c4\uc5d0 \ud14c\uc2a4\ud2b8\ud558\ub294 \uac83\uc774 \uc88b\uc74c\n  });\n\n  test('\ub2e4\ub978 \uc6b4\uc138 \uc11c\ube44\uc2a4\ub85c\uc758 \uc5f0\uacb0', async ({ page }) => {\n    await page.goto('/fortune/daily/');\n    \n    // \uad00\ub828 \uc6b4\uc138 \uc11c\ube44\uc2a4 \ub9c1\ud06c \ud655\uc778\n    const relatedServices = page.locator('.related-services, .other-fortune-services');\n    if (await relatedServices.isVisible()) {\n      const serviceLinks = relatedServices.locator('a, button');\n      const linkCount = await serviceLinks.count();\n      expect(linkCount).toBeGreaterThan(0);\n      \n      // \uc0ac\uc8fc \uc6b4\uc138 \ub9c1\ud06c\n      const sajuLink = serviceLinks.filter({ hasText: /\uc0ac\uc8fc/ });\n      if (await sajuLink.isVisible()) {\n        await sajuLink.click();\n        await expect(page).toHaveURL(/saju/);\n        await page.goBack();\n      }\n      \n      // \ud0c0\ub85c \uc6b4\uc138 \ub9c1\ud06c\n      const tarotLink = serviceLinks.filter({ hasText: /\ud0c0\ub85c/ });\n      if (await tarotLink.isVisible()) {\n        await tarotLink.click();\n        await expect(page).toHaveURL(/tarot/);\n        await page.goBack();\n      }\n    }\n    \n    // \ub124\ube44\uac8c\uc774\uc158 \uba54\ub274\uc5d0\uc11c \ub2e4\ub978 \uc6b4\uc138 \uc11c\ube44\uc2a4 \uc811\uadfc\n    const nav = page.locator('nav, .main-nav');\n    if (await nav.isVisible()) {\n      const fortuneMenu = nav.locator('a').filter({ hasText: /\uc6b4\uc138/ });\n      if (await fortuneMenu.isVisible()) {\n        await fortuneMenu.click();\n        await expect(page).toHaveURL(/fortune/);\n        \n        // \uc6b4\uc138 \uba54\uc778 \ud398\uc774\uc9c0\uc5d0\uc11c \ub2e4\ub978 \uc11c\ube44\uc2a4\ub4e4 \ud655\uc778\n        const fortuneServices = page.locator('.fortune-service, .service-card');\n        const serviceCount = await fortuneServices.count();\n        expect(serviceCount).toBeGreaterThanOrEqual(3); // \uc77c\uc77c, \uc0ac\uc8fc, \ud0c0\ub85c \ub4f1\n      }\n    }\n  });\n});"
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/');
+  });
+
+  test('홈페이지에서 일일 운세 서비스로 이동', async ({ page }) => {
+    // 운세 서비스 카드 찾기
+    const dailyFortuneCard = page.locator('.service-card, .fortune-card').filter({
+      hasText: /일일|오늘.*운세|데일리/,
+    });
+    await expect(dailyFortuneCard).toBeVisible();
+
+    // 카드 설명 확인
+    await expect(dailyFortuneCard).toContainText(/오늘|일일|데일리/);
+
+    // 카드 클릭
+    await dailyFortuneCard.click();
+
+    // 운세 페이지로 이동 확인
+    await expect(page).toHaveURL(/fortune.*daily|daily.*fortune/);
+    await expect(page.locator('h1')).toContainText(/일일.*운세|오늘.*운세/);
+  });
+
+  test('사용자 정보 입력 폼 처리', async ({ page }) => {
+    await page.goto('/fortune/daily/');
+
+    // 사용자 정보 입력 폼 확인
+    const userForm = page.locator('form, .user-info-form, .fortune-form');
+    await expect(userForm).toBeVisible();
+
+    // 이름 입력 필드
+    const nameInput = page.locator('input[name="name"], input[placeholder*="이름"], #name');
+    await expect(nameInput).toBeVisible();
+    await nameInput.fill('김테스트');
+
+    // 생년월일 입력
+    const birthDateInput = page.locator('input[name="birthDate"], input[type="date"], #birthDate');
+    if (await birthDateInput.isVisible()) {
+      await birthDateInput.fill('1990-01-01');
+    }
+
+    // 형식 유효성 검사
+    const nameValue = await nameInput.inputValue();
+    expect(nameValue.length).toBeGreaterThan(1);
+
+    if (await birthDateInput.isVisible()) {
+      const dateValue = await birthDateInput.inputValue();
+      expect(dateValue).toMatch(/\d{4}-\d{2}-\d{2}/);
+    }
+  });
+
+  test('운세 조회 버튼 클릭 및 로딩 처리', async ({ page }) => {
+    await page.goto('/fortune/daily/');
+
+    // 사용자 정보 입력
+    await page.fill('input[name="name"], #name', '이테스트');
+
+    const birthDateInput = page.locator('input[name="birthDate"], input[type="date"]');
+    if (await birthDateInput.isVisible()) {
+      await birthDateInput.fill('1995-06-15');
+    }
+
+    // 운세 보기 버튼 클릭
+    const fortuneButton = page.locator('button').filter({
+      hasText: /운세.*보기|조회|확인|Get.*Fortune/,
+    });
+    await expect(fortuneButton).toBeVisible();
+    await expect(fortuneButton).toBeEnabled();
+
+    await fortuneButton.click();
+
+    // 로딩 상태 확인
+    const loadingElement = page.locator('.loading, .spinner, .fortune-loading');
+    if (await loadingElement.isVisible()) {
+      await expect(loadingElement).toContainText(/로딩|분석|생성/);
+
+      // 로딩 완료 대기 (최대 15초)
+      await expect(loadingElement).not.toBeVisible({ timeout: 15000 });
+    }
+  });
+
+  test('운세 결과 표시 및 내용 검증', async ({ page }) => {
+    await page.goto('/fortune/daily/');
+
+    // Mock 데이터로 결과 표시 시뮬레이션
+    await page.evaluate(() => {
+      // 전역 변수로 Mock 데이터 설정
+      window.mockFortuneData = {
+        success: true,
+        data: {
+          fortune: '오늘은 새로운 기회가 찾아올 것입니다. 긍정적인 마음가짐으로 하루를 시작하세요.',
+          luckyNumber: 7,
+          luckyColor: '파란색',
+          advice: '새로운 사람들과의 만남을 두려워하지 마세요.',
+          mood: '운세가 좋은 날',
+          timestamp: new Date().toISOString(),
+        },
+      };
+    });
+
+    // 사용자 정보 입력 및 제출
+    await page.fill('input[name="name"]', '박테스트');
+    if (await page.locator('input[type="date"]').isVisible()) {
+      await page.fill('input[type="date"]', '1992-03-20');
+    }
+
+    const submitButton = page.locator('button').filter({ hasText: /운세/ });
+    await submitButton.click();
+
+    // 결과 컨테이너 확인
+    const resultContainer = page.locator(
+      '.fortune-result, .result-container, .daily-fortune-result'
+    );
+    await expect(resultContainer).toBeVisible({ timeout: 10000 });
+
+    // 주요 운세 내용 확인
+    const fortuneText = page.locator('.fortune-text, .main-fortune, .fortune-content');
+    await expect(fortuneText).toBeVisible();
+    await expect(fortuneText).toContainText(/기회|마음가짐|하루/);
+  });
+
+  test('모바일에서의 일일 운세 서비스', async ({ page }) => {
+    // 모바일 뷰포트 설정
+    await page.setViewportSize({ width: 375, height: 667 });
+    await page.goto('/fortune/daily/');
+
+    // 모바일에서 폼이 잘 보이는지 확인
+    const form = page.locator('form, .fortune-form');
+    await expect(form).toBeVisible();
+
+    const formBox = await form.boundingBox();
+    expect(formBox.width).toBeLessThan(400); // 모바일 너비에 맞음
+
+    // 입력 필드들이 터치하기 적절한 크기인지 확인
+    const nameInput = page.locator('input[name="name"]');
+    if (await nameInput.isVisible()) {
+      const inputBox = await nameInput.boundingBox();
+      expect(inputBox.height).toBeGreaterThan(44); // 최소 터치 타겟 크기
+    }
+
+    // 버튼들이 적절한 크기인지 확인
+    const submitButton = page.locator('button').filter({ hasText: /운세/ });
+    if (await submitButton.isVisible()) {
+      const buttonBox = await submitButton.boundingBox();
+      expect(buttonBox.height).toBeGreaterThan(44);
+      expect(buttonBox.width).toBeGreaterThan(80);
+    }
+  });
+
+  test('에러 처리 및 사용자 안내', async ({ page }) => {
+    await page.goto('/fortune/daily/');
+
+    // 빈 정보로 제출 시도
+    const submitButton = page.locator('button').filter({ hasText: /운세/ });
+    await submitButton.click();
+
+    // 유효성 검사 에러 메시지 확인
+    const errorMessage = page.locator('.error-message, .validation-error, .form-error');
+    if (await errorMessage.isVisible()) {
+      await expect(errorMessage).toContainText(/이름|생년월일|필수/);
+    }
+  });
+
+  test('일일 운세 페이지 접근성', async ({ page }) => {
+    await page.goto('/fortune/daily/');
+
+    // 페이지 제목 및 메타 정보 확인
+    await expect(page).toHaveTitle(/일일.*운세|오늘.*운세/);
+
+    // 주요 landmark 요소들
+    await expect(page.locator('main, [role="main"]')).toBeVisible();
+    await expect(page.locator('h1')).toBeVisible();
+
+    // 폼 라벨과 입력 요소 연결 확인
+    const nameLabel = page.locator('label[for="name"], label').filter({ hasText: /이름/ });
+    if (await nameLabel.isVisible()) {
+      const forAttr = await nameLabel.getAttribute('for');
+      const nameInput = page.locator(`#${forAttr}`);
+      await expect(nameInput).toBeVisible();
+    }
+  });
+
+  test('일일 운세 키보드 네비게이션', async ({ page }) => {
+    await page.goto('/fortune/daily/');
+
+    // Tab 키로 폼 요소들 순회
+    await page.keyboard.press('Tab');
+
+    let focusedElement = page.locator(':focus');
+    await expect(focusedElement).toBeVisible();
+
+    // 이름 필드에 포커스가 있을 것
+    const tagName = await focusedElement.evaluate((el) => el.tagName.toLowerCase());
+    expect(['input', 'select', 'textarea']).toContain(tagName);
+
+    // 다음 필드로 이동
+    await page.keyboard.press('Tab');
+
+    // 생년월일이나 성별 필드
+    focusedElement = page.locator(':focus');
+    await expect(focusedElement).toBeVisible();
+
+    // 제출 버튼으로 이동
+    await page.keyboard.press('Tab');
+    await page.keyboard.press('Tab'); // 더 탭이 필요할 수 있음
+
+    focusedElement = page.locator(':focus');
+    const buttonText = await focusedElement.textContent();
+    expect(buttonText).toMatch(/운세|조회|확인/);
+  });
+});

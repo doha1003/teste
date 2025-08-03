@@ -9,7 +9,7 @@ import { vi } from 'vitest';
  */
 export const mockApiResponse = (url, response, options = {}) => {
   const { status = 200, delay = 0, headers = {} } = options;
-  
+
   global.fetch.mockImplementationOnce((fetchUrl) => {
     if (fetchUrl.includes(url)) {
       return new Promise((resolve) => {
@@ -19,10 +19,10 @@ export const mockApiResponse = (url, response, options = {}) => {
             status,
             headers: new Headers({
               'content-type': 'application/json',
-              ...headers
+              ...headers,
             }),
             json: () => Promise.resolve(response),
-            text: () => Promise.resolve(JSON.stringify(response))
+            text: () => Promise.resolve(JSON.stringify(response)),
           });
         }, delay);
       });
@@ -36,9 +36,9 @@ export const mockApiResponse = (url, response, options = {}) => {
  */
 export const mockLocalStorage = (data = {}) => {
   const storage = {
-    ...data
+    ...data,
   };
-  
+
   global.localStorage.getItem = vi.fn((key) => storage[key] || null);
   global.localStorage.setItem = vi.fn((key, value) => {
     storage[key] = value;
@@ -47,9 +47,9 @@ export const mockLocalStorage = (data = {}) => {
     delete storage[key];
   });
   global.localStorage.clear = vi.fn(() => {
-    Object.keys(storage).forEach(key => delete storage[key]);
+    Object.keys(storage).forEach((key) => delete storage[key]);
   });
-  
+
   return storage;
 };
 
@@ -82,13 +82,13 @@ export const waitForEvent = (element, eventType, timeout = 5000) => {
     const timer = setTimeout(() => {
       reject(new Error(`Timeout waiting for ${eventType} event`));
     }, timeout);
-    
+
     const handler = (event) => {
       clearTimeout(timer);
       element.removeEventListener(eventType, handler);
       resolve(event);
     };
-    
+
     element.addEventListener(eventType, handler);
   });
 };
@@ -97,7 +97,7 @@ export const waitForEvent = (element, eventType, timeout = 5000) => {
  * 비동기 렌더링 대기 헬퍼
  */
 export const waitForRender = async () => {
-  await new Promise(resolve => setTimeout(resolve, 0));
+  await new Promise((resolve) => setTimeout(resolve, 0));
 };
 
 /**
@@ -127,7 +127,7 @@ export const mockApiError = (url, status = 500, message = 'Internal Server Error
         status,
         statusText: message,
         json: () => Promise.resolve({ error: message }),
-        text: () => Promise.resolve(message)
+        text: () => Promise.resolve(message),
       });
     }
   });
@@ -150,12 +150,12 @@ export const mockNetworkError = (url) => {
 export const mockCookie = {
   set: (name, value, days = 7) => {
     const expires = new Date();
-    expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
+    expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
     document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/`;
   },
-  
+
   get: (name) => {
-    const nameEQ = name + "=";
+    const nameEQ = name + '=';
     const ca = document.cookie.split(';');
     for (let i = 0; i < ca.length; i++) {
       let c = ca[i].trim();
@@ -165,12 +165,12 @@ export const mockCookie = {
     }
     return null;
   },
-  
+
   clear: () => {
     document.cookie.split(';').forEach((cookie) => {
       const eqPos = cookie.indexOf('=');
       const name = eqPos > -1 ? cookie.substr(0, eqPos).trim() : cookie.trim();
       document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`;
     });
-  }
+  },
 };

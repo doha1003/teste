@@ -12,7 +12,7 @@ export const LogLevel = {
   WARN: 1,
   INFO: 2,
   DEBUG: 3,
-  TRACE: 4
+  TRACE: 4,
 };
 
 /**
@@ -23,15 +23,17 @@ const LogLevelNames = {
   [LogLevel.WARN]: 'WARN',
   [LogLevel.INFO]: 'INFO',
   [LogLevel.DEBUG]: 'DEBUG',
-  [LogLevel.TRACE]: 'TRACE'
+  [LogLevel.TRACE]: 'TRACE',
 };
 
 /**
  * 현재 로그 레벨 설정
  */
-const currentLogLevel = process.env.LOG_LEVEL 
-  ? parseInt(process.env.LOG_LEVEL) 
-  : (process.env.NODE_ENV === 'production' ? LogLevel.INFO : LogLevel.DEBUG);
+const currentLogLevel = process.env.LOG_LEVEL
+  ? parseInt(process.env.LOG_LEVEL)
+  : process.env.NODE_ENV === 'production'
+    ? LogLevel.INFO
+    : LogLevel.DEBUG;
 
 /**
  * 로그 포맷터
@@ -39,18 +41,18 @@ const currentLogLevel = process.env.LOG_LEVEL
 function formatLog(level, namespace, message, meta = {}) {
   const timestamp = new Date().toISOString();
   const levelName = LogLevelNames[level];
-  
+
   const logEntry = {
     timestamp,
     level: levelName,
     namespace,
     message,
-    ...meta
+    ...meta,
   };
 
   // 민감한 정보 마스킹
   const sanitized = sanitizeLogData(logEntry);
-  
+
   return JSON.stringify(sanitized);
 }
 
@@ -59,8 +61,14 @@ function formatLog(level, namespace, message, meta = {}) {
  */
 function sanitizeLogData(data) {
   const sensitiveKeys = [
-    'password', 'token', 'key', 'secret', 'auth',
-    'GEMINI_API_KEY', 'API_KEY', 'authorization'
+    'password',
+    'token',
+    'key',
+    'secret',
+    'auth',
+    'GEMINI_API_KEY',
+    'API_KEY',
+    'authorization',
   ];
 
   function maskSensitiveData(obj) {
@@ -75,7 +83,7 @@ function sanitizeLogData(data) {
     const masked = {};
     for (const [key, value] of Object.entries(obj)) {
       const lowerKey = key.toLowerCase();
-      const isSensitive = sensitiveKeys.some(sensitive => 
+      const isSensitive = sensitiveKeys.some((sensitive) =>
         lowerKey.includes(sensitive.toLowerCase())
       );
 
@@ -110,7 +118,7 @@ class Logger {
     }
 
     const formattedLog = formatLog(level, this.namespace, message, meta);
-    
+
     // Vercel Functions에서는 console.log가 자동으로 수집됨
     if (level <= LogLevel.WARN) {
       console.error(formattedLog);
@@ -125,7 +133,7 @@ class Logger {
   error(message, meta = {}) {
     this._log(LogLevel.ERROR, message, {
       ...meta,
-      severity: 'error'
+      severity: 'error',
     });
   }
 
@@ -135,7 +143,7 @@ class Logger {
   warn(message, meta = {}) {
     this._log(LogLevel.WARN, message, {
       ...meta,
-      severity: 'warning'
+      severity: 'warning',
     });
   }
 
@@ -145,7 +153,7 @@ class Logger {
   info(message, meta = {}) {
     this._log(LogLevel.INFO, message, {
       ...meta,
-      severity: 'info'
+      severity: 'info',
     });
   }
 
@@ -155,7 +163,7 @@ class Logger {
   debug(message, meta = {}) {
     this._log(LogLevel.DEBUG, message, {
       ...meta,
-      severity: 'debug'
+      severity: 'debug',
     });
   }
 
@@ -165,7 +173,7 @@ class Logger {
   trace(message, meta = {}) {
     this._log(LogLevel.TRACE, message, {
       ...meta,
-      severity: 'trace'
+      severity: 'trace',
     });
   }
 
@@ -180,10 +188,10 @@ class Logger {
         this.info(`Timer: ${label}`, {
           ...meta,
           duration,
-          unit: 'ms'
+          unit: 'ms',
         });
         return duration;
-      }
+      },
     };
   }
 
@@ -197,7 +205,7 @@ class Logger {
       userAgent: req.headers['user-agent'],
       contentType: req.headers['content-type'],
       contentLength: req.headers['content-length'],
-      ...meta
+      ...meta,
     });
   }
 
@@ -208,7 +216,7 @@ class Logger {
     const level = statusCode >= 400 ? LogLevel.WARN : LogLevel.INFO;
     this._log(level, 'HTTP Response', {
       statusCode,
-      ...meta
+      ...meta,
     });
   }
 
@@ -220,7 +228,7 @@ class Logger {
       error: error.message,
       stack: error.stack,
       name: error.name,
-      ...context
+      ...context,
     });
   }
 
@@ -232,7 +240,7 @@ class Logger {
       metric: name,
       value,
       unit,
-      ...meta
+      ...meta,
     });
   }
 
@@ -243,7 +251,7 @@ class Logger {
     this.info('User Action', {
       action,
       userId,
-      ...meta
+      ...meta,
     });
   }
 
@@ -254,7 +262,7 @@ class Logger {
     this.warn('Security Event', {
       event,
       severity,
-      ...meta
+      ...meta,
     });
   }
 }
@@ -284,7 +292,7 @@ export const LogHelpers = {
       method: req.method,
       url: req.url,
       userAgent: req.headers['user-agent'],
-      contentType: req.headers['content-type']
+      contentType: req.headers['content-type'],
     });
   },
 
@@ -296,7 +304,7 @@ export const LogHelpers = {
       requestId,
       duration,
       unit: 'ms',
-      ...meta
+      ...meta,
     });
   },
 
@@ -310,7 +318,7 @@ export const LogHelpers = {
       promptLength,
       duration,
       unit: 'ms',
-      success
+      success,
     });
   },
 
@@ -322,7 +330,7 @@ export const LogHelpers = {
       event, // 'hit', 'miss', 'set', 'delete'
       key: key.substring(0, 50), // 키 길이 제한
       hit,
-      ttl
+      ttl,
     });
   },
 
@@ -334,7 +342,7 @@ export const LogHelpers = {
       ip: ip.substring(0, 15), // IP 부분 마스킹
       allowed,
       remaining,
-      resetTime
+      resetTime,
     });
   },
 
@@ -345,14 +353,14 @@ export const LogHelpers = {
     logger.warn('Validation failed', {
       requestId,
       errorCount: errors.length,
-      errors: errors.slice(0, 5) // 최대 5개 에러만 로깅
+      errors: errors.slice(0, 5), // 최대 5개 에러만 로깅
     });
-  }
+  },
 };
 
 export default {
   LogLevel,
   createLogger,
   logger,
-  LogHelpers
+  LogHelpers,
 };

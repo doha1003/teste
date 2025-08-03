@@ -250,7 +250,9 @@ export class TarotFortuneService extends FortuneService {
    */
   initTarotForm() {
     const form = document.querySelector('[data-form="tarot"]');
-    if (!form) return;
+    if (!form) {
+      return;
+    }
 
     // 스프레드 선택 이벤트
     const spreadRadios = form.querySelectorAll('input[name="spread"]');
@@ -313,7 +315,9 @@ export class TarotFortuneService extends FortuneService {
    */
   showCardSelectionUI() {
     const container = document.querySelector(this.config.resultContainer);
-    if (!container) return;
+    if (!container) {
+      return;
+    }
 
     container.classList.remove('d-none-init');
     container.style.display = 'block';
@@ -343,7 +347,9 @@ export class TarotFortuneService extends FortuneService {
    */
   createCardDeck() {
     const deck = document.getElementById('cardDeck');
-    if (!deck) return;
+    if (!deck) {
+      return;
+    }
 
     // 22장의 뒷면 카드 생성
     for (let i = 0; i < 22; i++) {
@@ -361,8 +367,12 @@ export class TarotFortuneService extends FortuneService {
    * 카드 선택
    */
   selectCard(cardElement, index) {
-    if (this.selectedCards.length >= this.currentSpread.count) return;
-    if (cardElement.classList.contains('selected')) return;
+    if (this.selectedCards.length >= this.currentSpread.count) {
+      return;
+    }
+    if (cardElement.classList.contains('selected')) {
+      return;
+    }
 
     // 카드 선택
     cardElement.classList.add('selected', 'flipping');
@@ -371,7 +381,7 @@ export class TarotFortuneService extends FortuneService {
 
     this.selectedCards.push({
       ...cardData,
-      isReversed: isReversed,
+      isReversed,
       position: this.selectedCards.length,
     });
 
@@ -448,24 +458,21 @@ export class TarotFortuneService extends FortuneService {
           if (aiResult) {
             const interpretation = this.parseTarotAIResponse(aiResult);
             this.showResult({
-              interpretation: interpretation,
+              interpretation,
               isAIGenerated: true,
             });
             return;
           }
         } catch (error) {
-          
           // 에러가 발생해도 기본 해석으로 계속 진행
         }
       }
-    } catch (error) {
-      
-    }
+    } catch (error) {}
 
     // 기본 해석 생성
     const interpretation = this.generateTarotInterpretation();
     this.showResult({
-      interpretation: interpretation,
+      interpretation,
       isAIGenerated: false,
     });
   }
@@ -481,14 +488,14 @@ export class TarotFortuneService extends FortuneService {
       const meaning = card.isReversed ? card.meaning.reversed : card.meaning.upright;
 
       interpretations.push({
-        position: position,
-        card: card,
+        position,
+        card,
         interpretation: this.generateCardInterpretation(card, position, meaning),
       });
     });
 
     return {
-      interpretations: interpretations,
+      interpretations,
       overall: this.generateOverallMessage(),
       advice: this.generateFinalAdvice(),
     };
@@ -578,9 +585,13 @@ export class TarotFortuneService extends FortuneService {
     const majorThemes = [];
 
     this.selectedCards.forEach((card) => {
-      if (card.id <= 7) majorThemes.push('시작과 성장');
-      else if (card.id <= 14) majorThemes.push('도전과 변화');
-      else majorThemes.push('완성과 깨달음');
+      if (card.id <= 7) {
+        majorThemes.push('시작과 성장');
+      } else if (card.id <= 14) {
+        majorThemes.push('도전과 변화');
+      } else {
+        majorThemes.push('완성과 깨달음');
+      }
     });
 
     const uniqueThemes = [...new Set(majorThemes)];
@@ -614,7 +625,7 @@ export class TarotFortuneService extends FortuneService {
     return {
       interpretations: this.selectedCards.map((card, idx) => ({
         position: this.currentSpread.positions[idx],
-        card: card,
+        card,
         interpretation:
           aiData.interpretations?.[idx] ||
           this.generateCardInterpretation(
@@ -632,7 +643,7 @@ export class TarotFortuneService extends FortuneService {
    * 타로 결과 카드 생성
    */
   createTarotResultCard(result) {
-    const interpretation = result.interpretation;
+    const { interpretation } = result;
     const isAIGenerated = result.isAIGenerated || false;
 
     return `

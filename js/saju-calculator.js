@@ -53,12 +53,12 @@ const sajuCalculator = {
   },
 
   // 음양 구분
-  getYinYang: function (index) {
+  getYinYang(index) {
     return index % 2 === 0 ? '양' : '음';
   },
 
   // 간단한 만세력 계산 (1900-2100년)
-  calculateSaju: function (year, month, day, hour, isLunar = false) {
+  calculateSaju(year, month, day, hour, isLunar = false) {
     try {
       // 양력 변환 (음력인 경우)
       if (isLunar) {
@@ -121,20 +121,20 @@ const sajuCalculator = {
 
       return {
         birthInfo: {
-          year: year,
-          month: month,
-          day: day,
-          hour: hour,
-          isLunar: isLunar,
+          year,
+          month,
+          day,
+          hour,
+          isLunar,
         },
         yearPillar: { stem: yearStem, branch: yearBranch },
         monthPillar: { stem: monthStem, branch: monthBranch },
         dayPillar: { stem: dayStem, branch: dayBranch },
         hourPillar: { stem: hourStem, branch: hourBranch },
-        dayMaster: dayMaster,
-        dayMasterElement: dayMasterElement,
-        tenGods: tenGods,
-        elements: elements,
+        dayMaster,
+        dayMasterElement,
+        tenGods,
+        elements,
       };
     } catch (error) {
       // console.error removed('사주 계산 오류:', error);
@@ -143,7 +143,7 @@ const sajuCalculator = {
   },
 
   // 총 일수 계산 (간단한 방식)
-  getTotalDays: function (year, month, day) {
+  getTotalDays(year, month, day) {
     const startYear = 1900;
     let totalDays = 0;
 
@@ -166,12 +166,12 @@ const sajuCalculator = {
   },
 
   // 윤년 판별
-  isLeapYear: function (year) {
+  isLeapYear(year) {
     return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
   },
 
   // 십신 계산
-  calculateTenGods: function (dayMaster, stems) {
+  calculateTenGods(dayMaster, stems) {
     const dayElement = this.stemElements[dayMaster];
     const result = {};
 
@@ -194,8 +194,10 @@ const sajuCalculator = {
   },
 
   // 오행 관계 분석
-  getElementRelationship: function (dayElement, targetElement) {
-    if (dayElement === targetElement) return 'same';
+  getElementRelationship(dayElement, targetElement) {
+    if (dayElement === targetElement) {
+      return 'same';
+    }
 
     const relationships = {
       목: {
@@ -231,16 +233,24 @@ const sajuCalculator = {
     };
 
     const rel = relationships[dayElement];
-    if (rel.generates === targetElement) return 'generates';
-    if (rel.controls === targetElement) return 'controls';
-    if (rel.controlledBy === targetElement) return 'controlledBy';
-    if (rel.generatedBy === targetElement) return 'generatedBy';
+    if (rel.generates === targetElement) {
+      return 'generates';
+    }
+    if (rel.controls === targetElement) {
+      return 'controls';
+    }
+    if (rel.controlledBy === targetElement) {
+      return 'controlledBy';
+    }
+    if (rel.generatedBy === targetElement) {
+      return 'generatedBy';
+    }
 
     return 'neutral';
   },
 
   // 십신 결정
-  getTenGod: function (relationship, isSameYinYang) {
+  getTenGod(relationship, isSameYinYang) {
     switch (relationship) {
       case 'same':
         return isSameYinYang ? '비견' : '겁재';
@@ -258,7 +268,7 @@ const sajuCalculator = {
   },
 
   // 오행 분석
-  analyzeElements: function (characters) {
+  analyzeElements(characters) {
     const counts = { 목: 0, 화: 0, 토: 0, 금: 0, 수: 0 };
 
     characters.forEach((char) => {
@@ -313,14 +323,14 @@ const sajuCalculator = {
       balance: {
         level: balanceLevel,
         description: balanceDescription,
-        variance: variance,
+        variance,
       },
     };
   },
 
   // 16개 분야 상세 해석 생성
-  generateDetailedInterpretation: function (saju, gender = 'male') {
-    const dayMaster = saju.dayMaster;
+  generateDetailedInterpretation(saju, gender = 'male') {
+    const { dayMaster } = saju;
     const dayElement = saju.dayMasterElement;
     const strongestElement = saju.elements.strongest;
     const weakestElement = saju.elements.weakest;
@@ -348,7 +358,7 @@ const sajuCalculator = {
   },
 
   // 일주 해석
-  interpretDayMaster: function (dayMaster) {
+  interpretDayMaster(dayMaster) {
     const interpretations = {
       갑: '갑목일주는 큰 나무와 같이 곧고 굳센 성격을 지니고 있습니다. 리더십이 강하고 정의감이 넘치며, 새로운 일에 도전하는 것을 좋아합니다. 때로는 고집이 센 면이 있지만, 그만큼 신념이 확고하고 믿을 만한 사람입니다.',
       을: '을목일주는 유연한 나무처럼 상황에 잘 적응하는 능력을 가지고 있습니다. 섬세하고 감성적이며, 다른 사람의 마음을 잘 이해합니다. 협조적이고 배려심이 깊어 인간관계에서 조화를 중시합니다.',
@@ -365,7 +375,7 @@ const sajuCalculator = {
   },
 
   // 성격 분석
-  interpretPersonality: function (dayMaster, strongestElement, balance) {
+  interpretPersonality(dayMaster, strongestElement, balance) {
     const basePersonality = this.getBasePersonality(dayMaster);
     const elementInfluence = this.getElementPersonality(strongestElement);
     const balanceInfluence = this.getBalancePersonality(balance);
@@ -373,7 +383,7 @@ const sajuCalculator = {
     return `${basePersonality} ${elementInfluence} ${balanceInfluence}`;
   },
 
-  getBasePersonality: function (dayMaster) {
+  getBasePersonality(dayMaster) {
     const personalities = {
       갑: '당신은 천성적으로 리더의 기질을 가지고 있습니다. 정직하고 직선적인 성격으로 부정과 불의를 참지 못합니다.',
       을: '당신은 부드럽고 유연한 성격의 소유자입니다. 상대방의 입장을 이해하려 노력하고 조화를 중시합니다.',
@@ -389,7 +399,7 @@ const sajuCalculator = {
     return personalities[dayMaster] || '';
   },
 
-  getElementPersonality: function (element) {
+  getElementPersonality(element) {
     const influences = {
       목: '목의 기운이 강해 성장 지향적이고 발전을 추구하는 성향이 있습니다.',
       화: '화의 기운이 강해 활동적이고 표현력이 풍부한 성향이 있습니다.',
@@ -400,7 +410,7 @@ const sajuCalculator = {
     return influences[element] || '';
   },
 
-  getBalancePersonality: function (balance) {
+  getBalancePersonality(balance) {
     const balanceEffects = {
       excellent: '오행의 균형이 매우 좋아 안정된 성격을 보입니다.',
       good: '오행이 균형을 이루어 조화로운 성격을 나타냅니다.',
@@ -411,19 +421,19 @@ const sajuCalculator = {
   },
 
   // 운세 분석
-  interpretFortune: function (dayMaster, strongestElement, balance) {
+  interpretFortune(dayMaster, strongestElement, balance) {
     const currentYear = new Date().getFullYear();
     const yearElement = this.getYearElement(currentYear);
 
     return `올해 ${currentYear}년은 ${yearElement} 기운이 강한 해입니다. ${dayMaster}일주인 당신에게는 ${this.getFortuneByElement(dayMaster, yearElement)} ${this.getBalanceFortune(balance)} 특히 ${strongestElement}의 기운이 강해 ${this.getElementFortune(strongestElement)} 전반적으로 꾸준한 노력이 결실을 맺는 시기가 될 것입니다.`;
   },
 
-  getYearElement: function (year) {
+  getYearElement(year) {
     const elements = ['금', '수', '목', '화', '토'];
     return elements[year % 5];
   },
 
-  getFortuneByElement: function (dayMaster, yearElement) {
+  getFortuneByElement(dayMaster, yearElement) {
     // 일주와 올해 오행의 관계 분석
     const dayElement = this.stemElements[dayMaster];
     const relationship = this.getElementRelationship(dayElement, yearElement);
@@ -439,7 +449,7 @@ const sajuCalculator = {
     return fortunes[relationship] || '변화와 기회의 해입니다.';
   },
 
-  getBalanceFortune: function (balance) {
+  getBalanceFortune(balance) {
     const balanceEffects = {
       excellent: '균형 잡힌 오행으로 인해 안정적인 운세를 보입니다.',
       good: '조화로운 기운으로 순조로운 진행이 예상됩니다.',
@@ -449,7 +459,7 @@ const sajuCalculator = {
     return balanceEffects[balance] || '';
   },
 
-  getElementFortune: function (element) {
+  getElementFortune(element) {
     const elementFortunes = {
       목: '성장과 발전의 기운이 강해집니다.',
       화: '활동적이고 창의적인 일에서 좋은 성과를 거둘 수 있습니다.',
@@ -461,7 +471,7 @@ const sajuCalculator = {
   },
 
   // 직업 적성 (더 상세하게)
-  interpretCareer: function (dayMaster, strongestElement, tenGods) {
+  interpretCareer(dayMaster, strongestElement, tenGods) {
     const baseCareer = this.getBaseCareer(dayMaster);
     const elementCareer = this.getElementCareer(strongestElement);
     const tenGodCareer = this.getTenGodCareer(tenGods);
@@ -469,7 +479,7 @@ const sajuCalculator = {
     return `${baseCareer} ${elementCareer} ${tenGodCareer}`;
   },
 
-  getBaseCareer: function (dayMaster) {
+  getBaseCareer(dayMaster) {
     const careers = {
       갑: '리더십이 요구되는 관리직, 경영직이 적합합니다. 교육자, 정치인, 군인 등의 분야에서도 능력을 발휘할 수 있습니다.',
       을: '상담, 서비스업, 예술 분야가 적합합니다. 사람과의 관계를 중시하는 직업에서 뛰어난 능력을 보입니다.',
@@ -485,7 +495,7 @@ const sajuCalculator = {
     return careers[dayMaster] || '';
   },
 
-  getElementCareer: function (element) {
+  getElementCareer(element) {
     const elementCareers = {
       목: '성장 산업, 교육, 출판, 환경 관련 분야에서 좋은 성과를 거둘 수 있습니다.',
       화: '에너지, IT, 미디어, 엔터테인먼트 분야에서 능력을 발휘할 수 있습니다.',
@@ -496,7 +506,7 @@ const sajuCalculator = {
     return elementCareers[element] || '';
   },
 
-  getTenGodCareer: function (tenGods) {
+  getTenGodCareer(tenGods) {
     // 십신 중 가장 많이 나타나는 것으로 판단
     const godCounts = {};
     Object.values(tenGods).forEach((god) => {
@@ -527,7 +537,7 @@ const sajuCalculator = {
   },
 
   // 건강 관리
-  interpretHealth: function (dayElement, strongestElement, weakestElement) {
+  interpretHealth(dayElement, strongestElement, weakestElement) {
     const baseHealth = this.getElementHealth(dayElement);
     const strongHealth = this.getStrongElementHealth(strongestElement);
     const weakHealth = this.getWeakElementHealth(weakestElement);
@@ -535,7 +545,7 @@ const sajuCalculator = {
     return `${baseHealth} ${strongHealth} ${weakHealth} 규칙적인 생활과 적절한 운동으로 건강을 유지하시기 바랍니다.`;
   },
 
-  getElementHealth: function (element) {
+  getElementHealth(element) {
     const healthMap = {
       목: '간, 담낭, 근육, 신경계 건강에 주의하시기 바랍니다. 스트레스 관리가 중요합니다.',
       화: '심장, 소장, 혈액순환 건강을 관리하세요. 과도한 흥분을 피하고 충분한 휴식을 취하세요.',
@@ -546,7 +556,7 @@ const sajuCalculator = {
     return healthMap[element] || '';
   },
 
-  getStrongElementHealth: function (element) {
+  getStrongElementHealth(element) {
     const effects = {
       목: '목 기운이 강해 간 기능이 활발하지만 과도할 경우 스트레스에 민감할 수 있습니다.',
       화: '화 기운이 강해 에너지가 넘치지만 심장에 부담을 줄 수 있으니 주의하세요.',
@@ -557,7 +567,7 @@ const sajuCalculator = {
     return effects[element] || '';
   },
 
-  getWeakElementHealth: function (element) {
+  getWeakElementHealth(element) {
     const supplements = {
       목: '목 기운이 부족하여 간 기능 강화에 도움이 되는 녹색 채소를 많이 드세요.',
       화: '화 기운이 부족하여 심장 건강에 좋은 붉은색 음식을 섭취하세요.',
@@ -569,14 +579,14 @@ const sajuCalculator = {
   },
 
   // 인간관계
-  interpretRelationship: function (dayMaster, tenGods) {
+  interpretRelationship(dayMaster, tenGods) {
     const baseRelation = this.getDayMasterRelation(dayMaster);
     const tenGodRelation = this.getTenGodRelation(tenGods);
 
     return `${baseRelation} ${tenGodRelation}`;
   },
 
-  getDayMasterRelation: function (dayMaster) {
+  getDayMasterRelation(dayMaster) {
     const relations = {
       갑: '직선적이고 솔직한 성격으로 진실한 관계를 선호합니다. 리더십을 발휘하여 주변 사람들을 이끌어 갑니다.',
       을: '부드럽고 배려심 많은 성격으로 조화로운 관계를 만들어 갑니다. 상대방의 마음을 잘 이해합니다.',
@@ -592,7 +602,7 @@ const sajuCalculator = {
     return relations[dayMaster] || '';
   },
 
-  getTenGodRelation: function (tenGods) {
+  getTenGodRelation(tenGods) {
     // 십신별 인간관계 특성
     const relationMap = {
       정관: '상하관계에서 예의를 중시하고 질서 있는 관계를 선호합니다.',
@@ -624,7 +634,7 @@ const sajuCalculator = {
   },
 
   // 재물운
-  interpretWealth: function (dayMaster, tenGods, strongestElement) {
+  interpretWealth(dayMaster, tenGods, strongestElement) {
     const baseWealth = this.getDayMasterWealth(dayMaster);
     const tenGodWealth = this.getTenGodWealth(tenGods);
     const elementWealth = this.getElementWealth(strongestElement);
@@ -632,7 +642,7 @@ const sajuCalculator = {
     return `${baseWealth} ${tenGodWealth} ${elementWealth}`;
   },
 
-  getDayMasterWealth: function (dayMaster) {
+  getDayMasterWealth(dayMaster) {
     const wealths = {
       갑: '정직한 방법으로 꾸준히 재물을 모으는 타입입니다. 사업보다는 안정적인 직업이 유리합니다.',
       을: '협력과 조화를 통해 재물을 얻습니다. 사람들과의 관계에서 경제적 기회를 얻을 수 있습니다.',
@@ -648,7 +658,7 @@ const sajuCalculator = {
     return wealths[dayMaster] || '';
   },
 
-  getTenGodWealth: function (tenGods) {
+  getTenGodWealth(tenGods) {
     // 재성(정재, 편재)의 비중으로 판단
     let hasWealth = false;
     let wealthType = '';
@@ -671,7 +681,7 @@ const sajuCalculator = {
     return '재물운은 노력에 따라 좌우됩니다. 꾸준한 근로소득과 현명한 투자로 재산을 늘려가시기 바랍니다.';
   },
 
-  getElementWealth: function (element) {
+  getElementWealth(element) {
     const elementWealths = {
       목: '성장하는 사업이나 교육 관련 투자에서 좋은 수익을 얻을 수 있습니다.',
       화: 'IT나 에너지 관련 주식, 미디어 사업에서 수익 기회가 있습니다.',
@@ -683,7 +693,7 @@ const sajuCalculator = {
   },
 
   // 생애 주기
-  interpretLifeCycle: function (dayMaster, birthYear) {
+  interpretLifeCycle(dayMaster, birthYear) {
     const currentYear = new Date().getFullYear();
     const age = currentYear - birthYear;
 
@@ -704,7 +714,7 @@ const sajuCalculator = {
     return `현재 ${lifePeriod}에 있는 당신은 ${baseLife} ${ageAdvice}`;
   },
 
-  getDayMasterLifeCycle: function (dayMaster, period) {
+  getDayMasterLifeCycle(dayMaster, period) {
     const lifecycles = {
       갑: {
         성장기: '강한 의지력으로 기초를 다지는 시기입니다. 학습에 집중하고 리더십을 기르세요.',
@@ -724,7 +734,7 @@ const sajuCalculator = {
     return lifecycles[dayMaster] ? lifecycles[dayMaster][period] || '' : '';
   },
 
-  getAgeAdvice: function (age) {
+  getAgeAdvice(age) {
     if (age < 30) {
       return '꿈과 목표를 세우고 기초 실력을 쌓는 것이 중요합니다.';
     } else if (age < 50) {
@@ -737,7 +747,7 @@ const sajuCalculator = {
   },
 
   // 궁합 분석
-  interpretCompatibility: function (dayMaster, gender) {
+  interpretCompatibility(dayMaster, gender) {
     const dayElement = this.stemElements[dayMaster];
     const compatible = this.getCompatibleElements(dayElement);
     const avoid = this.getAvoidElements(dayElement);
@@ -754,7 +764,7 @@ const sajuCalculator = {
         ${gender === 'male' ? '남성' : '여성'}으로서 상대방의 이해와 배려를 중시하며 서로 성장할 수 있는 관계를 만들어 가시기 바랍니다.`;
   },
 
-  getCompatibleElements: function (element) {
+  getCompatibleElements(element) {
     const compatibility = {
       목: ['수', '화'], // 목을 기르는 수, 목이 기르는 화
       화: ['목', '토'], // 화를 기르는 목, 화가 기르는 토
@@ -765,7 +775,7 @@ const sajuCalculator = {
     return compatibility[element] || [];
   },
 
-  getAvoidElements: function (element) {
+  getAvoidElements(element) {
     const avoid = {
       목: ['금'], // 목을 자르는 금
       화: ['수'], // 화를 끄는 수
@@ -776,7 +786,7 @@ const sajuCalculator = {
     return avoid[element] || [];
   },
 
-  getElementStems: function (element) {
+  getElementStems(element) {
     const stemsByElement = {
       목: ['갑', '을'],
       화: ['병', '정'],
@@ -788,7 +798,7 @@ const sajuCalculator = {
   },
 
   // 연도별 운세
-  interpretYearlyFortune: function (dayMaster, strongestElement) {
+  interpretYearlyFortune(dayMaster, strongestElement) {
     const currentYear = new Date().getFullYear();
     const nextYear = currentYear + 1;
 
@@ -800,7 +810,7 @@ const sajuCalculator = {
         기회를 놓치지 않도록 하시기 바랍니다.`;
   },
 
-  getYearFortune: function (dayMaster, year) {
+  getYearFortune(dayMaster, year) {
     const dayElement = this.stemElements[dayMaster];
     const yearElement = this.getYearElement(year);
     const relationship = this.getElementRelationship(dayElement, yearElement);
@@ -817,7 +827,7 @@ const sajuCalculator = {
   },
 
   // 월별 운세
-  interpretMonthlyFortune: function (dayMaster, strongestElement) {
+  interpretMonthlyFortune(dayMaster, strongestElement) {
     const currentMonth = new Date().getMonth() + 1;
     const nextMonth = currentMonth === 12 ? 1 : currentMonth + 1;
     const thirdMonth = nextMonth === 12 ? 1 : nextMonth + 1;
@@ -828,7 +838,7 @@ const sajuCalculator = {
         ${strongestElement}의 기운을 잘 활용하여 매달 목표를 세우고 실천하시기 바랍니다.`;
   },
 
-  getMonthFortune: function (dayMaster, month) {
+  getMonthFortune(dayMaster, month) {
     const dayElement = this.stemElements[dayMaster];
     const monthElements = ['목', '목', '토', '화', '화', '토', '금', '금', '토', '수', '수', '토'];
     const monthElement = monthElements[month - 1];
@@ -846,7 +856,7 @@ const sajuCalculator = {
   },
 
   // 행운 아이템
-  interpretLuckyItems: function (dayElement, strongestElement) {
+  interpretLuckyItems(dayElement, strongestElement) {
     const luckyColors = this.getLuckyColors(dayElement);
     const luckyDirections = this.getLuckyDirections(dayElement);
     const luckyNumbers = this.getLuckyNumbers(dayElement);
@@ -859,7 +869,7 @@ const sajuCalculator = {
         ${strongestElement}의 기운이 강한 당신은 해당 오행의 색상과 아이템을 활용하시면 더욱 좋습니다.`;
   },
 
-  getLuckyColors: function (element) {
+  getLuckyColors(element) {
     const colors = {
       목: ['초록색', '연두색', '청색'],
       화: ['빨간색', '주황색', '분홍색'],
@@ -870,7 +880,7 @@ const sajuCalculator = {
     return colors[element] || ['흰색'];
   },
 
-  getLuckyDirections: function (element) {
+  getLuckyDirections(element) {
     const directions = {
       목: ['동쪽', '동남쪽'],
       화: ['남쪽', '남동쪽'],
@@ -881,7 +891,7 @@ const sajuCalculator = {
     return directions[element] || ['동쪽'];
   },
 
-  getLuckyNumbers: function (element) {
+  getLuckyNumbers(element) {
     const numbers = {
       목: ['3', '8'],
       화: ['2', '7'],
@@ -892,7 +902,7 @@ const sajuCalculator = {
     return numbers[element] || ['1'];
   },
 
-  getLuckyStones: function (element) {
+  getLuckyStones(element) {
     const stones = {
       목: ['에메랄드', '말라카이트', '아벤츄린'],
       화: ['루비', '가넷', '카넬리안'],
@@ -904,7 +914,7 @@ const sajuCalculator = {
   },
 
   // 주의사항
-  interpretCautions: function (dayMaster, strongestElement) {
+  interpretCautions(dayMaster, strongestElement) {
     const baseCaution = this.getDayMasterCaution(dayMaster);
     const elementCaution = this.getElementCaution(strongestElement);
 
@@ -912,7 +922,7 @@ const sajuCalculator = {
         주변 사람들의 조언을 듣는 것이 좋습니다.`;
   },
 
-  getDayMasterCaution: function (dayMaster) {
+  getDayMasterCaution(dayMaster) {
     const cautions = {
       갑: '고집이 센 면이 있어 다른 사람의 의견을 무시할 수 있습니다. 유연함을 기르시기 바랍니다.',
       을: '우유부단한 면이 있어 결정을 미룰 수 있습니다. 때로는 과감한 선택이 필요합니다.',
@@ -928,7 +938,7 @@ const sajuCalculator = {
     return cautions[dayMaster] || '';
   },
 
-  getElementCaution: function (element) {
+  getElementCaution(element) {
     const cautions = {
       목: '목 기운이 강해 급성질을 낼 수 있습니다. 참을성을 기르시기 바랍니다.',
       화: '화 기운이 강해 과도한 흥분을 할 수 있습니다. 차분함을 유지하세요.',
@@ -940,7 +950,7 @@ const sajuCalculator = {
   },
 
   // 장점
-  interpretStrengths: function (dayMaster, strongestElement) {
+  interpretStrengths(dayMaster, strongestElement) {
     const baseStrength = this.getDayMasterStrength(dayMaster);
     const elementStrength = this.getElementStrength(strongestElement);
 
@@ -948,7 +958,7 @@ const sajuCalculator = {
         인생에서 큰 성취를 이룰 수 있을 것입니다.`;
   },
 
-  getDayMasterStrength: function (dayMaster) {
+  getDayMasterStrength(dayMaster) {
     const strengths = {
       갑: '강한 리더십과 정의감, 추진력이 뛰어납니다. 새로운 일을 시작하는 개척 정신이 훌륭합니다.',
       을: '유연함과 적응력, 배려심이 뛰어납니다. 사람들과 조화롭게 지내는 능력이 탁월합니다.',
@@ -964,7 +974,7 @@ const sajuCalculator = {
     return strengths[dayMaster] || '';
   },
 
-  getElementStrength: function (element) {
+  getElementStrength(element) {
     const strengths = {
       목: '성장 지향적이고 발전 가능성이 무궁무진합니다. 끊임없이 배우고 발전하려는 의지가 강합니다.',
       화: '활동적이고 열정적인 에너지가 넘칩니다. 창의적이고 표현력이 풍부하여 영향력이 큽니다.',
@@ -976,7 +986,7 @@ const sajuCalculator = {
   },
 
   // 개선할 점
-  interpretWeaknesses: function (dayMaster, weakestElement, balance) {
+  interpretWeaknesses(dayMaster, weakestElement, balance) {
     const baseWeakness = this.getDayMasterWeakness(dayMaster);
     const elementWeakness = this.getWeakElementIssue(weakestElement);
     const balanceWeakness = this.getBalanceWeakness(balance);
@@ -985,7 +995,7 @@ const sajuCalculator = {
         이러한 부분들을 의식적으로 개선하려 노력하시면 더 균형 잡힌 인생을 살 수 있습니다.`;
   },
 
-  getDayMasterWeakness: function (dayMaster) {
+  getDayMasterWeakness(dayMaster) {
     const weaknesses = {
       갑: '때로는 고집이 너무 셀 수 있습니다. 다른 사람의 의견에도 귀 기울이는 자세가 필요합니다.',
       을: '우유부단한 면이 있어 결정을 미루는 경향이 있습니다. 때로는 과감한 선택이 필요합니다.',
@@ -1001,7 +1011,7 @@ const sajuCalculator = {
     return weaknesses[dayMaster] || '';
   },
 
-  getWeakElementIssue: function (element) {
+  getWeakElementIssue(element) {
     const issues = {
       목: '목 기운이 부족하여 성장 동력이 부족할 수 있습니다. 배움과 도전에 적극적으로 나서세요.',
       화: '화 기운이 부족하여 활력이 떨어질 수 있습니다. 적극적이고 활동적인 자세가 필요합니다.',
@@ -1012,7 +1022,7 @@ const sajuCalculator = {
     return issues[element] || '';
   },
 
-  getBalanceWeakness: function (balance) {
+  getBalanceWeakness(balance) {
     const weaknesses = {
       excellent: '균형이 너무 좋아 때로는 도전 정신이 부족할 수 있습니다.',
       good: '전체적으로 무난하지만 때로는 특별함이 부족할 수 있습니다.',
@@ -1023,7 +1033,7 @@ const sajuCalculator = {
   },
 
   // 성장 포인트
-  interpretGrowthPoints: function (weakestElement, balance) {
+  interpretGrowthPoints(weakestElement, balance) {
     const elementGrowth = this.getElementGrowthPoint(weakestElement);
     const balanceGrowth = this.getBalanceGrowthPoint(balance);
 
@@ -1031,7 +1041,7 @@ const sajuCalculator = {
         지속적인 자기계발과 성찰을 통해 더 완전한 인격체로 성장해 나가시기 바랍니다.`;
   },
 
-  getElementGrowthPoint: function (element) {
+  getElementGrowthPoint(element) {
     const growthPoints = {
       목: '목 기운을 보강하기 위해 독서, 학습, 새로운 도전을 늘려보세요. 자연 속에서 시간을 보내는 것도 도움이 됩니다.',
       화: '화 기운을 보강하기 위해 운동, 사교활동, 창작활동을 늘려보세요. 밝고 활기찬 환경에서 시간을 보내세요.',
@@ -1042,7 +1052,7 @@ const sajuCalculator = {
     return growthPoints[element] || '';
   },
 
-  getBalanceGrowthPoint: function (balance) {
+  getBalanceGrowthPoint(balance) {
     const growthPoints = {
       excellent: '균형이 잘 잡혀 있으니 이를 유지하면서 새로운 도전에 나서보세요.',
       good: '좋은 균형을 바탕으로 한 단계 더 발전할 수 있는 영역을 찾아보세요.',
@@ -1053,7 +1063,7 @@ const sajuCalculator = {
   },
 
   // 십신 해석
-  interpretTenGods: function (tenGods) {
+  interpretTenGods(tenGods) {
     const godCounts = {};
     Object.values(tenGods).forEach((god) => {
       if (god !== '일주(본인)') {
@@ -1080,7 +1090,7 @@ const sajuCalculator = {
     return analysis;
   },
 
-  getTenGodMeaning: function (god) {
+  getTenGodMeaning(god) {
     const meanings = {
       정관: '질서를 중시하고 책임감이 강한 성향을 보입니다.',
       편관: '도전 정신이 강하고 권위에 맞서는 성향이 있습니다.',
@@ -1097,7 +1107,7 @@ const sajuCalculator = {
   },
 
   // 기본 해석 생성 (하위 호환성)
-  generateInterpretation: function (saju) {
+  generateInterpretation(saju) {
     return this.generateDetailedInterpretation(saju);
   },
 };

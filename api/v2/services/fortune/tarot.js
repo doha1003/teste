@@ -35,28 +35,93 @@ export class TarotFortuneService {
   initializeTarotData() {
     // 메이저 아르카나 (0-21)
     this.majorArcana = {
-      0: { name: '바보', nameEn: 'The Fool', element: '바람', keywords: ['새로운 시작', '모험', '순수'] },
-      1: { name: '마법사', nameEn: 'The Magician', element: '불', keywords: ['의지력', '창조', '행동'] },
-      2: { name: '여교황', nameEn: 'The High Priestess', element: '물', keywords: ['직관', '신비', '내적 지혜'] },
-      3: { name: '여황제', nameEn: 'The Empress', element: '흙', keywords: ['풍요', '모성', '창조력'] },
-      4: { name: '황제', nameEn: 'The Emperor', element: '불', keywords: ['권위', '안정', '리더십'] },
-      5: { name: '교황', nameEn: 'The Hierophant', element: '흙', keywords: ['전통', '가르침', '영적 지도'] },
-      6: { name: '연인', nameEn: 'The Lovers', element: '바람', keywords: ['사랑', '선택', '조화'] },
-      7: { name: '전차', nameEn: 'The Chariot', element: '물', keywords: ['승리', '의지력', '진보'] },
+      0: {
+        name: '바보',
+        nameEn: 'The Fool',
+        element: '바람',
+        keywords: ['새로운 시작', '모험', '순수'],
+      },
+      1: {
+        name: '마법사',
+        nameEn: 'The Magician',
+        element: '불',
+        keywords: ['의지력', '창조', '행동'],
+      },
+      2: {
+        name: '여교황',
+        nameEn: 'The High Priestess',
+        element: '물',
+        keywords: ['직관', '신비', '내적 지혜'],
+      },
+      3: {
+        name: '여황제',
+        nameEn: 'The Empress',
+        element: '흙',
+        keywords: ['풍요', '모성', '창조력'],
+      },
+      4: {
+        name: '황제',
+        nameEn: 'The Emperor',
+        element: '불',
+        keywords: ['권위', '안정', '리더십'],
+      },
+      5: {
+        name: '교황',
+        nameEn: 'The Hierophant',
+        element: '흙',
+        keywords: ['전통', '가르침', '영적 지도'],
+      },
+      6: {
+        name: '연인',
+        nameEn: 'The Lovers',
+        element: '바람',
+        keywords: ['사랑', '선택', '조화'],
+      },
+      7: {
+        name: '전차',
+        nameEn: 'The Chariot',
+        element: '물',
+        keywords: ['승리', '의지력', '진보'],
+      },
       8: { name: '힘', nameEn: 'Strength', element: '불', keywords: ['용기', '인내', '내적 힘'] },
-      9: { name: '은둔자', nameEn: 'The Hermit', element: '흙', keywords: ['성찰', '지혜', '고독'] },
-      10: { name: '운명의 수레바퀴', nameEn: 'Wheel of Fortune', element: '불', keywords: ['운명', '변화', '순환'] },
+      9: {
+        name: '은둔자',
+        nameEn: 'The Hermit',
+        element: '흙',
+        keywords: ['성찰', '지혜', '고독'],
+      },
+      10: {
+        name: '운명의 수레바퀴',
+        nameEn: 'Wheel of Fortune',
+        element: '불',
+        keywords: ['운명', '변화', '순환'],
+      },
       11: { name: '정의', nameEn: 'Justice', element: '바람', keywords: ['공정', '균형', '진실'] },
-      12: { name: '매달린 사람', nameEn: 'The Hanged Man', element: '물', keywords: ['희생', '기다림', '새로운 관점'] },
+      12: {
+        name: '매달린 사람',
+        nameEn: 'The Hanged Man',
+        element: '물',
+        keywords: ['희생', '기다림', '새로운 관점'],
+      },
       13: { name: '죽음', nameEn: 'Death', element: '물', keywords: ['변화', '끝과 시작', '변환'] },
       14: { name: '절제', nameEn: 'Temperance', element: '불', keywords: ['조화', '균형', '치유'] },
-      15: { name: '악마', nameEn: 'The Devil', element: '흙', keywords: ['유혹', '속박', '물질주의'] },
-      16: { name: '탑', nameEn: 'The Tower', element: '불', keywords: ['파괴', '각성', '급격한 변화'] },
+      15: {
+        name: '악마',
+        nameEn: 'The Devil',
+        element: '흙',
+        keywords: ['유혹', '속박', '물질주의'],
+      },
+      16: {
+        name: '탑',
+        nameEn: 'The Tower',
+        element: '불',
+        keywords: ['파괴', '각성', '급격한 변화'],
+      },
       17: { name: '별', nameEn: 'The Star', element: '바람', keywords: ['희망', '영감', '치유'] },
       18: { name: '달', nameEn: 'The Moon', element: '물', keywords: ['환상', '무의식', '두려움'] },
       19: { name: '태양', nameEn: 'The Sun', element: '불', keywords: ['성공', '기쁨', '활력'] },
       20: { name: '심판', nameEn: 'Judgement', element: '불', keywords: ['부활', '각성', '용서'] },
-      21: { name: '세계', nameEn: 'The World', element: '흙', keywords: ['완성', '성취', '통합'] }
+      21: { name: '세계', nameEn: 'The World', element: '흙', keywords: ['완성', '성취', '통합'] },
     };
 
     // 마이너 아르카나 - 완드 (지팡이)
@@ -74,7 +139,7 @@ export class TarotFortuneService {
       11: { name: '완드 페이지', keywords: ['열정', '학습', '새로운 소식'] },
       12: { name: '완드 나이트', keywords: ['모험', '충동적', '용감함'] },
       13: { name: '완드 퀸', keywords: ['자신감', '결단력', '독립성'] },
-      14: { name: '완드 킹', keywords: ['리더십', '비전', '기업가 정신'] }
+      14: { name: '완드 킹', keywords: ['리더십', '비전', '기업가 정신'] },
     };
 
     // 마이너 아르카나 - 컵 (성배)
@@ -92,7 +157,7 @@ export class TarotFortuneService {
       11: { name: '컵 페이지', keywords: ['창의적 기회', '직관적 메시지', '감정적 학습'] },
       12: { name: '컵 나이트', keywords: ['로맨스', '매력', '예술적 재능'] },
       13: { name: '컵 퀸', keywords: ['감정적 성숙', '직관력', '배려'] },
-      14: { name: '컵 킹', keywords: ['감정적 균형', '외교술', '관용'] }
+      14: { name: '컵 킹', keywords: ['감정적 균형', '외교술', '관용'] },
     };
 
     // 마이너 아르카나 - 소드 (검)
@@ -110,11 +175,7 @@ export class TarotFortuneService {
    * 단일 카드 타로 리딩
    */
   async performSingleCardReading(cardNumber, question = null, options = {}) {
-    const {
-      includeReversed = true,
-      includeAdvice = true,
-      includeTimeframe = true
-    } = options;
+    const { includeReversed = true, includeAdvice = true, includeTimeframe = true } = options;
 
     if (!this.model) {
       throw new Error('Gemini API가 설정되지 않았습니다.');
@@ -130,7 +191,12 @@ export class TarotFortuneService {
     const isReversed = includeReversed ? Math.random() > 0.5 : false;
 
     // 캐시 키 생성
-    const cacheKey = keyBuilder.build('tarot-single', cardNumber, isReversed ? 'r' : 'u', question ? 'q' : 'n');
+    const cacheKey = keyBuilder.build(
+      'tarot-single',
+      cardNumber,
+      isReversed ? 'r' : 'u',
+      question ? 'q' : 'n'
+    );
 
     // 캐시 확인 (같은 카드에 대한 일반적 해석은 캐시)
     let cached = null;
@@ -143,14 +209,20 @@ export class TarotFortuneService {
     }
 
     try {
-      const prompt = this.buildTarotPrompt(cardInfo, isReversed, question, includeAdvice, includeTimeframe);
-      
+      const prompt = this.buildTarotPrompt(
+        cardInfo,
+        isReversed,
+        question,
+        includeAdvice,
+        includeTimeframe
+      );
+
       logger.info('Generating tarot reading', {
         cardNumber,
         cardName: cardInfo.name,
         isReversed,
         hasQuestion: !!question,
-        promptLength: prompt.length
+        promptLength: prompt.length,
       });
 
       const startTime = performance.now();
@@ -162,19 +234,19 @@ export class TarotFortuneService {
       logger.info('Tarot reading generated', {
         cardNumber,
         responseLength: text.length,
-        duration: Math.round(duration)
+        duration: Math.round(duration),
       });
 
       // 응답 파싱
       const parsedReading = this.parseTarotResponse(text, cardInfo, isReversed);
-      
+
       const tarotReading = {
         ...parsedReading,
         card: cardInfo,
         isReversed,
         question,
         generatedAt: new Date().toISOString(),
-        aiGenerated: true
+        aiGenerated: true,
       };
 
       // 일반적인 해석은 캐시 (질문 특화가 아닌 경우)
@@ -183,12 +255,11 @@ export class TarotFortuneService {
       }
 
       return tarotReading;
-
     } catch (error) {
       logger.error('Tarot reading failed', {
         error: error.message,
         cardNumber,
-        isReversed
+        isReversed,
       });
       throw error;
     }
@@ -209,13 +280,13 @@ export class TarotFortuneService {
       const reading = await this.performSingleCardReading(cardNumbers[i], null, {
         includeReversed: true,
         includeAdvice: false,
-        includeTimeframe: false
+        includeTimeframe: false,
       });
-      
+
       readings.push({
         ...reading,
         position: positions[i],
-        positionDescription: this.getPositionDescription(positions[i])
+        positionDescription: this.getPositionDescription(positions[i]),
       });
     }
 
@@ -227,7 +298,7 @@ export class TarotFortuneService {
       question,
       cards: readings,
       overall: overallReading,
-      generatedAt: new Date().toISOString()
+      generatedAt: new Date().toISOString(),
     };
   }
 
@@ -240,8 +311,16 @@ export class TarotFortuneService {
     }
 
     const positions = [
-      '현재 상황', '도전과 기회', '먼 과거', '가까운 과거', '가능한 미래',
-      '가까운 미래', '당신의 접근법', '외부 영향', '희망과 두려움', '최종 결과'
+      '현재 상황',
+      '도전과 기회',
+      '먼 과거',
+      '가까운 과거',
+      '가능한 미래',
+      '가까운 미래',
+      '당신의 접근법',
+      '외부 영향',
+      '희망과 두려움',
+      '최종 결과',
     ];
 
     const readings = [];
@@ -250,13 +329,13 @@ export class TarotFortuneService {
       const reading = await this.performSingleCardReading(cardNumbers[i], null, {
         includeReversed: true,
         includeAdvice: false,
-        includeTimeframe: false
+        includeTimeframe: false,
       });
-      
+
       readings.push({
         ...reading,
         position: positions[i],
-        positionDescription: this.getCelticCrossDescription(positions[i])
+        positionDescription: this.getCelticCrossDescription(positions[i]),
       });
     }
 
@@ -268,7 +347,7 @@ export class TarotFortuneService {
       question,
       cards: readings,
       overall: overallReading,
-      generatedAt: new Date().toISOString()
+      generatedAt: new Date().toISOString(),
     };
   }
 
@@ -335,19 +414,19 @@ ${isReversed ? '역방향 카드의 의미를 중심으로 ' : ''}각 항목을 
    */
   parseTarotResponse(text, cardInfo, isReversed) {
     const sections = {};
-    const lines = text.split('\n').filter(line => line.trim());
-    
+    const lines = text.split('\n').filter((line) => line.trim());
+
     let currentSection = null;
     let currentContent = [];
 
     for (const line of lines) {
       const trimmed = line.trim();
-      
+
       if (trimmed.match(/^\d+\.\s/)) {
         if (currentSection) {
           sections[currentSection] = currentContent.join(' ').trim();
         }
-        
+
         const sectionMatch = trimmed.match(/^\d+\.\s(.+?):\s*(.*)$/);
         if (sectionMatch) {
           currentSection = this.getTarotSectionKey(sectionMatch[1]);
@@ -370,7 +449,7 @@ ${isReversed ? '역방향 카드의 의미를 중심으로 ' : ''}각 항목을 
       careerMoney: sections.careerMoney || '',
       spiritualMessage: sections.spiritualMessage || '',
       advice: sections.advice || '',
-      timeframe: sections.timeframe || ''
+      timeframe: sections.timeframe || '',
     };
   }
 
@@ -380,12 +459,12 @@ ${isReversed ? '역방향 카드의 의미를 중심으로 ' : ''}각 항목을 
   getTarotSectionKey(sectionName) {
     const keyMap = {
       '카드의 기본 의미': 'basicMeaning',
-      '현재 상황': 'currentSituation', 
+      '현재 상황': 'currentSituation',
       '감정과 관계': 'relationships',
       '직업과 재물': 'careerMoney',
       '영적 메시지': 'spiritualMessage',
-      '조언': 'advice',
-      '시기': 'timeframe'
+      조언: 'advice',
+      시기: 'timeframe',
     };
 
     return keyMap[sectionName] || sectionName.toLowerCase().replace(/\s/g, '');
@@ -420,9 +499,9 @@ ${question ? `질문: ${question}` : ''}
    */
   getPositionDescription(position) {
     const descriptions = {
-      '과거': '과거의 영향과 배경',
-      '현재': '현재 상황과 에너지',
-      '미래': '앞으로의 가능성과 방향'
+      과거: '과거의 영향과 배경',
+      현재: '현재 상황과 에너지',
+      미래: '앞으로의 가능성과 방향',
     };
     return descriptions[position] || '';
   }
@@ -438,7 +517,7 @@ ${question ? `질문: ${question}` : ''}
       '당신의 접근법': '당신의 마음가짐과 접근 방식',
       '외부 영향': '주변 환경과 타인의 영향',
       '희망과 두려움': '당신의 내적 기대와 우려',
-      '최종 결과': '모든 요소를 고려한 최종 결과'
+      '최종 결과': '모든 요소를 고려한 최종 결과',
     };
     return descriptions[position] || '';
   }
@@ -449,7 +528,7 @@ ${question ? `질문: ${question}` : ''}
   drawRandomCards(count = 1) {
     const cards = [];
     const usedNumbers = new Set();
-    
+
     while (cards.length < count) {
       const cardNumber = Math.floor(Math.random() * 78); // 0-77
       if (!usedNumbers.has(cardNumber)) {
@@ -457,7 +536,7 @@ ${question ? `질문: ${question}` : ''}
         cards.push(cardNumber);
       }
     }
-    
+
     return cards;
   }
 
@@ -470,7 +549,7 @@ ${question ? `질문: ${question}` : ''}
       status: genAI ? 'healthy' : 'error',
       model: this.model ? 'gemini-1.5-flash' : null,
       totalCards: 78,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     };
   }
 }

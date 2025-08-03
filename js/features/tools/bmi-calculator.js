@@ -274,7 +274,7 @@ export class BMICalculatorService extends ToolService {
     const statusElement = document.querySelector(this.ui.bmiStatus);
     if (statusElement) {
       statusElement.textContent = result.status.status;
-      statusElement.className = 'status ' + result.status.className;
+      statusElement.className = `status ${result.status.className}`;
     }
 
     // 설명
@@ -297,7 +297,9 @@ export class BMICalculatorService extends ToolService {
    */
   displayAdditionalInfo(result) {
     const additionalInfo = document.getElementById('additionalInfo');
-    if (!additionalInfo) return;
+    if (!additionalInfo) {
+      return;
+    }
 
     const weightStatus = result.weightDifference > 0 ? '초과' : '미달';
     const weightDiffAbs = Math.abs(result.weightDifference);
@@ -332,7 +334,9 @@ export class BMICalculatorService extends ToolService {
    */
   displayHealthAdvice(status) {
     const adviceContainer = document.getElementById('healthAdvice');
-    if (!adviceContainer || !status.advice) return;
+    if (!adviceContainer || !status.advice) {
+      return;
+    }
 
     const adviceHTML = status.advice.map((advice) => `<li>${advice}</li>`).join('');
 
@@ -388,8 +392,10 @@ export class BMICalculatorService extends ToolService {
    * 결과 복사 (오버라이드)
    */
   copyResult() {
-    const result = this.toolState.result;
-    if (!result) return;
+    const { result } = this.toolState;
+    if (!result) {
+      return;
+    }
 
     const text =
       `BMI 계산 결과
@@ -416,7 +422,7 @@ export class BMICalculatorService extends ToolService {
    * 공유 데이터 가져오기 (오버라이드)
    */
   getShareData() {
-    const result = this.toolState.result;
+    const { result } = this.toolState;
     if (!result) {
       return super.getShareData();
     }
@@ -461,7 +467,9 @@ export class BMICalculatorService extends ToolService {
    */
   displayBMIChart(result) {
     const chartContainer = document.querySelector(this.ui.bmiChart);
-    if (!chartContainer) return;
+    if (!chartContainer) {
+      return;
+    }
 
     // 간단한 시각적 표시
     const ranges = this.bmiRanges.slice(0, -1); // 마지막 Infinity 제외

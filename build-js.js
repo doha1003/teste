@@ -32,55 +32,52 @@ class BuildMetrics {
     console.log(`Total size: ${(totalSize / 1024).toFixed(2)} KB`);
     console.log(`Total gzipped: ${(totalGzipSize / 1024).toFixed(2)} KB`);
     console.log('\nBundle details:');
-    
-    this.bundles.forEach(bundle => {
+
+    this.bundles.forEach((bundle) => {
       console.log(`  - ${bundle.name}:`);
       console.log(`    Size: ${(bundle.size / 1024).toFixed(2)} KB`);
       console.log(`    Gzipped: ${(bundle.gzipSize / 1024).toFixed(2)} KB`);
       console.log(`    Build time: ${bundle.buildTime}s`);
     });
-    
+
     // 성능 보고서 저장
     const report = {
       timestamp: new Date().toISOString(),
       totalTime,
       totalSize,
       totalGzipSize,
-      bundles: this.bundles
+      bundles: this.bundles,
     };
-    
+
     if (!existsSync('build-reports')) {
       mkdirSync('build-reports');
     }
-    
-    writeFileSync(
-      `build-reports/build-${Date.now()}.json`,
-      JSON.stringify(report, null, 2)
-    );
+
+    writeFileSync(`build-reports/build-${Date.now()}.json`, JSON.stringify(report, null, 2));
   }
 }
 
 // 파일 크기 계산
 function getFileSize(filePath) {
   if (!existsSync(filePath)) return { size: 0, gzipSize: 0 };
-  
+
   const content = readFileSync(filePath);
   const gzipped = gzipSync(content);
-  
+
   return {
     size: content.length,
-    gzipSize: gzipped.length
+    gzipSize: gzipped.length,
   };
 }
 
 // 빌드 함수
 async function build() {
   const metrics = new BuildMetrics();
-  
+
   try {
     // Rollup 설정 로드
     const { options, warnings } = await loadConfigFile(configPath, {
-      format: 'es'
+      format: 'es',
     });
 
     warnings.flush();
@@ -91,10 +88,10 @@ async function build() {
     if (isWatch) {
       // Watch 모드
       console.log('👀 Starting watch mode...\n');
-      
+
       const watcher = watch(options);
-      
-      watcher.on('event', event => {
+
+      watcher.on('event', (event) => {
         switch (event.code) {
           case 'START':
             console.log('🔄 Build started...');
@@ -122,39 +119,40 @@ async function build() {
     } else {
       // 일반 빌드
       console.log(`🏗️  Building in ${isDev ? 'development' : 'production'} mode...\n`);
-      
+
       for (const optionSet of options) {
         const bundleStart = performance.now();
         const bundle = await rollup(optionSet);
-        
+
         if (Array.isArray(optionSet.output)) {
           for (const outputOptions of optionSet.output) {
             await bundle.write(outputOptions);
-            
+
             const { size, gzipSize } = getFileSize(outputOptions.file);
             const buildTime = ((performance.now() - bundleStart) / 1000).toFixed(2);
-            
+
             metrics.addBundle(outputOptions.file, size, gzipSize, buildTime);
             console.log(`✅ Built ${outputOptions.file}`);
           }
         } else {
           await bundle.write(optionSet.output);
-          
-          const outputFile = optionSet.output.file || 
+
+          const outputFile =
+            optionSet.output.file ||
             `${optionSet.output.dir}/${Object.keys(optionSet.input)[0]}.js`;
           const { size, gzipSize } = getFileSize(outputFile);
           const buildTime = ((performance.now() - bundleStart) / 1000).toFixed(2);
-          
+
           metrics.addBundle(outputFile, size, gzipSize, buildTime);
           console.log(`✅ Built ${outputFile}`);
         }
-        
+
         await bundle.close();
       }
-      
+
       // 성능 보고서 생성
       metrics.generateReport();
-      
+
       // HTML 파일 업데이트 스크립트 생성
       await createHtmlUpdateScript();
     }

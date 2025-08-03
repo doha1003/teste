@@ -23,4 +23,3 @@ import './fortune/zodiac-fortune.js';
 
 // 운세 인덱스
 import '../pages/fortune-index.js';
-

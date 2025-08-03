@@ -17,6 +17,10 @@
       maxEventsPerSession: 100,
       sessionTimeout: 30 * 60 * 1000, // 30 minutes
       apiEndpoint: '/api/analytics', // For custom analytics if needed
+      ga4MeasurementId: 'G-XXXXXXXXXX', // GA4 측정 ID (환경 변수로 설정 필요)
+      lighthouseApiEndpoint: '/api/lighthouse-metrics',
+      enableRealTimeData: true,
+      dataCollectionInterval: 300000, // 5분마다 데이터 수집
     },
 
     sessionId: null,
@@ -24,34 +28,51 @@
     events: [],
     botDetected: false,
     lastActivity: Date.now(),
+    performanceData: [],
+    lighthouseMetrics: null,
+    ga4Initialized: false,
+    dataCollectionTimer: null,
 
     // Initialize analytics
-    init: function () {
+    async init() {
       this.sessionId = this.generateSessionId();
       this.userId = this.getUserId();
       this.detectBot();
       this.setupEventListeners();
       this.startSessionTracking();
+
+      // Initialize GA4
+      await this.initGA4();
+
+      // Start real-time data collection
+      if (this.config.enableRealTimeData) {
+        this.startDataCollection();
+      }
+
+      // Collect initial lighthouse metrics
+      await this.collectLighthouseMetrics();
     },
 
     // Generate unique session ID
-    generateSessionId: function () {
+    generateSessionId() {
       return Date.now().toString(36) + Math.random().toString(36).substr(2);
     },
 
     // Get or create user ID
-    getUserId: function () {
+    getUserId() {
       let userId = localStorage.getItem('userId');
       if (!userId) {
-        userId = 'user_' + Date.now().toString(36) + Math.random().toString(36).substr(2);
+        userId = `user_${Date.now().toString(36)}${Math.random().toString(36).substr(2)}`;
         localStorage.setItem('userId', userId);
       }
       return userId;
     },
 
     // Bot detection system
-    detectBot: function () {
-      if (!this.config.enableBotDetection) return;
+    detectBot() {
+      if (!this.config.enableBotDetection) {
+        return;
+      }
 
       const indicators = {
         userAgent: this.checkUserAgentForBot(),
@@ -82,14 +103,14 @@
       this.trackEvent('bot_detection', {
         score: botScore,
         detected: this.botDetected,
-        indicators: indicators,
+        indicators,
       });
 
       return this.botDetected;
     },
 
     // Check user agent for bot patterns
-    checkUserAgentForBot: function () {
+    checkUserAgentForBot() {
       const userAgent = navigator.userAgent.toLowerCase();
       const botPatterns = [
         /bot/i,
@@ -116,7 +137,7 @@
     },
 
     // Check for webdriver presence
-    checkWebDriver: function () {
+    checkWebDriver() {
       return !!(
         window.navigator.webdriver ||
         window.callPhantom ||
@@ -129,11 +150,15 @@
     },
 
     // Check browser plugins
-    checkPlugins: function () {
-      if (!navigator.plugins) return true;
+    checkPlugins() {
+      if (!navigator.plugins) {
+        return true;
+      }
 
       // Real browsers usually have some plugins
-      if (navigator.plugins.length === 0) return true;
+      if (navigator.plugins.length === 0) {
+        return true;
+      }
 
       // Check for typical bot plugin patterns
       const pluginNames = Array.from(navigator.plugins).map((p) => p.name.toLowerCase());
@@ -143,8 +168,10 @@
     },
 
     // Check languages
-    checkLanguages: function () {
-      if (!navigator.languages || navigator.languages.length === 0) return true;
+    checkLanguages() {
+      if (!navigator.languages || navigator.languages.length === 0) {
+        return true;
+      }
 
       // Check for inconsistent language settings
       const browserLang = navigator.language;
@@ -154,7 +181,7 @@
     },
 
     // Check screen properties
-    checkScreenProperties: function () {
+    checkScreenProperties() {
       // Common headless browser screen sizes
       const suspiciousSizes = ['1024x768', '800x600', '1280x1024', '1366x768', '1920x1080'];
 
@@ -166,14 +193,18 @@
       }
 
       // Check for impossible screen configurations
-      if (screen.width === 0 || screen.height === 0) return true;
-      if (screen.colorDepth === 0) return true;
+      if (screen.width === 0 || screen.height === 0) {
+        return true;
+      }
+      if (screen.colorDepth === 0) {
+        return true;
+      }
 
       return false;
     },
 
     // Track mouse behavior for bot detection
-    checkMouseBehavior: function () {
+    checkMouseBehavior() {
       let mouseEvents = 0;
       let perfectLines = 0;
       let lastX = 0,
@@ -213,7 +244,7 @@
     },
 
     // Check timing behavior
-    checkTimingBehavior: function () {
+    checkTimingBehavior() {
       const startTime = performance.now();
       let interactions = 0;
 
@@ -247,12 +278,14 @@
     },
 
     // Check for suspicious behavior patterns
-    checkSuspiciousBehavior: function () {
+    checkSuspiciousBehavior() {
       let score = 0;
 
       // Check for missing touch support on mobile-like user agents
       if (/mobile|android|iphone|ipad/i.test(navigator.userAgent)) {
-        if (!('ontouchstart' in window)) score += 20;
+        if (!('ontouchstart' in window)) {
+          score += 20;
+        }
       }
 
       // Check for disabled images
@@ -286,15 +319,15 @@
     },
 
     // Update bot score asynchronously
-    updateBotScore: function (category, score) {
+    updateBotScore(category, score) {
       this.trackEvent('bot_score_update', {
-        category: category,
-        score: score,
+        category,
+        score,
       });
     },
 
     // Setup event listeners for tracking
-    setupEventListeners: function () {
+    setupEventListeners() {
       const self = this;
 
       // Track page views
@@ -316,7 +349,7 @@
       }
 
       // Track visibility changes
-      document.addEventListener('visibilitychange', function () {
+      document.addEventListener('visibilitychange', () => {
         self.trackEvent('visibility_change', {
           hidden: document.hidden,
           timestamp: Date.now(),
@@ -324,13 +357,13 @@
       });
 
       // Track beforeunload
-      window.addEventListener('beforeunload', function () {
+      window.addEventListener('beforeunload', () => {
         self.sendSessionData();
       });
     },
 
     // Track page views
-    trackPageView: function () {
+    trackPageView() {
       const pageData = {
         url: window.location.href,
         title: document.title,
@@ -348,22 +381,22 @@
     },
 
     // Setup user interaction tracking
-    setupUserInteractionTracking: function () {
+    setupUserInteractionTracking() {
       const self = this;
 
       // Track clicks
-      document.addEventListener('click', function (e) {
+      document.addEventListener('click', (e) => {
         self.trackInteraction('click', e);
       });
 
       // Track form submissions
-      document.addEventListener('submit', function (e) {
+      document.addEventListener('submit', (e) => {
         self.trackInteraction('form_submit', e);
       });
 
       // Track scroll behavior
       let scrollTimeout;
-      window.addEventListener('scroll', function () {
+      window.addEventListener('scroll', () => {
         clearTimeout(scrollTimeout);
         scrollTimeout = setTimeout(() => {
           self.trackEvent('scroll', {
@@ -380,12 +413,14 @@
     },
 
     // Track user interactions
-    trackInteraction: function (type, event) {
-      if (this.botDetected) return;
+    trackInteraction(type, event) {
+      if (this.botDetected) {
+        return;
+      }
 
-      const target = event.target;
+      const { target } = event;
       const data = {
-        type: type,
+        type,
         tagName: target.tagName,
         id: target.id,
         className: target.className,
@@ -406,11 +441,11 @@
     },
 
     // Setup performance tracking
-    setupPerformanceTracking: function () {
+    setupPerformanceTracking() {
       const self = this;
 
       // Track page load performance
-      window.addEventListener('load', function () {
+      window.addEventListener('load', () => {
         setTimeout(() => {
           const navigation = performance.getEntriesByType('navigation')[0];
           const paint = performance.getEntriesByType('paint');
@@ -433,7 +468,7 @@
       // Track resource loading errors
       window.addEventListener(
         'error',
-        function (e) {
+        (e) => {
           if (e.target !== window) {
             self.trackEvent('resource_error', {
               type: e.target.tagName,
@@ -447,7 +482,7 @@
     },
 
     // Setup error tracking
-    setupErrorTracking: function () {
+    setupErrorTracking() {
       const self = this;
 
       // This will work with the global error handler
@@ -464,7 +499,7 @@
     },
 
     // Start time tracking
-    startTimeTracking: function () {
+    startTimeTracking() {
       this.pageStartTime = Date.now();
 
       // Track active time (when page is visible and user is active)
@@ -502,7 +537,7 @@
     },
 
     // Start session tracking
-    startSessionTracking: function () {
+    startSessionTracking() {
       const self = this;
 
       // Update last activity time
@@ -525,14 +560,14 @@
     },
 
     // Track custom events
-    trackEvent: function (eventName, data = {}) {
+    trackEvent(eventName, data = {}) {
       if (this.events.length >= this.config.maxEventsPerSession) {
         return; // Prevent memory issues
       }
 
       const event = {
         name: eventName,
-        data: data,
+        data,
         timestamp: Date.now(),
         sessionId: this.sessionId,
         userId: this.userId,
@@ -550,7 +585,7 @@
     },
 
     // Track errors
-    trackError: function (errorInfo) {
+    trackError(errorInfo) {
       this.trackEvent('javascript_error', {
         message: errorInfo.message,
         type: errorInfo.type,
@@ -561,7 +596,7 @@
     },
 
     // Send to Google Analytics
-    sendToGoogleAnalytics: function (eventName, data) {
+    sendToGoogleAnalytics(eventName, data) {
       try {
         if (typeof gtag !== 'undefined' && !this.botDetected) {
           gtag('event', eventName, {
@@ -574,7 +609,7 @@
     },
 
     // Send to custom analytics
-    sendToCustomAnalytics: function (event) {
+    sendToCustomAnalytics(event) {
       // Implement custom analytics endpoint if needed
       try {
         if (this.config.apiEndpoint && !this.botDetected) {
@@ -585,7 +620,7 @@
     },
 
     // Queue events for batch sending
-    queueForBatchSend: function (event) {
+    queueForBatchSend(event) {
       if (!this.sendQueue) {
         this.sendQueue = [];
 
@@ -605,8 +640,10 @@
     },
 
     // Send batch of events
-    sendBatch: function () {
-      if (!this.sendQueue || this.sendQueue.length === 0) return;
+    sendBatch() {
+      if (!this.sendQueue || this.sendQueue.length === 0) {
+        return;
+      }
 
       const batch = this.sendQueue.splice(0, 10); // Send up to 10 events at once
 
@@ -620,11 +657,11 @@
           sessionId: this.sessionId,
           timestamp: Date.now(),
         }),
-      }).catch((error) => {});
+      }).catch((_error) => {});
     },
 
     // Send session data on page unload
-    sendSessionData: function () {
+    sendSessionData() {
       const sessionData = {
         sessionId: this.sessionId,
         userId: this.userId,
@@ -636,12 +673,12 @@
 
       // Use sendBeacon for reliable delivery
       if (navigator.sendBeacon && this.config.apiEndpoint) {
-        navigator.sendBeacon(this.config.apiEndpoint + '/session', JSON.stringify(sessionData));
+        navigator.sendBeacon(`${this.config.apiEndpoint}/session`, JSON.stringify(sessionData));
       }
     },
 
     // Get analytics data
-    getAnalyticsData: function () {
+    getAnalyticsData() {
       return {
         sessionId: this.sessionId,
         userId: this.userId,
@@ -652,9 +689,347 @@
     },
 
     // Clear analytics data
-    clearData: function () {
+    clearData() {
       this.events = [];
       localStorage.removeItem('userId');
+    },
+
+    // ==================== GA4 실제 데이터 연동 ====================
+
+    // Initialize GA4
+    async initGA4() {
+      try {
+        // Load GA4 script dynamically
+        if (!window.gtag) {
+          await this.loadGA4Script();
+        }
+
+        // Configure GA4
+        window.gtag('config', this.config.ga4MeasurementId, {
+          user_id: this.userId,
+          session_id: this.sessionId,
+          custom_map: {
+            custom_parameter_1: 'korean_user',
+            custom_parameter_2: 'doha_kr',
+          },
+        });
+
+        this.ga4Initialized = true;
+        console.log('GA4 initialized successfully');
+
+        // Track initialization
+        this.trackGA4Event('analytics_initialized', {
+          measurement_id: this.config.ga4MeasurementId,
+          user_id: this.userId,
+          session_id: this.sessionId,
+        });
+      } catch (error) {
+        console.error('GA4 initialization failed:', error);
+      }
+    },
+
+    // Load GA4 script
+    loadGA4Script() {
+      return new Promise((resolve, reject) => {
+        // Create gtag function
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = function () {
+          window.dataLayer.push(arguments);
+        };
+        window.gtag('js', new Date());
+
+        // Load GA4 script
+        const script = document.createElement('script');
+        script.async = true;
+        script.src = `https://www.googletagmanager.com/gtag/js?id=${this.config.ga4MeasurementId}`;
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
+      });
+    },
+
+    // Track GA4 events with enhanced data
+    trackGA4Event(eventName, parameters = {}) {
+      if (!this.ga4Initialized || this.botDetected) return;
+
+      try {
+        const enhancedParams = {
+          ...parameters,
+          page_title: document.title,
+          page_location: window.location.href,
+          user_id: this.userId,
+          session_id: this.sessionId,
+          timestamp: Date.now(),
+          korean_site: true,
+          site_language: 'ko',
+        };
+
+        window.gtag('event', eventName, enhancedParams);
+
+        // Also track in custom analytics
+        this.trackEvent(`ga4_${eventName}`, enhancedParams);
+      } catch (error) {
+        console.error('GA4 event tracking failed:', error);
+      }
+    },
+
+    // ==================== Lighthouse 메트릭 자동 저장 ====================
+
+    // Collect Lighthouse metrics
+    async collectLighthouseMetrics() {
+      try {
+        const metrics = await this.gatherPerformanceMetrics();
+
+        if (metrics) {
+          this.lighthouseMetrics = {
+            ...metrics,
+            timestamp: Date.now(),
+            url: window.location.href,
+            userAgent: navigator.userAgent,
+            collectingMethod: 'web_vitals',
+          };
+
+          // Save to API
+          await this.saveLighthouseMetrics(this.lighthouseMetrics);
+
+          // Track in GA4
+          this.trackGA4Event('performance_metrics', {
+            fcp: metrics.fcp || 0,
+            lcp: metrics.lcp || 0,
+            cls: metrics.cls || 0,
+            fid: metrics.fid || 0,
+            ttfb: metrics.ttfb || 0,
+          });
+        }
+      } catch (error) {
+        console.error('Lighthouse metrics collection failed:', error);
+      }
+    },
+
+    // Gather Web Vitals and performance metrics
+    async gatherPerformanceMetrics() {
+      return new Promise((resolve) => {
+        const metrics = {};
+
+        // Core Web Vitals using PerformanceObserver
+        try {
+          // First Contentful Paint
+          new PerformanceObserver((list) => {
+            for (const entry of list.getEntries()) {
+              if (entry.name === 'first-contentful-paint') {
+                metrics.fcp = entry.startTime;
+              }
+            }
+          }).observe({ entryTypes: ['paint'] });
+
+          // Largest Contentful Paint
+          new PerformanceObserver((list) => {
+            for (const entry of list.getEntries()) {
+              metrics.lcp = entry.startTime;
+            }
+          }).observe({ entryTypes: ['largest-contentful-paint'] });
+
+          // Cumulative Layout Shift
+          new PerformanceObserver((list) => {
+            let cls = 0;
+            for (const entry of list.getEntries()) {
+              if (!entry.hadRecentInput) {
+                cls += entry.value;
+              }
+            }
+            metrics.cls = cls;
+          }).observe({ entryTypes: ['layout-shift'] });
+
+          // First Input Delay
+          new PerformanceObserver((list) => {
+            for (const entry of list.getEntries()) {
+              metrics.fid = entry.processingStart - entry.startTime;
+            }
+          }).observe({ entryTypes: ['first-input'] });
+        } catch (error) {
+          console.warn('Some performance metrics not available:', error);
+        }
+
+        // Navigation Timing
+        setTimeout(() => {
+          const navigation = performance.getEntriesByType('navigation')[0];
+          if (navigation) {
+            metrics.ttfb = navigation.responseStart - navigation.requestStart;
+            metrics.domContentLoaded =
+              navigation.domContentLoadedEventEnd - navigation.navigationStart;
+            metrics.loadComplete = navigation.loadEventEnd - navigation.navigationStart;
+          }
+
+          resolve(metrics);
+        }, 3000); // Wait 3 seconds to collect metrics
+      });
+    },
+
+    // Save Lighthouse metrics to API
+    async saveLighthouseMetrics(metrics) {
+      try {
+        const response = await fetch(this.config.lighthouseApiEndpoint, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            type: 'lighthouse_metrics',
+            data: metrics,
+            timestamp: Date.now(),
+            sessionId: this.sessionId,
+          }),
+        });
+
+        if (response.ok) {
+          console.log('Lighthouse metrics saved successfully');
+        } else {
+          console.error('Failed to save Lighthouse metrics:', response.status);
+        }
+      } catch (error) {
+        console.error('Error saving Lighthouse metrics:', error);
+      }
+    },
+
+    // ==================== 실시간 데이터 수집 ====================
+
+    // Start continuous data collection
+    startDataCollection() {
+      // Clear existing timer
+      if (this.dataCollectionTimer) {
+        clearInterval(this.dataCollectionTimer);
+      }
+
+      // Collect data periodically
+      this.dataCollectionTimer = setInterval(async () => {
+        await this.collectRealTimeData();
+      }, this.config.dataCollectionInterval);
+
+      console.log(`Data collection started. Interval: ${this.config.dataCollectionInterval}ms`);
+    },
+
+    // Collect real-time data
+    async collectRealTimeData() {
+      try {
+        const data = {
+          timestamp: Date.now(),
+          sessionId: this.sessionId,
+          userId: this.userId,
+          url: window.location.href,
+
+          // Performance data
+          performance: await this.getCurrentPerformanceData(),
+
+          // User engagement
+          engagement: this.getEngagementData(),
+
+          // Error data
+          errors: this.getRecentErrors(),
+
+          // Page visibility
+          visibility: {
+            hidden: document.hidden,
+            visibilityState: document.visibilityState,
+          },
+        };
+
+        this.performanceData.push(data);
+
+        // Keep only last 20 data points
+        if (this.performanceData.length > 20) {
+          this.performanceData.shift();
+        }
+
+        // Send to analytics
+        await this.sendRealTimeData(data);
+
+        // Track in GA4
+        this.trackGA4Event('real_time_data', {
+          data_type: 'performance_snapshot',
+          session_duration: Date.now() - this.pageStartTime,
+        });
+      } catch (error) {
+        console.error('Real-time data collection failed:', error);
+      }
+    },
+
+    // Get current performance data
+    async getCurrentPerformanceData() {
+      const now = performance.now();
+
+      return {
+        currentTime: now,
+        memoryUsage: performance.memory
+          ? {
+              used: performance.memory.usedJSHeapSize,
+              total: performance.memory.totalJSHeapSize,
+              limit: performance.memory.jsHeapSizeLimit,
+            }
+          : null,
+
+        // Resource timing
+        resourceCount: performance.getEntriesByType('resource').length,
+
+        // Navigation timing
+        navigation: performance.getEntriesByType('navigation')[0] || null,
+
+        // Current page performance
+        currentPerformance: {
+          scrollY: window.scrollY,
+          innerHeight: window.innerHeight,
+          scrollHeight: document.body.scrollHeight,
+        },
+      };
+    },
+
+    // Get engagement data
+    getEngagementData() {
+      return {
+        eventsCount: this.events.length,
+        lastActivity: this.lastActivity,
+        timeSinceLastActivity: Date.now() - this.lastActivity,
+        sessionDuration: Date.now() - (this.pageStartTime || Date.now()),
+        botDetected: this.botDetected,
+      };
+    },
+
+    // Get recent errors
+    getRecentErrors() {
+      return this.events
+        .filter((event) => event.name === 'javascript_error')
+        .slice(-5) // Last 5 errors
+        .map((event) => ({
+          message: event.data.message,
+          timestamp: event.timestamp,
+          type: event.data.type,
+        }));
+    },
+
+    // Send real-time data to API
+    async sendRealTimeData(data) {
+      try {
+        await fetch(this.config.apiEndpoint, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            event: 'real_time_data',
+            data: data,
+          }),
+        });
+      } catch (error) {
+        // Silent fail for real-time data
+      }
+    },
+
+    // Stop data collection
+    stopDataCollection() {
+      if (this.dataCollectionTimer) {
+        clearInterval(this.dataCollectionTimer);
+        this.dataCollectionTimer = null;
+        console.log('Data collection stopped');
+      }
     },
   };
 
@@ -663,7 +1038,7 @@
 
   // Auto-initialize on DOM ready
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', () => {
       Analytics.init();
     });
   } else {

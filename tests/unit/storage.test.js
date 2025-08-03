@@ -51,14 +51,14 @@ class StorageManager {
         console.warn('localStorage 저장 실패:', new Error('localStorage is not available'));
         return false;
       }
-      
+
       const data = {
         value,
         timestamp: Date.now(),
         version: this.version,
-        expires: options.expires ? Date.now() + options.expires : null
+        expires: options.expires ? Date.now() + options.expires : null,
       };
-      
+
       const fullKey = this.prefix + key;
       localStorage.setItem(fullKey, JSON.stringify(data));
       return true;
@@ -68,32 +68,31 @@ class StorageManager {
     }
   }
 
-  
   getLocal(key) {
     try {
       if (typeof localStorage === 'undefined' || !localStorage) {
         return null;
       }
-      
+
       const fullKey = this.prefix + key;
       const item = localStorage.getItem(fullKey);
-      
+
       if (!item) return null;
-      
+
       const data = JSON.parse(item);
-      
+
       // 만료 확인
       if (data.expires && Date.now() > data.expires) {
         this.removeLocal(key);
         return null;
       }
-      
+
       // 버전 확인
       if (data.version !== this.version) {
         this.removeLocal(key);
         return null;
       }
-      
+
       return data.value;
     } catch (error) {
       console.warn('localStorage 읽기 실패:', error);
@@ -118,7 +117,7 @@ class StorageManager {
   clearLocal() {
     try {
       const keys = Object.keys(localStorage);
-      keys.forEach(key => {
+      keys.forEach((key) => {
         if (key.startsWith(this.prefix)) {
           localStorage.removeItem(key);
         }
@@ -136,9 +135,9 @@ class StorageManager {
       const data = {
         value,
         timestamp: Date.now(),
-        version: this.version
+        version: this.version,
       };
-      
+
       const fullKey = this.prefix + key;
       sessionStorage.setItem(fullKey, JSON.stringify(data));
       return true;
@@ -152,17 +151,17 @@ class StorageManager {
     try {
       const fullKey = this.prefix + key;
       const item = sessionStorage.getItem(fullKey);
-      
+
       if (!item) return null;
-      
+
       const data = JSON.parse(item);
-      
+
       // 버전 확인
       if (data.version !== this.version) {
         this.removeSession(key);
         return null;
       }
-      
+
       return data.value;
     } catch (error) {
       console.warn('sessionStorage 읽기 실패:', error);
@@ -184,7 +183,7 @@ class StorageManager {
   clearSession() {
     try {
       const keys = Object.keys(sessionStorage);
-      keys.forEach(key => {
+      keys.forEach((key) => {
         if (key.startsWith(this.prefix)) {
           sessionStorage.removeItem(key);
         }
@@ -197,7 +196,8 @@ class StorageManager {
   }
 
   // 캐시 관리
-  setCache(key, value, ttl = 300000) { // 기본 5분
+  setCache(key, value, ttl = 300000) {
+    // 기본 5분
     const result = this.setLocal(key, value, { expires: ttl });
     return result;
   }
@@ -224,7 +224,7 @@ class StorageManager {
     const data = {
       ...result,
       completedAt: new Date().toISOString(),
-      testType
+      testType,
     };
     return this.setLocal(key, data, { expires: 30 * 24 * 60 * 60 * 1000 }); // 30일
   }
@@ -236,22 +236,21 @@ class StorageManager {
 
   // 스토리지 정보
   getStorageInfo() {
-    const localKeys = Object.keys(localStorage).filter(key => key.startsWith(this.prefix));
-    const sessionKeys = Object.keys(sessionStorage).filter(key => key.startsWith(this.prefix));
-    
+    const localKeys = Object.keys(localStorage).filter((key) => key.startsWith(this.prefix));
+    const sessionKeys = Object.keys(sessionStorage).filter((key) => key.startsWith(this.prefix));
+
     return {
       localStorage: {
         keys: localKeys.length,
-        size: this.calculateStorageSize(localStorage, this.prefix)
+        size: this.calculateStorageSize(localStorage, this.prefix),
       },
       sessionStorage: {
         keys: sessionKeys.length,
-        size: this.calculateStorageSize(sessionStorage, this.prefix)
-      }
+        size: this.calculateStorageSize(sessionStorage, this.prefix),
+      },
     };
   }
 
-  
   calculateStorageSize(storage, prefix) {
     let size = 0;
     // MockStorage uses 'data' property, not direct key access
@@ -267,8 +266,8 @@ class StorageManager {
   // 스토리지 정리
   cleanup() {
     // 만료된 항목들 정리
-    const localKeys = Object.keys(localStorage).filter(key => key.startsWith(this.prefix));
-    localKeys.forEach(fullKey => {
+    const localKeys = Object.keys(localStorage).filter((key) => key.startsWith(this.prefix));
+    localKeys.forEach((fullKey) => {
       const key = fullKey.replace(this.prefix, '');
       this.getLocal(key); // getLocal에서 만료된 항목을 자동으로 정리함
     });
@@ -283,24 +282,24 @@ describe('Storage Manager', () => {
   beforeEach(() => {
     // Fake timers 활성화
     vi.useFakeTimers();
-    
+
     // Mock storage 생성
     mockLocalStorage = new MockStorage();
     mockSessionStorage = new MockStorage();
-    
+
     // Global storage mocking
     Object.defineProperty(window, 'localStorage', {
       value: mockLocalStorage,
-      writable: true
+      writable: true,
     });
-    
+
     Object.defineProperty(window, 'sessionStorage', {
       value: mockSessionStorage,
-      writable: true
+      writable: true,
     });
 
     storageManager = new StorageManager();
-    
+
     // Console 모킹
     vi.spyOn(console, 'warn').mockImplementation(() => {});
   });
@@ -315,7 +314,7 @@ describe('Storage Manager', () => {
   describe('localStorage 관리', () => {
     it('데이터를 올바르게 저장하고 불러와야 함', () => {
       const testData = { name: '홍길동', age: 25 };
-      
+
       const result = storageManager.setLocal('user', testData);
       expect(result).toBe(true);
 
@@ -328,7 +327,7 @@ describe('Storage Manager', () => {
       const shortExpiry = 100; // 100ms
 
       storageManager.setLocal('temp', testData, { expires: shortExpiry });
-      
+
       // 즉시 읽기는 성공
       expect(storageManager.getLocal('temp')).toEqual(testData);
 
@@ -343,15 +342,15 @@ describe('Storage Manager', () => {
         value: { old: 'data' },
         timestamp: Date.now(),
         version: '2.0.0', // 다른 버전
-        expires: null
+        expires: null,
       };
       mockLocalStorage.setItem('doha_old_data', JSON.stringify(oldData));
 
       // 읽기 시도하면 null 반환되고 삭제됨
       const result = storageManager.getLocal('old_data');
       expect(result).toBeNull();
-      
-      // getLocal에서 버전이 다르면 removeLocal을 호출하므로 
+
+      // getLocal에서 버전이 다르면 removeLocal을 호출하므로
       // mockLocalStorage에서도 삭제되어야 함
       // 하지만 MockStorage는 removeItem이 구현되어 있지 않음
       // 이 테스트는 이런 식으로 수정
@@ -378,7 +377,7 @@ describe('Storage Manager', () => {
       const result = storageManager.setLocal('big_data', { large: 'data' });
       expect(result).toBe(false);
       expect(console.warn).toHaveBeenCalledWith('localStorage 저장 실패:', expect.any(Error));
-      
+
       // Restore
       mockLocalStorage.setItem = originalSetItem;
     });
@@ -395,13 +394,13 @@ describe('Storage Manager', () => {
     it('모든 앱 데이터를 초기화할 수 있어야 함', () => {
       storageManager.setLocal('data1', { test: 1 });
       storageManager.setLocal('data2', { test: 2 });
-      
+
       // 다른 앱 데이터 추가 (삭제되면 안 됨)
       mockLocalStorage.setItem('other_app_data', 'should remain');
 
       const result = storageManager.clearLocal();
       expect(result).toBe(true);
-      
+
       expect(storageManager.getLocal('data1')).toBeNull();
       expect(storageManager.getLocal('data2')).toBeNull();
       expect(mockLocalStorage.getItem('other_app_data')).toBe('should remain');
@@ -411,7 +410,7 @@ describe('Storage Manager', () => {
   describe('sessionStorage 관리', () => {
     it('세션 데이터를 올바르게 저장하고 불러와야 함', () => {
       const sessionData = { currentTest: 'mbti', step: 5 };
-      
+
       const result = storageManager.setSession('test_state', sessionData);
       expect(result).toBe(true);
 
@@ -424,7 +423,7 @@ describe('Storage Manager', () => {
       const oldSessionData = {
         value: { old: 'session' },
         timestamp: Date.now(),
-        version: '1.0.0'
+        version: '1.0.0',
       };
       mockSessionStorage.setItem('doha_old_session', JSON.stringify(oldSessionData));
 
@@ -439,7 +438,7 @@ describe('Storage Manager', () => {
 
       const result = storageManager.clearSession();
       expect(result).toBe(true);
-      
+
       expect(storageManager.getSession('session1')).toBeNull();
       expect(storageManager.getSession('session2')).toBeNull();
     });
@@ -463,14 +462,14 @@ describe('Storage Manager', () => {
 
     it.skip('기본 TTL을 사용해야 함', () => {
       const cacheData = { default: 'ttl' };
-      
+
       const result = storageManager.setCache('default_ttl', cacheData);
       expect(result).toBe(true);
-      
+
       // 저장된 데이터 확인
       const stored = mockLocalStorage.getItem('doha_default_ttl');
       expect(stored).toBeTruthy();
-      
+
       const parsedData = JSON.parse(stored);
       expect(parsedData).toBeTruthy();
       expect(parsedData.expires).toBeTruthy();
@@ -507,7 +506,7 @@ describe('Storage Manager', () => {
         type: 'ENFP',
         description: '활발한 영감가',
         traits: ['외향적', '직관적', '감정적', '인식적'],
-        score: 85
+        score: 85,
       };
 
       const result = storageManager.saveTestResult('mbti', mbtiResult);
@@ -545,7 +544,7 @@ describe('Storage Manager', () => {
       storageManager.setSession('session1', { test: 'session1' });
 
       const info = storageManager.getStorageInfo();
-      
+
       expect(info.localStorage.keys).toBe(2);
       expect(info.localStorage.size).toBeGreaterThan(0);
       expect(info.sessionStorage.keys).toBe(1);
@@ -558,9 +557,9 @@ describe('Storage Manager', () => {
         value: { expired: true },
         timestamp: Date.now(),
         version: '3.0.0',
-        expires: Date.now() - 1000 // 이미 만료
+        expires: Date.now() - 1000, // 이미 만료
       };
-      
+
       mockLocalStorage.setItem('doha_expired', JSON.stringify(expiredData));
       const validResult = storageManager.setLocal('valid', { valid: true });
       expect(validResult).toBe(true);
@@ -578,7 +577,7 @@ describe('Storage Manager', () => {
       // 하지만 MockStorage에서 removeItem이 제대로 동작하지 않음
       const result = storageManager.getLocal('expired'); // null 반환
       expect(result).toBeNull();
-      
+
       // 유효한 항목은 여전히 있어야 함
       const validValue = storageManager.getLocal('valid');
       expect(validValue).toEqual({ valid: true });
@@ -591,11 +590,11 @@ describe('Storage Manager', () => {
       storage.setItem('other_test', 'other');
 
       const size = storageManager.calculateStorageSize(storage, 'doha_');
-      
+
       // 'doha_test1' + 'value1' + 'doha_test2' + 'value2'의 길이
-      const expectedSize = 'doha_test1'.length + 'value1'.length + 
-                          'doha_test2'.length + 'value2'.length;
-      
+      const expectedSize =
+        'doha_test1'.length + 'value1'.length + 'doha_test2'.length + 'value2'.length;
+
       expect(size).toBe(expectedSize);
     });
   });
@@ -606,7 +605,7 @@ describe('Storage Manager', () => {
         name: '김철수',
         description: '이것은 한국어 설명입니다. 유니코드 문자가 포함되어 있습니다.',
         result: '당신은 매우 창의적인 사람입니다! 🎨✨',
-        emotions: ['기쁨', '슬픔', '화남', '놀람']
+        emotions: ['기쁨', '슬픔', '화남', '놀람'],
       };
 
       const result = storageManager.setLocal('korean_test', koreanData);
@@ -634,22 +633,22 @@ describe('Storage Manager', () => {
       Object.defineProperty(window, 'localStorage', {
         value: undefined,
         writable: true,
-        configurable: true
+        configurable: true,
       });
 
       const storageManagerNoLS = new StorageManager();
-      
+
       // 에러가 발생하지 않고 false를 반환해야 함
       const result = storageManagerNoLS.setLocal('test', { data: 'test' });
       expect(result).toBe(false);
       // console.warn이 호출되었는지 확인
       expect(console.warn).toHaveBeenCalledWith('localStorage 저장 실패:', expect.any(Error));
-      
+
       // Restore localStorage
       Object.defineProperty(window, 'localStorage', {
         value: originalLocalStorage,
         writable: true,
-        configurable: true
+        configurable: true,
       });
     });
 

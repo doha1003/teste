@@ -4,8 +4,23 @@
 // Created: 2025-01-11
 // Purpose: Comprehensive error handling and logging for doha.kr
 
-// Import logger (if available)
-import { logger } from './utils/logger.js';
+// Import logger (if available) - conditional import for test compatibility
+let logger = {
+  error: () => {},
+  critical: () => {},
+  warn: () => {},
+  info: () => {}
+};
+
+// Try to import logger dynamically
+(async () => {
+  try {
+    const loggerModule = await import('./utils/logger.js');
+    logger = loggerModule.logger;
+  } catch (error) {
+    // Keep fallback logger
+  }
+})();
 
 (function () {
   'use strict';
@@ -24,18 +39,18 @@ import { logger } from './utils/logger.js';
     errorCache: new Set(),
 
     // Initialize error handling
-    init: function () {
+    init () {
       this.setupGlobalErrorHandlers();
       this.setupPromiseRejectionHandler();
       this.setupResourceErrorHandlers();
     },
 
     // Setup global error handlers
-    setupGlobalErrorHandlers: function () {
+    setupGlobalErrorHandlers () {
       const self = this;
 
       // Global JavaScript error handler
-      window.addEventListener('error', function (event) {
+      window.addEventListener('error', (event) => {
         self.handleError({
           type: 'javascript',
           message: event.message,
@@ -49,10 +64,10 @@ import { logger } from './utils/logger.js';
     },
 
     // Setup promise rejection handler
-    setupPromiseRejectionHandler: function () {
+    setupPromiseRejectionHandler () {
       const self = this;
 
-      window.addEventListener('unhandledrejection', function (event) {
+      window.addEventListener('unhandledrejection', (event) => {
         self.handleError({
           type: 'promise',
           message: 'Unhandled Promise Rejection',
@@ -67,13 +82,13 @@ import { logger } from './utils/logger.js';
     },
 
     // Setup resource error handlers
-    setupResourceErrorHandlers: function () {
+    setupResourceErrorHandlers () {
       const self = this;
 
       // Image loading errors
       document.addEventListener(
         'error',
-        function (event) {
+        (event) => {
           if (event.target.tagName === 'IMG') {
             self.handleResourceError('image', event.target.src);
             self.handleImageError(event.target);
@@ -85,7 +100,7 @@ import { logger } from './utils/logger.js';
       // Script loading errors
       document.addEventListener(
         'error',
-        function (event) {
+        (event) => {
           if (event.target.tagName === 'SCRIPT') {
             self.handleResourceError('script', event.target.src);
           }
@@ -96,7 +111,7 @@ import { logger } from './utils/logger.js';
       // CSS loading errors
       document.addEventListener(
         'error',
-        function (event) {
+        (event) => {
           if (event.target.tagName === 'LINK' && event.target.rel === 'stylesheet') {
             self.handleResourceError('stylesheet', event.target.href);
           }
@@ -106,7 +121,7 @@ import { logger } from './utils/logger.js';
     },
 
     // Handle JavaScript errors
-    handleError: function (errorInfo) {
+    handleError (errorInfo) {
       // Prevent error flooding
       if (this.errorCount >= this.config.maxErrorsPerSession) {
         return;
@@ -144,11 +159,11 @@ import { logger } from './utils/logger.js';
     },
 
     // Handle resource loading errors
-    handleResourceError: function (type, src) {
+    handleResourceError (type, src) {
       const errorInfo = {
         type: 'resource',
         resourceType: type,
-        src: src,
+        src,
         message: `Failed to load ${type}: ${src}`,
       };
 
@@ -156,7 +171,7 @@ import { logger } from './utils/logger.js';
     },
 
     // Handle image loading errors with fallback
-    handleImageError: function (imgElement) {
+    handleImageError (imgElement) {
       // Try fallback image
       if (!imgElement.dataset.errorHandled) {
         imgElement.dataset.errorHandled = 'true';
@@ -169,12 +184,12 @@ import { logger } from './utils/logger.js';
     },
 
     // Create error signature for deduplication
-    createErrorSignature: function (errorInfo) {
+    createErrorSignature (errorInfo) {
       return `${errorInfo.type}_${errorInfo.message}_${errorInfo.filename || ''}_${errorInfo.lineno || ''}`;
     },
 
     // Check if error is critical
-    isCriticalError: function (errorInfo) {
+    isCriticalError (errorInfo) {
       const criticalKeywords = ['network', 'fetch', 'api', 'security', 'permission', 'quota'];
 
       const message = (errorInfo.message || '').toLowerCase();
@@ -182,7 +197,7 @@ import { logger } from './utils/logger.js';
     },
 
     // Show user-friendly error message
-    showUserErrorMessage: function (errorInfo) {
+    showUserErrorMessage (errorInfo) {
       const userMessages = {
         network: '네트워크 연결을 확인해 주세요.',
         fetch: '데이터를 불러오는 중 문제가 발생했습니다. 잠시 후 다시 시도해 주세요.',
@@ -207,17 +222,17 @@ import { logger } from './utils/logger.js';
     },
 
     // Show notification to user
-    showNotification: function (message, type = 'info') {
+    showNotification (message, type = 'info') {
       // Try to use existing notification system
-      if (typeof showNotification === 'function') {
-        showNotification(message, type);
+      if (typeof window.showNotification === 'function') {
+        window.showNotification(message, type);
         return;
       }
 
       // Fallback notification
       const notification = document.createElement('div');
       notification.className = `notification notification-${type}`;
-      notification.innerHTML = safeHTML(`
+      notification.innerHTML = `
                 <div class="notification-content">
                     <span class="notification-icon">${type === 'error' ? '⚠️' : 'ℹ️'}</span>
                     <span class="notification-message">${this.escapeHtml(message)}</span>
@@ -236,14 +251,14 @@ import { logger } from './utils/logger.js';
     },
 
     // Escape HTML for safe display
-    escapeHtml: function (text) {
+    escapeHtml (text) {
       const div = document.createElement('div');
       div.textContent = text;
       return div.innerHTML;
     },
 
     // Log to DohaLogger
-    logToDohaLogger: function (errorInfo) {
+    logToDohaLogger (errorInfo) {
       try {
         if (typeof logger !== 'undefined') {
           const logLevel = this.isCriticalError(errorInfo) ? 'critical' : 'error';
@@ -278,7 +293,7 @@ import { logger } from './utils/logger.js';
     },
 
     // Send error to analytics
-    sendToAnalytics: function (errorInfo) {
+    sendToAnalytics (errorInfo) {
       try {
         // Google Analytics 4
         if (typeof gtag !== 'undefined') {
@@ -292,14 +307,16 @@ import { logger } from './utils/logger.js';
         }
 
         // Custom analytics endpoint (if available)
-        if (typeof Analytics !== 'undefined' && Analytics.trackError) {
-          Analytics.trackError(errorInfo);
+        if (typeof window.Analytics !== 'undefined' && window.Analytics.trackError) {
+          window.Analytics.trackError(errorInfo);
         }
-      } catch (analyticsError) {}
+      } catch (_analyticsError) {
+        // Analytics 전송 실패 시 무시
+      }
     },
 
     // Attempt automatic recovery
-    attemptRecovery: function (errorInfo) {
+    attemptRecovery (errorInfo) {
       // Retry failed API calls
       if (errorInfo.type === 'promise' && errorInfo.message.includes('fetch')) {
         this.retryFailedRequest(errorInfo);
@@ -312,7 +329,7 @@ import { logger } from './utils/logger.js';
     },
 
     // Retry failed requests
-    retryFailedRequest: function (errorInfo) {
+    retryFailedRequest (errorInfo) {
       if (errorInfo.retryCount >= this.config.retryAttempts) {
         return;
       }
@@ -325,7 +342,7 @@ import { logger } from './utils/logger.js';
     },
 
     // Retry resource loading
-    retryResourceLoad: function (errorInfo) {
+    retryResourceLoad (errorInfo) {
       // Only retry critical resources
       if (errorInfo.resourceType === 'script' && errorInfo.src.includes('main')) {
         setTimeout(() => {
@@ -337,7 +354,7 @@ import { logger } from './utils/logger.js';
     },
 
     // Safe function wrapper
-    safeExecute: function (fn, context = null, args = []) {
+    safeExecute (fn, context = null, args = []) {
       try {
         return fn.apply(context, args);
       } catch (error) {
@@ -352,7 +369,7 @@ import { logger } from './utils/logger.js';
     },
 
     // Safe async function wrapper
-    safeExecuteAsync: async function (asyncFn, context = null, args = []) {
+    async safeExecuteAsync (asyncFn, context = null, args = []) {
       try {
         return await asyncFn.apply(context, args);
       } catch (error) {
@@ -367,23 +384,23 @@ import { logger } from './utils/logger.js';
     },
 
     // Manual error reporting
-    reportError: function (message, details = {}) {
+    reportError (message, details = {}) {
       this.handleError({
         type: 'manual',
-        message: message,
-        details: details,
+        message,
+        details,
         stack: new Error().stack,
       });
     },
 
     // Clear error cache
-    clearErrorCache: function () {
+    clearErrorCache () {
       this.errorCache.clear();
       this.errorCount = 0;
     },
 
     // Get error statistics
-    getErrorStats: function () {
+    getErrorStats () {
       return {
         totalErrors: this.errorCount,
         cachedErrors: this.errorCache.size,
@@ -429,7 +446,7 @@ import { logger } from './utils/logger.js';
 
   // Auto-initialize on DOM ready
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', () => {
       ErrorHandler.init();
     });
   } else {

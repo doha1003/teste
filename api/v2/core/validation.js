@@ -41,7 +41,7 @@ export const ValidationRules = {
     if (typeof value !== 'string') {
       throw new ValidationError('문자열이 아닙니다.', null, 'INVALID_TYPE');
     }
-    
+
     const length = value.length;
     if (length < min || length > max) {
       const msg = message || `길이는 ${min}자 이상 ${max}자 이하여야 합니다.`;
@@ -79,7 +79,7 @@ export const ValidationRules = {
     const date = new Date(value);
     const minDate = new Date(min);
     const maxDate = new Date(max);
-    
+
     if (date < minDate || date > maxDate) {
       const msg = message || `날짜는 ${min}부터 ${max} 사이여야 합니다.`;
       throw new ValidationError(msg, null, 'DATE_OUT_OF_RANGE');
@@ -103,8 +103,18 @@ export const ValidationRules = {
    */
   zodiac: (value, message = '올바른 별자리를 선택해주세요.') => {
     const validZodiacs = [
-      'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
-      'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces'
+      'aries',
+      'taurus',
+      'gemini',
+      'cancer',
+      'leo',
+      'virgo',
+      'libra',
+      'scorpio',
+      'sagittarius',
+      'capricorn',
+      'aquarius',
+      'pisces',
     ];
     if (!validZodiacs.includes(value)) {
       throw new ValidationError(message, null, 'INVALID_ZODIAC');
@@ -117,8 +127,18 @@ export const ValidationRules = {
    */
   animalZodiac: (value, message = '올바른 띠를 선택해주세요.') => {
     const validAnimals = [
-      'rat', 'ox', 'tiger', 'rabbit', 'dragon', 'snake',
-      'horse', 'goat', 'monkey', 'rooster', 'dog', 'pig'
+      'rat',
+      'ox',
+      'tiger',
+      'rabbit',
+      'dragon',
+      'snake',
+      'horse',
+      'goat',
+      'monkey',
+      'rooster',
+      'dog',
+      'pig',
     ];
     if (!validAnimals.includes(value)) {
       throw new ValidationError(message, null, 'INVALID_ANIMAL_ZODIAC');
@@ -176,7 +196,7 @@ export const ValidationRules = {
       throw new ValidationError(msg, null, 'INVALID_ARRAY_LENGTH');
     }
     return true;
-  }
+  },
 };
 
 /**
@@ -188,7 +208,7 @@ export const DataSanitizer = {
    */
   sanitizeString: (input, maxLength = 1000) => {
     if (typeof input !== 'string') return input;
-    
+
     return input
       .replace(/[<>]/g, '') // HTML 태그 제거
       .replace(/[\n\r]/g, ' ') // 개행 문자를 공백으로
@@ -205,7 +225,7 @@ export const DataSanitizer = {
    */
   sanitizeKoreanName: (input) => {
     if (typeof input !== 'string') return '';
-    
+
     return input
       .replace(/[^가-힣]/g, '') // 한글만 허용
       .trim()
@@ -218,7 +238,7 @@ export const DataSanitizer = {
   sanitizeNumber: (input) => {
     if (typeof input === 'number') return input;
     if (typeof input !== 'string') return null;
-    
+
     const num = parseFloat(input.replace(/[^0-9.-]/g, ''));
     return isNaN(num) ? null : num;
   },
@@ -228,7 +248,7 @@ export const DataSanitizer = {
    */
   sanitizeDate: (input) => {
     if (input instanceof Date) return input;
-    
+
     const date = new Date(input);
     return isNaN(date.getTime()) ? null : date;
   },
@@ -238,7 +258,7 @@ export const DataSanitizer = {
    */
   sanitizeObject: (obj, rules = {}) => {
     if (typeof obj !== 'object' || obj === null) return obj;
-    
+
     const sanitized = {};
     for (const [key, value] of Object.entries(obj)) {
       const rule = rules[key];
@@ -251,7 +271,7 @@ export const DataSanitizer = {
       }
     }
     return sanitized;
-  }
+  },
 };
 
 /**
@@ -278,7 +298,7 @@ export class SchemaValidator {
           errors.push({
             field,
             message: rules.message || `${field}는 필수 항목입니다.`,
-            code: 'REQUIRED'
+            code: 'REQUIRED',
           });
           continue;
         }
@@ -311,12 +331,11 @@ export class SchemaValidator {
         }
 
         sanitized[field] = value;
-
       } catch (error) {
         errors.push({
           field,
           message: error.message,
-          code: error.code || 'VALIDATION_ERROR'
+          code: error.code || 'VALIDATION_ERROR',
         });
       }
     }
@@ -324,7 +343,7 @@ export class SchemaValidator {
     return {
       valid: errors.length === 0,
       errors,
-      data: sanitized
+      data: sanitized,
     };
   }
 
@@ -369,27 +388,24 @@ export const ValidationSchemas = {
       sanitize: DataSanitizer.sanitizeKoreanName,
       validate: [
         (value) => ValidationRules.length(value, 2, 10),
-        (value) => ValidationRules.koreanName(value)
-      ]
+        (value) => ValidationRules.koreanName(value),
+      ],
     },
     birthDate: {
       required: true,
       type: 'string',
-      validate: [
-        ValidationRules.date,
-        (value) => ValidationRules.dateRange(value)
-      ]
+      validate: [ValidationRules.date, (value) => ValidationRules.dateRange(value)],
     },
     gender: {
       required: true,
       type: 'string',
-      validate: ValidationRules.gender
+      validate: ValidationRules.gender,
     },
     birthTime: {
       required: false,
       type: 'string',
-      validate: (value) => value && ValidationRules.hour(value)
-    }
+      validate: (value) => value && ValidationRules.hour(value),
+    },
   }),
 
   /**
@@ -399,8 +415,8 @@ export const ValidationSchemas = {
     zodiac: {
       required: true,
       type: 'string',
-      validate: ValidationRules.zodiac
-    }
+      validate: ValidationRules.zodiac,
+    },
   }),
 
   /**
@@ -410,8 +426,8 @@ export const ValidationSchemas = {
     animal: {
       required: true,
       type: 'string',
-      validate: ValidationRules.animalZodiac
-    }
+      validate: ValidationRules.animalZodiac,
+    },
   }),
 
   /**
@@ -421,23 +437,23 @@ export const ValidationSchemas = {
     yearPillar: {
       required: true,
       type: 'string',
-      validate: (value) => ValidationRules.length(value, 2, 2, '년주는 2자여야 합니다.')
+      validate: (value) => ValidationRules.length(value, 2, 2, '년주는 2자여야 합니다.'),
     },
     monthPillar: {
       required: true,
       type: 'string',
-      validate: (value) => ValidationRules.length(value, 2, 2, '월주는 2자여야 합니다.')
+      validate: (value) => ValidationRules.length(value, 2, 2, '월주는 2자여야 합니다.'),
     },
     dayPillar: {
       required: true,
       type: 'string',
-      validate: (value) => ValidationRules.length(value, 2, 2, '일주는 2자여야 합니다.')
+      validate: (value) => ValidationRules.length(value, 2, 2, '일주는 2자여야 합니다.'),
     },
     hourPillar: {
       required: true,
       type: 'string',
-      validate: (value) => ValidationRules.length(value, 2, 2, '시주는 2자여야 합니다.')
-    }
+      validate: (value) => ValidationRules.length(value, 2, 2, '시주는 2자여야 합니다.'),
+    },
   }),
 
   /**
@@ -454,9 +470,9 @@ export const ValidationSchemas = {
               throw new ValidationError(`답변 ${i + 1}은 1-5 사이의 값이어야 합니다.`);
             }
           }
-        }
-      ]
-    }
+        },
+      ],
+    },
   }),
 
   /**
@@ -466,14 +482,16 @@ export const ValidationSchemas = {
     height: {
       required: true,
       type: 'number',
-      validate: (value) => ValidationRules.numberRange(value, 100, 250, '키는 100-250cm 사이여야 합니다.')
+      validate: (value) =>
+        ValidationRules.numberRange(value, 100, 250, '키는 100-250cm 사이여야 합니다.'),
     },
     weight: {
       required: true,
       type: 'number',
-      validate: (value) => ValidationRules.numberRange(value, 20, 300, '몸무게는 20-300kg 사이여야 합니다.')
-    }
-  })
+      validate: (value) =>
+        ValidationRules.numberRange(value, 20, 300, '몸무게는 20-300kg 사이여야 합니다.'),
+    },
+  }),
 };
 
 /**
@@ -493,23 +511,24 @@ export function validateInput(data, schemaName = null) {
     return {
       valid: true,
       errors: [],
-      data: sanitized
+      data: sanitized,
     };
-
   } catch (error) {
     logger.error('Validation error', {
       error: error.message,
-      data: JSON.stringify(data).substring(0, 200)
+      data: JSON.stringify(data).substring(0, 200),
     });
 
     return {
       valid: false,
-      errors: [{
-        field: 'general',
-        message: '검증 중 오류가 발생했습니다.',
-        code: 'VALIDATION_ERROR'
-      }],
-      data: null
+      errors: [
+        {
+          field: 'general',
+          message: '검증 중 오류가 발생했습니다.',
+          code: 'VALIDATION_ERROR',
+        },
+      ],
+      data: null,
     };
   }
 }
@@ -520,11 +539,11 @@ export function validateInput(data, schemaName = null) {
 export function validationMiddleware(schemaName) {
   return (req, res, next) => {
     const result = validateInput(req.body, schemaName);
-    
+
     if (!result.valid) {
       logger.warn('Request validation failed', {
         errors: result.errors,
-        originalData: JSON.stringify(req.body).substring(0, 200)
+        originalData: JSON.stringify(req.body).substring(0, 200),
       });
 
       return res.status(400).json({
@@ -532,8 +551,8 @@ export function validationMiddleware(schemaName) {
         error: {
           code: 400,
           message: '입력 데이터가 올바르지 않습니다.',
-          details: result.errors
-        }
+          details: result.errors,
+        },
       });
     }
 
@@ -550,5 +569,5 @@ export default {
   SchemaValidator,
   ValidationSchemas,
   validateInput,
-  validationMiddleware
+  validationMiddleware,
 };

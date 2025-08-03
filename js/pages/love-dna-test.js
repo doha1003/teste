@@ -709,11 +709,9 @@ function calculateLoveDNA(answers) {
 
 // 화면 전환 함수
 function showScreen(screenId) {
-  document
-    .querySelectorAll('#intro-screen, #test-screen, #result-screen')
-    .forEach((screen) => {
-      screen.classList.add('love-hidden');
-    });
+  document.querySelectorAll('#intro-screen, #test-screen, #result-screen').forEach((screen) => {
+    screen.classList.add('love-hidden');
+  });
   document.getElementById(screenId).classList.remove('love-hidden');
 }
 
@@ -733,19 +731,16 @@ function showQuestion() {
   }
 
   const question = loveDNAQuestions[currentQuestion];
-  const progressPercent =
-    ((currentQuestion + 1) / loveDNAQuestions.length) * 100;
+  const progressPercent = ((currentQuestion + 1) / loveDNAQuestions.length) * 100;
 
   // 진행률 업데이트
   document.getElementById('progress-text').textContent =
     `질문 ${currentQuestion + 1} / ${loveDNAQuestions.length}`;
-  document.getElementById('progress-percent').textContent =
-    `${Math.round(progressPercent)}%`;
+  document.getElementById('progress-percent').textContent = `${Math.round(progressPercent)}%`;
   document.getElementById('progress').style.width = `${progressPercent}%`;
 
   // 질문 번호와 텍스트 표시
-  document.getElementById('question-number').textContent =
-    `Q${currentQuestion + 1}`;
+  document.getElementById('question-number').textContent = `Q${currentQuestion + 1}`;
   document.getElementById('question').textContent = question.question;
 
   // 옵션 표시
@@ -774,8 +769,7 @@ function showQuestion() {
     prevBtn.style.display = currentQuestion > 0 ? 'block' : 'none';
   }
   if (nextBtn) {
-    nextBtn.textContent =
-      currentQuestion === loveDNAQuestions.length - 1 ? '결과 보기' : '다음';
+    nextBtn.textContent = currentQuestion === loveDNAQuestions.length - 1 ? '결과 보기' : '다음';
     nextBtn.disabled = answers[currentQuestion] === undefined;
   }
 }
@@ -839,8 +833,7 @@ function showResult() {
 
   // 결과 표시
   document.getElementById('result-dna').textContent = result.type || 'LOVED';
-  document.getElementById('result-title').textContent =
-    resultData.type || '로맨틱 드리머';
+  document.getElementById('result-title').textContent = resultData.type || '로맨틱 드리머';
   document.getElementById('result-subtitle').textContent =
     resultData.description || '영화 같은 사랑을 꿈꾸는 낭만주의자';
   document.getElementById('result-rarity').textContent =
@@ -907,8 +900,7 @@ function fallbackCopyToClipboard(text) {
 // 카카오톡 공유 함수
 function shareToKakao() {
   if (typeof Kakao !== 'undefined' && Kakao.isInitialized()) {
-    const resultType =
-      document.getElementById('result-title').textContent || '나의 러브 DNA';
+    const resultType = document.getElementById('result-title').textContent || '나의 러브 DNA';
 
     Kakao.Share.sendDefault({
       objectType: 'feed',

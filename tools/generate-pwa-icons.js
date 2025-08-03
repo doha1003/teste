@@ -3,9 +3,13 @@
  * 기본 아이콘에서 모든 필요한 크기의 아이콘을 생성
  */
 
-const sharp = require('sharp');
-const fs = require('fs').promises;
-const path = require('path');
+import sharp from 'sharp';
+import { promises as fs } from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // 생성할 아이콘 크기 목록
 const iconSizes = [

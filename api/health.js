@@ -1,103 +1,286 @@
 /**
- * 🏥 헬스체크 API 엔드포인트
- * 시스템 상태 모니터링 및 업타임 확인
+ * Health Check API for Blue-Green Deployment
+ * 블루-그린 배포를 위한 헬스체크 API
  */
 
+// Cold start 최적화를 위한 전역 변수
+let startTime = Date.now();
+let deploymentEnv = process.env.DEPLOY_ENV || 'production';
+let healthCache = null;
+let cacheTimestamp = 0;
+const CACHE_DURATION = 30000; // 30초 캐시
+
 export default async function handler(req, res) {
-  // CORS 헤더 설정
-  res.setHeader('Access-Control-Allow-Origin', 'https://doha.kr');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
-  }
-
-  if (req.method !== 'GET') {
-    return res.status(405).json({
-      error: '허용되지 않는 메서드',
-      message: 'GET 요청만 지원됩니다'
-    });
-  }
+  const requestStart = Date.now();
 
   try {
-    const startTime = Date.now();
-    
-    // 기본 시스템 정보
-    const systemInfo = {
-      status: 'healthy',
-      timestamp: new Date().toISOString(),
-      uptime: process.uptime(),
-      environment: process.env.NODE_ENV || 'development',
-      version: '3.0.0',
-      region: process.env.VERCEL_REGION || 'local'
-    };
+    // CORS 헤더 설정
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-    // Gemini API 연결 테스트
-    let geminiStatus = 'unknown';
-    try {
-      if (process.env.GEMINI_API_KEY) {
-        // 간단한 API 키 유효성 확인
-        geminiStatus = 'configured';
-      } else {
-        geminiStatus = 'not-configured';
-      }
-    } catch (error) {
-      geminiStatus = 'error';
+    // OPTIONS 요청 처리 (preflight)
+    if (req.method === 'OPTIONS') {
+      res.status(200).end();
+      return;
     }
 
-    // 메모리 사용량 체크
-    const memoryUsage = process.memoryUsage();
-    const memoryInfo = {
-      rss: Math.round(memoryUsage.rss / 1024 / 1024 * 100) / 100, // MB
-      heapUsed: Math.round(memoryUsage.heapUsed / 1024 / 1024 * 100) / 100, // MB
-      heapTotal: Math.round(memoryUsage.heapTotal / 1024 / 1024 * 100) / 100, // MB
-      external: Math.round(memoryUsage.external / 1024 / 1024 * 100) / 100 // MB
-    };
+    // GET 요청만 허용
+    if (req.method !== 'GET') {
+      return res.status(405).json({
+        status: 'error',
+        message: 'Method not allowed',
+        allowedMethods: ['GET'],
+      });
+    }
 
-    // 응답 시간 계산
-    const responseTime = Date.now() - startTime;
+    // 캐시된 응답 확인 (성능 최적화)
+    const now = Date.now();
+    if (healthCache && now - cacheTimestamp < CACHE_DURATION) {
+      const cachedResponse = {
+        ...healthCache,
+        responseTime: now - requestStart,
+        cached: true,
+      };
 
-    // 전체 건강 상태 판단
-    const isHealthy = 
-      memoryInfo.heapUsed < 200 && // 200MB 미만
-      responseTime < 1000 && // 1초 미만
-      geminiStatus !== 'error';
+      res.setHeader('Cache-Control', 'public, max-age=30, s-maxage=60');
+      return res.status(200).json(cachedResponse);
+    }
 
-    const healthStatus = {
-      ...systemInfo,
-      status: isHealthy ? 'healthy' : 'degraded',
-      checks: {
-        api: {
-          gemini: geminiStatus,
-          responseTime: `${responseTime}ms`
-        },
-        system: {
-          memory: memoryInfo,
-          node: process.version
-        }
-      },
-      korean: {
-        message: isHealthy ? '모든 시스템이 정상 작동 중입니다' : '일부 시스템에 문제가 있습니다',
-        lastCheck: new Date().toLocaleString('ko-KR', {
-          timeZone: 'Asia/Seoul'
-        })
-      }
-    };
+    // 시스템 상태 점검
+    const healthData = await performHealthCheck(requestStart);
 
-    // 캐시 헤더 설정 (5분)
-    res.setHeader('Cache-Control', 'public, max-age=300, s-maxage=300');
-    
-    return res.status(isHealthy ? 200 : 503).json(healthStatus);
+    // 캐시 업데이트
+    healthCache = healthData;
+    cacheTimestamp = now;
 
+    // 응답 헤더 설정
+    res.setHeader('Cache-Control', 'public, max-age=30, s-maxage=60');
+    res.setHeader('Content-Type', 'application/json; charset=utf-8');
+
+    // Blue-Green 배포 상태에 따른 응답
+    if (healthData.status === 'healthy') {
+      res.status(200).json(healthData);
+    } else {
+      res.status(503).json(healthData);
+    }
   } catch (error) {
     console.error('Health check error:', error);
-    
-    return res.status(503).json({
+
+    // 에러 응답
+    res.status(500).json({
       status: 'error',
-      message: '헬스체크 실행 중 오류가 발생했습니다',
-      error: process.env.NODE_ENV === 'development' ? error.message : undefined,
-      timestamp: new Date().toISOString()
+      message: 'Internal server error',
+      timestamp: new Date().toISOString(),
+      environment: deploymentEnv,
+      responseTime: Date.now() - requestStart,
+      error: {
+        message: error.message,
+        code: error.code,
+      },
     });
+  }
+}
+
+/**
+ * 헬스체크 수행
+ */
+async function performHealthCheck(requestStart) {
+  const timestamp = new Date().toISOString();
+  const uptime = Date.now() - startTime;
+
+  // 기본 시스템 정보
+  const systemInfo = {
+    status: 'healthy',
+    timestamp,
+    environment: deploymentEnv,
+    uptime: Math.floor(uptime / 1000), // 초 단위
+    responseTime: Date.now() - requestStart,
+    cached: false,
+    deployment: {
+      env: deploymentEnv,
+      region: process.env.VERCEL_REGION || 'unknown',
+      nodeVersion: process.version,
+      platform: process.platform,
+      memory: process.memoryUsage(),
+    },
+  };
+
+  // 외부 서비스 연결 테스트
+  const serviceChecks = await Promise.allSettled([
+    checkGeminiAPI(),
+    checkDatabaseConnection(),
+    checkCDNStatus(),
+  ]);
+
+  // 서비스 상태 집계
+  systemInfo.services = {
+    gemini: getCheckResult(serviceChecks[0]),
+    database: getCheckResult(serviceChecks[1]),
+    cdn: getCheckResult(serviceChecks[2]),
+  };
+
+  // 전체 상태 결정
+  const hasFailure = Object.values(systemInfo.services).some(
+    (service) => service.status === 'unhealthy'
+  );
+
+  if (hasFailure) {
+    systemInfo.status = 'degraded';
+  }
+
+  // 성능 메트릭
+  systemInfo.metrics = {
+    responseTime: systemInfo.responseTime,
+    memoryUsage: {
+      rss: Math.round(systemInfo.deployment.memory.rss / 1024 / 1024), // MB
+      heapUsed: Math.round(systemInfo.deployment.memory.heapUsed / 1024 / 1024), // MB
+      heapTotal: Math.round(systemInfo.deployment.memory.heapTotal / 1024 / 1024), // MB
+    },
+    cpuUsage: process.cpuUsage(),
+  };
+
+  return systemInfo;
+}
+
+/**
+ * Gemini API 연결 확인
+ */
+async function checkGeminiAPI() {
+  try {
+    if (!process.env.GEMINI_API_KEY) {
+      throw new Error('GEMINI_API_KEY not configured');
+    }
+
+    // 단순 연결 테스트 (실제 API 호출 없이)
+    const response = await fetch(
+      'https://generativelanguage.googleapis.com/v1beta/models?key=' + process.env.GEMINI_API_KEY,
+      {
+        method: 'GET',
+        timeout: 3000,
+        headers: {
+          'User-Agent': 'doha.kr/health-check',
+        },
+      }
+    );
+
+    if (response.ok) {
+      return { status: 'healthy', latency: Date.now() };
+    } else {
+      throw new Error(`HTTP ${response.status}`);
+    }
+  } catch (error) {
+    return {
+      status: 'unhealthy',
+      error: error.message,
+      latency: -1,
+    };
+  }
+}
+
+/**
+ * 데이터베이스 연결 확인 (향후 확장용)
+ */
+async function checkDatabaseConnection() {
+  try {
+    // 현재는 파일시스템 기반이므로 간단한 확인
+    const testStart = Date.now();
+
+    // 기본 파일시스템 접근 테스트
+    if (typeof require !== 'undefined') {
+      const fs = require('fs');
+      await fs.promises.access('/tmp', fs.constants.R_OK | fs.constants.W_OK);
+    }
+
+    return {
+      status: 'healthy',
+      latency: Date.now() - testStart,
+      type: 'filesystem',
+    };
+  } catch (error) {
+    return {
+      status: 'unhealthy',
+      error: error.message,
+      latency: -1,
+      type: 'filesystem',
+    };
+  }
+}
+
+/**
+ * CDN 상태 확인
+ */
+async function checkCDNStatus() {
+  try {
+    const testStart = Date.now();
+
+    // Cloudflare CDN 상태 확인
+    const response = await fetch('https://doha.kr/manifest.json', {
+      method: 'HEAD',
+      timeout: 3000,
+      headers: {
+        'User-Agent': 'doha.kr/health-check',
+      },
+    });
+
+    if (response.ok) {
+      return {
+        status: 'healthy',
+        latency: Date.now() - testStart,
+        cdnHeaders: {
+          cfRay: response.headers.get('cf-ray'),
+          cfCache: response.headers.get('cf-cache-status'),
+          server: response.headers.get('server'),
+        },
+      };
+    } else {
+      throw new Error(`HTTP ${response.status}`);
+    }
+  } catch (error) {
+    return {
+      status: 'unhealthy',
+      error: error.message,
+      latency: -1,
+    };
+  }
+}
+
+/**
+ * Promise settled 결과 파싱
+ */
+function getCheckResult(settledResult) {
+  if (settledResult.status === 'fulfilled') {
+    return settledResult.value;
+  } else {
+    return {
+      status: 'unhealthy',
+      error: settledResult.reason?.message || 'Unknown error',
+      latency: -1,
+    };
+  }
+}
+
+/**
+ * fetch with timeout 구현 (Node.js 환경 호환성)
+ */
+async function fetch(url, options = {}) {
+  const { timeout = 5000, ...fetchOptions } = options;
+
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeout);
+
+  try {
+    const response = await globalThis.fetch(url, {
+      ...fetchOptions,
+      signal: controller.signal,
+    });
+    clearTimeout(timeoutId);
+    return response;
+  } catch (error) {
+    clearTimeout(timeoutId);
+    if (error.name === 'AbortError') {
+      throw new Error(`Request timeout after ${timeout}ms`);
+    }
+    throw error;
   }
 }

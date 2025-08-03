@@ -35,44 +35,54 @@ export class SajuFortuneService {
   initializeSajuData() {
     // 천간 (Heavenly Stems)
     this.heavenlyStems = {
-      '갑': { element: '목', nature: '양', description: '큰 나무' },
-      '을': { element: '목', nature: '음', description: '작은 나무' },
-      '병': { element: '화', nature: '양', description: '태양' },
-      '정': { element: '화', nature: '음', description: '촛불' },
-      '무': { element: '토', nature: '양', description: '산' },
-      '기': { element: '토', nature: '음', description: '들판' },
-      '경': { element: '금', nature: '양', description: '쇠' },
-      '신': { element: '금', nature: '음', description: '보석' },
-      '임': { element: '수', nature: '양', description: '바다' },
-      '계': { element: '수', nature: '음', description: '샘물' }
+      갑: { element: '목', nature: '양', description: '큰 나무' },
+      을: { element: '목', nature: '음', description: '작은 나무' },
+      병: { element: '화', nature: '양', description: '태양' },
+      정: { element: '화', nature: '음', description: '촛불' },
+      무: { element: '토', nature: '양', description: '산' },
+      기: { element: '토', nature: '음', description: '들판' },
+      경: { element: '금', nature: '양', description: '쇠' },
+      신: { element: '금', nature: '음', description: '보석' },
+      임: { element: '수', nature: '양', description: '바다' },
+      계: { element: '수', nature: '음', description: '샘물' },
     };
 
     // 지지 (Earthly Branches)
     this.earthlyBranches = {
-      '자': { element: '수', season: '겨울', animal: '쥐', time: '23-01시' },
-      '축': { element: '토', season: '겨울', animal: '소', time: '01-03시' },
-      '인': { element: '목', season: '봄', animal: '호랑이', time: '03-05시' },
-      '묘': { element: '목', season: '봄', animal: '토끼', time: '05-07시' },
-      '진': { element: '토', season: '봄', animal: '용', time: '07-09시' },
-      '사': { element: '화', season: '여름', animal: '뱀', time: '09-11시' },
-      '오': { element: '화', season: '여름', animal: '말', time: '11-13시' },
-      '미': { element: '토', season: '여름', animal: '양', time: '13-15시' },
-      '신': { element: '금', season: '가을', animal: '원숭이', time: '15-17시' },
-      '유': { element: '금', season: '가을', animal: '닭', time: '17-19시' },
-      '술': { element: '토', season: '가을', animal: '개', time: '19-21시' },
-      '해': { element: '수', season: '겨울', animal: '돼지', time: '21-23시' }
+      자: { element: '수', season: '겨울', animal: '쥐', time: '23-01시' },
+      축: { element: '토', season: '겨울', animal: '소', time: '01-03시' },
+      인: { element: '목', season: '봄', animal: '호랑이', time: '03-05시' },
+      묘: { element: '목', season: '봄', animal: '토끼', time: '05-07시' },
+      진: { element: '토', season: '봄', animal: '용', time: '07-09시' },
+      사: { element: '화', season: '여름', animal: '뱀', time: '09-11시' },
+      오: { element: '화', season: '여름', animal: '말', time: '11-13시' },
+      미: { element: '토', season: '여름', animal: '양', time: '13-15시' },
+      신: { element: '금', season: '가을', animal: '원숭이', time: '15-17시' },
+      유: { element: '금', season: '가을', animal: '닭', time: '17-19시' },
+      술: { element: '토', season: '가을', animal: '개', time: '19-21시' },
+      해: { element: '수', season: '겨울', animal: '돼지', time: '21-23시' },
     };
 
     // 오행 상생상극
     this.fiveElements = {
       relations: {
-        생: { // 상생
-          목: '화', 화: '토', 토: '금', 금: '수', 수: '목'
+        생: {
+          // 상생
+          목: '화',
+          화: '토',
+          토: '금',
+          금: '수',
+          수: '목',
         },
-        극: { // 상극
-          목: '토', 화: '금', 토: '수', 금: '목', 수: '화'
-        }
-      }
+        극: {
+          // 상극
+          목: '토',
+          화: '금',
+          토: '수',
+          금: '목',
+          수: '화',
+        },
+      },
     };
   }
 
@@ -80,20 +90,19 @@ export class SajuFortuneService {
    * 사주 팔자 분석
    */
   async analyzeSaju(sajuData, options = {}) {
-    const {
-      includeDetailed = true,
-      includeYearly = true,
-      includeAdvice = true
-    } = options;
+    const { includeDetailed = true, includeYearly = true, includeAdvice = true } = options;
 
     if (!this.model) {
       throw new Error('Gemini API가 설정되지 않았습니다.');
     }
 
     const { yearPillar, monthPillar, dayPillar, hourPillar } = sajuData;
-    
+
     // 캐시 키 생성
-    const cacheKey = keyBuilder.build('saju-analysis', `${yearPillar}_${monthPillar}_${dayPillar}_${hourPillar}`);
+    const cacheKey = keyBuilder.build(
+      'saju-analysis',
+      `${yearPillar}_${monthPillar}_${dayPillar}_${hourPillar}`
+    );
 
     // 캐시에서 확인 (사주는 변하지 않으므로 긴 캐시)
     const cached = await cache.get(cacheKey);
@@ -105,13 +114,19 @@ export class SajuFortuneService {
     try {
       // 사주 기본 분석
       const basicAnalysis = this.analyzeSajuBasics(sajuData);
-      
+
       // AI 분석 프롬프트 생성
-      const prompt = this.buildSajuPrompt(sajuData, basicAnalysis, includeDetailed, includeYearly, includeAdvice);
-      
+      const prompt = this.buildSajuPrompt(
+        sajuData,
+        basicAnalysis,
+        includeDetailed,
+        includeYearly,
+        includeAdvice
+      );
+
       logger.info('Generating saju analysis', {
         pillars: `${yearPillar}_${monthPillar}_${dayPillar}_${hourPillar}`,
-        promptLength: prompt.length
+        promptLength: prompt.length,
       });
 
       const startTime = performance.now();
@@ -122,12 +137,12 @@ export class SajuFortuneService {
 
       logger.info('Saju analysis generated', {
         responseLength: text.length,
-        duration: Math.round(duration)
+        duration: Math.round(duration),
       });
 
       // 응답 파싱
       const parsedAnalysis = this.parseSajuResponse(text);
-      
+
       // 종합 결과
       const sajuAnalysis = {
         ...parsedAnalysis,
@@ -136,21 +151,20 @@ export class SajuFortuneService {
           year: yearPillar,
           month: monthPillar,
           day: dayPillar,
-          hour: hourPillar
+          hour: hourPillar,
         },
         generatedAt: new Date().toISOString(),
-        aiGenerated: true
+        aiGenerated: true,
       };
 
       // 캐시에 저장 (7일간)
       await cache.set(cacheKey, sajuAnalysis, 7 * 24 * 60 * 60 * 1000);
 
       return sajuAnalysis;
-
     } catch (error) {
       logger.error('Saju analysis failed', {
         error: error.message,
-        pillars: `${yearPillar}_${monthPillar}_${dayPillar}_${hourPillar}`
+        pillars: `${yearPillar}_${monthPillar}_${dayPillar}_${hourPillar}`,
       });
       throw error;
     }
@@ -161,31 +175,31 @@ export class SajuFortuneService {
    */
   analyzeSajuBasics(sajuData) {
     const { yearPillar, monthPillar, dayPillar, hourPillar } = sajuData;
-    
+
     // 각 기둥의 천간, 지지 분리
     const pillars = {
       year: { stem: yearPillar[0], branch: yearPillar[1] },
       month: { stem: monthPillar[0], branch: monthPillar[1] },
       day: { stem: dayPillar[0], branch: dayPillar[1] },
-      hour: { stem: hourPillar[0], branch: hourPillar[1] }
+      hour: { stem: hourPillar[0], branch: hourPillar[1] },
     };
 
     // 오행 분석
     const elements = this.analyzeElements(pillars);
-    
+
     // 일간 분석 (주인)
     const dayMaster = this.analyzeDayMaster(pillars.day, pillars);
-    
+
     // 계절 분석
     const season = this.analyzeSeason(pillars.month.branch);
-    
+
     return {
       pillars,
       elements,
       dayMaster,
       season,
       strength: this.calculateStrength(pillars, elements),
-      harmony: this.calculateHarmony(pillars)
+      harmony: this.calculateHarmony(pillars),
     };
   }
 
@@ -194,24 +208,24 @@ export class SajuFortuneService {
    */
   analyzeElements(pillars) {
     const elementCount = { 목: 0, 화: 0, 토: 0, 금: 0, 수: 0 };
-    
+
     // 천간 오행 계산
-    Object.values(pillars).forEach(pillar => {
+    Object.values(pillars).forEach((pillar) => {
       const stemElement = this.heavenlyStems[pillar.stem]?.element;
       const branchElement = this.earthlyBranches[pillar.branch]?.element;
-      
+
       if (stemElement) elementCount[stemElement]++;
       if (branchElement) elementCount[branchElement]++;
     });
 
     // 가장 많은/적은 오행
-    const sortedElements = Object.entries(elementCount).sort(([,a], [,b]) => b - a);
-    
+    const sortedElements = Object.entries(elementCount).sort(([, a], [, b]) => b - a);
+
     return {
       count: elementCount,
       strongest: sortedElements[0][0],
       weakest: sortedElements[sortedElements.length - 1][0],
-      balance: this.calculateElementBalance(elementCount)
+      balance: this.calculateElementBalance(elementCount),
     };
   }
 
@@ -221,17 +235,17 @@ export class SajuFortuneService {
   analyzeDayMaster(dayPillar, allPillars) {
     const dayStem = dayPillar.stem;
     const dayBranch = dayPillar.branch;
-    
+
     const stemInfo = this.heavenlyStems[dayStem];
     const branchInfo = this.earthlyBranches[dayBranch];
-    
+
     return {
       stem: dayStem,
       branch: dayBranch,
       element: stemInfo.element,
       nature: stemInfo.nature,
       description: stemInfo.description,
-      seasonalStrength: this.calculateSeasonalStrength(stemInfo.element, allPillars.month.branch)
+      seasonalStrength: this.calculateSeasonalStrength(stemInfo.element, allPillars.month.branch),
     };
   }
 
@@ -243,7 +257,7 @@ export class SajuFortuneService {
     return {
       season: branchInfo.season,
       element: branchInfo.element,
-      characteristics: this.getSeasonCharacteristics(branchInfo.season)
+      characteristics: this.getSeasonCharacteristics(branchInfo.season),
     };
   }
 
@@ -256,10 +270,11 @@ export class SajuFortuneService {
 
     // 같은 오행 개수
     strength += elements.count[dayElement] * 2;
-    
+
     // 생하는 오행 개수
-    const supportElement = Object.entries(this.fiveElements.relations.생)
-      .find(([key, value]) => value === dayElement)?.[0];
+    const supportElement = Object.entries(this.fiveElements.relations.생).find(
+      ([key, value]) => value === dayElement
+    )?.[0];
     if (supportElement) {
       strength += elements.count[supportElement];
     }
@@ -273,7 +288,7 @@ export class SajuFortuneService {
     return {
       score: strength,
       level: strength > 3 ? '강' : strength > 0 ? '중' : '약',
-      description: this.getStrengthDescription(strength)
+      description: this.getStrengthDescription(strength),
     };
   }
 
@@ -288,12 +303,12 @@ export class SajuFortuneService {
     // 천간 관계 분석
     // 지지 관계 분석
     // (복잡한 로직이므로 간소화)
-    
+
     return {
       score: harmonyScore,
       level: harmonyScore > 5 ? '상' : harmonyScore > 0 ? '중' : '하',
       conflicts,
-      supports
+      supports,
     };
   }
 
@@ -354,20 +369,20 @@ export class SajuFortuneService {
    */
   parseSajuResponse(text) {
     const sections = {};
-    const lines = text.split('\n').filter(line => line.trim());
-    
+    const lines = text.split('\n').filter((line) => line.trim());
+
     let currentSection = null;
     let currentContent = [];
 
     for (const line of lines) {
       const trimmed = line.trim();
-      
+
       // 섹션 헤더 확인
       if (trimmed.match(/^\d+\.\s/)) {
         if (currentSection) {
           sections[currentSection] = currentContent.join(' ').trim();
         }
-        
+
         const sectionMatch = trimmed.match(/^\d+\.\s(.+?):\s*(.*)$/);
         if (sectionMatch) {
           currentSection = this.getSectionKey(sectionMatch[1]);
@@ -395,7 +410,7 @@ export class SajuFortuneService {
       remedy: sections.remedy || '',
       advice: sections.advice || '',
       majorCycles: sections.majorCycles || '',
-      compatibility: sections.compatibility || ''
+      compatibility: sections.compatibility || '',
     };
   }
 
@@ -406,14 +421,14 @@ export class SajuFortuneService {
     const keyMap = {
       '성격과 기질': 'personality',
       '오행의 균형': 'elementBalance',
-      '재물운': 'wealth',
-      '직업운': 'career',
-      '연애운': 'love',
-      '건강운': 'health',
-      '개운법': 'remedy',
+      재물운: 'wealth',
+      직업운: 'career',
+      연애운: 'love',
+      건강운: 'health',
+      개운법: 'remedy',
       '인생 조언': 'advice',
       '대운 흐름': 'majorCycles',
-      '궁합': 'compatibility'
+      궁합: 'compatibility',
     };
 
     // 연도가 포함된 경우
@@ -440,18 +455,21 @@ export class SajuFortuneService {
   calculateSeasonalStrength(element, monthBranch) {
     const season = this.earthlyBranches[monthBranch].season;
     const seasonElements = {
-      '봄': '목', '여름': '화', '가을': '금', '겨울': '수'
+      봄: '목',
+      여름: '화',
+      가을: '금',
+      겨울: '수',
     };
-    
+
     return seasonElements[season] === element ? '강' : '약';
   }
 
   getSeasonCharacteristics(season) {
     const characteristics = {
-      '봄': '성장과 발전의 기운',
-      '여름': '활발하고 역동적인 에너지',
-      '가을': '결실과 수확의 시기',
-      '겨울': '침착하고 깊이 있는 성격'
+      봄: '성장과 발전의 기운',
+      여름: '활발하고 역동적인 에너지',
+      가을: '결실과 수확의 시기',
+      겨울: '침착하고 깊이 있는 성격',
     };
     return characteristics[season] || '';
   }
@@ -472,7 +490,7 @@ export class SajuFortuneService {
       service: 'saju-fortune',
       status: genAI ? 'healthy' : 'error',
       model: this.model ? 'gemini-1.5-flash' : null,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     };
   }
 }

@@ -145,9 +145,12 @@ export const logEnvironment = () => {
   const env = process.env.NODE_ENV || 'production';
   const allowedOrigins = getAllowedOrigins();
 
-  console.log('CORS Configuration:', {
-    environment: env,
-    vercelEnv: process.env.VERCEL_ENV,
-    allowedOrigins: allowedOrigins,
-  });
+  // Use serverLogger in production
+  if (env === 'development') {
+    console.log('CORS Configuration:', {
+      environment: env,
+      vercelEnv: process.env.VERCEL_ENV,
+      allowedOrigins: allowedOrigins,
+    });
+  }
 };

@@ -8,12 +8,12 @@ class PWAAnalytics {
     this.sessionId = this.generateSessionId();
     this.userId = this.getUserId();
     this.startTime = Date.now();
-    
+
     // 분석 데이터 버퍼
     this.analyticsBuffer = [];
     this.performanceBuffer = [];
     this.errorBuffer = [];
-    
+
     // 전송 설정
     this.config = {
       batchSize: 10,
@@ -21,10 +21,10 @@ class PWAAnalytics {
       maxRetries: 3,
       endpoint: '/api/analytics',
     };
-    
+
     // 메트릭 수집기
     this.collectors = new Map();
-    
+
     // 이벤트 추적
     this.events = {
       pageViews: 0,
@@ -33,24 +33,23 @@ class PWAAnalytics {
       swUpdates: 0,
       offlineEvents: 0,
     };
-    
+
     this.init();
   }
 
   init() {
-
     // 기본 수집기 등록
     this.registerCollectors();
-    
+
     // 이벤트 리스너 설정
     this.setupEventListeners();
-    
+
     // 주기적 데이터 전송
     this.startPeriodicFlush();
-    
+
     // 페이지 언로드 시 데이터 전송
     this.setupUnloadHandler();
-    
+
     // 초기 페이지뷰 기록
     this.trackPageView();
   }
@@ -64,7 +63,7 @@ class PWAAnalytics {
       }
       return null;
     });
-    
+
     // 네트워크 정보 수집기
     this.collectors.set('network', () => {
       if ('connection' in navigator) {
@@ -78,7 +77,7 @@ class PWAAnalytics {
       }
       return null;
     });
-    
+
     // 디바이스 정보 수집기
     this.collectors.set('device', () => ({
       userAgent: navigator.userAgent,
@@ -95,11 +94,11 @@ class PWAAnalytics {
       viewportHeight: window.innerHeight,
       pixelDensity: window.devicePixelRatio,
     }));
-    
+
     // 메모리 정보 수집기
     this.collectors.set('memory', () => {
       if ('memory' in performance) {
-        const {memory} = performance;
+        const { memory } = performance;
         return {
           usedJSHeapSize: memory.usedJSHeapSize,
           totalJSHeapSize: memory.totalJSHeapSize,
@@ -109,17 +108,17 @@ class PWAAnalytics {
       }
       return null;
     });
-    
+
     // PWA 상태 수집기
     this.collectors.set('pwa', () => ({
       standalone: window.matchMedia('(display-mode: standalone)').matches,
       installed: window.matchMedia('(display-mode: standalone)').matches,
       serviceWorkerSupported: 'serviceWorker' in navigator,
-      serviceWorkerActive: !!(navigator.serviceWorker?.controller),
+      serviceWorkerActive: !!navigator.serviceWorker?.controller,
       notificationPermission: 'Notification' in window ? Notification.permission : 'unsupported',
       offlineCapable: 'serviceWorker' in navigator && 'caches' in window,
     }));
-    
+
     // 한국어 최적화 수집기
     this.collectors.set('korean', () => {
       if (window.koreanOptimizer) {
@@ -127,7 +126,7 @@ class PWAAnalytics {
       }
       return null;
     });
-    
+
     // 오프라인 상태 수집기
     this.collectors.set('offline', () => {
       if (window.offlineManager) {
@@ -146,17 +145,17 @@ class PWAAnalytics {
         visibilityState: document.visibilityState,
       });
     });
-    
+
     // 클릭 이벤트 추적
     document.addEventListener('click', (event) => {
       this.trackInteraction('click', event.target);
     });
-    
+
     // 폼 제출 추적
     document.addEventListener('submit', (event) => {
       this.trackInteraction('formSubmit', event.target);
     });
-    
+
     // 에러 추적
     window.addEventListener('error', (event) => {
       this.trackError({
@@ -168,7 +167,7 @@ class PWAAnalytics {
         stack: event.error?.stack,
       });
     });
-    
+
     // Promise rejection 추적
     window.addEventListener('unhandledrejection', (event) => {
       this.trackError({
@@ -176,7 +175,7 @@ class PWAAnalytics {
         reason: event.reason?.toString(),
       });
     });
-    
+
     // Service Worker 업데이트 추적
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.addEventListener('message', (event) => {
@@ -188,17 +187,17 @@ class PWAAnalytics {
         }
       });
     }
-    
+
     // 네트워크 상태 변경 추적
     window.addEventListener('online', () => {
       this.track('networkStatusChange', { online: true });
     });
-    
+
     window.addEventListener('offline', () => {
       this.track('networkStatusChange', { online: false });
       this.events.offlineEvents++;
     });
-    
+
     // 앱 설치 프롬프트 추적
     window.addEventListener('beforeinstallprompt', () => {
       this.track('installPromptShown');
@@ -214,10 +213,9 @@ class PWAAnalytics {
       timestamp: Date.now(),
       ...customData,
     };
-    
+
     this.track('pageView', pageData);
     this.events.pageViews++;
-
   }
 
   // 사용자 상호작용 추적
@@ -231,7 +229,7 @@ class PWAAnalytics {
       url: location.href,
       timestamp: Date.now(),
     };
-    
+
     this.track('interaction', data);
     this.events.interactions++;
   }
@@ -245,7 +243,7 @@ class PWAAnalytics {
       timestamp: Date.now(),
       sessionId: this.sessionId,
     };
-    
+
     this.errorBuffer.push(data);
     this.events.errors++;
 
@@ -263,9 +261,8 @@ class PWAAnalytics {
       timestamp: Date.now(),
       sessionId: this.sessionId,
     };
-    
-    this.performanceBuffer.push(data);
 
+    this.performanceBuffer.push(data);
   }
 
   // 사용자 정의 이벤트 추적
@@ -278,9 +275,9 @@ class PWAAnalytics {
       url: location.href,
       ...data,
     };
-    
+
     this.analyticsBuffer.push(eventData);
-    
+
     // 버퍼가 가득 찬 경우 즉시 전송
     if (this.analyticsBuffer.length >= this.config.batchSize) {
       this.flush();
@@ -307,8 +304,10 @@ class PWAAnalytics {
 
   // 수집된 데이터 전송
   async flush() {
-    if (this.analyticsBuffer.length === 0) {return;}
-    
+    if (this.analyticsBuffer.length === 0) {
+      return;
+    }
+
     const batch = {
       sessionId: this.sessionId,
       userId: this.userId,
@@ -317,16 +316,14 @@ class PWAAnalytics {
       performance: [...this.performanceBuffer],
       context: this.collectContext(),
     };
-    
+
     // 버퍼 초기화
     this.analyticsBuffer = [];
     this.performanceBuffer = [];
-    
+
     try {
       await this.sendBatch(batch);
-      
     } catch (error) {
-
       // 실패한 데이터를 다시 버퍼에 추가 (재시도용)
       this.analyticsBuffer.unshift(...batch.events);
       this.performanceBuffer.unshift(...batch.performance);
@@ -335,11 +332,13 @@ class PWAAnalytics {
 
   // 에러 데이터만 전송
   async flushErrors() {
-    if (this.errorBuffer.length === 0) {return;}
-    
+    if (this.errorBuffer.length === 0) {
+      return;
+    }
+
     const errors = [...this.errorBuffer];
     this.errorBuffer = [];
-    
+
     try {
       await this.sendBatch({
         sessionId: this.sessionId,
@@ -348,9 +347,7 @@ class PWAAnalytics {
         errors,
         context: this.collectContext(),
       });
-
     } catch (error) {
-
       // 실패한 에러를 다시 버퍼에 추가
       this.errorBuffer.unshift(...errors);
     }
@@ -359,7 +356,7 @@ class PWAAnalytics {
   // 컨텍스트 정보 수집
   collectContext() {
     const context = {};
-    
+
     // 각 수집기에서 데이터 수집
     this.collectors.forEach((collector, name) => {
       try {
@@ -368,10 +365,11 @@ class PWAAnalytics {
           context[name] = data;
         }
       } catch (error) {
-        
+        // 컨텍스트 수집 실패 시 무시
+        console.warn('Failed to collect context data:', error);
       }
     });
-    
+
     return context;
   }
 
@@ -384,7 +382,7 @@ class PWAAnalytics {
       },
       body: JSON.stringify(batch),
     };
-    
+
     // 오프라인 상태에서는 Service Worker를 통해 큐에 추가
     if (!navigator.onLine) {
       if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
@@ -400,13 +398,13 @@ class PWAAnalytics {
       }
       return;
     }
-    
+
     const response = await fetch(this.config.endpoint, options);
-    
+
     if (!response.ok) {
       throw new Error(`HTTP ${response.status}: ${response.statusText}`);
     }
-    
+
     return response.json();
   }
 
@@ -424,13 +422,13 @@ class PWAAnalytics {
       this.trackSessionEnd();
       this.sendBeacon();
     });
-    
+
     // pagehide 이벤트 (더 안정적)
     window.addEventListener('pagehide', () => {
       this.trackSessionEnd();
       this.sendBeacon();
     });
-    
+
     // visibilitychange 이벤트 (백그라운드로 이동 시)
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) {
@@ -444,7 +442,7 @@ class PWAAnalytics {
     if (this.analyticsBuffer.length === 0 && this.performanceBuffer.length === 0) {
       return;
     }
-    
+
     const data = {
       sessionId: this.sessionId,
       userId: this.userId,
@@ -453,15 +451,11 @@ class PWAAnalytics {
       performance: [...this.performanceBuffer],
       context: this.collectContext(),
     };
-    
+
     if ('sendBeacon' in navigator) {
-      const success = navigator.sendBeacon(
-        this.config.endpoint,
-        JSON.stringify(data)
-      );
-      
+      const success = navigator.sendBeacon(this.config.endpoint, JSON.stringify(data));
+
       if (success) {
-        
         this.analyticsBuffer = [];
         this.performanceBuffer = [];
       }
@@ -481,7 +475,7 @@ class PWAAnalytics {
   // 세션 종료 추적
   trackSessionEnd() {
     const sessionDuration = Date.now() - this.startTime;
-    
+
     this.track('sessionEnd', {
       duration: sessionDuration,
       pageViews: this.events.pageViews,
@@ -495,12 +489,12 @@ class PWAAnalytics {
   // 사용자 ID 생성/조회
   getUserId() {
     let userId = localStorage.getItem('pwa_user_id');
-    
+
     if (!userId) {
       userId = this.generateUserId();
       localStorage.setItem('pwa_user_id', userId);
     }
-    
+
     return userId;
   }
 
@@ -511,13 +505,15 @@ class PWAAnalytics {
 
   // 사용자 ID 생성
   generateUserId() {
-    return `user_${  Date.now().toString(36)  }_${  Math.random().toString(36).substr(2)}`;
+    return `user_${Date.now().toString(36)}_${Math.random().toString(36).substr(2)}`;
   }
 
   // 실시간 대시보드 (개발 모드)
   showDebugDashboard() {
-    if (process.env.NODE_ENV !== 'development') {return;}
-    
+    if (process.env.NODE_ENV !== 'development') {
+      return;
+    }
+
     const dashboard = document.createElement('div');
     dashboard.id = 'analytics-dashboard';
     dashboard.style.cssText = `
@@ -535,9 +531,9 @@ class PWAAnalytics {
       max-height: 400px;
       overflow-y: auto;
     `;
-    
+
     document.body.appendChild(dashboard);
-    
+
     // 주기적 업데이트
     setInterval(() => {
       const context = this.collectContext();
@@ -559,7 +555,7 @@ class PWAAnalytics {
           })
           .join('<br>')}
       `;
-      
+
       dashboard.innerHTML = html;
     }, 2000);
   }
@@ -596,7 +592,7 @@ if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => {
     const analytics = new PWAAnalytics();
     window.pwaAnalytics = analytics;
-    
+
     // 개발 모드에서 대시보드 표시
     if (process.env.NODE_ENV === 'development') {
       analytics.showDebugDashboard();

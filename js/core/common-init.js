@@ -6,9 +6,29 @@
 import { initMobileMenu } from './mobile-menu.js';
 import * as PWAHelpers from './pwa-helpers.js';
 
+// 개발 환경 감지 유틸리티
+const isDevelopment = () => {
+  return (
+    location.hostname === 'localhost' ||
+    location.hostname === '127.0.0.1' ||
+    location.protocol === 'file:' ||
+    location.search.includes('debug=true')
+  );
+};
+
+// 안전한 로깅 함수들
+const safeLog = {
+  log: (...args) => isDevelopment() && console.log(...args), // eslint-disable-line no-console
+  warn: (...args) => isDevelopment() && console.warn(...args), // eslint-disable-line no-console
+  info: (...args) => isDevelopment() && console.info(...args), // eslint-disable-line no-console
+  error: (...args) => console.error(...args), // eslint-disable-line no-console
+  group: (...args) => isDevelopment() && console.group(...args), // eslint-disable-line no-console
+  groupEnd: () => isDevelopment() && console.groupEnd(), // eslint-disable-line no-console
+};
+
 // DohaKR 객체를 export
 export const DohaKR = {
-  utils: {},
+  utils: { safeLog, isDevelopment },
   PWAHelpers,
 };
 
@@ -17,7 +37,6 @@ export const DohaKR = {
  */
 DohaKR.initAdsense = function () {
   if (typeof adsbygoogle === 'undefined') {
-    
     return;
   }
 
@@ -27,7 +46,6 @@ DohaKR.initAdsense = function () {
       (window.adsbygoogle = window.adsbygoogle || []).push({});
       ad.setAttribute('data-ad-status', 'loaded');
     } catch (e) {
-      
       ad.style.display = 'none';
     }
   });
@@ -38,7 +56,6 @@ DohaKR.initAdsense = function () {
  */
 DohaKR.initKakao = function () {
   if (typeof Kakao === 'undefined') {
-    
     return;
   }
 
@@ -146,7 +163,6 @@ DohaKR.initMobileMenu = function () {
  */
 DohaKR.initAnalytics = function () {
   if (typeof gtag === 'undefined') {
-    
     return;
   }
 
@@ -232,7 +248,6 @@ DohaKR.registerServiceWorker = function () {
     navigator.serviceWorker
       .register('/sw.js', { scope: '/' })
       .then((registration) => {
-
         // 업데이트 체크
         registration.addEventListener('updatefound', () => {
           const newWorker = registration.installing;
@@ -253,14 +268,14 @@ DohaKR.registerServiceWorker = function () {
           60 * 60 * 1000
         );
       })
-      .catch((error) => {
-        
+      .catch((_error) => {
+        safeLog.warn('Service Worker 업데이트 실패:', _error);
       });
 
     // Service Worker 메시지 리스너
     navigator.serviceWorker.addEventListener('message', (event) => {
       if (event.data && event.data.type === 'CACHE_UPDATED') {
-        
+        safeLog.log('캐시가 업데이트되었습니다.');
       }
     });
   }
@@ -285,7 +300,6 @@ DohaKR.initPWAInstall = function () {
 
   // 설치 상태 확인
   window.addEventListener('appinstalled', () => {
-    
     deferredPrompt = null;
 
     // 설치 완료 메시지 표시
@@ -342,14 +356,12 @@ DohaKR.initNetworkStatus = function () {
     isOnline = true;
     statusIndicator.className = 'network-online';
     statusIndicator.innerHTML = '';
-    
   });
 
   window.addEventListener('offline', () => {
     isOnline = false;
     statusIndicator.className = 'network-offline';
     statusIndicator.innerHTML = '오프라인';
-    
   });
 };
 
@@ -392,9 +404,9 @@ DohaKR.showInstallButton = function (deferredPrompt) {
     const { outcome } = await deferredPrompt.userChoice;
 
     if (outcome === 'accepted') {
-      
+      safeLog.log('PWA 설치가 수락되었습니다.');
     } else {
-      
+      safeLog.log('PWA 설치가 거부되었습니다.');
     }
   });
 
@@ -516,7 +528,7 @@ function initializeAll() {
     const images = document.querySelectorAll('img[loading="lazy"]');
     images.forEach((img) => {
       // Force reload by changing URL
-                  img.src = `${img.src + (img.src.includes('?') ? '&' : '?')  }t=${  Date.now()}`;
+      img.src = `${img.src + (img.src.includes('?') ? '&' : '?')}t=${Date.now()}`;
     });
   } else {
     // Fallback for browsers that don't support lazy loading

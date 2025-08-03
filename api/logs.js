@@ -25,7 +25,7 @@ const VALID_LOG_TYPES = [
   'javascript_error',
   'promise_rejection',
   'navigation',
-  'security_event'
+  'security_event',
 ];
 
 class LogProcessor {
@@ -59,7 +59,7 @@ class LogProcessor {
    */
   validateLogEntry(log) {
     const requiredFields = ['timestamp', 'level', 'message'];
-    
+
     for (const field of requiredFields) {
       if (!log[field]) {
         throw new Error(`Missing required field: ${field}`);
@@ -95,7 +95,7 @@ class LogProcessor {
       message: sanitizeInput(log.message),
       data: this.sanitizeLogData(log.data || {}),
       context: this.sanitizeLogContext(log.context || {}),
-      metadata: this.sanitizeLogMetadata(log.metadata || {})
+      metadata: this.sanitizeLogMetadata(log.metadata || {}),
     };
 
     return sanitized;
@@ -106,18 +106,35 @@ class LogProcessor {
    */
   sanitizeLogData(data) {
     const sanitized = {};
-    
+
     // 허용된 데이터 필드만 포함
     const allowedFields = [
-      'type', 'duration', 'status', 'endpoint', 'method',
-      'value', 'element', 'page_load_time', 'dom_content_loaded',
-      'first_contentful_paint', 'largest_contentful_paint',
-      'dns_lookup', 'tcp_connection', 'request_response',
-      'message', 'filename', 'lineno', 'colno', 'stack',
-      'reason', 'promise', 'label', 'action'
+      'type',
+      'duration',
+      'status',
+      'endpoint',
+      'method',
+      'value',
+      'element',
+      'page_load_time',
+      'dom_content_loaded',
+      'first_contentful_paint',
+      'largest_contentful_paint',
+      'dns_lookup',
+      'tcp_connection',
+      'request_response',
+      'message',
+      'filename',
+      'lineno',
+      'colno',
+      'stack',
+      'reason',
+      'promise',
+      'label',
+      'action',
     ];
 
-    allowedFields.forEach(field => {
+    allowedFields.forEach((field) => {
       if (data[field] !== undefined) {
         sanitized[field] = this.sanitizeValue(data[field]);
       }
@@ -131,7 +148,7 @@ class LogProcessor {
    */
   sanitizeLogContext(context) {
     const sanitized = {};
-    
+
     // URL 정리 (쿼리 파라미터에서 민감한 정보 제거)
     if (context.url) {
       sanitized.url = this.sanitizeUrl(context.url);
@@ -170,7 +187,7 @@ class LogProcessor {
     if (metadata.viewport) {
       sanitized.viewport = {
         width: this.sanitizeNumber(metadata.viewport.width, 0, 10000),
-        height: this.sanitizeNumber(metadata.viewport.height, 0, 10000)
+        height: this.sanitizeNumber(metadata.viewport.height, 0, 10000),
       };
     }
 
@@ -178,7 +195,7 @@ class LogProcessor {
     if (metadata.screen) {
       sanitized.screen = {
         width: this.sanitizeNumber(metadata.screen.width, 0, 10000),
-        height: this.sanitizeNumber(metadata.screen.height, 0, 10000)
+        height: this.sanitizeNumber(metadata.screen.height, 0, 10000),
       };
     }
 
@@ -187,7 +204,7 @@ class LogProcessor {
       sanitized.connection = {
         effectiveType: metadata.connection.effectiveType,
         downlink: this.sanitizeNumber(metadata.connection.downlink, 0, 1000),
-        rtt: this.sanitizeNumber(metadata.connection.rtt, 0, 10000)
+        rtt: this.sanitizeNumber(metadata.connection.rtt, 0, 10000),
       };
     }
 
@@ -200,10 +217,10 @@ class LogProcessor {
   sanitizeUrl(url) {
     try {
       const urlObj = new URL(url);
-      
+
       // 민감한 쿼리 파라미터 제거
       const sensitiveParams = ['token', 'key', 'password', 'secret', 'auth'];
-      sensitiveParams.forEach(param => {
+      sensitiveParams.forEach((param) => {
         if (urlObj.searchParams.has(param)) {
           urlObj.searchParams.set(param, '[REDACTED]');
         }
@@ -231,7 +248,7 @@ class LogProcessor {
     if (value === null || value === undefined) {
       return value;
     }
-    
+
     // 객체나 배열은 JSON으로 변환 후 정리
     try {
       return JSON.parse(sanitizeInput(JSON.stringify(value)));
@@ -260,12 +277,12 @@ class LogProcessor {
       try {
         this.validateLogEntry(logs[i]);
         const sanitizedLog = this.sanitizeLogEntry(logs[i]);
-        
+
         // 클라이언트 정보 추가
         sanitizedLog.client = {
           ip: clientInfo.ip,
           userAgent: clientInfo.userAgent,
-          referer: clientInfo.referer
+          referer: clientInfo.referer,
         };
 
         // 세션 정보 추가
@@ -278,12 +295,11 @@ class LogProcessor {
         if (['ERROR', 'CRITICAL'].includes(sanitizedLog.level)) {
           this.errorLogs++;
         }
-
       } catch (error) {
         errors.push({
           index: i,
           error: error.message,
-          log: logs[i]
+          log: logs[i],
         });
       }
     }
@@ -297,7 +313,7 @@ class LogProcessor {
   async storeLogs(logs) {
     // 여기서 실제 로그 저장 로직을 구현할 수 있습니다
     // 예: 데이터베이스 저장, 외부 로깅 서비스 전송 등
-    
+
     for (const log of logs) {
       // 로그 레벨에 따른 서버 로깅
       switch (log.level) {
@@ -318,7 +334,7 @@ class LogProcessor {
     }
 
     // 에러 로그의 경우 추가 처리
-    const errorLogs = logs.filter(log => ['ERROR', 'CRITICAL'].includes(log.level));
+    const errorLogs = logs.filter((log) => ['ERROR', 'CRITICAL'].includes(log.level));
     if (errorLogs.length > 0) {
       await this.processErrorLogs(errorLogs);
     }
@@ -341,7 +357,7 @@ class LogProcessor {
           stack: log.data.stack,
           url: log.context.url,
           userAgent: log.context.userAgent,
-          sessionId: log.context.sessionId
+          sessionId: log.context.sessionId,
         });
       }
 
@@ -350,7 +366,7 @@ class LogProcessor {
         serverLogger.critical('Unhandled Promise Rejection', {
           reason: log.data.reason,
           url: log.context.url,
-          sessionId: log.context.sessionId
+          sessionId: log.context.sessionId,
         });
       }
     }
@@ -364,7 +380,7 @@ class LogProcessor {
       processedLogs: this.processedLogs,
       errorLogs: this.errorLogs,
       uptime: Date.now() - this.startTime,
-      errorRate: this.processedLogs > 0 ? (this.errorLogs / this.processedLogs) : 0
+      errorRate: this.processedLogs > 0 ? this.errorLogs / this.processedLogs : 0,
     };
   }
 }
@@ -380,7 +396,7 @@ async function handleClientLogs(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({
       error: true,
-      message: 'Method not allowed'
+      message: 'Method not allowed',
     });
   }
 
@@ -389,13 +405,13 @@ async function handleClientLogs(req, res) {
     const validation = validateRequest(req, {
       requiredFields: ['logs'],
       maxBodySize: 1024 * 1024, // 1MB
-      allowedContentTypes: ['application/json']
+      allowedContentTypes: ['application/json'],
     });
 
     if (!validation.isValid) {
       return res.status(400).json({
         error: true,
-        message: validation.message
+        message: validation.message,
       });
     }
 
@@ -408,26 +424,23 @@ async function handleClientLogs(req, res) {
     if (!session || !session.sessionId) {
       return res.status(400).json({
         error: true,
-        message: 'Session information is required'
+        message: 'Session information is required',
       });
     }
 
     // 클라이언트 정보 추출
     const clientInfo = {
-      ip: req.headers['x-forwarded-for'] || 
-          req.headers['x-real-ip'] || 
-          req.connection?.remoteAddress || 
-          'unknown',
+      ip:
+        req.headers['x-forwarded-for'] ||
+        req.headers['x-real-ip'] ||
+        req.connection?.remoteAddress ||
+        'unknown',
       userAgent: req.headers['user-agent'] || 'unknown',
-      referer: req.headers['referer'] || req.headers['referrer'] || null
+      referer: req.headers['referer'] || req.headers['referrer'] || null,
     };
 
     // 로그 처리
-    const { processedLogs, errors } = await logProcessor.processLogBatch(
-      logs, 
-      session, 
-      clientInfo
-    );
+    const { processedLogs, errors } = await logProcessor.processLogBatch(logs, session, clientInfo);
 
     // 로그 저장
     if (processedLogs.length > 0) {
@@ -439,7 +452,7 @@ async function handleClientLogs(req, res) {
       success: true,
       processed: processedLogs.length,
       errors: errors.length,
-      message: `Successfully processed ${processedLogs.length} logs`
+      message: `Successfully processed ${processedLogs.length} logs`,
     };
 
     // 에러가 있는 경우 에러 정보 포함
@@ -448,23 +461,22 @@ async function handleClientLogs(req, res) {
       serverLogger.warn('Log processing errors', {
         errorCount: errors.length,
         totalLogs: logs.length,
-        sessionId: session.sessionId
+        sessionId: session.sessionId,
       });
     }
 
     res.status(200).json(response);
-
   } catch (error) {
     serverLogger.error('Log collection error', {
       error: error.message,
       stack: error.stack,
-      body: req.body
+      body: req.body,
     });
 
     res.status(500).json({
       error: true,
       message: 'Failed to process logs',
-      details: process.env.NODE_ENV === 'development' ? error.message : undefined
+      details: process.env.NODE_ENV === 'development' ? error.message : undefined,
     });
   }
 }
@@ -476,30 +488,29 @@ async function handleLogStats(req, res) {
   if (req.method !== 'GET') {
     return res.status(405).json({
       error: true,
-      message: 'Method not allowed'
+      message: 'Method not allowed',
     });
   }
 
   try {
     const stats = {
       logProcessor: logProcessor.getStats(),
-      server: serverLogger.getStats()
+      server: serverLogger.getStats(),
     };
 
     res.status(200).json({
       success: true,
-      stats
+      stats,
     });
-
   } catch (error) {
     serverLogger.error('Stats retrieval error', {
       error: error.message,
-      stack: error.stack
+      stack: error.stack,
     });
 
     res.status(500).json({
       error: true,
-      message: 'Failed to retrieve stats'
+      message: 'Failed to retrieve stats',
     });
   }
 }
@@ -521,11 +532,11 @@ const handler = async (req, res) => {
 
   // 라우팅
   const { pathname } = new URL(req.url, `http://${req.headers.host}`);
-  
+
   if (pathname === '/api/logs' || pathname === '/api/logs/') {
     return await handleClientLogs(req, res);
   }
-  
+
   if (pathname === '/api/logs/stats') {
     return await handleLogStats(req, res);
   }
@@ -533,7 +544,7 @@ const handler = async (req, res) => {
   // 404
   res.status(404).json({
     error: true,
-    message: 'Endpoint not found'
+    message: 'Endpoint not found',
   });
 };
 
@@ -541,5 +552,5 @@ const handler = async (req, res) => {
 export default withLogging(handler, {
   enableRequestLogging: true,
   enablePerformanceLogging: true,
-  enableErrorDetails: process.env.NODE_ENV === 'development'
+  enableErrorDetails: process.env.NODE_ENV === 'development',
 });

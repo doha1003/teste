@@ -32,7 +32,7 @@ async function callFortuneAPI(type, data) {
     }
   } catch (error) {
     // Fortune API 호출 오류
-    
+
     throw error;
   }
 }
@@ -47,7 +47,7 @@ async function callGeminiAPI(prompt) {
       },
       body: JSON.stringify({
         type: 'general',
-        prompt: prompt,
+        prompt,
       }),
     });
 
@@ -71,7 +71,7 @@ async function callGeminiAPI(prompt) {
     }
   } catch (error) {
     // Gemini API 호출 오류
-    
+
     throw error;
   }
 }
@@ -88,13 +88,12 @@ async function generateDailyFortuneWithAI(name, birthDate, gender, birthTime = n
 
     if (result) {
       return {
-        name: name,
+        name,
         aiGenerated: true,
         ...result,
       };
     }
   } catch (error) {
-    
     // 사용자에게 친화적인 에러 메시지를 전달하기 위해 에러를 다시 던짐
     throw error;
   }
@@ -109,7 +108,6 @@ async function generateZodiacFortuneWithAI(zodiac) {
       return result;
     }
   } catch (error) {
-    
     throw error;
   }
 }
@@ -123,7 +121,6 @@ async function generateSajuWithAI(sajuData) {
       return result;
     }
   } catch (error) {
-    
     throw error;
   }
 }
@@ -180,7 +177,7 @@ function generateBackupFortune(name, birthDate) {
   const selectText = (texts, index) => texts[index % texts.length];
 
   return {
-    name: name,
+    name,
     ganzhi: todayGanzhi,
     aiGenerated: false,
     scores: {

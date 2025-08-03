@@ -159,7 +159,7 @@ export class SalaryCalculatorService extends ToolService {
     const monthlyTaxBase = monthlySalary - this.taxExemption - totalInsurance;
 
     // 소득세 계산
-    let monthlyIncomeTax = this.calculateIncomeTax(monthlyTaxBase, familyCount, childCount);
+    const monthlyIncomeTax = this.calculateIncomeTax(monthlyTaxBase, familyCount, childCount);
 
     // 지방소득세 (소득세의 10%)
     const monthlyLocalTax = Math.round(monthlyIncomeTax * 0.1);
@@ -298,8 +298,10 @@ export class SalaryCalculatorService extends ToolService {
    * 결과 복사 (오버라이드)
    */
   copyResult() {
-    const result = this.toolState.result;
-    if (!result) return;
+    const { result } = this.toolState;
+    if (!result) {
+      return;
+    }
 
     const text =
       `연봉 실수령액 계산 결과
@@ -337,7 +339,7 @@ export class SalaryCalculatorService extends ToolService {
    * 공유 데이터 가져오기 (오버라이드)
    */
   getShareData() {
-    const result = this.toolState.result;
+    const { result } = this.toolState;
     if (!result) {
       return super.getShareData();
     }

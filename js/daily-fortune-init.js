@@ -1,6 +1,6 @@
 // Initialize year dropdown
-window.addEventListener('DOMContentLoaded', function () {
-  setTimeout(function () {
+window.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => {
     const yearSelect = document.getElementById('birthYear');
     if (yearSelect && yearSelect.options.length <= 1) {
       yearSelect.innerHTML = '';
@@ -13,10 +13,9 @@ window.addEventListener('DOMContentLoaded', function () {
       for (let year = currentYear; year >= 1920; year--) {
         const option = document.createElement('option');
         option.value = year;
-        option.textContent = year + '년';
+        option.textContent = `${year}년`;
         yearSelect.appendChild(option);
       }
-      
     }
   }, 100);
 });

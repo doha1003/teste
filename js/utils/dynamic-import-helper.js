@@ -16,10 +16,10 @@ const preloadStatus = new Map();
  * @returns {Promise<any>} 로드된 모듈
  */
 export async function dynamicImport(modulePath, options = {}) {
-  const { 
+  const {
     // preload = false,
     // priority = 'low',
-    timeout = 10000 
+    timeout = 10000,
   } = options;
 
   // 캐시 확인
@@ -32,19 +32,14 @@ export async function dynamicImport(modulePath, options = {}) {
     setTimeout(() => reject(new Error(`Module load timeout: ${modulePath}`)), timeout);
   });
 
-  try {
-    // 모듈 로드
-    const modulePromise = import(modulePath);
-    const module = await Promise.race([modulePromise, timeoutPromise]);
-    
-    // 캐시에 저장
-    moduleCache.set(modulePath, module);
-    
-    return module;
-  } catch (error) {
-    
-    throw error;
-  }
+  // 모듈 로드
+  const modulePromise = import(modulePath);
+  const module = await Promise.race([modulePromise, timeoutPromise]);
+
+  // 캐시에 저장
+  moduleCache.set(modulePath, module);
+
+  return module;
 }
 
 /**
@@ -60,17 +55,17 @@ export function preloadModule(modulePath, priority = 'low') {
   const link = document.createElement('link');
   link.rel = 'modulepreload';
   link.href = modulePath;
-  
+
   if (priority === 'high') {
     link.fetchpriority = 'high';
   }
 
   document.head.appendChild(link);
-  
+
   // 프리로드 상태 저장
   const promise = dynamicImport(modulePath, { preload: true });
   preloadStatus.set(modulePath, promise);
-  
+
   return promise;
 }
 
@@ -79,9 +74,7 @@ export function preloadModule(modulePath, priority = 'low') {
  * @param {string[]} modulePaths - 모듈 경로 배열
  */
 export function preloadModules(modulePaths) {
-  return Promise.all(
-    modulePaths.map(path => preloadModule(path))
-  );
+  return Promise.all(modulePaths.map((path) => preloadModule(path)));
 }
 
 /**
@@ -94,11 +87,11 @@ export function lazyLoad(element, loadCallback, options = {}) {
   const defaultOptions = {
     rootMargin: '50px',
     threshold: 0.01,
-    ...options
+    ...options,
   };
 
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
+    entries.forEach((entry) => {
       if (entry.isIntersecting) {
         loadCallback();
         observer.unobserve(entry.target);
@@ -107,7 +100,7 @@ export function lazyLoad(element, loadCallback, options = {}) {
   }, defaultOptions);
 
   observer.observe(element);
-  
+
   return observer;
 }
 
@@ -116,19 +109,19 @@ export function lazyLoad(element, loadCallback, options = {}) {
  */
 export function conditionalPreload(modulePath) {
   if ('connection' in navigator) {
-    const {connection} = navigator;
-    
+    const { connection } = navigator;
+
     // 느린 연결에서는 프리로드 건너뛰기
     if (connection.saveData || connection.effectiveType === 'slow-2g') {
       return Promise.resolve(null);
     }
-    
+
     // 빠른 연결에서는 높은 우선순위로 프리로드
     if (connection.effectiveType === '4g') {
       return preloadModule(modulePath, 'high');
     }
   }
-  
+
   // 기본적으로 낮은 우선순위로 프리로드
   return preloadModule(modulePath, 'low');
 }
@@ -165,14 +158,14 @@ export class RoutePreloader {
    */
   preloadAdjacentRoutes(currentRoute) {
     const adjacentModules = [];
-    
+
     // 현재 라우트와 관련된 라우트의 모듈 수집
     this.routes.forEach((modules, route) => {
       if (route !== currentRoute && this.isAdjacent(currentRoute, route)) {
         adjacentModules.push(...modules);
       }
     });
-    
+
     return preloadModules(adjacentModules);
   }
 
@@ -206,5 +199,5 @@ export default {
   preloadModules,
   lazyLoad,
   conditionalPreload,
-  routePreloader
+  routePreloader,
 };

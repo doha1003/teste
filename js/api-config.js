@@ -4,7 +4,6 @@
 
   // Check if APIManager already exists
   if (window.APIManager) {
-    
     return;
   }
 
@@ -33,7 +32,7 @@
     async secureRequest(url, options = {}) {
       const startTime = performance.now();
       const requestId = `api_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-      
+
       const defaultOptions = {
         headers: {
           'Content-Type': 'application/json',
@@ -41,56 +40,56 @@
         },
         credentials: 'same-origin',
       };
-      
+
       // CSRF 토큰 추가
       if (this.securityConfig.csrf.enabled && window.csrfToken) {
         defaultOptions.headers[this.securityConfig.csrf.headerName] = window.csrfToken;
       }
-      
+
       // 로깅이 가능한 경우 요청 로그
       if (typeof window.DohaLogger !== 'undefined') {
         window.DohaLogger.info('API Request Started', {
           requestId,
           url,
           method: options.method || 'GET',
-          hasBody: !!options.body
+          hasBody: !!options.body,
         });
       }
-      
+
       try {
         const response = await fetch(url, { ...defaultOptions, ...options });
         const duration = performance.now() - startTime;
-        
+
         if (!response.ok) {
           const error = new Error(`API Error: ${response.status} ${response.statusText}`);
-          
+
           // 에러 로깅
           if (typeof window.DohaLogger !== 'undefined') {
             window.DohaLogger.logApiCall(url, options.method || 'GET', response.status, duration, {
               requestId,
               statusText: response.statusText,
-              error: true
+              error: true,
             });
           }
-          
+
           throw error;
         }
-        
+
         const data = await response.json();
-        
+
         // 성공 로깅
         if (typeof window.DohaLogger !== 'undefined') {
           window.DohaLogger.logApiCall(url, options.method || 'GET', response.status, duration, {
             requestId,
             responseSize: JSON.stringify(data).length,
-            success: true
+            success: true,
           });
         }
-        
+
         return data;
       } catch (error) {
         const duration = performance.now() - startTime;
-        
+
         // 에러 로깅
         if (typeof window.DohaLogger !== 'undefined') {
           window.DohaLogger.error('API Request Failed', {
@@ -98,12 +97,11 @@
             url,
             method: options.method || 'GET',
             error: error.message,
-            duration
+            duration,
           });
         } else {
-          
         }
-        
+
         throw error;
       }
     }
@@ -127,7 +125,7 @@
      * 현재 환경 감지
      */
     detectEnvironment() {
-      const hostname = window.location.hostname;
+      const { hostname } = window.location;
       if (hostname === 'localhost' || hostname === '127.0.0.1') {
         return 'development';
       } else if (hostname.includes('test') || hostname.includes('staging')) {
@@ -166,15 +164,12 @@
       try {
         if (typeof window.Kakao === 'undefined') {
           if (this.detectEnvironment() === 'development') {
-            
           } else {
-            
           }
           return;
         }
         if (window.Kakao.isInitialized && window.Kakao.isInitialized()) {
           if (this.detectEnvironment() === 'development') {
-            
           }
           return;
         }
@@ -182,18 +177,13 @@
         if (kakaoKey && kakaoKey !== 'KAKAO_APP_KEY_PLACEHOLDER') {
           window.Kakao.init(kakaoKey);
           if (this.detectEnvironment() === 'development') {
-            
           }
         } else {
           if (this.detectEnvironment() === 'development') {
-            
           } else {
-            
           }
         }
-      } catch (error) {
-        
-      }
+      } catch (error) {}
     }
     /**
      * 카카오 키 가져오기

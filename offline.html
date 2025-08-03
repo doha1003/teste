@@ -251,11 +251,73 @@
         opacity: 1;
         transform: translateY(0);
       }
+
+      .offline-features {
+        margin-top: var(--space-2xl);
+        text-align: left;
+        background: var(--gray-50);
+        padding: var(--space-lg);
+        border-radius: var(--radius-lg);
+      }
+
+      .offline-features h3 {
+        font-size: 1.125rem;
+        font-weight: 600;
+        margin-bottom: var(--space-lg);
+        color: var(--gray-900);
+        text-align: center;
+      }
+
+      .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: var(--space-md);
+      }
+
+      .feature-card {
+        background: var(--white);
+        padding: var(--space-lg);
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--gray-100);
+        text-align: center;
+        transition:
+          transform 150ms ease,
+          box-shadow 150ms ease;
+      }
+
+      .feature-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      .feature-icon {
+        font-size: 2rem;
+        margin-bottom: var(--space-md);
+      }
+
+      .feature-title {
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--gray-900);
+        margin-bottom: var(--space-md);
+      }
+
+      .feature-desc {
+        font-size: 0.875rem;
+        color: var(--gray-600);
+        line-height: 1.5;
+      }
+
+      @media (max-width: 640px) {
+        .feature-grid {
+          grid-template-columns: 1fr;
+        }
+      }
     </style>
 
     <!-- Main CSS -->
     <!-- CSS Bundle - Automatically selects development or production version -->
-    <link rel="stylesheet" href="/dist/styles.min.css" id="main-styles">
+    <link rel="stylesheet" href="/dist/styles.min.css" id="main-styles" />
 
     <!-- Page Data Attributes -->
     <script>
@@ -287,11 +349,20 @@
               <span>🏠</span>
               <span>홈으로 이동</span>
             </button>
+            <button class="btn btn--secondary" id="cache-view-btn" data-action="cache-view" style="display: none">
+              <span>💾</span>
+              <span>캐시된 콘텐츠 보기</span>
+            </button>
           </div>
 
           <div class="connection-status connection-status--offline" id="connection-status">
             <span>📶</span>
             <span id="status-text">오프라인 상태</span>
+            <div
+              class="connection-details"
+              id="connection-details"
+              style="margin-top: 8px; font-size: 0.8rem; opacity: 0.7"
+            ></div>
           </div>
 
           <div class="offline-tips fade-in">
@@ -303,6 +374,33 @@
               <li>브라우저를 새로고침하거나 재시작해보세요</li>
               <li>VPN을 사용 중이라면 잠시 비활성화해보세요</li>
             </ul>
+          </div>
+
+          <!-- 오프라인 기능 안내 -->
+          <div class="offline-features fade-in">
+            <h3>오프라인에서도 이용 가능한 기능</h3>
+            <div class="feature-grid">
+              <div class="feature-card">
+                <div class="feature-icon">📝</div>
+                <div class="feature-title">텍스트 카운터</div>
+                <div class="feature-desc">글자수와 단어수를 계산할 수 있습니다</div>
+              </div>
+              <div class="feature-card">
+                <div class="feature-icon">⚖️</div>
+                <div class="feature-title">BMI 계산기</div>
+                <div class="feature-desc">체질량지수를 계산할 수 있습니다</div>
+              </div>
+              <div class="feature-card">
+                <div class="feature-icon">💰</div>
+                <div class="feature-title">연봉 계산기</div>
+                <div class="feature-desc">실수령액을 계산할 수 있습니다</div>
+              </div>
+              <div class="feature-card">
+                <div class="feature-icon">💾</div>
+                <div class="feature-title">캐시된 콘텐츠</div>
+                <div class="feature-desc">이전에 방문한 페이지를 볼 수 있습니다</div>
+              </div>
+            </div>
           </div>
         </div>
       </section>

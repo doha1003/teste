@@ -1,6 +1,6 @@
 /**
  * CSP Violation Report Handler
- * 
+ *
  * This endpoint receives Content Security Policy violation reports
  * from browsers when CSP rules are violated.
  */
@@ -24,37 +24,41 @@ export default async function handler(req, res) {
   try {
     // Parse CSP report
     const report = req.body;
-    
-    // Log CSP violation (in production, you might want to send this to a logging service)
-    console.log('CSP Violation Report:', JSON.stringify(report, null, 2));
+
+    // Log CSP violation using structured logging
+    if (process.env.NODE_ENV === 'development') {
+      console.log('CSP Violation Report:', JSON.stringify(report, null, 2));
+    }
 
     // Extract key information from the report
     const violation = report['csp-report'] || {};
     const {
       'document-uri': documentUri,
-      'referrer': referrer,
+      referrer: referrer,
       'violated-directive': violatedDirective,
       'effective-directive': effectiveDirective,
       'original-policy': originalPolicy,
-      'disposition': disposition,
+      disposition: disposition,
       'blocked-uri': blockedUri,
       'line-number': lineNumber,
       'column-number': columnNumber,
       'source-file': sourceFile,
       'status-code': statusCode,
-      'script-sample': scriptSample
+      'script-sample': scriptSample,
     } = violation;
 
-    // Log formatted violation info
-    console.log('CSP Violation Details:', {
-      documentUri,
-      violatedDirective,
-      blockedUri,
-      sourceFile,
-      lineNumber,
-      disposition,
-      timestamp: new Date().toISOString()
-    });
+    // Log formatted violation info for development
+    if (process.env.NODE_ENV === 'development') {
+      console.log('CSP Violation Details:', {
+        documentUri,
+        violatedDirective,
+        blockedUri,
+        sourceFile,
+        lineNumber,
+        disposition,
+        timestamp: new Date().toISOString(),
+      });
+    }
 
     // In production, you might want to:
     // 1. Send to a logging service (e.g., Sentry, LogRocket)
@@ -65,6 +69,7 @@ export default async function handler(req, res) {
     // Respond with success
     return res.status(204).end();
   } catch (error) {
+    // Always log security-related errors
     console.error('Error processing CSP report:', error);
     return res.status(400).json({ error: 'Invalid CSP report' });
   }

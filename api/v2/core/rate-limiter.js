@@ -27,38 +27,38 @@ class MemoryRateLimiter {
    */
   async check(key, options = {}) {
     const {
-      requests = 60,     // 허용 요청 수
-      window = 60000,    // 시간 윈도우 (ms)
+      requests = 60, // 허용 요청 수
+      window = 60000, // 시간 윈도우 (ms)
       skipSuccessfulRequests = false,
-      skipFailedRequests = false
+      skipFailedRequests = false,
     } = options;
 
     const now = Date.now();
     const hashedKey = this.hashKey(key);
-    
+
     // 기존 요청 데이터 가져오기
     let requestData = this.requests.get(hashedKey);
-    
+
     if (!requestData) {
       // 첫 번째 요청
       requestData = {
         count: 1,
         resetTime: now + window,
-        firstRequest: now
+        firstRequest: now,
       };
       this.requests.set(hashedKey, requestData);
-      
+
       logger.debug('Rate limit - first request', {
         key: this.maskKey(key),
         window,
-        maxRequests: requests
+        maxRequests: requests,
       });
-      
+
       return {
         allowed: true,
         remaining: requests - 1,
         resetTime: requestData.resetTime,
-        totalHits: 1
+        totalHits: 1,
       };
     }
 
@@ -67,23 +67,23 @@ class MemoryRateLimiter {
       requestData.count = 1;
       requestData.resetTime = now + window;
       requestData.firstRequest = now;
-      
+
       logger.debug('Rate limit - window reset', {
         key: this.maskKey(key),
-        newResetTime: requestData.resetTime
+        newResetTime: requestData.resetTime,
       });
-      
+
       return {
         allowed: true,
         remaining: requests - 1,
         resetTime: requestData.resetTime,
-        totalHits: 1
+        totalHits: 1,
       };
     }
 
     // 요청 수 증가
     requestData.count++;
-    
+
     const allowed = requestData.count <= requests;
     const remaining = Math.max(0, requests - requestData.count);
     const retryAfter = allowed ? null : Math.ceil((requestData.resetTime - now) / 1000);
@@ -94,7 +94,7 @@ class MemoryRateLimiter {
         count: requestData.count,
         limit: requests,
         retryAfter,
-        windowStart: requestData.firstRequest
+        windowStart: requestData.firstRequest,
       });
     }
 
@@ -103,7 +103,7 @@ class MemoryRateLimiter {
       remaining,
       resetTime: requestData.resetTime,
       totalHits: requestData.count,
-      retryAfter
+      retryAfter,
     };
   }
 
@@ -113,7 +113,7 @@ class MemoryRateLimiter {
   async get(key) {
     const hashedKey = this.hashKey(key);
     const requestData = this.requests.get(hashedKey);
-    
+
     if (!requestData) {
       return null;
     }
@@ -126,7 +126,7 @@ class MemoryRateLimiter {
     return {
       totalHits: requestData.count,
       resetTime: requestData.resetTime,
-      remaining: Math.max(0, 60 - requestData.count) // 기본값 60
+      remaining: Math.max(0, 60 - requestData.count), // 기본값 60
     };
   }
 
@@ -136,13 +136,13 @@ class MemoryRateLimiter {
   async reset(key) {
     const hashedKey = this.hashKey(key);
     const deleted = this.requests.delete(hashedKey);
-    
+
     if (deleted) {
       logger.info('Rate limit reset', {
-        key: this.maskKey(key)
+        key: this.maskKey(key),
       });
     }
-    
+
     return deleted;
   }
 
@@ -154,7 +154,7 @@ class MemoryRateLimiter {
     let hash = 0;
     for (let i = 0; i < key.length; i++) {
       const char = key.charCodeAt(i);
-      hash = ((hash << 5) - hash) + char;
+      hash = (hash << 5) - hash + char;
       hash = hash & hash; // 32bit 정수로 변환
     }
     return hash.toString();
@@ -185,7 +185,7 @@ class MemoryRateLimiter {
     if (cleaned > 0) {
       logger.debug('Rate limiter cleanup', {
         cleaned,
-        remaining: this.requests.size
+        remaining: this.requests.size,
       });
     }
   }
@@ -195,9 +195,12 @@ class MemoryRateLimiter {
    */
   startCleanup() {
     // 5분마다 정리
-    this.cleanupInterval = setInterval(() => {
-      this.cleanup();
-    }, 5 * 60 * 1000);
+    this.cleanupInterval = setInterval(
+      () => {
+        this.cleanup();
+      },
+      5 * 60 * 1000
+    );
   }
 
   /**
@@ -216,7 +219,7 @@ class MemoryRateLimiter {
   getStats() {
     return {
       totalKeys: this.requests.size,
-      memoryUsage: this.requests.size * 100 // 대략적인 메모리 사용량 (바이트)
+      memoryUsage: this.requests.size * 100, // 대략적인 메모리 사용량 (바이트)
     };
   }
 }
@@ -238,7 +241,7 @@ class MultiPolicyRateLimiter {
       requests: config.requests || 60,
       window: config.window || 60000,
       skipSuccessfulRequests: config.skipSuccessfulRequests || false,
-      skipFailedRequests: config.skipFailedRequests || false
+      skipFailedRequests: config.skipFailedRequests || false,
     });
   }
 
@@ -269,27 +272,27 @@ const rateLimiter = new MultiPolicyRateLimiter();
 // 기본 정책들 설정
 rateLimiter.addPolicy('api', {
   requests: 60,
-  window: 60000 // 1분
+  window: 60000, // 1분
 });
 
 rateLimiter.addPolicy('fortune', {
   requests: 30,
-  window: 60000 // 1분
+  window: 60000, // 1분
 });
 
 rateLimiter.addPolicy('psychology', {
   requests: 20,
-  window: 60000 // 1분
+  window: 60000, // 1분
 });
 
 rateLimiter.addPolicy('tools', {
   requests: 100,
-  window: 60000 // 1분
+  window: 60000, // 1분
 });
 
 rateLimiter.addPolicy('strict', {
   requests: 10,
-  window: 60000 // 1분
+  window: 60000, // 1분
 });
 
 /**
@@ -302,15 +305,15 @@ export async function checkIpRateLimit(ip, policy = 'api') {
     logger.error('Rate limit check failed', {
       ip: rateLimiter.limiter.maskKey(ip),
       policy,
-      error: error.message
+      error: error.message,
     });
-    
+
     // 에러 시 허용 (fail-open)
     return {
       allowed: true,
       remaining: 1,
       resetTime: Date.now() + 60000,
-      totalHits: 0
+      totalHits: 0,
     };
   }
 }
@@ -328,7 +331,7 @@ export async function checkUserRateLimit(userId, policy = 'api') {
  */
 export async function checkEndpointRateLimit(ip, endpoint, customLimit = null) {
   const key = `${ip}:${endpoint}`;
-  
+
   if (customLimit) {
     return await rateLimiter.check(key, customLimit);
   } else {
@@ -336,9 +339,9 @@ export async function checkEndpointRateLimit(ip, endpoint, customLimit = null) {
     const endpointPolicies = {
       '/api/v2/fortune': 'fortune',
       '/api/v2/psychology': 'psychology',
-      '/api/v2/tools': 'tools'
+      '/api/v2/tools': 'tools',
     };
-    
+
     const policy = endpointPolicies[endpoint] || 'api';
     return await rateLimiter.checkWithPolicy(key, policy);
   }
@@ -353,7 +356,7 @@ export function rateLimitMiddleware(options = {}) {
       keyGenerator = (req) => req.ip,
       policy = 'api',
       onLimitReached = null,
-      skip = () => false
+      skip = () => false,
     } = options;
 
     // 스킵 조건 확인
@@ -383,8 +386,8 @@ export function rateLimitMiddleware(options = {}) {
         error: {
           code: 429,
           message: '요청 한도를 초과했습니다. 잠시 후 다시 시도해주세요.',
-          retryAfter: result.retryAfter
-        }
+          retryAfter: result.retryAfter,
+        },
       });
     }
 

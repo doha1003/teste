@@ -1,0 +1,348 @@
+/* ==========================================================================
+   Mobile Korean Input Optimization CSS
+   모바일 한글 입력 최적화 - 입력 필드, 가상 키보드 대응, IME 최적화
+   ========================================================================== */
+
+/* ===== 1. 한글 입력 필드 기본 최적화 ===== */
+
+/* 한글 입력 필드 공통 스타일 */
+.korean-input {
+  font-family: var(--font-korean-ui, "Pretendard Variable", "Pretendard", sans-serif);
+  font-size: var(--font-size-base, 1rem);
+  line-height: var(--line-height-normal, 1.6);
+  letter-spacing: var(--letter-spacing-normal, -0.005em);
+
+  /* 한글 입력 최적화 */
+  word-break: keep-all;
+  ime-mode: active;
+  -webkit-ime-mode: active;
+
+  /* 모바일 최적화 */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  /* 기본 스타일 */
+  width: 100%;
+  padding: var(--space-3, 0.75rem) var(--space-4, 1rem);
+  border: 1px solid var(--color-gray-300, #d1d5db);
+  border-radius: var(--radius-md, 0.5rem);
+  background: var(--color-gray-0, #ffffff);
+  color: var(--color-gray-900, #111827);
+  transition: var(--transition-colors);
+}
+
+/* 포커스 상태 */
+.korean-input:focus {
+  outline: none;
+  border-color: var(--color-brand-500, #5c5ce0);
+  box-shadow: 0 0 0 3px rgba(92, 92, 224, 0.1);
+}
+
+/* 에러 상태 */
+.korean-input.error {
+  border-color: var(--color-danger, #ef4444);
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+/* 성공 상태 */
+.korean-input.success {
+  border-color: var(--color-success, #10b981);
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+/* ===== 2. 모바일 특화 입력 필드 ===== */
+
+@media (max-width: 768px) {
+  .korean-input {
+    /* 모바일 최적 폰트 크기 (확대 방지) */
+    font-size: 16px;
+
+    /* 터치 타겟 크기 */
+    min-height: 44px;
+    padding: var(--space-3, 0.75rem) var(--space-4, 1rem);
+
+    /* 모바일 키보드 대응 */
+    -webkit-user-select: text;
+    user-select: text;
+  }
+
+  /* 텍스트영역 모바일 최적화 */
+  .korean-input.textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
+}
+
+/* ===== 3. 입력 필드 크기 변형 ===== */
+
+/* 대형 입력 필드 */
+.korean-input--lg {
+  font-size: var(--font-size-lg, 1.125rem);
+  padding: var(--space-4, 1rem) var(--space-5, 1.25rem);
+  min-height: 56px;
+}
+
+/* 소형 입력 필드 */
+.korean-input--sm {
+  font-size: var(--font-size-sm, 0.875rem);
+  padding: var(--space-2, 0.5rem) var(--space-3, 0.75rem);
+  min-height: 36px;
+}
+
+/* 인라인 입력 필드 */
+.korean-input--inline {
+  display: inline-block;
+  width: auto;
+  min-width: 120px;
+}
+
+/* ===== 4. 가상 키보드 대응 ===== */
+
+/* 모바일 뷰포트 높이 조정 */
+@supports (-webkit-touch-callout: none) {
+  .keyboard-active {
+    /* iOS Safari 가상 키보드 대응 */
+    height: -webkit-fill-available;
+  }
+}
+
+/* 키보드 표시 시 레이아웃 조정 */
+.keyboard-open {
+  /* 키보드 표시 시 상단 여백 축소 */
+  padding-top: var(--space-4, 1rem);
+}
+
+/* 키보드 대응 컨테이너 */
+.keyboard-adaptive-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+}
+
+.keyboard-adaptive-content {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.keyboard-adaptive-footer {
+  flex-shrink: 0;
+  padding: var(--space-4, 1rem);
+  background: var(--color-gray-0, #ffffff);
+  border-top: 1px solid var(--color-gray-200, #e5e7eb);
+}
+
+/* ===== 5. IME 한글 입력 최적화 ===== */
+
+/* 한글 조합 상태 표시 */
+.korean-input[data-composing="true"] {
+  background-color: var(--color-brand-50, #f5f5ff);
+}
+
+/* 자동완성 드롭다운 */
+.korean-autocomplete {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  max-height: 200px;
+  overflow-y: auto;
+  background: var(--color-gray-0, #ffffff);
+  border: 1px solid var(--color-gray-300, #d1d5db);
+  border-top: none;
+  border-radius: 0 0 var(--radius-md, 0.5rem) var(--radius-md, 0.5rem);
+  z-index: var(--z-dropdown, 1000);
+  box-shadow: var(--shadow-lg);
+}
+
+.korean-autocomplete__item {
+  padding: var(--space-3, 0.75rem) var(--space-4, 1rem);
+  cursor: pointer;
+  word-break: keep-all;
+  font-family: inherit;
+  transition: var(--transition-colors);
+}
+
+.korean-autocomplete__item:hover,
+.korean-autocomplete__item.active {
+  background: var(--color-brand-50, #f5f5ff);
+  color: var(--color-brand-700, #3838b8);
+}
+
+/* ===== 6. 입력 그룹 레이아웃 ===== */
+
+/* 입력 필드 그룹 */
+.korean-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2, 0.5rem);
+  margin-bottom: var(--space-4, 1rem);
+}
+
+/* 라벨 */
+.korean-input-label {
+  font-size: var(--font-size-sm, 0.875rem);
+  font-weight: var(--font-weight-medium, 500);
+  color: var(--color-gray-700, #374151);
+  word-break: keep-all;
+  line-height: var(--line-height-normal, 1.6);
+}
+
+/* 필수 표시 */
+.korean-input-label.required::after {
+  content: " *";
+  color: var(--color-danger, #ef4444);
+}
+
+/* 도움말 텍스트 */
+.korean-input-help {
+  font-size: var(--font-size-xs, 0.75rem);
+  color: var(--color-gray-500, #6b7280);
+  word-break: keep-all;
+  line-height: var(--line-height-normal, 1.6);
+}
+
+/* 에러 메시지 */
+.korean-input-error {
+  font-size: var(--font-size-xs, 0.75rem);
+  color: var(--color-danger, #ef4444);
+  word-break: keep-all;
+  line-height: var(--line-height-normal, 1.6);
+  margin-top: var(--space-1, 0.25rem);
+}
+
+/* ===== 7. 인라인 입력 도구 ===== */
+
+/* 입력 카운터 */
+.korean-input-counter {
+  font-size: var(--font-size-xs, 0.75rem);
+  color: var(--color-gray-500, #6b7280);
+  text-align: right;
+  margin-top: var(--space-1, 0.25rem);
+}
+
+.korean-input-counter.warning {
+  color: var(--color-warning, #f59e0b);
+}
+
+.korean-input-counter.error {
+  color: var(--color-danger, #ef4444);
+}
+
+/* 클리어 버튼 */
+.korean-input-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.korean-input-clear {
+  position: absolute;
+  right: var(--space-3, 0.75rem);
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--color-gray-400, #9ca3af);
+  cursor: pointer;
+  padding: var(--space-1, 0.25rem);
+  border-radius: var(--radius-sm, 0.25rem);
+  transition: var(--transition-colors);
+}
+
+.korean-input-clear:hover {
+  color: var(--color-gray-600, #4b5563);
+  background: var(--color-gray-100, #f3f4f6);
+}
+
+/* ===== 8. 모바일 폼 최적화 ===== */
+
+@media (max-width: 768px) {
+  /* 폼 컨테이너 */
+  .korean-form {
+    padding: var(--space-4, 1rem);
+  }
+
+  /* 폼 그룹 간격 조정 */
+  .korean-input-group {
+    margin-bottom: var(--space-6, 1.5rem);
+  }
+
+  /* 버튼 그룹 */
+  .korean-form-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3, 0.75rem);
+    margin-top: var(--space-6, 1.5rem);
+  }
+
+  .korean-form-buttons .btn {
+    width: 100%;
+    min-height: 48px;
+    font-size: var(--font-size-base, 1rem);
+  }
+
+  /* 가로 배열 버튼 (2개까지) */
+  .korean-form-buttons--horizontal {
+    flex-direction: row;
+  }
+
+  .korean-form-buttons--horizontal .btn {
+    flex: 1;
+  }
+}
+
+/* ===== 9. 접근성 개선 ===== */
+
+/* 고대비 모드 지원 */
+@media (prefers-contrast: high) {
+  .korean-input {
+    border-width: 2px;
+  }
+
+  .korean-input:focus {
+    box-shadow: 0 0 0 4px rgba(92, 92, 224, 0.3);
+  }
+}
+
+/* 애니메이션 축소 모드 */
+@media (prefers-reduced-motion: reduce) {
+  .korean-input,
+  .korean-autocomplete__item {
+    transition: none;
+  }
+}
+
+/* 스크린 리더 지원 */
+.korean-input[aria-invalid="true"] {
+  border-color: var(--color-danger, #ef4444);
+}
+
+.korean-input[aria-describedby] {
+  /* 연관된 도움말이 있는 입력 필드 */
+}
+
+/* ===== 10. 특수 입력 유형 ===== */
+
+/* 검색 입력 */
+.korean-input--search {
+  padding-left: var(--space-10, 2.5rem);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'%3E%3C/path%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: var(--space-3, 0.75rem) center;
+  background-size: 1rem;
+}
+
+/* 날짜 입력 */
+.korean-input--date {
+  font-family: var(--font-mono);
+  letter-spacing: 0.05em;
+}
+
+/* 숫자 입력 */
+.korean-input--number {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}

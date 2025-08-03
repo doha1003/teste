@@ -4,7 +4,6 @@
 
   // Check if DohaMainApp already exists
   if (window.DohaMainApp) {
-    
     return;
   }
 
@@ -35,21 +34,21 @@
             localStorage.setItem(key, JSON.stringify(value));
             return true;
           } catch (e) {
-            
             return false;
           }
         },
         get: (key) => {
           try {
             const item = localStorage.getItem(key);
-            if (!item) return null;
+            if (!item) {
+              return null;
+            }
             try {
               return JSON.parse(item);
             } catch (parseError) {
               return item;
             }
           } catch (e) {
-            
             return null;
           }
         },
@@ -58,7 +57,6 @@
             localStorage.removeItem(key);
             return true;
           } catch (e) {
-            
             return false;
           }
         },
@@ -67,7 +65,6 @@
             localStorage.clear();
             return true;
           } catch (e) {
-            
             return false;
           }
         },
@@ -98,7 +95,9 @@
      * 애플리케이션 초기화
      */
     async init() {
-      if (this.initialized) return;
+      if (this.initialized) {
+        return;
+      }
       try {
         // DohaApp이 이미 초기화되었는지 확인
         const isDohaAppInitialized = window.DohaApp && typeof window.DohaApp.init === 'function';
@@ -113,9 +112,7 @@
         await this.loadDataSystems();
         await this.loadPerformanceOptimizer();
         this.initialized = true;
-        
       } catch (error) {
-        
         throw new ApplicationError('Initialization failed', { cause: error });
       }
     }
@@ -124,7 +121,7 @@
      */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     detectEnvironment() {
-      const hostname = window.location.hostname;
+      const { hostname } = window.location;
       if (hostname === 'localhost' || hostname === '127.0.0.1' || hostname.includes('test')) {
         return 'development';
       } else if (hostname.includes('staging')) {
@@ -168,7 +165,9 @@
       // 폴백: 기본 필터링 로직
       const cards = document.querySelectorAll('.service-card');
       cards.forEach((card) => {
-        if (!card) return;
+        if (!card) {
+          return;
+        }
         if (category === 'all') {
           card.style.display = 'block';
         } else {
@@ -208,16 +207,16 @@
       try {
         const elements = document.querySelectorAll('.fade-in');
         elements.forEach((element) => {
-          if (!element) return;
+          if (!element) {
+            return;
+          }
           const rect = element.getBoundingClientRect();
           const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
           if (isVisible && !element.classList.contains('animated')) {
             element.classList.add('animated');
           }
         });
-      } catch (error) {
-        
-      }
+      } catch (error) {}
     }
     /**
      * 부드러운 스크롤
@@ -225,7 +224,9 @@
     smoothScroll(target) {
       try {
         const element = document.querySelector(target);
-        if (!element) return;
+        if (!element) {
+          return;
+        }
         const headerHeight = document.querySelector('.header')?.offsetHeight || 0;
         const targetPosition = element.offsetTop - headerHeight - 20;
         window.scrollTo({
@@ -235,9 +236,7 @@
         // 접근성을 위한 포커스 설정
         element.setAttribute('tabindex', '-1');
         element.focus();
-      } catch (error) {
-        
-      }
+      } catch (error) {}
     }
     /**
      * 페이지 애니메이션 초기화
@@ -273,11 +272,15 @@
     validateForm(formId) {
       try {
         const form = document.getElementById(formId);
-        if (!form) return true;
+        if (!form) {
+          return true;
+        }
         const inputs = form.querySelectorAll('input[required], textarea[required]');
         let isValid = true;
         inputs.forEach((input) => {
-          if (!input) return;
+          if (!input) {
+            return;
+          }
           if (!input.value.trim()) {
             input.classList.add('error');
             isValid = false;
@@ -287,7 +290,6 @@
         });
         return isValid;
       } catch (error) {
-        
         return false;
       }
     }
@@ -303,11 +305,13 @@
      * 쿠키 가져오기
      */
     getCookie(name) {
-      const nameEQ = name + '=';
+      const nameEQ = `${name}=`;
       const ca = document.cookie.split(';');
       for (let i = 0; i < ca.length; i++) {
         let c = ca[i];
-        if (!c) continue;
+        if (!c) {
+          continue;
+        }
         while (c.charAt(0) === ' ') {
           c = c.substring(1, c.length);
         }
@@ -338,7 +342,6 @@
           window.open(shareUrls[platform], '_blank', 'width=600,height=400');
         }
       } catch (error) {
-        
         this.showNotification('공유 중 오류가 발생했습니다.', 'error');
       }
     }
@@ -369,9 +372,7 @@
       textArea.select();
       try {
         document.execCommand('copy');
-      } catch (err) {
-        
-      }
+      } catch (err) {}
       document.body.removeChild(textArea);
     }
     /**
@@ -403,9 +404,7 @@
             }
           }, 300);
         }, 3000);
-      } catch (error) {
-        
-      }
+      } catch (error) {}
     }
     /**
      * 디바운스 함수
@@ -431,7 +430,6 @@
       try {
         const d = new Date(date);
         if (isNaN(d.getTime())) {
-          
           return format;
         }
         const year = d.getFullYear();
@@ -446,7 +444,6 @@
           .replace('HH', hours)
           .replace('mm', minutes);
       } catch (error) {
-        
         return format;
       }
     }
@@ -455,10 +452,11 @@
      */
     formatNumber(num) {
       try {
-        if (num === null || num === undefined) return '0';
+        if (num === null || num === undefined) {
+          return '0';
+        }
         return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
       } catch (error) {
-        
         return '0';
       }
     }
@@ -475,7 +473,9 @@
     initLazyLoading() {
       try {
         const images = document.querySelectorAll('img[data-src]:not(.lazy)');
-        if (!images.length) return;
+        if (!images.length) {
+          return;
+        }
         if ('IntersectionObserver' in window) {
           const imageObserver = new IntersectionObserver((entries, observer) => {
             entries.forEach((entry) => {
@@ -490,7 +490,9 @@
             });
           });
           images.forEach((img) => {
-            if (img) imageObserver.observe(img);
+            if (img) {
+              imageObserver.observe(img);
+            }
           });
         } else {
           // 폴백: 즉시 로드
@@ -501,9 +503,7 @@
             }
           });
         }
-      } catch (error) {
-        
-      }
+      } catch (error) {}
     }
     /**
      * 다크 모드 토글
@@ -630,7 +630,6 @@
      * 컴포넌트 로드 (ID 기반)
      */
     async loadComponentById(componentName, targetId) {
-      
       try {
         const response = await fetch(`/includes/${componentName}.html`);
         if (response.ok) {
@@ -644,15 +643,12 @@
               target.innerHTML = html;
             }
             this.components.set(componentName, target);
-            
           } else {
-            
           }
         } else {
           throw new Error(`HTTP ${response.status}`);
         }
       } catch (error) {
-        
         this.loadFallbackComponent(componentName, targetId);
       }
     }
@@ -661,7 +657,9 @@
      */
     loadFallbackComponent(componentName, targetId) {
       const target = document.getElementById(targetId);
-      if (!target) return;
+      if (!target) {
+        return;
+      }
       if (componentName === 'navbar') {
         const navbarHtml = `
           <nav class="navbar">
@@ -815,7 +813,9 @@
       try {
         this.fixAdSenseResponsive();
         const adSlots = document.querySelectorAll('.adsbygoogle:not([data-adsbygoogle-status])');
-        if (adSlots.length === 0) return;
+        if (adSlots.length === 0) {
+          return;
+        }
         adSlots.forEach((slot) => {
           const rect = slot.getBoundingClientRect();
           if (rect.width < 50) {
@@ -833,16 +833,13 @@
               (window.adsbygoogle = window.adsbygoogle || []).push({});
               slot.setAttribute('data-adsbygoogle-status', 'loaded');
             } catch (error) {
-              
               slot.setAttribute('data-adsbygoogle-status', 'error');
             }
           });
         } else {
           setTimeout(() => this.initAdSense(), 2000);
         }
-      } catch (error) {
-        
-      }
+      } catch (error) {}
     }
     /**
      * 데이터 시스템 로드
@@ -858,9 +855,7 @@
         if (!window.analyticsDashboard) {
           await this.loadScript('/js/analytics-dashboard.js');
         }
-      } catch (error) {
-        
-      }
+      } catch (error) {}
     }
     /**
      * 성능 최적화 시스템 로드
@@ -870,9 +865,7 @@
         if (!window.performanceOptimizer) {
           await this.loadScript('/js/performance-optimizer.js');
         }
-      } catch (error) {
-        
-      }
+      } catch (error) {}
     }
     /**
      * 스크립트 동적 로딩

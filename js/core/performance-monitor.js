@@ -3,6 +3,25 @@
  * LCP, FID, CLS, INP 측정 및 최적화
  */
 
+// 개발 환경 감지 및 안전한 로깅
+const isDevelopment = () => {
+  return (
+    location.hostname === 'localhost' ||
+    location.hostname === '127.0.0.1' ||
+    location.protocol === 'file:' ||
+    location.search.includes('debug=true')
+  );
+};
+
+const safeLog = {
+  log: (...args) => isDevelopment() && console.log(...args), // eslint-disable-line no-console
+  warn: (...args) => isDevelopment() && console.warn(...args), // eslint-disable-line no-console
+  info: (...args) => isDevelopment() && console.info(...args), // eslint-disable-line no-console
+  error: (...args) => console.error(...args), // eslint-disable-line no-console
+  group: (...args) => isDevelopment() && console.group(...args), // eslint-disable-line no-console
+  groupEnd: () => isDevelopment() && console.groupEnd(), // eslint-disable-line no-console
+};
+
 class PerformanceMonitor {
   constructor() {
     this.metrics = {
@@ -13,7 +32,7 @@ class PerformanceMonitor {
       ttfb: null,
       fcp: null,
     };
-    
+
     this.thresholds = {
       lcp: { good: 2500, poor: 4000 },
       fid: { good: 100, poor: 300 },
@@ -22,10 +41,10 @@ class PerformanceMonitor {
       ttfb: { good: 800, poor: 1800 },
       fcp: { good: 1800, poor: 3000 },
     };
-    
+
     this.observers = new Map();
     this.isMonitoring = false;
-    
+
     // 한국어 메시지
     this.messages = {
       lcp: {
@@ -49,8 +68,10 @@ class PerformanceMonitor {
 
   // 성능 모니터링 시작
   start() {
-    if (this.isMonitoring) {return;}
-    
+    if (this.isMonitoring) {
+      return;
+    }
+
     this.isMonitoring = true;
 
     // Core Web Vitals 측정
@@ -58,50 +79,54 @@ class PerformanceMonitor {
     this.measureFID();
     this.measureCLS();
     this.measureINP();
-    
+
     // 추가 메트릭
     this.measureTTFB();
     this.measureFCP();
-    
+
     // 리소스 타이밍 모니터링
     this.monitorResourceTiming();
-    
+
     // 메모리 사용량 모니터링 (가능한 경우)
     this.monitorMemoryUsage();
-    
+
     // 주기적 보고
     this.startPeriodicReporting();
   }
 
   // Largest Contentful Paint 측정
   measureLCP() {
-    if (!('PerformanceObserver' in window)) {return;}
-    
+    if (!('PerformanceObserver' in window)) {
+      return;
+    }
+
     const observer = new PerformanceObserver((list) => {
       const entries = list.getEntries();
       const lastEntry = entries[entries.length - 1];
-      
+
       this.metrics.lcp = Math.round(lastEntry.startTime);
       this.evaluateMetric('lcp', this.metrics.lcp);
-      
+
       // LCP 요소 정보 수집
       if (lastEntry.element) {
         this.collectLCPElementInfo(lastEntry.element);
       }
     });
-    
+
     try {
       observer.observe({ entryTypes: ['largest-contentful-paint'] });
       this.observers.set('lcp', observer);
     } catch (error) {
-      console.warn('PerformanceObserver not supported:', error.message);
+      safeLog.warn('PerformanceObserver not supported:', error.message);
     }
   }
 
   // First Input Delay 측정
   measureFID() {
-    if (!('PerformanceObserver' in window)) {return;}
-    
+    if (!('PerformanceObserver' in window)) {
+      return;
+    }
+
     const observer = new PerformanceObserver((list) => {
       const entries = list.getEntries();
       entries.forEach((entry) => {
@@ -109,76 +134,82 @@ class PerformanceMonitor {
         this.evaluateMetric('fid', this.metrics.fid);
       });
     });
-    
+
     try {
       observer.observe({ entryTypes: ['first-input'] });
       this.observers.set('fid', observer);
     } catch (error) {
-      console.warn('PerformanceObserver not supported:', error.message);
+      safeLog.warn('PerformanceObserver not supported:', error.message);
     }
   }
 
   // Cumulative Layout Shift 측정
   measureCLS() {
-    if (!('PerformanceObserver' in window)) {return;}
-    
+    if (!('PerformanceObserver' in window)) {
+      return;
+    }
+
     let clsValue = 0;
     let sessionValue = 0;
     let sessionEntries = [];
-    
+
     const observer = new PerformanceObserver((list) => {
       const entries = list.getEntries();
-      
+
       entries.forEach((entry) => {
         // 예상치 못한 레이아웃 시프트만 측정
         if (!entry.hadRecentInput) {
           const firstSessionEntry = sessionEntries[0];
           const lastSessionEntry = sessionEntries[sessionEntries.length - 1];
-          
+
           // 새 세션 시작 조건
-          if (!firstSessionEntry || 
-              entry.startTime - lastSessionEntry.startTime > 1000 ||
-              entry.startTime - firstSessionEntry.startTime > 5000) {
+          if (
+            !firstSessionEntry ||
+            entry.startTime - lastSessionEntry.startTime > 1000 ||
+            entry.startTime - firstSessionEntry.startTime > 5000
+          ) {
             sessionValue = entry.value;
             sessionEntries = [entry];
           } else {
             sessionValue += entry.value;
             sessionEntries.push(entry);
           }
-          
+
           if (sessionValue > clsValue) {
             clsValue = sessionValue;
             this.metrics.cls = Math.round(clsValue * 10000) / 10000;
             this.evaluateMetric('cls', this.metrics.cls);
-            
+
             // CLS 원인 요소 수집
             this.collectCLSElementInfo(entry);
           }
         }
       });
     });
-    
+
     try {
       observer.observe({ entryTypes: ['layout-shift'] });
       this.observers.set('cls', observer);
     } catch (error) {
-      console.warn('PerformanceObserver not supported:', error.message);
+      safeLog.warn('PerformanceObserver not supported:', error.message);
     }
   }
 
   // Interaction to Next Paint 측정
   measureINP() {
-    if (!('PerformanceObserver' in window)) {return;}
-    
+    if (!('PerformanceObserver' in window)) {
+      return;
+    }
+
     let maxINP = 0;
-    
+
     const observer = new PerformanceObserver((list) => {
       const entries = list.getEntries();
-      
+
       entries.forEach((entry) => {
         // Event Timing API를 사용한 INP 계산
         const inp = entry.processingEnd - entry.startTime;
-        
+
         if (inp > maxINP) {
           maxINP = inp;
           this.metrics.inp = Math.round(inp);
@@ -186,7 +217,7 @@ class PerformanceMonitor {
         }
       });
     });
-    
+
     try {
       observer.observe({ entryTypes: ['event'] });
       this.observers.set('inp', observer);
@@ -198,8 +229,10 @@ class PerformanceMonitor {
 
   // Time to First Byte 측정
   measureTTFB() {
-    if (!('PerformanceObserver' in window)) {return;}
-    
+    if (!('PerformanceObserver' in window)) {
+      return;
+    }
+
     const observer = new PerformanceObserver((list) => {
       const entries = list.getEntries();
       entries.forEach((entry) => {
@@ -209,19 +242,21 @@ class PerformanceMonitor {
         }
       });
     });
-    
+
     try {
       observer.observe({ entryTypes: ['navigation'] });
       this.observers.set('ttfb', observer);
     } catch (error) {
-      console.warn('PerformanceObserver not supported:', error.message);
+      safeLog.warn('PerformanceObserver not supported:', error.message);
     }
   }
 
   // First Contentful Paint 측정
   measureFCP() {
-    if (!('PerformanceObserver' in window)) {return;}
-    
+    if (!('PerformanceObserver' in window)) {
+      return;
+    }
+
     const observer = new PerformanceObserver((list) => {
       const entries = list.getEntries();
       entries.forEach((entry) => {
@@ -231,12 +266,12 @@ class PerformanceMonitor {
         }
       });
     });
-    
+
     try {
       observer.observe({ entryTypes: ['paint'] });
       this.observers.set('fcp', observer);
     } catch (error) {
-      console.warn('PerformanceObserver not supported:', error.message);
+      safeLog.warn('PerformanceObserver not supported:', error.message);
     }
   }
 
@@ -244,65 +279,79 @@ class PerformanceMonitor {
   measureINPFallback() {
     let startTime;
     const events = ['click', 'keydown', 'pointerdown'];
-    
-    events.forEach(eventType => {
-      document.addEventListener(eventType, () => {
-        startTime = performance.now();
-      }, { passive: true });
-      
-      document.addEventListener(eventType, () => {
-        if (startTime) {
-          const inp = Math.round(performance.now() - startTime);
-          if (inp > (this.metrics.inp || 0)) {
-            this.metrics.inp = inp;
-            this.evaluateMetric('inp', inp);
+
+    events.forEach((eventType) => {
+      document.addEventListener(
+        eventType,
+        () => {
+          startTime = performance.now();
+        },
+        { passive: true }
+      );
+
+      document.addEventListener(
+        eventType,
+        () => {
+          if (startTime) {
+            const inp = Math.round(performance.now() - startTime);
+            if (inp > (this.metrics.inp || 0)) {
+              this.metrics.inp = inp;
+              this.evaluateMetric('inp', inp);
+            }
+            startTime = null;
           }
-          startTime = null;
-        }
-      }, { passive: true, capture: false });
+        },
+        { passive: true, capture: false }
+      );
     });
   }
 
   // 리소스 타이밍 모니터링
   monitorResourceTiming() {
-    if (!('PerformanceObserver' in window)) {return;}
-    
+    if (!('PerformanceObserver' in window)) {
+      return;
+    }
+
     const observer = new PerformanceObserver((list) => {
       const entries = list.getEntries();
-      
+
       entries.forEach((entry) => {
         // 느린 리소스 감지
         const duration = entry.responseEnd - entry.startTime;
-        
-        if (duration > 3000) { // 3초 이상
-          console.warn(`느린 리소스 감지: ${entry.name} (${duration.toFixed(2)}ms)`);
-          
+
+        if (duration > 3000) {
+          // 3초 이상
+          safeLog.warn(`느린 리소스 감지: ${entry.name} (${duration.toFixed(2)}ms)`);
+
           // 성능 개선 제안
           this.suggestResourceOptimization(entry);
         }
       });
     });
-    
+
     try {
       observer.observe({ entryTypes: ['resource'] });
       this.observers.set('resource', observer);
     } catch (error) {
-      console.warn('PerformanceObserver not supported:', error.message);
+      safeLog.warn('PerformanceObserver not supported:', error.message);
     }
   }
 
   // 메모리 사용량 모니터링
   monitorMemoryUsage() {
-    if (!('memory' in performance)) {return;}
-    
+    if (!('memory' in performance)) {
+      return;
+    }
+
     setInterval(() => {
-      const {memory} = performance;
+      const { memory } = performance;
       const usedMB = Math.round(memory.usedJSHeapSize / 1024 / 1024);
       const limitMB = Math.round(memory.jsHeapSizeLimit / 1024 / 1024);
       const usage = (usedMB / limitMB) * 100;
-      
-      if (usage > 80) { // 80% 이상 사용 시
-        console.warn(`메모리 사용량 높음: ${usage.toFixed(1)}% (${usedMB}MB/${limitMB}MB)`);
+
+      if (usage > 80) {
+        // 80% 이상 사용 시
+        safeLog.warn(`메모리 사용량 높음: ${usage.toFixed(1)}% (${usedMB}MB/${limitMB}MB)`);
         this.suggestMemoryOptimization();
       }
     }, 30000); // 30초마다 체크
@@ -311,28 +360,32 @@ class PerformanceMonitor {
   // 메트릭 평가
   evaluateMetric(metricName, value) {
     const threshold = this.thresholds[metricName];
-    if (!threshold) {return;}
-    
+    if (!threshold) {
+      return;
+    }
+
     let status = 'good';
     if (value > threshold.poor) {
       status = 'poor';
     } else if (value > threshold.good) {
       status = 'needs-improvement';
     }
-    
+
     const message = this.messages[metricName]?.[status === 'good' ? 'good' : 'poor'];
-    
-    console.log(`성능 메트릭 ${metricName.toUpperCase()}: ${value}${this.getUnit(metricName)} (${status})`);
-    
+
+    safeLog.log(
+      `성능 메트릭 ${metricName.toUpperCase()}: ${value}${this.getUnit(metricName)} (${status})`
+    );
+
     if (message) {
-      console.info(message);
+      safeLog.info(message);
     }
-    
+
     // 성능 문제 시 최적화 제안
     if (status === 'poor') {
       this.suggestOptimization(metricName, value);
     }
-    
+
     // 메트릭을 Service Worker로 전송
     this.reportToServiceWorker(metricName, value, status);
   }
@@ -355,13 +408,16 @@ class PerformanceMonitor {
 
   // LCP 요소 정보 수집
   collectLCPElementInfo(element) {
-    const info = {
+    const elementInfo = {
       tagName: element.tagName,
       id: element.id,
       className: element.className,
       src: element.src || element.href,
       text: element.textContent?.substring(0, 100),
     };
+
+    // LCP 요소 정보를 성능 메트릭에 저장
+    this.performanceMetrics.lcpElement = elementInfo;
 
     // LCP 최적화 제안
     if (element.tagName === 'IMG') {
@@ -371,15 +427,15 @@ class PerformanceMonitor {
 
   // CLS 요소 정보 수집
   collectCLSElementInfo(entry) {
-    entry.sources?.forEach(source => {
+    entry.sources?.forEach((source) => {
       if (source.node) {
-        console.log('CLS element:', source.node.tagName, source.node.className);
+        safeLog.log('CLS element:', source.node.tagName, source.node.className);
       }
     });
   }
 
   // 최적화 제안
-  suggestOptimization(metricName, value) {
+  suggestOptimization(metricName, _value) {
     const suggestions = {
       lcp: [
         '이미지를 WebP 형식으로 변환하세요',
@@ -406,41 +462,41 @@ class PerformanceMonitor {
         '복잡한 DOM 조작을 최소화하세요',
       ],
     };
-    
+
     const metricSuggestions = suggestions[metricName];
     if (metricSuggestions) {
-      console.group(`${metricName.toUpperCase()} 개선 제안:`);
+      safeLog.group(`${metricName.toUpperCase()} 개선 제안:`);
       metricSuggestions.forEach((suggestion, index) => {
-        console.log(`${index + 1}. ${suggestion}`);
+        safeLog.log(`${index + 1}. ${suggestion}`);
       });
-      console.groupEnd();
+      safeLog.groupEnd();
     }
   }
 
   // 이미지 최적화 제안
   suggestImageOptimization(img) {
     const suggestions = [];
-    
+
     if (!img.loading || img.loading !== 'lazy') {
       suggestions.push('loading="lazy" 속성을 추가하세요');
     }
-    
+
     if (!img.decoding || img.decoding !== 'async') {
       suggestions.push('decoding="async" 속성을 추가하세요');
     }
-    
+
     if (img.src && !img.src.includes('.webp')) {
       suggestions.push('WebP 형식을 사용하세요');
     }
-    
+
     if (!img.sizes && img.srcset) {
       suggestions.push('sizes 속성을 추가하세요');
     }
-    
+
     if (suggestions.length > 0) {
-      console.group('이미지 최적화 제안:');
-      suggestions.forEach(suggestion => console.log(`• ${suggestion}`));
-      console.groupEnd();
+      safeLog.group('이미지 최적화 제안:');
+      suggestions.forEach((suggestion) => safeLog.log(`• ${suggestion}`));
+      safeLog.groupEnd();
     }
   }
 
@@ -448,20 +504,20 @@ class PerformanceMonitor {
   suggestResourceOptimization(entry) {
     const url = new URL(entry.name);
     const extension = url.pathname.split('.').pop()?.toLowerCase();
-    
+
     const suggestions = {
-      'js': ['코드 분할을 고려하세요', '불필요한 코드를 제거하세요', '압축을 적용하세요'],
-      'css': ['중요한 CSS를 인라인으로 처리하세요', '사용하지 않는 CSS를 제거하세요'],
-      'png': ['WebP 형식으로 변환하세요', '이미지를 압축하세요'],
-      'jpg': ['WebP 형식으로 변환하세요', '적절한 품질로 압축하세요'],
-      'jpeg': ['WebP 형식으로 변환하세요', '적절한 품질로 압축하세요'],
+      js: ['코드 분할을 고려하세요', '불필요한 코드를 제거하세요', '압축을 적용하세요'],
+      css: ['중요한 CSS를 인라인으로 처리하세요', '사용하지 않는 CSS를 제거하세요'],
+      png: ['WebP 형식으로 변환하세요', '이미지를 압축하세요'],
+      jpg: ['WebP 형식으로 변환하세요', '적절한 품질로 압축하세요'],
+      jpeg: ['WebP 형식으로 변환하세요', '적절한 품질로 압축하세요'],
     };
-    
+
     const resourceSuggestions = suggestions[extension];
     if (resourceSuggestions) {
-      console.group(`리소스 최적화 제안 (${extension}):`);
-      resourceSuggestions.forEach(suggestion => console.log(`• ${suggestion}`));
-      console.groupEnd();
+      safeLog.group(`리소스 최적화 제안 (${extension}):`);
+      resourceSuggestions.forEach((suggestion) => safeLog.log(`• ${suggestion}`));
+      safeLog.groupEnd();
     }
   }
 
@@ -474,9 +530,9 @@ class PerformanceMonitor {
       '메모리 누수를 확인하세요',
     ];
 
-    console.group('메모리 최적화 제안:');
-    suggestions.forEach(suggestion => console.log(`• ${suggestion}`));
-    console.groupEnd();
+    safeLog.group('메모리 최적화 제안:');
+    suggestions.forEach((suggestion) => safeLog.log(`• ${suggestion}`));
+    safeLog.groupEnd();
   }
 
   // Service Worker로 메트릭 전송
@@ -508,13 +564,13 @@ class PerformanceMonitor {
       metrics: { ...this.metrics },
       scores: this.calculateScores(),
     };
-    
+
     // 로컬 스토리지에 저장
     this.saveReportToStorage(report);
-    
+
     // 서버로 전송 (가능한 경우)
     this.sendReportToServer(report);
-    
+
     return report;
   }
 
@@ -535,11 +591,11 @@ class PerformanceMonitor {
   // 점수 계산
   calculateScores() {
     const scores = {};
-    
-    Object.keys(this.metrics).forEach(metricName => {
+
+    Object.keys(this.metrics).forEach((metricName) => {
       const value = this.metrics[metricName];
       const threshold = this.thresholds[metricName];
-      
+
       if (value !== null && threshold) {
         if (value <= threshold.good) {
           scores[metricName] = 'good';
@@ -550,7 +606,7 @@ class PerformanceMonitor {
         }
       }
     });
-    
+
     return scores;
   }
 
@@ -559,15 +615,15 @@ class PerformanceMonitor {
     try {
       const reports = JSON.parse(localStorage.getItem('performance_reports') || '[]');
       reports.push(report);
-      
+
       // 최근 10개만 보관
       if (reports.length > 10) {
         reports.shift();
       }
-      
+
       localStorage.setItem('performance_reports', JSON.stringify(reports));
     } catch (error) {
-      console.warn('PerformanceObserver not supported:', error.message);
+      safeLog.warn('PerformanceObserver not supported:', error.message);
     }
   }
 
@@ -579,7 +635,7 @@ class PerformanceMonitor {
         await window.sendPerformanceReport(report);
       }
     } catch (error) {
-      console.warn('PerformanceObserver not supported:', error.message);
+      safeLog.warn('PerformanceObserver not supported:', error.message);
     }
   }
 
@@ -591,19 +647,20 @@ class PerformanceMonitor {
   // 모니터링 중지
   stop() {
     this.isMonitoring = false;
-    
+
     // 모든 옵저버 해제
-    this.observers.forEach(observer => {
+    this.observers.forEach((observer) => {
       observer.disconnect();
     });
     this.observers.clear();
-
   }
 
   // 실시간 성능 대시보드 표시 (개발 모드)
   showDebugDashboard() {
-    if (process.env.NODE_ENV !== 'development') {return;}
-    
+    if (process.env.NODE_ENV !== 'development') {
+      return;
+    }
+
     const dashboard = document.createElement('div');
     dashboard.id = 'performance-dashboard';
     dashboard.style.cssText = `
@@ -619,24 +676,29 @@ class PerformanceMonitor {
       z-index: 10000;
       min-width: 200px;
     `;
-    
+
     document.body.appendChild(dashboard);
-    
+
     // 주기적 업데이트
     setInterval(() => {
       const scores = this.calculateScores();
       const html = Object.keys(this.metrics)
-        .map(key => {
+        .map((key) => {
           const value = this.metrics[key];
           const score = scores[key];
-          const color = score === 'good' ? '#4ade80' : (score === 'needs-improvement' ? '#fbbf24' : '#ef4444');
-          
+          const colorMap = {
+            good: '#4ade80',
+            'needs-improvement': '#fbbf24',
+            poor: '#ef4444',
+          };
+          const color = colorMap[score] || '#ef4444';
+
           return `<div style="color: ${color}">
             ${key.toUpperCase()}: ${value !== null ? value + this.getUnit(key) : 'N/A'}
           </div>`;
         })
         .join('');
-      
+
       dashboard.innerHTML = `<strong>성능 지표</strong><br>${html}`;
     }, 1000);
   }
@@ -651,7 +713,7 @@ if (document.readyState === 'loading') {
     const monitor = new PerformanceMonitor();
     monitor.start();
     window.performanceMonitor = monitor;
-    
+
     // 개발 모드에서 대시보드 표시
     if (process.env.NODE_ENV === 'development') {
       monitor.showDebugDashboard();

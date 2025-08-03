@@ -32,11 +32,7 @@ export class DailyFortuneService {
    * 개인화된 일일 운세 생성
    */
   async generateDailyFortune(userData, options = {}) {
-    const {
-      includeDetailed = true,
-      includeLucky = true,
-      todayDate = null
-    } = options;
+    const { includeDetailed = true, includeLucky = true, todayDate = null } = options;
 
     if (!this.model) {
       throw new Error('Gemini API가 설정되지 않았습니다.');
@@ -55,11 +51,11 @@ export class DailyFortuneService {
 
     try {
       const prompt = this.buildFortunePrompt(userData, today, includeDetailed, includeLucky);
-      
+
       logger.info('Generating daily fortune', {
         date: today,
         hasUserData: !!userData,
-        promptLength: prompt.length
+        promptLength: prompt.length,
       });
 
       const startTime = performance.now();
@@ -71,12 +67,12 @@ export class DailyFortuneService {
       logger.info('Daily fortune generated', {
         date: today,
         responseLength: text.length,
-        duration: Math.round(duration)
+        duration: Math.round(duration),
       });
 
       // 응답 파싱
       const parsedFortune = this.parseFortuneResponse(text);
-      
+
       // 메타데이터 추가
       const fortuneData = {
         ...parsedFortune,
@@ -86,20 +82,19 @@ export class DailyFortuneService {
         userData: {
           name: userData.name,
           birthDate: userData.birthDate,
-          gender: userData.gender
-        }
+          gender: userData.gender,
+        },
       };
 
       // 캐시에 저장 (하루 동안)
       await cache.set(cacheKey, fortuneData, 24 * 60 * 60 * 1000);
 
       return fortuneData;
-
     } catch (error) {
       logger.error('Daily fortune generation failed', {
         error: error.message,
         date: today,
-        userData: this.sanitizeUserData(userData)
+        userData: this.sanitizeUserData(userData),
       });
       throw error;
     }
@@ -111,7 +106,7 @@ export class DailyFortuneService {
   buildFortunePrompt(userData, date, includeDetailed, includeLucky) {
     const { name, birthDate, gender, birthTime, manseryeok } = userData;
     const genderKorean = gender === 'male' ? '남성' : '여성';
-    
+
     let prompt = `당신은 한국 최고의 사주명리학 전문가입니다. 다음 정보를 바탕으로 ${date}의 운세를 전문적으로 분석해주세요.
 
 이름: ${name}
@@ -164,18 +159,18 @@ export class DailyFortuneService {
    * AI 응답 파싱
    */
   parseFortuneResponse(text) {
-    const lines = text.split('\n').filter(line => line.trim());
+    const lines = text.split('\n').filter((line) => line.trim());
     const result = {
       scores: {},
       descriptions: {},
       luck: {},
       advice: {},
-      overall: null
+      overall: null,
     };
 
     for (const line of lines) {
       const trimmed = line.trim();
-      
+
       if (trimmed.includes('종합운:')) {
         const match = trimmed.match(/종합운:\s*\[?(\d+)점?\]?\s*(.+)/);
         if (match) {
@@ -217,7 +212,10 @@ export class DailyFortuneService {
         result.luck.color = trimmed.replace(/행운의 색상:\s*/, '').trim();
       } else if (trimmed.includes('행운의 숫자:')) {
         const numbers = trimmed.replace(/행운의 숫자:\s*/, '').trim();
-        result.luck.numbers = numbers.split(/[,\s]+/).map(n => parseInt(n)).filter(n => !isNaN(n));
+        result.luck.numbers = numbers
+          .split(/[,\s]+/)
+          .map((n) => parseInt(n))
+          .filter((n) => !isNaN(n));
       } else if (trimmed.includes('주의사항:')) {
         result.advice.caution = trimmed.replace(/주의사항:\s*/, '').trim();
       } else if (trimmed.includes('추천 활동:')) {
@@ -226,7 +224,7 @@ export class DailyFortuneService {
     }
 
     // 평균 점수 계산
-    const scores = Object.values(result.scores).filter(s => typeof s === 'number');
+    const scores = Object.values(result.scores).filter((s) => typeof s === 'number');
     if (scores.length > 0) {
       result.averageScore = Math.round(scores.reduce((a, b) => a + b, 0) / scores.length);
     }
@@ -240,12 +238,12 @@ export class DailyFortuneService {
   getUserHash(userData) {
     const { name, birthDate, gender, birthTime } = userData;
     const str = `${name}_${birthDate}_${gender}_${birthTime || ''}`;
-    
+
     // 간단한 해시 생성
     let hash = 0;
     for (let i = 0; i < str.length; i++) {
       const char = str.charCodeAt(i);
-      hash = ((hash << 5) - hash) + char;
+      hash = (hash << 5) - hash + char;
       hash = hash & hash;
     }
     return Math.abs(hash).toString(36);
@@ -260,7 +258,7 @@ export class DailyFortuneService {
       birthDate: userData.birthDate,
       gender: userData.gender,
       hasTime: !!userData.birthTime,
-      hasManseryeok: !!userData.manseryeok
+      hasManseryeok: !!userData.manseryeok,
     };
   }
 
@@ -282,21 +280,21 @@ export class DailyFortuneService {
   generateFortuneSummary(fortuneData) {
     const { scores, averageScore } = fortuneData;
     const grade = this.getFortuneGrade(averageScore);
-    
+
     // 가장 높은/낮은 운세 찾기
     const sortedScores = Object.entries(scores)
       .filter(([key, value]) => typeof value === 'number')
-      .sort(([,a], [,b]) => b - a);
-    
+      .sort(([, a], [, b]) => b - a);
+
     const best = sortedScores[0];
     const worst = sortedScores[sortedScores.length - 1];
-    
+
     const categoryNames = {
       overall: '종합운',
       love: '애정운',
       money: '금전운',
       health: '건강운',
-      work: '직장운'
+      work: '직장운',
     };
 
     return {
@@ -305,13 +303,13 @@ export class DailyFortuneService {
       averageScore,
       bestCategory: {
         name: categoryNames[best[0]],
-        score: best[1]
+        score: best[1],
       },
       worstCategory: {
         name: categoryNames[worst[0]],
-        score: worst[1]
+        score: worst[1],
       },
-      summary: `오늘의 운세는 ${grade.description} 등급입니다. ${categoryNames[best[0]]}이 ${best[1]}점으로 가장 좋고, ${categoryNames[worst[0]]}은 ${worst[1]}점으로 주의가 필요합니다.`
+      summary: `오늘의 운세는 ${grade.description} 등급입니다. ${categoryNames[best[0]]}이 ${best[1]}점으로 가장 좋고, ${categoryNames[worst[0]]}은 ${worst[1]}점으로 주의가 필요합니다.`,
     };
   }
 
@@ -323,7 +321,7 @@ export class DailyFortuneService {
       service: 'daily-fortune',
       status: genAI ? 'healthy' : 'error',
       model: this.model ? 'gemini-1.5-flash' : null,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     };
   }
 }

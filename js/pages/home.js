@@ -389,7 +389,11 @@ class HomePage {
       try {
         (window.adsbygoogle = window.adsbygoogle || []).push({});
       } catch (e) {
-        
+        // Error handled - see console for details
+        // Error handled - development logging only
+        if (process.env.NODE_ENV === 'development' || window.location.hostname === 'localhost') {
+          console.warn('Caught error:', e);
+        }
       }
     });
   }
@@ -404,7 +408,6 @@ class HomePage {
 
     // API 키 확인
     if (!window.API_CONFIG || !window.API_CONFIG.KAKAO_JS_KEY) {
-      
       return;
     }
 
@@ -413,7 +416,11 @@ class HomePage {
       try {
         Kakao.init(window.API_CONFIG.KAKAO_JS_KEY);
       } catch (e) {
-        
+        // Error handled - see console for details
+        // Error handled - development logging only
+        if (process.env.NODE_ENV === 'development' || window.location.hostname === 'localhost') {
+          console.warn('Caught error:', e);
+        }
       }
     }
   }
@@ -430,7 +437,11 @@ class HomePage {
     const loadTime = timing.loadEventEnd - timing.navigationStart;
 
     if (loadTime > 5000) {
-      
+      // 로딩 시간이 5초 이상인 경우 성능 경고
+      // Performance warning - development only
+      if (process.env.NODE_ENV === 'development' || window.location.hostname === 'localhost') {
+        console.warn('Page load time exceeded 5 seconds:', loadTime);
+      }
     }
   }
 
@@ -445,6 +456,7 @@ class HomePage {
 
     // 개발 환경에서 로그
     if (window.location.hostname === 'localhost') {
+      console.log('Development mode'); // eslint-disable-line no-console
     }
   }
 }

@@ -35,7 +35,7 @@ export class MBTITestService {
   initializeMBTIData() {
     // MBTI 16가지 유형 정보
     this.mbtiTypes = {
-      'INTJ': {
+      INTJ: {
         name: '건축가',
         nickname: '과학자',
         description: '상상력이 풍부하고 전략적인 사고를 하는 계획가',
@@ -44,20 +44,20 @@ export class MBTITestService {
         careers: ['과학자', '엔지니어', '연구원', '작가', '전략 기획자'],
         relationships: '소수의 깊은 관계를 선호하며, 지적 교감을 중시함',
         famous: ['일론 머스크', '스티븐 호킹', '크리스토퍼 놀란'],
-        percentage: 2
+        percentage: 2,
       },
-      'INTP': {
+      INTP: {
         name: '논리술사',
-        nickname: '사상가', 
+        nickname: '사상가',
         description: '논리적이고 창의적인 사고를 하는 혁신적인 발명가',
         strengths: ['논리적', '객관적', '창의적', '독립적', '분석적'],
         weaknesses: ['우유부단', '민감함', '현실성 부족', '감정 표현 어려움', '완벽주의'],
         careers: ['연구원', '프로그래머', '철학자', '수학자', '분석가'],
         relationships: '지적 호기심을 공유할 수 있는 파트너를 선호',
         famous: ['알베르트 아인슈타인', '빌 게이츠', '찰스 다윈'],
-        percentage: 3
+        percentage: 3,
       },
-      'ENTJ': {
+      ENTJ: {
         name: '통솔자',
         nickname: '지휘관',
         description: '대담하고 상상력이 풍부한 강력한 의지의 지도자',
@@ -66,9 +66,9 @@ export class MBTITestService {
         careers: ['CEO', '변호사', '컨설턴트', '정치인', '기업가'],
         relationships: '목표 지향적인 관계를 선호하며, 성취를 함께 추구함',
         famous: ['스티브 잡스', '고든 램지', '프랭클린 루스벨트'],
-        percentage: 2
+        percentage: 2,
       },
-      'ENTP': {
+      ENTP: {
         name: '변론가',
         nickname: '발명가',
         description: '똑똑하고 호기심이 많은 사색가로 지적 도전을 즐김',
@@ -77,9 +77,9 @@ export class MBTITestService {
         careers: ['기업가', '변호사', '저널리스트', '컨설턴트', '발명가'],
         relationships: '지적 자극과 새로운 경험을 함께할 파트너 선호',
         famous: ['월트 디즈니', '로버트 다우니 주니어', '세오도어 루스벨트'],
-        percentage: 3
+        percentage: 3,
       },
-      'INFJ': {
+      INFJ: {
         name: '옹호자',
         nickname: '예언자',
         description: '창의적이고 통찰력 있으며 영감을 주는 이상주의자',
@@ -88,9 +88,9 @@ export class MBTITestService {
         careers: ['상담사', '작가', '교사', '예술가', '심리학자'],
         relationships: '깊고 의미 있는 관계를 추구하며, 감정적 연결 중시',
         famous: ['마틴 루터 킹', '넬슨 만델라', '마더 테레사'],
-        percentage: 1
+        percentage: 1,
       },
-      'INFP': {
+      INFP: {
         name: '중재자',
         nickname: '잠재력을 가진 자',
         description: '항상 선을 행할 준비가 되어 있는 부드럽고 친근한 사람',
@@ -99,9 +99,9 @@ export class MBTITestService {
         careers: ['작가', '예술가', '상담사', '심리학자', '사회복지사'],
         relationships: '진정성과 깊은 감정적 연결을 추구',
         famous: ['윌리엄 셰익스피어', '조니 뎁', '빈센트 반 고흐'],
-        percentage: 4
+        percentage: 4,
       },
-      'ENFJ': {
+      ENFJ: {
         name: '주인공',
         nickname: '언변능숙형',
         description: '카리스마 있고 영감을 주는 지도자로 듣는 이들을 매혹시킴',
@@ -110,9 +110,9 @@ export class MBTITestService {
         careers: ['교사', '상담사', '정치인', '코치', '종교인'],
         relationships: '타인의 성장을 돕는 것을 좋아하며, 조화로운 관계 추구',
         famous: ['오프라 윈프리', '바라크 오바마', '말라라 유사프자이'],
-        percentage: 2
+        percentage: 2,
       },
-      'ENFP': {
+      ENFP: {
         name: '활동가',
         nickname: '재기발랄한 활동가',
         description: '열정적이고 창의적인 사교적인 자유주의자',
@@ -121,9 +121,9 @@ export class MBTITestService {
         careers: ['상담사', '언론인', '예술가', '교사', '기업가'],
         relationships: '자유롭고 창의적인 관계를 선호하며, 깊은 감정적 연결 추구',
         famous: ['로빈 윌리엄스', '엘런 드제너러스', '윌 스미스'],
-        percentage: 8
+        percentage: 8,
       },
-      'ISTJ': {
+      ISTJ: {
         name: '물류담당자',
         nickname: '관리자',
         description: '사실적이고 신뢰할 수 있는 실용주의자',
@@ -132,9 +132,9 @@ export class MBTITestService {
         careers: ['회계사', '법무관', '의사', '관리자', '은행원'],
         relationships: '안정적이고 전통적인 관계를 선호하며, 신뢰와 충성심 중시',
         famous: ['조지 워싱턴', '워런 버핏', '안젤라 메르켈'],
-        percentage: 13
+        percentage: 13,
       },
-      'ISFJ': {
+      ISFJ: {
         name: '수호자',
         nickname: '보호자',
         description: '따뜻하고 친근하며 항상 타인을 돕고자 하는 수호자',
@@ -143,9 +143,9 @@ export class MBTITestService {
         careers: ['의료진', '교사', '상담사', '사서', '사회복지사'],
         relationships: '배려심 깊고 헌신적인 관계를 추구하며, 안정성 중시',
         famous: ['마더 테레사', '케이트 미들턴', '로사 파크스'],
-        percentage: 13
+        percentage: 13,
       },
-      'ESTJ': {
+      ESTJ: {
         name: '경영자',
         nickname: '사업가',
         description: '훌륭한 관리자로 사람이나 일을 관리하는 데 타고남',
@@ -154,9 +154,9 @@ export class MBTITestService {
         careers: ['관리자', '판사', '교사', '은행원', '정치인'],
         relationships: '전통적이고 안정적인 관계를 선호하며, 질서와 계획 중시',
         famous: ['힐러리 클린턴', '프랭크 시나트라', '존 록펠러'],
-        percentage: 8
+        percentage: 8,
       },
-      'ESFJ': {
+      ESFJ: {
         name: '집정관',
         nickname: '친선도모형',
         description: '인기가 많고 사교적인 사람들로 항상 도움을 주고자 함',
@@ -165,9 +165,9 @@ export class MBTITestService {
         careers: ['간호사', '교사', '상담사', '사회복지사', '접객업'],
         relationships: '조화롭고 따뜻한 관계를 추구하며, 타인의 행복을 우선시',
         famous: ['테일러 스위프트', '휴 잭맨', '엘튼 존'],
-        percentage: 12
+        percentage: 12,
       },
-      'ISTP': {
+      ISTP: {
         name: '만능재주꾼',
         nickname: '장인',
         description: '대담하고 실직적인 실험정신이 풍부한 만능재주꾼',
@@ -176,9 +176,9 @@ export class MBTITestService {
         careers: ['엔지니어', '기술자', '파일럿', '경찰관', '운동선수'],
         relationships: '독립적이고 자유로운 관계를 선호하며, 행동으로 사랑 표현',
         famous: ['마이클 조던', '톰 크루즈', '스칼렛 요한슨'],
-        percentage: 5
+        percentage: 5,
       },
-      'ISFP': {
+      ISFP: {
         name: '모험가',
         nickname: '성인군자',
         description: '유연하고 매력적인 예술가로 항상 새로운 가능성을 탐구',
@@ -187,9 +187,9 @@ export class MBTITestService {
         careers: ['예술가', '음악가', '상담사', '심리학자', '마케터'],
         relationships: '자유롭고 진정성 있는 관계를 추구하며, 개인 공간 중시',
         famous: ['마이클 잭슨', '프린스', '브리트니 스피어스'],
-        percentage: 8
+        percentage: 8,
       },
-      'ESTP': {
+      ESTP: {
         name: '사업가',
         nickname: '활동가',
         description: '똑똑하고 에너지 넘치며 매우 지각이 빠른 사람들',
@@ -198,9 +198,9 @@ export class MBTITestService {
         careers: ['영업', '기업가', '연예인', '운동선수', '응급의학'],
         relationships: '활동적이고 흥미진진한 관계를 선호하며, 현재 순간에 집중',
         famous: ['도널드 트럼프', '어니스트 헤밍웨이', '브루스 윌리스'],
-        percentage: 4
+        percentage: 4,
       },
-      'ESFP': {
+      ESFP: {
         name: '연예인',
         nickname: '자유영혼',
         description: '자율적이고 예술적인 성격으로 항상 새로운 것을 탐구',
@@ -209,33 +209,73 @@ export class MBTITestService {
         careers: ['연예인', 'PR 전문가', '이벤트 기획자', '상담사', '패션 디자이너'],
         relationships: '즐겁고 활기찬 관계를 선호하며, 감정 표현이 풍부함',
         famous: ['엘비스 프레슬리', '마릴린 몬로', '윌 스미스'],
-        percentage: 8
-      }
+        percentage: 8,
+      },
     };
 
     // MBTI 검사 문항 (60문항)
     this.testQuestions = [
       // E vs I 문항들 (15문항)
       { id: 1, dimension: 'EI', question: '새로운 사람들과 만나는 것을 즐긴다', weight: 1 },
-      { id: 2, dimension: 'EI', question: '파티에서 많은 사람들과 이야기하는 것이 에너지를 준다', weight: 1 },
+      {
+        id: 2,
+        dimension: 'EI',
+        question: '파티에서 많은 사람들과 이야기하는 것이 에너지를 준다',
+        weight: 1,
+      },
       { id: 3, dimension: 'EI', question: '혼자 있을 때 더 편안하고 집중이 잘 된다', weight: -1 },
       { id: 4, dimension: 'EI', question: '사람들과 함께 있을 때 활력이 넘친다', weight: 1 },
-      { id: 5, dimension: 'EI', question: '조용한 환경에서 깊이 생각하는 것을 선호한다', weight: -1 },
+      {
+        id: 5,
+        dimension: 'EI',
+        question: '조용한 환경에서 깊이 생각하는 것을 선호한다',
+        weight: -1,
+      },
       { id: 6, dimension: 'EI', question: '모르는 사람에게 먼저 말을 거는 편이다', weight: 1 },
-      { id: 7, dimension: 'EI', question: '큰 모임보다는 소수의 친한 사람들과 시간 보내기를 좋아한다', weight: -1 },
+      {
+        id: 7,
+        dimension: 'EI',
+        question: '큰 모임보다는 소수의 친한 사람들과 시간 보내기를 좋아한다',
+        weight: -1,
+      },
       { id: 8, dimension: 'EI', question: '생각하기 전에 말하는 경우가 많다', weight: 1 },
       { id: 9, dimension: 'EI', question: '말하기 전에 신중하게 생각하는 편이다', weight: -1 },
-      { id: 10, dimension: 'EI', question: '활동적이고 다양한 일을 동시에 하는 것을 좋아한다', weight: 1 },
-      { id: 11, dimension: 'EI', question: '한 번에 한 가지 일에만 집중하는 것을 선호한다', weight: -1 },
-      { id: 12, dimension: 'EI', question: '전화로 이야기하는 것보다 문자나 이메일을 선호한다', weight: -1 },
+      {
+        id: 10,
+        dimension: 'EI',
+        question: '활동적이고 다양한 일을 동시에 하는 것을 좋아한다',
+        weight: 1,
+      },
+      {
+        id: 11,
+        dimension: 'EI',
+        question: '한 번에 한 가지 일에만 집중하는 것을 선호한다',
+        weight: -1,
+      },
+      {
+        id: 12,
+        dimension: 'EI',
+        question: '전화로 이야기하는 것보다 문자나 이메일을 선호한다',
+        weight: -1,
+      },
       { id: 13, dimension: 'EI', question: '새로운 환경에 빨리 적응하는 편이다', weight: 1 },
-      { id: 14, dimension: 'EI', question: '사람들과의 만남 후에는 혼자만의 시간이 필요하다', weight: -1 },
+      {
+        id: 14,
+        dimension: 'EI',
+        question: '사람들과의 만남 후에는 혼자만의 시간이 필요하다',
+        weight: -1,
+      },
       { id: 15, dimension: 'EI', question: '토론이나 회의에서 적극적으로 발언한다', weight: 1 },
 
-      // S vs N 문항들 (15문항)  
+      // S vs N 문항들 (15문항)
       { id: 16, dimension: 'SN', question: '구체적이고 실용적인 정보를 선호한다', weight: 1 },
       { id: 17, dimension: 'SN', question: '미래의 가능성을 상상하는 것을 좋아한다', weight: -1 },
-      { id: 18, dimension: 'SN', question: '단계별로 차근차근 진행하는 방식을 선호한다', weight: 1 },
+      {
+        id: 18,
+        dimension: 'SN',
+        question: '단계별로 차근차근 진행하는 방식을 선호한다',
+        weight: 1,
+      },
       { id: 19, dimension: 'SN', question: '새로운 아이디어나 개념에 흥미를 느낀다', weight: -1 },
       { id: 20, dimension: 'SN', question: '경험과 사실에 근거하여 판단한다', weight: 1 },
       { id: 21, dimension: 'SN', question: '상징적이고 은유적인 표현을 좋아한다', weight: -1 },
@@ -245,7 +285,12 @@ export class MBTITestService {
       { id: 25, dimension: 'SN', question: '전체적인 그림을 보는 것을 중시한다', weight: -1 },
       { id: 26, dimension: 'SN', question: '과거의 경험을 통해 배우는 것을 선호한다', weight: 1 },
       { id: 27, dimension: 'SN', question: '직감과 영감을 따르는 편이다', weight: -1 },
-      { id: 28, dimension: 'SN', question: '검증된 방법을 사용하는 것이 안전하다고 생각한다', weight: 1 },
+      {
+        id: 28,
+        dimension: 'SN',
+        question: '검증된 방법을 사용하는 것이 안전하다고 생각한다',
+        weight: 1,
+      },
       { id: 29, dimension: 'SN', question: '새로운 가능성을 탐구하는 것을 즐긴다', weight: -1 },
       { id: 30, dimension: 'SN', question: '사실과 데이터를 중시한다', weight: 1 },
 
@@ -263,25 +308,50 @@ export class MBTITestService {
       { id: 41, dimension: 'TF', question: '사실에 근거한 피드백을 제공한다', weight: 1 },
       { id: 42, dimension: 'TF', question: '격려와 지지를 통해 동기를 부여한다', weight: -1 },
       { id: 43, dimension: 'TF', question: '경쟁을 통해 발전한다고 생각한다', weight: 1 },
-      { id: 44, dimension: 'TF', question: '협력을 통해 더 좋은 결과를 얻는다고 생각한다', weight: -1 },
+      {
+        id: 44,
+        dimension: 'TF',
+        question: '협력을 통해 더 좋은 결과를 얻는다고 생각한다',
+        weight: -1,
+      },
       { id: 45, dimension: 'TF', question: '문제 해결 시 감정보다는 논리를 우선시한다', weight: 1 },
 
       // J vs P 문항들 (15문항)
-      { id: 46, dimension: 'JP', question: '계획을 세우고 그에 따라 행동하는 것을 선호한다', weight: 1 },
+      {
+        id: 46,
+        dimension: 'JP',
+        question: '계획을 세우고 그에 따라 행동하는 것을 선호한다',
+        weight: 1,
+      },
       { id: 47, dimension: 'JP', question: '즉흥적이고 자유로운 행동을 좋아한다', weight: -1 },
       { id: 48, dimension: 'JP', question: '일정과 데드라인을 잘 지키는 편이다', weight: 1 },
-      { id: 49, dimension: 'JP', question: '마지막 순간까지 기다렸다가 결정하는 편이다', weight: -1 },
+      {
+        id: 49,
+        dimension: 'JP',
+        question: '마지막 순간까지 기다렸다가 결정하는 편이다',
+        weight: -1,
+      },
       { id: 50, dimension: 'JP', question: '체계적이고 정리된 환경을 선호한다', weight: 1 },
       { id: 51, dimension: 'JP', question: '변화와 새로운 경험에 열려있다', weight: -1 },
       { id: 52, dimension: 'JP', question: '일을 미리미리 끝내는 것을 좋아한다', weight: 1 },
-      { id: 53, dimension: 'JP', question: '여러 가지 선택지를 열어두는 것을 선호한다', weight: -1 },
+      {
+        id: 53,
+        dimension: 'JP',
+        question: '여러 가지 선택지를 열어두는 것을 선호한다',
+        weight: -1,
+      },
       { id: 54, dimension: 'JP', question: '확실한 결론을 내리는 것을 좋아한다', weight: 1 },
-      { id: 55, dimension: 'JP', question: '상황에 따라 유연하게 대응하는 것을 선호한다', weight: -1 },
+      {
+        id: 55,
+        dimension: 'JP',
+        question: '상황에 따라 유연하게 대응하는 것을 선호한다',
+        weight: -1,
+      },
       { id: 56, dimension: 'JP', question: '목표를 설정하고 달성하는 과정을 즐긴다', weight: 1 },
       { id: 57, dimension: 'JP', question: '과정 자체를 즐기는 것이 더 중요하다', weight: -1 },
       { id: 58, dimension: 'JP', question: '규칙적인 생활 패턴을 유지한다', weight: 1 },
       { id: 59, dimension: 'JP', question: '자유로운 시간 관리를 선호한다', weight: -1 },
-      { id: 60, dimension: 'JP', question: '결정을 빨리 내리는 편이다', weight: 1 }
+      { id: 60, dimension: 'JP', question: '결정을 빨리 내리는 편이다', weight: 1 },
     ];
   }
 
@@ -293,7 +363,7 @@ export class MBTITestService {
       includeDetailedAnalysis = true,
       includeCareerAdvice = true,
       includeRelationshipAdvice = true,
-      includeFamousPeople = true
+      includeFamousPeople = true,
     } = options;
 
     if (!answers || !Array.isArray(answers) || answers.length !== 60) {
@@ -310,20 +380,20 @@ export class MBTITestService {
     try {
       // MBTI 점수 계산
       const scores = this.calculateMBTIScores(answers);
-      
+
       // MBTI 유형 결정
       const mbtiType = this.determineMBTIType(scores);
-      
+
       // 기본 결과 생성
       const basicResult = this.generateBasicResult(mbtiType, scores);
-      
+
       // AI 기반 상세 분석 (선택적)
       let detailedAnalysis = null;
       if (includeDetailedAnalysis && this.model) {
         detailedAnalysis = await this.generateDetailedAnalysis(
-          mbtiType, 
-          answers, 
-          includeCareerAdvice, 
+          mbtiType,
+          answers,
+          includeCareerAdvice,
           includeRelationshipAdvice
         );
       }
@@ -336,22 +406,21 @@ export class MBTITestService {
           questionsCount: 60,
           answersProvided: answers.length,
           testDate: new Date().toISOString(),
-          aiGenerated: !!detailedAnalysis
-        }
+          aiGenerated: !!detailedAnalysis,
+        },
       };
 
       logger.info('MBTI test completed', {
         type: mbtiType,
         scores,
-        hasDetailedAnalysis: !!detailedAnalysis
+        hasDetailedAnalysis: !!detailedAnalysis,
       });
 
       return result;
-
     } catch (error) {
       logger.error('MBTI test failed', {
         error: error.message,
-        answersLength: answers?.length
+        answersLength: answers?.length,
       });
       throw error;
     }
@@ -362,12 +431,12 @@ export class MBTITestService {
    */
   calculateMBTIScores(answers) {
     const scores = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
-    
+
     for (let i = 0; i < this.testQuestions.length; i++) {
       const question = this.testQuestions[i];
       const answer = answers[i];
       const normalizedScore = answer - 3; // 1-5를 -2~+2로 변환
-      
+
       if (question.dimension === 'EI') {
         if (question.weight > 0) {
           scores.E += normalizedScore * question.weight;
@@ -396,7 +465,7 @@ export class MBTITestService {
     }
 
     // 음수 점수 처리
-    Object.keys(scores).forEach(key => {
+    Object.keys(scores).forEach((key) => {
       scores[key] = Math.max(0, scores[key]);
     });
 
@@ -409,9 +478,9 @@ export class MBTITestService {
   determineMBTIType(scores) {
     const type = [
       scores.E >= scores.I ? 'E' : 'I',
-      scores.S >= scores.N ? 'S' : 'N', 
+      scores.S >= scores.N ? 'S' : 'N',
       scores.T >= scores.F ? 'T' : 'F',
-      scores.J >= scores.P ? 'J' : 'P'
+      scores.J >= scores.P ? 'J' : 'P',
     ].join('');
 
     return type;
@@ -422,7 +491,7 @@ export class MBTITestService {
    */
   generateBasicResult(mbtiType, scores) {
     const typeInfo = this.mbtiTypes[mbtiType];
-    
+
     if (!typeInfo) {
       throw new Error(`알 수 없는 MBTI 유형: ${mbtiType}`);
     }
@@ -434,29 +503,29 @@ export class MBTITestService {
         strength: this.calculatePreferenceStrength(
           mbtiType[0] === 'E' ? scores.E : scores.I,
           mbtiType[0] === 'E' ? scores.I : scores.E
-        )
+        ),
       },
       SN: {
         preference: mbtiType[1],
         strength: this.calculatePreferenceStrength(
           mbtiType[1] === 'S' ? scores.S : scores.N,
           mbtiType[1] === 'S' ? scores.N : scores.S
-        )
+        ),
       },
       TF: {
         preference: mbtiType[2],
         strength: this.calculatePreferenceStrength(
           mbtiType[2] === 'T' ? scores.T : scores.F,
           mbtiType[2] === 'T' ? scores.F : scores.T
-        )
+        ),
       },
       JP: {
         preference: mbtiType[3],
         strength: this.calculatePreferenceStrength(
           mbtiType[3] === 'J' ? scores.J : scores.P,
           mbtiType[3] === 'J' ? scores.P : scores.J
-        )
-      }
+        ),
+      },
     };
 
     return {
@@ -471,8 +540,8 @@ export class MBTITestService {
         careers: typeInfo.careers,
         relationships: typeInfo.relationships,
         famous: typeInfo.famous,
-        population: typeInfo.percentage
-      }
+        population: typeInfo.percentage,
+      },
     };
   }
 
@@ -482,7 +551,7 @@ export class MBTITestService {
   calculatePreferenceStrength(dominantScore, recessionScore) {
     const total = dominantScore + recessionScore;
     if (total === 0) return 50;
-    
+
     const percentage = Math.round((dominantScore / total) * 100);
     return Math.min(95, Math.max(55, percentage)); // 55-95% 범위로 제한
   }
@@ -496,16 +565,22 @@ export class MBTITestService {
     }
 
     const typeInfo = this.mbtiTypes[mbtiType];
-    
+
     // 답변 패턴 분석
     const answerPatterns = this.analyzeAnswerPatterns(answers);
-    
+
     try {
-      const prompt = this.buildAnalysisPrompt(mbtiType, typeInfo, answerPatterns, includeCareer, includeRelationship);
-      
+      const prompt = this.buildAnalysisPrompt(
+        mbtiType,
+        typeInfo,
+        answerPatterns,
+        includeCareer,
+        includeRelationship
+      );
+
       logger.info('Generating MBTI detailed analysis', {
         type: mbtiType,
-        promptLength: prompt.length
+        promptLength: prompt.length,
       });
 
       const startTime = performance.now();
@@ -517,15 +592,14 @@ export class MBTITestService {
       logger.info('MBTI analysis generated', {
         type: mbtiType,
         responseLength: text.length,
-        duration: Math.round(duration)
+        duration: Math.round(duration),
       });
 
       return this.parseAnalysisResponse(text);
-
     } catch (error) {
       logger.error('MBTI analysis generation failed', {
         error: error.message,
-        type: mbtiType
+        type: mbtiType,
       });
       return null;
     }
@@ -537,8 +611,8 @@ export class MBTITestService {
   analyzeAnswerPatterns(answers) {
     const patterns = {
       consistency: 0, // 일관성
-      extremity: 0,   // 극단성
-      uncertainty: 0  // 불확실성 (중간 답변 비율)
+      extremity: 0, // 극단성
+      uncertainty: 0, // 불확실성 (중간 답변 비율)
     };
 
     let extremeCount = 0;
@@ -604,19 +678,19 @@ MBTI 유형: ${mbtiType} (${typeInfo.name})
    */
   parseAnalysisResponse(text) {
     const sections = {};
-    const lines = text.split('\n').filter(line => line.trim());
-    
+    const lines = text.split('\n').filter((line) => line.trim());
+
     let currentSection = null;
     let currentContent = [];
 
     for (const line of lines) {
       const trimmed = line.trim();
-      
+
       if (trimmed.match(/^\d+\.\s/)) {
         if (currentSection) {
           sections[currentSection] = currentContent.join(' ').trim();
         }
-        
+
         const sectionMatch = trimmed.match(/^\d+\.\s(.+?):\s*(.*)$/);
         if (sectionMatch) {
           currentSection = this.getAnalysisSectionKey(sectionMatch[1]);
@@ -638,7 +712,7 @@ MBTI 유형: ${mbtiType} (${typeInfo.name})
       stressManagement: sections.stressManagement || '',
       growthPoints: sections.growthPoints || '',
       careerFit: sections.careerFit || '',
-      relationships: sections.relationships || ''
+      relationships: sections.relationships || '',
     };
   }
 
@@ -652,7 +726,7 @@ MBTI 유형: ${mbtiType} (${typeInfo.name})
       '스트레스 관리': 'stressManagement',
       '성장 포인트': 'growthPoints',
       '직업 적성': 'careerFit',
-      '인간관계': 'relationships'
+      인간관계: 'relationships',
     };
 
     return keyMap[sectionName] || sectionName.toLowerCase().replace(/\s/g, '');
@@ -678,7 +752,7 @@ MBTI 유형: ${mbtiType} (${typeInfo.name})
     }
 
     const compatibility = this.calculateTypeCompatibility(type1, type2);
-    
+
     // AI 분석 추가
     let aiAnalysis = null;
     if (this.model) {
@@ -698,11 +772,11 @@ MBTI 유형: ${mbtiType} (${typeInfo.name})
     const result = {
       types: {
         type1: { type: type1, name: this.mbtiTypes[type1].name },
-        type2: { type: type2, name: this.mbtiTypes[type2].name }
+        type2: { type: type2, name: this.mbtiTypes[type2].name },
       },
       compatibility,
       aiAnalysis,
-      generatedAt: new Date().toISOString()
+      generatedAt: new Date().toISOString(),
     };
 
     // 캐시에 저장
@@ -716,12 +790,12 @@ MBTI 유형: ${mbtiType} (${typeInfo.name})
    */
   calculateTypeCompatibility(type1, type2) {
     let score = 50; // 기본 점수
-    
+
     // 각 차원별 비교
     for (let i = 0; i < 4; i++) {
       const dim1 = type1[i];
       const dim2 = type2[i];
-      
+
       if (dim1 === dim2) {
         score += 5; // 같은 선호도
       } else {
@@ -764,7 +838,7 @@ MBTI 유형: ${mbtiType} (${typeInfo.name})
       model: this.model ? 'gemini-1.5-flash' : null,
       questionsCount: this.testQuestions.length,
       supportedTypes: Object.keys(this.mbtiTypes).length,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     };
   }
 }

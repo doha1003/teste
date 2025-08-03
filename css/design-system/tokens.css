@@ -51,9 +51,14 @@
   
   /* ===== TYPOGRAPHY TOKENS ===== */
   
-  /* Font Families */
-  --font-sans: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-mono: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+  /* Font Families - Korean Optimized */
+  --font-sans: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'SF Mono', 'D2Coding', Monaco, 'Cascadia Code', Consolas, monospace;
+  
+  /* Korean Specific Font Families */
+  --font-korean-display: 'Pretendard Variable', 'Pretendard', sans-serif;
+  --font-korean-text: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-korean-ui: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   
   /* Font Sizes - Fluid Typography */
   --font-size-2xs: clamp(0.625rem, 0.75vw, 0.75rem);      /* 10-12px */
@@ -74,21 +79,26 @@
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
   
-  /* Line Heights */
+  /* Line Heights - Korean Optimized */
   --line-height-none: 1;
-  --line-height-tight: 1.25;
-  --line-height-snug: 1.375;
-  --line-height-normal: 1.5;
-  --line-height-relaxed: 1.7;     /* 한글 최적화 */
-  --line-height-loose: 2;
+  --line-height-tight: 1.3;       /* 한글 제목용 최소 권장 */
+  --line-height-snug: 1.45;       /* 한글 부제목용 */
+  --line-height-normal: 1.6;      /* 한글 기본 텍스트 */
+  --line-height-relaxed: 1.7;     /* 한글 본문 최적화 */
+  --line-height-loose: 1.8;       /* 한글 긴 텍스트용 */
   
-  /* Letter Spacing */
-  --letter-spacing-tighter: -0.05em;
-  --letter-spacing-tight: -0.025em;
-  --letter-spacing-normal: 0;
-  --letter-spacing-wide: 0.025em;
-  --letter-spacing-wider: 0.05em;
-  --letter-spacing-widest: 0.1em;
+  /* Korean Specific Line Heights */
+  --line-height-korean-title: 1.3;
+  --line-height-korean-body: 1.7;
+  --line-height-korean-caption: 1.6;
+  
+  /* Letter Spacing - Korean Optimized */
+  --letter-spacing-tighter: -0.03em;   /* 한글 타이틀용 */
+  --letter-spacing-tight: -0.015em;    /* 한글 서브타이틀용 */
+  --letter-spacing-normal: -0.005em;   /* 한글 기본값 */
+  --letter-spacing-wide: 0.01em;
+  --letter-spacing-wider: 0.02em;
+  --letter-spacing-widest: 0.05em;
   
   /* ===== SPACING TOKENS ===== */
   /* 8px Grid System */
@@ -196,4 +206,58 @@
   --z-modal: 1050;
   --z-popover: 1060;
   --z-tooltip: 1070;
+  
+  /* ===== KOREAN TYPOGRAPHY OPTIMIZATION ===== */
+  
+  /* Korean Text Behavior */
+  --korean-word-break: keep-all;
+  --korean-word-wrap: break-word;
+  --korean-hyphenation: none;
+  --korean-text-justify: inter-character;
+  --korean-text-orientation: mixed;
+  --korean-hanging-punctuation: none;
 }
+
+/* ===== KOREAN TYPOGRAPHY UTILITY CLASSES ===== */
+
+/* Korean Text Optimization */
+.text-korean {
+  font-family: var(--font-korean-text);
+  word-break: var(--korean-word-break);
+  word-wrap: var(--korean-word-wrap);
+  hyphens: var(--korean-hyphenation);
+  line-height: var(--line-height-korean-body);
+  letter-spacing: var(--letter-spacing-normal);
+}
+
+.text-korean-title {
+  font-family: var(--font-korean-display);
+  word-break: var(--korean-word-break);
+  line-height: var(--line-height-korean-title);
+  letter-spacing: var(--letter-spacing-tighter);
+  font-weight: var(--font-weight-semibold);
+}
+
+.text-korean-caption {
+  font-family: var(--font-korean-ui);
+  word-break: var(--korean-word-break);
+  line-height: var(--line-height-korean-caption);
+  letter-spacing: var(--letter-spacing-normal);
+  font-size: var(--font-size-sm);
+}
+
+/* Korean Text Alignment */
+.text-korean-justify {
+  text-align: justify;
+  text-justify: var(--korean-text-justify);
+}
+
+/* Korean Line Height Utilities */
+.leading-korean-tight { line-height: var(--line-height-korean-title); }
+.leading-korean-normal { line-height: var(--line-height-korean-caption); }
+.leading-korean-relaxed { line-height: var(--line-height-korean-body); }
+
+/* Korean Letter Spacing Utilities */
+.tracking-korean-tight { letter-spacing: var(--letter-spacing-tighter); }
+.tracking-korean-normal { letter-spacing: var(--letter-spacing-normal); }
+.tracking-korean-wide { letter-spacing: var(--letter-spacing-wide); }

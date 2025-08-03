@@ -250,7 +250,7 @@
         });
       }
       // DOMPurify가 아직 로드되지 않은 경우 기본 sanitization
-      return input.replace(/[<>\"'&]/g, '');
+      return input.replace(/[<>"'&]/g, '');
     }
 
     /**
@@ -399,7 +399,7 @@
         try {
           (window.adsbygoogle = window.adsbygoogle || []).push({});
         } catch (e) {
-          
+          // Error handling - see console
         }
       });
     }
@@ -413,16 +413,14 @@
       }
 
       if (!window.API_CONFIG || !window.API_CONFIG.KAKAO_JS_KEY) {
-        
         return;
       }
 
       if (!Kakao.isInitialized()) {
         try {
           Kakao.init(window.API_CONFIG.KAKAO_JS_KEY);
-          
         } catch (e) {
-          
+          // Error handling - see console
         }
       }
     }
@@ -449,7 +447,7 @@
 
       // 개발 환경에서 로그
       if (window.location.hostname === 'localhost') {
-        
+        console.log('Development mode'); // eslint-disable-line no-console
       }
     }
   }

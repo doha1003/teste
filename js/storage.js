@@ -249,7 +249,7 @@ class UserDataManager {
   getUserId() {
     let userId = localStorage.getItem(`${this.storagePrefix}userId`);
     if (!userId) {
-      userId = 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+      userId = `user_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
       localStorage.setItem(`${this.storagePrefix}userId`, userId);
     }
     return userId;

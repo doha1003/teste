@@ -1,0 +1,342 @@
+# 품질 모니터링 및 성능 테스트 자동화
+name: Quality Monitoring & Performance Tests
+
+on:
+  # 매일 새벽 1시에 실행 (보안 감사와 시간 분리)
+  schedule:
+    - cron: '0 1 * * *'
+  
+  # 메인 브랜치에 푸시될 때 실행
+  push:
+    branches: [ main ]
+  
+  # PR 생성/업데이트 시 실행
+  pull_request:
+    branches: [ main ]
+  
+  # 수동 실행 허용
+  workflow_dispatch:
+
+env:
+  NODE_VERSION: '20'
+  PYTHON_VERSION: '3.11'
+
+jobs:
+  # 성능 테스트
+  performance-tests:
+    name: 성능 테스트 및 Lighthouse 감사
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 체크아웃
+      uses: actions/checkout@v4
+    
+    - name: Node.js 설정
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+    
+    - name: 의존성 설치
+      run: |
+        npm ci
+        npx playwright install --with-deps
+    
+    - name: 프로젝트 빌드
+      run: |
+        npm run build
+        npm run update:html
+    
+    - name: 로컬 서버 시작
+      run: |
+        npm run serve &
+        sleep 10
+        curl -f http://localhost:3000 || exit 1
+    
+    - name: Lighthouse CI 실행
+      uses: treosh/lighthouse-ci-action@v10
+      with:
+        configPath: './lighthouse-ci.json'
+        uploadArtifacts: true
+        temporaryPublicStorage: true
+      env:
+        LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+    
+    - name: 성능 테스트 실행
+      run: |
+        npm run test:performance
+      continue-on-error: true
+    
+    - name: Lighthouse 보고서 업로드
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: lighthouse-reports
+        path: |
+          .lighthouseci/
+          lighthouse-*.html
+          playwright-report/
+        retention-days: 30
+    
+    - name: 성능 회귀 검사
+      run: |
+        node .github/scripts/check-performance-regression.js
+      continue-on-error: true
+
+  # 접근성 테스트
+  accessibility-tests:
+    name: 접근성 테스트
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 체크아웃
+      uses: actions/checkout@v4
+    
+    - name: Node.js 설정
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+    
+    - name: 의존성 설치
+      run: |
+        npm ci
+        npx playwright install --with-deps
+    
+    - name: 프로젝트 빌드
+      run: npm run build
+    
+    - name: 로컬 서버 시작
+      run: |
+        npm run serve &
+        sleep 10
+    
+    - name: 접근성 테스트 실행
+      run: npm run test:accessibility
+    
+    - name: 접근성 보고서 업로드
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: accessibility-reports
+        path: playwright-report/
+        retention-days: 30
+
+  # 품질 보증 테스트
+  quality-assurance:
+    name: 품질 보증 테스트
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 체크아웃
+      uses: actions/checkout@v4
+    
+    - name: Node.js 설정
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+    
+    - name: 의존성 설치
+      run: |
+        npm ci
+        npx playwright install --with-deps
+    
+    - name: 프로젝트 빌드
+      run: npm run build
+    
+    - name: 로컬 서버 시작
+      run: |
+        npm run serve &
+        sleep 10
+    
+    - name: 전체 E2E 테스트 실행
+      run: npm run test:e2e
+    
+    - name: 보안 테스트 실행
+      run: npm run test:security
+    
+    - name: 한국어 로컬라이제이션 테스트
+      run: npm run test:korean
+    
+    - name: 크로스 브라우저 테스트 실행
+      run: npm run test:cross-browser
+    
+    - name: API 통합 테스트
+      run: npm run test:integration
+      env:
+        GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+    
+    - name: 품질 테스트 보고서 업로드
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: quality-test-reports
+        path: |
+          playwright-report/
+          test-results/
+        retention-days: 30
+
+  # PWA 검증
+  pwa-validation:
+    name: PWA 검증
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 체크아웃
+      uses: actions/checkout@v4
+    
+    - name: Node.js 설정
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+    
+    - name: 의존성 설치
+      run: npm ci
+    
+    - name: 프로젝트 빌드
+      run: npm run build
+    
+    - name: PWA 빌드
+      run: npm run build:pwa
+    
+    - name: 로컬 서버 시작
+      run: |
+        npm run serve &
+        sleep 10
+    
+    - name: PWA Lighthouse 감사
+      run: |
+        npx lighthouse http://localhost:3000 \
+          --only-categories=pwa \
+          --output=html \
+          --output-path=./pwa-audit-report.html \
+          --chrome-flags="--headless --no-sandbox --disable-gpu"
+    
+    - name: Manifest 검증
+      run: |
+        curl -f http://localhost:3000/manifest.json > manifest-check.json
+        node -e "
+          const manifest = require('./manifest-check.json');
+          if (!manifest.name || !manifest.short_name || !manifest.start_url) {
+            console.error('PWA manifest validation failed');
+            process.exit(1);
+          }
+          console.log('PWA manifest validation passed');
+        "
+    
+    - name: Service Worker 검증
+      run: |
+        curl -f http://localhost:3000/sw.js > /dev/null
+        echo "Service Worker validation passed"
+    
+    - name: PWA 보고서 업로드
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: pwa-reports
+        path: |
+          pwa-audit-report.html
+          manifest-check.json
+        retention-days: 30
+
+  # 품질 메트릭 수집
+  quality-metrics:
+    name: 품질 메트릭 수집
+    runs-on: ubuntu-latest
+    needs: [performance-tests, accessibility-tests, quality-assurance, pwa-validation]
+    if: always()
+    
+    steps:
+    - name: 체크아웃
+      uses: actions/checkout@v4
+    
+    - name: Node.js 설정
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+    
+    - name: 의존성 설치
+      run: npm ci
+    
+    - name: 모든 아티팩트 다운로드
+      uses: actions/download-artifact@v4
+      with:
+        path: ./artifacts
+    
+    - name: 품질 보고서 생성
+      run: |
+        node .github/scripts/generate-quality-report.js
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        RUN_ID: ${{ github.run_id }}
+        RUN_NUMBER: ${{ github.run_number }}
+        COMMIT_SHA: ${{ github.sha }}
+        BRANCH_NAME: ${{ github.ref_name }}
+    
+    - name: 품질 보고서 업로드
+      uses: actions/upload-artifact@v4
+      with:
+        name: quality-summary-report
+        path: |
+          quality-report.html
+          quality-metrics.json
+        retention-days: 90
+    
+    - name: 품질 메트릭을 GitHub Pages에 배포
+      if: github.ref == 'refs/heads/main'
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./quality-reports
+        destination_dir: quality-reports
+        keep_files: true
+    
+    - name: Slack 알림 (성능 회귀 감지시)
+      if: failure()
+      uses: 8398a7/action-slack@v3
+      with:
+        status: failure
+        text: "🚨 doha.kr 품질 회귀가 감지되었습니다. 자세한 내용은 GitHub Actions를 확인해주세요."
+        webhook_url: ${{ secrets.SLACK_WEBHOOK }}
+
+  # 모니터링 대시보드 업데이트
+  update-monitoring:
+    name: 모니터링 대시보드 업데이트
+    runs-on: ubuntu-latest
+    needs: [quality-metrics]
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: 체크아웃
+      uses: actions/checkout@v4
+    
+    - name: Node.js 설정
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+    
+    - name: 의존성 설치
+      run: npm ci
+    
+    - name: 품질 메트릭 다운로드
+      uses: actions/download-artifact@v4
+      with:
+        name: quality-summary-report
+        path: ./quality-data
+    
+    - name: 모니터링 데이터베이스 업데이트
+      run: |
+        node .github/scripts/update-monitoring-db.js
+      env:
+        MONITORING_DB_URL: ${{ secrets.MONITORING_DB_URL }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: 실시간 모니터링 트리거
+      run: |
+        curl -X POST "${{ secrets.MONITORING_WEBHOOK_URL }}" \
+          -H "Content-Type: application/json" \
+          -d '{"source": "github-actions", "run_id": "${{ github.run_id }}", "status": "completed"}'

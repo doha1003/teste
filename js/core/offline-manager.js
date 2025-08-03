@@ -10,10 +10,10 @@ class OfflineManager {
     this.syncInProgress = false;
     this.retryAttempts = new Map();
     this.maxRetries = 3;
-    
+
     // 오프라인 콘텐츠 캐시
     this.offlineContent = new Map();
-    
+
     // 한국어 메시지
     this.messages = {
       offline: '인터넷 연결이 끊어졌습니다',
@@ -24,10 +24,10 @@ class OfflineManager {
       offlineMode: '오프라인 모드로 전환되었습니다',
       limitedFeatures: '일부 기능이 제한됩니다',
     };
-    
+
     // 이벤트 리스너
     this.listeners = new Map();
-    
+
     this.init();
   }
 
@@ -35,54 +35,51 @@ class OfflineManager {
     // 온라인/오프라인 이벤트 리스너
     window.addEventListener('online', this.handleOnline.bind(this));
     window.addEventListener('offline', this.handleOffline.bind(this));
-    
+
     // 페이지 가시성 변경 감지
     document.addEventListener('visibilitychange', this.handleVisibilityChange.bind(this));
-    
+
     // Service Worker 메시지 리스너
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.addEventListener('message', this.handleSWMessage.bind(this));
     }
-    
+
     // 주기적 연결 상태 확인
     this.startConnectionMonitoring();
-    
+
     // 오프라인 콘텐츠 미리 로드
     this.preloadOfflineContent();
-    
+
     // UI 업데이트
     this.updateUI();
-
   }
 
   // 온라인 상태로 전환
   async handleOnline() {
-
     this.isOnline = true;
     this.updateUI();
     this.showNotification(this.messages.online, 'success');
-    
+
     // 대기 중인 요청들 동기화
     await this.syncOfflineQueue();
-    
+
     // Service Worker에 온라인 상태 알림
     this.notifyServiceWorker('ONLINE');
-    
+
     // 이벤트 발생
     this.emit('online');
   }
 
   // 오프라인 상태로 전환
   handleOffline() {
-
     this.isOnline = false;
     this.updateUI();
     this.showNotification(this.messages.offline, 'warning');
     this.showNotification(this.messages.limitedFeatures, 'info');
-    
+
     // Service Worker에 오프라인 상태 알림
     this.notifyServiceWorker('OFFLINE');
-    
+
     // 이벤트 발생
     this.emit('offline');
   }
@@ -98,7 +95,7 @@ class OfflineManager {
   // Service Worker 메시지 처리
   handleSWMessage(event) {
     const { data } = event;
-    
+
     switch (data.type) {
       case 'SYNC_COMPLETE':
         this.showNotification(this.messages.syncComplete, 'success');
@@ -116,7 +113,7 @@ class OfflineManager {
   startConnectionMonitoring() {
     setInterval(async () => {
       const isReallyOnline = await this.checkRealConnection();
-      
+
       if (navigator.onLine !== isReallyOnline) {
         // 브라우저의 navigator.onLine과 실제 연결 상태가 다른 경우
         if (isReallyOnline) {
@@ -145,14 +142,8 @@ class OfflineManager {
 
   // 오프라인 콘텐츠 미리 로드
   async preloadOfflineContent() {
-    const criticalContent = [
-      '/',
-      '/offline.html',
-      '/tests/',
-      '/tools/',
-      '/fortune/',
-    ];
-    
+    const criticalContent = ['/', '/offline.html', '/tests/', '/tools/', '/fortune/'];
+
     for (const url of criticalContent) {
       try {
         const response = await fetch(url);
@@ -161,10 +152,9 @@ class OfflineManager {
           this.offlineContent.set(url, content);
         }
       } catch (error) {
-        
+        console.warn('오프라인 캐시 실패:', error);
       }
     }
-
   }
 
   // 오프라인 큐에 요청 추가
@@ -175,7 +165,7 @@ class OfflineManager {
       timestamp: Date.now(),
       retryCount: 0,
     };
-    
+
     this.offlineQueue.push(queueItem);
     this.saveQueueToStorage();
 
@@ -197,7 +187,7 @@ class OfflineManager {
     if (this.syncInProgress || this.offlineQueue.length === 0) {
       return;
     }
-    
+
     this.syncInProgress = true;
     this.showNotification(this.messages.syncInProgress, 'info');
 
@@ -205,14 +195,14 @@ class OfflineManager {
       success: 0,
       failed: 0,
     };
-    
+
     // 큐의 복사본으로 작업 (동시 수정 방지)
     const queueCopy = [...this.offlineQueue];
-    
+
     for (const item of queueCopy) {
       try {
         const success = await this.retryRequest(item);
-        
+
         if (success) {
           this.removeFromQueue(item.id);
           results.success++;
@@ -220,36 +210,28 @@ class OfflineManager {
           results.failed++;
         }
       } catch (error) {
-        
         results.failed++;
       }
     }
-    
+
     this.syncInProgress = false;
     this.saveQueueToStorage();
     this.updateUI();
-    
+
     // 결과 알림
     if (results.success > 0) {
-      this.showNotification(
-        `${results.success}개 요청이 성공적으로 동기화되었습니다`,
-        'success'
-      );
-    }
-    
-    if (results.failed > 0) {
-      this.showNotification(
-        `${results.failed}개 요청 동기화에 실패했습니다`,
-        'error'
-      );
+      this.showNotification(`${results.success}개 요청이 성공적으로 동기화되었습니다`, 'success');
     }
 
+    if (results.failed > 0) {
+      this.showNotification(`${results.failed}개 요청 동기화에 실패했습니다`, 'error');
+    }
   }
 
   // 요청 재시도
   async retryRequest(item) {
     const { request } = item;
-    
+
     try {
       const response = await fetch(request.url, {
         method: request.method,
@@ -257,22 +239,21 @@ class OfflineManager {
         body: request.body,
         signal: AbortSignal.timeout(10000), // 10초 타임아웃
       });
-      
+
       if (response.ok) {
-        
         return true;
       } else {
         throw new Error(`HTTP ${response.status}`);
       }
     } catch (error) {
       item.retryCount++;
-      
+
       if (item.retryCount >= this.maxRetries) {
         console.warn(`오프라인 요청 최대 재시도 횟수 초과: ${item.request.url}`);
         this.removeFromQueue(item.id);
         return false;
       }
-      
+
       console.warn(`오프라인 요청 재시도 실패: ${item.request.url}`);
       return false;
     }
@@ -280,7 +261,7 @@ class OfflineManager {
 
   // 큐에서 항목 제거
   removeFromQueue(id) {
-    const index = this.offlineQueue.findIndex(item => item.id === id);
+    const index = this.offlineQueue.findIndex((item) => item.id === id);
     if (index !== -1) {
       this.offlineQueue.splice(index, 1);
     }
@@ -291,7 +272,8 @@ class OfflineManager {
     try {
       localStorage.setItem('offline_queue', JSON.stringify(this.offlineQueue));
     } catch (error) {
-      
+      // localStorage write 실패 시 무시 (용량 부족 등)
+      console.warn('Failed to save offline queue to storage:', error);
     }
   }
 
@@ -301,10 +283,11 @@ class OfflineManager {
       const stored = localStorage.getItem('offline_queue');
       if (stored) {
         this.offlineQueue = JSON.parse(stored);
-        
       }
     } catch (error) {
-      
+      // localStorage read/parse 실패 시 빈 큐로 초기화
+      console.warn('Failed to load offline queue from storage:', error);
+      this.offlineQueue = [];
     }
   }
 
@@ -323,14 +306,14 @@ class OfflineManager {
     // 커스텀 알림 UI 구현
     const notification = this.createNotificationElement(message, type);
     document.body.appendChild(notification);
-    
+
     // 3초 후 자동 제거
     setTimeout(() => {
       if (notification.parentNode) {
         notification.parentNode.removeChild(notification);
       }
     }, 3000);
-    
+
     // 이벤트 발생
     this.emit('notification', { message, type });
   }
@@ -339,21 +322,21 @@ class OfflineManager {
   createNotificationElement(message, type) {
     const notification = document.createElement('div');
     notification.className = `offline-notification offline-notification--${type}`;
-    
+
     const colors = {
       success: '#10b981',
       error: '#ef4444',
       warning: '#f59e0b',
       info: '#3b82f6',
     };
-    
+
     const icons = {
       success: '✅',
       error: '❌',
       warning: '⚠️',
       info: 'ℹ️',
     };
-    
+
     notification.style.cssText = `
       position: fixed;
       top: 20px;
@@ -369,14 +352,14 @@ class OfflineManager {
       line-height: 1.4;
       animation: slideIn 0.3s ease-out;
     `;
-    
+
     notification.innerHTML = `
       <div style="display: flex; align-items: center; gap: 8px;">
         <span>${icons[type] || icons.info}</span>
         <span>${message}</span>
       </div>
     `;
-    
+
     // 애니메이션 CSS 추가 (한 번만)
     if (!document.getElementById('offline-notification-styles')) {
       const style = document.createElement('style');
@@ -395,7 +378,7 @@ class OfflineManager {
       `;
       document.head.appendChild(style);
     }
-    
+
     return notification;
   }
 
@@ -403,19 +386,19 @@ class OfflineManager {
   updateUI() {
     // 온라인/오프라인 상태 표시
     this.updateConnectionStatus();
-    
+
     // 큐 상태 표시
     this.updateQueueStatus();
-    
+
     // 페이지별 UI 업데이트
     this.updatePageUI();
   }
 
   // 연결 상태 표시 업데이트
   updateConnectionStatus() {
-    const statusElement = document.getElementById('connection-status') || 
-                         this.createConnectionStatusElement();
-    
+    const statusElement =
+      document.getElementById('connection-status') || this.createConnectionStatusElement();
+
     if (this.isOnline) {
       statusElement.className = 'connection-status connection-status--online';
       statusElement.innerHTML = '🟢 온라인';
@@ -440,7 +423,7 @@ class OfflineManager {
       z-index: 1000;
       transition: all 0.3s ease;
     `;
-    
+
     document.body.appendChild(element);
     return element;
   }
@@ -448,9 +431,9 @@ class OfflineManager {
   // 큐 상태 업데이트
   updateQueueStatus() {
     if (this.offlineQueue.length > 0) {
-      const queueElement = document.getElementById('queue-status') || 
-                          this.createQueueStatusElement();
-      
+      const queueElement =
+        document.getElementById('queue-status') || this.createQueueStatusElement();
+
       queueElement.innerHTML = `📋 대기 중인 요청: ${this.offlineQueue.length}개`;
       queueElement.style.display = 'block';
     } else {
@@ -478,7 +461,7 @@ class OfflineManager {
       z-index: 1000;
       display: none;
     `;
-    
+
     document.body.appendChild(element);
     return element;
   }
@@ -488,10 +471,10 @@ class OfflineManager {
     // 오프라인 상태에서 특정 기능 비활성화
     const formsToDisable = document.querySelectorAll('form[data-requires-online="true"]');
     const buttonsToDisable = document.querySelectorAll('button[data-requires-online="true"]');
-    
+
     const elements = [...formsToDisable, ...buttonsToDisable];
-    
-    elements.forEach(element => {
+
+    elements.forEach((element) => {
       if (this.isOnline) {
         element.disabled = false;
         element.classList.remove('offline-disabled');
@@ -529,7 +512,7 @@ class OfflineManager {
   // 이벤트 발생
   emit(event, data) {
     if (this.listeners.has(event)) {
-      this.listeners.get(event).forEach(callback => {
+      this.listeners.get(event).forEach((callback) => {
         try {
           callback(data);
         } catch (error) {
@@ -568,13 +551,12 @@ class OfflineManager {
     window.removeEventListener('online', this.handleOnline.bind(this));
     window.removeEventListener('offline', this.handleOffline.bind(this));
     document.removeEventListener('visibilitychange', this.handleVisibilityChange.bind(this));
-    
+
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.removeEventListener('message', this.handleSWMessage.bind(this));
     }
-    
-    this.listeners.clear();
 
+    this.listeners.clear();
   }
 }
 

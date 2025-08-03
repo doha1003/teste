@@ -88,8 +88,7 @@
 
         // 2차 검증: 길이 제한 확인
         if (content.length > this.config.maxContentLength) {
-          exceeds limit (${this.config.maxContentLength})`
-          );
+          console.warn(`Content length exceeds limit (${this.config.maxContentLength})`); // eslint-disable-line no-console
           content = content.substring(0, this.config.maxContentLength) + '...';
         }
 

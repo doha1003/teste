@@ -77,7 +77,7 @@ const zodiacAnimals = {
 };
 
 // 페이지 로드 시 오늘 날짜 표시
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', () => {
   displayTodayDate();
 });
 
@@ -98,12 +98,13 @@ function displayTodayDate() {
 async function showAnimalFortune(animal) {
   const animalData = zodiacAnimals[animal];
   if (!animalData) {
-    
     return;
   }
 
   const resultDiv = document.getElementById('fortuneResult');
-  if (!resultDiv) return;
+  if (!resultDiv) {
+    return;
+  }
 
   resultDiv.style.display = 'block';
   resultDiv.innerHTML = `
@@ -118,7 +119,6 @@ async function showAnimalFortune(animal) {
     const fortuneData = await generateAnimalFortuneWithAI(animal, animalData);
     displayAnimalFortuneResult(animal, animalData, fortuneData);
   } catch (error) {
-    
     const fallbackFortune = generateFallbackFortune(animal, animalData);
     displayAnimalFortuneResult(animal, animalData, fallbackFortune);
   }
@@ -137,9 +137,7 @@ async function generateAnimalFortuneWithAI(animal, animalData) {
         return parsed;
       }
     }
-  } catch (error) {
-    
-  }
+  } catch (error) {}
 
   return null;
 }
@@ -163,7 +161,9 @@ function generateFallbackFortune(animal, animalData) {
 function displayAnimalFortuneResult(animal, animalData, fortuneData) {
   const today = new Date();
   const resultDiv = document.getElementById('fortuneResult');
-  if (!resultDiv) return;
+  if (!resultDiv) {
+    return;
+  }
 
   resultDiv.innerHTML = `
         <div class="fortune-result-container">

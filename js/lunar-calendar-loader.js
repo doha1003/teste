@@ -13,9 +13,13 @@ let loadingPromise = null;
  * 음력 모듈을 동적으로 로드
  */
 async function loadLunarModule() {
-  if (lunarModule) return lunarModule;
+  if (lunarModule) {
+    return lunarModule;
+  }
 
-  if (loadingPromise) return loadingPromise;
+  if (loadingPromise) {
+    return loadingPromise;
+  }
 
   loadingPromise = new Promise((resolve, reject) => {
     const script = document.createElement('script');

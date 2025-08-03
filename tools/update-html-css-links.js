@@ -24,7 +24,7 @@ const CONFIG = {
           link.href = '/dist/styles.min.css';
         }
       })();
-    </script>`
+    </script>`,
 };
 
 // Console colors
@@ -34,7 +34,7 @@ const colors = {
   yellow: '\x1b[33m',
   red: '\x1b[31m',
   gray: '\x1b[90m',
-  reset: '\x1b[0m'
+  reset: '\x1b[0m',
 };
 
 // Logger functions
@@ -43,7 +43,7 @@ const log = {
   success: (msg) => console.log(`${colors.green}✓${colors.reset} ${msg}`),
   warning: (msg) => console.log(`${colors.yellow}⚠${colors.reset} ${msg}`),
   error: (msg) => console.error(`${colors.red}✗${colors.reset} ${msg}`),
-  detail: (msg) => console.log(`${colors.gray}  ${msg}${colors.reset}`)
+  detail: (msg) => console.log(`${colors.gray}  ${msg}${colors.reset}`),
 };
 
 /**
@@ -51,14 +51,14 @@ const log = {
  */
 async function findHtmlFiles() {
   const htmlFiles = [];
-  
+
   async function walkDir(dir) {
     try {
       const entries = await fs.readdir(dir, { withFileTypes: true });
-      
+
       for (const entry of entries) {
         const fullPath = path.join(dir, entry.name);
-        
+
         // Skip excluded directories
         if (entry.isDirectory()) {
           if (!CONFIG.excludeDirs.includes(entry.name)) {
@@ -72,7 +72,7 @@ async function findHtmlFiles() {
       log.warning(`Cannot read directory ${dir}: ${error.message}`);
     }
   }
-  
+
   await walkDir(rootDir);
   return htmlFiles;
 }
@@ -83,7 +83,7 @@ async function findHtmlFiles() {
 async function updateHtmlFile(filePath) {
   try {
     const content = await fs.readFile(filePath, 'utf8');
-    
+
     // Check if file contains main.css link
     if (!CONFIG.cssLinkRegex.test(content)) {
       return { updated: false, reason: 'No main.css link found' };
@@ -119,7 +119,7 @@ async function main() {
     // Find all HTML files
     log.info('Finding HTML files...');
     const htmlFiles = await findHtmlFiles();
-    
+
     if (htmlFiles.length === 0) {
       log.warning('No HTML files found');
       return;
@@ -155,7 +155,7 @@ async function main() {
     console.log(`Total files scanned: ${htmlFiles.length}`);
     console.log(`Files updated: ${updatedCount}`);
     console.log(`Files skipped: ${skippedCount}`);
-    
+
     if (errors.length > 0) {
       console.log(`\n${colors.red}Errors:${colors.reset}`);
       errors.forEach(({ file, reason }) => {
@@ -169,9 +169,10 @@ async function main() {
       console.log('1. Test the website locally to ensure CSS loads correctly');
       console.log('2. Check browser console for any 404 errors');
       console.log('3. Verify that styles appear correctly in both dev and production');
-      console.log('4. Commit the changes with: git add -A && git commit -m "refactor: implement CSS bundling for performance"');
+      console.log(
+        '4. Commit the changes with: git add -A && git commit -m "refactor: implement CSS bundling for performance"'
+      );
     }
-
   } catch (error) {
     log.error('Update failed!');
     console.error(error);
@@ -180,7 +181,7 @@ async function main() {
 }
 
 // Run if called directly
-main().catch(error => {
+main().catch((error) => {
   console.error('Script failed:', error);
   process.exit(1);
 });

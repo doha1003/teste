@@ -226,7 +226,9 @@ class FormValidator {
   // 개별 필드 검증
   validateField(fieldName, value) {
     const rules = this.rules[fieldName];
-    if (!rules) return true;
+    if (!rules) {
+      return true;
+    }
 
     // XSS 방지를 위한 기본 sanitization
     const sanitizedValue = this.sanitize(value);
@@ -317,7 +319,9 @@ class FormValidator {
   // UI 업데이트
   updateFieldUI(fieldName) {
     const field = this.form.elements[fieldName];
-    if (!field) return;
+    if (!field) {
+      return;
+    }
 
     const errorElement = this.form.querySelector(`[data-error-for="${fieldName}"]`);
 
@@ -342,7 +346,9 @@ class FormValidator {
 
   // XSS 방지 sanitization
   sanitize(value) {
-    if (typeof value !== 'string') return value;
+    if (typeof value !== 'string') {
+      return value;
+    }
 
     // HTML 태그 제거
     value = value.replace(/<[^>]*>/g, '');

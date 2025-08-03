@@ -21,13 +21,13 @@ export class SajuFortuneService extends FortuneService {
    * 사주 운세 API 호출 및 계산
    */
   async fetchSajuFortune() {
-    const birthData = this.fortuneState.birthData;
+    const { birthData } = this.fortuneState;
 
     try {
       // 음력 변환 처리
-      let year = birthData.year;
-      let month = birthData.month;
-      let day = birthData.day;
+      let { year } = birthData;
+      let { month } = birthData;
+      let { day } = birthData;
 
       if (birthData.isLunar && window.lunarToSolar) {
         const solarDate = window.lunarToSolar(year, month, day);
@@ -56,9 +56,7 @@ export class SajuFortuneService extends FortuneService {
           if (manseryeokData) {
             saju = this.mergeManseryeokData(saju, manseryeokData);
           }
-        } catch (error) {
-          
-        }
+        } catch (error) {}
       }
 
       // 사주 데이터 저장
@@ -81,18 +79,16 @@ export class SajuFortuneService extends FortuneService {
             interpretation.aiAnalysis = aiResult;
           }
         } catch (error) {
-          
           // 에러가 발생해도 기본 분석으로 계속 진행
         }
       }
 
       return {
-        saju: saju,
-        interpretation: interpretation,
-        birthData: birthData,
+        saju,
+        interpretation,
+        birthData,
       };
     } catch (error) {
-      
       throw error;
     }
   }
@@ -101,7 +97,9 @@ export class SajuFortuneService extends FortuneService {
    * 만세력 데이터 병합
    */
   mergeManseryeokData(saju, manseryeokData) {
-    if (!saju) saju = {};
+    if (!saju) {
+      saju = {};
+    }
 
     saju.yearPillar = {
       stem: manseryeokData.yearStem,
@@ -134,8 +132,12 @@ export class SajuFortuneService extends FortuneService {
    * 기둥 포맷팅
    */
   formatPillar(pillar) {
-    if (!pillar) return '';
-    if (typeof pillar === 'string') return pillar;
+    if (!pillar) {
+      return '';
+    }
+    if (typeof pillar === 'string') {
+      return pillar;
+    }
     return `${pillar.stem || ''}${pillar.branch || ''}`;
   }
 
@@ -149,10 +151,10 @@ export class SajuFortuneService extends FortuneService {
     const compatibility = this.analyzeCompatibility(saju);
 
     return {
-      elements: elements,
-      personality: personality,
-      fortune: fortune,
-      compatibility: compatibility,
+      elements,
+      personality,
+      fortune,
+      compatibility,
       advice: this.generateAdvice(saju, elements),
     };
   }
@@ -172,24 +174,38 @@ export class SajuFortuneService extends FortuneService {
     const pillars = [saju.yearPillar, saju.monthPillar, saju.dayPillar, saju.hourPillar];
 
     pillars.forEach((pillar) => {
-      if (!pillar) return;
+      if (!pillar) {
+        return;
+      }
 
       const stem = pillar.stem || (typeof pillar === 'string' ? pillar.charAt(0) : '');
       const branch = pillar.branch || (typeof pillar === 'string' ? pillar.charAt(1) : '');
 
       // 천간 오행
-      if ('갑을'.includes(stem)) elements.목++;
-      else if ('병정'.includes(stem)) elements.화++;
-      else if ('무기'.includes(stem)) elements.토++;
-      else if ('경신'.includes(stem)) elements.금++;
-      else if ('임계'.includes(stem)) elements.수++;
+      if ('갑을'.includes(stem)) {
+        elements.목++;
+      } else if ('병정'.includes(stem)) {
+        elements.화++;
+      } else if ('무기'.includes(stem)) {
+        elements.토++;
+      } else if ('경신'.includes(stem)) {
+        elements.금++;
+      } else if ('임계'.includes(stem)) {
+        elements.수++;
+      }
 
       // 지지 오행
-      if ('인묘'.includes(branch)) elements.목++;
-      else if ('사오'.includes(branch)) elements.화++;
-      else if ('진술축미'.includes(branch)) elements.토++;
-      else if ('신유'.includes(branch)) elements.금++;
-      else if ('해자'.includes(branch)) elements.수++;
+      if ('인묘'.includes(branch)) {
+        elements.목++;
+      } else if ('사오'.includes(branch)) {
+        elements.화++;
+      } else if ('진술축미'.includes(branch)) {
+        elements.토++;
+      } else if ('신유'.includes(branch)) {
+        elements.금++;
+      } else if ('해자'.includes(branch)) {
+        elements.수++;
+      }
     });
 
     const total = Object.values(elements).reduce((sum, count) => sum + count, 0);
@@ -200,9 +216,13 @@ export class SajuFortuneService extends FortuneService {
       }, 0) / 5;
 
     let balance = '매우 균형적';
-    if (variance >= 2) balance = '불균형';
-    else if (variance >= 1) balance = '약간 불균형';
-    else if (variance >= 0.5) balance = '균형적';
+    if (variance >= 2) {
+      balance = '불균형';
+    } else if (variance >= 1) {
+      balance = '약간 불균형';
+    } else if (variance >= 0.5) {
+      balance = '균형적';
+    }
 
     const maxElement = Object.entries(elements).reduce((a, b) =>
       elements[a[0]] > elements[b[0]] ? a : b
@@ -215,7 +235,7 @@ export class SajuFortuneService extends FortuneService {
       distribution: elements,
       dominant: maxElement,
       lacking: minElement,
-      balance: balance,
+      balance,
     };
   }
 
@@ -364,8 +384,8 @@ export class SajuFortuneService extends FortuneService {
    * 사주 결과 카드 생성
    */
   createSajuResultCard(result) {
-    const saju = result.saju;
-    const interpretation = result.interpretation;
+    const { saju } = result;
+    const { interpretation } = result;
     const today = new Date();
 
     return `
@@ -612,7 +632,7 @@ export class SajuFortuneService extends FortuneService {
    * 공유 데이터 가져오기 (오버라이드)
    */
   getShareData() {
-    const result = this.state.result;
+    const { result } = this.state;
 
     return {
       title: '나의 사주팔자 분석 결과',

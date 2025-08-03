@@ -3,14 +3,15 @@
  * 모든 테스트 실행 전에 한 번 실행됩니다.
  */
 
-import { beforeAll, afterAll, beforeEach, afterEach } from 'vitest';
+import { beforeAll, afterAll, beforeEach, afterEach, vi } from 'vitest';
 import { JSDOM } from 'jsdom';
 
 // DOM 환경 설정
-const dom = new JSDOM('<!DOCTYPE html><html><body></body></html>', {
+const dom = new JSDOM('<!DOCTYPE html><html><head></head><body></body></html>', {
   url: 'http://localhost:3000',
   pretendToBeVisual: true,
   resources: 'usable',
+  runScripts: 'dangerously',
 });
 
 global.window = dom.window;
@@ -22,6 +23,9 @@ global.sessionStorage = dom.window.sessionStorage;
 
 // Fetch API 모킹
 global.fetch = vi.fn();
+
+// Vi를 전역으로 노출
+global.vi = vi;
 
 // 전역 설정
 beforeAll(() => {
@@ -42,10 +46,21 @@ beforeEach(() => {
 
   // DOM 초기화
   document.body.innerHTML = '';
+  document.head.innerHTML = '<title>Test</title>';
 
   // 날짜 모킹 (필요한 경우)
   vi.useFakeTimers();
   vi.setSystemTime(new Date('2025-07-31T00:00:00.000Z'));
+
+  // 전역 객체 초기화
+  delete window.ErrorHandler;
+  delete window.gtag;
+  delete window.DohaLogger;
+
+  // 기본 window 메서드들 모킹
+  window.alert = vi.fn();
+  window.confirm = vi.fn().mockReturnValue(true);
+  window.prompt = vi.fn().mockReturnValue('test');
 });
 
 // 각 테스트 후 정리
@@ -60,6 +75,18 @@ afterAll(() => {
   dom.window.close();
 });
 
+// Mock 시스템 import (try-catch로 안전하게)
+let mockHelpers, fetchMocks;
+try {
+  const apiMocks = await import('./mocks/api-mocks.js');
+  mockHelpers = apiMocks.mockHelpers;
+  fetchMocks = apiMocks.setupFetchMocks();
+} catch (error) {
+  console.warn('API mocks not available:', error);
+  mockHelpers = {};
+  fetchMocks = {};
+}
+
 // 전역 헬퍼 함수
 global.createMockResponse = (data, status = 200) => {
   return Promise.resolve({
@@ -72,6 +99,10 @@ global.createMockResponse = (data, status = 200) => {
     }),
   });
 };
+
+// API Mock 헬퍼들을 전역으로 노출
+global.mockHelpers = mockHelpers;
+global.fetchMocks = fetchMocks;
 
 // 한국어 테스트를 위한 헬퍼
 global.expectKoreanText = (element, text) => {

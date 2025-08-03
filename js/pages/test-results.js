@@ -7,7 +7,6 @@
 
   // 테스트 결과 페이지 초기화
   function initTestResults() {
-
     // URL 파라미터에서 테스트 결과 가져오기
     const urlParams = new URLSearchParams(window.location.search);
     const testType = urlParams.get('test');

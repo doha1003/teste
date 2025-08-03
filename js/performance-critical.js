@@ -40,7 +40,7 @@
   });
 
   // 레이아웃 시프트 방지
-  document.addEventListener('DOMContentLoaded', function () {
+  document.addEventListener('DOMContentLoaded', () => {
     // 광고 컨테이너 크기 예약
     const adContainers = document.querySelectorAll('.ad-container');
     adContainers.forEach((container) => {
@@ -60,7 +60,7 @@
   });
 
   // 스크립트 지연 로딩
-  window.addEventListener('load', function () {
+  window.addEventListener('load', () => {
     // 비필수 스크립트 지연 로딩
     const deferredScripts = ['/js/analytics.js', '/js/storage.js', '/js/performance-optimizer.js'];
 

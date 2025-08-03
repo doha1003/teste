@@ -45,7 +45,7 @@ export class ZodiacFortuneService {
         traits: ['적극적', '열정적', '리더십', '충동적', '용감한'],
         luckyNumbers: [1, 8, 17],
         luckyColors: ['빨강', '주황'],
-        compatibility: ['사자자리', '사수자리', '쌍둥이자리']
+        compatibility: ['사자자리', '사수자리', '쌍둥이자리'],
       },
       taurus: {
         name: '황소자리',
@@ -58,7 +58,7 @@ export class ZodiacFortuneService {
         traits: ['안정적', '실용적', '끈기있는', '고집스러운', '감각적'],
         luckyNumbers: [2, 6, 9, 12, 24],
         luckyColors: ['초록', '분홍'],
-        compatibility: ['처녀자리', '염소자리', '게자리']
+        compatibility: ['처녀자리', '염소자리', '게자리'],
       },
       gemini: {
         name: '쌍둥이자리',
@@ -71,7 +71,7 @@ export class ZodiacFortuneService {
         traits: ['호기심많은', '적응력있는', '소통능력', '다재다능', '변덕스러운'],
         luckyNumbers: [5, 7, 14, 23],
         luckyColors: ['노랑', '연두'],
-        compatibility: ['천칭자리', '물병자리', '양자리']
+        compatibility: ['천칭자리', '물병자리', '양자리'],
       },
       cancer: {
         name: '게자리',
@@ -84,7 +84,7 @@ export class ZodiacFortuneService {
         traits: ['감정적', '배려심', '가족중심', '직관적', '보호본능'],
         luckyNumbers: [2, 7, 11, 16, 20, 25],
         luckyColors: ['은색', '흰색', '바다색'],
-        compatibility: ['전갈자리', '물고기자리', '황소자리']
+        compatibility: ['전갈자리', '물고기자리', '황소자리'],
       },
       leo: {
         name: '사자자리',
@@ -97,7 +97,7 @@ export class ZodiacFortuneService {
         traits: ['자신감', '관대함', '창조적', '드라마틱', '자존심'],
         luckyNumbers: [1, 3, 10, 19],
         luckyColors: ['금색', '주황', '빨강'],
-        compatibility: ['양자리', '사수자리', '쌍둥이자리']
+        compatibility: ['양자리', '사수자리', '쌍둥이자리'],
       },
       virgo: {
         name: '처녀자리',
@@ -110,7 +110,7 @@ export class ZodiacFortuneService {
         traits: ['완벽주의', '분석적', '실용적', '신중한', '봉사정신'],
         luckyNumbers: [3, 15, 6, 27],
         luckyColors: ['네이비', '갈색', '회색'],
-        compatibility: ['황소자리', '염소자리', '게자리']
+        compatibility: ['황소자리', '염소자리', '게자리'],
       },
       libra: {
         name: '천칭자리',
@@ -123,7 +123,7 @@ export class ZodiacFortuneService {
         traits: ['균형감각', '공정함', '사교적', '우유부단', '예술적'],
         luckyNumbers: [4, 6, 13, 15, 24],
         luckyColors: ['파스텔톤', '분홍', '하늘색'],
-        compatibility: ['쌍둥이자리', '물병자리', '사자자리']
+        compatibility: ['쌍둥이자리', '물병자리', '사자자리'],
       },
       scorpio: {
         name: '전갈자리',
@@ -136,7 +136,7 @@ export class ZodiacFortuneService {
         traits: ['강렬함', '신비로운', '집중력', '질투심', '변화력'],
         luckyNumbers: [8, 11, 18, 22],
         luckyColors: ['짙은빨강', '검정', '자주'],
-        compatibility: ['게자리', '물고기자리', '처녀자리']
+        compatibility: ['게자리', '물고기자리', '처녀자리'],
       },
       sagittarius: {
         name: '사수자리',
@@ -149,7 +149,7 @@ export class ZodiacFortuneService {
         traits: ['자유로운', '낙천적', '모험적', '솔직한', '철학적'],
         luckyNumbers: [3, 9, 15, 21, 33],
         luckyColors: ['보라', '터키석', '진청'],
-        compatibility: ['양자리', '사자자리', '천칭자리']
+        compatibility: ['양자리', '사자자리', '천칭자리'],
       },
       capricorn: {
         name: '염소자리',
@@ -162,7 +162,7 @@ export class ZodiacFortuneService {
         traits: ['야심적', '책임감', '현실적', '인내심', '보수적'],
         luckyNumbers: [6, 9, 8, 26],
         luckyColors: ['검정', '갈색', '회색'],
-        compatibility: ['황소자리', '처녀자리', '전갈자리']
+        compatibility: ['황소자리', '처녀자리', '전갈자리'],
       },
       aquarius: {
         name: '물병자리',
@@ -175,7 +175,7 @@ export class ZodiacFortuneService {
         traits: ['독창적', '진보적', '인도주의', '독립적', '예측불가'],
         luckyNumbers: [4, 7, 11, 22, 29],
         luckyColors: ['전기색', '터키석', '은색'],
-        compatibility: ['쌍둥이자리', '천칭자리', '사수자리']
+        compatibility: ['쌍둥이자리', '천칭자리', '사수자리'],
       },
       pisces: {
         name: '물고기자리',
@@ -188,8 +188,8 @@ export class ZodiacFortuneService {
         traits: ['감성적', '직관적', '예술적', '공감능력', '몽상적'],
         luckyNumbers: [3, 9, 12, 15, 18, 24],
         luckyColors: ['바다색', '라벤더', '은색'],
-        compatibility: ['게자리', '전갈자리', '염소자리']
-      }
+        compatibility: ['게자리', '전갈자리', '염소자리'],
+      },
     };
 
     // 행성의 운행과 영향
@@ -198,7 +198,7 @@ export class ZodiacFortuneService {
       venus: { name: '금성', influence: '사랑, 관계, 예술, 돈' },
       mars: { name: '화성', influence: '에너지, 행동, 갈등' },
       jupiter: { name: '목성', influence: '확장, 행운, 성장' },
-      saturn: { name: '토성', influence: '제한, 책임, 교훈' }
+      saturn: { name: '토성', influence: '제한, 책임, 교훈' },
     };
   }
 
@@ -210,7 +210,7 @@ export class ZodiacFortuneService {
       includeWeekly = false,
       includeMonthly = false,
       includeCompatibility = true,
-      todayDate = null
+      todayDate = null,
     } = options;
 
     if (!this.model) {
@@ -223,7 +223,7 @@ export class ZodiacFortuneService {
     }
 
     const today = todayDate || new Date().toISOString().split('T')[0];
-    
+
     // 캐시 키 생성
     const cacheKey = keyBuilder.build('zodiac-fortune', zodiacSign, today);
 
@@ -235,12 +235,18 @@ export class ZodiacFortuneService {
     }
 
     try {
-      const prompt = this.buildZodiacPrompt(zodiacData, today, includeWeekly, includeMonthly, includeCompatibility);
-      
+      const prompt = this.buildZodiacPrompt(
+        zodiacData,
+        today,
+        includeWeekly,
+        includeMonthly,
+        includeCompatibility
+      );
+
       logger.info('Generating zodiac fortune', {
         zodiac: zodiacSign,
         date: today,
-        promptLength: prompt.length
+        promptLength: prompt.length,
       });
 
       const startTime = performance.now();
@@ -252,12 +258,12 @@ export class ZodiacFortuneService {
       logger.info('Zodiac fortune generated', {
         zodiac: zodiacSign,
         responseLength: text.length,
-        duration: Math.round(duration)
+        duration: Math.round(duration),
       });
 
       // 응답 파싱
       const parsedFortune = this.parseZodiacResponse(text);
-      
+
       const fortuneData = {
         ...parsedFortune,
         zodiac: {
@@ -265,23 +271,22 @@ export class ZodiacFortuneService {
           name: zodiacData.name,
           symbol: zodiacData.symbol,
           element: zodiacData.element,
-          rulingPlanet: zodiacData.rulingPlanet
+          rulingPlanet: zodiacData.rulingPlanet,
         },
         date: today,
         generatedAt: new Date().toISOString(),
-        aiGenerated: true
+        aiGenerated: true,
       };
 
       // 캐시에 저장 (하루 동안)
       await cache.set(cacheKey, fortuneData, 24 * 60 * 60 * 1000);
 
       return fortuneData;
-
     } catch (error) {
       logger.error('Zodiac fortune generation failed', {
         error: error.message,
         zodiac: zodiacSign,
-        date: today
+        date: today,
       });
       throw error;
     }
@@ -293,7 +298,7 @@ export class ZodiacFortuneService {
   async analyzeCompatibility(sign1, sign2) {
     const zodiac1 = this.zodiacInfo[sign1];
     const zodiac2 = this.zodiacInfo[sign2];
-    
+
     if (!zodiac1 || !zodiac2) {
       throw new Error('유효하지 않은 별자리입니다.');
     }
@@ -320,25 +325,24 @@ export class ZodiacFortuneService {
       const compatibilityAnalysis = {
         signs: {
           sign1: { sign: sign1, name: zodiac1.name },
-          sign2: { sign: sign2, name: zodiac2.name }
+          sign2: { sign: sign2, name: zodiac2.name },
         },
         score: compatibility.score,
         level: compatibility.level,
         analysis: text.trim(),
         strengths: compatibility.strengths,
         challenges: compatibility.challenges,
-        generatedAt: new Date().toISOString()
+        generatedAt: new Date().toISOString(),
       };
 
       // 캐시에 저장 (궁합은 변하지 않으므로 긴 캐시)
       await cache.set(cacheKey, compatibilityAnalysis, 7 * 24 * 60 * 60 * 1000);
 
       return compatibilityAnalysis;
-
     } catch (error) {
       logger.error('Compatibility analysis failed', {
         error: error.message,
-        signs: [sign1, sign2]
+        signs: [sign1, sign2],
       });
       throw error;
     }
@@ -412,18 +416,18 @@ ${zodiac2.name}: ${zodiac2.element} 원소, ${zodiac2.rulingPlanet} 지배
    * 별자리 응답 파싱
    */
   parseZodiacResponse(text) {
-    const lines = text.split('\n').filter(line => line.trim());
+    const lines = text.split('\n').filter((line) => line.trim());
     const result = {
       overall: '',
       scores: {},
       descriptions: {},
       advice: '',
-      lucky: {}
+      lucky: {},
     };
 
     for (const line of lines) {
       const trimmed = line.trim();
-      
+
       if (trimmed.includes('종합운:')) {
         result.overall = trimmed.replace(/종합운:\s*/, '').trim();
       } else if (trimmed.includes('애정운:')) {
@@ -454,7 +458,10 @@ ${zodiac2.name}: ${zodiac2.element} 원소, ${zodiac2.rulingPlanet} 지배
         result.advice = trimmed.replace(/오늘의 조언:\s*/, '').trim();
       } else if (trimmed.includes('행운의 숫자:')) {
         const numbers = trimmed.replace(/행운의 숫자:\s*/, '').trim();
-        result.lucky.numbers = numbers.split(/[,\s]+/).map(n => parseInt(n)).filter(n => !isNaN(n));
+        result.lucky.numbers = numbers
+          .split(/[,\s]+/)
+          .map((n) => parseInt(n))
+          .filter((n) => !isNaN(n));
       } else if (trimmed.includes('행운의 색상:')) {
         result.lucky.color = trimmed.replace(/행운의 색상:\s*/, '').trim();
       } else if (trimmed.includes('행운의 시간:')) {
@@ -469,7 +476,7 @@ ${zodiac2.name}: ${zodiac2.element} 원소, ${zodiac2.rulingPlanet} 지배
     }
 
     // 평균 점수 계산
-    const scores = Object.values(result.scores).filter(s => typeof s === 'number');
+    const scores = Object.values(result.scores).filter((s) => typeof s === 'number');
     if (scores.length > 0) {
       result.averageScore = Math.round(scores.reduce((a, b) => a + b, 0) / scores.length);
     }
@@ -482,7 +489,7 @@ ${zodiac2.name}: ${zodiac2.element} 원소, ${zodiac2.rulingPlanet} 지배
    */
   calculateCompatibility(zodiac1, zodiac2) {
     let score = 50; // 기본 점수
-    
+
     // 원소 궁합
     const elementCompatibility = this.getElementCompatibility(zodiac1.element, zodiac2.element);
     score += elementCompatibility;
@@ -492,7 +499,10 @@ ${zodiac2.name}: ${zodiac2.element} 원소, ${zodiac2.rulingPlanet} 지배
     score += qualityCompatibility;
 
     // 특별 궁합 (미리 정의된 궁합)
-    if (zodiac1.compatibility.includes(zodiac2.name) || zodiac2.compatibility.includes(zodiac1.name)) {
+    if (
+      zodiac1.compatibility.includes(zodiac2.name) ||
+      zodiac2.compatibility.includes(zodiac1.name)
+    ) {
       score += 20;
     }
 
@@ -510,7 +520,7 @@ ${zodiac2.name}: ${zodiac2.element} 원소, ${zodiac2.rulingPlanet} 지배
       score,
       level,
       strengths: this.getCompatibilityStrengths(zodiac1, zodiac2),
-      challenges: this.getCompatibilityChallenges(zodiac1, zodiac2)
+      challenges: this.getCompatibilityChallenges(zodiac1, zodiac2),
     };
   }
 
@@ -519,12 +529,12 @@ ${zodiac2.name}: ${zodiac2.element} 원소, ${zodiac2.rulingPlanet} 지배
    */
   getElementCompatibility(element1, element2) {
     const compatibility = {
-      '불': { '불': 15, '흙': 5, '바람': 10, '물': -10 },
-      '흙': { '불': 5, '흙': 10, '바람': -5, '물': 0 },
-      '바람': { '불': 10, '흙': -5, '바람': 15, '물': 5 },
-      '물': { '불': -10, '흙': 0, '바람': 5, '물': 10 }
+      불: { 불: 15, 흙: 5, 바람: 10, 물: -10 },
+      흙: { 불: 5, 흙: 10, 바람: -5, 물: 0 },
+      바람: { 불: 10, 흙: -5, 바람: 15, 물: 5 },
+      물: { 불: -10, 흙: 0, 바람: 5, 물: 10 },
     };
-    
+
     return compatibility[element1]?.[element2] || 0;
   }
 
@@ -533,8 +543,11 @@ ${zodiac2.name}: ${zodiac2.element} 원소, ${zodiac2.rulingPlanet} 지배
    */
   getQualityCompatibility(quality1, quality2) {
     if (quality1 === quality2) return 10;
-    if ((quality1 === '활동궁' && quality2 === '변동궁') || 
-        (quality1 === '변동궁' && quality2 === '활동궁')) return 5;
+    if (
+      (quality1 === '활동궁' && quality2 === '변동궁') ||
+      (quality1 === '변동궁' && quality2 === '활동궁')
+    )
+      return 5;
     return 0;
   }
 
@@ -563,7 +576,7 @@ ${zodiac2.name}: ${zodiac2.element} 원소, ${zodiac2.rulingPlanet} 지배
       status: genAI ? 'healthy' : 'error',
       model: this.model ? 'gemini-1.5-flash' : null,
       supportedSigns: Object.keys(this.zodiacInfo),
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     };
   }
 }

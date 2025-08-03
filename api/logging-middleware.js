@@ -14,7 +14,7 @@ const LOG_LEVELS = {
   INFO: 1,
   WARN: 2,
   ERROR: 3,
-  CRITICAL: 4
+  CRITICAL: 4,
 };
 
 const LOG_LEVEL_NAMES = Object.fromEntries(
@@ -24,29 +24,29 @@ const LOG_LEVEL_NAMES = Object.fromEntries(
 // 환경별 설정
 const getConfig = () => {
   const env = process.env.NODE_ENV || 'development';
-  
+
   const configs = {
     development: {
       minLevel: LOG_LEVELS.DEBUG,
       enableConsole: true,
       enableRequestLogging: true,
       enablePerformanceLogging: true,
-      enableErrorDetails: true
+      enableErrorDetails: true,
     },
     production: {
       minLevel: LOG_LEVELS.INFO,
       enableConsole: false,
       enableRequestLogging: true,
       enablePerformanceLogging: true,
-      enableErrorDetails: false
+      enableErrorDetails: false,
     },
     test: {
       minLevel: LOG_LEVELS.WARN,
       enableConsole: false,
       enableRequestLogging: false,
       enablePerformanceLogging: false,
-      enableErrorDetails: false
-    }
+      enableErrorDetails: false,
+    },
   };
 
   return configs[env] || configs.production;
@@ -77,14 +77,14 @@ class ServerLogger {
         service: 'doha-api',
         version: process.env.npm_package_version || '1.0.0',
         uptime,
-        ...context
+        ...context,
       },
       metadata: {
         memory: process.memoryUsage(),
         pid: process.pid,
         platform: process.platform,
-        nodeVersion: process.version
-      }
+        nodeVersion: process.version,
+      },
     };
   }
 
@@ -112,13 +112,13 @@ class ServerLogger {
   outputToConsole(logEntry) {
     const { level, message, data, context, timestamp } = logEntry;
     const time = new Date(timestamp).toISOString();
-    
+
     const logString = JSON.stringify({
       time,
       level,
       message,
       ...data,
-      context
+      context,
     });
 
     switch (level) {
@@ -181,19 +181,23 @@ class ServerLogger {
       this.requestCounter++;
 
       // 요청 로그
-      this.info('HTTP Request', {
-        requestId,
-        method: req.method,
-        url: req.url,
-        userAgent: req.headers['user-agent'],
-        ip: this.getClientIP(req),
-        contentLength: req.headers['content-length'],
-        requestNumber: this.requestCounter,
-        type: 'request'
-      }, {
-        requestId,
-        headers: this.sanitizeHeaders(req.headers)
-      });
+      this.info(
+        'HTTP Request',
+        {
+          requestId,
+          method: req.method,
+          url: req.url,
+          userAgent: req.headers['user-agent'],
+          ip: this.getClientIP(req),
+          contentLength: req.headers['content-length'],
+          requestNumber: this.requestCounter,
+          type: 'request',
+        },
+        {
+          requestId,
+          headers: this.sanitizeHeaders(req.headers),
+        }
+      );
 
       // 응답 가로채기
       const originalSend = res.send;
@@ -217,16 +221,19 @@ class ServerLogger {
           statusCode: res.statusCode,
           duration,
           contentLength: res.get('content-length'),
-          type: 'response'
+          type: 'response',
         };
 
-        const logLevel = res.statusCode >= 500 ? LOG_LEVELS.ERROR :
-                        res.statusCode >= 400 ? LOG_LEVELS.WARN :
-                        LOG_LEVELS.INFO;
+        const logLevel =
+          res.statusCode >= 500
+            ? LOG_LEVELS.ERROR
+            : res.statusCode >= 400
+              ? LOG_LEVELS.WARN
+              : LOG_LEVELS.INFO;
 
         this.log(logLevel, 'HTTP Response', responseData, {
           requestId,
-          responseHeaders: this.sanitizeHeaders(res.getHeaders())
+          responseHeaders: this.sanitizeHeaders(res.getHeaders()),
         });
 
         // 성능 로깅
@@ -235,19 +242,19 @@ class ServerLogger {
         }
       };
 
-      res.send = function(body) {
+      res.send = function (body) {
         responseBody = body;
         logResponse(body);
         return originalSend.call(this, body);
       };
 
-      res.json = function(body) {
+      res.json = function (body) {
         responseBody = body;
         logResponse(body);
         return originalJson.call(this, body);
       };
 
-      res.end = function(chunk, encoding) {
+      res.end = function (chunk, encoding) {
         if (chunk) responseBody = chunk;
         logResponse(chunk);
         return originalEnd.call(this, chunk, encoding);
@@ -263,7 +270,7 @@ class ServerLogger {
   errorLogger() {
     return (error, req, res, next) => {
       this.errorCounter++;
-      
+
       const requestId = req.requestId || this.generateRequestId();
       const errorData = {
         requestId,
@@ -273,21 +280,21 @@ class ServerLogger {
         errorMessage: error.message,
         errorCode: error.code,
         errorNumber: this.errorCounter,
-        type: 'error'
+        type: 'error',
       };
 
       const context = {
         requestId,
         userAgent: req.headers['user-agent'],
         ip: this.getClientIP(req),
-        headers: this.sanitizeHeaders(req.headers)
+        headers: this.sanitizeHeaders(req.headers),
       };
 
       if (this.config.enableErrorDetails) {
         errorData.stack = error.stack;
         errorData.errorDetails = {
           name: error.name,
-          constructor: error.constructor.name
+          constructor: error.constructor.name,
         };
       }
 
@@ -308,12 +315,14 @@ class ServerLogger {
    * 클라이언트 IP 추출
    */
   getClientIP(req) {
-    return req.headers['x-forwarded-for'] ||
-           req.headers['x-real-ip'] ||
-           req.connection?.remoteAddress ||
-           req.socket?.remoteAddress ||
-           (req.connection?.socket ? req.connection.socket.remoteAddress : null) ||
-           'unknown';
+    return (
+      req.headers['x-forwarded-for'] ||
+      req.headers['x-real-ip'] ||
+      req.connection?.remoteAddress ||
+      req.socket?.remoteAddress ||
+      (req.connection?.socket ? req.connection.socket.remoteAddress : null) ||
+      'unknown'
+    );
   }
 
   /**
@@ -330,7 +339,7 @@ class ServerLogger {
       userAgent: req.headers['user-agent'],
       referer: req.headers['referer'] || req.headers['referrer'],
       acceptLanguage: req.headers['accept-language'],
-      acceptEncoding: req.headers['accept-encoding']
+      acceptEncoding: req.headers['accept-encoding'],
     };
   }
 
@@ -339,15 +348,9 @@ class ServerLogger {
    */
   sanitizeHeaders(headers) {
     const sanitized = { ...headers };
-    const sensitiveHeaders = [
-      'authorization',
-      'cookie',
-      'x-api-key',
-      'x-auth-token',
-      'set-cookie'
-    ];
+    const sensitiveHeaders = ['authorization', 'cookie', 'x-api-key', 'x-auth-token', 'set-cookie'];
 
-    sensitiveHeaders.forEach(header => {
+    sensitiveHeaders.forEach((header) => {
       if (sanitized[header]) {
         sanitized[header] = '[REDACTED]';
       }
@@ -361,17 +364,17 @@ class ServerLogger {
    */
   logPerformanceMetrics(req, res, duration, requestId) {
     const memoryUsage = process.memoryUsage();
-    
+
     this.info('Performance Metrics', {
       requestId,
       duration,
       memory: {
-        heapUsed: Math.round(memoryUsage.heapUsed / 1024 / 1024 * 100) / 100,
-        heapTotal: Math.round(memoryUsage.heapTotal / 1024 / 1024 * 100) / 100,
-        external: Math.round(memoryUsage.external / 1024 / 1024 * 100) / 100
+        heapUsed: Math.round((memoryUsage.heapUsed / 1024 / 1024) * 100) / 100,
+        heapTotal: Math.round((memoryUsage.heapTotal / 1024 / 1024) * 100) / 100,
+        external: Math.round((memoryUsage.external / 1024 / 1024) * 100) / 100,
       },
       uptime: process.uptime(),
-      type: 'performance'
+      type: 'performance',
     });
 
     // 느린 요청 경고
@@ -381,7 +384,7 @@ class ServerLogger {
         duration,
         method: req.method,
         url: req.url,
-        type: 'slow_request'
+        type: 'slow_request',
       });
     }
   }
@@ -391,7 +394,7 @@ class ServerLogger {
    */
   logSecurityEvent(eventType, req, data = {}) {
     const requestId = req.requestId || this.generateRequestId();
-    
+
     this.warn('Security Event', {
       requestId,
       eventType,
@@ -400,7 +403,7 @@ class ServerLogger {
       ip: this.getClientIP(req),
       userAgent: req.headers['user-agent'],
       type: 'security',
-      ...data
+      ...data,
     });
   }
 
@@ -413,7 +416,7 @@ class ServerLogger {
       requestCount: this.requestCounter,
       errorCount: this.errorCounter,
       memory: process.memoryUsage(),
-      environment: process.env.NODE_ENV || 'development'
+      environment: process.env.NODE_ENV || 'development',
     };
   }
 }
@@ -436,29 +439,28 @@ function getServerLogger(options = {}) {
  */
 function withLogging(handler, options = {}) {
   const logger = getServerLogger(options);
-  
+
   return async (req, res) => {
     const requestLogger = logger.requestLogger();
     const errorLogger = logger.errorLogger();
-    
+
     try {
       // 요청 로깅 실행
       requestLogger(req, res, () => {});
-      
+
       // 원본 핸들러 실행
       await handler(req, res);
-      
     } catch (error) {
       // 에러 로깅 실행
       errorLogger(error, req, res, () => {});
-      
+
       // 에러 응답
       if (!res.headersSent) {
         const statusCode = error.statusCode || 500;
         res.status(statusCode).json({
           error: true,
           message: error.message || 'Internal Server Error',
-          ...(logger.config.enableErrorDetails && { details: error.stack })
+          ...(logger.config.enableErrorDetails && { details: error.stack }),
         });
       }
     }
@@ -474,10 +476,11 @@ const serverLogger = {
   warn: (message, data, context) => getServerLogger().warn(message, data, context),
   error: (message, data, context) => getServerLogger().error(message, data, context),
   critical: (message, data, context) => getServerLogger().critical(message, data, context),
-  
-  logSecurityEvent: (eventType, req, data) => getServerLogger().logSecurityEvent(eventType, req, data),
+
+  logSecurityEvent: (eventType, req, data) =>
+    getServerLogger().logSecurityEvent(eventType, req, data),
   getStats: () => getServerLogger().getStats(),
-  getInstance: getServerLogger
+  getInstance: getServerLogger,
 };
 
 export { ServerLogger, serverLogger, withLogging, getServerLogger };

@@ -20,7 +20,7 @@ class LRUCache {
       misses: 0,
       sets: 0,
       deletes: 0,
-      evictions: 0
+      evictions: 0,
     };
   }
 
@@ -29,7 +29,7 @@ class LRUCache {
    */
   get(key) {
     const item = this.cache.get(key);
-    
+
     if (!item) {
       this.stats.misses++;
       logger.debug('Cache miss', { key: this.maskKey(key) });
@@ -48,25 +48,26 @@ class LRUCache {
     this.cache.delete(key);
     this.cache.set(key, {
       ...item,
-      lastAccessed: Date.now()
+      lastAccessed: Date.now(),
     });
 
     this.stats.hits++;
     logger.debug('Cache hit', { key: this.maskKey(key) });
-    
+
     return item.value;
   }
 
   /**
    * 캐시에 값 저장
    */
-  set(key, value, ttl = 300000) { // 기본 5분
+  set(key, value, ttl = 300000) {
+    // 기본 5분
     const now = Date.now();
     const item = {
       value,
       createdAt: now,
       lastAccessed: now,
-      expiresAt: now + ttl
+      expiresAt: now + ttl,
     };
 
     // 크기 제한 확인
@@ -76,11 +77,11 @@ class LRUCache {
 
     this.cache.set(key, item);
     this.stats.sets++;
-    
-    logger.debug('Cache set', { 
-      key: this.maskKey(key), 
+
+    logger.debug('Cache set', {
+      key: this.maskKey(key),
       ttl,
-      size: this.cache.size 
+      size: this.cache.size,
     });
   }
 
@@ -158,16 +159,17 @@ class LRUCache {
    * 캐시 통계
    */
   getStats() {
-    const hitRate = this.stats.hits + this.stats.misses > 0 
-      ? (this.stats.hits / (this.stats.hits + this.stats.misses) * 100).toFixed(2)
-      : 0;
+    const hitRate =
+      this.stats.hits + this.stats.misses > 0
+        ? ((this.stats.hits / (this.stats.hits + this.stats.misses)) * 100).toFixed(2)
+        : 0;
 
     return {
       ...this.stats,
       hitRate: `${hitRate}%`,
       size: this.cache.size,
       maxSize: this.maxSize,
-      memoryUsage: this.cache.size * 500 // 대략적인 메모리 사용량
+      memoryUsage: this.cache.size * 500, // 대략적인 메모리 사용량
     };
   }
 
@@ -186,9 +188,9 @@ class LRUCache {
 class MultiLevelCache {
   constructor() {
     // 레벨별 캐시
-    this.l1Cache = new LRUCache(500);  // 빠른 액세스, 작은 크기
+    this.l1Cache = new LRUCache(500); // 빠른 액세스, 작은 크기
     this.l2Cache = new LRUCache(2000); // 중간 속도, 큰 크기
-    
+
     this.cleanupInterval = null;
     this.startCleanup();
   }
@@ -220,8 +222,9 @@ class MultiLevelCache {
   async set(key, value, ttl = 300000) {
     // 작은 데이터는 L1에, 큰 데이터는 L2에
     const valueSize = JSON.stringify(value).length;
-    
-    if (valueSize < 1024) { // 1KB 미만
+
+    if (valueSize < 1024) {
+      // 1KB 미만
       this.l1Cache.set(key, value, ttl);
     } else {
       this.l2Cache.set(key, value, ttl);
@@ -266,8 +269,8 @@ class MultiLevelCache {
         hits: l1Stats.hits + l2Stats.hits,
         misses: l1Stats.misses + l2Stats.misses,
         size: l1Stats.size + l2Stats.size,
-        memoryUsage: l1Stats.memoryUsage + l2Stats.memoryUsage
-      }
+        memoryUsage: l1Stats.memoryUsage + l2Stats.memoryUsage,
+      },
     };
   }
 
@@ -275,10 +278,13 @@ class MultiLevelCache {
    * 주기적 정리 시작
    */
   startCleanup() {
-    this.cleanupInterval = setInterval(() => {
-      this.l1Cache.cleanup();
-      this.l2Cache.cleanup();
-    }, 5 * 60 * 1000); // 5분마다
+    this.cleanupInterval = setInterval(
+      () => {
+        this.l1Cache.cleanup();
+        this.l2Cache.cleanup();
+      },
+      5 * 60 * 1000
+    ); // 5분마다
   }
 
   /**
@@ -311,12 +317,14 @@ export class CacheKeyBuilder {
    * API 응답 키 생성
    */
   apiResponse(endpoint, params = {}) {
-    const paramStr = Object.keys(params).length > 0 
-      ? ':' + Object.entries(params)
-          .sort(([a], [b]) => a.localeCompare(b))
-          .map(([k, v]) => `${k}=${v}`)
-          .join('&')
-      : '';
+    const paramStr =
+      Object.keys(params).length > 0
+        ? ':' +
+          Object.entries(params)
+            .sort(([a], [b]) => a.localeCompare(b))
+            .map(([k, v]) => `${k}=${v}`)
+            .join('&')
+        : '';
     return this.build('api', endpoint + paramStr);
   }
 
@@ -349,7 +357,7 @@ export class CacheWrapper {
    */
   async memoize(fn, keyParts, ttl = 300000) {
     const key = this.keyBuilder.build(...keyParts);
-    
+
     // 캐시에서 확인
     let result = await this.cache.get(key);
     if (result !== null) {
@@ -400,8 +408,8 @@ export const CacheTagManager = {
    */
   addTag(key, tags) {
     if (!Array.isArray(tags)) tags = [tags];
-    
-    tags.forEach(tag => {
+
+    tags.forEach((tag) => {
       if (!cacheTags.has(tag)) {
         cacheTags.set(tag, new Set());
       }
@@ -424,7 +432,7 @@ export const CacheTagManager = {
 
     cacheTags.delete(tag);
     logger.info('Cache invalidated by tag', { tag, invalidated });
-    
+
     return invalidated;
   },
 
@@ -433,15 +441,9 @@ export const CacheTagManager = {
    */
   clearTags() {
     cacheTags.clear();
-  }
+  },
 };
 
-export {
-  cache,
-  keyBuilder,
-  cacheWrapper,
-  LRUCache,
-  MultiLevelCache
-};
+export { cache, keyBuilder, cacheWrapper, LRUCache, MultiLevelCache };
 
 export default cache;

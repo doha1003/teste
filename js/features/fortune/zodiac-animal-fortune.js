@@ -151,7 +151,7 @@ export class ZodiacAnimalFortuneService extends FortuneService {
     const cards = document.querySelectorAll('[data-animal]');
     cards.forEach((card) => {
       card.addEventListener('click', () => {
-        const animal = card.dataset.animal;
+        const { animal } = card.dataset;
         this.selectZodiacAnimal(animal);
       });
     });
@@ -163,7 +163,6 @@ export class ZodiacAnimalFortuneService extends FortuneService {
   selectZodiacAnimal(animal) {
     const animalData = this.zodiacAnimals[animal];
     if (!animalData) {
-      
       return;
     }
 
@@ -198,8 +197,8 @@ export class ZodiacAnimalFortuneService extends FortuneService {
             },
             body: JSON.stringify({
               type: 'zodiac-animal',
-              animal: animal,
-              animalData: animalData,
+              animal,
+              animalData,
               date: today.toLocaleDateString('ko-KR'),
             }),
           });
@@ -209,16 +208,15 @@ export class ZodiacAnimalFortuneService extends FortuneService {
             if (result.success && result.data) {
               const fortune = this.parseZodiacAnimalAIResponse(result.data);
               this.showResult({
-                animal: animal,
-                animalData: animalData,
-                fortune: fortune,
+                animal,
+                animalData,
+                fortune,
                 isAIGenerated: true,
               });
               return;
             }
           }
         } catch (error) {
-          
           // 에러가 발생해도 기본 운세로 계속 진행
         }
       }
@@ -226,13 +224,12 @@ export class ZodiacAnimalFortuneService extends FortuneService {
       // 기본 운세 생성
       const fallbackFortune = this.generateFallbackFortune(animal, animalData);
       this.showResult({
-        animal: animal,
-        animalData: animalData,
+        animal,
+        animalData,
         fortune: fallbackFortune,
         isAIGenerated: false,
       });
     } catch (error) {
-      
       this.showError('운세 분석 중 오류가 발생했습니다.');
     }
   }
@@ -269,9 +266,7 @@ export class ZodiacAnimalFortuneService extends FortuneService {
         const cleanResponse = aiResponse.replace(/```json|```/g, '').trim();
         return JSON.parse(cleanResponse);
       }
-    } catch (error) {
-      
-    }
+    } catch (error) {}
 
     return null;
   }
@@ -435,9 +430,9 @@ export class ZodiacAnimalFortuneService extends FortuneService {
    * 띠별 운세 결과 카드 생성
    */
   createZodiacAnimalResultCard(result) {
-    const animal = result.animal;
-    const animalData = result.animalData;
-    const fortune = result.fortune;
+    const { animal } = result;
+    const { animalData } = result;
+    const { fortune } = result;
     const today = new Date();
     const isAIGenerated = result.isAIGenerated || false;
 

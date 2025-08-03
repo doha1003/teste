@@ -12,7 +12,9 @@
 
   // Load AdSense script
   function loadAdSenseScript() {
-    if (window.__adsenseState.scriptLoaded) return;
+    if (window.__adsenseState.scriptLoaded) {
+      return;
+    }
     window.__adsenseState.scriptLoaded = true;
 
     const script = document.createElement('script');
@@ -78,7 +80,7 @@
 
     if (typeof window.adsbygoogle === 'undefined') {
       // AdSense not loaded yet, queuing ad initialization
-      setTimeout(function () {
+      setTimeout(() => {
         window.initializeDynamicAd(adElement);
       }, 500);
       return;
@@ -96,7 +98,7 @@
   // Error handling to prevent duplicate initialization errors
   window.addEventListener(
     'error',
-    function (e) {
+    (e) => {
       if (e.message && e.message.includes('adsbygoogle.push() error')) {
         e.preventDefault();
         e.stopPropagation();
@@ -109,7 +111,7 @@
 
   // Initialize when DOM is ready
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', () => {
       setTimeout(loadAdSenseScript, 1000);
     });
   } else {
@@ -117,10 +119,10 @@
   }
 
   // Re-initialize ads when new content is loaded
-  const observer = new MutationObserver(function (mutations) {
-    mutations.forEach(function (mutation) {
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
       if (mutation.addedNodes.length) {
-        mutation.addedNodes.forEach(function (node) {
+        mutation.addedNodes.forEach((node) => {
           if (node.nodeType === 1 && node.classList && node.classList.contains('adsbygoogle')) {
             if (window.__adsenseState.initialized) {
               window.initializeDynamicAd(node);
@@ -135,7 +137,7 @@
   if (document.body) {
     observer.observe(document.body, { childList: true, subtree: true });
   } else {
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', () => {
       observer.observe(document.body, { childList: true, subtree: true });
     });
   }

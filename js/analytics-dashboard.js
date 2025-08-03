@@ -27,7 +27,9 @@ class AnalyticsDashboard {
    */
   createDashboardContainer() {
     // 대시보드가 이미 존재하는지 확인
-    if (document.getElementById('analytics-dashboard')) return;
+    if (document.getElementById('analytics-dashboard')) {
+      return;
+    }
 
     const dashboard = document.createElement('div');
     dashboard.id = 'analytics-dashboard';
@@ -112,7 +114,9 @@ class AnalyticsDashboard {
    * 대시보드 스타일 삽입
    */
   injectDashboardStyles() {
-    if (document.getElementById('analytics-dashboard-styles')) return;
+    if (document.getElementById('analytics-dashboard-styles')) {
+      return;
+    }
 
     const styles = document.createElement('style');
     styles.id = 'analytics-dashboard-styles';
@@ -415,7 +419,7 @@ class AnalyticsDashboard {
     this.data.realtime.events.unshift({
       timestamp: now,
       event: eventName,
-      data: data,
+      data,
       url: window.location.pathname,
     });
 
@@ -492,7 +496,9 @@ class AnalyticsDashboard {
    * 실시간 업데이트 시작
    */
   startRealTimeUpdates() {
-    if (this.updateInterval) return;
+    if (this.updateInterval) {
+      return;
+    }
 
     this.updateInterval = setInterval(() => {
       this.updateMetrics();
@@ -514,7 +520,9 @@ class AnalyticsDashboard {
    * 메트릭 업데이트
    */
   updateMetrics() {
-    if (!this.data.realtime) return;
+    if (!this.data.realtime) {
+      return;
+    }
 
     // 실시간 방문자
     const visitorsElement = document.getElementById('realtime-visitors');
@@ -539,7 +547,7 @@ class AnalyticsDashboard {
     if (botRateElement) {
       const total = this.data.realtime.visitors.size;
       const rate = total > 0 ? ((this.data.realtime.botDetections / total) * 100).toFixed(1) : 0;
-      botRateElement.textContent = rate + '%';
+      botRateElement.textContent = `${rate}%`;
     }
   }
 
@@ -556,7 +564,9 @@ class AnalyticsDashboard {
    */
   updateTrafficChart() {
     const canvas = document.getElementById('traffic-chart');
-    if (!canvas) return;
+    if (!canvas) {
+      return;
+    }
 
     const ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -571,7 +581,9 @@ class AnalyticsDashboard {
    */
   updateTestsChart() {
     const canvas = document.getElementById('tests-chart');
-    if (!canvas) return;
+    if (!canvas) {
+      return;
+    }
 
     const ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -586,7 +598,9 @@ class AnalyticsDashboard {
    */
   updateRecentActivity() {
     const tbody = document.querySelector('#recent-activity tbody');
-    if (!tbody || !this.data.realtime) return;
+    if (!tbody || !this.data.realtime) {
+      return;
+    }
 
     tbody.innerHTML = '';
 
@@ -597,7 +611,7 @@ class AnalyticsDashboard {
                 <td>${this.formatTime(event.timestamp)}</td>
                 <td>${this.formatEventName(event.event)}</td>
                 <td>${event.url}</td>
-                <td>${event.data.userId ? event.data.userId.substring(0, 8) + '...' : 'Anonymous'}</td>
+                <td>${event.data.userId ? `${event.data.userId.substring(0, 8)}...` : 'Anonymous'}</td>
                 <td><span class="status-${this.getEventStatus(event.event)}">${this.getEventStatusText(event.event)}</span></td>
             `);
       tbody.appendChild(row);
@@ -661,8 +675,12 @@ class AnalyticsDashboard {
 
   // 헬퍼 메서드들
   formatNumber(num) {
-    if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
-    if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
+    if (num >= 1000000) {
+      return `${(num / 1000000).toFixed(1)}M`;
+    }
+    if (num >= 1000) {
+      return `${(num / 1000).toFixed(1)}K`;
+    }
     return num.toString();
   }
 
@@ -686,14 +704,22 @@ class AnalyticsDashboard {
   }
 
   getEventStatus(event) {
-    if (event === 'bot_detection') return 'warning';
-    if (event === 'testCompleted') return 'success';
+    if (event === 'bot_detection') {
+      return 'warning';
+    }
+    if (event === 'testCompleted') {
+      return 'success';
+    }
     return 'success';
   }
 
   getEventStatusText(event) {
-    if (event === 'bot_detection') return '감지';
-    if (event === 'testCompleted') return '완료';
+    if (event === 'bot_detection') {
+      return '감지';
+    }
+    if (event === 'testCompleted') {
+      return '완료';
+    }
     return '정상';
   }
 
@@ -717,7 +743,9 @@ class AnalyticsDashboard {
   }
 
   drawLineChart(ctx, data, width, height, color) {
-    if (data.length === 0) return;
+    if (data.length === 0) {
+      return;
+    }
 
     ctx.strokeStyle = color;
     ctx.lineWidth = 2;

@@ -8,59 +8,121 @@ import { test, expect } from '@playwright/test';
 const KOREAN_TEST_STRINGS = [
   {
     text: '안녕하세요 반갑습니다',
-    description: '기본 한글 텍스트'
+    description: '기본 한글 텍스트',
   },
   {
     text: '사주팔자 운세보기',
-    description: '전통 문화 용어'
+    description: '전통 문화 용어',
   },
   {
     text: '생년월일 1990년 1월 1일',
-    description: '날짜 형식'
+    description: '날짜 형식',
   },
   {
     text: '김철수님의 오늘의 운세',
-    description: '이름과 존칭'
+    description: '이름과 존칭',
   },
   {
     text: '금요일 오후 3시 30분',
-    description: '시간 표현'
+    description: '시간 표현',
   },
   {
     text: '서울특별시 강남구',
-    description: '주소 표현'
+    description: '주소 표현',
   },
   {
     text: '휴대폰 번호: 010-1234-5678',
-    description: '전화번호 형식'
+    description: '전화번호 형식',
   },
   {
     text: '이메일: test@example.com',
-    description: '혼합 텍스트'
+    description: '혼합 텍스트',
   },
   {
     text: '가나다라마바사아자차카타파하',
-    description: '긴 한글 텍스트'
+    description: '긴 한글 텍스트',
   },
   {
     text: '♥♡★☆◆◇○●',
-    description: '특수문자와 한글'
-  }
+    description: '특수문자와 한글',
+  },
 ];
 
 const KOREAN_NAMES = [
-  '김철수', '이영희', '박민수', '최지영', '정우진',
-  '한소영', '윤태호', '강민정', '조현우', '서지혜'
+  '김철수',
+  '이영희',
+  '박민수',
+  '최지영',
+  '정우진',
+  '한소영',
+  '윤태호',
+  '강민정',
+  '조현우',
+  '서지혜',
 ];
 
 // 60갑자 (육십갑자) - 한국 전통 달력
 const SIXTY_GAPJA = [
-  '갑자', '을축', '병인', '정묘', '무진', '기사', '경오', '신미', '임신', '계유',
-  '갑술', '을해', '병자', '정축', '무인', '기묘', '경진', '신사', '임오', '계미',
-  '갑신', '을유', '병술', '정해', '무자', '기축', '경인', '신묘', '임진', '계사',
-  '갑오', '을미', '병신', '정유', '무술', '기해', '경자', '신축', '임인', '계묘',
-  '갑진', '을사', '병오', '정미', '무신', '기유', '경술', '신해', '임자', '계축',
-  '갑인', '을묘', '병진', '정사', '무오', '기미', '경신', '신유', '임술', '계해'
+  '갑자',
+  '을축',
+  '병인',
+  '정묘',
+  '무진',
+  '기사',
+  '경오',
+  '신미',
+  '임신',
+  '계유',
+  '갑술',
+  '을해',
+  '병자',
+  '정축',
+  '무인',
+  '기묘',
+  '경진',
+  '신사',
+  '임오',
+  '계미',
+  '갑신',
+  '을유',
+  '병술',
+  '정해',
+  '무자',
+  '기축',
+  '경인',
+  '신묘',
+  '임진',
+  '계사',
+  '갑오',
+  '을미',
+  '병신',
+  '정유',
+  '무술',
+  '기해',
+  '경자',
+  '신축',
+  '임인',
+  '계묘',
+  '갑진',
+  '을사',
+  '병오',
+  '정미',
+  '무신',
+  '기유',
+  '경술',
+  '신해',
+  '임자',
+  '계축',
+  '갑인',
+  '을묘',
+  '병진',
+  '정사',
+  '무오',
+  '기미',
+  '경신',
+  '신유',
+  '임술',
+  '계해',
 ];
 
 test.describe('한국어 특화 테스트', () => {
@@ -68,10 +130,10 @@ test.describe('한국어 특화 테스트', () => {
     // 한국어 로케일 설정
     await page.addInitScript(() => {
       Object.defineProperty(navigator, 'language', {
-        get: () => 'ko-KR'
+        get: () => 'ko-KR',
       });
       Object.defineProperty(navigator, 'languages', {
-        get: () => ['ko-KR', 'ko', 'en-US', 'en']
+        get: () => ['ko-KR', 'ko', 'en-US', 'en'],
       });
     });
   });
@@ -86,13 +148,14 @@ test.describe('한국어 특화 테스트', () => {
     const koreanTextElements = await page.evaluate(() => {
       const results = [];
       const allElements = document.querySelectorAll('*');
-      
+
       allElements.forEach((element, index) => {
         const text = element.textContent?.trim();
         if (text && text.length > 0) {
           // 한글 문자가 포함된 텍스트 찾기
           const hasKorean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(text);
-          if (hasKorean && element.children.length === 0) { // 리프 노드만
+          if (hasKorean && element.children.length === 0) {
+            // 리프 노드만
             const style = window.getComputedStyle(element);
             results.push({
               index,
@@ -103,12 +166,12 @@ test.describe('한국어 특화 테스트', () => {
               whiteSpace: style.whiteSpace,
               fontSize: style.fontSize,
               lineHeight: style.lineHeight,
-              fontFamily: style.fontFamily
+              fontFamily: style.fontFamily,
             });
           }
         }
       });
-      
+
       return results.slice(0, 20); // 처음 20개만 검사
     });
 
@@ -117,20 +180,24 @@ test.describe('한국어 특화 테스트', () => {
     let properWordBreakCount = 0;
     let koreanFontCount = 0;
 
-    koreanTextElements.forEach(element => {
+    koreanTextElements.forEach((element) => {
       // word-break: keep-all 적용 확인
       if (element.wordBreak === 'keep-all') {
         properWordBreakCount++;
         console.log(`✓ 올바른 word-break 적용: ${element.tagName} - "${element.text}"`);
       } else {
-        console.warn(`⚠️  word-break 미적용: ${element.tagName} - "${element.text}" (${element.wordBreak})`);
+        console.warn(
+          `⚠️  word-break 미적용: ${element.tagName} - "${element.text}" (${element.wordBreak})`
+        );
       }
 
       // 한국어 폰트 적용 확인
-      if (element.fontFamily.includes('Pretendard') || 
-          element.fontFamily.includes('Noto Sans KR') ||
-          element.fontFamily.includes('Malgun Gothic') ||
-          element.fontFamily.includes('Apple SD Gothic Neo')) {
+      if (
+        element.fontFamily.includes('Pretendard') ||
+        element.fontFamily.includes('Noto Sans KR') ||
+        element.fontFamily.includes('Malgun Gothic') ||
+        element.fontFamily.includes('Apple SD Gothic Neo')
+      ) {
         koreanFontCount++;
       }
 
@@ -170,28 +237,28 @@ test.describe('한국어 특화 테스트', () => {
 
       for (let i = 0; i < Math.min(inputCount, 3); i++) {
         const input = textInputs.nth(i);
-        
+
         // 한국어 텍스트 입력 테스트
         for (const testCase of KOREAN_TEST_STRINGS.slice(0, 5)) {
           await input.clear();
           await input.fill(testCase.text);
-          
+
           // 입력된 값 확인
           const inputValue = await input.inputValue();
           expect(inputValue).toBe(testCase.text);
-          
+
           console.log(`✓ 한국어 입력 성공: ${testCase.description} - "${testCase.text}"`);
-          
+
           // 입력 필드의 스타일 확인
-          const inputStyle = await input.evaluate(el => {
+          const inputStyle = await input.evaluate((el) => {
             const style = window.getComputedStyle(el);
             return {
               fontFamily: style.fontFamily,
               imeMode: style.imeMode,
-              direction: style.direction
+              direction: style.direction,
             };
           });
-          
+
           // 한국어 텍스트 방향 확인 (LTR)
           expect(inputStyle.direction).toBe('ltr');
         }
@@ -209,37 +276,37 @@ test.describe('한국어 특화 테스트', () => {
     const dateElements = await page.evaluate(() => {
       const results = [];
       const allText = document.body.textContent || '';
-      
+
       // 한국어 날짜 패턴 찾기
       const patterns = [
-        /\d{4}년\s*\d{1,2}월\s*\d{1,2}일/g,  // 2024년 1월 1일
-        /\d{1,2}월\s*\d{1,2}일/g,            // 1월 1일
-        /(월|화|수|목|금|토|일)요일/g,         // 요일
-        /오전|오후/g,                        // 오전/오후
-        /\d{1,2}시\s*\d{1,2}분/g,           // 시간
-        /(봄|여름|가을|겨울)/g                // 계절
+        /\d{4}년\s*\d{1,2}월\s*\d{1,2}일/g, // 2024년 1월 1일
+        /\d{1,2}월\s*\d{1,2}일/g, // 1월 1일
+        /(월|화|수|목|금|토|일)요일/g, // 요일
+        /오전|오후/g, // 오전/오후
+        /\d{1,2}시\s*\d{1,2}분/g, // 시간
+        /(봄|여름|가을|겨울)/g, // 계절
       ];
-      
+
       patterns.forEach((pattern, index) => {
         const matches = allText.match(pattern);
         if (matches) {
           results.push({
             patternIndex: index,
-            matches: matches.slice(0, 3) // 처음 3개만
+            matches: matches.slice(0, 3), // 처음 3개만
           });
         }
       });
-      
+
       return results;
     });
 
     console.log('한국어 날짜/시간 형식 검사 결과:', dateElements);
 
     // 날짜 형식이 발견되면 한국어 표준 형식인지 확인
-    dateElements.forEach(dateGroup => {
-      dateGroup.matches.forEach(match => {
+    dateElements.forEach((dateGroup) => {
+      dateGroup.matches.forEach((match) => {
         console.log(`✓ 한국어 날짜/시간 형식 발견: "${match}"`);
-        
+
         // 기본적인 형식 검증
         expect(match).toMatch(/[가-힣0-9\s:]+/);
         expect(match.length).toBeGreaterThan(2);
@@ -247,17 +314,15 @@ test.describe('한국어 특화 테스트', () => {
     });
 
     // 생년월일 입력 필드가 있다면 한국어 형식으로 테스트
-    const birthDateInput = page.locator('input[name*="birth"], input[name*="date"], input[type="date"]');
+    const birthDateInput = page.locator(
+      'input[name*="birth"], input[name*="date"], input[type="date"]'
+    );
     const birthInputCount = await birthDateInput.count();
 
     if (birthInputCount > 0) {
       console.log('생년월일 입력 필드 발견 - 한국어 날짜 입력 테스트');
-      
-      const testDates = [
-        '1990-01-01',
-        '2000-12-31',
-        '1985-06-15'
-      ];
+
+      const testDates = ['1990-01-01', '2000-12-31', '1985-06-15'];
 
       for (const date of testDates) {
         await birthDateInput.first().fill(date);
@@ -276,38 +341,101 @@ test.describe('한국어 특화 테스트', () => {
     const traditionalTerms = await page.evaluate(() => {
       const text = document.body.textContent || '';
       const foundTerms = [];
-      
+
       // 사주 관련 용어들
       const sajuTerms = [
-        '사주팔자', '사주', '팔자', '운세', '점괘', '괘', '역학',
-        '천간', '지지', '갑을병정', '자축인묘', '오행', '음양',
-        '금', '목', '수', '화', '토',
-        '정관', '편관', '정재', '편재', '식신', '상관', '비견', '겁재',
-        '용신', '기신', '희신', '구신', '양', '음',
-        '대운', '세운', '월운', '일운', '시운',
-        '충', '형', '파', '해', '합'
+        '사주팔자',
+        '사주',
+        '팔자',
+        '운세',
+        '점괘',
+        '괘',
+        '역학',
+        '천간',
+        '지지',
+        '갑을병정',
+        '자축인묘',
+        '오행',
+        '음양',
+        '금',
+        '목',
+        '수',
+        '화',
+        '토',
+        '정관',
+        '편관',
+        '정재',
+        '편재',
+        '식신',
+        '상관',
+        '비견',
+        '겁재',
+        '용신',
+        '기신',
+        '희신',
+        '구신',
+        '양',
+        '음',
+        '대운',
+        '세운',
+        '월운',
+        '일운',
+        '시운',
+        '충',
+        '형',
+        '파',
+        '해',
+        '합',
       ];
-      
+
       // 60갑자 용어들
       const gapjaTerms = [
-        '갑자', '을축', '병인', '정묘', '무진', '기사', '경오', '신미', '임신', '계유',
-        '갑술', '을해', '병자', '정축', '무인', '기묘', '경진', '신사', '임오', '계미'
+        '갑자',
+        '을축',
+        '병인',
+        '정묘',
+        '무진',
+        '기사',
+        '경오',
+        '신미',
+        '임신',
+        '계유',
+        '갑술',
+        '을해',
+        '병자',
+        '정축',
+        '무인',
+        '기묘',
+        '경진',
+        '신사',
+        '임오',
+        '계미',
       ];
-      
+
       // 띠 관련 용어들
       const zodiacTerms = [
-        '쥐띠', '소띠', '호랑이띠', '토끼띠', '용띠', '뱀띠',
-        '말띠', '양띠', '원숭이띠', '닭띠', '개띠', '돼지띠'
+        '쥐띠',
+        '소띠',
+        '호랑이띠',
+        '토끼띠',
+        '용띠',
+        '뱀띠',
+        '말띠',
+        '양띠',
+        '원숭이띠',
+        '닭띠',
+        '개띠',
+        '돼지띠',
       ];
-      
+
       const allTerms = [...sajuTerms, ...gapjaTerms, ...zodiacTerms];
-      
-      allTerms.forEach(term => {
+
+      allTerms.forEach((term) => {
         if (text.includes(term)) {
           foundTerms.push(term);
         }
       });
-      
+
       return foundTerms;
     });
 
@@ -325,8 +453,8 @@ test.describe('한국어 특화 테스트', () => {
           year: 1990,
           month: 1,
           day: 1,
-          isLunar: false
-        }
+          isLunar: false,
+        },
       });
 
       if (response.ok()) {
@@ -362,32 +490,39 @@ test.describe('한국어 특화 테스트', () => {
       const errorMessages = await page.evaluate(() => {
         const errors = [];
         const selectors = [
-          '.error', '.error-message', '.alert-danger', '.invalid-feedback',
-          '[role="alert"]', '.validation-error', '.form-error'
+          '.error',
+          '.error-message',
+          '.alert-danger',
+          '.invalid-feedback',
+          '[role="alert"]',
+          '.validation-error',
+          '.form-error',
         ];
 
-        selectors.forEach(selector => {
+        selectors.forEach((selector) => {
           const elements = document.querySelectorAll(selector);
-          elements.forEach(el => {
+          elements.forEach((el) => {
             const text = el.textContent?.trim();
             if (text && text.length > 0) {
               errors.push({
                 selector,
                 text,
-                hasKorean: /[가-힣]/.test(text)
+                hasKorean: /[가-힣]/.test(text),
               });
             }
           });
         });
 
         // 브라우저 기본 validation 메시지도 확인
-        const inputs = document.querySelectorAll('input[required], select[required], textarea[required]');
-        inputs.forEach(input => {
+        const inputs = document.querySelectorAll(
+          'input[required], select[required], textarea[required]'
+        );
+        inputs.forEach((input) => {
           if (input.validationMessage) {
             errors.push({
               selector: 'validation-message',
               text: input.validationMessage,
-              hasKorean: /[가-힣]/.test(input.validationMessage)
+              hasKorean: /[가-힣]/.test(input.validationMessage),
             });
           }
         });
@@ -397,14 +532,14 @@ test.describe('한국어 특화 테스트', () => {
 
       console.log(`에러 메시지 ${errorMessages.length}개 발견`);
 
-      errorMessages.forEach(error => {
+      errorMessages.forEach((error) => {
         console.log(`에러 메시지: "${error.text}" (한국어: ${error.hasKorean})`);
-        
+
         if (error.hasKorean) {
           // 한국어 에러 메시지의 적절성 확인
           expect(error.text).toMatch(/[가-힣]/);
           expect(error.text.length).toBeGreaterThan(2);
-          
+
           // 존댓말 사용 확인 (선택적)
           const hasPoliteForm = /입니다|습니다|하세요|해주세요|입력해|선택해/.test(error.text);
           if (hasPoliteForm) {
@@ -414,7 +549,7 @@ test.describe('한국어 특화 테스트', () => {
       });
 
       // 한국어 에러 메시지가 있는 경우 품질 확인
-      const koreanErrors = errorMessages.filter(e => e.hasKorean);
+      const koreanErrors = errorMessages.filter((e) => e.hasKorean);
       if (koreanErrors.length > 0) {
         expect(koreanErrors.length).toBeGreaterThan(0);
         console.log(`✓ 한국어 에러 메시지 ${koreanErrors.length}개 확인`);
@@ -433,31 +568,26 @@ test.describe('한국어 특화 테스트', () => {
     if (searchInputCount > 0) {
       console.log('검색 기능에서 한국어 입력 테스트');
 
-      const searchTerms = [
-        '사주',
-        '운세',
-        'MBTI',
-        '성격테스트',
-        '타로카드',
-        '연애DNA'
-      ];
+      const searchTerms = ['사주', '운세', 'MBTI', '성격테스트', '타로카드', '연애DNA'];
 
       for (const term of searchTerms) {
         await searchInput.first().clear();
         await searchInput.first().fill(term);
         await searchInput.first().press('Enter');
-        
+
         await page.waitForTimeout(1000);
 
         // 검색 결과 확인
         const searchResults = await page.evaluate((searchTerm) => {
-          const resultsContainer = document.querySelector('.search-results, .results, .service-grid');
+          const resultsContainer = document.querySelector(
+            '.search-results, .results, .service-grid'
+          );
           if (resultsContainer) {
             const text = resultsContainer.textContent || '';
             return {
               hasResults: text.trim().length > 0,
               containsSearchTerm: text.includes(searchTerm),
-              resultText: text.substring(0, 100)
+              resultText: text.substring(0, 100),
             };
           }
           return { hasResults: false, containsSearchTerm: false, resultText: '' };
@@ -481,14 +611,16 @@ test.describe('한국어 특화 테스트', () => {
     // 긴 한국어 텍스트 블록 찾기
     const longTextElements = await page.evaluate(() => {
       const results = [];
-      const textElements = document.querySelectorAll('p, div, span, .content, .description, .result-text');
-      
+      const textElements = document.querySelectorAll(
+        'p, div, span, .content, .description, .result-text'
+      );
+
       textElements.forEach((element, index) => {
         const text = element.textContent?.trim();
         if (text && text.length > 50 && /[가-힣]/.test(text)) {
           const style = window.getComputedStyle(element);
           const rect = element.getBoundingClientRect();
-          
+
           results.push({
             index,
             textLength: text.length,
@@ -497,29 +629,32 @@ test.describe('한국어 특화 테스트', () => {
             overflowWrap: style.overflowWrap,
             whiteSpace: style.whiteSpace,
             width: rect.width,
-            height: rect.height
+            height: rect.height,
           });
         }
       });
-      
+
       return results.slice(0, 10); // 처음 10개만
     });
 
     console.log(`긴 한국어 텍스트 ${longTextElements.length}개 검사`);
 
-    longTextElements.forEach(element => {
+    longTextElements.forEach((element) => {
       console.log(`텍스트 길이: ${element.textLength}, word-break: ${element.wordBreak}`);
-      
+
       // 긴 텍스트에는 적절한 줄바꿈 설정이 있어야 함
-      const hasProperBreaking = element.wordBreak === 'keep-all' || 
-                               element.overflowWrap === 'break-word' ||
-                               element.whiteSpace !== 'nowrap';
-      
+      const hasProperBreaking =
+        element.wordBreak === 'keep-all' ||
+        element.overflowWrap === 'break-word' ||
+        element.whiteSpace !== 'nowrap';
+
       expect(hasProperBreaking).toBe(true);
-      
+
       // 텍스트가 컨테이너를 벗어나지 않는지 확인
       if (element.width > 0) {
-        console.log(`✓ 텍스트 컨테이너 크기: ${Math.round(element.width)}px x ${Math.round(element.height)}px`);
+        console.log(
+          `✓ 텍스트 컨테이너 크기: ${Math.round(element.width)}px x ${Math.round(element.height)}px`
+        );
       }
     });
   });
@@ -533,7 +668,7 @@ test.describe('한국어 특화 테스트', () => {
       const results = {
         availableFonts: [],
         koreanTextElements: 0,
-        fontLoadingStatus: {}
+        fontLoadingStatus: {},
       };
 
       // 사용 가능한 폰트 목록 (간접적으로 확인)
@@ -543,20 +678,20 @@ test.describe('한국어 특화 테스트', () => {
         'Noto Sans KR',
         'Malgun Gothic',
         'Apple SD Gothic Neo',
-        'sans-serif'
+        'sans-serif',
       ];
 
       // 한국어 텍스트 요소들의 폰트 확인
       const elementsWithKorean = document.querySelectorAll('*');
       let koreanElementCount = 0;
 
-      elementsWithKorean.forEach(element => {
+      elementsWithKorean.forEach((element) => {
         const text = element.textContent?.trim();
         if (text && /[가-힣]/.test(text) && element.children.length === 0) {
           koreanElementCount++;
           const style = window.getComputedStyle(element);
           const fontFamily = style.fontFamily;
-          
+
           if (!results.availableFonts.includes(fontFamily)) {
             results.availableFonts.push(fontFamily);
           }
@@ -579,13 +714,14 @@ test.describe('한국어 특화 테스트', () => {
     // 한국어 텍스트 요소가 있다면 적절한 폰트가 적용되어야 함
     if (fontInfo.koreanTextElements > 0) {
       expect(fontInfo.availableFonts.length).toBeGreaterThan(0);
-      
+
       // 주요 한국어 폰트 중 하나는 사용되어야 함
-      const hasKoreanFont = fontInfo.availableFonts.some(font => 
-        font.includes('Pretendard') ||
-        font.includes('Noto Sans KR') ||
-        font.includes('Malgun Gothic') ||
-        font.includes('Apple SD Gothic Neo')
+      const hasKoreanFont = fontInfo.availableFonts.some(
+        (font) =>
+          font.includes('Pretendard') ||
+          font.includes('Noto Sans KR') ||
+          font.includes('Malgun Gothic') ||
+          font.includes('Apple SD Gothic Neo')
       );
 
       expect(hasKoreanFont).toBe(true);
@@ -595,12 +731,17 @@ test.describe('한국어 특화 테스트', () => {
     // 폰트 로딩 완료 확인
     if (fontInfo.fontLoadingStatus.ready === 'available') {
       console.log('✓ 폰트 로딩 API 사용 가능 - 폰트 로딩 완료 대기');
-      
-      await page.waitForFunction(() => {
-        return document.fonts.ready;
-      }, { timeout: 5000 }).catch(() => {
-        console.warn('폰트 로딩 완료 대기 시간초과');
-      });
+
+      await page
+        .waitForFunction(
+          () => {
+            return document.fonts.ready;
+          },
+          { timeout: 5000 }
+        )
+        .catch(() => {
+          console.warn('폰트 로딩 완료 대기 시간초과');
+        });
     }
   });
 
@@ -618,7 +759,7 @@ test.describe('한국어 특화 테스트', () => {
         timeString: now.toLocaleTimeString('ko-KR'),
         weekday: now.toLocaleDateString('ko-KR', { weekday: 'long' }),
         navigatorLanguage: navigator.language,
-        navigatorLanguages: navigator.languages
+        navigatorLanguages: navigator.languages,
       };
     });
 
@@ -650,12 +791,12 @@ test.describe('한국어 특화 테스트', () => {
         hasTraditionalTerms: false,
         hasRespectfulLanguage: false,
         hasInappropriateContent: false,
-        foundTerms: []
+        foundTerms: [],
       };
 
       // 전통 문화 용어 확인
       const traditionalTerms = ['사주', '팔자', '운세', '점괘', '음양', '오행', '천간', '지지'];
-      traditionalTerms.forEach(term => {
+      traditionalTerms.forEach((term) => {
         if (text.includes(term)) {
           results.hasTraditionalTerms = true;
           results.foundTerms.push(term);
@@ -664,11 +805,11 @@ test.describe('한국어 특화 테스트', () => {
 
       // 존댓말 사용 확인
       const respectfulPatterns = [/습니다|입니다|하세요|해주세요|드립니다|드려요/];
-      results.hasRespectfulLanguage = respectfulPatterns.some(pattern => pattern.test(text));
+      results.hasRespectfulLanguage = respectfulPatterns.some((pattern) => pattern.test(text));
 
       // 부적절한 내용 확인 (기본적인 필터링)
       const inappropriateTerms = ['바보', '멍청이', '죽어', '죽일', '꺼져'];
-      results.hasInappropriateContent = inappropriateTerms.some(term => text.includes(term));
+      results.hasInappropriateContent = inappropriateTerms.some((term) => text.includes(term));
 
       return results;
     });
@@ -696,7 +837,7 @@ test.afterAll(async () => {
   console.log('\n=== 한국어 특화 테스트 완료 ===');
   console.log('✓ 한국어 텍스트 렌더링 및 word-break 검증');
   console.log('✓ 한국어 입력 및 IME 호환성 검증');
-  console.log('✓ 한국어 날짜/시간 형식 검증'); 
+  console.log('✓ 한국어 날짜/시간 형식 검증');
   console.log('✓ 전통 문화 용어 정확성 검증');
   console.log('✓ 한국어 에러 메시지 검증');
   console.log('✓ 한국어 검색 기능 검증');

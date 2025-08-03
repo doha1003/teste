@@ -259,7 +259,6 @@
           message_length: sanitizedData.message.length,
         });
       } catch (error) {
-        
         this.showError('문의 전송 중 오류가 발생했습니다. 다시 시도해주세요.');
       }
     }
@@ -397,9 +396,11 @@
       const subject = encodeURIComponent(`[doha.kr 문의] ${data.subject}`);
       const body = encodeURIComponent(
         `이름: ${data.name}
-` + `이메일: ${data.email}
+` +
+          `이메일: ${data.email}
 
-` + `문의 내용:
+` +
+          `문의 내용:
 ${data.message}`
       );
 
@@ -493,7 +494,7 @@ ${data.message}`
         try {
           (window.adsbygoogle = window.adsbygoogle || []).push({});
         } catch (e) {
-          
+          // Error handling - see console
         }
       });
     }
@@ -507,16 +508,14 @@ ${data.message}`
       }
 
       if (!window.API_CONFIG || !window.API_CONFIG.KAKAO_JS_KEY) {
-        
         return;
       }
 
       if (!Kakao.isInitialized()) {
         try {
           Kakao.init(window.API_CONFIG.KAKAO_JS_KEY);
-          
         } catch (e) {
-          
+          // Error handling - see console
         }
       }
     }
@@ -543,7 +542,7 @@ ${data.message}`
 
       // 개발 환경에서 로그
       if (window.location.hostname === 'localhost') {
-        
+        console.log('Development mode'); // eslint-disable-line no-console
       }
     }
   }

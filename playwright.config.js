@@ -17,7 +17,7 @@ export default defineConfig({
     'tests/security/**/*.test.js',
     'tests/performance/**/*.test.js',
     'tests/localization/**/*.test.js',
-    'tests/cross-browser/**/*.test.js'
+    'tests/cross-browser/**/*.test.js',
   ],
 
   // 리포터 설정
@@ -60,7 +60,7 @@ export default defineConfig({
     timezoneId: 'Asia/Seoul',
 
     // 권한
-    permissions: ['clipboard-read', 'clipboard-write'],
+    // permissions: ['clipboard-read', 'clipboard-write'], // Firefox/Safari에서 지원하지 않음
 
     // 오프라인 모드 테스트
     offline: false,
@@ -77,73 +77,64 @@ export default defineConfig({
     // 데스크톱 브라우저
     {
       name: 'chromium',
-      use: { 
+      use: {
         ...devices['Desktop Chrome'],
         locale: 'ko-KR',
-        timezoneId: 'Asia/Seoul'
+        timezoneId: 'Asia/Seoul',
       },
       testDir: './tests',
       testMatch: [
         'tests/e2e/**/*.spec.js',
         'tests/accessibility/**/*.test.js',
         'tests/security/**/*.test.js',
-        'tests/cross-browser/**/*.test.js'
-      ]
+        'tests/cross-browser/**/*.test.js',
+      ],
     },
     {
       name: 'firefox',
-      use: { 
+      use: {
         ...devices['Desktop Firefox'],
         locale: 'ko-KR',
-        timezoneId: 'Asia/Seoul'
+        timezoneId: 'Asia/Seoul',
       },
       testDir: './tests',
-      testMatch: [
-        'tests/e2e/**/*.spec.js',
-        'tests/cross-browser/**/*.test.js'
-      ]
+      testMatch: ['tests/e2e/**/*.spec.js', 'tests/cross-browser/**/*.test.js'],
     },
     {
       name: 'webkit',
-      use: { 
+      use: {
         ...devices['Desktop Safari'],
         locale: 'ko-KR',
-        timezoneId: 'Asia/Seoul'
+        timezoneId: 'Asia/Seoul',
       },
       testDir: './tests',
-      testMatch: [
-        'tests/e2e/**/*.spec.js',
-        'tests/cross-browser/**/*.test.js'
-      ]
+      testMatch: ['tests/e2e/**/*.spec.js', 'tests/cross-browser/**/*.test.js'],
     },
-    
+
     // 모바일 디바이스
     {
       name: 'mobile-chrome',
-      use: { 
+      use: {
         ...devices['Pixel 5'],
         locale: 'ko-KR',
-        timezoneId: 'Asia/Seoul'
+        timezoneId: 'Asia/Seoul',
       },
       testDir: './tests',
       testMatch: [
         'tests/e2e/**/*.spec.js',
         'tests/accessibility/**/*.test.js',
-        'tests/cross-browser/**/*.test.js'
-      ]
+        'tests/cross-browser/**/*.test.js',
+      ],
     },
     {
       name: 'mobile-safari',
-      use: { 
+      use: {
         ...devices['iPhone 12'],
         locale: 'ko-KR',
-        timezoneId: 'Asia/Seoul'
+        timezoneId: 'Asia/Seoul',
       },
       testDir: './tests',
-      testMatch: [
-        'tests/e2e/**/*.spec.js',
-        'tests/cross-browser/**/*.test.js'
-      ]
+      testMatch: ['tests/e2e/**/*.spec.js', 'tests/cross-browser/**/*.test.js'],
     },
     {
       name: 'tablet',
@@ -151,38 +142,35 @@ export default defineConfig({
         ...devices['iPad Pro'],
         viewport: { width: 1024, height: 768 },
         locale: 'ko-KR',
-        timezoneId: 'Asia/Seoul'
+        timezoneId: 'Asia/Seoul',
       },
       testDir: './tests',
-      testMatch: [
-        'tests/e2e/**/*.spec.js',
-        'tests/cross-browser/**/*.test.js'
-      ]
+      testMatch: ['tests/e2e/**/*.spec.js', 'tests/cross-browser/**/*.test.js'],
     },
 
     // 성능 테스트 (Chrome만)
     {
       name: 'performance',
-      use: { 
+      use: {
         ...devices['Desktop Chrome'],
         locale: 'ko-KR',
-        timezoneId: 'Asia/Seoul'
+        timezoneId: 'Asia/Seoul',
       },
       testDir: './tests',
-      testMatch: ['tests/performance/**/*.test.js']
+      testMatch: ['tests/performance/**/*.test.js'],
     },
 
     // 한국어 특화 테스트
     {
       name: 'localization',
-      use: { 
+      use: {
         ...devices['Desktop Chrome'],
         locale: 'ko-KR',
-        timezoneId: 'Asia/Seoul'
+        timezoneId: 'Asia/Seoul',
       },
       testDir: './tests',
-      testMatch: ['tests/localization/**/*.test.js']
-    }
+      testMatch: ['tests/localization/**/*.test.js'],
+    },
   ],
 
   // 웹 서버 설정 (로컬 개발용)

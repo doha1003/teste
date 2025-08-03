@@ -10,8 +10,10 @@
   // XSS Prevention utilities
   const Security = {
     // Sanitize HTML input to prevent XSS
-    sanitizeHTML: function (str) {
-      if (!str) return '';
+    sanitizeHTML(str) {
+      if (!str) {
+        return '';
+      }
 
       // Check if DOMPurify is available (recommended)
       if (typeof DOMPurify !== 'undefined') {
@@ -25,10 +27,12 @@
     },
 
     // Sanitize string for use in HTML attributes
-    sanitizeAttr: function (str) {
-      if (!str) return '';
+    sanitizeAttr(str) {
+      if (!str) {
+        return '';
+      }
 
-      return String(str).replace(/['"<>&]/g, function (match) {
+      return String(str).replace(/['"<>&]/g, (match) => {
         const escapes = {
           '"': '&quot;',
           "'": '&#x27;',
@@ -41,8 +45,10 @@
     },
 
     // Sanitize URL to prevent javascript: and data: schemes
-    sanitizeURL: function (url) {
-      if (!url) return '';
+    sanitizeURL(url) {
+      if (!url) {
+        return '';
+      }
 
       try {
         const parsed = new URL(url, window.location.href);
@@ -60,8 +66,10 @@
     },
 
     // Sanitize input based on type
-    sanitizeInput: function (input, type = 'text') {
-      if (!input) return '';
+    sanitizeInput(input, type = 'text') {
+      if (!input) {
+        return '';
+      }
 
       const str = String(input);
 
@@ -86,7 +94,7 @@
     },
 
     // Validate and sanitize numeric input
-    validateNumber: function (input, min = 0, max = Infinity) {
+    validateNumber(input, min = 0, max = Infinity) {
       const num = parseFloat(input);
 
       if (isNaN(num) || !isFinite(num)) {
@@ -97,16 +105,20 @@
     },
 
     // Validate email format
-    validateEmail: function (email) {
-      if (!email) return false;
+    validateEmail(email) {
+      if (!email) {
+        return false;
+      }
 
       const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       return re.test(String(email).toLowerCase());
     },
 
     // Validate Korean phone number
-    validatePhone: function (phone) {
-      if (!phone) return false;
+    validatePhone(phone) {
+      if (!phone) {
+        return false;
+      }
 
       const cleaned = phone.replace(/\D/g, '');
       const re = /^(01[0-9]{8,9}|02[0-9]{7,8}|0[3-9][0-9]{7,8})$/;
@@ -114,7 +126,7 @@
     },
 
     // Generate CSRF token
-    generateCSRFToken: function () {
+    generateCSRFToken() {
       if (window.crypto && window.crypto.getRandomValues) {
         return [...crypto.getRandomValues(new Uint8Array(32))]
           .map((b) => b.toString(16).padStart(2, '0'))
@@ -126,20 +138,26 @@
     },
 
     // Validate CSRF token
-    validateCSRFToken: function (token, storedToken) {
-      if (!token || !storedToken) return false;
+    validateCSRFToken(token, storedToken) {
+      if (!token || !storedToken) {
+        return false;
+      }
       return token === storedToken;
     },
 
     // Escape special regex characters
-    escapeRegex: function (str) {
-      if (!str) return '';
+    escapeRegex(str) {
+      if (!str) {
+        return '';
+      }
       return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     },
 
     // Check for potentially dangerous content
-    containsDangerousContent: function (str) {
-      if (!str) return false;
+    containsDangerousContent(str) {
+      if (!str) {
+        return false;
+      }
 
       const dangerousPatterns = [
         /<script[^>]*>/gi,
@@ -156,7 +174,7 @@
     },
 
     // Safe JSON parsing
-    safeJSONParse: function (str, defaultValue = null) {
+    safeJSONParse(str, defaultValue = null) {
       try {
         return JSON.parse(str);
       } catch (e) {
@@ -166,8 +184,10 @@
     },
 
     // Validate allowed characters (Korean, English, numbers, basic punctuation)
-    validateAllowedChars: function (str, allowSpecial = false) {
-      if (!str) return true;
+    validateAllowedChars(str, allowSpecial = false) {
+      if (!str) {
+        return true;
+      }
 
       const basicPattern = /^[가-힣a-zA-Z0-9\s\-\_\.\,\!\?]+$/;
       const specialPattern = /^[가-힣a-zA-Z0-9\s\-\_\.\,\!\?\@\#\$\%\&\*\(\)\[\]\{\}]+$/;
@@ -177,7 +197,7 @@
     },
 
     // Create safe element with text content
-    createSafeElement: function (tagName, textContent, attributes = {}) {
+    createSafeElement(tagName, textContent, attributes = {}) {
       const element = document.createElement(tagName);
 
       if (textContent) {
@@ -198,13 +218,13 @@
     },
 
     // Content Security Policy helper
-    getCSPNonce: function () {
+    getCSPNonce() {
       const meta = document.querySelector('meta[name="csp-nonce"]');
       return meta ? meta.content : '';
     },
 
     // Rate limiting helper
-    createRateLimiter: function (maxCalls, timeWindow) {
+    createRateLimiter(maxCalls, timeWindow) {
       const calls = [];
 
       return function () {
@@ -230,9 +250,9 @@
   window.Security = Security;
 
   // Automatically sanitize common input events
-  document.addEventListener('DOMContentLoaded', function () {
+  document.addEventListener('DOMContentLoaded', () => {
     // Auto-sanitize form inputs
-    document.addEventListener('input', function (e) {
+    document.addEventListener('input', (e) => {
       if (e.target.matches('input[type="text"], input[type="email"], textarea')) {
         const maxLength = e.target.maxLength || 1000;
 
@@ -248,11 +268,11 @@
     });
 
     // Prevent form submission with dangerous content
-    document.addEventListener('submit', function (e) {
+    document.addEventListener('submit', (e) => {
       const form = e.target;
       const inputs = form.querySelectorAll('input, textarea, select');
 
-      for (let input of inputs) {
+      for (const input of inputs) {
         if (Security.containsDangerousContent(input.value)) {
           e.preventDefault();
           // console.error removed('Form submission blocked: dangerous content detected');

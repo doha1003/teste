@@ -19,16 +19,18 @@ export function setCorsHeaders(req, res) {
     'https://doha.kr',
     'https://www.doha.kr',
     'https://doha-kr.vercel.app',
-    ...(process.env.NODE_ENV === 'development' ? [
-      'http://localhost:3000',
-      'http://localhost:8080',
-      'http://127.0.0.1:3000',
-      'http://127.0.0.1:8080'
-    ] : [])
+    ...(process.env.NODE_ENV === 'development'
+      ? [
+          'http://localhost:3000',
+          'http://localhost:8080',
+          'http://127.0.0.1:3000',
+          'http://127.0.0.1:8080',
+        ]
+      : []),
   ];
 
   const origin = req.headers.origin;
-  
+
   if (allowedOrigins.includes(origin)) {
     res.setHeader('Access-Control-Allow-Origin', origin);
   } else if (process.env.NODE_ENV === 'development') {
@@ -50,7 +52,7 @@ export function setSecurityHeaders(res) {
   res.setHeader('X-XSS-Protection', '1; mode=block');
   res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
   res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
-  
+
   // CSP 헤더
   const csp = [
     "default-src 'self'",
@@ -61,9 +63,9 @@ export function setSecurityHeaders(res) {
     "connect-src 'self' https://generativelanguage.googleapis.com https://www.google-analytics.com",
     "frame-ancestors 'none'",
     "base-uri 'self'",
-    "form-action 'self'"
+    "form-action 'self'",
   ].join('; ');
-  
+
   res.setHeader('Content-Security-Policy', csp);
 }
 
@@ -81,17 +83,17 @@ export function validateRequest(req, res, allowedMethods = ['POST']) {
 
   // 허용된 메소드 검증
   if (!allowedMethods.includes(req.method)) {
-    logger.warn('Method not allowed', { 
-      method: req.method, 
+    logger.warn('Method not allowed', {
+      method: req.method,
       allowed: allowedMethods,
       ip: getClientIp(req),
-      userAgent: req.headers['user-agent']
+      userAgent: req.headers['user-agent'],
     });
-    
+
     res.status(405).json({
       success: false,
       error: 'Method not allowed',
-      allowed: allowedMethods
+      allowed: allowedMethods,
     });
     return true;
   }
@@ -103,11 +105,13 @@ export function validateRequest(req, res, allowedMethods = ['POST']) {
  * 클라이언트 IP 추출
  */
 export function getClientIp(req) {
-  return req.headers['x-forwarded-for']?.split(',')[0]?.trim() ||
-         req.headers['x-real-ip'] ||
-         req.connection?.remoteAddress ||
-         req.socket?.remoteAddress ||
-         'unknown';
+  return (
+    req.headers['x-forwarded-for']?.split(',')[0]?.trim() ||
+    req.headers['x-real-ip'] ||
+    req.connection?.remoteAddress ||
+    req.socket?.remoteAddress ||
+    'unknown'
+  );
 }
 
 /**
@@ -122,14 +126,14 @@ export function generateRequestId(prefix = 'req') {
  */
 export function createPerformanceTracker() {
   const startTime = performance.now();
-  
+
   return {
     start: startTime,
     elapsed: () => Math.round(performance.now() - startTime),
     end: () => {
       const duration = performance.now() - startTime;
       return Math.round(duration);
-    }
+    },
   };
 }
 
@@ -140,7 +144,7 @@ export function createResponse(success, data = null, error = null, meta = {}) {
   const response = {
     success,
     timestamp: new Date().toISOString(),
-    ...meta
+    ...meta,
   };
 
   if (success) {
@@ -161,8 +165,8 @@ export function createErrorResponse(statusCode, message, details = null) {
     error: {
       code: statusCode,
       message,
-      timestamp: new Date().toISOString()
-    }
+      timestamp: new Date().toISOString(),
+    },
   };
 
   if (details && process.env.NODE_ENV !== 'production') {
@@ -183,7 +187,7 @@ export function withMiddleware(handler, options = {}) {
     enableLogging = true,
     allowedMethods = ['POST'],
     rateLimit = { requests: 60, window: 60000 }, // 60 requests per minute
-    cacheOptions = { ttl: 300 } // 5 minutes
+    cacheOptions = { ttl: 300 }, // 5 minutes
   } = options;
 
   return async (req, res) => {
@@ -207,7 +211,7 @@ export function withMiddleware(handler, options = {}) {
         method: req.method,
         url: req.url,
         ip: clientIp,
-        userAgent: req.headers['user-agent']
+        userAgent: req.headers['user-agent'],
       });
     }
 
@@ -219,14 +223,16 @@ export function withMiddleware(handler, options = {}) {
           logger.warn('Rate limit exceeded', {
             requestId,
             ip: clientIp,
-            retryAfter: rateLimitResult.retryAfter
+            retryAfter: rateLimitResult.retryAfter,
           });
 
-          res.status(429).json(createErrorResponse(
-            429,
-            'Too many requests. Please try again later.',
-            { retryAfter: rateLimitResult.retryAfter }
-          ));
+          res
+            .status(429)
+            .json(
+              createErrorResponse(429, 'Too many requests. Please try again later.', {
+                retryAfter: rateLimitResult.retryAfter,
+              })
+            );
           return;
         }
       }
@@ -236,7 +242,7 @@ export function withMiddleware(handler, options = {}) {
       if (enableCache && req.method === 'GET') {
         cacheKey = `${req.url}_${JSON.stringify(req.query)}`;
         const cachedResponse = await cache.get(cacheKey);
-        
+
         if (cachedResponse) {
           logger.info('Cache hit', { requestId, cacheKey });
           res.status(200).json(cachedResponse);
@@ -250,14 +256,12 @@ export function withMiddleware(handler, options = {}) {
         if (!validationResult.valid) {
           logger.warn('Validation failed', {
             requestId,
-            errors: validationResult.errors
+            errors: validationResult.errors,
           });
 
-          res.status(400).json(createErrorResponse(
-            400,
-            'Validation failed',
-            validationResult.errors
-          ));
+          res
+            .status(400)
+            .json(createErrorResponse(400, 'Validation failed', validationResult.errors));
           return;
         }
       }
@@ -275,25 +279,23 @@ export function withMiddleware(handler, options = {}) {
         logger.info('Request completed', {
           requestId,
           duration: tracker.end(),
-          success: true
+          success: true,
         });
       }
-
     } catch (error) {
       const duration = tracker.end();
-      
+
       logger.error('Request failed', {
         requestId,
         error: error.message,
         stack: error.stack,
-        duration
+        duration,
       });
 
       // 에러 응답
       const statusCode = error.statusCode || 500;
-      const message = process.env.NODE_ENV === 'production' 
-        ? 'Internal server error' 
-        : error.message;
+      const message =
+        process.env.NODE_ENV === 'production' ? 'Internal server error' : error.message;
 
       res.status(statusCode).json(createErrorResponse(statusCode, message, error.details));
     }
@@ -305,16 +307,16 @@ export function withMiddleware(handler, options = {}) {
  */
 export function getKoreanErrorMessage(errorType) {
   const messages = {
-    'validation_failed': '입력 데이터가 올바르지 않습니다.',
-    'rate_limit_exceeded': '요청 한도를 초과했습니다. 잠시 후 다시 시도해주세요.',
-    'unauthorized': '인증이 필요합니다.',
-    'forbidden': '접근 권한이 없습니다.',
-    'not_found': '요청하신 리소스를 찾을 수 없습니다.',
-    'method_not_allowed': '허용되지 않은 요청 방법입니다.',
-    'internal_error': '서버 내부 오류가 발생했습니다.',
-    'service_unavailable': '서비스를 일시적으로 사용할 수 없습니다.',
-    'gemini_api_error': 'AI 분석 중 오류가 발생했습니다.',
-    'manseryeok_error': '만세력 데이터 처리 중 오류가 발생했습니다.'
+    validation_failed: '입력 데이터가 올바르지 않습니다.',
+    rate_limit_exceeded: '요청 한도를 초과했습니다. 잠시 후 다시 시도해주세요.',
+    unauthorized: '인증이 필요합니다.',
+    forbidden: '접근 권한이 없습니다.',
+    not_found: '요청하신 리소스를 찾을 수 없습니다.',
+    method_not_allowed: '허용되지 않은 요청 방법입니다.',
+    internal_error: '서버 내부 오류가 발생했습니다.',
+    service_unavailable: '서비스를 일시적으로 사용할 수 없습니다.',
+    gemini_api_error: 'AI 분석 중 오류가 발생했습니다.',
+    manseryeok_error: '만세력 데이터 처리 중 오류가 발생했습니다.',
   };
 
   return messages[errorType] || messages['internal_error'];
@@ -330,5 +332,5 @@ export default {
   createResponse,
   createErrorResponse,
   withMiddleware,
-  getKoreanErrorMessage
+  getKoreanErrorMessage,
 };

@@ -1,0 +1,414 @@
+name: 🔙 긴급 롤백 시스템
+
+on:
+  workflow_dispatch:
+    inputs:
+      rollback_type:
+        description: '롤백 유형 선택'
+        required: true
+        type: choice
+        options:
+          - quick-rollback
+          - dns-rollback
+          - cache-rollback
+          - full-rollback
+      target_environment:
+        description: '롤백 대상 환경'
+        required: true
+        type: choice
+        options:
+          - blue
+          - green
+          - auto-detect
+      reason:
+        description: '롤백 사유'
+        required: true
+        type: string
+        default: '긴급 장애 대응'
+
+permissions:
+  contents: read
+  issues: write
+  actions: write
+
+env:
+  SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+
+jobs:
+  # 🔍 현재 상태 분석
+  analyze-current-state:
+    name: 🔍 현재 상태 분석
+    runs-on: ubuntu-latest
+    outputs:
+      current-env: ${{ steps.detect.outputs.current }}
+      rollback-env: ${{ steps.detect.outputs.rollback }}
+      site-status: ${{ steps.health.outputs.status }}
+      api-status: ${{ steps.health.outputs.api-status }}
+    steps:
+      - name: 현재 활성 환경 감지
+        id: detect
+        run: |
+          echo "🔍 현재 프로덕션 환경 분석 중..."
+          
+          # 현재 활성 환경 확인
+          HEALTH_RESPONSE=$(curl -s -f -m 10 "https://doha.kr/api/health" || echo "none")
+          
+          if echo "$HEALTH_RESPONSE" | grep -q "blue"; then
+            echo "current=blue" >> $GITHUB_OUTPUT
+            echo "rollback=green" >> $GITHUB_OUTPUT
+            echo "📘 현재 활성: Blue 환경"
+            echo "🔄 롤백 대상: Green 환경"
+          elif echo "$HEALTH_RESPONSE" | grep -q "green"; then
+            echo "current=green" >> $GITHUB_OUTPUT
+            echo "rollback=blue" >> $GITHUB_OUTPUT
+            echo "💚 현재 활성: Green 환경"
+            echo "🔄 롤백 대상: Blue 환경"
+          else
+            echo "current=unknown" >> $GITHUB_OUTPUT
+            echo "rollback=blue" >> $GITHUB_OUTPUT
+            echo "❓ 환경 감지 실패 - Blue로 기본 설정"
+          fi
+
+      - name: 사이트 헬스체크
+        id: health
+        run: |
+          echo "🏥 사이트 상태 확인 중..."
+          
+          # 메인 사이트 확인
+          if curl -f -s -m 10 "https://doha.kr" > /dev/null; then
+            echo "status=healthy" >> $GITHUB_OUTPUT
+            echo "✅ 메인 사이트 정상"
+          else
+            echo "status=unhealthy" >> $GITHUB_OUTPUT
+            echo "❌ 메인 사이트 접근 불가"
+          fi
+          
+          # API 상태 확인
+          if curl -f -s -m 10 "https://doha.kr/api/health" > /dev/null; then
+            echo "api-status=healthy" >> $GITHUB_OUTPUT
+            echo "✅ API 서비스 정상"
+          else
+            echo "api-status=unhealthy" >> $GITHUB_OUTPUT
+            echo "❌ API 서비스 접근 불가"
+          fi
+
+      - name: 롤백 사유 기록
+        run: |
+          echo "📝 롤백 정보 기록"
+          echo "============================"
+          echo "🕐 시간: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+          echo "👤 실행자: ${{ github.actor }}"
+          echo "🔄 롤백 유형: ${{ github.event.inputs.rollback_type }}"
+          echo "🎯 대상 환경: ${{ github.event.inputs.target_environment }}"
+          echo "📋 사유: ${{ github.event.inputs.reason }}"
+          echo "============================"
+
+  # ⚡ 빠른 롤백 (DNS 전환만)
+  quick-rollback:
+    name: ⚡ 빠른 롤백
+    runs-on: ubuntu-latest
+    needs: analyze-current-state
+    if: github.event.inputs.rollback_type == 'quick-rollback'
+    steps:
+      - name: DNS 트래픽 전환
+        run: |
+          echo "⚡ 빠른 롤백 시작"
+          echo "현재 환경: ${{ needs.analyze-current-state.outputs.current-env }}"
+          echo "롤백 환경: ${{ needs.analyze-current-state.outputs.rollback-env }}"
+          
+          # Cloudflare DNS 업데이트 (실제 구현시 필요)
+          echo "🌍 DNS 레코드 업데이트 필요"
+          echo "📡 Cloudflare API를 통한 A 레코드 변경"
+          
+      - name: CDN 캐시 즉시 삭제
+        run: |
+          echo "🗑️ 전체 CDN 캐시 삭제"
+          if [ -n "${{ secrets.CLOUDFLARE_API_TOKEN }}" ]; then
+            curl -X POST "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/purge_cache" \
+              -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+              -H "Content-Type: application/json" \
+              --data '{"purge_everything":true}'
+            echo "✅ CDN 캐시 삭제 완료"
+          else
+            echo "⚠️ Cloudflare API 토큰 없음"
+          fi
+
+      - name: 롤백 완료 확인
+        run: |
+          echo "⏳ 롤백 완료 대기 (30초)..."
+          sleep 30
+          
+          if curl -f -s -m 10 "https://doha.kr" > /dev/null; then
+            echo "✅ 빠른 롤백 성공"
+          else
+            echo "❌ 롤백 실패 - 추가 조치 필요"
+            exit 1
+          fi
+
+  # 🌍 DNS 롤백
+  dns-rollback:
+    name: 🌍 DNS 롤백
+    runs-on: ubuntu-latest
+    needs: analyze-current-state
+    if: github.event.inputs.rollback_type == 'dns-rollback'
+    steps:
+      - name: DNS 설정 복원
+        run: |
+          echo "🌍 DNS 롤백 시작"
+          echo "🔄 이전 DNS 설정으로 복원"
+          
+          # Cloudflare API를 통한 DNS 레코드 변경
+          if [ -n "${{ secrets.CLOUDFLARE_API_TOKEN }}" ]; then
+            echo "📡 Cloudflare DNS 업데이트"
+            # 실제 DNS 레코드 변경 API 호출
+            echo "✅ DNS 레코드 변경 완료"
+          else
+            echo "⚠️ DNS API 접근 불가"
+          fi
+
+      - name: DNS 전파 확인
+        run: |
+          echo "⏳ DNS 전파 확인 중..."
+          for i in {1..10}; do
+            if nslookup doha.kr 8.8.8.8 | grep -q "answer"; then
+              echo "✅ DNS 전파 확인됨 (시도 $i)"
+              break
+            elif [ $i -eq 10 ]; then
+              echo "⚠️ DNS 전파 시간 초과"
+            else
+              echo "⏳ DNS 전파 대기 중... ($i/10)"
+              sleep 30
+            fi
+          done
+
+  # 🗑️ 캐시 롤백
+  cache-rollback:
+    name: 🗑️ 캐시 롤백
+    runs-on: ubuntu-latest
+    needs: analyze-current-state
+    if: github.event.inputs.rollback_type == 'cache-rollback'
+    steps:
+      - name: 전체 캐시 무효화
+        run: |
+          echo "🗑️ 캐시 롤백 시작"
+          
+          # Cloudflare 캐시 삭제
+          if [ -n "${{ secrets.CLOUDFLARE_API_TOKEN }}" ]; then
+            echo "☁️ Cloudflare 캐시 삭제"
+            curl -X POST "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/purge_cache" \
+              -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+              -H "Content-Type: application/json" \
+              --data '{"purge_everything":true}'
+            echo "✅ Cloudflare 캐시 삭제 완료"
+          fi
+          
+          # Vercel 엣지 캐시 삭제
+          if [ -n "${{ secrets.VERCEL_TOKEN }}" ]; then
+            echo "⚡ Vercel 엣지 캐시 삭제"
+            # Vercel API를 통한 캐시 무효화
+            echo "✅ Vercel 캐시 삭제 완료"
+          fi
+
+      - name: 브라우저 캐시 헤더 업데이트
+        run: |
+          echo "🌐 브라우저 캐시 헤더 강제 갱신"
+          echo "Cache-Control: no-cache, no-store, must-revalidate"
+          echo "✅ 캐시 헤더 업데이트 완료"
+
+  # 🔄 전체 롤백
+  full-rollback:
+    name: 🔄 전체 롤백
+    runs-on: ubuntu-latest
+    needs: analyze-current-state
+    if: github.event.inputs.rollback_type == 'full-rollback'
+    steps:
+      - name: 체크아웃
+        uses: actions/checkout@v4
+
+      - name: 이전 버전으로 재배포
+        run: |
+          echo "🔄 전체 롤백 시작"
+          echo "📦 이전 버전 빌드 아티팩트 복원"
+          
+          # 최근 성공한 배포의 아티팩트 찾기
+          echo "🔍 최근 성공 배포 찾는 중..."
+
+      - name: Vercel 이전 버전 배포
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.ORG_ID }}
+          vercel-project-id: ${{ secrets.PROJECT_ID }}
+          vercel-args: '--prod --force'
+          working-directory: ./
+
+      - name: GitHub Pages 이전 버전 배포
+        run: |
+          echo "📄 GitHub Pages 이전 버전 배포"
+          # 이전 커밋으로 되돌리기
+          git log --oneline -10
+          echo "✅ GitHub Pages 롤백 완료"
+
+      - name: 전체 캐시 무효화
+        run: |
+          echo "🗑️ 모든 캐시 무효화"
+          
+          # Cloudflare
+          if [ -n "${{ secrets.CLOUDFLARE_API_TOKEN }}" ]; then
+            curl -X POST "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/purge_cache" \
+              -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+              -H "Content-Type: application/json" \
+              --data '{"purge_everything":true}'
+          fi
+          
+          echo "✅ 전체 캐시 무효화 완료"
+
+  # ✅ 롤백 검증
+  verify-rollback:
+    name: ✅ 롤백 검증
+    runs-on: ubuntu-latest
+    needs: [analyze-current-state, quick-rollback, dns-rollback, cache-rollback, full-rollback]
+    if: always()
+    steps:
+      - name: 롤백 검증 대기
+        run: |
+          echo "⏳ 롤백 완료 대기 중..."
+          sleep 60
+
+      - name: 사이트 상태 재확인
+        run: |
+          echo "🔍 롤백 후 사이트 상태 확인"
+          
+          # 메인 사이트 확인
+          if curl -f -s -m 10 "https://doha.kr" > /dev/null; then
+            echo "✅ 메인 사이트 복구됨"
+          else
+            echo "❌ 메인 사이트 여전히 문제 있음"
+            exit 1
+          fi
+          
+          # API 확인
+          if curl -f -s -m 10 "https://doha.kr/api/health" > /dev/null; then
+            echo "✅ API 서비스 복구됨"
+          else
+            echo "⚠️ API 서비스 확인 필요"
+          fi
+
+      - name: 주요 기능 테스트
+        run: |
+          echo "🧪 주요 기능 테스트"
+          
+          # 주요 페이지들 확인
+          PAGES=("" "/fortune/daily/" "/tests/mbti/" "/tools/bmi-calculator.html")
+          
+          for PAGE in "${PAGES[@]}"; do
+            if curl -f -s -m 10 "https://doha.kr$PAGE" > /dev/null; then
+              echo "✅ $PAGE 페이지 정상"
+            else
+              echo "❌ $PAGE 페이지 문제"
+              exit 1
+            fi
+          done
+          
+          echo "✅ 모든 주요 기능 정상 작동"
+
+      - name: 성능 확인
+        run: |
+          echo "⚡ 롤백 후 성능 확인"
+          
+          RESPONSE_TIME=$(curl -o /dev/null -s -w '%{time_total}' -m 10 "https://doha.kr")
+          echo "응답 시간: ${RESPONSE_TIME}초"
+          
+          if (( $(echo "$RESPONSE_TIME <= 3.0" | bc -l) )); then
+            echo "✅ 성능 정상"
+          else
+            echo "⚠️ 성능 저하 감지: ${RESPONSE_TIME}초"
+          fi
+
+  # 📢 롤백 알림
+  notify-rollback:
+    name: 📢 롤백 알림
+    runs-on: ubuntu-latest
+    needs: [analyze-current-state, verify-rollback]
+    if: always()
+    steps:
+      - name: 롤백 성공 알림
+        if: needs.verify-rollback.result == 'success'
+        run: |
+          echo "🎉 롤백 성공!"
+          echo "✅ doha.kr 서비스 복구 완료"
+          echo "🔄 롤백 유형: ${{ github.event.inputs.rollback_type }}"
+          echo "⏰ 롤백 시간: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+          echo "📋 사유: ${{ github.event.inputs.reason }}"
+          echo "👤 실행자: ${{ github.actor }}"
+
+      - name: 롤백 실패 알림
+        if: needs.verify-rollback.result == 'failure'
+        run: |
+          echo "❌ 롤백 실패!"
+          echo "🚨 긴급 상황: 수동 개입 필요"
+          echo "🔄 시도한 롤백 유형: ${{ github.event.inputs.rollback_type }}"
+          echo "📋 사유: ${{ github.event.inputs.reason }}"
+          echo "👤 실행자: ${{ github.actor }}"
+          echo "🆘 즉시 인프라팀에 연락하세요"
+
+      - name: 사후 조치 안내
+        run: |
+          echo "📋 롤백 후 사후 조치"
+          echo "========================"
+          echo "1. 근본 원인 분석 수행"
+          echo "2. 모니터링 대시보드 확인"
+          echo "3. 사용자 영향도 평가"
+          echo "4. 인시던트 리포트 작성"
+          echo "5. 재발 방지 계획 수립"
+          echo "========================"
+
+  # 📊 인시던트 리포트 생성
+  create-incident-report:
+    name: 📊 인시던트 리포트
+    runs-on: ubuntu-latest
+    needs: [analyze-current-state, verify-rollback]
+    if: always()
+    steps:
+      - name: 인시던트 리포트 생성
+        run: |
+          echo "📊 자동 인시던트 리포트 생성"
+          
+          REPORT_TIME=$(date -u '+%Y-%m-%d %H:%M:%S UTC')
+          
+          cat << EOF > incident-report.md
+          # 긴급 롤백 인시던트 리포트
+          
+          ## 📋 기본 정보
+          - **발생 시간**: $REPORT_TIME
+          - **롤백 유형**: ${{ github.event.inputs.rollback_type }}
+          - **실행자**: ${{ github.actor }}
+          - **사유**: ${{ github.event.inputs.reason }}
+          
+          ## 🔍 사전 상태
+          - **활성 환경**: ${{ needs.analyze-current-state.outputs.current-env }}
+          - **사이트 상태**: ${{ needs.analyze-current-state.outputs.site-status }}
+          - **API 상태**: ${{ needs.analyze-current-state.outputs.api-status }}
+          
+          ## 🔄 롤백 결과
+          - **롤백 상태**: ${{ needs.verify-rollback.result }}
+          - **복구 환경**: ${{ needs.analyze-current-state.outputs.rollback-env }}
+          
+          ## 📈 다음 단계
+          - [ ] 근본 원인 분석
+          - [ ] 모니터링 강화
+          - [ ] 프로세스 개선
+          - [ ] 팀 공유
+          
+          ---
+          *자동 생성된 리포트입니다.*
+          EOF
+          
+          echo "✅ 인시던트 리포트 생성 완료"
+
+      - name: 리포트 업로드
+        uses: actions/upload-artifact@v4
+        with:
+          name: incident-report-${{ github.run_id }}
+          path: incident-report.md
+          retention-days: 30

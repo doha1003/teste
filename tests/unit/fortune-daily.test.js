@@ -3,12 +3,7 @@
  */
 
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import {
-  createTestElement,
-  mockApiResponse,
-  mockApiError,
-  waitForRender,
-} from '../utils/test-helpers.js';
+// Test helpers are now in setup.js as globals
 
 describe('Fortune Daily Feature', () => {
   let container;
@@ -20,7 +15,8 @@ describe('Fortune Daily Feature', () => {
     window.alert = alertMock;
 
     // DOM 구조 생성
-    container = createTestElement(`
+    container = document.createElement('div');
+    container.innerHTML = `
       <form data-form="true">
         <input name="userName" id="userName" />
         <select id="birthYear" name="birthYear"></select>
@@ -41,9 +37,11 @@ describe('Fortune Daily Feature', () => {
     // 모듈 로드
     await import('../../js/features/fortune-daily.js');
 
+    // DOM에 추가
+    document.body.appendChild(container);
+    
     // DOM 준비 이벤트 발생
     window.dispatchEvent(new Event('DOMContentLoaded'));
-    await waitForRender();
   });
 
   afterEach(() => {
@@ -110,7 +108,6 @@ describe('Fortune Daily Feature', () => {
       const form = document.querySelector('form[data-form="true"]');
 
       form.dispatchEvent(new Event('submit'));
-      await waitForRender();
 
       expect(alertMock).toHaveBeenCalledWith('모든 필수 항목을 입력해주세요.');
     });
@@ -123,20 +120,18 @@ describe('Fortune Daily Feature', () => {
 
       // 일 옵션 생성
       document.getElementById('birthMonth').dispatchEvent(new Event('change'));
-      await waitForRender();
 
       document.getElementById('birthDay').value = '15';
 
       // API 응답 모킹
-      mockApiResponse('/api/fortune', {
+      global.fetch.mockResolvedValue(global.createMockResponse({
         success: true,
         fortune: '오늘은 좋은 일이 있을 거예요!',
-      });
+      }));
 
       // 폼 제출
       const form = document.querySelector('form[data-form="true"]');
       form.dispatchEvent(new Event('submit'));
-      await waitForRender();
 
       expect(alertMock).not.toHaveBeenCalled();
     });
@@ -147,7 +142,6 @@ describe('Fortune Daily Feature', () => {
       document.getElementById('birthYear').value = '1985';
       document.getElementById('birthMonth').value = '10';
       document.getElementById('birthMonth').dispatchEvent(new Event('change'));
-      await waitForRender();
       document.getElementById('birthDay').value = '20';
       document.getElementById('isLunar').checked = true;
 
@@ -156,12 +150,11 @@ describe('Fortune Daily Feature', () => {
       global.fetch.mockImplementationOnce(async (url, options) => {
         capturedBody = JSON.parse(options.body);
         return global.createMockResponse({ success: true, fortune: '테스트' });
-      });
+      }));
 
       // 폼 제출
       const form = document.querySelector('form[data-form="true"]');
       form.dispatchEvent(new Event('submit'));
-      await waitForRender();
 
       expect(capturedBody.userData.isLunar).toBe(true);
     });
@@ -172,7 +165,6 @@ describe('Fortune Daily Feature', () => {
       document.getElementById('birthYear').value = '1995';
       document.getElementById('birthMonth').value = '3';
       document.getElementById('birthMonth').dispatchEvent(new Event('change'));
-      await waitForRender();
       document.getElementById('birthDay').value = '8';
       document.getElementById('birthTime').value = '1'; // 축시
 
@@ -181,12 +173,11 @@ describe('Fortune Daily Feature', () => {
       global.fetch.mockImplementationOnce(async (url, options) => {
         capturedBody = JSON.parse(options.body);
         return global.createMockResponse({ success: true, fortune: '테스트' });
-      });
+      }));
 
       // 폼 제출
       const form = document.querySelector('form[data-form="true"]');
       form.dispatchEvent(new Event('submit'));
-      await waitForRender();
 
       expect(capturedBody.userData.birthHour).toBe(1);
     });
@@ -199,7 +190,6 @@ describe('Fortune Daily Feature', () => {
       document.getElementById('birthYear').value = '2000';
       document.getElementById('birthMonth').value = '6';
       document.getElementById('birthMonth').dispatchEvent(new Event('change'));
-      await waitForRender();
       document.getElementById('birthDay').value = '15';
     });
 
@@ -207,20 +197,19 @@ describe('Fortune Daily Feature', () => {
       const spinner = document.querySelector('.spinner');
 
       // 지연된 응답 모킹
-      mockApiResponse('/api/fortune', { success: true }, { delay: 100 });
+      global.fetch.mockResolvedValue(global.createMockResponse({ success: true }, { delay: 100 });
 
       const form = document.querySelector('form[data-form="true"]');
       form.dispatchEvent(new Event('submit'));
 
       // 로딩 중 확인
-      await waitForRender();
       expect(spinner.style.display).toBe('block');
     });
 
     it('API 응답 후 로딩 스피너를 숨겨야 함', async () => {
       const spinner = document.querySelector('.spinner');
 
-      mockApiResponse('/api/fortune', {
+      global.fetch.mockResolvedValue(global.createMockResponse({
         success: true,
         fortune: '운세 결과',
       });
@@ -244,12 +233,14 @@ describe('Fortune Daily Feature', () => {
       document.getElementById('birthYear').value = '2000';
       document.getElementById('birthMonth').value = '6';
       document.getElementById('birthMonth').dispatchEvent(new Event('change'));
-      await waitForRender();
       document.getElementById('birthDay').value = '15';
     });
 
     it('API 에러 시 사용자에게 알림을 표시해야 함', async () => {
-      mockApiError('/api/fortune', 500);
+      global.fetch.mockResolvedValue(global.createMockResponse({
+        success: false,
+        error: 'Internal Server Error'
+      }, 500));
 
       const form = document.querySelector('form[data-form="true"]');
       form.dispatchEvent(new Event('submit'));
@@ -282,14 +273,13 @@ describe('Fortune Daily Feature', () => {
       document.getElementById('birthYear').value = '1990';
       document.getElementById('birthMonth').value = '5';
       document.getElementById('birthMonth').dispatchEvent(new Event('change'));
-      await waitForRender();
       document.getElementById('birthDay').value = '15';
     });
 
     it('성공적인 운세 결과를 표시해야 함', async () => {
       const fortuneText = '오늘은 새로운 기회가 찾아올 것입니다. 긍정적인 마음가짐을 유지하세요.';
 
-      mockApiResponse('/api/fortune', {
+      global.fetch.mockResolvedValue(global.createMockResponse({
         success: true,
         fortune: fortuneText,
         luckyColor: '파란색',
@@ -311,7 +301,7 @@ describe('Fortune Daily Feature', () => {
     });
 
     it('사용자 이름을 포함한 개인화된 메시지를 표시해야 함', async () => {
-      mockApiResponse('/api/fortune', {
+      global.fetch.mockResolvedValue(global.createMockResponse({
         success: true,
         fortune: '좋은 하루가 될 것입니다.',
         personalMessage: '홍길동님, 오늘은 특별한 날입니다.',

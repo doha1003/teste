@@ -4,7 +4,12 @@
  * @author doha.kr Backend Team
  */
 
-import { withMiddleware, createResponse, createErrorResponse, getKoreanErrorMessage } from '../core/middleware.js';
+import {
+  withMiddleware,
+  createResponse,
+  createErrorResponse,
+  getKoreanErrorMessage,
+} from '../core/middleware.js';
 import { ValidationSchemas } from '../core/validation.js';
 import { createLogger } from '../core/logger.js';
 
@@ -20,7 +25,7 @@ async function toolsHandler(req, res, { requestId, clientIp, tracker }) {
     return res.status(400).json(
       createErrorResponse(400, getKoreanErrorMessage('validation_failed'), {
         field: 'type',
-        message: '도구 유형을 지정해주세요.'
+        message: '도구 유형을 지정해주세요.',
       })
     );
   }
@@ -32,48 +37,47 @@ async function toolsHandler(req, res, { requestId, clientIp, tracker }) {
       case 'bmi':
         result = await handleBMICalculator(data, options, requestId);
         break;
-      
+
       case 'salary':
         result = await handleSalaryCalculator(data, options, requestId);
         break;
-      
+
       case 'text-counter':
         result = await handleTextCounter(data, options, requestId);
         break;
-      
+
       default:
         return res.status(400).json(
           createErrorResponse(400, '지원하지 않는 도구 유형입니다.', {
-            supportedTypes: ['bmi', 'salary', 'text-counter']
+            supportedTypes: ['bmi', 'salary', 'text-counter'],
           })
         );
     }
 
     const duration = tracker.end();
-    
+
     logger.info('Tools API success', {
       requestId,
       type,
       duration,
-      clientIp: clientIp.substring(0, 10) + '***'
+      clientIp: clientIp.substring(0, 10) + '***',
     });
 
     return res.status(200).json(
       createResponse(true, result, null, {
         type,
         duration,
-        requestId
+        requestId,
       })
     );
-
   } catch (error) {
     const duration = tracker.end();
-    
+
     logger.error('Tools API error', {
       requestId,
       type,
       error: error.message,
-      duration
+      duration,
     });
 
     const statusCode = error.statusCode || 500;
@@ -82,7 +86,7 @@ async function toolsHandler(req, res, { requestId, clientIp, tracker }) {
     return res.status(statusCode).json(
       createErrorResponse(statusCode, message, {
         type,
-        requestId
+        requestId,
       })
     );
   }
@@ -94,11 +98,13 @@ async function toolsHandler(req, res, { requestId, clientIp, tracker }) {
 async function handleBMICalculator(data, options, requestId) {
   const validation = ValidationSchemas.bmiCalculator.validate(data);
   if (!validation.valid) {
-    throw new Error(`BMI 계산 데이터 검증 실패: ${validation.errors.map(e => e.message).join(', ')}`);
+    throw new Error(
+      `BMI 계산 데이터 검증 실패: ${validation.errors.map((e) => e.message).join(', ')}`
+    );
   }
 
   const { height, weight } = validation.data;
-  
+
   // BMI 계산
   const heightInMeter = height / 100;
   const bmi = weight / (heightInMeter * heightInMeter);
@@ -121,16 +127,16 @@ async function handleBMICalculator(data, options, requestId) {
       idealWeight,
       weightDifference,
       risks,
-      recommendations
+      recommendations,
     },
-    calculatedAt: new Date().toISOString()
+    calculatedAt: new Date().toISOString(),
   };
 
   logger.info('BMI calculation completed', {
     requestId,
     bmi: roundedBMI,
     category,
-    status
+    status,
   });
 
   return result;
@@ -152,13 +158,13 @@ async function handleSalaryCalculator(data, options, requestId) {
 
   // 한국 세금 계산 (간소화)
   const taxes = calculateKoreanTax(annualSalary, dependents, isMarried);
-  
+
   const result = {
     input: {
       annualSalary,
       dependents,
       isMarried,
-      taxYear
+      taxYear,
     },
     breakdown: {
       grossSalary: annualSalary,
@@ -170,23 +176,23 @@ async function handleSalaryCalculator(data, options, requestId) {
       healthInsurance: taxes.healthInsurance,
       employmentInsurance: taxes.employmentInsurance,
       totalTax: taxes.totalTax,
-      netSalary: taxes.netSalary
+      netSalary: taxes.netSalary,
     },
     monthly: {
       grossMonthly: Math.round(annualSalary / 12),
       netMonthly: Math.round(taxes.netSalary / 12),
-      deductionsMonthly: Math.round(taxes.totalTax / 12)
+      deductionsMonthly: Math.round(taxes.totalTax / 12),
     },
     taxRate: Math.round((taxes.totalTax / annualSalary) * 100 * 10) / 10,
     calculatedAt: new Date().toISOString(),
-    disclaimer: '이 계산은 추정치이며, 실제 세액과 다를 수 있습니다.'
+    disclaimer: '이 계산은 추정치이며, 실제 세액과 다를 수 있습니다.',
   };
 
   logger.info('Salary calculation completed', {
     requestId,
     annualSalary,
     netSalary: taxes.netSalary,
-    taxRate: result.taxRate
+    taxRate: result.taxRate,
   });
 
   return result;
@@ -208,11 +214,11 @@ async function handleTextCounter(data, options, requestId) {
 
   // 다양한 카운트 계산
   const analysis = analyzeText(text);
-  
+
   const result = {
     input: {
       textLength: text.length,
-      textPreview: text.length > 100 ? text.substring(0, 100) + '...' : text
+      textPreview: text.length > 100 ? text.substring(0, 100) + '...' : text,
     },
     counts: {
       characters: analysis.characters,
@@ -220,7 +226,7 @@ async function handleTextCounter(data, options, requestId) {
       words: analysis.words,
       sentences: analysis.sentences,
       paragraphs: analysis.paragraphs,
-      lines: analysis.lines
+      lines: analysis.lines,
     },
     korean: {
       koreanCharacters: analysis.koreanCharacters,
@@ -228,21 +234,21 @@ async function handleTextCounter(data, options, requestId) {
       numbers: analysis.numbers,
       punctuation: analysis.punctuation,
       koreanWords: analysis.koreanWords,
-      englishWords: analysis.englishWords
+      englishWords: analysis.englishWords,
     },
     statistics: {
       averageWordsPerSentence: analysis.averageWordsPerSentence,
       averageCharactersPerWord: analysis.averageCharactersPerWord,
-      readingTimeMinutes: analysis.readingTimeMinutes
+      readingTimeMinutes: analysis.readingTimeMinutes,
     },
-    analyzedAt: new Date().toISOString()
+    analyzedAt: new Date().toISOString(),
   };
 
   logger.info('Text analysis completed', {
     requestId,
     textLength: text.length,
     words: analysis.words,
-    koreanCharacters: analysis.koreanCharacters
+    koreanCharacters: analysis.koreanCharacters,
   });
 
   return result;
@@ -289,7 +295,12 @@ function getBMIAnalysis(bmi) {
     status = '고도비만';
     description = '비만 3단계입니다.';
     risks = ['생명 위험', '각종 만성질환', '수술 위험 증가', '기대수명 단축'];
-    recommendations = ['즉시 전문의 상담', '수술적 치료 고려', '집중 관리 프로그램', '응급상황 대비'];
+    recommendations = [
+      '즉시 전문의 상담',
+      '수술적 치료 고려',
+      '집중 관리 프로그램',
+      '응급상황 대비',
+    ];
   }
 
   return { category, status, description, risks, recommendations };
@@ -321,7 +332,8 @@ function calculateKoreanTax(annualSalary, dependents, isMarried) {
   // 표준공제
   const standardDeduction = 1300000;
 
-  const totalDeductions = employmentDeduction + personalDeduction + marriageDeduction + standardDeduction;
+  const totalDeductions =
+    employmentDeduction + personalDeduction + marriageDeduction + standardDeduction;
   const taxableIncome = Math.max(0, annualSalary - totalDeductions);
 
   // 소득세 계산 (간소화된 구간)
@@ -356,7 +368,7 @@ function calculateKoreanTax(annualSalary, dependents, isMarried) {
     healthInsurance: Math.round(healthInsurance),
     employmentInsurance: Math.round(employmentInsurance),
     totalTax: Math.round(totalTax),
-    netSalary: Math.round(netSalary)
+    netSalary: Math.round(netSalary),
   };
 }
 
@@ -366,28 +378,28 @@ function calculateKoreanTax(annualSalary, dependents, isMarried) {
 function analyzeText(text) {
   const characters = text.length;
   const charactersNoSpaces = text.replace(/\s/g, '').length;
-  
+
   // 단어 카운트
   const words = text.trim() ? text.trim().split(/\s+/).length : 0;
-  
+
   // 문장 카운트
-  const sentences = text.split(/[.!?]+/).filter(s => s.trim()).length;
-  
+  const sentences = text.split(/[.!?]+/).filter((s) => s.trim()).length;
+
   // 단락 카운트
-  const paragraphs = text.split(/\n\s*\n/).filter(p => p.trim()).length;
-  
+  const paragraphs = text.split(/\n\s*\n/).filter((p) => p.trim()).length;
+
   // 줄 카운트
   const lines = text.split('\n').length;
 
   // 한글 문자 카운트
   const koreanCharacters = (text.match(/[가-힣]/g) || []).length;
-  
+
   // 영문 문자 카운트
   const englishCharacters = (text.match(/[a-zA-Z]/g) || []).length;
-  
+
   // 숫자 카운트
   const numbers = (text.match(/[0-9]/g) || []).length;
-  
+
   // 구두점 카운트
   const punctuation = (text.match(/[^\w\s가-힣]/g) || []).length;
 
@@ -397,8 +409,9 @@ function analyzeText(text) {
 
   // 통계
   const averageWordsPerSentence = sentences > 0 ? Math.round((words / sentences) * 10) / 10 : 0;
-  const averageCharactersPerWord = words > 0 ? Math.round((charactersNoSpaces / words) * 10) / 10 : 0;
-  
+  const averageCharactersPerWord =
+    words > 0 ? Math.round((charactersNoSpaces / words) * 10) / 10 : 0;
+
   // 읽기 시간 (분당 200단어 기준)
   const readingTimeMinutes = Math.ceil(words / 200);
 
@@ -417,7 +430,7 @@ function analyzeText(text) {
     englishWords,
     averageWordsPerSentence,
     averageCharactersPerWord,
-    readingTimeMinutes
+    readingTimeMinutes,
   };
 }
 
@@ -431,47 +444,46 @@ async function healthHandler(req, res, { requestId, clientIp, tracker }) {
       services: {
         bmi: { status: 'healthy', service: 'bmi-calculator' },
         salary: { status: 'healthy', service: 'salary-calculator' },
-        textCounter: { status: 'healthy', service: 'text-counter' }
+        textCounter: { status: 'healthy', service: 'text-counter' },
       },
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     };
 
     const duration = tracker.end();
-    
+
     return res.status(200).json(
       createResponse(true, result, null, {
         duration,
-        requestId
+        requestId,
       })
     );
-
   } catch (error) {
     const duration = tracker.end();
-    
+
     logger.error('Health check error', {
       requestId,
       error: error.message,
-      duration
+      duration,
     });
 
-    return res.status(500).json(
-      createErrorResponse(500, '서비스 상태 확인 중 오류가 발생했습니다.')
-    );
+    return res
+      .status(500)
+      .json(createErrorResponse(500, '서비스 상태 확인 중 오류가 발생했습니다.'));
   }
 }
 
 // 메인 핸들러 - 경로별 분기
 async function mainHandler(req, res, context) {
   const { url } = req;
-  
+
   if (url === '/api/v2/tools' && req.method === 'POST') {
     return await toolsHandler(req, res, context);
   } else if (url === '/api/v2/tools/health' && req.method === 'GET') {
     return await healthHandler(req, res, context);
   } else {
-    return res.status(404).json(
-      createErrorResponse(404, '요청하신 API 엔드포인트를 찾을 수 없습니다.')
-    );
+    return res
+      .status(404)
+      .json(createErrorResponse(404, '요청하신 API 엔드포인트를 찾을 수 없습니다.'));
   }
 }
 
@@ -483,11 +495,8 @@ export default withMiddleware(mainHandler, {
   enableLogging: true,
   allowedMethods: ['GET', 'POST'],
   rateLimit: { requests: 100, window: 60000 }, // 100 requests per minute
-  cacheOptions: { ttl: 300000 } // 5분 캐시
+  cacheOptions: { ttl: 300000 }, // 5분 캐시
 });
 
 // 명명된 내보내기 (테스트용)
-export {
-  toolsHandler,
-  healthHandler
-};
+export { toolsHandler, healthHandler };

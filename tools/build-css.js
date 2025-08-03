@@ -21,7 +21,7 @@ const CONFIG = {
   outputDev: 'styles.css',
   outputProd: 'styles.min.css',
   sourceMap: true,
-  browsers: ['> 1%', 'last 2 versions', 'not dead', 'not ie 11']
+  browsers: ['> 1%', 'last 2 versions', 'not dead', 'not ie 11'],
 };
 
 // Console colors for better output
@@ -31,7 +31,7 @@ const colors = {
   yellow: '\x1b[33m',
   red: '\x1b[31m',
   gray: '\x1b[90m',
-  reset: '\x1b[0m'
+  reset: '\x1b[0m',
 };
 
 // Logger functions
@@ -40,7 +40,7 @@ const log = {
   success: (msg) => console.log(`${colors.green}✓${colors.reset} ${msg}`),
   warning: (msg) => console.log(`${colors.yellow}⚠${colors.reset} ${msg}`),
   error: (msg) => console.error(`${colors.red}✗${colors.reset} ${msg}`),
-  detail: (msg) => console.log(`${colors.gray}  ${msg}${colors.reset}`)
+  detail: (msg) => console.log(`${colors.gray}  ${msg}${colors.reset}`),
 };
 
 /**
@@ -100,68 +100,75 @@ async function buildCSS(isDevelopment = false) {
           return path.join(rootDir, 'css', id);
         },
         onImport: (files) => {
-          files.forEach(file => {
+          files.forEach((file) => {
             if (file !== CONFIG.entry) {
               log.detail(`Importing: ${path.relative(rootDir, file)}`);
             }
           });
-        }
+        },
       }),
       // Autoprefixer for browser compatibility
       autoprefixer({
         overrideBrowserslist: CONFIG.browsers,
-        grid: 'autoplace'
-      })
+        grid: 'autoplace',
+      }),
     ];
+
+    // Note: Advanced optimizations disabled for compatibility
 
     // Add minification for production
     if (!isDevelopment) {
-      plugins.push(cssnano({
-        preset: ['default', {
-          discardComments: {
-            removeAll: true
-          },
-          normalizeWhitespace: true,
-          colormin: true,
-          convertValues: true,
-          discardDuplicates: true,
-          discardEmpty: true,
-          mergeIdents: true,
-          mergeLonghand: true,
-          mergeRules: true,
-          minifyFontValues: true,
-          minifyGradients: true,
-          minifyParams: true,
-          minifySelectors: true,
-          normalizeCharset: true,
-          normalizeDisplayValues: true,
-          normalizePositions: true,
-          normalizeRepeatStyle: true,
-          normalizeString: true,
-          normalizeTimingFunctions: true,
-          normalizeUnicode: true,
-          normalizeUrl: true,
-          orderedValues: true,
-          reduceIdents: true,
-          reduceInitial: true,
-          reduceTransforms: true,
-          svgo: true,
-          uniqueSelectors: true,
-          // Preserve Korean characters
-          normalizeCharset: {
-            add: true
-          }
-        }]
-      }));
+      plugins.push(
+        cssnano({
+          preset: [
+            'default',
+            {
+              discardComments: {
+                removeAll: true,
+              },
+              normalizeWhitespace: true,
+              colormin: true,
+              convertValues: true,
+              discardDuplicates: true,
+              discardEmpty: true,
+              mergeIdents: true,
+              mergeLonghand: true,
+              mergeRules: true,
+              minifyFontValues: true,
+              minifyGradients: true,
+              minifyParams: true,
+              minifySelectors: true,
+              normalizeCharset: true,
+              normalizeDisplayValues: true,
+              normalizePositions: true,
+              normalizeRepeatStyle: true,
+              normalizeString: true,
+              normalizeTimingFunctions: true,
+              normalizeUnicode: true,
+              normalizeUrl: true,
+              orderedValues: true,
+              reduceIdents: true,
+              reduceInitial: true,
+              reduceTransforms: true,
+              svgo: true,
+              uniqueSelectors: true,
+              // Keep basic optimization only
+              // Preserve Korean characters
+              normalizeCharset: {
+                add: true,
+              },
+            },
+          ],
+        })
+      );
     }
 
     // Process CSS
-    const result = await postcss(plugins)
-      .process(mainCSS, {
-        from: CONFIG.entry,
-        to: outputPath,
-        map: CONFIG.sourceMap ? { inline: false } : false
-      });
+    const result = await postcss(plugins).process(mainCSS, {
+      from: CONFIG.entry,
+      to: outputPath,
+      map: CONFIG.sourceMap ? { inline: false } : false,
+    });
 
     // Write output files
     await fs.writeFile(outputPath, result.css);
@@ -180,7 +187,7 @@ async function buildCSS(isDevelopment = false) {
     log.detail(`Output: ${outputFile}`);
     log.detail(`Size: ${originalSize} KB → ${bundleSize} KB`);
     log.detail(`Time: ${duration}ms`);
-    
+
     if (!isDevelopment) {
       const reduction = ((1 - bundleSize / originalSize) * 100).toFixed(1);
       log.detail(`Compression: ${reduction}% reduction`);
@@ -191,9 +198,8 @@ async function buildCSS(isDevelopment = false) {
       outputFile,
       bundleSize,
       duration,
-      importCount
+      importCount,
     };
-
   } catch (error) {
     log.error(`Failed to build CSS: ${error.message}`);
     if (error.file) {
@@ -247,10 +253,16 @@ async function main() {
     // Summary
     console.log(`\n${colors.green}Build Summary:${colors.reset}`);
     console.log('┌─────────────────────────────────────────────────┐');
-    console.log(`│ Development:  ${devResult.outputFile.padEnd(20)} ${devResult.bundleSize.padStart(8)} KB │`);
-    console.log(`│ Production:   ${prodResult.outputFile.padEnd(20)} ${prodResult.bundleSize.padStart(8)} KB │`);
+    console.log(
+      `│ Development:  ${devResult.outputFile.padEnd(20)} ${devResult.bundleSize.padStart(8)} KB │`
+    );
+    console.log(
+      `│ Production:   ${prodResult.outputFile.padEnd(20)} ${prodResult.bundleSize.padStart(8)} KB │`
+    );
     console.log(`│ Imports bundled: ${prodResult.importCount.toString().padEnd(30)} │`);
-    console.log(`│ Total time: ${(devResult.duration + prodResult.duration).toString().padEnd(32)}ms │`);
+    console.log(
+      `│ Total time: ${(devResult.duration + prodResult.duration).toString().padEnd(32)}ms │`
+    );
     console.log('└─────────────────────────────────────────────────┘');
 
     // Show HTML integration snippet
@@ -263,7 +275,6 @@ async function main() {
     console.log(`Network requests reduced from ${networkRequests} to 1`);
     console.log(`Estimated load time improvement: ~${(networkRequests - 1) * 50}ms`);
     console.log(`(Based on 50ms average per HTTP request)\n`);
-
   } catch (error) {
     log.error('Build failed!');
     console.error(error);
@@ -276,7 +287,7 @@ console.log('Checking if script is called directly...');
 console.log('import.meta.url:', import.meta.url);
 console.log('process.argv[1]:', process.argv[1]);
 
-main().catch(error => {
+main().catch((error) => {
   console.error('Script failed:', error);
   process.exit(1);
 });

@@ -19,13 +19,13 @@ const OPTIMIZATION_CONFIG = {
     png: 90,
     avif: 75,
   },
-  
+
   // PWA 아이콘 크기
   iconSizes: [48, 72, 96, 128, 144, 152, 192, 256, 384, 512],
-  
+
   // 반응형 이미지 크기
   responsiveSizes: [320, 640, 768, 1024, 1280, 1920],
-  
+
   // 최적화 옵션
   options: {
     // 진보적 JPEG
@@ -52,21 +52,21 @@ class PWAImageOptimizer {
 
   async init() {
     console.log('🚀 PWA 이미지 최적화 시작...\n');
-    
+
     // 출력 디렉토리 생성
     await this.ensureDirectories();
-    
+
     // 이미지 파일 찾기
     const imageFiles = await this.findImageFiles();
-    
+
     console.log(`📁 발견된 이미지: ${imageFiles.length}개\n`);
-    
+
     // 이미지 최적화 실행
     await this.processImages(imageFiles);
-    
+
     // PWA 아이콘 생성
     await this.generatePWAIcons();
-    
+
     // 결과 출력
     this.printResults();
   }
@@ -111,15 +111,14 @@ class PWAImageOptimizer {
 
   async processImages(imageFiles) {
     console.log('🔄 이미지 최적화 중...\n');
-    
+
     for (const [index, filePath] of imageFiles.entries()) {
       try {
         const progress = `[${index + 1}/${imageFiles.length}]`;
         console.log(`${progress} 처리 중: ${filePath}`);
-        
+
         await this.optimizeImage(filePath);
         this.stats.processed++;
-        
       } catch (error) {
         console.error(`❌ ${filePath} 최적화 실패:`, error.message);
         this.stats.errors++;
@@ -138,7 +137,7 @@ class PWAImageOptimizer {
 
     // Sharp 인스턴스 생성
     let image = sharp(inputPath);
-    
+
     // 메타데이터 제거
     if (OPTIMIZATION_CONFIG.options.stripMetadata) {
       image = image.withMetadata({
@@ -165,16 +164,14 @@ class PWAImageOptimizer {
     }
 
     // 반응형 버전 생성 (대형 이미지만)
-    if (inputStats.size > 100 * 1024) { // 100KB 이상
+    if (inputStats.size > 100 * 1024) {
+      // 100KB 이상
       await this.generateResponsiveVersions(image, parsedPath);
     }
   }
 
   async optimizeJPEG(image, inputPath, parsedPath) {
-    const outputPath = path.join(
-      this.outputDir,
-      `${parsedPath.name}-optimized${parsedPath.ext}`
-    );
+    const outputPath = path.join(this.outputDir, `${parsedPath.name}-optimized${parsedPath.ext}`);
 
     // JPEG 최적화
     await image
@@ -186,11 +183,8 @@ class PWAImageOptimizer {
       .toFile(outputPath);
 
     // WebP 변환
-    const webpPath = path.join(
-      this.outputDir,
-      `${parsedPath.name}.webp`
-    );
-    
+    const webpPath = path.join(this.outputDir, `${parsedPath.name}.webp`);
+
     await sharp(inputPath)
       .webp({
         quality: OPTIMIZATION_CONFIG.quality.webp,
@@ -199,11 +193,8 @@ class PWAImageOptimizer {
       .toFile(webpPath);
 
     // AVIF 변환 (최신 포맷)
-    const avifPath = path.join(
-      this.outputDir,
-      `${parsedPath.name}.avif`
-    );
-    
+    const avifPath = path.join(this.outputDir, `${parsedPath.name}.avif`);
+
     try {
       await sharp(inputPath)
         .avif({
@@ -217,10 +208,7 @@ class PWAImageOptimizer {
   }
 
   async optimizePNG(image, inputPath, parsedPath) {
-    const outputPath = path.join(
-      this.outputDir,
-      `${parsedPath.name}-optimized${parsedPath.ext}`
-    );
+    const outputPath = path.join(this.outputDir, `${parsedPath.name}-optimized${parsedPath.ext}`);
 
     // PNG 최적화
     await image
@@ -232,11 +220,8 @@ class PWAImageOptimizer {
       .toFile(outputPath);
 
     // WebP 변환 (투명도 지원)
-    const webpPath = path.join(
-      this.outputDir,
-      `${parsedPath.name}.webp`
-    );
-    
+    const webpPath = path.join(this.outputDir, `${parsedPath.name}.webp`);
+
     await sharp(inputPath)
       .webp({
         quality: OPTIMIZATION_CONFIG.quality.webp,
@@ -247,44 +232,31 @@ class PWAImageOptimizer {
 
   async optimizeGIF(image, inputPath, parsedPath) {
     // GIF를 WebP 애니메이션으로 변환
-    const webpPath = path.join(
-      this.outputDir,
-      `${parsedPath.name}.webp`
-    );
-    
+    const webpPath = path.join(this.outputDir, `${parsedPath.name}.webp`);
+
     try {
-      await sharp(inputPath, { animated: true })
-        .webp({ quality: 80 })
-        .toFile(webpPath);
+      await sharp(inputPath, { animated: true }).webp({ quality: 80 }).toFile(webpPath);
     } catch (error) {
       console.log(`⚠️  GIF 애니메이션 변환 실패: ${parsedPath.name}`);
-      
+
       // 정적 이미지로 폴백
-      await image
-        .png({ quality: 90 })
-        .toFile(path.join(this.outputDir, `${parsedPath.name}.png`));
+      await image.png({ quality: 90 }).toFile(path.join(this.outputDir, `${parsedPath.name}.png`));
     }
   }
 
   async optimizeSVG(inputPath, parsedPath) {
     // SVG는 복사만 (별도 최적화 도구 필요)
-    const outputPath = path.join(
-      this.outputDir,
-      `${parsedPath.name}-optimized${parsedPath.ext}`
-    );
-    
+    const outputPath = path.join(this.outputDir, `${parsedPath.name}-optimized${parsedPath.ext}`);
+
     await fs.copyFile(inputPath, outputPath);
   }
 
   async generateResponsiveVersions(image, parsedPath) {
     const responsiveDir = path.join(this.outputDir, 'responsive');
-    
+
     for (const size of OPTIMIZATION_CONFIG.responsiveSizes) {
-      const outputPath = path.join(
-        responsiveDir,
-        `${parsedPath.name}-${size}w.webp`
-      );
-      
+      const outputPath = path.join(responsiveDir, `${parsedPath.name}-${size}w.webp`);
+
       try {
         await image
           .clone()
@@ -302,7 +274,7 @@ class PWAImageOptimizer {
 
   async generatePWAIcons() {
     console.log('\n🎨 PWA 아이콘 생성 중...\n');
-    
+
     // 기본 로고 찾기
     const logoPath = await this.findLogo();
     if (!logoPath) {
@@ -311,15 +283,15 @@ class PWAImageOptimizer {
     }
 
     const logo = sharp(logoPath);
-    
+
     // 표준 아이콘들 생성
     for (const size of OPTIMIZATION_CONFIG.iconSizes) {
       await this.generateIcon(logo, size, 'any');
     }
-    
+
     // Maskable 아이콘들 생성
     await this.generateMaskableIcons(logo);
-    
+
     // 바로가기 아이콘들 생성
     await this.generateShortcutIcons();
   }
@@ -340,14 +312,14 @@ class PWAImageOptimizer {
         // 파일이 없으면 다음 시도
       }
     }
-    
+
     return null;
   }
 
   async generateIcon(logo, size, purpose = 'any') {
     const suffix = purpose === 'maskable' ? '-maskable' : '';
     const outputPath = `images/icon${suffix}-${size}x${size}.png`;
-    
+
     let pipeline = logo.clone().resize(size, size, {
       fit: 'contain',
       background: { r: 255, g: 255, b: 255, alpha: 0 },
@@ -366,14 +338,14 @@ class PWAImageOptimizer {
     }
 
     await pipeline.png({ quality: 100 }).toFile(outputPath);
-    
+
     console.log(`✅ 생성됨: ${outputPath}`);
   }
 
   async generateMaskableIcons(logo) {
     // Maskable 아이콘은 192px, 512px만 생성
     const maskableSizes = [192, 512];
-    
+
     for (const size of maskableSizes) {
       await this.generateIcon(logo, size, 'maskable');
     }
@@ -399,7 +371,7 @@ class PWAImageOptimizer {
       });
 
       const outputPath = `images/shortcuts/${shortcut.name}-icon.png`;
-      
+
       await canvas.png().toFile(outputPath);
       console.log(`✅ 바로가기 아이콘 생성: ${outputPath}`);
     }
@@ -408,14 +380,14 @@ class PWAImageOptimizer {
   printResults() {
     const savedBytes = this.stats.totalSizeBefore - this.stats.totalSizeAfter;
     const savedPercent = ((savedBytes / this.stats.totalSizeBefore) * 100).toFixed(1);
-    
+
     console.log('\n📊 이미지 최적화 완료!\n');
     console.log(`✅ 처리된 이미지: ${this.stats.processed}개`);
     console.log(`❌ 실패한 이미지: ${this.stats.errors}개`);
     console.log(`💾 절약된 용량: ${this.formatBytes(savedBytes)} (${savedPercent}%)`);
     console.log(`📦 최적화 전: ${this.formatBytes(this.stats.totalSizeBefore)}`);
     console.log(`📦 최적화 후: ${this.formatBytes(this.stats.totalSizeAfter)}`);
-    
+
     // 권장사항
     console.log('\n💡 권장사항:');
     console.log('- HTML에서 <picture> 요소를 사용하여 WebP/AVIF 지원');

@@ -44,8 +44,8 @@ describe('Design System Components', () => {
 
     it('버튼 변형들이 올바른 클래스를 가져야 함', () => {
       const variants = ['primary', 'secondary', 'ghost', 'danger'];
-      
-      variants.forEach(variant => {
+
+      variants.forEach((variant) => {
         const button = document.createElement('button');
         button.className = `btn btn-${variant}`;
         button.textContent = `${variant} 버튼`;
@@ -64,7 +64,7 @@ describe('Design System Components', () => {
 
       expect(button.disabled).toBe(true);
       expect(button.getAttribute('aria-disabled')).toBe(null);
-      
+
       // aria-disabled 설정
       button.setAttribute('aria-disabled', 'true');
       expect(button.getAttribute('aria-disabled')).toBe('true');
@@ -72,8 +72,8 @@ describe('Design System Components', () => {
 
     it('버튼 크기 변형이 올바르게 적용되어야 함', () => {
       const sizes = ['sm', 'md', 'lg'];
-      
-      sizes.forEach(size => {
+
+      sizes.forEach((size) => {
         const button = document.createElement('button');
         button.className = `btn btn-primary btn-${size}`;
         button.textContent = `${size} 크기`;
@@ -110,7 +110,7 @@ describe('Design System Components', () => {
       container.appendChild(card);
 
       expect(card.className).toContain('card');
-      
+
       const header = card.querySelector('.card-header');
       const title = card.querySelector('.card-title');
       const content = card.querySelector('.card-content');
@@ -140,7 +140,7 @@ describe('Design System Components', () => {
       container.appendChild(resultCard);
 
       expect(resultCard.className).toContain('result-card');
-      
+
       const icon = resultCard.querySelector('.result-icon');
       const title = resultCard.querySelector('.result-title');
       const type = resultCard.querySelector('.result-type');
@@ -218,7 +218,7 @@ describe('Design System Components', () => {
       container.appendChild(inputGroup);
 
       expect(inputGroup.className).toContain('input-error');
-      
+
       const errorMessage = inputGroup.querySelector('.input-error-message');
       expect(errorMessage).toBeTruthy();
       expectKoreanText(errorMessage, '올바른 이메일 형식이 아닙니다');
@@ -269,8 +269,8 @@ describe('Design System Components', () => {
       expect(legend).toBeTruthy();
       expect(radioItems).toHaveLength(2);
       expect(inputs).toHaveLength(2);
-      
-      inputs.forEach(input => {
+
+      inputs.forEach((input) => {
         expect(input.name).toBe('activity');
       });
 
@@ -345,22 +345,23 @@ describe('Design System Components', () => {
   describe('Theme System', () => {
     it('다크 테마 클래스가 올바르게 적용되어야 함', () => {
       document.documentElement.classList.add('theme-dark');
-      
+
       const card = document.createElement('div');
       card.className = 'card';
       card.textContent = '다크 테마 카드';
       container.appendChild(card);
 
       expect(document.documentElement.classList.contains('theme-dark')).toBe(true);
-      
+
       // 정리
       document.documentElement.classList.remove('theme-dark');
     });
 
     it('라이트 테마가 기본값이어야 함', () => {
-      const hasLightTheme = document.documentElement.classList.contains('theme-light') || 
-                           !document.documentElement.classList.contains('theme-dark');
-      
+      const hasLightTheme =
+        document.documentElement.classList.contains('theme-light') ||
+        !document.documentElement.classList.contains('theme-dark');
+
       expect(hasLightTheme).toBe(true);
     });
 
@@ -427,7 +428,7 @@ describe('Design System Components', () => {
 
       expect(containerEl.className).toContain('container');
       expect(containerEl.style.maxWidth).toBe('1200px');
-      expect(containerEl.style.margin).toBe('0 auto');
+      expect(containerEl.style.margin).toBe('0px auto');
     });
 
     it('그리드 시스템이 올바르게 작동해야 함', () => {

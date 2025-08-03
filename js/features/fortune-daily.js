@@ -109,7 +109,6 @@
       state.fortuneResult = fortune;
       displayResult(fortune);
     } catch (error) {
-      
       showError('운세 생성 중 오류가 발생했습니다. 다시 시도해주세요.');
     }
   }
@@ -128,9 +127,7 @@
         if (userData.isLunar && window.lunarToSolar) {
           const solarDate = window.lunarToSolar(year, month, day);
           if (solarDate) {
-            year = solarDate.year;
-            month = solarDate.month;
-            day = solarDate.day;
+            ({ year, month, day } = solarDate);
           }
         }
 
@@ -146,7 +143,8 @@
         }
       }
     } catch (error) {
-      
+      // 만세력 데이터 계산 실패 시 무시
+      console.warn('Failed to calculate manseryeok data:', error);
     }
 
     // Generate fortune using templates

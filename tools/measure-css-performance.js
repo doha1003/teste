@@ -15,7 +15,7 @@ const colors = {
   yellow: '\x1b[33m',
   red: '\x1b[31m',
   gray: '\x1b[90m',
-  reset: '\x1b[0m'
+  reset: '\x1b[0m',
 };
 
 // Logger functions
@@ -24,7 +24,7 @@ const log = {
   success: (msg) => console.log(`${colors.green}✓${colors.reset} ${msg}`),
   warning: (msg) => console.log(`${colors.yellow}⚠${colors.reset} ${msg}`),
   error: (msg) => console.error(`${colors.red}✗${colors.reset} ${msg}`),
-  detail: (msg) => console.log(`${colors.gray}  ${msg}${colors.reset}`)
+  detail: (msg) => console.log(`${colors.gray}  ${msg}${colors.reset}`),
 };
 
 /**
@@ -33,20 +33,20 @@ const log = {
 async function countCSSImports() {
   const mainCSSPath = path.join(rootDir, 'css', 'main.css');
   const content = await fs.readFile(mainCSSPath, 'utf8');
-  
+
   const importRegex = /@import\s+["']([^"']+)["']/g;
   const fontImportRegex = /@import\s+url\(["']https:\/\/fonts[^"']+["']\)/g;
-  
+
   const fileImports = content.match(importRegex) || [];
   const fontImports = content.match(fontImportRegex) || [];
-  
+
   // Filter out font imports from file imports
-  const localImports = fileImports.filter(imp => !imp.includes('fonts.googleapis.com'));
-  
+  const localImports = fileImports.filter((imp) => !imp.includes('fonts.googleapis.com'));
+
   return {
     total: localImports.length + fontImports.length,
     files: localImports.length,
-    fonts: fontImports.length
+    fonts: fontImports.length,
   };
 }
 
@@ -57,24 +57,24 @@ async function getFileSizes() {
   const files = {
     original: path.join(rootDir, 'css', 'main.css'),
     devBundle: path.join(rootDir, 'dist', 'styles.css'),
-    prodBundle: path.join(rootDir, 'dist', 'styles.min.css')
+    prodBundle: path.join(rootDir, 'dist', 'styles.min.css'),
   };
 
   const sizes = {};
-  
+
   for (const [key, filePath] of Object.entries(files)) {
     try {
       const stats = await fs.stat(filePath);
       sizes[key] = {
         bytes: stats.size,
         kb: (stats.size / 1024).toFixed(2),
-        mb: (stats.size / 1024 / 1024).toFixed(3)
+        mb: (stats.size / 1024 / 1024).toFixed(3),
       };
     } catch (error) {
       sizes[key] = null;
     }
   }
-  
+
   return sizes;
 }
 
@@ -86,15 +86,15 @@ function calculateNetworkImpact(importCount) {
   const avgRTT = 50; // Average Round Trip Time in ms
   const concurrentRequests = 6; // Browser concurrent request limit
   const setupTime = 10; // TCP handshake, DNS, etc per request
-  
+
   const parallelBatches = Math.ceil(importCount / concurrentRequests);
   const totalTime = parallelBatches * (avgRTT + setupTime);
-  
+
   return {
     requests: importCount,
     parallelBatches,
     estimatedTime: totalTime,
-    timeReduction: totalTime - (avgRTT + setupTime) // Single request time
+    timeReduction: totalTime - (avgRTT + setupTime), // Single request time
   };
 }
 
@@ -108,13 +108,13 @@ async function generateReport() {
     // Get import counts
     const imports = await countCSSImports();
     log.info(`Analyzing CSS structure...`);
-    
+
     // Get file sizes
     const sizes = await getFileSizes();
-    
+
     // Calculate network impact
     const networkImpact = calculateNetworkImpact(imports.files);
-    
+
     // Display results
     console.log(`\n${colors.green}1. Network Requests${colors.reset}`);
     console.log('┌─────────────────────────────────────────────────┐');
@@ -153,7 +153,9 @@ async function generateReport() {
     console.log(`│ Estimated time savings:                         │`);
     console.log(`│   - Parallel batches: ${networkImpact.parallelBatches} → 1                   │`);
     console.log(`│   - Time reduction: ~${networkImpact.timeReduction.toString().padEnd(25)} ms │`);
-    console.log(`│   - Percentage: ~${((networkImpact.timeReduction / networkImpact.estimatedTime) * 100).toFixed(0).padEnd(29)} % │`);
+    console.log(
+      `│   - Percentage: ~${((networkImpact.timeReduction / networkImpact.estimatedTime) * 100).toFixed(0).padEnd(29)} % │`
+    );
     console.log('└─────────────────────────────────────────────────┘');
 
     console.log(`\n${colors.green}4. Browser Benefits${colors.reset}`);
@@ -169,7 +171,6 @@ async function generateReport() {
     console.log('3. Set long cache headers (1 year) with versioning');
     console.log('4. Consider critical CSS inlining for above-the-fold content');
     console.log('5. Monitor real user metrics with Web Vitals\n');
-
   } catch (error) {
     log.error('Failed to generate report');
     console.error(error);
@@ -178,7 +179,7 @@ async function generateReport() {
 }
 
 // Run if called directly
-generateReport().catch(error => {
+generateReport().catch((error) => {
   console.error('Script failed:', error);
   process.exit(1);
 });
