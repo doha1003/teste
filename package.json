@@ -16,7 +16,7 @@
     "build:js": "node build-js.js",
     "build:js:dev": "node build-js.js --dev",
     "build:js:watch": "node build-js.js --watch --dev",
-    "build:js:prod": "rollup -c rollup.config.prod.js",
+    "build:js:prod": "NODE_ENV=production rollup -c rollup.config.js",
     "build:js:analyze": "npm run build:js:prod && node analyze-bundle.js",
     "update:html": "node update-html-for-bundles.js",
     "update:html:dev": "node update-html-for-bundles.js --dev",
