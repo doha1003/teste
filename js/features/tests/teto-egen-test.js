@@ -21,7 +21,7 @@ export class TetoEgenTestService extends TestService {
       allowBack: true,
       showProgress: true,
       autoSubmit: true,
-      questions: window.tetoEgenQuestions || tetoEgenQuestions || [],
+      questions: [], // 초기화 시점에 동적으로 설정
     });
 
     // 테토-에겐 특화 설정
@@ -114,6 +114,16 @@ export class TetoEgenTestService extends TestService {
    * 테스트 초기화 (오버라이드)
    */
   initializeService() {
+    // Teto-Egen 질문 데이터 설정
+    if (window.tetoEgenQuestions && Array.isArray(window.tetoEgenQuestions)) {
+      this.testState.questions = window.tetoEgenQuestions;
+      this.testState.totalQuestions = window.tetoEgenQuestions.length;
+      console.log('✅ Teto-Egen questions loaded into service:', this.testState.questions.length);
+    } else {
+      console.error('❌ Teto-Egen questions not found in window.tetoEgenQuestions');
+      throw new Error('Teto-Egen 질문 데이터를 찾을 수 없습니다');
+    }
+    
     // 성별 선택 화면 이벤트 바인딩
     this.bindGenderSelection();
 

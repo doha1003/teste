@@ -34,12 +34,12 @@ test.describe('MBTI 테스트 플로우', () => {
       await page.goto('/tests/mbti/test.html');
     }
 
-    // 첫 번째 질문 확인
-    const question = page.locator('.question, .question-container');
+    // 첫 번째 질문 확인 (실제 DOM 구조에 맞게 수정)
+    const question = page.locator('#question');
     await expect(question).toBeVisible();
 
-    // 답변 옵션 확인
-    const options = page.locator('.option, input[type="radio"], button[data-value]');
+    // 답변 옵션 확인 (실제 DOM 구조에 맞게 수정)
+    const options = page.locator('.mbti-option-btn');
     const optionCount = await options.count();
     expect(optionCount).toBeGreaterThanOrEqual(2);
 
@@ -62,13 +62,13 @@ test.describe('MBTI 테스트 플로우', () => {
     let currentQuestion = 1;
 
     while (currentQuestion <= maxQuestions) {
-      // 현재 질문 확인
-      const question = page.locator('.question, .question-container');
+      // 현재 질문 확인 (실제 DOM 구조에 맞게 수정)
+      const question = page.locator('#question');
       await expect(question).toBeVisible();
 
       // 답변 옵션 확인
       const options = page.locator(
-        '.option, .answer-option, input[type="radio"], button[data-value]'
+        '.mbti-option-btn'
       );
       const optionCount = await options.count();
 
@@ -115,7 +115,7 @@ test.describe('MBTI 테스트 플로우', () => {
     await page.goto('/tests/mbti/test.html');
 
     // 모바일에서 질문과 옵션이 잘 보이는지 확인
-    const question = page.locator('.question, .question-container');
+    const question = page.locator('#question');
     await expect(question).toBeVisible();
 
     const questionBox = await question.boundingBox();

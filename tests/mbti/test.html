@@ -219,74 +219,228 @@
     <script type="module" src="/js/app.js"></script>
     <script type="module" src="/js/core/service-base.js"></script>
 
-    <!-- Feature JavaScript (순서 중요!) -->
+    <!-- MBTI 테스트 단순화된 초기화 -->
     <script type="module">
-      // MBTI 모듈 동적 로딩 및 초기화
-      async function initializeMBTITest() {
+      // 직접적이고 단순한 MBTI 테스트 구현
+      let mbtiTestActive = false;
+      let currentQuestion = 0;
+      let answers = [];
+      let mbtiQuestions = [];
+      
+      // MBTI 점수
+      let mbtiScores = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
+      
+      async function initializeMBTI() {
         try {
-          // 1. MBTI 질문 데이터 로드
-          const { mbtiQuestions } = await import('/js/mbti-questions.js');
-          window.mbtiQuestions = mbtiQuestions;
-          console.log('✅ MBTI Questions loaded:', mbtiQuestions.length, 'questions');
-
-          // 2. API 설정 로드
-          await import('/js/api-config.js');
-          console.log('✅ API Config loaded');
-
-          // 3. 테스트 서비스 베이스 클래스 로드
-          await import('/js/features/tests/test-service.js');
-          console.log('✅ Test Service loaded');
-
-          // 4. MBTI 테스트 서비스 로드 및 초기화
-          const { MBTITestService, mbtiTest } = await import('/js/features/tests/mbti-test.js');
+          console.log('🚀 MBTI 간단 초기화 시작');
           
-          // 네임스페이스 등록 (DohaKR이 이미 로드된 후)
-          if (window.DohaKR) {
-            window.DohaKR.registerService('Tests', 'MBTI', mbtiTest);
-            console.log('✅ MBTI Test Service registered in namespace');
+          // 질문 데이터 로드
+          const questionsModule = await import('/js/mbti-questions.js');
+          mbtiQuestions = questionsModule.mbtiQuestions || [];
+          console.log('✅ MBTI 질문 로드됨:', mbtiQuestions.length, '문항');
+          
+          if (mbtiQuestions.length === 0) {
+            throw new Error('MBTI 질문 데이터가 비어있습니다');
           }
           
-          // 레거시 호환성을 위한 전역 연결
-          window.MBTITestService = MBTITestService;
-          window.mbtiTest = mbtiTest;
-          
-          console.log('✅ MBTI Test Service initialized');
-          
-          // 테스트 시작 버튼 이벤트 리스너 추가
+          // 시작 버튼 이벤트
           const startButton = document.querySelector('.test-start-button');
           if (startButton) {
-            startButton.addEventListener('click', () => {
-              // 네임스페이스를 통해 서비스 접근 (우선)
-              const mbtiService = window.DohaKR?.getService('Tests', 'MBTI') || mbtiTest;
-              if (mbtiService && typeof mbtiService.startTest === 'function') {
-                mbtiService.startTest();
-              } else {
-                console.error('❌ MBTI startTest method not found');
-              }
-            });
+            startButton.addEventListener('click', startMBTITest);
+            console.log('✅ 시작 버튼 이벤트 연결됨');
           }
           
         } catch (error) {
-          console.error('❌ MBTI Test initialization failed:', error);
-          // 사용자에게 에러 메시지 표시
-          const testContainer = document.querySelector('.mbti-test-container');
-          if (testContainer) {
-            testContainer.innerHTML = `
-              <div class="error-message">
-                <h3>테스트 로딩 중 오류가 발생했습니다</h3>
-                <p>페이지를 새로고침해 주세요.</p>
-                <button onclick="location.reload()" class="btn btn-primary">새로고침</button>
-              </div>
-            `;
-          }
+          console.error('❌ MBTI 초기화 실패:', error);
+          showError('MBTI 테스트를 불러올 수 없습니다: ' + error.message);
         }
       }
-
-      // DOM이 준비되면 초기화 실행
+      
+      function startMBTITest() {
+        if (mbtiTestActive) return;
+        
+        console.log('🎯 MBTI 테스트 시작');
+        mbtiTestActive = true;
+        currentQuestion = 0;
+        answers = [];
+        mbtiScores = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
+        
+        // 화면 전환 (CSS 클래스와 인라인 스타일 모두 처리)
+        const introScreen = document.querySelector('#intro-screen');
+        const testScreen = document.querySelector('#test-screen');
+        
+        if (introScreen) {
+          introScreen.style.display = 'none';
+          introScreen.classList.add('hidden');
+        }
+        if (testScreen) {
+          testScreen.classList.remove('hidden', 'mbti-hidden');
+          testScreen.style.display = 'block';
+          testScreen.style.visibility = 'visible';
+          console.log('✅ 테스트 화면 표시됨:', testScreen.style.display);
+        }
+        
+        showMBTIQuestion();
+      }
+      
+      function showMBTIQuestion() {
+        if (currentQuestion >= mbtiQuestions.length) {
+          showMBTIResult();
+          return;
+        }
+        
+        const question = mbtiQuestions[currentQuestion];
+        console.log('📋 질문 표시:', currentQuestion + 1, '/', mbtiQuestions.length);
+        
+        // 진행도 업데이트
+        const progressBar = document.querySelector('#progress');
+        const progressText = document.querySelector('#progress-text');
+        const progressPercent = document.querySelector('#progress-percent');
+        
+        const progress = ((currentQuestion + 1) / mbtiQuestions.length) * 100;
+        
+        if (progressBar) progressBar.style.width = progress + '%';
+        if (progressText) progressText.textContent = `질문 ${currentQuestion + 1} / ${mbtiQuestions.length}`;
+        if (progressPercent) progressPercent.textContent = Math.round(progress) + '%';
+        
+        // 질문 표시
+        const questionElement = document.querySelector('#question');
+        const questionNumber = document.querySelector('#question-number');
+        
+        if (questionElement) questionElement.textContent = question.question;
+        if (questionNumber) questionNumber.textContent = `Q${currentQuestion + 1}`;
+        
+        // 선택지 표시
+        const optionsContainer = document.querySelector('#options');
+        if (optionsContainer) {
+          optionsContainer.innerHTML = '';
+          
+          question.options.forEach((option, index) => {
+            const optionDiv = document.createElement('div');
+            optionDiv.className = 'mbti-option';
+            optionDiv.innerHTML = `
+              <button class="mbti-option-btn" data-type="${option.type}" data-index="${index}">
+                ${option.text}
+              </button>
+            `;
+            optionsContainer.appendChild(optionDiv);
+          });
+          
+          // 옵션 클릭 이벤트
+          optionsContainer.addEventListener('click', handleMBTIOptionClick);
+        }
+        
+        // 네비게이션 버튼
+        const prevBtn = document.querySelector('#prev-btn');
+        const nextBtn = document.querySelector('#next-btn');
+        
+        if (prevBtn) {
+          prevBtn.style.display = currentQuestion > 0 ? 'block' : 'none';
+          prevBtn.onclick = () => {
+            if (currentQuestion > 0) {
+              currentQuestion--;
+              showMBTIQuestion();
+            }
+          };
+        }
+        
+        if (nextBtn) {
+          nextBtn.style.display = 'none'; // 선택 후에 표시
+        }
+      }
+      
+      function handleMBTIOptionClick(event) {
+        const button = event.target.closest('.mbti-option-btn');
+        if (!button) return;
+        
+        const type = button.dataset.type;
+        const index = parseInt(button.dataset.index);
+        
+        console.log('✅ 선택:', type, index);
+        
+        // 선택 표시
+        document.querySelectorAll('.mbti-option-btn').forEach(btn => {
+          btn.classList.remove('selected');
+        });
+        button.classList.add('selected');
+        
+        // 답변 저장
+        answers[currentQuestion] = { type, index };
+        mbtiScores[type]++;
+        
+        // 다음 버튼 표시
+        const nextBtn = document.querySelector('#next-btn');
+        if (nextBtn) {
+          nextBtn.style.display = 'block';
+          nextBtn.onclick = () => {
+            currentQuestion++;
+            showMBTIQuestion();
+          };
+        }
+      }
+      
+      function showMBTIResult() {
+        console.log('🎊 MBTI 결과 계산');
+        
+        // MBTI 유형 결정
+        const E_I = mbtiScores.E >= mbtiScores.I ? 'E' : 'I';
+        const S_N = mbtiScores.S >= mbtiScores.N ? 'S' : 'N';
+        const T_F = mbtiScores.T >= mbtiScores.F ? 'T' : 'F';
+        const J_P = mbtiScores.J >= mbtiScores.P ? 'J' : 'P';
+        
+        const mbtiType = E_I + S_N + T_F + J_P;
+        console.log('🎯 MBTI 결과:', mbtiType);
+        
+        // 결과 화면 표시 (CSS 클래스와 인라인 스타일 모두 처리)
+        const testScreen = document.querySelector('#test-screen');
+        const resultScreen = document.querySelector('#result-screen');
+        
+        if (testScreen) {
+          testScreen.style.display = 'none';
+          testScreen.classList.add('hidden');
+        }
+        if (resultScreen) {
+          resultScreen.classList.remove('hidden', 'mbti-hidden');
+          resultScreen.style.display = 'block';
+          resultScreen.style.visibility = 'visible';
+          resultScreen.innerHTML = `
+            <div class="mbti-result-content">
+              <h2>🎉 당신의 MBTI 유형</h2>
+              <div class="mbti-result-type">${mbtiType}</div>
+              <div class="mbti-result-scores">
+                <div>E: ${mbtiScores.E} vs I: ${mbtiScores.I}</div>
+                <div>S: ${mbtiScores.S} vs N: ${mbtiScores.N}</div>
+                <div>T: ${mbtiScores.T} vs F: ${mbtiScores.F}</div>
+                <div>J: ${mbtiScores.J} vs P: ${mbtiScores.P}</div>
+              </div>
+              <button onclick="location.reload()" class="test-btn test-btn-primary">
+                🔄 다시 테스트하기
+              </button>
+            </div>
+          `;
+        }
+      }
+      
+      function showError(message) {
+        const testContainer = document.querySelector('.mbti-test-container');
+        if (testContainer) {
+          testContainer.innerHTML = `
+            <div style="text-align: center; padding: 40px; background: #ffe6e6; border-radius: 12px; margin: 20px;">
+              <h3 style="color: #d32f2f; margin-bottom: 16px;">⚠️ 오류</h3>
+              <p style="color: #666; margin-bottom: 20px;">${message}</p>
+              <button onclick="location.reload()" class="test-btn test-btn-primary">
+                🔄 페이지 새로고침
+              </button>
+            </div>
+          `;
+        }
+      }
+      
+      // 초기화 실행
       if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initializeMBTITest);
+        document.addEventListener('DOMContentLoaded', initializeMBTI);
       } else {
-        initializeMBTITest();
+        initializeMBTI();
       }
     </script>
 

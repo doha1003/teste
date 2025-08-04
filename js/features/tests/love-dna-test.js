@@ -21,7 +21,7 @@ export class LoveDNATestService extends TestService {
       allowBack: true,
       showProgress: true,
       autoSubmit: false,
-      questions: window.loveDNAQuestions || [],
+      questions: [], // 초기화 시점에 동적으로 설정
     });
 
     // Love DNA 특화 설정
@@ -63,6 +63,41 @@ export class LoveDNATestService extends TestService {
     // 전역 결과 데이터 (기존 페이지와 호환성 유지)
     if (window.loveDNAResults) {
       this.resultTypes = window.loveDNAResults;
+    }
+  }
+
+  /**
+   * 테스트 초기화 (오버라이드)
+   */
+  initializeService() {
+    // Love DNA 질문 데이터 로드 시도
+    if (window.loveDNAQuestions && Array.isArray(window.loveDNAQuestions)) {
+      this.testState.questions = window.loveDNAQuestions;
+      this.testState.totalQuestions = window.loveDNAQuestions.length;
+      console.log('✅ Love DNA questions loaded into service:', this.testState.questions.length);
+    } else {
+      // 질문 데이터가 없으면 동적 로드 시도
+      return this.loadLoveDNAQuestions();
+    }
+  }
+  
+  /**
+   * Love DNA 질문 데이터 동적 로드
+   */
+  async loadLoveDNAQuestions() {
+    try {
+      const module = await import('/js/pages/love-dna-test.js');
+      if (module.loveDNAQuestions) {
+        this.testState.questions = module.loveDNAQuestions;
+        this.testState.totalQuestions = module.loveDNAQuestions.length;
+        window.loveDNAQuestions = module.loveDNAQuestions; // 전역에도 설정
+        console.log('✅ Love DNA questions dynamically loaded:', this.testState.questions.length);
+      } else {
+        throw new Error('Love DNA 질문 데이터를 찾을 수 없습니다');
+      }
+    } catch (error) {
+      console.error('❌ Love DNA questions loading failed:', error);
+      throw new Error('Love DNA 질문 데이터 로딩 실패');
     }
   }
 

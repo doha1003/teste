@@ -233,76 +233,91 @@
     <script type="module" src="/js/app.js"></script>
     <script type="module" src="/js/core/service-base.js"></script>
 
-    <!-- Feature JavaScript (순서 중요!) -->
-    <script type="module" src="/js/api-config.js"></script>
-    <script type="module" src="/js/teto-egen-questions.js"></script>
-    <script type="module" src="/js/features/tests/test-service.js"></script>
-    <script type="module" src="/js/features/tests/teto-egen-test.js"></script>
-    
-    <!-- 페이지 초기화 -->
+    <!-- Feature JavaScript (안정적 초기화) -->
     <script type="module">
-      // 테토-에겐 테스트 초기화
+      // Teto-Egen 테스트 초기화 (간소화된 안정적 버전)
       async function initializeTetoEgenTest() {
         try {
-          // 1. 테토-에겐 질문 데이터 로드
-          const { tetoEgenQuestions } = await import('/js/teto-egen-questions.js');
-          window.tetoEgenQuestions = tetoEgenQuestions;
-          console.log('✅ Teto-Egen Questions loaded:', tetoEgenQuestions.length, 'questions');
-
-          // 2. API 설정 로드
-          await import('/js/api-config.js');
-          console.log('✅ API Config loaded');
-
-          // 3. 테스트 서비스 베이스 클래스 로드
-          await import('/js/features/tests/test-service.js');
-          console.log('✅ Test Service loaded');
-
-          // 4. 테토-에겐 테스트 서비스 로드 및 초기화
-          const { TetoEgenTestService, tetoEgenTest } = await import('/js/features/tests/teto-egen-test.js');
+          console.log('🚀 Teto-Egen Test 초기화 시작...');
           
-          // 네임스페이스 등록 (DohaKR이 이미 로드된 후)
-          if (window.DohaKR) {
-            window.DohaKR.registerService('Tests', 'TetoEgen', tetoEgenTest);
-            console.log('✅ Teto-Egen Test Service registered in namespace');
+          // 1. 필수 모듈들을 순차적으로 로드
+          const [
+            { tetoEgenQuestions },
+            apiConfig,
+            testServiceModule,
+            tetoEgenTestModule
+          ] = await Promise.all([
+            import('/js/teto-egen-questions.js'),
+            import('/js/api-config.js'),
+            import('/js/features/tests/test-service.js'),
+            import('/js/features/tests/teto-egen-test.js')
+          ]);
+
+          // 2. 전역 변수 설정
+          window.tetoEgenQuestions = tetoEgenQuestions;
+          window.tetoEgenTest = tetoEgenTestModule.tetoEgenTest;
+          
+          console.log('✅ 모든 모듈 로드 완료');
+          console.log('✅ Teto-Egen Questions:', tetoEgenQuestions.length, '문항');
+          
+          // 3. 테스트 서비스 초기화
+          if (window.tetoEgenTest && typeof window.tetoEgenTest.initialize === 'function') {
+            await window.tetoEgenTest.initialize();
+            console.log('✅ Teto-Egen Test Service 초기화 완료');
           }
           
-          // 레거시 호환성을 위한 전역 연결
-          window.TetoEgenTestService = TetoEgenTestService;
-          window.tetoEgenTest = tetoEgenTest;
-          
-          console.log('✅ Teto-Egen Test Service initialized');
-          
-          // 테스트 시작 버튼 이벤트 리스너 추가
+          // 4. 시작 버튼 이벤트 추가 (중복 방지)
           const startButton = document.querySelector('.test-start-button');
-          if (startButton) {
-            startButton.addEventListener('click', () => {
-              // 네임스페이스를 통해 서비스 접근 (우선)
-              const tetoService = window.DohaKR?.getService('Tests', 'TetoEgen') || tetoEgenTest;
-              tetoService.startTest();
+          if (startButton && !startButton.hasAttribute('data-initialized')) {
+            startButton.setAttribute('data-initialized', 'true');
+            startButton.addEventListener('click', async (e) => {
+              e.preventDefault();
+              console.log('🎯 Teto-Egen 테스트 시작 버튼 클릭됨');
+              
+              if (window.tetoEgenTest && typeof window.tetoEgenTest.startTest === 'function') {
+                try {
+                  await window.tetoEgenTest.startTest();
+                  console.log('✅ Teto-Egen 테스트 시작됨');
+                } catch (error) {
+                  console.error('❌ Teto-Egen 테스트 시작 실패:', error);
+                  alert('테스트 시작 중 오류가 발생했습니다. 페이지를 새로고침 해주세요.');
+                }
+              } else {
+                console.error('❌ Teto-Egen Test Service를 찾을 수 없습니다');
+                alert('테스트 서비스를 찾을 수 없습니다. 페이지를 새로고침 해주세요.');
+              }
             });
+            console.log('✅ 시작 버튼 이벤트 바인딩 완료');
           }
           
         } catch (error) {
-          console.error('❌ Teto-Egen Test initialization failed:', error);
-          // 사용자에게 에러 메시지 표시
+          console.error('❌ Teto-Egen Test 초기화 실패:', error);
+          
+          // 사용자에게 명확한 오류 메시지 표시
           const testContainer = document.querySelector('.teto-test-container');
           if (testContainer) {
             testContainer.innerHTML = `
-              <div class="error-message">
-                <h3>테스트 로딩 중 오류가 발생했습니다</h3>
-                <p>페이지를 새로고침해 주세요.</p>
-                <button onclick="location.reload()" class="btn btn-primary">새로고침</button>
+              <div class="error-message" style="text-align: center; padding: 40px; background: #ffe6e6; border-radius: 12px; margin: 20px;">
+                <h3 style="color: #d32f2f; margin-bottom: 16px;">⚠️ 테스트 로딩 오류</h3>
+                <p style="color: #666; margin-bottom: 20px;">테스트를 불러오는 중 문제가 발생했습니다.</p>
+                <div style="margin-bottom: 20px;">
+                  <strong>오류 내용:</strong> ${error.message}
+                </div>
+                <button onclick="location.reload()" class="test-btn test-btn-primary" style="padding: 12px 24px;">
+                  🔄 페이지 새로고침
+                </button>
               </div>
             `;
           }
         }
       }
 
-      // DOM이 준비되면 초기화 실행
+      // DOM 준비 상태에 따른 초기화
       if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initializeTetoEgenTest);
       } else {
-        initializeTetoEgenTest();
+        // DOM이 이미 로드된 경우 바로 실행
+        setTimeout(initializeTetoEgenTest, 100);
       }
     </script>
 

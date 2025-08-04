@@ -21,7 +21,7 @@ export class MBTITestService extends TestService {
       allowBack: true,
       showProgress: true,
       autoSubmit: false,
-      questions: window.mbtiQuestions || mbtiQuestions || [],
+      questions: [], // 초기화 시점에 동적으로 설정
     });
 
     // MBTI 특화 설정
@@ -289,7 +289,15 @@ export class MBTITestService extends TestService {
    * 테스트 초기화 (오버라이드)
    */
   initializeService() {
-    // MBTI 특화 초기화
+    // MBTI 질문 데이터 설정
+    if (window.mbtiQuestions && Array.isArray(window.mbtiQuestions)) {
+      this.testState.questions = window.mbtiQuestions;
+      this.testState.totalQuestions = window.mbtiQuestions.length;
+      console.log('✅ MBTI questions loaded into service:', this.testState.questions.length);
+    } else {
+      console.error('❌ MBTI questions not found in window.mbtiQuestions');
+      throw new Error('MBTI 질문 데이터를 찾을 수 없습니다');
+    }
   }
 
   /**

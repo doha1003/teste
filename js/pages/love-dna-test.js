@@ -4,7 +4,7 @@
 let currentQuestion = 0;
 let answers = [];
 
-const loveDNAQuestions = [
+export const loveDNAQuestions = [
   {
     question: '첫 데이트 장소를 정할 때 당신은?',
     options: [
