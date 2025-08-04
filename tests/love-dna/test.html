@@ -121,7 +121,45 @@
 
           <!-- 결과 화면 -->
           <div id="result-screen" class="love-result-container love-hidden hidden">
-            <!-- 결과가 여기에 동적으로 생성됩니다 -->
+            <!-- 러브 DNA 결과 카드 -->
+            <div class="love-type-card">
+              <div class="love-result-emoji">💖</div>
+              <div id="result-dna" class="love-result-dna">LOVED</div>
+              <div id="result-title" class="love-result-title">로맨틱 드리머</div>
+              <div id="result-subtitle" class="love-result-subtitle">"영화 같은 사랑을 꿈꾸는 낭만주의자"</div>
+              <div id="result-rarity" class="love-result-rarity">희귀도: SPECIAL (15%)</div>
+            </div>
+            
+            <div class="love-result-detail-box">
+              <div class="love-result-detail-grid">
+                <div class="love-result-detail-card">
+                  <h4>💫 성격 특징</h4>
+                  <div id="result-traits" class="love-traits">
+                    <!-- 특성들이 여기에 동적으로 생성됩니다 -->
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="love-share-section">
+              <h3 class="love-share-title">결과 공유하기</h3>
+              <div class="love-share-buttons">
+                <button class="love-share-btn love-share-btn-kakao" onclick="shareToKakao()">
+                  💬 카카오톡 공유
+                </button>
+                <button class="love-share-btn love-share-btn-copy" onclick="copyResultLink()">
+                  🔗 링크 복사
+                </button>
+              </div>
+              <div class="love-action-buttons">
+                <button class="love-btn love-btn-primary" onclick="restartTest()">
+                  🔄 다시 테스트하기
+                </button>
+                <a href="/tests/" class="love-btn love-btn-secondary">
+                  다른 테스트 보기
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -203,11 +241,63 @@
     <script type="module" src="/js/app.js"></script>
     <script type="module" src="/js/core/service-base.js"></script>
 
-    <!-- Feature JavaScript -->
+    <!-- Feature JavaScript (순서 중요!) -->
     <script type="module" src="/js/api-config.js"></script>
-    <script type="module" src="/js/features/tests/test-service.js"></script>
     <script type="module" src="/js/pages/love-dna-test.js"></script>
+    <script type="module" src="/js/features/tests/test-service.js"></script>
     <script type="module" src="/js/features/tests/love-dna-test.js"></script>
+    
+    <!-- 페이지 초기화 -->
+    <script type="module">
+      // 러브 DNA 테스트 초기화
+      async function initializeLoveDNATest() {
+        try {
+          // 전역 변수 확인 (love-dna-test.js가 이미 로드됨)
+          if (typeof window.loveDNAQuestions === 'undefined') {
+            console.error('❌ Love DNA Questions not loaded');
+            return;
+          }
+          console.log('✅ Love DNA Questions loaded:', window.loveDNAQuestions.length, 'questions');
+
+          // 테스트 시작 버튼 이벤트 리스너 추가
+          const startButton = document.querySelector('.test-start-button');
+          if (startButton) {
+            startButton.addEventListener('click', () => {
+              // 기존 러브 DNA 테스트 함수 사용
+              if (typeof window.startTest === 'function') {
+                window.startTest();
+              } else {
+                console.error('❌ startTest function not found');
+              }
+            });
+            console.log('✅ Start button event listener added');
+          }
+          
+          console.log('✅ Love DNA Test Service initialized');
+          
+        } catch (error) {
+          console.error('❌ Love DNA Test initialization failed:', error);
+          // 사용자에게 에러 메시지 표시
+          const testContainer = document.querySelector('.love-test-container');
+          if (testContainer) {
+            testContainer.innerHTML = `
+              <div class="error-message">
+                <h3>테스트 로딩 중 오류가 발생했습니다</h3>
+                <p>페이지를 새로고침해 주세요.</p>
+                <button onclick="location.reload()" class="btn btn-primary">새로고침</button>
+              </div>
+            `;
+          }
+        }
+      }
+
+      // DOM이 준비되면 초기화 실행
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initializeLoveDNATest);
+      } else {
+        initializeLoveDNATest();
+      }
+    </script>
 
     <!-- External SDKs (지연 로딩) -->
     <script async src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js"></script>

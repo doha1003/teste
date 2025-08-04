@@ -21,7 +21,7 @@ export class MBTITestService extends TestService {
       allowBack: true,
       showProgress: true,
       autoSubmit: false,
-      questions: mbtiQuestions || [],
+      questions: window.mbtiQuestions || mbtiQuestions || [],
     });
 
     // MBTI 특화 설정
@@ -390,10 +390,10 @@ export class MBTITestService extends TestService {
   createTestResultCard(result) {
     return `
                 <div class="mbti-type-card">
-                    <div class="mbti-result-type">${result.type}</div>
-                    <div class="mbti-result-title">${result.nickname}</div>
+                    <div class="mbti-result-type highlight-grid highlight-korean animated">${result.type}</div>
+                    <div class="mbti-result-title highlight-diagonal highlight-korean">${result.nickname}</div>
                     <div class="mbti-result-subtitle">"${result.subtitle}"</div>
-                    <div class="mbti-result-rarity">희귀도: ${result.rarity < 5 ? 'RARE' : result.rarity < 10 ? 'UNCOMMON' : 'COMMON'} (${result.rarity}%)</div>
+                    <div class="mbti-result-rarity">희귀도: <span class="highlight-noise highlight-korean subtle">${result.rarity < 5 ? 'RARE' : result.rarity < 10 ? 'UNCOMMON' : 'COMMON'}</span> (${result.rarity}%)</div>
                 </div>
                 
                 <div class="mbti-type-analysis">
@@ -541,8 +541,18 @@ export class MBTITestService extends TestService {
   }
 }
 
-// 전역 인스턴스 생성
+// 네임스페이스 방식으로 인스턴스 생성
 export const mbtiTest = new MBTITestService();
 
-// 전역에도 연결 (레거시 코드 호환성)
-window.mbtiTest = mbtiTest;
+// 초기화 실행
+mbtiTest.initialize();
+
+// DohaKR 네임스페이스에 등록
+if (typeof window !== 'undefined' && window.DohaKR) {
+  window.DohaKR.registerService('Tests', 'MBTI', mbtiTest);
+  
+  // 레거시 호환성을 위한 전역 연결 (점진적 제거 예정)
+  window.mbtiTest = mbtiTest;
+  
+  console.log('✅ MBTI Test Service registered in DohaKR.Tests.MBTI');
+}

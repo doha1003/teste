@@ -745,7 +745,7 @@ function showQuestion() {
 
   // 옵션 표시
   const optionsContainer = document.getElementById('options');
-  SecureDOM.setInnerHTML(optionsContainer, '');
+  optionsContainer.innerHTML = '';
 
   question.options.forEach((option, index) => {
     const optionElement = document.createElement('div');
@@ -843,7 +843,7 @@ function showResult() {
   if (resultData.traits) {
     const traitsContainer = document.getElementById('result-traits');
     if (traitsContainer) {
-      SecureDOM.setInnerHTML(traitsContainer, '');
+      traitsContainer.innerHTML = '';
       resultData.traits.forEach((trait) => {
         const traitElement = document.createElement('div');
         traitElement.className = 'love-trait-item';
@@ -927,6 +927,8 @@ window.startTest = startTest;
 window.showQuestion = showQuestion;
 window.selectOption = selectOption;
 window.nextQuestion = nextQuestion;
+// 전역 변수 노출
+window.loveDNAQuestions = loveDNAQuestions;
 window.previousQuestion = previousQuestion;
 window.showResult = showResult;
 window.restartTest = restartTest;

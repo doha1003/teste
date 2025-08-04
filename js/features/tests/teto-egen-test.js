@@ -21,7 +21,7 @@ export class TetoEgenTestService extends TestService {
       allowBack: true,
       showProgress: true,
       autoSubmit: true,
-      questions: tetoEgenQuestions || [],
+      questions: window.tetoEgenQuestions || tetoEgenQuestions || [],
     });
 
     // 테토-에겐 특화 설정
@@ -309,6 +309,9 @@ export class TetoEgenTestService extends TestService {
 
 // 전역 인스턴스 생성
 export const tetoEgenTest = new TetoEgenTestService();
+
+// 초기화 실행
+tetoEgenTest.initialize();
 
 // 전역에도 연결 (레거시 코드 호환성)
 window.tetoEgenTest = tetoEgenTest;

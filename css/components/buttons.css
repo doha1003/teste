@@ -11,9 +11,9 @@
   justify-content: center;
   gap: var(--space-2, var(--spacing-2));
 
-  /* Sizing */
-  padding: var(--space-2, var(--spacing-2)) var(--space-4, var(--spacing-4));
-  min-height: var(--button-height-md, 48px);
+  /* Sizing - Linear.app Style */
+  padding: var(--space-2, 12px) var(--space-4, 16px); /* 더 미니멀한 패딩 */
+  min-height: var(--button-height-md, 40px); /* 더 컴팩트한 높이 */
   min-width: max-content;
 
   /* Typography */
@@ -73,18 +73,21 @@
 }
 
 /* ===== BUTTON VARIANTS ===== */
-/* Primary Button */
+/* Primary Button - Linear.app Style */
 .btn-primary,
 .btn--primary {
-  color: var(--button-primary-text, var(--color-white));
-  background-color: var(--button-primary-bg, var(--color-primary));
-  border-color: var(--button-primary-bg, var(--color-primary));
+  color: var(--color-white);
+  background-color: var(--color-gray-900, #1f2937); /* Linear.app의 다크 버튼 */
+  border: 1px solid var(--color-gray-900, #1f2937);
+  font-weight: var(--font-weight-medium, 500); /* 굵지 않게 */
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); /* 섬세한 그림자 */
 }
 
 .btn-primary:hover:not(:disabled),
 .btn--primary:hover:not(:disabled) {
-  background-color: var(--button-primary-hover, var(--color-primary-dark));
-  border-color: var(--button-primary-hover, var(--color-primary-dark));
+  background-color: var(--color-gray-800, #374151);
+  border-color: var(--color-gray-800, #374151);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 호버 시 살짝 깊어진 그림자 */
 }
 
 /* Secondary Button */
@@ -255,27 +258,35 @@
   color: var(--color-white);
 }
 
-/* 특수 버튼 변형 - HTML에서 사용되는 클래스들 */
+/* 특수 버튼 변형 - Linear.app Style */
 .btn-tools {
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  background-color: var(--color-gray-900, #1f2937); /* 통일된 다크 버튼 */
   color: var(--color-white);
+  border: 1px solid var(--color-gray-900, #1f2937);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .btn-tools:hover:not(:disabled) {
-  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  background-color: var(--color-gray-800, #374151);
+  border-color: var(--color-gray-800, #374151);
   color: var(--color-white);
   text-decoration: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .btn-fortune {
-  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+  background-color: var(--color-gray-900, #1f2937); /* 통일된 다크 버튼 */
   color: var(--color-white);
+  border: 1px solid var(--color-gray-900, #1f2937);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .btn-fortune:hover:not(:disabled) {
-  background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+  background-color: var(--color-gray-800, #374151);
+  border-color: var(--color-gray-800, #374151);
   color: var(--color-white);
   text-decoration: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Share Buttons */
