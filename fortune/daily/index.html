@@ -48,7 +48,7 @@
 
     <!-- Main CSS -->
     <!-- CSS Bundle - Automatically selects development or production version -->
-    <link rel="stylesheet" href="/dist/styles.min.css" id="main-styles" />
+    <link rel="stylesheet" href="../../dist/styles.min.css" id="main-styles" />
 
     <!-- Page Data Attributes -->
     <script>
@@ -261,16 +261,16 @@
     </footer>
 
     <!-- Core JavaScript -->
-    <script type="module" src="/js/app.js"></script>
-    <script type="module" src="/js/core/service-base.js"></script>
+    <script type="module" src="../../js/app.js"></script>
+    <script type="module" src="../../js/core/service-base.js"></script>
 
     <!-- Feature JavaScript -->
-    <script type="module" src="/js/manseryeok-client.js"></script>
-    <script type="module" src="/js/lunar-calendar-compact.js"></script>
-    <script type="module" src="/js/saju-calculator.js"></script>
-    <script type="module" src="/js/api-config.js"></script>
-    <script type="module" src="/js/features/fortune/fortune-service.js"></script>
-    <script type="module" src="/js/features/fortune/daily-fortune.js"></script>
+    <script type="module" src="../../js/manseryeok-client.js"></script>
+    <script type="module" src="../../js/lunar-calendar-compact.js"></script>
+    <script type="module" src="../../js/saju-calculator.js"></script>
+    <script type="module" src="../../js/api-config.js"></script>
+    <script type="module" src="../../js/features/fortune/fortune-service.js"></script>
+    <script type="module" src="../../js/features/fortune/daily-fortune.js"></script>
 
     <!-- External SDKs (지연 로딩) -->
     <script async src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js"></script>
@@ -286,6 +286,121 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
+
+    <!-- Daily Fortune Initialization -->
+    <script type="module">
+      // 일일 운세 서비스 초기화
+      import { DailyFortuneService } from '../../js/features/fortune/daily-fortune.js';
+      
+      let dailyFortuneService;
+      
+      document.addEventListener('DOMContentLoaded', async () => {
+        try {
+          console.log('🌟 일일 운세 초기화 시작');
+          
+          // DailyFortuneService 인스턴스 생성
+          dailyFortuneService = new DailyFortuneService();
+          console.log('✅ 일일 운세 서비스 생성됨');
+          
+          // 생년월일 드롭다운 초기화 (이미 구현된 로직 유지)
+          initializeBirthDateSelectors();
+          
+          // 폼 제출 이벤트 연결
+          const form = document.querySelector('form[data-form="birth-data"]');
+          if (form) {
+            form.addEventListener('submit', handleFortuneSubmit);
+            console.log('✅ 폼 이벤트 연결됨');
+          }
+          
+          // 월 변경 시 일 옵션 업데이트
+          const monthSelect = document.getElementById('birthMonth');
+          if (monthSelect) {
+            monthSelect.addEventListener('change', updateDayOptions);
+          }
+          
+        } catch (error) {
+          console.error('❌ 일일 운세 초기화 실패:', error);
+        }
+      });
+      
+      function initializeBirthDateSelectors() {
+        // 연도 선택 초기화
+        const yearSelect = document.getElementById('birthYear');
+        if (yearSelect && yearSelect.options.length <= 1) {
+          const currentYear = new Date().getFullYear();
+          for (let year = currentYear; year >= 1920; year--) {
+            const option = document.createElement('option');
+            option.value = year;
+            option.textContent = `${year}년`;
+            yearSelect.appendChild(option);
+          }
+        }
+        
+        // 일 선택 초기화
+        updateDayOptions();
+      }
+      
+      function updateDayOptions() {
+        const monthSelect = document.getElementById('birthMonth');
+        const daySelect = document.getElementById('birthDay');
+        
+        if (!monthSelect || !daySelect) return;
+        
+        const month = parseInt(monthSelect.value);
+        if (!month) {
+          daySelect.innerHTML = '<option value="">일 선택</option>';
+          return;
+        }
+        
+        const year = parseInt(document.getElementById('birthYear').value) || new Date().getFullYear();
+        const daysInMonth = new Date(year, month, 0).getDate();
+        
+        daySelect.innerHTML = '<option value="">일 선택</option>';
+        for (let day = 1; day <= daysInMonth; day++) {
+          const option = document.createElement('option');
+          option.value = day;
+          option.textContent = `${day}일`;
+          daySelect.appendChild(option);
+        }
+      }
+      
+      async function handleFortuneSubmit(event) {
+        event.preventDefault();
+        
+        try {
+          console.log('🔮 운세 분석 시작');
+          
+          // 폼 데이터 수집
+          const formData = new FormData(event.target);
+          const userData = {
+            name: formData.get('userName'),
+            year: parseInt(formData.get('birthYear')),
+            month: parseInt(formData.get('birthMonth')),
+            day: parseInt(formData.get('birthDay')),
+            time: parseInt(formData.get('birthTime')) || -1,
+            isLunar: formData.get('isLunar') === 'on'
+          };
+          
+          // 입력 검증
+          if (!userData.name || !userData.year || !userData.month || !userData.day) {
+            alert('필수 정보를 모두 입력해주세요.');
+            return;
+          }
+          
+          console.log('📋 사용자 데이터:', userData);
+          
+          // 운세 분석 실행
+          await dailyFortuneService.generateFortune(userData);
+          
+        } catch (error) {
+          console.error('❌ 운세 분석 실패:', error);
+          alert('운세 분석 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+        }
+      }
+      
+      // 전역 접근을 위한 설정
+      window.dailyFortuneService = dailyFortuneService;
+    </script>
 
     <!-- Structured Data -->
     <script type="application/ld+json">

@@ -29,28 +29,47 @@
     }
 
     createMobileNavigation() {
-      // 기존 네비게이션 찾기
-      const nav = document.querySelector('nav, [role="navigation"], .navbar, #navbar');
-      
-      if (!nav) {
-        console.warn('네비게이션 요소를 찾을 수 없습니다.');
-        return;
-      }
+      // 네비게이션 placeholder가 로드될 때까지 기다림
+      const checkNavigation = () => {
+        const nav = document.querySelector('nav, [role="navigation"], .navbar, #navbar-placeholder');
+        
+        if (!nav) {
+          // 1초 후 재시도
+          setTimeout(checkNavigation, 1000);
+          return;
+        }
 
-      // 모바일 전용 햄버거 메뉴 추가
-      if (!document.querySelector('.mobile-menu-toggle')) {
-        const hamburger = this.createHamburgerMenu();
-        nav.insertBefore(hamburger, nav.firstChild);
-      }
+        // placeholder가 있다면 실제 네비게이션 로드를 기다림
+        if (nav.id === 'navbar-placeholder' && !nav.querySelector('.navbar')) {
+          setTimeout(checkNavigation, 500);
+          return;
+        }
 
-      // 모바일 메뉴 오버레이 생성
-      if (!document.querySelector('.mobile-menu-overlay')) {
-        const overlay = this.createMobileOverlay();
-        document.body.appendChild(overlay);
-      }
+        // 실제 네비게이션 요소 찾기
+        const actualNav = nav.querySelector('.navbar') || nav;
 
-      // 네비게이션 링크들 터치 최적화
-      this.optimizeNavigationLinks(nav);
+        // 기존 모바일 메뉴 버튼이 있는지 확인
+        const existingToggle = actualNav.querySelector('.mobile-menu-btn, .navbar-toggle, .mobile-menu-toggle');
+        
+        if (!existingToggle && !document.querySelector('.mobile-menu-toggle-enhanced')) {
+          const hamburger = this.createHamburgerMenu();
+          hamburger.classList.add('mobile-menu-toggle-enhanced'); // 중복 방지용 클래스
+          const container = actualNav.querySelector('.navbar-container') || actualNav;
+          container.appendChild(hamburger);
+        }
+
+        // 모바일 메뉴 오버레이 생성 (기존 것이 없을 때만)
+        if (!document.querySelector('.mobile-menu-overlay-enhanced')) {
+          const overlay = this.createMobileOverlay();
+          overlay.classList.add('mobile-menu-overlay-enhanced'); // 중복 방지용 클래스
+          document.body.appendChild(overlay);
+        }
+
+        // 네비게이션 링크들 터치 최적화
+        this.optimizeNavigationLinks(actualNav);
+      };
+
+      checkNavigation();
     }
 
     createHamburgerMenu() {
@@ -109,8 +128,8 @@
     }
 
     toggleMobileMenu(open = null) {
-      const hamburger = document.querySelector('.mobile-menu-toggle');
-      const overlay = document.querySelector('.mobile-menu-overlay');
+      const hamburger = document.querySelector('.mobile-menu-toggle-enhanced') || document.querySelector('.mobile-menu-toggle');
+      const overlay = document.querySelector('.mobile-menu-overlay-enhanced') || document.querySelector('.mobile-menu-overlay');
       
       if (!hamburger || !overlay) return;
 

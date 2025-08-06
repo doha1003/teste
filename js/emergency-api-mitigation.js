@@ -342,4 +342,76 @@
   window.EmergencyAPIManager = emergencyManager;
 
   console.log('🚑 긴급 API 완화 시스템 활성화됨');
+
+  // UI/UX 문제 디버깅을 위한 추가 검증
+  if (window.location.pathname.includes('/tests/')) {
+    // 심리테스트 페이지 전용 검증
+    const checkTestEnvironment = () => {
+      const issues = [];
+      
+      // CSS 로딩 확인
+      const stylesheets = document.querySelectorAll('link[rel="stylesheet"]');
+      if (stylesheets.length === 0) {
+        issues.push('CSS 파일이 로딩되지 않았습니다');
+      }
+      
+      // JavaScript 모듈 로딩 확인
+      const scripts = document.querySelectorAll('script[type="module"]');
+      if (scripts.length === 0) {
+        issues.push('ES6 모듈이 로딩되지 않았습니다');
+      }
+      
+      // 네비게이션 로딩 확인
+      const nav = document.querySelector('#navbar-placeholder');
+      if (nav && nav.innerHTML.trim() === '') {
+        issues.push('네비게이션이 로딩되지 않았습니다');
+      }
+      
+      // 모바일 메뉴 버튼 확인
+      const mobileMenuBtn = document.querySelector('.mobile-menu-btn, .mobile-menu-toggle, .navbar-toggle');
+      if (window.innerWidth <= 768 && !mobileMenuBtn) {
+        issues.push('모바일 메뉴 버튼을 찾을 수 없습니다');
+      }
+      
+      // 테스트 서비스 클래스 확인
+      const testContainer = document.querySelector('#test-screen, #intro-screen, .test-container');
+      if (!testContainer) {
+        issues.push('테스트 컨테이너를 찾을 수 없습니다');
+      }
+      
+      if (issues.length > 0) {
+        console.warn('🚨 UI/UX 문제 감지:', issues);
+        // 사용자에게 문제 알림 (개발환경에서만)
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.search.includes('debug=true')) {
+          const notification = document.createElement('div');
+          notification.style.cssText = `
+            position: fixed; top: 70px; right: 10px; 
+            background: #ff6b6b; color: white; 
+            padding: 10px 15px; border-radius: 8px; 
+            z-index: 10000; font-size: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            max-width: 300px; word-break: keep-all;
+          `;
+          notification.innerHTML = `⚠️ UI 문제 ${issues.length}개 감지`;
+          notification.onclick = () => {
+            alert('감지된 문제:\\n• ' + issues.join('\\n• '));
+            notification.remove();
+          };
+          document.body.appendChild(notification);
+          setTimeout(() => notification.remove(), 8000);
+        }
+      } else {
+        console.log('✅ UI/UX 검증 완료: 모든 항목 정상');
+      }
+    };
+    
+    // 페이지 로드 후 검증 실행
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(checkTestEnvironment, 2000);
+      });
+    } else {
+      setTimeout(checkTestEnvironment, 2000);
+    }
+  }
 })();

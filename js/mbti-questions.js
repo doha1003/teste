@@ -224,3 +224,11 @@ const mbtiQuestions = [
     ],
   },
 ];
+
+// 전역 스코프에 변수 노출 (모듈 호환성을 위해)
+if (typeof window !== 'undefined') {
+  window.mbtiQuestions = mbtiQuestions;
+}
+
+// ES6 모듈 export
+export { mbtiQuestions };

@@ -11,8 +11,8 @@
  * - Background sync for critical features
  */
 
-// 캐시 버전 관리
-const SW_VERSION = '5.0.0';
+// 캐시 버전 관리 - 하이라이터 패턴 CSS 추가로 버전 업데이트
+const SW_VERSION = '5.1.0';
 const CACHE_VERSION = `v${SW_VERSION}`;
 const STATIC_CACHE = `doha-static-${CACHE_VERSION}`;
 const DYNAMIC_CACHE = `doha-dynamic-${CACHE_VERSION}`;
@@ -46,13 +46,14 @@ const CACHE_CONFIG = {
   },
 };
 
-// 핵심 자산 최적화 (필수만 선별)
+// 핵심 자산 최적화 (필수만 선별) - 하이라이터 패턴 포함된 CSS 번들
 const CRITICAL_ASSETS = [
   '/',
   '/offline.html',
   '/manifest.json',
-  // 핵심 CSS (번들만)
+  // 핵심 CSS (하이라이터 패턴 포함된 번들)
   '/dist/styles.min.css',
+  '/dist/styles.css', // 개발용 번들도 포함
   // 핵심 JavaScript
   '/js/app.js',
   '/js/core/common-init.js',

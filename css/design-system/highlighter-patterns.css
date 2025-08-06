@@ -1,0 +1,564 @@
+/**
+ * Linear.app Inspired Highlighter Patterns
+ * 미묘하고 현대적인 하이라이터 패턴 컬렉션
+ * 
+ * Features:
+ * - 가독성을 해치지 않는 낮은 opacity
+ * - 다크모드 완전 대응
+ * - CSS-only 구현 (성능 최적화)
+ * - 한글 텍스트와의 조화 고려
+ * - GPU 가속 최적화
+ */
+
+/* ==========================================================================
+   Base Variables for Highlighter Patterns
+   ========================================================================== */
+
+:root {
+  /* Pattern base colors */
+  --highlight-color-primary: rgba(99, 102, 241, 0.1);
+  --highlight-color-secondary: rgba(156, 163, 175, 0.08);
+  --highlight-color-accent: rgba(59, 130, 246, 0.06);
+  --highlight-color-warning: rgba(245, 158, 11, 0.08);
+  --highlight-color-success: rgba(34, 197, 94, 0.06);
+  
+  /* Pattern intensities */
+  --highlight-opacity-subtle: 0.05;
+  --highlight-opacity-normal: 0.1;
+  --highlight-opacity-medium: 0.15;
+  --highlight-opacity-strong: 0.2;
+  
+  /* Pattern sizes */
+  --highlight-pattern-small: 8px;
+  --highlight-pattern-medium: 16px;
+  --highlight-pattern-large: 24px;
+}
+
+[data-theme="dark"] {
+  /* Dark mode adjustments - even more subtle */
+  --highlight-color-primary: rgba(129, 140, 248, 0.06);
+  --highlight-color-secondary: rgba(156, 163, 175, 0.04);
+  --highlight-color-accent: rgba(96, 165, 250, 0.04);
+  --highlight-color-warning: rgba(251, 191, 36, 0.05);
+  --highlight-color-success: rgba(52, 211, 153, 0.04);
+  
+  --highlight-opacity-subtle: 0.03;
+  --highlight-opacity-normal: 0.06;
+  --highlight-opacity-medium: 0.08;
+  --highlight-opacity-strong: 0.12;
+}
+
+/* ==========================================================================
+   Base Highlighter Class
+   ========================================================================== */
+
+.highlight-base {
+  position: relative;
+  padding: 2px 4px;
+  border-radius: 3px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+  
+  /* Subtle background for better contrast */
+  background-color: var(--highlight-color-secondary);
+}
+
+.highlight-base:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* ==========================================================================
+   Pattern 1: Dots Pattern
+   미묘한 도트 패턴 - 반복되는 작은 점들
+   ========================================================================== */
+
+.highlight-dots {
+  /* Base styles */
+  position: relative;
+  padding: 2px 4px;
+  border-radius: 3px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+  background-color: var(--highlight-color-secondary);
+  
+  background-image: 
+    radial-gradient(
+      circle at 2px 2px,
+      var(--highlight-color-primary) 0.5px,
+      transparent 0.5px
+    );
+  background-size: var(--highlight-pattern-small) var(--highlight-pattern-small);
+  background-position: 0 0, 4px 4px;
+  
+  /* Performance optimization */
+  background-attachment: scroll;
+}
+
+.highlight-dots:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.highlight-dots.subtle {
+  background-image: 
+    radial-gradient(
+      circle at 1px 1px,
+      rgba(156, 163, 175, var(--highlight-opacity-subtle)) 0.3px,
+      transparent 0.3px
+    );
+  background-size: 6px 6px;
+}
+
+.highlight-dots.medium {
+  background-image: 
+    radial-gradient(
+      circle at 3px 3px,
+      var(--highlight-color-primary) 0.8px,
+      transparent 0.8px
+    );
+  background-size: 12px 12px;
+}
+
+/* ==========================================================================
+   Pattern 2: Diagonal Stripes
+   대각선 스트라이프 - 45도 얇은 선들
+   ========================================================================== */
+
+.highlight-diagonal {
+  /* Base styles */
+  position: relative;
+  padding: 2px 4px;
+  border-radius: 3px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+  background-color: var(--highlight-color-secondary);
+  
+  background-image: 
+    linear-gradient(
+      45deg,
+      transparent 40%,
+      var(--highlight-color-primary) 40%,
+      var(--highlight-color-primary) 60%,
+      transparent 60%
+    );
+  background-size: var(--highlight-pattern-medium) var(--highlight-pattern-medium);
+  
+  /* Subtle animation on hover */
+  transition: background-position 0.3s ease;
+}
+
+.highlight-diagonal:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  background-position: 4px 4px;
+}
+
+.highlight-diagonal:hover {
+  background-position: 4px 4px;
+}
+
+.highlight-diagonal.reverse {
+  background-image: 
+    linear-gradient(
+      -45deg,
+      transparent 40%,
+      var(--highlight-color-accent) 40%,
+      var(--highlight-color-accent) 60%,
+      transparent 60%
+    );
+}
+
+.highlight-diagonal.fine {
+  background-image: 
+    linear-gradient(
+      45deg,
+      transparent 47%,
+      rgba(156, 163, 175, var(--highlight-opacity-normal)) 47%,
+      rgba(156, 163, 175, var(--highlight-opacity-normal)) 53%,
+      transparent 53%
+    );
+  background-size: 8px 8px;
+}
+
+/* ==========================================================================
+   Pattern 3: Grid Pattern
+   격자 패턴 - 미세한 그리드
+   ========================================================================== */
+
+.highlight-grid {
+  /* Base styles */
+  position: relative;
+  padding: 2px 4px;
+  border-radius: 3px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+  
+  background-image: 
+    linear-gradient(
+      var(--highlight-color-secondary) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      var(--highlight-color-secondary) 1px,
+      transparent 1px
+    );
+  background-size: 
+    var(--highlight-pattern-medium) var(--highlight-pattern-medium);
+  
+  /* Add subtle overlay for better blend */
+  background-color: rgba(248, 250, 252, 0.3);
+}
+
+.highlight-grid:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="dark"] .highlight-grid {
+  background-color: rgba(15, 23, 42, 0.2);
+}
+
+.highlight-grid.fine {
+  background-size: 8px 8px;
+  background-image: 
+    linear-gradient(
+      rgba(156, 163, 175, var(--highlight-opacity-subtle)) 0.5px,
+      transparent 0.5px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(156, 163, 175, var(--highlight-opacity-subtle)) 0.5px,
+      transparent 0.5px
+    );
+}
+
+.highlight-grid.bold {
+  background-size: 20px 20px;
+  background-image: 
+    linear-gradient(
+      var(--highlight-color-primary) 1.5px,
+      transparent 1.5px
+    ),
+    linear-gradient(
+      90deg,
+      var(--highlight-color-primary) 1.5px,
+      transparent 1.5px
+    );
+}
+
+/* ==========================================================================
+   Pattern 4: Noise Texture
+   노이즈 텍스처 - subtle grain effect
+   ========================================================================== */
+
+.highlight-noise {
+  /* Base styles */
+  position: relative;
+  padding: 2px 4px;
+  border-radius: 3px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+  background-color: var(--highlight-color-secondary);
+  
+  /* Multiple small radial gradients to create noise effect */
+  background-image: 
+    radial-gradient(circle at 20% 50%, transparent 20%, var(--highlight-color-secondary) 21%, var(--highlight-color-secondary) 34%, transparent 35%, transparent),
+    radial-gradient(circle at 40% 20%, var(--highlight-color-primary) 8%, transparent 9%),
+    radial-gradient(circle at 80% 80%, transparent 15%, var(--highlight-color-accent) 16%, var(--highlight-color-accent) 18%, transparent 19%),
+    radial-gradient(circle at 60% 90%, var(--highlight-color-secondary) 5%, transparent 6%);
+  
+  background-size: 
+    20px 20px,
+    16px 16px,
+    24px 24px,
+    12px 12px;
+  
+  background-position:
+    0 0,
+    8px 8px,
+    12px 4px,
+    4px 16px;
+  
+  /* Very subtle opacity for noise effect */
+  opacity: 0.6;
+}
+
+.highlight-noise:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.highlight-noise.fine {
+  background-size: 
+    12px 12px,
+    10px 10px,
+    14px 14px,
+    8px 8px;
+  opacity: 0.4;
+}
+
+.highlight-noise.organic {
+  /* More organic, scattered pattern */
+  background-image: 
+    radial-gradient(circle at 15% 30%, var(--highlight-color-primary) 2px, transparent 2px),
+    radial-gradient(circle at 75% 60%, var(--highlight-color-secondary) 1.5px, transparent 1.5px),
+    radial-gradient(circle at 45% 85%, var(--highlight-color-accent) 1px, transparent 1px),
+    radial-gradient(circle at 90% 20%, var(--highlight-color-primary) 2.5px, transparent 2.5px);
+  
+  background-size: 
+    30px 25px,
+    22px 28px,
+    18px 20px,
+    26px 32px;
+}
+
+/* ==========================================================================
+   Pattern 5: Geometric Pattern
+   기하학적 패턴 - 삼각형과 육각형
+   ========================================================================== */
+
+.highlight-geometric {
+  /* Base styles */
+  position: relative;
+  padding: 2px 4px;
+  border-radius: 3px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+  background-color: var(--highlight-color-secondary);
+  
+  /* Triangular pattern using conic gradients */
+  background-image: 
+    conic-gradient(
+      from 0deg at 50% 50%,
+      transparent 0deg,
+      var(--highlight-color-primary) 60deg,
+      transparent 120deg,
+      var(--highlight-color-accent) 180deg,
+      transparent 240deg,
+      var(--highlight-color-primary) 300deg,
+      transparent 360deg
+    );
+  
+  background-size: var(--highlight-pattern-large) var(--highlight-pattern-large);
+  
+  /* Mask to create geometric shapes */
+  -webkit-mask-image: 
+    radial-gradient(
+      circle at center,
+      black 30%,
+      transparent 35%
+    );
+  mask-image: 
+    radial-gradient(
+      circle at center,
+      black 30%,
+      transparent 35%
+    );
+}
+
+.highlight-geometric:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.highlight-geometric.hexagon {
+  /* Hexagonal pattern */
+  background-image: 
+    conic-gradient(
+      from 30deg at 50% 50%,
+      var(--highlight-color-primary) 0deg,
+      transparent 60deg,
+      var(--highlight-color-secondary) 120deg,
+      transparent 180deg,
+      var(--highlight-color-accent) 240deg,
+      transparent 300deg,
+      var(--highlight-color-primary) 360deg
+    );
+  
+  -webkit-mask-image: 
+    polygon(30% 0%, 70% 0%, 100% 50%, 70% 100%, 30% 100%, 0% 50%);
+  mask-image: 
+    polygon(30% 0%, 70% 0%, 100% 50%, 70% 100%, 30% 100%, 0% 50%);
+}
+
+.highlight-geometric.triangle {
+  /* Triangular tessellation */
+  background-image: 
+    linear-gradient(
+      60deg,
+      var(--highlight-color-primary) 25%,
+      transparent 25%,
+      transparent 75%,
+      var(--highlight-color-secondary) 75%
+    ),
+    linear-gradient(
+      -60deg,
+      var(--highlight-color-accent) 25%,
+      transparent 25%,
+      transparent 75%,
+      var(--highlight-color-primary) 75%
+    );
+  
+  background-size: 16px 28px;
+}
+
+/* ==========================================================================
+   Utility Classes
+   ========================================================================== */
+
+/* Intensity modifiers */
+.highlight-subtle { opacity: 0.5; }
+.highlight-normal { opacity: 0.8; }
+.highlight-strong { opacity: 1; }
+
+/* Size modifiers */
+.highlight-sm {
+  padding: 1px 2px;
+  border-radius: 2px;
+}
+
+.highlight-lg {
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.highlight-xl {
+  padding: 8px 12px;
+  border-radius: 6px;
+}
+
+/* Color variations */
+.highlight-primary {
+  --highlight-color-primary: rgba(99, 102, 241, 0.12);
+  --highlight-color-secondary: rgba(99, 102, 241, 0.06);
+}
+
+.highlight-success {
+  --highlight-color-primary: rgba(34, 197, 94, 0.12);
+  --highlight-color-secondary: rgba(34, 197, 94, 0.06);
+}
+
+.highlight-warning {
+  --highlight-color-primary: rgba(245, 158, 11, 0.12);
+  --highlight-color-secondary: rgba(245, 158, 11, 0.06);
+}
+
+.highlight-error {
+  --highlight-color-primary: rgba(239, 68, 68, 0.12);
+  --highlight-color-secondary: rgba(239, 68, 68, 0.06);
+}
+
+/* ==========================================================================
+   Korean Text Optimization
+   ========================================================================== */
+
+.highlight-korean {
+  /* Optimized for Korean typography */
+  line-height: 1.7;
+  word-break: keep-all;
+  letter-spacing: -0.01em;
+  
+  /* Ensure patterns don't interfere with Korean characters */
+  background-blend-mode: multiply;
+}
+
+/* ==========================================================================
+   Animation and Interactive States
+   ========================================================================== */
+
+.highlight-animated {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.highlight-animated:hover {
+  transform: translateY(-1px);
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.05),
+    0 0 0 1px rgba(99, 102, 241, 0.1);
+}
+
+.highlight-pulse {
+  animation: highlight-pulse 2s ease-in-out infinite;
+}
+
+@keyframes highlight-pulse {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; }
+}
+
+/* Floating animation for geometric patterns */
+.highlight-geometric.animated {
+  animation: highlight-float 3s ease-in-out infinite;
+}
+
+@keyframes highlight-float {
+  0%, 100% { 
+    transform: translateY(0px);
+    background-position: 0 0;
+  }
+  50% { 
+    transform: translateY(-2px);
+    background-position: 2px 2px;
+  }
+}
+
+/* ==========================================================================
+   Accessibility and Performance
+   ========================================================================== */
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  .highlight-animated,
+  .highlight-pulse,
+  .highlight-geometric.animated {
+    animation: none;
+    transition: none;
+  }
+  
+  .highlight-base:hover,
+  .highlight-animated:hover {
+    transform: none;
+  }
+}
+
+/* High contrast mode adjustments */
+@media (prefers-contrast: high) {
+  :root {
+    --highlight-opacity-subtle: 0.15;
+    --highlight-opacity-normal: 0.25;
+    --highlight-opacity-medium: 0.35;
+    --highlight-opacity-strong: 0.45;
+  }
+}
+
+/* Print styles - remove patterns for better readability */
+@media print {
+  [class*="highlight-"] {
+    background-image: none !important;
+    background-color: rgba(0, 0, 0, 0.05) !important;
+    color: inherit !important;
+  }
+}
+
+/* ==========================================================================
+   Performance Optimizations
+   ========================================================================== */
+
+/* GPU acceleration for better performance */
+.highlight-base,
+[class*="highlight-"] {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Optimize pattern rendering */
+[class*="highlight-"]:not(:hover) {
+  will-change: auto;
+}
+
+[class*="highlight-"]:hover {
+  will-change: transform, background-position;
+}

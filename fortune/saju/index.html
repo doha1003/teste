@@ -47,7 +47,7 @@
 
     <!-- Main CSS -->
     <!-- CSS Bundle - Automatically selects development or production version -->
-    <link rel="stylesheet" href="/dist/styles.min.css" id="main-styles" />
+    <link rel="stylesheet" href="../../dist/styles.min.css" id="main-styles" />
 
     <!-- Page Data Attributes -->
     <script>
@@ -239,16 +239,16 @@
       </div>
     </footer>
     <!-- Core JavaScript -->
-    <script type="module" src="/js/app.js"></script>
-    <script type="module" src="/js/core/service-base.js"></script>
+    <script type="module" src="../../js/app.js"></script>
+    <script type="module" src="../../js/core/service-base.js"></script>
 
     <!-- Feature JavaScript -->
-    <script type="module" src="/js/manseryeok-client.js"></script>
-    <script type="module" src="/js/lunar-calendar-compact.js"></script>
-    <script type="module" src="/js/saju-calculator.js"></script>
-    <script type="module" src="/js/api-config.js"></script>
-    <script type="module" src="/js/features/fortune/fortune-service.js"></script>
-    <script type="module" src="/js/features/fortune/saju-fortune.js"></script>
+    <script type="module" src="../../js/manseryeok-client.js"></script>
+    <script type="module" src="../../js/lunar-calendar-compact.js"></script>
+    <script type="module" src="../../js/saju-calculator.js"></script>
+    <script type="module" src="../../js/api-config.js"></script>
+    <script type="module" src="../../js/features/fortune/fortune-service.js"></script>
+    <script type="module" src="../../js/features/fortune/saju-fortune.js"></script>
 
     <!-- External SDKs (지연 로딩) -->
     <script async src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js"></script>
@@ -264,6 +264,110 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
+
+    <!-- Saju Fortune Initialization -->
+    <script type="module">
+      // 사주팔자 서비스 초기화
+      import { SajuFortuneService } from '../../js/features/fortune/saju-fortune.js';
+      
+      let sajuFortuneService;
+      
+      document.addEventListener('DOMContentLoaded', async () => {
+        try {
+          console.log('🎯 사주팔자 초기화 시작');
+          
+          // SajuFortuneService 인스턴스 생성
+          sajuFortuneService = new SajuFortuneService();
+          console.log('✅ 사주팔자 서비스 생성됨');
+          
+          // 폼 제출 이벤트 연결
+          const form = document.querySelector('form[data-form="birth-data"]');
+          if (form) {
+            form.addEventListener('submit', handleSajuSubmit);
+            console.log('✅ 사주 폼 이벤트 연결됨');
+          }
+          
+          // 월/일 유효성 검사
+          const monthInput = document.getElementById('birthMonth');
+          const dayInput = document.getElementById('birthDay');
+          
+          if (monthInput && dayInput) {
+            monthInput.addEventListener('change', validateDayInput);
+            dayInput.addEventListener('change', validateDayInput);
+          }
+          
+        } catch (error) {
+          console.error('❌ 사주팔자 초기화 실패:', error);
+        }
+      });
+      
+      function validateDayInput() {
+        const month = parseInt(document.getElementById('birthMonth').value);
+        const day = parseInt(document.getElementById('birthDay').value);
+        const year = parseInt(document.getElementById('birthYear').value) || new Date().getFullYear();
+        
+        if (month && day) {
+          const daysInMonth = new Date(year, month, 0).getDate();
+          if (day > daysInMonth) {
+            document.getElementById('birthDay').value = daysInMonth;
+            alert(`${month}월은 최대 ${daysInMonth}일까지 있습니다.`);
+          }
+        }
+      }
+      
+      async function handleSajuSubmit(event) {
+        event.preventDefault();
+        
+        try {
+          console.log('🔮 사주팔자 분석 시작');
+          
+          // 폼 데이터 수집
+          const formData = new FormData(event.target);
+          const userData = {
+            name: formData.get('userName'),
+            gender: formData.get('gender'),
+            year: parseInt(formData.get('birthYear')),
+            month: parseInt(formData.get('birthMonth')),
+            day: parseInt(formData.get('birthDay')),
+            time: parseInt(formData.get('birthTime')),
+            isLunar: formData.get('isLunar') === 'on'
+          };
+          
+          // 입력 검증
+          if (!userData.name || !userData.gender || !userData.year || !userData.month || !userData.day || userData.time === undefined) {
+            alert('모든 필수 정보를 입력해주세요.');
+            return;
+          }
+          
+          if (userData.year < 1900 || userData.year > new Date().getFullYear()) {
+            alert('올바른 생년을 입력해주세요.');
+            return;
+          }
+          
+          if (userData.month < 1 || userData.month > 12) {
+            alert('올바른 생월을 입력해주세요.');
+            return;
+          }
+          
+          if (userData.day < 1 || userData.day > 31) {
+            alert('올바른 생일을 입력해주세요.');
+            return;
+          }
+          
+          console.log('📋 사주 분석 데이터:', userData);
+          
+          // 사주팔자 분석 실행
+          await sajuFortuneService.generateFortune(userData);
+          
+        } catch (error) {
+          console.error('❌ 사주팔자 분석 실패:', error);
+          alert('사주팔자 분석 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+        }
+      }
+      
+      // 전역 접근을 위한 설정
+      window.sajuFortuneService = sajuFortuneService;
+    </script>
 
     <!-- Structured Data -->
     <script type="application/ld+json">

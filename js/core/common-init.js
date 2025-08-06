@@ -26,10 +26,63 @@ const safeLog = {
   groupEnd: () => isDevelopment() && console.groupEnd(), // eslint-disable-line no-console
 };
 
-// DohaKR 객체를 export
+// DohaKR 메인 네임스페이스 - 모든 기능을 통합관리
 export const DohaKR = {
+  // 핵심 유틸리티
   utils: { safeLog, isDevelopment },
   PWAHelpers,
+  
+  // 각 기능별 네임스페이스
+  Tests: {
+    MBTI: null,    // MBTITestService 인스턴스
+    TetoEgen: null, // TetoEgenTestService 인스턴스
+    LoveDNA: null   // LoveDNATestService 인스턴스
+  },
+  
+  Fortune: {
+    Daily: null,    // DailyFortuneService 인스턴스
+    Tarot: null,    // TarotFortuneService 인스턴스
+    Saju: null,     // SajuFortuneService 인스턴스
+    Zodiac: null    // ZodiacFortuneService 인스턴스
+  },
+  
+  Tools: {
+    BMI: null,      // BMICalculatorService 인스턴스
+    Salary: null,   // SalaryCalculatorService 인스턴스
+    TextCounter: null // TextCounterService 인스턴스
+  },
+  
+  // API 및 데이터 관리
+  API: {
+    Manager: null,  // APIManager 인스턴스
+    Config: null    // API 설정
+  },
+  
+  // UI 및 상호작용
+  UI: {
+    MobileMenu: null,
+    Theme: null,
+    Analytics: null
+  },
+  
+  // 서비스 등록 함수
+  registerService(category, name, instance) {
+    if (this[category] && typeof this[category] === 'object') {
+      this[category][name] = instance;
+      safeLog.log(`✅ Service registered: DohaKR.${category}.${name}`);
+    } else {
+      safeLog.warn(`⚠️ Invalid category: ${category}`);
+    }
+  },
+  
+  // 서비스 가져오기 함수
+  getService(category, name) {
+    if (this[category] && this[category][name]) {
+      return this[category][name];
+    }
+    safeLog.warn(`⚠️ Service not found: DohaKR.${category}.${name}`);
+    return null;
+  }
 };
 
 /**
@@ -135,25 +188,54 @@ DohaKR.initMobileMenu = function () {
   const navMenu = document.querySelector('.nav-menu');
 
   if (mobileMenuBtn && navMenu) {
-    mobileMenuBtn.addEventListener('click', () => {
-      navMenu.classList.toggle('active');
-      mobileMenuBtn.classList.toggle('active');
-
-      // 메뉴 열릴 때 body 스크롤 방지
-      if (navMenu.classList.contains('active')) {
-        document.body.style.overflow = 'hidden';
+    // 기존 이벤트 리스너 제거 (중복 방지)
+    mobileMenuBtn.removeEventListener('click', DohaKR._mobileMenuClickHandler);
+    
+    // 클릭 핸들러 정의
+    DohaKR._mobileMenuClickHandler = () => {
+      const isActive = navMenu.classList.contains('active');
+      
+      if (isActive) {
+        navMenu.classList.remove('active');
+        mobileMenuBtn.classList.remove('active');
+        mobileMenuBtn.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
       } else {
+        navMenu.classList.add('active');
+        mobileMenuBtn.classList.add('active');
+        mobileMenuBtn.setAttribute('aria-expanded', 'true');
+        document.body.style.overflow = 'hidden';
+      }
+    };
+
+    // 이벤트 리스너 추가
+    mobileMenuBtn.addEventListener('click', DohaKR._mobileMenuClickHandler);
+
+    // 메뉴 외부 클릭 시 닫기
+    document.addEventListener('click', (event) => {
+      if (!event.target.closest('.navbar') && navMenu.classList.contains('active')) {
+        navMenu.classList.remove('active');
+        mobileMenuBtn.classList.remove('active');
+        mobileMenuBtn.setAttribute('aria-expanded', 'false');
         document.body.style.overflow = '';
       }
     });
 
-    // 메뉴 외부 클릭 시 닫기
-    document.addEventListener('click', (event) => {
-      if (!event.target.closest('.navbar')) {
+    // ESC 키로 메뉴 닫기
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && navMenu.classList.contains('active')) {
         navMenu.classList.remove('active');
         mobileMenuBtn.classList.remove('active');
+        mobileMenuBtn.setAttribute('aria-expanded', 'false');
         document.body.style.overflow = '';
       }
+    });
+
+    console.log('✅ Mobile menu initialized with button:', mobileMenuBtn ? 'found' : 'not found');
+  } else {
+    console.warn('⚠️ Mobile menu elements not found:', {
+      button: !!mobileMenuBtn,
+      menu: !!navMenu
     });
   }
 };
@@ -520,8 +602,7 @@ function initializeAll() {
   // 페이지별 초기화
   DohaKR.initPage();
 
-  // 모바일 메뉴 초기화
-  initMobileMenu();
+  // 모바일 메뉴는 네비게이션 로드 후 자동 초기화됨
 
   // 이미지 지연 로딩 polyfill
   if ('loading' in HTMLImageElement.prototype) {

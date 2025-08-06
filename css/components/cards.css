@@ -15,80 +15,95 @@
   max-width: 100%; /* 부모 컨테이너 넘지 않도록 */
   min-height: var(--space-32, 8rem);
 
-  /* Visual */
-  background-color: var(--surface-primary, var(--color-white));
-  border: var(--border-1, 1px) solid var(--border-primary, var(--color-gray-200));
-  border-radius: var(--radius-lg, var(--radius-xl));
-  box-shadow: var(--shadow-sm);
+  /* Visual - Linear.app 미니멀 스타일 */
+  background-color: var(--color-white);
+  border: 1px solid rgba(0, 0, 0, 0.1); /* 얘은 보더 */
+  border-radius: 8px; /* 6-8px 범위 */
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); /* 매우 미묘한 그림자 */
 
   /* Behavior */
   overflow: hidden;
   overflow-x: hidden; /* 수평 스크롤 방지 */
-  transition: var(--transition-all, all 0.2s ease);
   box-sizing: border-box; /* 패딩 포함 너비 계산 */
+  
+  /* Transitions - Linear.app precise timing */
+  transition: 
+    box-shadow 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    border-color 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform, box-shadow;
 }
 
-/* Card States */
+/* Card States - Linear.app 미니먀 호버 */
 .card:hover,
 .card--hover:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
-  border-color: var(--border-secondary, var(--color-gray-300));
+  transform: translateY(-1px); /* 살짝 올라오는 효과 */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* 부드럽게 늘어난 그림자 */
+  border-color: rgba(0, 0, 0, 0.15);
 }
 
 .card--clickable {
   cursor: pointer;
 }
 
+.card--clickable:active {
+  transform: translateY(0px) scale(0.99);
+  transition-duration: 100ms; /* Instant feedback */
+}
+
 .card--clickable:focus-visible {
-  outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, var(--color-primary));
-  outline-offset: var(--focus-ring-offset, 2px);
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  box-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.08),
+    0 0 0 2px rgba(94, 106, 210, 0.2);
 }
 
 /* ===== CARD STRUCTURE ===== */
-/* Card Header */
+/* Card Header - Linear.app 미니먀 스타일 */
 .card-header,
 .card__header {
-  padding: var(--space-6, var(--spacing-5)) var(--space-6, var(--spacing-6))
-    var(--space-4, var(--spacing-4));
-  border-bottom: var(--border-1, 1px) solid var(--border-primary, var(--color-gray-200));
-  background-color: var(--bg-secondary, var(--color-gray-50));
+  padding: 24px 24px 16px; /* 8px 배수로 정밀한 패딩 */
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08); /* 더 미묘한 보더 */
+  background-color: transparent; /* 배경 색상 제거 */
 }
 
-/* Card Body */
+/* Card Body - Linear.app 미니먀 스타일 */
 .card-body,
 .card__body {
   flex: 1;
-  padding: var(--space-6, var(--spacing-6));
+  padding: 24px; /* 8px 배수로 정밀한 패딩 */
+  line-height: 1.7; /* 한글 가독성 최적화 */
 }
 
-/* Card Footer */
+/* Card Footer - Linear.app 미니먀 스타일 */
 .card-footer,
 .card__footer {
-  padding: var(--space-4, var(--spacing-4)) var(--space-6, var(--spacing-6));
-  background-color: var(--bg-secondary, var(--color-gray-50));
-  border-top: var(--border-1, 1px) solid var(--border-primary, var(--color-gray-200));
+  padding: 16px 24px; /* 8px 배수로 정밀한 패딩 */
+  background-color: transparent; /* 배경 색상 제거 */
+  border-top: 1px solid rgba(0, 0, 0, 0.08); /* 더 미묘한 보더 */
 }
 
-/* Compact padding */
+/* Compact padding - Linear.app 미니먀 스타일 */
 .card--compact .card__header,
 .card--compact .card__body,
 .card--compact .card__footer,
 .card--compact .card-header,
 .card--compact .card-body,
 .card--compact .card-footer {
-  padding: var(--space-4, var(--spacing-4));
+  padding: 16px; /* 8px 배수로 정밀한 패딩 */
 }
 
 /* ===== CARD CONTENT ===== */
-/* Card Title */
+/* Card Title - 한글 최적화 */
 .card-title,
 .card__title {
-  margin: 0 0 var(--space-2, var(--spacing-2)) 0;
+  margin: 0 0 8px 0; /* 8px 배수 */
   font-size: var(--font-size-lg, var(--font-size-xl));
-  font-weight: var(--font-weight-semibold);
+  font-weight: 600; /* Semibold weight */
   line-height: var(--line-height-korean-title);
-  color: var(--text-primary, var(--color-gray-900));
+  color: var(--color-gray-900);
+  word-break: keep-all; /* 한글 단어 분리 방지 */
 }
 
 /* Card Subtitle */
@@ -100,13 +115,14 @@
   line-height: var(--line-height-korean-caption);
 }
 
-/* Card Text */
+/* Card Text - 한글 최적화 */
 .card-text,
 .card__text {
-  margin: 0 0 var(--space-4, var(--spacing-4)) 0;
+  margin: 0 0 16px 0; /* 8px 배수 */
   font-size: var(--font-size-base);
-  line-height: var(--line-height-relaxed);
-  color: var(--text-primary, var(--color-gray-700));
+  line-height: 1.7; /* 한글 가독성 최적화 */
+  color: var(--color-gray-700);
+  word-break: keep-all; /* 한글 단어 분리 방지 */
 }
 
 /* Card Meta */
@@ -174,10 +190,10 @@
 }
 
 /* ===== CARD VARIANTS ===== */
-/* Bordered Card */
+/* Bordered Card - Linear.app 미니먀 스타일 */
 .card-bordered,
 .card--borderless {
-  border: 1px solid var(--color-gray-200);
+  border: 1px solid rgba(0, 0, 0, 0.1);
   box-shadow: none;
 }
 
@@ -192,26 +208,28 @@
   border: none;
 }
 
-/* Flat Card */
+/* Flat Card - Linear.app 미니먀 스타일 */
 .card-flat {
   box-shadow: none;
-  background-color: var(--color-gray-50);
+  background-color: var(--color-white); /* 흰색 배경 유지 */
+  border: 1px solid rgba(0, 0, 0, 0.08); /* 더 미묘한 보더 */
 }
 
-/* Elevated Card */
+/* Elevated Card - Linear.app 미니먀 스타일 */
 .card--elevated {
-  border: none;
-  box-shadow: var(--shadow-md);
+  border: 1px solid rgba(0, 0, 0, 0.05); /* 미묘한 보더 유지 */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* 미묘한 그림자 */
 }
 
 .card--elevated:hover {
-  box-shadow: var(--shadow-xl);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12); /* 호버 시 미묘하게 증가 */
+  transform: translateY(-1px); /* 살짝 올라오는 효과 */
 }
 
-/* Ghost Card */
+/* Ghost Card - Linear.app 미니먀 스타일 */
 .card--ghost {
   background-color: transparent;
-  border: var(--border-1, 1px) dashed var(--border-primary, var(--color-gray-300));
+  border: 1px dashed rgba(0, 0, 0, 0.15); /* 더 미묘한 dashed 보더 */
 }
 
 /* Highlighted Card */
@@ -319,23 +337,29 @@
   margin-bottom: var(--space-4, var(--spacing-4));
 }
 
-/* Feature/Service Card */
+/* Feature/Service Card - Linear.app 미니먀 스타일 */
 .feature-card,
 .service-card {
   text-align: center;
-  padding: var(--space-8, var(--spacing-6)) var(--space-6, var(--spacing-6));
-  border-radius: var(--radius-xl);
+  padding: 32px 24px; /* 8px 배수로 정밀한 패딩 */
+  border-radius: 8px; /* 6-8px 범위 */
   background-color: var(--color-white);
-  border: 1px solid var(--color-gray-200);
-  transition: var(--transition-all, all 0.2s ease);
+  border: 1px solid rgba(0, 0, 0, 0.1); /* 미묘한 보더 */
+  transition: all 0.2s ease; /* 부드러운 전환 */
   height: 100%;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); /* 미묘한 그림자 */
 }
 
 .feature-card:hover,
 .service-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-xl);
-  border-color: var(--color-primary);
+  transform: translateY(-1px); /* Subtle lift */
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  border-color: rgba(0, 0, 0, 0.15);
+}
+
+.service-card:active {
+  transform: translateY(0px) scale(0.98);
+  transition-duration: 100ms;
 }
 
 .feature-card-icon,
@@ -389,7 +413,7 @@
 /* ===== RESPONSIVE CARDS ===== */
 @media (max-width: 768px) {
   .card {
-    margin-bottom: var(--spacing-4);
+    margin-bottom: 16px; /* 8px 배수 */
   }
 
   .card-header,
@@ -398,14 +422,14 @@
   .card__header,
   .card__body,
   .card__footer {
-    padding: var(--space-4, var(--spacing-4));
+    padding: 16px; /* 8px 배수로 정밀한 패딩 */
   }
 
   .fortune-result-card,
   .test-result-card,
   .result-card {
-    margin: var(--spacing-4) var(--spacing-3);
-    padding: var(--spacing-6);
+    margin: 16px 12px; /* 8px 배수 */
+    padding: 24px; /* 8px 배수 */
   }
 
   .test-result-card .result-title,

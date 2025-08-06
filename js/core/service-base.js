@@ -61,6 +61,28 @@ export class ServiceBase {
   }
 
   /**
+   * 공통 초기화 (광고, 공유, 분석 등)
+   */
+  initializeCommon() {
+    // 광고 초기화
+    this.initializeAds();
+    
+    // 카카오 SDK 초기화 (지연 로딩)
+    if (typeof window.Kakao !== 'undefined' && !window.Kakao.isInitialized()) {
+      try {
+        window.Kakao.init('YOUR_KAKAO_APP_KEY'); // 실제 키로 교체 필요
+      } catch (e) {
+        console.warn('Kakao SDK initialization failed:', e);
+      }
+    }
+    
+    // 전역 에러 핸들러
+    window.addEventListener('error', (e) => {
+      console.error('Global error:', e.error);
+    });
+  }
+
+  /**
    * 로딩 표시
    */
   showLoading(text) {

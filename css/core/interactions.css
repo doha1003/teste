@@ -1,0 +1,565 @@
+/**
+ * Linear.app Inspired Interaction System
+ * Sophisticated micro-interactions and state management
+ * Implements precise hover, focus, active, and loading states
+ * Version: 1.0.0
+ */
+
+:root {
+  /* ========== INTERACTION TOKENS ========== */
+  
+  /* Hover transform values */
+  --hover-lift-distance: -2px;
+  --hover-scale-factor: 1.02;
+  --hover-button-scale: 0.98;
+  
+  /* Active transform values */
+  --active-scale-factor: 0.98;
+  --active-lift-distance: 0px;
+  
+  /* Focus ring dimensions */
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 2px;
+  --focus-ring-blur: 0px;
+  
+  /* Interaction timing */
+  --interaction-duration: 200ms;
+  --interaction-timing: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --quick-interaction: 150ms;
+  --instant-feedback: 100ms;
+  
+  /* Loading pulse timing */
+  --pulse-duration: 2s;
+  --skeleton-shimmer: 1.5s;
+}
+
+/* ========== BASE INTERACTIVE ELEMENT STYLES ========== */
+
+/* Standard interactive element base */
+.interactive-base {
+  position: relative;
+  cursor: pointer;
+  transition: all var(--interaction-duration) var(--interaction-timing);
+  will-change: transform, box-shadow, background-color, border-color;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+/* Prevent layout shift during transforms */
+.interactive-base::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ========== BUTTON INTERACTIONS ========== */
+
+/* Primary button interactions */
+.btn, 
+.button,
+button:not(.btn-minimal) {
+  @extend .interactive-base;
+  transition: 
+    background-color var(--quick-interaction) var(--interaction-timing),
+    border-color var(--quick-interaction) var(--interaction-timing),
+    color var(--quick-interaction) var(--interaction-timing),
+    box-shadow var(--interaction-duration) var(--interaction-timing),
+    transform var(--instant-feedback) var(--interaction-timing);
+}
+
+/* Button hover states */
+.btn:hover,
+.button:hover,
+button:not(.btn-minimal):hover {
+  transform: translateY(var(--hover-lift-distance));
+  box-shadow: var(--shadow-hover-lift);
+}
+
+/* Primary button hover */
+.btn-primary:hover {
+  background-color: color-mix(in srgb, var(--color-primary) 90%, black 10%);
+  box-shadow: var(--shadow-colored);
+}
+
+/* Secondary button hover */
+.btn-secondary:hover {
+  background-color: var(--color-neutral-100);
+  border-color: var(--color-neutral-300);
+}
+
+/* Ghost button hover */
+.btn-ghost:hover {
+  background-color: var(--color-neutral-50);
+  color: var(--color-neutral-900);
+}
+
+/* Danger button hover */
+.btn-danger:hover {
+  background-color: color-mix(in srgb, var(--color-error) 90%, black 10%);
+  box-shadow: var(--shadow-error);
+}
+
+/* Button active states */
+.btn:active,
+.button:active,
+button:not(.btn-minimal):active {
+  transform: scale(var(--active-scale-factor));
+  transition-duration: var(--instant-feedback);
+}
+
+/* Button focus states */
+.btn:focus,
+.button:focus,
+button:focus {
+  outline: var(--focus-ring-width) solid var(--color-primary);
+  outline-offset: var(--focus-ring-offset);
+  box-shadow: 
+    var(--shadow-button-rest),
+    0 0 0 var(--focus-ring-width) var(--color-primary-alpha-20);
+}
+
+/* Disabled button states */
+.btn:disabled,
+.button:disabled,
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  transform: none !important;
+  box-shadow: none !important;
+  transition: opacity var(--interaction-duration) var(--interaction-timing);
+}
+
+/* ========== CARD INTERACTIONS ========== */
+
+.card,
+.service-card,
+.result-card {
+  @extend .interactive-base;
+  transition:
+    box-shadow var(--interaction-duration) var(--interaction-timing),
+    transform var(--interaction-duration) var(--interaction-timing),
+    border-color var(--interaction-duration) var(--interaction-timing);
+}
+
+/* Card hover states */
+.card:hover,
+.service-card:hover,
+.result-card:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-card-hover);
+  border-color: var(--color-neutral-200);
+}
+
+/* Interactive card active state */
+.card.interactive:active,
+.service-card:active {
+  transform: translateY(0px) scale(0.99);
+  transition-duration: var(--instant-feedback);
+}
+
+/* Card focus states */
+.card:focus,
+.service-card:focus {
+  outline: var(--focus-ring-width) solid var(--color-primary);
+  outline-offset: var(--focus-ring-offset);
+}
+
+/* ========== LINK INTERACTIONS ========== */
+
+a,
+.link {
+  color: var(--color-neutral-600);
+  text-decoration: none;
+  transition: color var(--interaction-duration) var(--interaction-timing);
+  position: relative;
+}
+
+/* Link hover states */
+a:hover,
+.link:hover {
+  color: var(--color-neutral-900);
+}
+
+/* Primary link styles */
+.link-primary {
+  color: var(--color-primary);
+}
+
+.link-primary:hover {
+  color: color-mix(in srgb, var(--color-primary) 80%, black 20%);
+  text-decoration: underline;
+  text-decoration-color: currentColor;
+  text-underline-offset: 2px;
+}
+
+/* Link focus states */
+a:focus,
+.link:focus {
+  outline: var(--focus-ring-width) solid var(--color-primary);
+  outline-offset: var(--focus-ring-offset);
+  border-radius: var(--radius-sm);
+}
+
+/* ========== FORM ELEMENT INTERACTIONS ========== */
+
+/* Input base styles */
+input,
+textarea,
+select {
+  transition:
+    border-color var(--interaction-duration) var(--interaction-timing),
+    box-shadow var(--interaction-duration) var(--interaction-timing),
+    background-color var(--interaction-duration) var(--interaction-timing);
+}
+
+/* Input hover states */
+input:hover:not(:focus):not(:disabled),
+textarea:hover:not(:focus):not(:disabled),
+select:hover:not(:focus):not(:disabled) {
+  border-color: var(--color-neutral-300);
+  background-color: var(--color-neutral-25);
+}
+
+/* Input focus states */
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-input-focus);
+  background-color: var(--color-white);
+}
+
+/* Input error states */
+input.error,
+textarea.error,
+input:invalid,
+textarea:invalid {
+  border-color: var(--color-error);
+  box-shadow: var(--shadow-input-error);
+}
+
+/* Input success states */
+input.success,
+textarea.success {
+  border-color: var(--color-success);
+  box-shadow: 0 0 0 2px var(--color-success-alpha-20);
+}
+
+/* Input disabled states */
+input:disabled,
+textarea:disabled,
+select:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  background-color: var(--color-neutral-50);
+  border-color: var(--color-neutral-200);
+}
+
+/* ========== NAVIGATION INTERACTIONS ========== */
+
+/* Navigation link base */
+.nav-link {
+  position: relative;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-md);
+  transition: 
+    background-color var(--interaction-duration) var(--interaction-timing),
+    color var(--interaction-duration) var(--interaction-timing);
+}
+
+/* Navigation link hover */
+.nav-link:hover {
+  background-color: var(--color-neutral-50);
+  color: var(--color-neutral-900);
+}
+
+/* Active navigation link */
+.nav-link.active {
+  background-color: var(--color-primary-alpha-10);
+  color: var(--color-primary);
+  font-weight: 500;
+}
+
+/* Navigation link focus */
+.nav-link:focus {
+  outline: var(--focus-ring-width) solid var(--color-primary);
+  outline-offset: 1px;
+}
+
+/* ========== LOADING STATES ========== */
+
+/* Loading button state */
+.btn.loading,
+.button.loading {
+  cursor: wait;
+  color: transparent;
+  pointer-events: none;
+  position: relative;
+}
+
+.btn.loading::after,
+.button.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 16px;
+  height: 16px;
+  margin: -8px 0 0 -8px;
+  border: 2px solid currentColor;
+  border-color: currentColor transparent currentColor transparent;
+  border-radius: 50%;
+  animation: var(--animation-spin);
+}
+
+/* Loading card state */
+.card.loading {
+  pointer-events: none;
+  animation: var(--animation-pulse);
+}
+
+/* Skeleton loading styles */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--color-neutral-200) 0%,
+    var(--color-neutral-100) 50%,
+    var(--color-neutral-200) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer var(--skeleton-shimmer) ease-in-out infinite;
+  border-radius: var(--radius-md);
+}
+
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* ========== TOUCH OPTIMIZATIONS ========== */
+
+/* Larger touch targets for mobile */
+@media (pointer: coarse) {
+  .btn,
+  .button,
+  button,
+  .card.interactive,
+  .service-card,
+  .nav-link {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Reduce hover effects on touch devices */
+  .btn:hover,
+  .button:hover,
+  .card:hover,
+  .service-card:hover,
+  .nav-link:hover {
+    transform: none;
+  }
+  
+  /* Enhance active states for touch */
+  .btn:active,
+  .button:active,
+  .card.interactive:active,
+  .service-card:active {
+    transform: scale(0.96);
+    opacity: 0.8;
+    transition-duration: 50ms;
+  }
+  
+  /* Touch-friendly form elements */
+  input,
+  textarea,
+  select {
+    min-height: 44px;
+    font-size: 16px; /* Prevent zoom on iOS */
+  }
+}
+
+/* ========== DARK THEME ADJUSTMENTS ========== */
+
+[data-theme="dark"] {
+  /* Adjust hover colors for dark theme */
+  --color-neutral-hover: var(--color-neutral-800);
+  --color-neutral-active: var(--color-neutral-700);
+  
+  /* Enhanced glow effects in dark mode */
+  .btn:focus,
+  .button:focus,
+  input:focus,
+  textarea:focus {
+    box-shadow: 
+      var(--shadow-glow),
+      0 0 0 var(--focus-ring-width) var(--color-primary-alpha-30);
+  }
+  
+  /* Dark theme skeleton */
+  .skeleton {
+    background: linear-gradient(
+      90deg,
+      var(--color-neutral-800) 0%,
+      var(--color-neutral-700) 50%,
+      var(--color-neutral-800) 100%
+    );
+  }
+}
+
+/* ========== REDUCED MOTION SUPPORT ========== */
+
+@media (prefers-reduced-motion: reduce) {
+  .interactive-base,
+  .btn,
+  .button,
+  button,
+  .card,
+  .service-card,
+  a,
+  .link,
+  input,
+  textarea,
+  select {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+  
+  /* Remove transform animations */
+  .btn:hover,
+  .button:hover,
+  .card:hover,
+  .service-card:hover,
+  .btn:active,
+  .button:active {
+    transform: none !important;
+  }
+  
+  /* Keep essential focus outlines */
+  .btn:focus,
+  .button:focus,
+  input:focus,
+  textarea:focus,
+  a:focus,
+  .link:focus {
+    outline: var(--focus-ring-width) solid var(--color-primary) !important;
+    outline-offset: var(--focus-ring-offset) !important;
+  }
+}
+
+/* ========== UTILITY CLASSES ========== */
+
+/* Interactive modifiers */
+.hover\:lift:hover {
+  transform: translateY(var(--hover-lift-distance));
+}
+
+.hover\:scale:hover {
+  transform: scale(var(--hover-scale-factor));
+}
+
+.hover\:glow:hover {
+  box-shadow: var(--shadow-glow);
+}
+
+.active\:scale:active {
+  transform: scale(var(--active-scale-factor));
+}
+
+.active\:press:active {
+  transform: scale(var(--active-scale-factor)) translateY(1px);
+}
+
+/* State classes */
+.is-loading {
+  pointer-events: none;
+  opacity: 0.7;
+  cursor: wait;
+}
+
+.is-disabled {
+  pointer-events: none;
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.is-interactive {
+  cursor: pointer;
+  transition: all var(--interaction-duration) var(--interaction-timing);
+}
+
+/* Focus ring utilities */
+.focus-ring:focus {
+  outline: var(--focus-ring-width) solid var(--color-primary);
+  outline-offset: var(--focus-ring-offset);
+}
+
+.focus-ring-inset:focus {
+  outline: var(--focus-ring-width) solid var(--color-primary);
+  outline-offset: calc(var(--focus-ring-offset) * -1);
+}
+
+/* Remove focus ring (use carefully for accessibility) */
+.focus-ring-none:focus {
+  outline: none;
+}
+
+/* ========== PERFORMANCE OPTIMIZATIONS ========== */
+
+/* Composite layers for smooth animations */
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}
+
+.will-change-shadow {
+  will-change: box-shadow;
+}
+
+.will-change-colors {
+  will-change: background-color, border-color, color;
+}
+
+/* Hardware acceleration for smooth animations */
+.gpu-accelerated {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* ========== RIPPLE EFFECT (OPTIONAL) ========== */
+
+.ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: var(--color-primary-alpha-20);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.ripple:active::after {
+  width: 300px;
+  height: 300px;
+  transition: width 0s, height 0s;
+}

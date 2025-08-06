@@ -34,9 +34,9 @@
     <meta property="og:url" content="https://doha.kr/tools/text-counter.html" />
 
     <!-- 파비콘 -->
-    <link rel="icon" type="image/svg+xml" href="/images/logo.svg" />
-    <link rel="apple-touch-icon" href="/images/android-chrome-192x192.png" />
-    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" type="image/svg+xml" href="../images/logo.svg" />
+    <link rel="apple-touch-icon" href="../images/android-chrome-192x192.png" />
+    <link rel="manifest" href="../manifest.json" />
 
     <!-- 폰트 -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -50,7 +50,7 @@
 
     <!-- Main CSS -->
     <!-- CSS Bundle - Automatically selects development or production version -->
-    <link rel="stylesheet" href="/dist/styles.min.css" id="main-styles" />
+    <link rel="stylesheet" href="../dist/styles.min.css" id="main-styles" />
 
     <!-- Page Data Attributes -->
     <script>
@@ -433,13 +433,26 @@
     </main>
 
     <!-- Core JavaScript -->
-    <script type="module" src="/js/app.js"></script>
-    <script type="module" src="/js/core/service-base.js"></script>
+    <script type="module" src="../js/app.js"></script>
+    <script type="module" src="../js/core/service-base.js"></script>
 
     <!-- Feature JavaScript -->
-    <script type="module" src="/js/api-config.js"></script>
-    <script type="module" src="/js/features/tools/tool-service.js"></script>
-    <script type="module" src="/js/features/tools/text-counter.js"></script>
+    <script type="module" src="../js/api-config.js"></script>
+    <script type="module" src="../js/features/tools/tool-service.js"></script>
+    <script type="module" src="../js/features/tools/text-counter.js"></script>
+
+    <!-- Text Counter Initialization -->
+    <script type="module">
+      // 글자수 세기 초기화
+      import { textCounterService } from '../js/features/tools/text-counter.js';
+      
+      // DOM이 로드되면 서비스 초기화
+      document.addEventListener('DOMContentLoaded', () => {
+        if (textCounterService && typeof textCounterService.initializeService === 'function') {
+          textCounterService.initializeService();
+        }
+      });
+    </script>
 
     <!-- External SDKs (지연 로딩) -->
     <script

@@ -295,3 +295,11 @@ const tetoEgenQuestions = [
     ],
   },
 ];
+
+// 전역 스코프에 변수 노출 (모듈 호환성을 위해)
+if (typeof window !== 'undefined') {
+  window.tetoEgenQuestions = tetoEgenQuestions;
+}
+
+// ES6 모듈 export
+export { tetoEgenQuestions };

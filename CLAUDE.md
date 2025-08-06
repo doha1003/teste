@@ -279,6 +279,48 @@ npm run optimize:images         # Optimize images with sharp
 - Ensure WCAG 2.1 AA compliance
 - Test on mobile devices (Korean keyboards)
 
+### Highlighter Pattern System
+- **5 Pattern Types Available**:
+  - `highlight-dots`: Subtle dot pattern for gentle emphasis
+  - `highlight-diagonal`: 45-degree stripe pattern with hover animation
+  - `highlight-grid`: Fine grid pattern for structured content
+  - `highlight-noise`: Organic noise texture for natural feel
+  - `highlight-geometric`: Modern geometric shapes with conic gradients
+
+- **Usage Examples**:
+  ```html
+  <!-- Basic patterns -->
+  <span class="highlight-dots">중요한 텍스트</span>
+  <span class="highlight-diagonal">강조할 내용</span>
+  
+  <!-- Size variations -->
+  <span class="highlight-dots highlight-sm">작은 하이라이터</span>
+  <span class="highlight-grid highlight-lg">큰 하이라이터</span>
+  
+  <!-- Color variants -->
+  <span class="highlight-dots highlight-primary">주요 강조</span>
+  <span class="highlight-noise highlight-success">성공 메시지</span>
+  <span class="highlight-diagonal highlight-warning">경고 텍스트</span>
+  
+  <!-- Korean optimized -->
+  <span class="highlight-dots highlight-korean">한글 최적화된 하이라이터</span>
+  
+  <!-- Animated patterns -->
+  <span class="highlight-geometric highlight-animated">애니메이션 패턴</span>
+  ```
+
+- **Performance Optimizations**:
+  - GPU acceleration enabled for smooth animations
+  - Patterns cached by browser for better performance
+  - Reduced motion respected for accessibility
+  - Print-friendly (patterns removed in print mode)
+
+- **Korean Language Considerations**:
+  - Optimized for Korean typography with `word-break: keep-all`
+  - Proper line-height (1.7) for readability
+  - Dark mode optimized with reduced opacity
+  - Letter-spacing adjusted for Korean characters
+
 ## Testing Strategy
 
 ### Unit Tests (Vitest)

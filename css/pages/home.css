@@ -4,10 +4,10 @@
 
 /* ===== HERO SECTION - Linear.app Style ===== */
 .hero {
-  min-height: 45vh; /* Linear.app 스타일: 컴팩트한 히어로 */
+  min-height: 40vh; /* Linear.app 스타일: 더욱 컴팩트한 히어로 */
   background: var(--surface-primary, var(--color-white)); /* 깔끔한 흰색 배경 */
   color: var(--text-primary, var(--color-gray-900)); /* 다크 텍스트 */
-  padding: var(--space-12, 3rem) var(--space-4, 1rem) var(--space-16, 4rem); /* 미니멀한 패딩 */
+  padding: var(--space-10, 2.5rem) var(--space-4, 1rem) var(--space-12, 3rem); /* 더 타이트한 패딩 */
   display: flex;
   align-items: center;
   text-align: center;
@@ -27,9 +27,9 @@
 
 .hero-title,
 .hero h1 {
-  font-size: var(--font-size-4xl, 3rem); /* Linear.app 스타일: 더 절제된 크기 */
+  font-size: var(--font-size-3xl, 2.25rem); /* Linear.app 스타일: 더욱 절제된 크기 */
   font-weight: var(--font-weight-semibold, 600); /* 굵지만 과하지 않게 */
-  margin-bottom: var(--space-4, var(--spacing-4));
+  margin-bottom: var(--space-3, var(--spacing-3)); /* 더 타이트한 간격 */
   line-height: var(--line-height-tight, 1.1);
   letter-spacing: var(--letter-spacing-tight, -0.02em);
   color: var(--text-primary, var(--color-gray-900)); /* 진한 회색 */
@@ -40,11 +40,11 @@
 }
 
 .hero-subtitle {
-  font-size: var(--font-size-lg, 1.125rem); /* Linear.app 스타일: 더 작고 절제된 크기 */
-  margin-bottom: var(--space-6, var(--spacing-6));
+  font-size: var(--font-size-base, 1rem); /* Linear.app 스타일: 더욱 절제된 크기 */
+  margin-bottom: var(--space-5, var(--spacing-5)); /* 더 타이트한 간격 */
   color: var(--text-secondary, var(--color-gray-600)); /* 회색 텍스트 */
   line-height: var(--line-height-relaxed, 1.5);
-  max-width: 500px; /* 더 컴팩트한 폭 */
+  max-width: 450px; /* 더 컴팩트한 폭 */
   margin-left: auto;
   margin-right: auto;
   font-weight: var(--font-weight-normal, 400); /* 일반 폰트 굵기 */
@@ -52,9 +52,10 @@
 
 .hero-buttons {
   display: flex;
-  gap: var(--space-4, var(--spacing-4));
+  gap: var(--space-3, var(--spacing-3)); /* 더 타이트한 버튼 간격 */
   justify-content: center;
   flex-wrap: wrap;
+  margin-top: var(--space-1, var(--spacing-1)); /* 부제목과의 간격 최소화 */
 }
 
 /* ===== FEATURES SECTION ===== */
@@ -611,28 +612,30 @@
 /* ===== MOBILE OPTIMIZATION ===== */
 @media (max-width: 768px) {
   .hero {
-    min-height: 35vh; /* Linear.app 스타일: 모바일에서도 컴팩트 */
-    padding: var(--space-8, 2rem) var(--space-4, 1rem) var(--space-10, 2.5rem);
+    min-height: 32vh; /* Linear.app 스타일: 모바일에서 더욱 컴팩트 */
+    padding: var(--space-6, 1.5rem) var(--space-4, 1rem) var(--space-8, 2rem); /* 더 타이트한 모바일 패딩 */
     margin-top: 0; /* 모바일에서도 네비게이션 바로 아래 위치 */
   }
 
   .hero-title,
   .hero h1 {
-    font-size: var(--font-size-3xl, 2.25rem); /* Linear.app 스타일: 모바일에서도 절제된 크기 */
-    margin-bottom: var(--space-3, var(--spacing-3));
+    font-size: var(--font-size-2xl, 1.875rem); /* Linear.app 스타일: 모바일에서 더 절제된 크기 */
+    margin-bottom: var(--space-2, var(--spacing-2)); /* 더 타이트한 간격 */
   }
 
   .hero-subtitle {
-    font-size: var(--font-size-base, 1rem); /* 모바일에서 더 작게 */
+    font-size: var(--font-size-sm, 0.875rem); /* 모바일에서 더 작게 */
     margin-bottom: var(--space-4, var(--spacing-4));
+    max-width: 320px; /* 모바일에 맞는 더 작은 폭 */
   }
 
   .hero-buttons {
     flex-direction: column;
     align-items: center;
     width: 100%;
-    max-width: 300px;
+    max-width: 280px; /* 더 컴팩트한 버튼 영역 */
     margin: 0 auto;
+    gap: var(--space-2, var(--spacing-2)); /* 모바일에서 더 타이트한 버튼 간격 */
   }
 
   .hero-buttons .btn {
@@ -700,13 +703,29 @@
 }
 
 @media (max-width: 480px) {
+  .hero {
+    min-height: 30vh; /* 아주 작은 화면에서 최소 높이 */
+    padding: var(--space-5, 1.25rem) var(--space-4, 1rem) var(--space-6, 1.5rem);
+  }
+  
   .hero-title,
   .hero h1 {
-    font-size: var(--font-size-2xl);
+    font-size: var(--font-size-xl, 1.5rem); /* 더 작은 제목 크기 */
+    margin-bottom: var(--space-2, var(--spacing-2));
   }
 
   .hero-subtitle {
-    font-size: var(--font-size-base);
+    font-size: var(--font-size-sm, 0.875rem);
+    margin-bottom: var(--space-3, var(--spacing-3));
+    max-width: 280px; /* 더 작은 폭 */
+  }
+
+  .hero-buttons {
+    max-width: 250px; /* 더 작은 버튼 영역 */
+  }
+
+  .hero-buttons .btn {
+    max-width: 220px; /* 더 작은 버튼 */
   }
 
   .stats-grid {

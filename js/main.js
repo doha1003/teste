@@ -247,24 +247,22 @@
       window.addEventListener('scroll', throttledHandler);
     }
     /**
-     * 쓰로틀 함수
+     * 쓰로틀 함수 (CommonUtils 사용)
      */
     throttle(func, limit) {
-      if (window.DohaApp?.utils?.throttle) {
-        return window.DohaApp.utils.throttle(func, limit);
+      // CommonUtils가 로드되면 사용, 아니면 폴백
+      if (window.CommonUtils?.throttle) {
+        return window.CommonUtils.throttle(func, limit);
       }
+      // 간소화된 폴백
       let inThrottle;
-      const throttledFunc = function (...args) {
+      return function (...args) {
         if (!inThrottle) {
           func.apply(this, args);
           inThrottle = true;
           setTimeout(() => (inThrottle = false), limit);
         }
       };
-      throttledFunc.cancel = () => {
-        inThrottle = false;
-      };
-      return throttledFunc;
     }
     /**
      * 폼 유효성 검사
@@ -346,34 +344,40 @@
       }
     }
     /**
-     * 클립보드에 복사
+     * 클립보드에 복사 (CommonUtils 사용)
      */
     async copyToClipboard(text) {
-      if (navigator.clipboard?.writeText) {
-        try {
+      if (window.CommonUtils?.clipboard?.copy) {
+        return await window.CommonUtils.clipboard.copy(text);
+      }
+      // 간소화된 폴백
+      try {
+        if (navigator.clipboard?.writeText) {
           await navigator.clipboard.writeText(text);
-        } catch (err) {
-          this.fallbackCopyToClipboard(text);
+          return true;
+        } else {
+          return this.fallbackCopyToClipboard(text);
         }
-      } else {
-        this.fallbackCopyToClipboard(text);
+      } catch (err) {
+        return this.fallbackCopyToClipboard(text);
       }
     }
     /**
-     * 클립보드 복사 폴백
+     * 클립보드 복사 폴백 (간소화)
      */
     fallbackCopyToClipboard(text) {
-      const textArea = document.createElement('textarea');
-      textArea.value = text;
-      textArea.style.position = 'fixed';
-      textArea.style.left = '-999999px';
-      document.body.appendChild(textArea);
-      textArea.focus();
-      textArea.select();
       try {
-        document.execCommand('copy');
-      } catch (err) {}
-      document.body.removeChild(textArea);
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        textArea.style.cssText = 'position:fixed;left:-9999px;';
+        document.body.appendChild(textArea);
+        textArea.select();
+        const successful = document.execCommand('copy');
+        document.body.removeChild(textArea);
+        return successful;
+      } catch (err) {
+        return false;
+      }
     }
     /**
      * 알림 표시
@@ -407,55 +411,49 @@
       } catch (error) {}
     }
     /**
-     * 디바운스 함수
+     * 디바운스 함수 (CommonUtils 사용)
      */
     debounce(func, wait) {
-      if (window.DohaApp?.utils?.debounce) {
-        return window.DohaApp.utils.debounce(func, wait);
+      if (window.CommonUtils?.debounce) {
+        return window.CommonUtils.debounce(func, wait);
       }
+      // 간소화된 폴백
       let timeout;
-      return function executedFunction(...args) {
-        const later = () => {
-          clearTimeout(timeout);
-          func(...args);
-        };
+      return function (...args) {
         clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
+        timeout = setTimeout(() => func.apply(this, args), wait);
       };
     }
     /**
-     * 날짜 포맷팅
+     * 날짜 포맷팅 (CommonUtils 사용)
      */
     formatDate(date, format = 'YYYY-MM-DD') {
+      if (window.CommonUtils?.formatDate) {
+        return window.CommonUtils.formatDate(date, format);
+      }
+      // 간소화된 폴백
       try {
         const d = new Date(date);
-        if (isNaN(d.getTime())) {
-          return format;
-        }
+        if (isNaN(d.getTime())) return format;
         const year = d.getFullYear();
         const month = String(d.getMonth() + 1).padStart(2, '0');
         const day = String(d.getDate()).padStart(2, '0');
-        const hours = String(d.getHours()).padStart(2, '0');
-        const minutes = String(d.getMinutes()).padStart(2, '0');
-        return format
-          .replace('YYYY', year.toString())
-          .replace('MM', month)
-          .replace('DD', day)
-          .replace('HH', hours)
-          .replace('mm', minutes);
+        return format.replace('YYYY', year).replace('MM', month).replace('DD', day);
       } catch (error) {
         return format;
       }
     }
     /**
-     * 숫자 포맷팅 (천 단위 콤마)
+     * 숫자 포맷팅 (CommonUtils 사용)
      */
     formatNumber(num) {
+      if (window.CommonUtils?.formatNumber) {
+        return window.CommonUtils.formatNumber(num);
+      }
+      // 간소화된 폴백
       try {
-        if (num === null || num === undefined) {
-          return '0';
-        }
-        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        if (num == null) return '0';
+        return Number(num).toLocaleString('ko-KR');
       } catch (error) {
         return '0';
       }

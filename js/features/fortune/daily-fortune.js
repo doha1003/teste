@@ -192,14 +192,14 @@ export class DailyFortuneService extends FortuneService {
                     <div class="result-card-header">
                         <span class="result-icon">✨</span>
                         <div class="result-type">오늘의 운세</div>
-                        <h2 class="result-title">${this.escapeHtml(this.fortuneState.birthData.name)}님의 운세</h2>
+                        <h2 class="result-title highlight-diagonal highlight-korean animated">${this.escapeHtml(this.fortuneState.birthData.name)}님의 운세</h2>
                         <p class="result-subtitle">${result.date}</p>
                     </div>
                     <div class="result-card-body">
                         ${
                           result.specialMessage
                             ? `
-                            <div class="result-special-message">
+                            <div class="result-special-message highlight-geometric highlight-korean">
                                 ${this.escapeHtml(result.specialMessage)}
                             </div>
                         `

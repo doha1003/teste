@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Psychology Tests Debug - Updated</title>
+    <style>
+        body { font-family: monospace; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ccc; }
+        .error { color: red; }
+        .success { color: green; }
+        .info { color: blue; }
+        .warning { color: orange; }
+        button { padding: 10px 20px; margin: 5px; }
+        iframe { width: 100%; height: 600px; border: 1px solid #ddd; margin: 10px 0; }
+        .result { background: #f5f5f5; padding: 10px; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h1>심리테스트 디버깅 도구</h1>
+    
+    <div class="test-section">
+        <h2>1. 파일 존재 여부 확인</h2>
+        <div id="file-check-results"></div>
+        <button onclick="checkFiles()">파일 체크</button>
+    </div>
+
+    <div class="test-section">
+        <h2>2. JavaScript 모듈 로딩 테스트</h2>
+        <div id="module-load-results"></div>
+        <button onclick="testModuleLoading()">모듈 로딩 테스트</button>
+    </div>
+
+    <div class="test-section">
+        <h2>3. MBTI 테스트 실행</h2>
+        <div id="mbti-test-results"></div>
+        <button onclick="testMBTI()">MBTI 테스트</button>
+        <iframe id="mbti-frame" src="/tests/mbti/test.html" style="display:none;"></iframe>
+    </div>
+
+    <div class="test-section">
+        <h2>4. Love DNA 테스트 실행</h2>
+        <div id="love-dna-test-results"></div>
+        <button onclick="testLoveDNA()">Love DNA 테스트</button>
+        <iframe id="love-dna-frame" src="/tests/love-dna/test.html" style="display:none;"></iframe>
+    </div>
+
+    <div class="test-section">
+        <h2>5. Teto-Egen 테스트 실행</h2>
+        <div id="teto-egen-test-results"></div>
+        <button onclick="testTetoEgen()">Teto-Egen 테스트</button>
+        <iframe id="teto-egen-frame" src="/tests/teto-egen/test.html" style="display:none;"></iframe>
+    </div>
+
+    <script>
+        async function checkFiles() {
+            const results = document.getElementById('file-check-results');
+            results.innerHTML = '<div class="info">파일 체크 중...</div>';
+            
+            const filesToCheck = [
+                '/dist/styles.min.css',
+                '/js/app.js',
+                '/js/mbti-questions.js',
+                '/js/features/tests/mbti-test.js',
+                '/js/features/tests/love-dna-test.js',
+                '/js/features/tests/teto-egen-test.js',
+                '/js/features/tests/test-service.js',
+                '/js/api-config.js',
+                '/js/core/service-base.js'
+            ];
+            
+            let html = '';
+            for (const file of filesToCheck) {
+                try {
+                    const response = await fetch(file);
+                    if (response.ok) {
+                        html += `<div class="success">✅ ${file} - 로드 성공</div>`;
+                    } else {
+                        html += `<div class="error">❌ ${file} - HTTP ${response.status}</div>`;
+                    }
+                } catch (error) {
+                    html += `<div class="error">❌ ${file} - 오류: ${error.message}</div>`;
+                }
+            }
+            results.innerHTML = html;
+        }
+
+        async function testModuleLoading() {
+            const results = document.getElementById('module-load-results');
+            results.innerHTML = '<div class="info">모듈 로딩 테스트 중...</div>';
+            
+            let html = '';
+            
+            try {
+                // API Config 로드
+                await import('/js/api-config.js');
+                html += '<div class="success">✅ API Config 로드 성공</div>';
+            } catch (error) {
+                html += `<div class="error">❌ API Config 로드 실패: ${error.message}</div>`;
+            }
+            
+            try {
+                // Service Base 로드
+                await import('/js/core/service-base.js');
+                html += '<div class="success">✅ Service Base 로드 성공</div>';
+            } catch (error) {
+                html += `<div class="error">❌ Service Base 로드 실패: ${error.message}</div>`;
+            }
+            
+            try {
+                // MBTI Questions 로드
+                const mbtiModule = await import('/js/mbti-questions.js');
+                html += `<div class="success">✅ MBTI Questions 로드 성공 (${mbtiModule.mbtiQuestions?.length || 0}문항)</div>`;
+            } catch (error) {
+                html += `<div class="error">❌ MBTI Questions 로드 실패: ${error.message}</div>`;
+            }
+            
+            try {
+                // Test Service 로드
+                await import('/js/features/tests/test-service.js');
+                html += '<div class="success">✅ Test Service 로드 성공</div>';
+            } catch (error) {
+                html += `<div class="error">❌ Test Service 로드 실패: ${error.message}</div>`;
+            }
+            
+            try {
+                // MBTI Test 로드
+                const mbtiTestModule = await import('/js/features/tests/mbti-test.js');
+                html += `<div class="success">✅ MBTI Test Service 로드 성공</div>`;
+                
+                if (mbtiTestModule.mbtiTest) {
+                    html += '<div class="info">🔍 MBTI Test Service 인스턴스 확인됨</div>';
+                } else {
+                    html += '<div class="warning">⚠️ MBTI Test Service 인스턴스가 없음</div>';
+                }
+            } catch (error) {
+                html += `<div class="error">❌ MBTI Test Service 로드 실패: ${error.message}</div>`;
+            }
+            
+            results.innerHTML = html;
+        }
+
+        function testMBTI() {
+            const results = document.getElementById('mbti-test-results');
+            const frame = document.getElementById('mbti-frame');
+            
+            results.innerHTML = '<div class="info">MBTI 테스트 로딩 중...</div>';
+            frame.style.display = 'block';
+            
+            frame.onload = function() {
+                try {
+                    const frameDoc = frame.contentDocument || frame.contentWindow.document;
+                    const startButton = frameDoc.querySelector('.test-start-button');
+                    
+                    let html = '';
+                    if (startButton) {
+                        html += '<div class="success">✅ 시작 버튼 발견</div>';
+                        
+                        // 콘솔 로그 캡처를 위한 리스너 추가
+                        const originalLog = frameDoc.defaultView.console.log;
+                        let consoleLogs = [];
+                        frameDoc.defaultView.console.log = function(...args) {
+                            consoleLogs.push(args.join(' '));
+                            originalLog.apply(console, args);
+                        };
+                        
+                        // 버튼 클릭 시뮬레이션
+                        setTimeout(() => {
+                            startButton.click();
+                            
+                            setTimeout(() => {
+                                // 콘솔 로그 표시
+                                html += '<div class="info">📝 콘솔 로그:</div>';
+                                consoleLogs.forEach(log => {
+                                    html += `<div class="info" style="font-size: 12px; margin-left: 20px;">${log}</div>`;
+                                });
+                                
+                                const testScreen = frameDoc.querySelector('#test-screen');
+                                const questionElement = frameDoc.querySelector('#question');
+                                const introScreen = frameDoc.querySelector('#intro-screen');
+                                
+                                html += '<div class="info">🔍 DOM 상태:</div>';
+                                html += `<div class="info">• intro-screen display: ${introScreen ? frameDoc.defaultView.getComputedStyle(introScreen).display : 'not found'}</div>`;
+                                html += `<div class="info">• test-screen display: ${testScreen ? frameDoc.defaultView.getComputedStyle(testScreen).display : 'not found'}</div>`;
+                                html += `<div class="info">• question element exists: ${questionElement ? 'yes' : 'no'}</div>`;
+                                
+                                if (testScreen && !testScreen.classList.contains('hidden')) {
+                                    html += '<div class="success">✅ 테스트 화면 표시됨</div>';
+                                    if (questionElement) {
+                                        if (questionElement.textContent && questionElement.textContent.trim()) {
+                                            html += `<div class="success">✅ 첫 번째 질문 로드됨: "${questionElement.textContent.substring(0, 50)}..."</div>`;
+                                        } else {
+                                            html += '<div class="error">❌ 질문 요소는 있지만 내용이 비어있음</div>';
+                                        }
+                                    } else {
+                                        html += '<div class="error">❌ 질문 요소를 찾을 수 없음</div>';
+                                    }
+                                } else {
+                                    html += '<div class="error">❌ 테스트 화면이 표시되지 않음</div>';
+                                    html += `<div class="error">• 테스트 화면 클래스: ${testScreen ? testScreen.className : 'element not found'}</div>`;
+                                }
+                                
+                                // window 객체 확인
+                                html += '<div class="info">🔍 Window 객체:</div>';
+                                html += `<div class="info">• window.mbtiQuestions: ${frameDoc.defaultView.window.mbtiQuestions ? frameDoc.defaultView.window.mbtiQuestions.length + ' 문항' : 'not found'}</div>`;
+                                html += `<div class="info">• window.mbtiTest: ${frameDoc.defaultView.window.mbtiTest ? 'exists' : 'not found'}</div>`;
+                                
+                                results.innerHTML = html;
+                            }, 3000); // 더 긴 대기 시간
+                        }, 1000);
+                    } else {
+                        html += '<div class="error">❌ 시작 버튼을 찾을 수 없음</div>';
+                        results.innerHTML = html;
+                    }
+                } catch (error) {
+                    results.innerHTML = `<div class="error">❌ MBTI 테스트 오류: ${error.message}</div>`;
+                }
+            };
+            
+            frame.onerror = function() {
+                results.innerHTML = '<div class="error">❌ MBTI 테스트 페이지 로드 실패</div>';
+            };
+        }
+
+        function testLoveDNA() {
+            const results = document.getElementById('love-dna-test-results');
+            const frame = document.getElementById('love-dna-frame');
+            
+            results.innerHTML = '<div class="info">Love DNA 테스트 로딩 중...</div>';
+            frame.style.display = 'block';
+            
+            frame.onload = function() {
+                try {
+                    const frameDoc = frame.contentDocument || frame.contentWindow.document;
+                    const startButton = frameDoc.querySelector('.test-start-button');
+                    
+                    let html = '';
+                    if (startButton) {
+                        html += '<div class="success">✅ 시작 버튼 발견</div>';
+                        
+                        setTimeout(() => {
+                            startButton.click();
+                            setTimeout(() => {
+                                const testScreen = frameDoc.querySelector('#test-screen');
+                                const questionElement = frameDoc.querySelector('#question');
+                                
+                                if (testScreen && !testScreen.classList.contains('hidden')) {
+                                    html += '<div class="success">✅ 테스트 화면 표시됨</div>';
+                                    if (questionElement && questionElement.textContent) {
+                                        html += `<div class="success">✅ 첫 번째 질문 로드됨: "${questionElement.textContent.substring(0, 50)}..."</div>`;
+                                    } else {
+                                        html += '<div class="error">❌ 질문이 로드되지 않음</div>';
+                                    }
+                                } else {
+                                    html += '<div class="error">❌ 테스트 화면이 표시되지 않음</div>';
+                                }
+                                results.innerHTML = html;
+                            }, 2000);
+                        }, 1000);
+                    } else {
+                        html += '<div class="error">❌ 시작 버튼을 찾을 수 없음</div>';
+                        results.innerHTML = html;
+                    }
+                } catch (error) {
+                    results.innerHTML = `<div class="error">❌ Love DNA 테스트 오류: ${error.message}</div>`;
+                }
+            };
+        }
+
+        function testTetoEgen() {
+            const results = document.getElementById('teto-egen-test-results');
+            const frame = document.getElementById('teto-egen-frame');
+            
+            results.innerHTML = '<div class="info">Teto-Egen 테스트 로딩 중...</div>';
+            frame.style.display = 'block';
+            
+            frame.onload = function() {
+                try {
+                    const frameDoc = frame.contentDocument || frame.contentWindow.document;
+                    const startButton = frameDoc.querySelector('.test-start-button');
+                    
+                    let html = '';
+                    if (startButton) {
+                        html += '<div class="success">✅ 시작 버튼 발견</div>';
+                        
+                        setTimeout(() => {
+                            startButton.click();
+                            setTimeout(() => {
+                                const genderScreen = frameDoc.querySelector('#gender-selection-screen');
+                                const testScreen = frameDoc.querySelector('#test-screen');
+                                
+                                if (genderScreen && !genderScreen.classList.contains('hidden')) {
+                                    html += '<div class="success">✅ 성별 선택 화면 표시됨</div>';
+                                } else if (testScreen && !testScreen.classList.contains('hidden')) {
+                                    html += '<div class="success">✅ 테스트 화면 표시됨</div>';
+                                } else {
+                                    html += '<div class="error">❌ 다음 화면이 표시되지 않음</div>';
+                                }
+                                results.innerHTML = html;
+                            }, 2000);
+                        }, 1000);
+                    } else {
+                        html += '<div class="error">❌ 시작 버튼을 찾을 수 없음</div>';
+                        results.innerHTML = html;
+                    }
+                } catch (error) {
+                    results.innerHTML = `<div class="error">❌ Teto-Egen 테스트 오류: ${error.message}</div>`;
+                }
+            };
+        }
+
+        // 페이지 로드 시 자동으로 파일 체크 실행
+        window.addEventListener('load', () => {
+            checkFiles();
+        });
+    </script>
+</body>
+</html>

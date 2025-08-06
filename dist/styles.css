@@ -2370,6 +2370,503 @@ hr {
     font-size: 10pt;
   }
 }
+/* 1.5 Core Interactions - Linear.app 인터랙션 시스템 */
+/**
+ * Linear.app Inspired Interaction System
+ * Sophisticated micro-interactions and state management
+ * Implements precise hover, focus, active, and loading states
+ * Version: 1.0.0
+ */
+:root {
+  /* ========== INTERACTION TOKENS ========== */
+  
+  /* Hover transform values */
+  --hover-lift-distance: -2px;
+  --hover-scale-factor: 1.02;
+  --hover-button-scale: 0.98;
+  
+  /* Active transform values */
+  --active-scale-factor: 0.98;
+  --active-lift-distance: 0px;
+  
+  /* Focus ring dimensions */
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 2px;
+  --focus-ring-blur: 0px;
+  
+  /* Interaction timing */
+  --interaction-duration: 200ms;
+  --interaction-timing: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --quick-interaction: 150ms;
+  --instant-feedback: 100ms;
+  
+  /* Loading pulse timing */
+  --pulse-duration: 2s;
+  --skeleton-shimmer: 1.5s;
+}
+/* ========== BASE INTERACTIVE ELEMENT STYLES ========== */
+/* Standard interactive element base */
+.interactive-base {
+  position: relative;
+  cursor: pointer;
+  transition: all var(--interaction-duration) var(--interaction-timing);
+  will-change: transform, box-shadow, background-color, border-color;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+/* Prevent layout shift during transforms */
+.interactive-base::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+/* ========== BUTTON INTERACTIONS ========== */
+/* Primary button interactions */
+.btn, 
+.button,
+button:not(.btn-minimal) {
+  @extend .interactive-base;
+  transition: 
+    background-color var(--quick-interaction) var(--interaction-timing),
+    border-color var(--quick-interaction) var(--interaction-timing),
+    color var(--quick-interaction) var(--interaction-timing),
+    box-shadow var(--interaction-duration) var(--interaction-timing),
+    transform var(--instant-feedback) var(--interaction-timing);
+}
+/* Button hover states */
+.btn:hover,
+.button:hover,
+button:not(.btn-minimal):hover {
+  transform: translateY(var(--hover-lift-distance));
+  box-shadow: var(--shadow-hover-lift);
+}
+/* Primary button hover */
+.btn-primary:hover {
+  background-color: color-mix(in srgb, var(--color-primary) 90%, black 10%);
+  box-shadow: var(--shadow-colored);
+}
+/* Secondary button hover */
+.btn-secondary:hover {
+  background-color: var(--color-neutral-100);
+  border-color: var(--color-neutral-300);
+}
+/* Ghost button hover */
+.btn-ghost:hover {
+  background-color: var(--color-neutral-50);
+  color: var(--color-neutral-900);
+}
+/* Danger button hover */
+.btn-danger:hover {
+  background-color: color-mix(in srgb, var(--color-error) 90%, black 10%);
+  box-shadow: var(--shadow-error);
+}
+/* Button active states */
+.btn:active,
+.button:active,
+button:not(.btn-minimal):active {
+  transform: scale(var(--active-scale-factor));
+  transition-duration: var(--instant-feedback);
+}
+/* Button focus states */
+.btn:focus,
+.button:focus,
+button:focus {
+  outline: var(--focus-ring-width) solid var(--color-primary);
+  outline-offset: var(--focus-ring-offset);
+  box-shadow: 
+    var(--shadow-button-rest),
+    0 0 0 var(--focus-ring-width) var(--color-primary-alpha-20);
+}
+/* Disabled button states */
+.btn:disabled,
+.button:disabled,
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  transform: none !important;
+  box-shadow: none !important;
+  transition: opacity var(--interaction-duration) var(--interaction-timing);
+}
+/* ========== CARD INTERACTIONS ========== */
+.card,
+.service-card,
+.result-card {
+  @extend .interactive-base;
+  transition:
+    box-shadow var(--interaction-duration) var(--interaction-timing),
+    transform var(--interaction-duration) var(--interaction-timing),
+    border-color var(--interaction-duration) var(--interaction-timing);
+}
+/* Card hover states */
+.card:hover,
+.service-card:hover,
+.result-card:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-card-hover);
+  border-color: var(--color-neutral-200);
+}
+/* Interactive card active state */
+.card.interactive:active,
+.service-card:active {
+  transform: translateY(0px) scale(0.99);
+  transition-duration: var(--instant-feedback);
+}
+/* Card focus states */
+.card:focus,
+.service-card:focus {
+  outline: var(--focus-ring-width) solid var(--color-primary);
+  outline-offset: var(--focus-ring-offset);
+}
+/* ========== LINK INTERACTIONS ========== */
+a,
+.link {
+  color: var(--color-neutral-600);
+  text-decoration: none;
+  transition: color var(--interaction-duration) var(--interaction-timing);
+  position: relative;
+}
+/* Link hover states */
+a:hover,
+.link:hover {
+  color: var(--color-neutral-900);
+}
+/* Primary link styles */
+.link-primary {
+  color: var(--color-primary);
+}
+.link-primary:hover {
+  color: color-mix(in srgb, var(--color-primary) 80%, black 20%);
+  text-decoration: underline;
+  text-decoration-color: currentColor;
+  text-underline-offset: 2px;
+}
+/* Link focus states */
+a:focus,
+.link:focus {
+  outline: var(--focus-ring-width) solid var(--color-primary);
+  outline-offset: var(--focus-ring-offset);
+  border-radius: var(--radius-sm);
+}
+/* ========== FORM ELEMENT INTERACTIONS ========== */
+/* Input base styles */
+input,
+textarea,
+select {
+  transition:
+    border-color var(--interaction-duration) var(--interaction-timing),
+    box-shadow var(--interaction-duration) var(--interaction-timing),
+    background-color var(--interaction-duration) var(--interaction-timing);
+}
+/* Input hover states */
+input:hover:not(:focus):not(:disabled),
+textarea:hover:not(:focus):not(:disabled),
+select:hover:not(:focus):not(:disabled) {
+  border-color: var(--color-neutral-300);
+  background-color: var(--color-neutral-25);
+}
+/* Input focus states */
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-input-focus);
+  background-color: var(--color-white);
+}
+/* Input error states */
+input.error,
+textarea.error,
+input:invalid,
+textarea:invalid {
+  border-color: var(--color-error);
+  box-shadow: var(--shadow-input-error);
+}
+/* Input success states */
+input.success,
+textarea.success {
+  border-color: var(--color-success);
+  box-shadow: 0 0 0 2px var(--color-success-alpha-20);
+}
+/* Input disabled states */
+input:disabled,
+textarea:disabled,
+select:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  background-color: var(--color-neutral-50);
+  border-color: var(--color-neutral-200);
+}
+/* ========== NAVIGATION INTERACTIONS ========== */
+/* Navigation link base */
+.nav-link {
+  position: relative;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-md);
+  transition: 
+    background-color var(--interaction-duration) var(--interaction-timing),
+    color var(--interaction-duration) var(--interaction-timing);
+}
+/* Navigation link hover */
+.nav-link:hover {
+  background-color: var(--color-neutral-50);
+  color: var(--color-neutral-900);
+}
+/* Active navigation link */
+.nav-link.active {
+  background-color: var(--color-primary-alpha-10);
+  color: var(--color-primary);
+  font-weight: 500;
+}
+/* Navigation link focus */
+.nav-link:focus {
+  outline: var(--focus-ring-width) solid var(--color-primary);
+  outline-offset: 1px;
+}
+/* ========== LOADING STATES ========== */
+/* Loading button state */
+.btn.loading,
+.button.loading {
+  cursor: wait;
+  color: transparent;
+  pointer-events: none;
+  position: relative;
+}
+.btn.loading::after,
+.button.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 16px;
+  height: 16px;
+  margin: -8px 0 0 -8px;
+  border: 2px solid currentColor;
+  border-color: currentColor transparent currentColor transparent;
+  border-radius: 50%;
+  animation: var(--animation-spin);
+}
+/* Loading card state */
+.card.loading {
+  pointer-events: none;
+  animation: var(--animation-pulse);
+}
+/* Skeleton loading styles */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--color-neutral-200) 0%,
+    var(--color-neutral-100) 50%,
+    var(--color-neutral-200) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer var(--skeleton-shimmer) ease-in-out infinite;
+  border-radius: var(--radius-md);
+}
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+/* ========== TOUCH OPTIMIZATIONS ========== */
+/* Larger touch targets for mobile */
+@media (pointer: coarse) {
+  .btn,
+  .button,
+  button,
+  .card.interactive,
+  .service-card,
+  .nav-link {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Reduce hover effects on touch devices */
+  .btn:hover,
+  .button:hover,
+  .card:hover,
+  .service-card:hover,
+  .nav-link:hover {
+    transform: none;
+  }
+  
+  /* Enhance active states for touch */
+  .btn:active,
+  .button:active,
+  .card.interactive:active,
+  .service-card:active {
+    transform: scale(0.96);
+    opacity: 0.8;
+    transition-duration: 50ms;
+  }
+  
+  /* Touch-friendly form elements */
+  input,
+  textarea,
+  select {
+    min-height: 44px;
+    font-size: 16px; /* Prevent zoom on iOS */
+  }
+}
+/* ========== DARK THEME ADJUSTMENTS ========== */
+[data-theme="dark"] {
+  /* Adjust hover colors for dark theme */
+  --color-neutral-hover: var(--color-neutral-800);
+  --color-neutral-active: var(--color-neutral-700);
+  
+  /* Enhanced glow effects in dark mode */
+  .btn:focus,
+  .button:focus,
+  input:focus,
+  textarea:focus {
+    box-shadow: 
+      var(--shadow-glow),
+      0 0 0 var(--focus-ring-width) var(--color-primary-alpha-30);
+  }
+  
+  /* Dark theme skeleton */
+  .skeleton {
+    background: linear-gradient(
+      90deg,
+      var(--color-neutral-800) 0%,
+      var(--color-neutral-700) 50%,
+      var(--color-neutral-800) 100%
+    );
+  }
+}
+/* ========== REDUCED MOTION SUPPORT ========== */
+@media (prefers-reduced-motion: reduce) {
+  .interactive-base,
+  .btn,
+  .button,
+  button,
+  .card,
+  .service-card,
+  a,
+  .link,
+  input,
+  textarea,
+  select {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+  
+  /* Remove transform animations */
+  .btn:hover,
+  .button:hover,
+  .card:hover,
+  .service-card:hover,
+  .btn:active,
+  .button:active {
+    transform: none !important;
+  }
+  
+  /* Keep essential focus outlines */
+  .btn:focus,
+  .button:focus,
+  input:focus,
+  textarea:focus,
+  a:focus,
+  .link:focus {
+    outline: var(--focus-ring-width) solid var(--color-primary) !important;
+    outline-offset: var(--focus-ring-offset) !important;
+  }
+}
+/* ========== UTILITY CLASSES ========== */
+/* Interactive modifiers */
+.hover\:lift:hover {
+  transform: translateY(var(--hover-lift-distance));
+}
+.hover\:scale:hover {
+  transform: scale(var(--hover-scale-factor));
+}
+.hover\:glow:hover {
+  box-shadow: var(--shadow-glow);
+}
+.active\:scale:active {
+  transform: scale(var(--active-scale-factor));
+}
+.active\:press:active {
+  transform: scale(var(--active-scale-factor)) translateY(1px);
+}
+/* State classes */
+.is-loading {
+  pointer-events: none;
+  opacity: 0.7;
+  cursor: wait;
+}
+.is-disabled {
+  pointer-events: none;
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.is-interactive {
+  cursor: pointer;
+  transition: all var(--interaction-duration) var(--interaction-timing);
+}
+/* Focus ring utilities */
+.focus-ring:focus {
+  outline: var(--focus-ring-width) solid var(--color-primary);
+  outline-offset: var(--focus-ring-offset);
+}
+.focus-ring-inset:focus {
+  outline: var(--focus-ring-width) solid var(--color-primary);
+  outline-offset: calc(var(--focus-ring-offset) * -1);
+}
+/* Remove focus ring (use carefully for accessibility) */
+.focus-ring-none:focus {
+  outline: none;
+}
+/* ========== PERFORMANCE OPTIMIZATIONS ========== */
+/* Composite layers for smooth animations */
+.will-change-transform {
+  will-change: transform;
+}
+.will-change-opacity {
+  will-change: opacity;
+}
+.will-change-shadow {
+  will-change: box-shadow;
+}
+.will-change-colors {
+  will-change: background-color, border-color, color;
+}
+/* Hardware acceleration for smooth animations */
+.gpu-accelerated {
+  transform: translateZ(0);
+  will-change: transform;
+}
+/* ========== RIPPLE EFFECT (OPTIONAL) ========== */
+.ripple {
+  position: relative;
+  overflow: hidden;
+}
+.ripple::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: var(--color-primary-alpha-20);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+.ripple:active::after {
+  width: 300px;
+  height: 300px;
+  transition: width 0s, height 0s;
+}
 /* ===== 2. DESIGN SYSTEM LAYER (디자인 시스템 계층) ===== */
 /* Linear.app 기반 디자인 토큰 및 시스템 */
 /* ==========================================================================
@@ -2408,7 +2905,7 @@ hr {
   --color-info-light: #60a5fa;
   --color-info-dark: #2563eb;
   
-  /* Neutral Palette */
+  /* Neutral Palette - Linear.app 정밀 그레이 스케일 */
   --color-gray-0: #ffffff;
   --color-gray-50: #f9fafb;
   --color-gray-100: #f3f4f6;
@@ -2422,6 +2919,20 @@ hr {
   --color-gray-900: #111827;
   --color-gray-1000: #000000;
   
+  /* Linear.app 스타일 텍스트 색상 계층 */
+  --color-text-primary: var(--color-gray-900);     /* #111827 - 메인 텍스트 */
+  --color-text-secondary: var(--color-gray-600);   /* #4b5563 - 보조 텍스트 */
+  --color-text-tertiary: var(--color-gray-500);    /* #6b7280 - 희미한 텍스트 */
+  --color-text-quaternary: var(--color-gray-400);  /* #9ca3af - 비활성 텍스트 */
+  
+  /* Linear.app 스타일 배경 색상 */
+  --color-bg-primary: var(--color-gray-0);         /* #ffffff - 기본 배경 */
+  --color-bg-secondary: var(--color-gray-50);      /* #f9fafb - 섹션 구분 */
+  --color-bg-tertiary: var(--color-gray-100);      /* #f3f4f6 - 카드 배경 */
+  --color-bg-hover: rgba(0, 0, 0, 0.02);           /* 호버 상태 */
+  --color-bg-active: rgba(0, 0, 0, 0.04);          /* 활성 상태 */
+  --color-bg-selected: rgba(99, 102, 241, 0.08);   /* 선택 상태 */
+  
   /* ===== TYPOGRAPHY TOKENS ===== */
   
   /* Font Families - Korean Optimized */
@@ -2433,17 +2944,27 @@ hr {
   --font-korean-text: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   --font-korean-ui: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   
-  /* Font Sizes - Fluid Typography */
-  --font-size-2xs: clamp(0.625rem, 0.75vw, 0.75rem);      /* 10-12px */
-  --font-size-xs: clamp(0.75rem, 0.875vw, 0.875rem);      /* 12-14px */
-  --font-size-sm: clamp(0.875rem, 1vw, 1rem);             /* 14-16px */
-  --font-size-base: clamp(1rem, 1.125vw, 1.125rem);       /* 16-18px */
-  --font-size-lg: clamp(1.125rem, 1.25vw, 1.25rem);       /* 18-20px */
-  --font-size-xl: clamp(1.25rem, 1.5vw, 1.5rem);          /* 20-24px */
-  --font-size-2xl: clamp(1.5rem, 1.875vw, 1.875rem);      /* 24-30px */
-  --font-size-3xl: clamp(1.875rem, 2.25vw, 2.25rem);      /* 30-36px */
-  --font-size-4xl: clamp(2.25rem, 3vw, 3rem);             /* 36-48px */
-  --font-size-5xl: clamp(3rem, 4vw, 4rem);                /* 48-64px */
+  /* Font Sizes - Linear.app 타이포그래피 계층구조 */
+  --font-size-2xs: 0.6875rem;     /* 11px - Linear.app 최소 크기 */
+  --font-size-xs: 0.75rem;        /* 12px - Caption, Meta text */
+  --font-size-sm: 0.8125rem;      /* 13px - Small UI text */
+  --font-size-base: 0.875rem;     /* 14px - Body text (Linear.app 기본) */
+  --font-size-md: 1rem;           /* 16px - Medium body text */
+  --font-size-lg: 1.125rem;       /* 18px - Large body text */
+  --font-size-xl: 1.25rem;        /* 20px - Subheading */
+  --font-size-2xl: 1.5rem;        /* 24px - Heading 3 */
+  --font-size-3xl: 1.75rem;       /* 28px - Heading 2 */
+  --font-size-4xl: 2.25rem;       /* 36px - Heading 1 */
+  --font-size-5xl: 3rem;          /* 48px - Display */
+  
+  /* Linear.app 스타일 Fluid Typography (모바일 대응) */
+  --font-size-responsive-sm: clamp(0.75rem, 2vw, 0.8125rem);     /* 12-13px */
+  --font-size-responsive-base: clamp(0.875rem, 2.5vw, 1rem);     /* 14-16px */
+  --font-size-responsive-lg: clamp(1rem, 3vw, 1.125rem);         /* 16-18px */
+  --font-size-responsive-xl: clamp(1.125rem, 4vw, 1.25rem);      /* 18-20px */
+  --font-size-responsive-2xl: clamp(1.25rem, 5vw, 1.5rem);       /* 20-24px */
+  --font-size-responsive-3xl: clamp(1.5rem, 6vw, 1.75rem);       /* 24-28px */
+  --font-size-responsive-4xl: clamp(1.75rem, 8vw, 2.25rem);      /* 28-36px */
   
   /* Font Weights */
   --font-weight-light: 300;
@@ -2452,18 +2973,25 @@ hr {
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
   
-  /* Line Heights - Korean Optimized */
+  /* Line Heights - Linear.app + Korean 최적화 */
   --line-height-none: 1;
-  --line-height-tight: 1.3;       /* 한글 제목용 최소 권장 */
-  --line-height-snug: 1.45;       /* 한글 부제목용 */
-  --line-height-normal: 1.6;      /* 한글 기본 텍스트 */
-  --line-height-relaxed: 1.7;     /* 한글 본문 최적화 */
-  --line-height-loose: 1.8;       /* 한글 긴 텍스트용 */
+  --line-height-tight: 1.2;       /* Linear.app UI 요소용 */
+  --line-height-snug: 1.4;        /* Linear.app 헤딩용 */
+  --line-height-normal: 1.5;      /* Linear.app 기본 (영문) */
+  --line-height-relaxed: 1.6;     /* Linear.app Body text */
+  --line-height-loose: 1.7;       /* 한글 본문 최적화 */
+  
+  /* Linear.app 스타일 Line Heights */
+  --line-height-ui: 1.2;          /* UI 요소, 버튼, 레이블 */
+  --line-height-heading: 1.3;     /* 헤딩 전용 (한글 최적화) */
+  --line-height-body: 1.5;        /* 기본 본문 (영문) */
+  --line-height-reading: 1.7;     /* 읽기용 텍스트 (한글) */
   
   /* Korean Specific Line Heights */
-  --line-height-korean-title: 1.3;
-  --line-height-korean-body: 1.7;
-  --line-height-korean-caption: 1.6;
+  --line-height-korean-title: 1.3;    /* 한글 제목용 */
+  --line-height-korean-body: 1.7;     /* 한글 본문용 */
+  --line-height-korean-caption: 1.6;  /* 한글 캡션용 */
+  --line-height-korean-ui: 1.4;       /* 한글 UI 텍스트용 */
   
   /* Letter Spacing - Korean Optimized */
   --letter-spacing-tighter: -0.03em;   /* 한글 타이틀용 */
@@ -2590,7 +3118,79 @@ hr {
   --korean-text-orientation: mixed;
   --korean-hanging-punctuation: none;
 }
-/* ===== KOREAN TYPOGRAPHY UTILITY CLASSES ===== */
+/* ===== LINEAR.APP + KOREAN TYPOGRAPHY UTILITY CLASSES ===== */
+/* Linear.app 스타일 텍스트 계층구조 */
+.text-display {
+  font-size: var(--font-size-5xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-heading);
+  color: var(--color-text-primary);
+  letter-spacing: var(--letter-spacing-tighter);
+}
+.text-heading-1 {
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-heading);
+  color: var(--color-text-primary);
+  letter-spacing: var(--letter-spacing-tighter);
+}
+.text-heading-2 {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-heading);
+  color: var(--color-text-primary);
+  letter-spacing: var(--letter-spacing-tight);
+}
+.text-heading-3 {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-heading);
+  color: var(--color-text-primary);
+  letter-spacing: var(--letter-spacing-tight);
+}
+.text-subheading {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-snug);
+  color: var(--color-text-secondary);
+  letter-spacing: var(--letter-spacing-normal);
+}
+.text-body-large {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-reading);
+  color: var(--color-text-primary);
+}
+.text-body {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-reading);
+  color: var(--color-text-primary);
+}
+.text-body-small {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-secondary);
+}
+.text-caption {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-normal);
+  color: var(--color-text-tertiary);
+}
+.text-label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-ui);
+  color: var(--color-text-secondary);
+}
+.text-ui-small {
+  font-size: var(--font-size-2xs);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-ui);
+  color: var(--color-text-tertiary);
+}
 /* Korean Text Optimization */
 .text-korean {
   font-family: var(--font-korean-text);
@@ -2614,19 +3214,52 @@ hr {
   letter-spacing: var(--letter-spacing-normal);
   font-size: var(--font-size-sm);
 }
+.text-korean-ui {
+  font-family: var(--font-korean-ui);
+  word-break: var(--korean-word-break);
+  line-height: var(--line-height-korean-ui);
+  letter-spacing: var(--letter-spacing-normal);
+  font-weight: var(--font-weight-medium);
+}
 /* Korean Text Alignment */
 .text-korean-justify {
   text-align: justify;
   text-justify: var(--korean-text-justify);
 }
+/* Linear.app 스타일 텍스트 색상 클래스 */
+.text-primary { color: var(--color-text-primary); }
+.text-secondary { color: var(--color-text-secondary); }
+.text-tertiary { color: var(--color-text-tertiary); }
+.text-quaternary { color: var(--color-text-quaternary); }
+/* Linear.app 스타일 배경 색상 클래스 */
+.bg-primary { background-color: var(--color-bg-primary); }
+.bg-secondary { background-color: var(--color-bg-secondary); }
+.bg-tertiary { background-color: var(--color-bg-tertiary); }
+.bg-hover:hover { background-color: var(--color-bg-hover); }
+.bg-active:active { background-color: var(--color-bg-active); }
+.bg-selected { background-color: var(--color-bg-selected); }
 /* Korean Line Height Utilities */
 .leading-korean-tight { line-height: var(--line-height-korean-title); }
 .leading-korean-normal { line-height: var(--line-height-korean-caption); }
 .leading-korean-relaxed { line-height: var(--line-height-korean-body); }
+.leading-korean-ui { line-height: var(--line-height-korean-ui); }
+/* Linear.app Line Height Utilities */
+.leading-ui { line-height: var(--line-height-ui); }
+.leading-heading { line-height: var(--line-height-heading); }
+.leading-body { line-height: var(--line-height-body); }
+.leading-reading { line-height: var(--line-height-reading); }
 /* Korean Letter Spacing Utilities */
 .tracking-korean-tight { letter-spacing: var(--letter-spacing-tighter); }
 .tracking-korean-normal { letter-spacing: var(--letter-spacing-normal); }
 .tracking-korean-wide { letter-spacing: var(--letter-spacing-wide); }
+/* Linear.app Font Size Utilities (Responsive) */
+.text-responsive-sm { font-size: var(--font-size-responsive-sm); }
+.text-responsive-base { font-size: var(--font-size-responsive-base); }
+.text-responsive-lg { font-size: var(--font-size-responsive-lg); }
+.text-responsive-xl { font-size: var(--font-size-responsive-xl); }
+.text-responsive-2xl { font-size: var(--font-size-responsive-2xl); }
+.text-responsive-3xl { font-size: var(--font-size-responsive-3xl); }
+.text-responsive-4xl { font-size: var(--font-size-responsive-4xl); }
 /**
  * Linear-inspired Component Library for doha.kr
  * Based on Linear.app's design language with Korean optimization
@@ -3262,6 +3895,512 @@ body {
     background: #fff !important;
   }
 }
+/**
+ * Linear.app Inspired Highlighter Patterns
+ * 미묘하고 현대적인 하이라이터 패턴 컬렉션
+ * 
+ * Features:
+ * - 가독성을 해치지 않는 낮은 opacity
+ * - 다크모드 완전 대응
+ * - CSS-only 구현 (성능 최적화)
+ * - 한글 텍스트와의 조화 고려
+ * - GPU 가속 최적화
+ */
+/* ==========================================================================
+   Base Variables for Highlighter Patterns
+   ========================================================================== */
+:root {
+  /* Pattern base colors */
+  --highlight-color-primary: rgba(99, 102, 241, 0.1);
+  --highlight-color-secondary: rgba(156, 163, 175, 0.08);
+  --highlight-color-accent: rgba(59, 130, 246, 0.06);
+  --highlight-color-warning: rgba(245, 158, 11, 0.08);
+  --highlight-color-success: rgba(34, 197, 94, 0.06);
+  
+  /* Pattern intensities */
+  --highlight-opacity-subtle: 0.05;
+  --highlight-opacity-normal: 0.1;
+  --highlight-opacity-medium: 0.15;
+  --highlight-opacity-strong: 0.2;
+  
+  /* Pattern sizes */
+  --highlight-pattern-small: 8px;
+  --highlight-pattern-medium: 16px;
+  --highlight-pattern-large: 24px;
+}
+[data-theme="dark"] {
+  /* Dark mode adjustments - even more subtle */
+  --highlight-color-primary: rgba(129, 140, 248, 0.06);
+  --highlight-color-secondary: rgba(156, 163, 175, 0.04);
+  --highlight-color-accent: rgba(96, 165, 250, 0.04);
+  --highlight-color-warning: rgba(251, 191, 36, 0.05);
+  --highlight-color-success: rgba(52, 211, 153, 0.04);
+  
+  --highlight-opacity-subtle: 0.03;
+  --highlight-opacity-normal: 0.06;
+  --highlight-opacity-medium: 0.08;
+  --highlight-opacity-strong: 0.12;
+}
+/* ==========================================================================
+   Base Highlighter Class
+   ========================================================================== */
+.highlight-base {
+  position: relative;
+  padding: 2px 4px;
+  border-radius: 3px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+  
+  /* Subtle background for better contrast */
+  background-color: var(--highlight-color-secondary);
+}
+.highlight-base:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+/* ==========================================================================
+   Pattern 1: Dots Pattern
+   미묘한 도트 패턴 - 반복되는 작은 점들
+   ========================================================================== */
+.highlight-dots {
+  /* Base styles */
+  position: relative;
+  padding: 2px 4px;
+  border-radius: 3px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+  background-color: var(--highlight-color-secondary);
+  
+  background-image: 
+    radial-gradient(
+      circle at 2px 2px,
+      var(--highlight-color-primary) 0.5px,
+      transparent 0.5px
+    );
+  background-size: var(--highlight-pattern-small) var(--highlight-pattern-small);
+  background-position: 0 0, 4px 4px;
+  
+  /* Performance optimization */
+  background-attachment: scroll;
+}
+.highlight-dots:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+.highlight-dots.subtle {
+  background-image: 
+    radial-gradient(
+      circle at 1px 1px,
+      rgba(156, 163, 175, var(--highlight-opacity-subtle)) 0.3px,
+      transparent 0.3px
+    );
+  background-size: 6px 6px;
+}
+.highlight-dots.medium {
+  background-image: 
+    radial-gradient(
+      circle at 3px 3px,
+      var(--highlight-color-primary) 0.8px,
+      transparent 0.8px
+    );
+  background-size: 12px 12px;
+}
+/* ==========================================================================
+   Pattern 2: Diagonal Stripes
+   대각선 스트라이프 - 45도 얇은 선들
+   ========================================================================== */
+.highlight-diagonal {
+  /* Base styles */
+  position: relative;
+  padding: 2px 4px;
+  border-radius: 3px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+  background-color: var(--highlight-color-secondary);
+  
+  background-image: 
+    linear-gradient(
+      45deg,
+      transparent 40%,
+      var(--highlight-color-primary) 40%,
+      var(--highlight-color-primary) 60%,
+      transparent 60%
+    );
+  background-size: var(--highlight-pattern-medium) var(--highlight-pattern-medium);
+  
+  /* Subtle animation on hover */
+  transition: background-position 0.3s ease;
+}
+.highlight-diagonal:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  background-position: 4px 4px;
+}
+.highlight-diagonal:hover {
+  background-position: 4px 4px;
+}
+.highlight-diagonal.reverse {
+  background-image: 
+    linear-gradient(
+      -45deg,
+      transparent 40%,
+      var(--highlight-color-accent) 40%,
+      var(--highlight-color-accent) 60%,
+      transparent 60%
+    );
+}
+.highlight-diagonal.fine {
+  background-image: 
+    linear-gradient(
+      45deg,
+      transparent 47%,
+      rgba(156, 163, 175, var(--highlight-opacity-normal)) 47%,
+      rgba(156, 163, 175, var(--highlight-opacity-normal)) 53%,
+      transparent 53%
+    );
+  background-size: 8px 8px;
+}
+/* ==========================================================================
+   Pattern 3: Grid Pattern
+   격자 패턴 - 미세한 그리드
+   ========================================================================== */
+.highlight-grid {
+  /* Base styles */
+  position: relative;
+  padding: 2px 4px;
+  border-radius: 3px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+  
+  background-image: 
+    linear-gradient(
+      var(--highlight-color-secondary) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      var(--highlight-color-secondary) 1px,
+      transparent 1px
+    );
+  background-size: 
+    var(--highlight-pattern-medium) var(--highlight-pattern-medium);
+  
+  /* Add subtle overlay for better blend */
+  background-color: rgba(248, 250, 252, 0.3);
+}
+.highlight-grid:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+[data-theme="dark"] .highlight-grid {
+  background-color: rgba(15, 23, 42, 0.2);
+}
+.highlight-grid.fine {
+  background-size: 8px 8px;
+  background-image: 
+    linear-gradient(
+      rgba(156, 163, 175, var(--highlight-opacity-subtle)) 0.5px,
+      transparent 0.5px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(156, 163, 175, var(--highlight-opacity-subtle)) 0.5px,
+      transparent 0.5px
+    );
+}
+.highlight-grid.bold {
+  background-size: 20px 20px;
+  background-image: 
+    linear-gradient(
+      var(--highlight-color-primary) 1.5px,
+      transparent 1.5px
+    ),
+    linear-gradient(
+      90deg,
+      var(--highlight-color-primary) 1.5px,
+      transparent 1.5px
+    );
+}
+/* ==========================================================================
+   Pattern 4: Noise Texture
+   노이즈 텍스처 - subtle grain effect
+   ========================================================================== */
+.highlight-noise {
+  /* Base styles */
+  position: relative;
+  padding: 2px 4px;
+  border-radius: 3px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+  background-color: var(--highlight-color-secondary);
+  
+  /* Multiple small radial gradients to create noise effect */
+  background-image: 
+    radial-gradient(circle at 20% 50%, transparent 20%, var(--highlight-color-secondary) 21%, var(--highlight-color-secondary) 34%, transparent 35%, transparent),
+    radial-gradient(circle at 40% 20%, var(--highlight-color-primary) 8%, transparent 9%),
+    radial-gradient(circle at 80% 80%, transparent 15%, var(--highlight-color-accent) 16%, var(--highlight-color-accent) 18%, transparent 19%),
+    radial-gradient(circle at 60% 90%, var(--highlight-color-secondary) 5%, transparent 6%);
+  
+  background-size: 
+    20px 20px,
+    16px 16px,
+    24px 24px,
+    12px 12px;
+  
+  background-position:
+    0 0,
+    8px 8px,
+    12px 4px,
+    4px 16px;
+  
+  /* Very subtle opacity for noise effect */
+  opacity: 0.6;
+}
+.highlight-noise:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+.highlight-noise.fine {
+  background-size: 
+    12px 12px,
+    10px 10px,
+    14px 14px,
+    8px 8px;
+  opacity: 0.4;
+}
+.highlight-noise.organic {
+  /* More organic, scattered pattern */
+  background-image: 
+    radial-gradient(circle at 15% 30%, var(--highlight-color-primary) 2px, transparent 2px),
+    radial-gradient(circle at 75% 60%, var(--highlight-color-secondary) 1.5px, transparent 1.5px),
+    radial-gradient(circle at 45% 85%, var(--highlight-color-accent) 1px, transparent 1px),
+    radial-gradient(circle at 90% 20%, var(--highlight-color-primary) 2.5px, transparent 2.5px);
+  
+  background-size: 
+    30px 25px,
+    22px 28px,
+    18px 20px,
+    26px 32px;
+}
+/* ==========================================================================
+   Pattern 5: Geometric Pattern
+   기하학적 패턴 - 삼각형과 육각형
+   ========================================================================== */
+.highlight-geometric {
+  /* Base styles */
+  position: relative;
+  padding: 2px 4px;
+  border-radius: 3px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+  background-color: var(--highlight-color-secondary);
+  
+  /* Triangular pattern using conic gradients */
+  background-image: 
+    conic-gradient(
+      from 0deg at 50% 50%,
+      transparent 0deg,
+      var(--highlight-color-primary) 60deg,
+      transparent 120deg,
+      var(--highlight-color-accent) 180deg,
+      transparent 240deg,
+      var(--highlight-color-primary) 300deg,
+      transparent 360deg
+    );
+  
+  background-size: var(--highlight-pattern-large) var(--highlight-pattern-large);
+  
+  /* Mask to create geometric shapes */
+  -webkit-mask-image: 
+    radial-gradient(
+      circle at center,
+      black 30%,
+      transparent 35%
+    );
+  mask-image: 
+    radial-gradient(
+      circle at center,
+      black 30%,
+      transparent 35%
+    );
+}
+.highlight-geometric:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+.highlight-geometric.hexagon {
+  /* Hexagonal pattern */
+  background-image: 
+    conic-gradient(
+      from 30deg at 50% 50%,
+      var(--highlight-color-primary) 0deg,
+      transparent 60deg,
+      var(--highlight-color-secondary) 120deg,
+      transparent 180deg,
+      var(--highlight-color-accent) 240deg,
+      transparent 300deg,
+      var(--highlight-color-primary) 360deg
+    );
+  
+  -webkit-mask-image: 
+    polygon(30% 0%, 70% 0%, 100% 50%, 70% 100%, 30% 100%, 0% 50%);
+  mask-image: 
+    polygon(30% 0%, 70% 0%, 100% 50%, 70% 100%, 30% 100%, 0% 50%);
+}
+.highlight-geometric.triangle {
+  /* Triangular tessellation */
+  background-image: 
+    linear-gradient(
+      60deg,
+      var(--highlight-color-primary) 25%,
+      transparent 25%,
+      transparent 75%,
+      var(--highlight-color-secondary) 75%
+    ),
+    linear-gradient(
+      -60deg,
+      var(--highlight-color-accent) 25%,
+      transparent 25%,
+      transparent 75%,
+      var(--highlight-color-primary) 75%
+    );
+  
+  background-size: 16px 28px;
+}
+/* ==========================================================================
+   Utility Classes
+   ========================================================================== */
+/* Intensity modifiers */
+.highlight-subtle { opacity: 0.5; }
+.highlight-normal { opacity: 0.8; }
+.highlight-strong { opacity: 1; }
+/* Size modifiers */
+.highlight-sm {
+  padding: 1px 2px;
+  border-radius: 2px;
+}
+.highlight-lg {
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+.highlight-xl {
+  padding: 8px 12px;
+  border-radius: 6px;
+}
+/* Color variations */
+.highlight-primary {
+  --highlight-color-primary: rgba(99, 102, 241, 0.12);
+  --highlight-color-secondary: rgba(99, 102, 241, 0.06);
+}
+.highlight-success {
+  --highlight-color-primary: rgba(34, 197, 94, 0.12);
+  --highlight-color-secondary: rgba(34, 197, 94, 0.06);
+}
+.highlight-warning {
+  --highlight-color-primary: rgba(245, 158, 11, 0.12);
+  --highlight-color-secondary: rgba(245, 158, 11, 0.06);
+}
+.highlight-error {
+  --highlight-color-primary: rgba(239, 68, 68, 0.12);
+  --highlight-color-secondary: rgba(239, 68, 68, 0.06);
+}
+/* ==========================================================================
+   Korean Text Optimization
+   ========================================================================== */
+.highlight-korean {
+  /* Optimized for Korean typography */
+  line-height: 1.7;
+  word-break: keep-all;
+  letter-spacing: -0.01em;
+  
+  /* Ensure patterns don't interfere with Korean characters */
+  background-blend-mode: multiply;
+}
+/* ==========================================================================
+   Animation and Interactive States
+   ========================================================================== */
+.highlight-animated {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.highlight-animated:hover {
+  transform: translateY(-1px);
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.05),
+    0 0 0 1px rgba(99, 102, 241, 0.1);
+}
+.highlight-pulse {
+  animation: highlight-pulse 2s ease-in-out infinite;
+}
+@keyframes highlight-pulse {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; }
+}
+/* Floating animation for geometric patterns */
+.highlight-geometric.animated {
+  animation: highlight-float 3s ease-in-out infinite;
+}
+@keyframes highlight-float {
+  0%, 100% { 
+    transform: translateY(0px);
+    background-position: 0 0;
+  }
+  50% { 
+    transform: translateY(-2px);
+    background-position: 2px 2px;
+  }
+}
+/* ==========================================================================
+   Accessibility and Performance
+   ========================================================================== */
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  .highlight-animated,
+  .highlight-pulse,
+  .highlight-geometric.animated {
+    animation: none;
+    transition: none;
+  }
+  
+  .highlight-base:hover,
+  .highlight-animated:hover {
+    transform: none;
+  }
+}
+/* High contrast mode adjustments */
+@media (prefers-contrast: high) {
+  :root {
+    --highlight-opacity-subtle: 0.15;
+    --highlight-opacity-normal: 0.25;
+    --highlight-opacity-medium: 0.35;
+    --highlight-opacity-strong: 0.45;
+  }
+}
+/* Print styles - remove patterns for better readability */
+@media print {
+  [class*="highlight-"] {
+    background-image: none !important;
+    background-color: rgba(0, 0, 0, 0.05) !important;
+    color: inherit !important;
+  }
+}
+/* ==========================================================================
+   Performance Optimizations
+   ========================================================================== */
+/* GPU acceleration for better performance */
+.highlight-base,
+[class*="highlight-"] {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+/* Optimize pattern rendering */
+[class*="highlight-"]:not(:hover) {
+  will-change: auto;
+}
+[class*="highlight-"]:hover {
+  will-change: transform, background-position;
+}
+/* 하이라이터 패턴 시스템 */
 /* ==========================================================================
    Design System - Linear.app 기반 디자인 시스템
    ========================================================================== */
@@ -4344,16 +5483,26 @@ body {
   text-decoration: none;
   font-weight: var(--font-weight-medium);
   border-radius: var(--radius-md);
-  transition: all var(--transition-base);
+  position: relative;
+  transition: 
+    background-color 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    color 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 100ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: background-color, color;
 }
 .nav-link:hover {
-  color: var(--color-primary);
-  background-color: var(--color-gray-50);
+  color: var(--color-gray-900);
+  background-color: var(--color-neutral-50);
+}
+.nav-link:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px rgba(94, 106, 210, 0.2);
 }
 .nav-link.active {
   color: var(--color-primary);
-  background-color: var(--color-primary-light);
-  background-color: rgba(139, 92, 246, 0.1);
+  background-color: rgba(94, 106, 210, 0.1);
+  font-weight: 500;
 }
 /* Mobile Menu Button */
 .mobile-menu-btn {
@@ -4480,25 +5629,42 @@ body {
 /* =========================================================================
    Footer Styles
    ========================================================================= */
-/* 구체적인 클래스 선택자로 CSS 충돌 방지 */
+/* 구체적인 클래스 선택자로 CSS 충돌 방지 - !important 최소화 */
 footer.footer {
-  background-color: var(--color-gray-900) !important;
-  color: var(--color-gray-300) !important;
-  padding-top: var(--spacing-16) !important;
-  padding-bottom: var(--spacing-8) !important;
-  margin-top: auto !important;
-  border-top: none !important;
+  background-color: var(--color-gray-900);
+  color: var(--color-gray-300);
+  padding-top: var(--spacing-16);
+  padding-bottom: var(--spacing-8);
+  margin-top: auto;
+  border-top: none;
+  position: relative;
+  width: 100%;
 }
 /* Remove duplicate - now handled by .footer-content */
-/* Footer Content Container */
+/* Footer Content Container - 5단 구조 최적화 */
 .footer-content {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: var(--spacing-8);
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr; /* 브랜드 섹션을 더 넓게, 5개 섹션 지원 */
+  gap: var(--spacing-6);
   margin-bottom: var(--spacing-12);
   max-width: 1320px;
   margin: 0 auto;
   padding: 0 var(--spacing-6);
+  align-items: start;
+}
+/* 큰 태블릿에서는 3단 구조 */
+@media (max-width: 1200px) and (min-width: 901px) {
+  .footer-content {
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: var(--spacing-6);
+  }
+}
+/* 작은 태블릿에서는 2x3 구조 */
+@media (max-width: 900px) and (min-width: 769px) {
+  .footer-content {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-6);
+  }
 }
 /* Footer Section */
 .footer-section h3 {
@@ -4506,10 +5672,28 @@ footer.footer {
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-semibold);
   margin-bottom: var(--spacing-4);
+  word-break: keep-all;
 }
 .footer-section p {
   line-height: var(--line-height-relaxed);
   margin-bottom: var(--spacing-4);
+  word-break: keep-all;
+}
+/* 브랜드 섹션 특별 스타일 */
+.footer-brand h3 {
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--spacing-3);
+}
+.footer-description {
+  color: var(--color-gray-400);
+  line-height: 1.6;
+  margin-bottom: var(--spacing-5);
+}
+/* 각 섹션별 아이콘과 텍스트 정렬 */
+.footer-links a {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
 }
 /* Footer Links */
 .footer-links {
@@ -4934,26 +6118,27 @@ footer.footer {
   justify-content: center;
   gap: var(--space-2, var(--spacing-2));
 
-  /* Sizing - Linear.app Style */
-  padding: var(--space-2, 12px) var(--space-4, 16px); /* 더 미니멀한 패딩 */
-  min-height: var(--button-height-md, 40px); /* 더 컴팩트한 높이 */
+  /* Sizing - Linear.app 미니멀 스타일 */
+  padding: 8px 16px; /* 8px 배수로 정밀한 패딩 */
+  min-height: 36px; /* 더 컴팩트한 높이 */
   min-width: -moz-max-content;
   min-width: max-content;
 
-  /* Typography */
+  /* Typography - 한글 최적화 */
   font-family: var(--font-korean-ui);
   font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
+  font-weight: 500; /* Medium weight */
   line-height: var(--line-height-korean-caption);
   text-align: center;
   text-decoration: none;
   white-space: nowrap;
+  word-break: keep-all; /* 한글 단어 분리 방지 */
 
-  /* Visual */
-  color: var(--button-secondary-text, var(--color-text-primary));
-  background-color: var(--button-secondary-bg, var(--color-gray-100));
-  border: var(--border-1, 1px) solid transparent;
-  border-radius: var(--radius-md, var(--radius-lg));
+  /* Visual - Linear.app 미니멀 스타일 */
+  color: var(--color-gray-700);
+  background-color: var(--color-white);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
 
   /* Behavior */
   cursor: pointer;
@@ -4962,25 +6147,37 @@ footer.footer {
           user-select: none;
   vertical-align: middle;
 
-  /* Transitions */
-  transition: var(--transition-all, all 0.2s ease);
+  /* Transitions - Linear.app precise timing */
+  transition: 
+    background-color 150ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    border-color 150ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    color 150ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    box-shadow 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 100ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform, box-shadow, background-color;
 
   /* Korean optimization */
   word-break: var(--korean-word-break);
 }
-/* Button States */
+/* Button States - Linear.app sophisticated interactions */
 .btn:hover:not(:disabled) {
-  background-color: var(--button-secondary-hover, var(--color-gray-200));
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-sm);
+  background-color: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px); /* Subtle lift effect */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.06);
 }
 .btn:active:not(:disabled) {
-  transform: translateY(0);
-  box-shadow: none;
+  transform: scale(0.98); /* Quick scale feedback */
+  background-color: rgba(0, 0, 0, 0.08);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+  transition-duration: 50ms; /* Instant feedback */
 }
 .btn:focus-visible {
-  outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, var(--color-primary));
-  outline-offset: var(--focus-ring-offset, 2px);
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  box-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.06),
+    0 0 0 2px rgba(94, 106, 210, 0.2);
 }
 .btn:focus:not(:focus-visible) {
   outline: none;
@@ -4993,43 +6190,45 @@ footer.footer {
   pointer-events: none;
 }
 /* ===== BUTTON VARIANTS ===== */
-/* Primary Button - Linear.app Style */
+/* Primary Button - Linear.app 미니멀 스타일 */
 .btn-primary,
 .btn--primary {
   color: var(--color-white);
-  background-color: var(--color-gray-900, #1f2937); /* Linear.app의 다크 버튼 */
-  border: 1px solid var(--color-gray-900, #1f2937);
-  font-weight: var(--font-weight-medium, 500); /* 굵지 않게 */
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); /* 섬세한 그림자 */
+  background-color: #1f2937; /* Linear.app 다크 버튼 */
+  border: 1px solid #1f2937;
+  font-weight: 500; /* Medium weight */
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); /* 미묘한 그림자 */
 }
 .btn-primary:hover:not(:disabled),
 .btn--primary:hover:not(:disabled) {
-  background-color: var(--color-gray-800, #374151);
-  border-color: var(--color-gray-800, #374151);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 호버 시 살짝 깊어진 그림자 */
+  background-color: #374151;
+  border-color: #374151;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 16px -4px rgba(31, 41, 55, 0.3), 0 4px 8px -2px rgba(31, 41, 55, 0.1);
 }
-/* Secondary Button */
+/* Secondary Button - Linear.app 미니멀 스타일 */
 .btn-secondary,
 .btn--secondary {
-  color: var(--button-secondary-text, var(--color-text-primary));
-  background-color: var(--button-secondary-bg, var(--color-gray-100));
-  border-color: var(--border-primary, var(--color-gray-300));
+  color: var(--color-gray-700);
+  background-color: var(--color-white);
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 .btn-secondary:hover:not(:disabled),
 .btn--secondary:hover:not(:disabled) {
-  background-color: var(--button-secondary-hover, var(--color-gray-200));
-  border-color: var(--border-secondary, var(--color-gray-400));
+  background-color: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.15);
 }
-/* Ghost Button */
+/* Ghost Button - Linear.app 미니멀 스타일 */
 .btn-ghost,
 .btn--ghost {
-  color: var(--text-primary, var(--color-text-primary));
+  color: var(--color-gray-700);
   background-color: transparent;
-  border-color: transparent;
+  border: 1px solid transparent;
 }
 .btn-ghost:hover:not(:disabled),
 .btn--ghost:hover:not(:disabled) {
-  background-color: var(--bg-hover, var(--color-gray-100));
+  background-color: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.1);
 }
 /* Success Button */
 .btn-success,
@@ -5068,14 +6267,14 @@ footer.footer {
 /* ===== BUTTON SIZES ===== */
 .btn-sm,
 .btn--sm {
-  padding: var(--space-1, var(--spacing-1)) var(--space-3, var(--spacing-3));
-  min-height: var(--button-height-sm, 44px);
+  padding: 6px 12px; /* 8px 배수로 정밀한 패딩 */
+  min-height: 32px; /* 더 컴팩트 */
   font-size: var(--font-size-xs, var(--font-size-sm));
 }
 .btn-lg,
 .btn--lg {
-  padding: var(--space-3, var(--spacing-3)) var(--space-6, var(--spacing-6));
-  min-height: var(--button-height-lg, 56px);
+  padding: 12px 24px; /* 8px 배수로 정밀한 패딩 */
+  min-height: 44px; /* 적당한 크기 */
   font-size: var(--font-size-base, var(--font-size-lg));
 }
 /* ===== BUTTON MODIFIERS ===== */
@@ -5129,57 +6328,61 @@ footer.footer {
   }
 }
 /* ===== SPECIAL PURPOSE BUTTONS ===== */
-/* CTA Button */
+/* CTA Button - Linear.app 미니멀 스타일 (그라데이션 제거) */
 .btn-cta,
 .cta-button {
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  background-color: #1f2937; /* 단색 배경 */
   color: var(--color-white);
   font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-semibold);
-  padding: var(--spacing-4) var(--spacing-8);
-  box-shadow: var(--shadow-lg);
-  border: none;
+  font-weight: 500; /* Medium weight로 통일 */
+  padding: 16px 32px; /* 8px 배수 */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08); /* 미묘한 그림자 */
+  border: 1px solid #1f2937;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: var(--radius-lg);
-  min-height: 56px;
-  transition: all 0.3s ease;
+  border-radius: 8px; /* 6-8px 범위 */
+  min-height: 48px;
+  transition: all 0.2s ease; /* 빠른 전환 */
 }
 .btn-cta:hover:not(:disabled),
 .cta-button:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-xl);
+  background-color: #374151;
+  border-color: #374151;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12); /* 미묘한 그림자 증가 */
   text-decoration: none;
   color: var(--color-white);
+  transform: none; /* transform 제거 */
 }
-/* 특수 버튼 변형 - Linear.app Style */
+/* 특수 버튼 변형 - Linear.app 미니멀 스타일 */
 .btn-tools {
-  background-color: var(--color-gray-900, #1f2937); /* 통일된 다크 버튼 */
+  background-color: #1f2937; /* 통일된 다크 버튼 */
   color: var(--color-white);
-  border: 1px solid var(--color-gray-900, #1f2937);
+  border: 1px solid #1f2937;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 .btn-tools:hover:not(:disabled) {
-  background-color: var(--color-gray-800, #374151);
-  border-color: var(--color-gray-800, #374151);
+  background-color: #374151;
+  border-color: #374151;
   color: var(--color-white);
   text-decoration: none;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08); /* 미묘한 그림자 */
+  transform: none;
 }
 .btn-fortune {
-  background-color: var(--color-gray-900, #1f2937); /* 통일된 다크 버튼 */
+  background-color: #1f2937; /* 통일된 다크 버튼 */
   color: var(--color-white);
-  border: 1px solid var(--color-gray-900, #1f2937);
+  border: 1px solid #1f2937;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 .btn-fortune:hover:not(:disabled) {
-  background-color: var(--color-gray-800, #374151);
-  border-color: var(--color-gray-800, #374151);
+  background-color: #374151;
+  border-color: #374151;
   color: var(--color-white);
   text-decoration: none;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08); /* 미묘한 그림자 */
+  transform: none;
 }
 /* Share Buttons */
 .share-btn {
@@ -5262,9 +6465,9 @@ footer.footer {
 /* ===== RESPONSIVE BUTTONS ===== */
 @media (max-width: 768px) {
   .btn {
-    min-height: 48px; /* 모바일 터치 타겟 크기 */
+    min-height: 44px; /* 모바일 터치 타겟 크기 - 한글 입력 고려 */
     font-size: var(--font-size-base);
-    padding: var(--spacing-3) var(--spacing-5);
+    padding: 12px 20px; /* 한글 텍스트 여백 충분히 */
   }
 
   .btn-sm,
@@ -5320,72 +6523,86 @@ footer.footer {
   max-width: 100%; /* 부모 컨테이너 넘지 않도록 */
   min-height: var(--space-32, 8rem);
 
-  /* Visual */
-  background-color: var(--surface-primary, var(--color-white));
-  border: var(--border-1, 1px) solid var(--border-primary, var(--color-gray-200));
-  border-radius: var(--radius-lg, var(--radius-xl));
-  box-shadow: var(--shadow-sm);
+  /* Visual - Linear.app 미니멀 스타일 */
+  background-color: var(--color-white);
+  border: 1px solid rgba(0, 0, 0, 0.1); /* 얘은 보더 */
+  border-radius: 8px; /* 6-8px 범위 */
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); /* 매우 미묘한 그림자 */
 
   /* Behavior */
   overflow: hidden;
   overflow-x: hidden; /* 수평 스크롤 방지 */
-  transition: var(--transition-all, all 0.2s ease);
   box-sizing: border-box; /* 패딩 포함 너비 계산 */
+  
+  /* Transitions - Linear.app precise timing */
+  transition: 
+    box-shadow 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    border-color 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform, box-shadow;
 }
-/* Card States */
+/* Card States - Linear.app 미니먀 호버 */
 .card:hover,
 .card--hover:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
-  border-color: var(--border-secondary, var(--color-gray-300));
+  transform: translateY(-1px); /* 살짝 올라오는 효과 */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* 부드럽게 늘어난 그림자 */
+  border-color: rgba(0, 0, 0, 0.15);
 }
 .card--clickable {
   cursor: pointer;
 }
+.card--clickable:active {
+  transform: translateY(0px) scale(0.99);
+  transition-duration: 100ms; /* Instant feedback */
+}
 .card--clickable:focus-visible {
-  outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, var(--color-primary));
-  outline-offset: var(--focus-ring-offset, 2px);
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  box-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.08),
+    0 0 0 2px rgba(94, 106, 210, 0.2);
 }
 /* ===== CARD STRUCTURE ===== */
-/* Card Header */
+/* Card Header - Linear.app 미니먀 스타일 */
 .card-header,
 .card__header {
-  padding: var(--space-6, var(--spacing-5)) var(--space-6, var(--spacing-6))
-    var(--space-4, var(--spacing-4));
-  border-bottom: var(--border-1, 1px) solid var(--border-primary, var(--color-gray-200));
-  background-color: var(--bg-secondary, var(--color-gray-50));
+  padding: 24px 24px 16px; /* 8px 배수로 정밀한 패딩 */
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08); /* 더 미묘한 보더 */
+  background-color: transparent; /* 배경 색상 제거 */
 }
-/* Card Body */
+/* Card Body - Linear.app 미니먀 스타일 */
 .card-body,
 .card__body {
   flex: 1;
-  padding: var(--space-6, var(--spacing-6));
+  padding: 24px; /* 8px 배수로 정밀한 패딩 */
+  line-height: 1.7; /* 한글 가독성 최적화 */
 }
-/* Card Footer */
+/* Card Footer - Linear.app 미니먀 스타일 */
 .card-footer,
 .card__footer {
-  padding: var(--space-4, var(--spacing-4)) var(--space-6, var(--spacing-6));
-  background-color: var(--bg-secondary, var(--color-gray-50));
-  border-top: var(--border-1, 1px) solid var(--border-primary, var(--color-gray-200));
+  padding: 16px 24px; /* 8px 배수로 정밀한 패딩 */
+  background-color: transparent; /* 배경 색상 제거 */
+  border-top: 1px solid rgba(0, 0, 0, 0.08); /* 더 미묘한 보더 */
 }
-/* Compact padding */
+/* Compact padding - Linear.app 미니먀 스타일 */
 .card--compact .card__header,
 .card--compact .card__body,
 .card--compact .card__footer,
 .card--compact .card-header,
 .card--compact .card-body,
 .card--compact .card-footer {
-  padding: var(--space-4, var(--spacing-4));
+  padding: 16px; /* 8px 배수로 정밀한 패딩 */
 }
 /* ===== CARD CONTENT ===== */
-/* Card Title */
+/* Card Title - 한글 최적화 */
 .card-title,
 .card__title {
-  margin: 0 0 var(--space-2, var(--spacing-2)) 0;
+  margin: 0 0 8px 0; /* 8px 배수 */
   font-size: var(--font-size-lg, var(--font-size-xl));
-  font-weight: var(--font-weight-semibold);
+  font-weight: 600; /* Semibold weight */
   line-height: var(--line-height-korean-title);
-  color: var(--text-primary, var(--color-gray-900));
+  color: var(--color-gray-900);
+  word-break: keep-all; /* 한글 단어 분리 방지 */
 }
 /* Card Subtitle */
 .card-subtitle,
@@ -5395,13 +6612,14 @@ footer.footer {
   color: var(--text-secondary, var(--color-gray-600));
   line-height: var(--line-height-korean-caption);
 }
-/* Card Text */
+/* Card Text - 한글 최적화 */
 .card-text,
 .card__text {
-  margin: 0 0 var(--space-4, var(--spacing-4)) 0;
+  margin: 0 0 16px 0; /* 8px 배수 */
   font-size: var(--font-size-base);
-  line-height: var(--line-height-relaxed);
-  color: var(--text-primary, var(--color-gray-700));
+  line-height: 1.7; /* 한글 가독성 최적화 */
+  color: var(--color-gray-700);
+  word-break: keep-all; /* 한글 단어 분리 방지 */
 }
 /* Card Meta */
 .card__meta {
@@ -5459,10 +6677,10 @@ footer.footer {
   justify-content: space-between;
 }
 /* ===== CARD VARIANTS ===== */
-/* Bordered Card */
+/* Bordered Card - Linear.app 미니먀 스타일 */
 .card-bordered,
 .card--borderless {
-  border: 1px solid var(--color-gray-200);
+  border: 1px solid rgba(0, 0, 0, 0.1);
   box-shadow: none;
 }
 .card--borderless {
@@ -5474,23 +6692,25 @@ footer.footer {
 .card--borderless .card-footer {
   border: none;
 }
-/* Flat Card */
+/* Flat Card - Linear.app 미니먀 스타일 */
 .card-flat {
   box-shadow: none;
-  background-color: var(--color-gray-50);
+  background-color: var(--color-white); /* 흰색 배경 유지 */
+  border: 1px solid rgba(0, 0, 0, 0.08); /* 더 미묘한 보더 */
 }
-/* Elevated Card */
+/* Elevated Card - Linear.app 미니먀 스타일 */
 .card--elevated {
-  border: none;
-  box-shadow: var(--shadow-md);
+  border: 1px solid rgba(0, 0, 0, 0.05); /* 미묘한 보더 유지 */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* 미묘한 그림자 */
 }
 .card--elevated:hover {
-  box-shadow: var(--shadow-xl);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12); /* 호버 시 미묘하게 증가 */
+  transform: translateY(-1px); /* 살짝 올라오는 효과 */
 }
-/* Ghost Card */
+/* Ghost Card - Linear.app 미니먀 스타일 */
 .card--ghost {
   background-color: transparent;
-  border: var(--border-1, 1px) dashed var(--border-primary, var(--color-gray-300));
+  border: 1px dashed rgba(0, 0, 0, 0.15); /* 더 미묘한 dashed 보더 */
 }
 /* Highlighted Card */
 .card--highlighted {
@@ -5583,22 +6803,27 @@ footer.footer {
   font-weight: var(--font-weight-semibold);
   margin-bottom: var(--space-4, var(--spacing-4));
 }
-/* Feature/Service Card */
+/* Feature/Service Card - Linear.app 미니먀 스타일 */
 .feature-card,
 .service-card {
   text-align: center;
-  padding: var(--space-8, var(--spacing-6)) var(--space-6, var(--spacing-6));
-  border-radius: var(--radius-xl);
+  padding: 32px 24px; /* 8px 배수로 정밀한 패딩 */
+  border-radius: 8px; /* 6-8px 범위 */
   background-color: var(--color-white);
-  border: 1px solid var(--color-gray-200);
-  transition: var(--transition-all, all 0.2s ease);
+  border: 1px solid rgba(0, 0, 0, 0.1); /* 미묘한 보더 */
+  transition: all 0.2s ease; /* 부드러운 전환 */
   height: 100%;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); /* 미묘한 그림자 */
 }
 .feature-card:hover,
 .service-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-xl);
-  border-color: var(--color-primary);
+  transform: translateY(-1px); /* Subtle lift */
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  border-color: rgba(0, 0, 0, 0.15);
+}
+.service-card:active {
+  transform: translateY(0px) scale(0.98);
+  transition-duration: 100ms;
 }
 .feature-card-icon,
 .service-card__icon {
@@ -5644,7 +6869,7 @@ footer.footer {
 /* ===== RESPONSIVE CARDS ===== */
 @media (max-width: 768px) {
   .card {
-    margin-bottom: var(--spacing-4);
+    margin-bottom: 16px; /* 8px 배수 */
   }
 
   .card-header,
@@ -5653,14 +6878,14 @@ footer.footer {
   .card__header,
   .card__body,
   .card__footer {
-    padding: var(--space-4, var(--spacing-4));
+    padding: 16px; /* 8px 배수로 정밀한 패딩 */
   }
 
   .fortune-result-card,
   .test-result-card,
   .result-card {
-    margin: var(--spacing-4) var(--spacing-3);
-    padding: var(--spacing-6);
+    margin: 16px 12px; /* 8px 배수 */
+    padding: 24px; /* 8px 배수 */
   }
 
   .test-result-card .result-title,
@@ -5776,17 +7001,22 @@ footer.footer {
   border-radius: var(--input-radius, var(--radius-md));
 
   /* Behavior */
-  transition: var(--transition-all, all 0.2s ease);
+  transition: 
+    border-color 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    box-shadow 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    background-color 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: border-color, box-shadow;
 
   /* Korean optimization */
   word-break: keep-all;
 }
-/* Input States */
-.form-control:hover:not(:disabled),
-.form-input:hover:not(:disabled),
-.form-select:hover:not(:disabled),
-.form-textarea:hover:not(:disabled) {
-  border-color: var(--border-secondary, var(--color-gray-400));
+/* Input States - Linear.app sophisticated interactions */
+.form-control:hover:not(:disabled):not(:focus),
+.form-input:hover:not(:disabled):not(:focus),
+.form-select:hover:not(:disabled):not(:focus),
+.form-textarea:hover:not(:disabled):not(:focus) {
+  border-color: var(--color-neutral-300);
+  background-color: var(--color-neutral-25);
 }
 .form-control:focus,
 .form-input:focus,
@@ -5794,9 +7024,11 @@ footer.footer {
 .form-textarea:focus {
   outline: none;
   color: var(--text-primary, var(--color-gray-900));
-  background-color: var(--surface-primary, var(--color-white));
-  border-color: var(--border-focus, var(--color-primary));
-  box-shadow: 0 0 0 3px var(--color-primary-subtle, rgba(139, 92, 246, 0.1));
+  background-color: var(--color-white);
+  border-color: var(--color-primary);
+  box-shadow: 
+    inset 0 2px 4px 0 rgba(0, 0, 0, 0.05),
+    0 0 0 2px rgba(94, 106, 210, 0.2);
 }
 .form-control:disabled,
 .form-input:disabled,
@@ -5959,8 +7191,10 @@ select.form-control::-ms-expand,
 .form-input--error:focus,
 .form-select--error:focus,
 .form-textarea--error:focus {
-  border-color: var(--border-error, var(--color-danger));
-  box-shadow: 0 0 0 3px var(--semantic-danger-bg, rgba(239, 68, 68, 0.1));
+  border-color: var(--color-error);
+  box-shadow: 
+    inset 0 2px 4px 0 rgba(0, 0, 0, 0.05),
+    0 0 0 2px rgba(239, 68, 68, 0.2);
 }
 .form-control.is-valid,
 .form-input--success,
@@ -5972,8 +7206,10 @@ select.form-control::-ms-expand,
 .form-input--success:focus,
 .form-select--success:focus,
 .form-textarea--success:focus {
-  border-color: var(--border-success, var(--color-success));
-  box-shadow: 0 0 0 3px var(--semantic-success-bg, rgba(34, 197, 94, 0.1));
+  border-color: var(--color-success);
+  box-shadow: 
+    inset 0 2px 4px 0 rgba(0, 0, 0, 0.05),
+    0 0 0 2px rgba(16, 185, 129, 0.2);
 }
 .invalid-feedback {
   display: block;
@@ -13761,10 +14997,10 @@ input:checked + .toggle-slider:before {
    ========================================================================== */
 /* ===== HERO SECTION - Linear.app Style ===== */
 .hero {
-  min-height: 45vh; /* Linear.app 스타일: 컴팩트한 히어로 */
+  min-height: 40vh; /* Linear.app 스타일: 더욱 컴팩트한 히어로 */
   background: var(--surface-primary, var(--color-white)); /* 깔끔한 흰색 배경 */
   color: var(--text-primary, var(--color-gray-900)); /* 다크 텍스트 */
-  padding: var(--space-12, 3rem) var(--space-4, 1rem) var(--space-16, 4rem); /* 미니멀한 패딩 */
+  padding: var(--space-10, 2.5rem) var(--space-4, 1rem) var(--space-12, 3rem); /* 더 타이트한 패딩 */
   display: flex;
   align-items: center;
   text-align: center;
@@ -13781,9 +15017,9 @@ input:checked + .toggle-slider:before {
 }
 .hero-title,
 .hero h1 {
-  font-size: var(--font-size-4xl, 3rem); /* Linear.app 스타일: 더 절제된 크기 */
+  font-size: var(--font-size-3xl, 2.25rem); /* Linear.app 스타일: 더욱 절제된 크기 */
   font-weight: var(--font-weight-semibold, 600); /* 굵지만 과하지 않게 */
-  margin-bottom: var(--space-4, var(--spacing-4));
+  margin-bottom: var(--space-3, var(--spacing-3)); /* 더 타이트한 간격 */
   line-height: var(--line-height-tight, 1.1);
   letter-spacing: var(--letter-spacing-tight, -0.02em);
   color: var(--text-primary, var(--color-gray-900)); /* 진한 회색 */
@@ -13792,20 +15028,21 @@ input:checked + .toggle-slider:before {
   color: var(--color-primary, #5c5ce0); /* 단순한 브랜드 컬러 */
 }
 .hero-subtitle {
-  font-size: var(--font-size-lg, 1.125rem); /* Linear.app 스타일: 더 작고 절제된 크기 */
-  margin-bottom: var(--space-6, var(--spacing-6));
+  font-size: var(--font-size-base, 1rem); /* Linear.app 스타일: 더욱 절제된 크기 */
+  margin-bottom: var(--space-5, var(--spacing-5)); /* 더 타이트한 간격 */
   color: var(--text-secondary, var(--color-gray-600)); /* 회색 텍스트 */
   line-height: var(--line-height-relaxed, 1.5);
-  max-width: 500px; /* 더 컴팩트한 폭 */
+  max-width: 450px; /* 더 컴팩트한 폭 */
   margin-left: auto;
   margin-right: auto;
   font-weight: var(--font-weight-normal, 400); /* 일반 폰트 굵기 */
 }
 .hero-buttons {
   display: flex;
-  gap: var(--space-4, var(--spacing-4));
+  gap: var(--space-3, var(--spacing-3)); /* 더 타이트한 버튼 간격 */
   justify-content: center;
   flex-wrap: wrap;
+  margin-top: var(--space-1, var(--spacing-1)); /* 부제목과의 간격 최소화 */
 }
 /* ===== FEATURES SECTION ===== */
 .features {
@@ -14294,28 +15531,30 @@ input:checked + .toggle-slider:before {
 /* ===== MOBILE OPTIMIZATION ===== */
 @media (max-width: 768px) {
   .hero {
-    min-height: 35vh; /* Linear.app 스타일: 모바일에서도 컴팩트 */
-    padding: var(--space-8, 2rem) var(--space-4, 1rem) var(--space-10, 2.5rem);
+    min-height: 32vh; /* Linear.app 스타일: 모바일에서 더욱 컴팩트 */
+    padding: var(--space-6, 1.5rem) var(--space-4, 1rem) var(--space-8, 2rem); /* 더 타이트한 모바일 패딩 */
     margin-top: 0; /* 모바일에서도 네비게이션 바로 아래 위치 */
   }
 
   .hero-title,
   .hero h1 {
-    font-size: var(--font-size-3xl, 2.25rem); /* Linear.app 스타일: 모바일에서도 절제된 크기 */
-    margin-bottom: var(--space-3, var(--spacing-3));
+    font-size: var(--font-size-2xl, 1.875rem); /* Linear.app 스타일: 모바일에서 더 절제된 크기 */
+    margin-bottom: var(--space-2, var(--spacing-2)); /* 더 타이트한 간격 */
   }
 
   .hero-subtitle {
-    font-size: var(--font-size-base, 1rem); /* 모바일에서 더 작게 */
+    font-size: var(--font-size-sm, 0.875rem); /* 모바일에서 더 작게 */
     margin-bottom: var(--space-4, var(--spacing-4));
+    max-width: 320px; /* 모바일에 맞는 더 작은 폭 */
   }
 
   .hero-buttons {
     flex-direction: column;
     align-items: center;
     width: 100%;
-    max-width: 300px;
+    max-width: 280px; /* 더 컴팩트한 버튼 영역 */
     margin: 0 auto;
+    gap: var(--space-2, var(--spacing-2)); /* 모바일에서 더 타이트한 버튼 간격 */
   }
 
   .hero-buttons .btn {
@@ -14382,13 +15621,29 @@ input:checked + .toggle-slider:before {
   }
 }
 @media (max-width: 480px) {
+  .hero {
+    min-height: 30vh; /* 아주 작은 화면에서 최소 높이 */
+    padding: var(--space-5, 1.25rem) var(--space-4, 1rem) var(--space-6, 1.5rem);
+  }
+  
   .hero-title,
   .hero h1 {
-    font-size: var(--font-size-2xl);
+    font-size: var(--font-size-xl, 1.5rem); /* 더 작은 제목 크기 */
+    margin-bottom: var(--space-2, var(--spacing-2));
   }
 
   .hero-subtitle {
-    font-size: var(--font-size-base);
+    font-size: var(--font-size-sm, 0.875rem);
+    margin-bottom: var(--space-3, var(--spacing-3));
+    max-width: 280px; /* 더 작은 폭 */
+  }
+
+  .hero-buttons {
+    max-width: 250px; /* 더 작은 버튼 영역 */
+  }
+
+  .hero-buttons .btn {
+    max-width: 220px; /* 더 작은 버튼 */
   }
 
   .stats-grid {

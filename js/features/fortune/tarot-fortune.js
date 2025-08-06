@@ -719,11 +719,4 @@ export class TarotFortuneService extends FortuneService {
   }
 }
 
-// 페이지 로드 시 자동 초기화
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => {
-    new TarotFortuneService();
-  });
-} else {
-  new TarotFortuneService();
-}
+// HTML에서 명시적으로 초기화하므로 자동 초기화 제거
