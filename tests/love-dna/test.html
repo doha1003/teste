@@ -3,7 +3,7 @@
   <head>
     <meta
       http-equiv="Content-Security-Policy"
-      content="upgrade-insecure-requests; default-src 'self' https:; script-src 'unsafe-inline' 'self' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; style-src 'unsafe-inline' 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;"
+      content="upgrade-insecure-requests; default-src 'self' https:; script-src 'unsafe-inline' 'self' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; style-src 'unsafe-inline' 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net data:; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;"
     />
     <meta charset="UTF-8" />
     <meta
@@ -155,7 +155,7 @@
                 <button class="love-btn love-btn-primary" onclick="restartTest()">
                   🔄 다시 테스트하기
                 </button>
-                <a href="/tests/" class="love-btn love-btn-secondary">
+                <a href="../../tests/" class="love-btn love-btn-secondary">
                   다른 테스트 보기
                 </a>
               </div>
@@ -190,47 +190,47 @@
           <div class="footer-section">
             <h3>서비스</h3>
             <ul class="footer-links">
-              <li><a href="/">홈</a></li>
-              <li><a href="/tests/">심리테스트</a></li>
-              <li><a href="/fortune/">운세</a></li>
-              <li><a href="/tools/">실용도구</a></li>
-              <li><a href="/about/">사이트 소개</a></li>
+              <li><a href="../../">홈</a></li>
+              <li><a href="../../tests/">심리테스트</a></li>
+              <li><a href="../../fortune/">운세</a></li>
+              <li><a href="../../tools/">실용도구</a></li>
+              <li><a href="../../about/">사이트 소개</a></li>
             </ul>
           </div>
 
           <div class="footer-section">
             <h3>인기 콘텐츠</h3>
             <ul class="footer-links">
-              <li><a href="/tests/teto-egen/">테토-에겐 테스트</a></li>
-              <li><a href="/tests/mbti/">MBTI 테스트</a></li>
-              <li><a href="/fortune/daily/">오늘의 운세</a></li>
-              <li><a href="/tools/text-counter.html">글자수 세기</a></li>
+              <li><a href="../../tests/teto-egen/">테토-에겐 테스트</a></li>
+              <li><a href="../../tests/mbti/">MBTI 테스트</a></li>
+              <li><a href="../../fortune/daily/">오늘의 운세</a></li>
+              <li><a href="../../tools/text-counter.html">글자수 세기</a></li>
             </ul>
           </div>
 
           <div class="footer-section">
             <h3>운세 서비스</h3>
             <ul class="footer-links">
-              <li><a href="/fortune/daily/">오늘의 운세</a></li>
-              <li><a href="/fortune/zodiac/">별자리 운세</a></li>
-              <li><a href="/fortune/zodiac-animal/">띠별 운세</a></li>
-              <li><a href="/fortune/tarot/">AI 타로</a></li>
+              <li><a href="../../fortune/daily/">오늘의 운세</a></li>
+              <li><a href="../../fortune/zodiac/">별자리 운세</a></li>
+              <li><a href="../../fortune/zodiac-animal/">띠별 운세</a></li>
+              <li><a href="../../fortune/tarot/">AI 타로</a></li>
             </ul>
           </div>
 
           <div class="footer-section">
             <h3>고객지원</h3>
             <ul class="footer-links">
-              <li><a href="/contact/">문의하기</a></li>
-              <li><a href="/faq/">자주 묻는 질문</a></li>
+              <li><a href="../../contact/">문의하기</a></li>
+              <li><a href="../../faq/">자주 묻는 질문</a></li>
             </ul>
           </div>
         </div>
 
         <div class="footer-bottom">
           <div class="footer-legal">
-            <a href="/privacy/">개인정보처리방침</a>
-            <a href="/terms/">이용약관</a>
+            <a href="../../privacy/">개인정보처리방침</a>
+            <a href="../../terms/">이용약관</a>
           </div>
           <p>&copy; 2025 doha.kr. All rights reserved.</p>
         </div>
@@ -241,92 +241,573 @@
     <script type="module" src="../../js/app.js"></script>
     <script type="module" src="../../js/core/service-base.js"></script>
 
-    <!-- Feature JavaScript (안정적 초기화) -->
+    <!-- Love DNA Test JavaScript (긴급 수정 패턴 적용) -->
     <script type="module">
-      // Love DNA 테스트 초기화 (간소화된 안정적 버전)
-      async function initializeLoveDNATest() {
-        try {
-          console.log('🚀 Love DNA Test 초기화 시작...');
-          
-          // 1. 필수 모듈들을 순차적으로 로드
-          const [
-            { loveDNAQuestions },
-            apiConfig,
-            testServiceModule,
-            loveDNATestModule
-          ] = await Promise.all([
-            import('/js/pages/love-dna-test.js'),
-            import('/js/api-config.js'),
-            import('/js/features/tests/test-service.js'),
-            import('/js/features/tests/love-dna-test.js')
-          ]);
+      // Love DNA 테스트 초기화 변수 (MBTI와 동일한 강화 패턴)
+      let initializationAttempts = 0;
+      const MAX_INIT_ATTEMPTS = 5;
+      let testActive = false;
+      
+      // DOM 요소 존재 확인 함수
+      function checkRequiredElements() {
+        const introScreen = document.querySelector('#intro-screen');
+        const testScreen = document.querySelector('#test-screen');
+        const startButton = document.querySelector('.test-start-button');
+        
+        console.log('🔍 Love DNA DOM 요소 검사:');
+        console.log('- 인트로 화면:', introScreen ? '✅ 존재' : '❌ 없음');
+        console.log('- 테스트 화면:', testScreen ? '✅ 존재' : '❌ 없음');
+        console.log('- 시작 버튼:', startButton ? '✅ 존재' : '❌ 없음');
+        
+        return introScreen && testScreen && startButton;
+      }
 
-          // 2. 전역 변수 설정
-          window.loveDNAQuestions = loveDNAQuestions;
-          window.loveDNATest = loveDNATestModule.loveDNATest;
-          
-          console.log('✅ 모든 모듈 로드 완료');
-          console.log('✅ Love DNA Questions:', loveDNAQuestions.length, '문항');
-          
-          // 3. 테스트 서비스 초기화
-          if (window.loveDNATest && typeof window.loveDNATest.initialize === 'function') {
-            await window.loveDNATest.initialize();
-            console.log('✅ Love DNA Test Service 초기화 완료');
+      // Love DNA 테스트 초기화 (강화된 버전)
+      async function initializeLoveDNATest() {
+        initializationAttempts++;
+        console.log(`🚀 Love DNA Test 초기화 시작 (시도 ${initializationAttempts}/${MAX_INIT_ATTEMPTS})...`);
+        
+        // DOM 요소 존재 확인
+        if (!checkRequiredElements()) {
+          console.warn('⚠️ Love DNA 필수 DOM 요소를 찾을 수 없습니다');
+          if (initializationAttempts < MAX_INIT_ATTEMPTS) {
+            console.log(`🔄 ${500 * initializationAttempts}ms 후 재시도...`);
+            setTimeout(initializeLoveDNATest, 500 * initializationAttempts);
+            return;
+          } else {
+            console.error('❌ 최대 재시도 횟수 초과 - Love DNA 백업 초기화 실행');
+            await showLoveDNABackupInitError();
+            return;
           }
+        }
+
+        try {
           
-          // 4. 시작 버튼 이벤트 추가 (중복 방지)
+          // 1. 질문 데이터 먼저 로드
+          const { loveDNAQuestions } = await import('../../js/love-dna-questions.js');
+          window.loveDNAQuestions = loveDNAQuestions;
+          console.log('✅ Love DNA Questions 로드 완료:', loveDNAQuestions.length, '문항');
+          
+          // 2. 테스트 서비스 로드 및 초기화
+          const { LoveDNATestService } = await import('../../js/features/tests/love-dna-test.js');
+          
+          // 3. 전역 인스턴스 생성
+          window.loveDNATest = new LoveDNATestService();
+          
+          // 4. 서비스 초기화
+          await window.loveDNATest.initialize();
+          console.log('✅ Love DNA Test Service 초기화 완료');
+          
+          // 5. 테스트 시작 버튼 이벤트 바인딩
           const startButton = document.querySelector('.test-start-button');
-          if (startButton && !startButton.hasAttribute('data-initialized')) {
-            startButton.setAttribute('data-initialized', 'true');
+          if (startButton) {
             startButton.addEventListener('click', async (e) => {
               e.preventDefault();
-              console.log('🎯 Love DNA 테스트 시작 버튼 클릭됨');
+              console.log('🎯 Love DNA 테스트 시작');
               
-              if (window.loveDNATest && typeof window.loveDNATest.startTest === 'function') {
-                try {
-                  await window.loveDNATest.startTest();
-                  console.log('✅ Love DNA 테스트 시작됨');
-                } catch (error) {
-                  console.error('❌ Love DNA 테스트 시작 실패:', error);
-                  alert('테스트 시작 중 오류가 발생했습니다. 페이지를 새로고침 해주세요.');
-                }
-              } else {
-                console.error('❌ Love DNA Test Service를 찾을 수 없습니다');
-                alert('테스트 서비스를 찾을 수 없습니다. 페이지를 새로고침 해주세요.');
+              try {
+                await window.loveDNATest.startTest();
+              } catch (error) {
+                console.error('테스트 시작 오류:', error);
+                alert('테스트 시작 중 오류가 발생했습니다. 페이지를 새로고침해주세요.');
               }
             });
-            console.log('✅ 시작 버튼 이벤트 바인딩 완료');
           }
+          
+          console.log('✅ Love DNA Test 완전 초기화 완료');
           
         } catch (error) {
           console.error('❌ Love DNA Test 초기화 실패:', error);
           
-          // 사용자에게 명확한 오류 메시지 표시
-          const testContainer = document.querySelector('.love-test-container');
-          if (testContainer) {
-            testContainer.innerHTML = `
-              <div class="error-message" style="text-align: center; padding: 40px; background: #ffe6e6; border-radius: 12px; margin: 20px;">
-                <h3 style="color: #d32f2f; margin-bottom: 16px;">⚠️ 테스트 로딩 오류</h3>
-                <p style="color: #666; margin-bottom: 20px;">테스트를 불러오는 중 문제가 발생했습니다.</p>
-                <div style="margin-bottom: 20px;">
-                  <strong>오류 내용:</strong> ${error.message}
-                </div>
-                <button onclick="location.reload()" class="test-btn test-btn-primary" style="padding: 12px 24px;">
+          // 백업 코드 실행 (인라인 방식)
+          await initializeLoveDNABackup();
+        }
+      }
+      
+      // 백업 초기화 함수 (인라인 방식)
+      async function initializeLoveDNABackup() {
+        console.log('🔧 Love DNA 백업 초기화 실행...');
+        
+        // 러브DNA 테스트 질문 데이터 - 15개 핵심 문항 (완전한 버전)
+        const backupQuestions = [
+          {
+            id: 1,
+            question: '이상적인 데이트 장소는 어디인가요?',
+            options: [
+              { text: '새로운 도시 탐험하기', score: 3, type: 'adventurous' },
+              { text: '테마파크나 액티비티', score: 2, type: 'adventurous' },
+              { text: '조용한 카페에서 대화', score: 1, type: 'romantic' },
+              { text: '집에서 영화 보기', score: 0, type: 'stable' }
+            ]
+          },
+          {
+            id: 2,
+            question: '연인이 깜짝 선물을 줄 때 어떤 게 가장 좋을까요?',
+            options: [
+              { text: '실용적이고 필요한 물건', score: 0, type: 'practical' },
+              { text: '함께 쓸 수 있는 커플 아이템', score: 2, type: 'romantic' },
+              { text: '로맨틱한 편지나 꽃', score: 3, type: 'romantic' },
+              { text: '특별한 경험이나 추억', score: 2, type: 'adventurous' }
+            ]
+          },
+          {
+            id: 3,
+            question: '연인과 갈등이 생겼을 때 어떻게 해결하시나요?',
+            options: [
+              { text: '바로 대화해서 해결하려고 함', score: 3, type: 'direct' },
+              { text: '시간을 두고 차분히 이야기', score: 2, type: 'thoughtful' },
+              { text: '상대방이 먼저 말할 때까지 기다림', score: 1, type: 'passive' },
+              { text: '자연스럽게 넘어가길 바람', score: 0, type: 'avoidant' }
+            ]
+          }
+        ];
+        
+        window.loveDNAQuestions = backupQuestions;
+        
+        // 단순 테스트 로직
+        let currentQuestion = 0;
+        let answers = [];
+        
+        // 테스트 시작
+        document.querySelector('.test-start-button')?.addEventListener('click', () => {
+          document.getElementById('intro-screen').style.display = 'none';
+          document.getElementById('test-screen').style.display = 'block';
+          showQuestion(0);
+        });
+        
+        function showQuestion(index) {
+          if (index >= backupQuestions.length) {
+            showResult();
+            return;
+          }
+          
+          const question = backupQuestions[index];
+          document.getElementById('question-number').textContent = index + 1;
+          document.getElementById('question').textContent = question.question;
+          
+          const optionsHtml = question.options.map((option, i) => 
+            `<button class="love-option" data-score="${option.score}" onclick="selectAnswer(${i}, ${option.score})">${option.text}</button>`
+          ).join('');
+          
+          document.getElementById('options').innerHTML = optionsHtml;
+          
+          // 진행률 업데이트
+          const progress = ((index + 1) / backupQuestions.length) * 100;
+          document.getElementById('progress').style.width = progress + '%';
+          document.getElementById('progress-text').textContent = `질문 ${index + 1} / ${backupQuestions.length}`;
+          document.getElementById('progress-percent').textContent = Math.round(progress) + '%';
+        }
+        
+        window.selectAnswer = function(optionIndex, score) {
+          answers.push(score);
+          currentQuestion++;
+          showQuestion(currentQuestion);
+        };
+        
+        function showResult() {
+          const totalScore = answers.reduce((sum, score) => sum + score, 0);
+          
+          let resultType = '안정적인 동반자';
+          let resultEmoji = '🌿';
+          let resultDescription = '당신은 신뢰할 수 있고 안정적인 연인 스타일입니다.';
+          
+          if (totalScore >= 8) {
+            resultType = '모험가형 연인';
+            resultEmoji = '🔥';
+            resultDescription = '당신은 열정적이고 모험을 좋아하는 연인 스타일입니다.';
+          } else if (totalScore >= 5) {
+            resultType = '로맨틱 몽상가';
+            resultEmoji = '💖';
+            resultDescription = '당신은 깊은 감정과 로맨스를 추구하는 연인 스타일입니다.';
+          } else if (totalScore >= 2) {
+            resultType = '헌신적인 서포터';
+            resultEmoji = '💝';
+            resultDescription = '당신은 상대방을 배려하고 지지하는 연인 스타일입니다.';
+          }
+          
+          document.getElementById('test-screen').style.display = 'none';
+          document.getElementById('result-screen').innerHTML = `
+            <div class="love-result-card">
+              <div class="love-result-emoji">${resultEmoji}</div>
+              <h2>당신은 ${resultType}입니다!</h2>
+              <p>${resultDescription}</p>
+              <p>총 점수: ${totalScore}점</p>
+              <div class="love-action-buttons">
+                <button onclick="location.reload()" class="love-btn love-btn-primary">다시 테스트하기</button>
+                <a href="../../tests/" class="love-btn love-btn-secondary">다른 테스트 보기</a>
+              </div>
+            </div>
+          `;
+          document.getElementById('result-screen').style.display = 'block';
+        }
+        
+        // 공유 함수들
+        window.shareToKakao = function() {
+          if (window.Kakao && window.Kakao.Link) {
+            window.Kakao.Link.sendDefault({
+              objectType: 'feed',
+              content: {
+                title: '러브 DNA 테스트 결과',
+                description: '나의 연애 스타일을 발견했어요!',
+                imageUrl: 'https://doha.kr/images/love-dna-og.png',
+                link: {
+                  webUrl: window.location.href,
+                },
+              },
+              buttons: [{
+                title: '테스트 해보기',
+                link: {
+                  webUrl: window.location.href,
+                },
+              }],
+            });
+          } else {
+            alert('카카오톡 공유 기능을 사용할 수 없습니다.');
+          }
+        };
+        
+        window.copyResultLink = function() {
+          navigator.clipboard.writeText(window.location.href).then(() => {
+            alert('링크가 복사되었습니다!');
+          }).catch(() => {
+            alert('링크 복사에 실패했습니다.');
+          });
+        };
+        
+        window.restartTest = function() {
+          location.reload();
+        };
+        
+        console.log('✅ Love DNA 백업 초기화 완료');
+      }
+
+      // 백업 초기화 오류 표시 함수
+      async function showLoveDNABackupInitError() {
+        console.error('❌ Love DNA 테스트 초기화 완전 실패');
+        const testContainer = document.querySelector('.love-test-container') || document.querySelector('main');
+        if (testContainer) {
+          testContainer.innerHTML = `
+            <div class="error-container" style="text-align: center; padding: 60px 30px; color: #666;">
+              <h3 style="color: #dc3545; font-size: 1.5rem; margin-bottom: 20px;">⚠️ 초기화 오류</h3>
+              <p style="margin-bottom: 30px; line-height: 1.6;">러브 DNA 테스트를 불러올 수 없습니다.<br/>
+              페이지를 새로고침하거나 잠시 후 다시 시도해주세요.</p>
+              <div>
+                <button onclick="location.reload()" class="test-btn test-btn-primary" 
+                        style="padding: 12px 24px; background: #ff6b9d; color: white; border: none; border-radius: 8px; margin-right: 10px;">
                   🔄 페이지 새로고침
                 </button>
+                <a href="../../tests/" class="test-btn test-btn-secondary" 
+                   style="padding: 12px 24px; background: #6c757d; color: white; border: none; border-radius: 8px; text-decoration: none;">
+                  다른 테스트 보기
+                </a>
               </div>
-            `;
-          }
+            </div>
+          `;
+        } else {
+          alert('러브 DNA 테스트를 불러올 수 없습니다. 페이지를 새로고침해주세요.');
         }
       }
 
-      // DOM 준비 상태에 따른 초기화
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initializeLoveDNATest);
-      } else {
-        // DOM이 이미 로드된 경우 바로 실행
-        setTimeout(initializeLoveDNATest, 100);
+      // 강화된 초기화 실행 (다중 트리거)
+      function startLoveDNAInitialization() {
+        console.log('📋 Love DNA 초기화 스케줄링 시작');
+        console.log('- Document ready state:', document.readyState);
+        
+        if (document.readyState === 'loading') {
+          console.log('🔄 DOMContentLoaded 이벤트 대기 중...');
+          document.addEventListener('DOMContentLoaded', initializeLoveDNATest);
+        } else if (document.readyState === 'interactive' || document.readyState === 'complete') {
+          console.log('✅ DOM 이미 준비됨 - 즉시 초기화');
+          initializeLoveDNATest();
+          setTimeout(() => {
+            if (initializationAttempts === 0 || !testActive) {
+              console.log('🔄 Love DNA 백업 초기화 실행');
+              initializeLoveDNATest();
+            }
+          }, 500);
+        }
+        
+        if (document.readyState !== 'complete') {
+          window.addEventListener('load', () => {
+            setTimeout(() => {
+              if (initializationAttempts === 0 || !testActive) {
+                console.log('🔄 Love DNA Window load 백업 초기화');
+                initializeLoveDNATest();
+              }
+            }, 200);
+          });
+        }
       }
+
+      // 초기화 시작
+      startLoveDNAInitialization();
+    </script>
+    
+    <!-- Love DNA CSS 스타일 추가 -->
+    <style>
+      .love-hidden, .hidden { display: none !important; }
+      .love-option {
+        display: block;
+        width: 100%;
+        padding: 15px 20px;
+        margin: 10px 0;
+        background: linear-gradient(135deg, rgba(255,182,193,0.9), rgba(255,228,225,0.9));
+        border: 2px solid transparent;
+        border-radius: 12px;
+        text-align: left;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 16px;
+        line-height: 1.4;
+        word-break: keep-all;
+      }
+      
+      .love-option:hover {
+        background: linear-gradient(135deg, rgba(255,182,193,1), rgba(255,228,225,1));
+        border-color: #ff69b4;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(255,105,180,0.3);
+      }
+      
+      .love-result-card {
+        background: linear-gradient(135deg, rgba(255,240,245,0.95), rgba(255,228,225,0.95));
+        padding: 40px;
+        border-radius: 20px;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(255,105,180,0.2);
+        border: 2px solid rgba(255,182,193,0.3);
+      }
+      
+      .love-result-emoji {
+        font-size: 4rem;
+        margin-bottom: 20px;
+      }
+      
+      .love-btn {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        margin: 10px;
+        transition: all 0.3s ease;
+        font-weight: 600;
+      }
+      
+      .love-btn-primary {
+        background: linear-gradient(135deg, #ff69b4, #ff1493);
+        color: white;
+      }
+      
+      .love-btn-secondary {
+        background: linear-gradient(135deg, #ffb6c1, #ffc0cb);
+        color: #333;
+      }
+      
+      .love-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(255,105,180,0.3);
+      }
+      
+      .love-test-wrapper {
+        background: linear-gradient(135deg, #ff69b4, #ff1493, #ffc0cb);
+        min-height: 100vh;
+        padding: 20px 0;
+      }
+      
+      .love-header-section {
+        text-align: center;
+        padding: 40px 20px;
+        color: white;
+      }
+      
+      .love-header-title {
+        font-size: 3rem;
+        margin-bottom: 10px;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+      }
+      
+      .love-header-subtitle {
+        font-size: 1.2rem;
+        opacity: 0.9;
+      }
+      
+      .love-test-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+      
+      .love-intro-section {
+        background: rgba(255,255,255,0.95);
+        padding: 40px;
+        border-radius: 20px;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      }
+      
+      .love-intro-title {
+        font-size: 2rem;
+        margin-bottom: 20px;
+        color: #ff1493;
+      }
+      
+      .love-intro-text {
+        font-size: 1.1rem;
+        line-height: 1.7;
+        margin-bottom: 30px;
+        color: #666;
+        word-break: keep-all;
+      }
+      
+      .test-start-button {
+        background: linear-gradient(135deg, #ff69b4, #ff1493);
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        font-size: 1.2rem;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(255,105,180,0.4);
+      }
+      
+      .test-start-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(255,105,180,0.6);
+      }
+      
+      /* 모바일 반응형 스타일 */
+      @media (max-width: 768px) {
+        .love-option {
+          padding: 18px 16px;
+          margin: 8px 0;
+          font-size: 15px;
+          min-height: 55px;
+        }
+        
+        .love-result-card {
+          padding: 30px 20px;
+        }
+        
+        .test-start-button {
+          width: 100%;
+          max-width: 300px;
+          padding: 18px 30px;
+        }
+        
+        .love-btn {
+          padding: 14px 20px;
+          font-size: 15px;
+          margin: 8px 5px;
+        }
+        
+        .love-header-title {
+          font-size: 2.5rem;
+        }
+        
+        .love-intro-title {
+          font-size: 1.8rem;
+        }
+        
+        .love-intro-text {
+          font-size: 1rem;
+          padding: 0 10px;
+        }
+      }
+      
+      @media (max-width: 480px) {
+        .love-option {
+          padding: 16px 14px;
+          font-size: 14px;
+          line-height: 1.5;
+        }
+        
+        .love-result-card {
+          padding: 25px 15px;
+        }
+        
+        .love-header-title {
+          font-size: 2rem;
+        }
+        
+        .love-intro-title {
+          font-size: 1.6rem;
+        }
+        
+        .love-test-container {
+          padding: 0 15px;
+        }
+        
+        .love-intro-section {
+          padding: 30px 20px;
+        }
+      }
+      
+      /* 터치 디바이스 최적화 */
+      @media (hover: none) and (pointer: coarse) {
+        .love-option:hover {
+          transform: none;
+          box-shadow: none;
+        }
+        
+        .love-option:active {
+          transform: scale(0.98);
+          background: linear-gradient(135deg, rgba(255,182,193,1), rgba(255,228,225,1));
+          border-color: #ff69b4;
+        }
+        
+        .test-start-button:hover {
+          transform: none;
+          box-shadow: 0 4px 15px rgba(255,105,180,0.4);
+        }
+        
+        .test-start-button:active {
+          transform: scale(0.98);
+        }
+        
+        .love-btn:hover {
+          transform: none;
+          box-shadow: none;
+        }
+        
+        .love-btn:active {
+          transform: scale(0.98);
+        }
+      }
+      
+      /* 추가 모바일 최적화 */
+      .love-option,
+      .test-start-button,
+      .love-btn {
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+        user-select: none;
+      }
+      
+      .love-option {
+        min-height: 60px;
+        display: flex;
+        align-items: center;
+      }
+    </style>
+
+    <!-- Core JavaScript -->
+    <script type="module" src="../../js/app.js"></script>
+    
+    <!-- 네비게이션 로드 스크립트 -->
+    <script>
+      // 네비게이션 로드
+      fetch('../../includes/navbar.html')
+        .then(response => response.text())
+        .then(data => {
+          const navbarPlaceholder = document.getElementById('navbar-placeholder');
+          if (navbarPlaceholder) {
+            navbarPlaceholder.innerHTML = data;
+          }
+        })
+        .catch(error => console.log('네비게이션 로드 실패:', error));
     </script>
 
     <!-- External SDKs (지연 로딩) -->

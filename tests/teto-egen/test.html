@@ -3,7 +3,7 @@
   <head>
     <meta
       http-equiv="Content-Security-Policy"
-      content="upgrade-insecure-requests; default-src 'self' https:; script-src 'unsafe-inline' 'self' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; style-src 'unsafe-inline' 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;"
+      content="upgrade-insecure-requests; default-src 'self' https:; script-src 'unsafe-inline' 'self' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; style-src 'unsafe-inline' 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net data:; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;"
     />
     <meta charset="UTF-8" />
     <meta
@@ -182,47 +182,47 @@
           <div class="footer-section">
             <h3>서비스</h3>
             <ul class="footer-links">
-              <li><a href="/">홈</a></li>
-              <li><a href="/tests/">심리테스트</a></li>
-              <li><a href="/fortune/">운세</a></li>
-              <li><a href="/tools/">실용도구</a></li>
-              <li><a href="/about/">사이트 소개</a></li>
+              <li><a href="../../">홈</a></li>
+              <li><a href="../../tests/">심리테스트</a></li>
+              <li><a href="../../fortune/">운세</a></li>
+              <li><a href="../../tools/">실용도구</a></li>
+              <li><a href="../../about/">사이트 소개</a></li>
             </ul>
           </div>
 
           <div class="footer-section">
             <h3>인기 콘텐츠</h3>
             <ul class="footer-links">
-              <li><a href="/tests/teto-egen/">테토-에겐 테스트</a></li>
-              <li><a href="/tests/mbti/">MBTI 테스트</a></li>
-              <li><a href="/fortune/daily/">오늘의 운세</a></li>
-              <li><a href="/tools/text-counter.html">글자수 세기</a></li>
+              <li><a href="../../tests/teto-egen/">테토-에겐 테스트</a></li>
+              <li><a href="../../tests/mbti/">MBTI 테스트</a></li>
+              <li><a href="../../fortune/daily/">오늘의 운세</a></li>
+              <li><a href="../../tools/text-counter.html">글자수 세기</a></li>
             </ul>
           </div>
 
           <div class="footer-section">
             <h3>운세 서비스</h3>
             <ul class="footer-links">
-              <li><a href="/fortune/daily/">오늘의 운세</a></li>
-              <li><a href="/fortune/zodiac/">별자리 운세</a></li>
-              <li><a href="/fortune/zodiac-animal/">띠별 운세</a></li>
-              <li><a href="/fortune/tarot/">AI 타로</a></li>
+              <li><a href="../../fortune/daily/">오늘의 운세</a></li>
+              <li><a href="../../fortune/zodiac/">별자리 운세</a></li>
+              <li><a href="../../fortune/zodiac-animal/">띠별 운세</a></li>
+              <li><a href="../../fortune/tarot/">AI 타로</a></li>
             </ul>
           </div>
 
           <div class="footer-section">
             <h3>고객지원</h3>
             <ul class="footer-links">
-              <li><a href="/contact/">문의하기</a></li>
-              <li><a href="/faq/">자주 묻는 질문</a></li>
+              <li><a href="../../contact/">문의하기</a></li>
+              <li><a href="../../faq/">자주 묻는 질문</a></li>
             </ul>
           </div>
         </div>
 
         <div class="footer-bottom">
           <div class="footer-legal">
-            <a href="/privacy/">개인정보처리방침</a>
-            <a href="/terms/">이용약관</a>
+            <a href="../../privacy/">개인정보처리방침</a>
+            <a href="../../terms/">이용약관</a>
           </div>
           <p>&copy; 2025 doha.kr. All rights reserved.</p>
         </div>
@@ -233,92 +233,1219 @@
     <script type="module" src="../../js/app.js"></script>
     <script type="module" src="../../js/core/service-base.js"></script>
 
-    <!-- Feature JavaScript (안정적 초기화) -->
+    <!-- Teto-Egen Test JavaScript (MBTI 패턴 적용) -->
     <script type="module">
-      // Teto-Egen 테스트 초기화 (간소화된 안정적 버전)
-      async function initializeTetoEgenTest() {
-        try {
-          console.log('🚀 Teto-Egen Test 초기화 시작...');
-          
-          // 1. 필수 모듈들을 순차적으로 로드
-          const [
-            { tetoEgenQuestions },
-            apiConfig,
-            testServiceModule,
-            tetoEgenTestModule
-          ] = await Promise.all([
-            import('../../js/teto-egen-questions.js'),
-            import('../../js/api-config.js'),
-            import('../../js/features/tests/test-service.js'),
-            import('../../js/features/tests/teto-egen-test.js')
-          ]);
+      // Teto-Egen 테스트 초기화 변수 (긴급 수정 강화 패턴)
+      let initializationAttempts = 0;
+      const MAX_INIT_ATTEMPTS = 5;
+      let testActive = false;
+      
+      // DOM 요소 존재 확인 함수
+      function checkRequiredElements() {
+        const genderScreen = document.querySelector('#gender-screen');
+        const introScreen = document.querySelector('#intro-screen');
+        const testScreen = document.querySelector('#test-screen');
+        const genderButtons = document.querySelectorAll('.teto-gender-btn');
+        
+        console.log('🔍 Teto-Egen DOM 요소 검사:');
+        console.log('- 성별 선택 화면:', genderScreen ? '✅ 존재' : '❌ 없음');
+        console.log('- 인트로 화면:', introScreen ? '✅ 존재' : '❌ 없음');
+        console.log('- 테스트 화면:', testScreen ? '✅ 존재' : '❌ 없음');
+        console.log('- 성별 버튼:', genderButtons.length > 0 ? `✅ ${genderButtons.length}개` : '❌ 없음');
+        
+        return genderScreen && introScreen && testScreen && genderButtons.length > 0;
+      }
 
-          // 2. 전역 변수 설정
-          window.tetoEgenQuestions = tetoEgenQuestions;
-          window.tetoEgenTest = tetoEgenTestModule.tetoEgenTest;
-          
-          console.log('✅ 모든 모듈 로드 완료');
-          console.log('✅ Teto-Egen Questions:', tetoEgenQuestions.length, '문항');
-          
-          // 3. 테스트 서비스 초기화
-          if (window.tetoEgenTest && typeof window.tetoEgenTest.initialize === 'function') {
-            await window.tetoEgenTest.initialize();
-            console.log('✅ Teto-Egen Test Service 초기화 완료');
+      // Teto-Egen 테스트 초기화 (강화된 버전)
+      async function initializeTetoEgenTest() {
+        initializationAttempts++;
+        console.log(`🚀 Teto-Egen Test 초기화 시작 (시도 ${initializationAttempts}/${MAX_INIT_ATTEMPTS})...`);
+        
+        // DOM 요소 존재 확인
+        if (!checkRequiredElements()) {
+          console.warn('⚠️ Teto-Egen 필수 DOM 요소를 찾을 수 없습니다');
+          if (initializationAttempts < MAX_INIT_ATTEMPTS) {
+            console.log(`🔄 ${500 * initializationAttempts}ms 후 재시도...`);
+            setTimeout(initializeTetoEgenTest, 500 * initializationAttempts);
+            return;
+          } else {
+            console.error('❌ 최대 재시도 횟수 초과 - Teto-Egen 백업 초기화 실행');
+            await showTetoEgenBackupInitError();
+            return;
           }
+        }
+
+        try {
           
-          // 4. 시작 버튼 이벤트 추가 (중복 방지)
+          // 1. 질문 데이터 먼저 로드
+          const { tetoEgenQuestions } = await import('../../js/teto-egen-questions.js');
+          window.tetoEgenQuestions = tetoEgenQuestions;
+          console.log('✅ Teto-Egen Questions 로드 완료:', tetoEgenQuestions.length, '문항');
+          
+          // 2. 테스트 서비스 로드 및 초기화
+          const { TetoEgenTestService } = await import('../../js/features/tests/teto-egen-test.js');
+          
+          // 3. 전역 인스턴스 생성
+          window.tetoEgenTest = new TetoEgenTestService();
+          
+          // 4. 서비스 초기화
+          await window.tetoEgenTest.initialize();
+          console.log('✅ Teto-Egen Test Service 초기화 완료');
+          
+          // 5. 성별 선택 버튼 이벤트 바인딩
+          const genderButtons = document.querySelectorAll('.teto-gender-btn');
+          genderButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+              const gender = btn.dataset.gender;
+              console.log('성별 선택:', gender);
+              
+              // 성별 설정
+              window.tetoEgenTest.testState.userData.gender = gender;
+              
+              // 성별 화면 숨기고 시작 화면 표시
+              document.getElementById('gender-screen').classList.add('teto-hidden', 'hidden');
+              document.getElementById('intro-screen').classList.remove('teto-hidden', 'hidden');
+            });
+          });
+          
+          // 6. 테스트 시작 버튼 이벤트 바인딩
           const startButton = document.querySelector('.test-start-button');
-          if (startButton && !startButton.hasAttribute('data-initialized')) {
-            startButton.setAttribute('data-initialized', 'true');
+          if (startButton) {
             startButton.addEventListener('click', async (e) => {
               e.preventDefault();
-              console.log('🎯 Teto-Egen 테스트 시작 버튼 클릭됨');
+              console.log('🎯 Teto-Egen 테스트 시작');
               
-              if (window.tetoEgenTest && typeof window.tetoEgenTest.startTest === 'function') {
-                try {
-                  await window.tetoEgenTest.startTest();
-                  console.log('✅ Teto-Egen 테스트 시작됨');
-                } catch (error) {
-                  console.error('❌ Teto-Egen 테스트 시작 실패:', error);
-                  alert('테스트 시작 중 오류가 발생했습니다. 페이지를 새로고침 해주세요.');
-                }
-              } else {
-                console.error('❌ Teto-Egen Test Service를 찾을 수 없습니다');
-                alert('테스트 서비스를 찾을 수 없습니다. 페이지를 새로고침 해주세요.');
+              try {
+                await window.tetoEgenTest.startTest();
+              } catch (error) {
+                console.error('테스트 시작 오류:', error);
+                alert('테스트 시작 중 오류가 발생했습니다. 페이지를 새로고침해주세요.');
               }
             });
-            console.log('✅ 시작 버튼 이벤트 바인딩 완료');
           }
+          
+          console.log('✅ Teto-Egen Test 완전 초기화 완료');
           
         } catch (error) {
           console.error('❌ Teto-Egen Test 초기화 실패:', error);
           
-          // 사용자에게 명확한 오류 메시지 표시
-          const testContainer = document.querySelector('.teto-test-container');
-          if (testContainer) {
-            testContainer.innerHTML = `
-              <div class="error-message" style="text-align: center; padding: 40px; background: #ffe6e6; border-radius: 12px; margin: 20px;">
-                <h3 style="color: #d32f2f; margin-bottom: 16px;">⚠️ 테스트 로딩 오류</h3>
-                <p style="color: #666; margin-bottom: 20px;">테스트를 불러오는 중 문제가 발생했습니다.</p>
-                <div style="margin-bottom: 20px;">
-                  <strong>오류 내용:</strong> ${error.message}
-                </div>
-                <button onclick="location.reload()" class="test-btn test-btn-primary" style="padding: 12px 24px;">
-                  🔄 페이지 새로고침
-                </button>
-              </div>
-            `;
-          }
+          // 백업 코드 실행 (인라인 방식)
+          await initializeTetoEgenBackup();
         }
       }
+      
+      // 백업 초기화 함수 (인라인 방식)
+      async function initializeTetoEgenBackup() {
+        console.log('🔧 Teto-Egen 백업 초기화 실행...');
+        
+        // 간단한 질문 데이터 백업
+        const backupQuestions = [
+          {
+            id: 1,
+            question: '회식에서 2차 제안이 나왔을 때 당신의 반응은?',
+            options: [
+              { text: '좋아요! 어디로 갈까요?', score: 3 },
+              { text: '다들 가시면 저도 따라갈게요~', score: 1 },
+              { text: '오늘은 좀 피곤해서... 다음에 가요', score: -1 },
+              { text: '집에 일이 있어서 먼저 들어가야 해요', score: -3 }
+            ]
+          }
+          // 더 많은 질문들...
+        ];
+        
+        window.tetoEgenQuestions = backupQuestions;
+        
+        // 단순 테스트 로직
+        let currentQuestion = 0;
+        let answers = [];
+        
+        // 성별 선택
+        document.querySelectorAll('.teto-gender-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            document.getElementById('gender-screen').style.display = 'none';
+            document.getElementById('intro-screen').style.display = 'block';
+          });
+        });
+        
+        // 테스트 시작
+        document.querySelector('.test-start-button')?.addEventListener('click', () => {
+          document.getElementById('intro-screen').style.display = 'none';
+          document.getElementById('test-screen').style.display = 'block';
+          showQuestion(0);
+        });
+        
+        function showQuestion(index) {
+          if (index >= backupQuestions.length) {
+            showResult();
+            return;
+          }
+          
+          const question = backupQuestions[index];
+          document.getElementById('question-number').textContent = index + 1;
+          document.getElementById('question').textContent = question.question;
+          
+          const optionsHtml = question.options.map((option, i) => 
+            `<button class="teto-option" data-score="${option.score}" onclick="selectAnswer(${i}, ${option.score})">${option.text}</button>`
+          ).join('');
+          
+          document.getElementById('options').innerHTML = optionsHtml;
+          
+          // 진행률 업데이트
+          const progress = ((index + 1) / backupQuestions.length) * 100;
+          document.getElementById('progress').style.width = progress + '%';
+          document.getElementById('progress-text').textContent = `질문 ${index + 1} / ${backupQuestions.length}`;
+          document.getElementById('progress-percent').textContent = Math.round(progress) + '%';
+        }
+        
+        window.selectAnswer = function(optionIndex, score) {
+          answers.push(score);
+          currentQuestion++;
+          showQuestion(currentQuestion);
+        };
+        
+        function showResult() {
+          const totalScore = answers.reduce((sum, score) => sum + score, 0);
+          
+          let resultType = '마일드 테토형';
+          if (totalScore >= 15) resultType = '슈퍼 테토형';
+          else if (totalScore >= 5) resultType = '마일드 테토형';
+          else if (totalScore >= -5) resultType = '마일드 에겐형';
+          else resultType = '슈퍼 에겐형';
+          
+          document.getElementById('test-screen').style.display = 'none';
+          document.getElementById('result-screen').innerHTML = `
+            <div class="teto-result-card">
+              <h2>당신은 ${resultType}입니다!</h2>
+              <p>총 점수: ${totalScore}점</p>
+              <div class="teto-action-buttons">
+                <button onclick="location.reload()" class="teto-btn teto-btn-primary">다시 테스트하기</button>
+                <a href="../../tests/" class="teto-btn teto-btn-secondary">다른 테스트 보기</a>
+              </div>
+            </div>
+          `;
+          document.getElementById('result-screen').style.display = 'block';
+        }
+        
+        console.log('✅ Teto-Egen 백업 초기화 완료');
+      }
 
-      // DOM 준비 상태에 따른 초기화
+      // DOM 준비되면 초기화 실행
       if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initializeTetoEgenTest);
       } else {
-        // DOM이 이미 로드된 경우 바로 실행
         setTimeout(initializeTetoEgenTest, 100);
       }
+    </script>
+    
+    <!-- Teto-Egen CSS 스타일 추가 (모바일 최적화) -->
+    <style>
+      .teto-hidden, .hidden { display: none !important; }
+      
+      /* 테스트 옵션 스타일 */
+      .teto-option {
+        display: block;
+        width: 100%;
+        padding: 15px 20px;
+        margin: 10px 0;
+        background: rgba(255, 255, 255, 0.9);
+        border: 2px solid transparent;
+        border-radius: 12px;
+        text-align: left;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 16px;
+        line-height: 1.4;
+        word-break: keep-all;
+        min-height: 60px;
+        display: flex;
+        align-items: center;
+        -webkit-tap-highlight-color: transparent;
+      }
+      
+      .teto-option:hover,
+      .teto-option:active,
+      .teto-option:focus {
+        background: rgba(255, 255, 255, 1);
+        border-color: #ff6b6b;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(255,107,107,0.2);
+        outline: none;
+      }
+      
+      /* 성별 선택 버튼 */
+      .teto-gender-btn {
+        background: rgba(255, 255, 255, 0.9);
+        border: none;
+        padding: 20px;
+        margin: 10px;
+        border-radius: 15px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        min-width: 120px;
+        min-height: 120px;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+      }
+      
+      .teto-gender-btn:hover,
+      .teto-gender-btn:active,
+      .teto-gender-btn:focus {
+        background: rgba(255, 255, 255, 1);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        outline: none;
+      }
+      
+      .teto-gender-emoji {
+        font-size: 3rem;
+      }
+      
+      .teto-gender-text {
+        font-size: 1.2rem;
+        font-weight: 600;
+      }
+      
+      /* 결과 카드 */
+      .teto-result-card {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 40px;
+        border-radius: 20px;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      }
+      
+      /* 버튼 스타일 */
+      .teto-btn {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        margin: 10px;
+        transition: all 0.3s ease;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+        font-size: 16px;
+        font-weight: 500;
+      }
+      
+      .teto-btn-primary {
+        background: #ff6b6b;
+        color: white;
+      }
+      
+      .teto-btn-secondary {
+        background: #6c757d;
+        color: white;
+      }
+      
+      .teto-btn:hover,
+      .teto-btn:active,
+      .teto-btn:focus {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        outline: none;
+      }
+      
+      /* 테스트 시작 버튼 */
+      .test-start-button {
+        background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        font-size: 1.2rem;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(255,107,107,0.4);
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+        font-weight: 600;
+        min-height: 50px;
+      }
+      
+      .test-start-button:hover,
+      .test-start-button:active,
+      .test-start-button:focus {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(255,107,107,0.6);
+        outline: none;
+      }
+      
+      /* 진행바 스타일 */
+      .teto-progress-container {
+        margin-bottom: 30px;
+      }
+      
+      .teto-progress-bar {
+        width: 100%;
+        height: 8px;
+        background: rgba(255,255,255,0.3);
+        border-radius: 4px;
+        overflow: hidden;
+      }
+      
+      .teto-progress-fill {
+        height: 100%;
+        background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+        transition: width 0.3s ease;
+        border-radius: 4px;
+      }
+      
+      .teto-progress-info {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        font-size: 14px;
+        color: rgba(255,255,255,0.8);
+      }
+      
+      /* 모바일 반응형 스타일 */
+      @media (max-width: 768px) {
+        .teto-gender-btn {
+          min-width: 100px;
+          min-height: 100px;
+          padding: 15px;
+          margin: 8px;
+        }
+        
+        .teto-gender-emoji {
+          font-size: 2.5rem;
+        }
+        
+        .teto-gender-text {
+          font-size: 1rem;
+        }
+        
+        .teto-option {
+          padding: 18px 16px;
+          margin: 8px 0;
+          font-size: 15px;
+          min-height: 55px;
+        }
+        
+        .teto-result-card {
+          padding: 30px 20px;
+        }
+        
+        .test-start-button {
+          width: 100%;
+          max-width: 300px;
+          padding: 18px 30px;
+        }
+        
+        .teto-btn {
+          padding: 14px 20px;
+          font-size: 15px;
+          margin: 8px 5px;
+        }
+      }
+      
+      @media (max-width: 480px) {
+        .teto-gender-btn {
+          min-width: 80px;
+          min-height: 80px;
+          padding: 12px;
+        }
+        
+        .teto-gender-emoji {
+          font-size: 2rem;
+        }
+        
+        .teto-option {
+          padding: 16px 14px;
+          font-size: 14px;
+          line-height: 1.5;
+        }
+        
+        .teto-result-card {
+          padding: 25px 15px;
+        }
+      }
+      
+      /* 터치 디바이스 최적화 */
+      @media (hover: none) and (pointer: coarse) {
+        .teto-option:hover {
+          transform: none;
+          box-shadow: none;
+        }
+        
+        .teto-option:active {
+          transform: scale(0.98);
+          background: rgba(255, 255, 255, 1);
+          border-color: #ff6b6b;
+        }
+        
+        .teto-gender-btn:hover {
+          transform: none;
+          box-shadow: none;
+        }
+        
+        .teto-gender-btn:active {
+          transform: scale(0.95);
+          background: rgba(255, 255, 255, 1);
+        }
+        
+        .test-start-button:hover {
+          transform: none;
+          box-shadow: 0 4px 15px rgba(255,107,107,0.4);
+        }
+        
+        .test-start-button:active {
+          transform: scale(0.98);
+        }
+      }
+    </style>
+
+    <!-- Core JavaScript -->
+    <script type="module" src="../../js/app.js"></script>
+    
+    <!-- 네비게이션 로드 스크립트 -->
+    <script>
+      // 네비게이션 로드
+      fetch('../../includes/navbar.html')
+        .then(response => response.text())
+        .then(data => {
+          const navbarPlaceholder = document.getElementById('navbar-placeholder');
+          if (navbarPlaceholder) {
+            navbarPlaceholder.innerHTML = data;
+          }
+        })
+        .catch(error => console.log('네비게이션 로드 실패:', error));
+    </script>
+
+    <!-- 테토-에겐 테스트 - 완전 복구된 버전 -->
+    <script type="module">
+      // 테토-에겐 테스트 구현 - 완전히 작동하는 버전
+      let tetoTestActive = false;
+      let currentQuestion = 0;
+      let answers = [];
+      let tetoQuestions = [];
+      let selectedGender = null;
+      
+      // 테토-에겐 점수
+      let totalScore = 0;
+      
+      // 테토-에겐 결과 유형 정보
+      const tetoResultTypes = {
+        'super-teto-male': {
+          type: '슈퍼 테토형',
+          emoji: '🔥',
+          title: '완전 인싸 에너지',
+          subtitle: '세상 모든 게 재미있고 사람이 좋은 타입',
+          description: "당신은 진짜 테토의 정수! 어디든 가면 분위기 메이커가 되고, 새로운 것에 대한 호기심이 넘치는 타입이에요. 친구들 사이에서도 '놀 때 꼭 불러야 하는 사람' 1순위죠!",
+          traits: ['초사교적', '모험 추구', '트렌드 선도', '에너지 폭발', '리더십'],
+          compatibility: '차분한 에겐형',
+          percentage: '25%',
+          gender: 'male'
+        },
+        'super-teto-female': {
+          type: '슈퍼 테토형',
+          emoji: '🦋',
+          title: '완전 인싸 에너지',
+          subtitle: '세상 모든 게 재미있고 사람이 좋은 타입',
+          description: "당신은 진짜 테토의 정수! 어디든 가면 분위기 메이커가 되고, 새로운 것에 대한 호기심이 넘치는 타입이에요. 친구들 사이에서도 '놀 때 꼭 불러야 하는 사람' 1순위죠!",
+          traits: ['초사교적', '모험 추구', '트렌드 선도', '에너지 폭발', '리더십'],
+          compatibility: '차분한 에겐형',
+          percentage: '25%',
+          gender: 'female'
+        },
+        'teto-male': {
+          type: '테토형',
+          emoji: '😎',
+          title: '활발한 사교형',
+          subtitle: '사람들과 어울리는 걸 좋아하는 외향적 타입',
+          description: "사람들과 함께 있을 때 더 빛나는 타입이에요. 새로운 경험을 좋아하고 트렌드에 민감하죠. 주변 사람들에게 긍정적인 에너지를 전파하는 매력이 있어요.",
+          traits: ['사교적', '적극적', '트렌드 관심', '에너지 충전', '소통력'],
+          compatibility: '균형잡힌 에겐형',
+          percentage: '35%',
+          gender: 'male'
+        },
+        'teto-female': {
+          type: '테토형',
+          emoji: '🌸',
+          title: '활발한 사교형',
+          subtitle: '사람들과 어울리는 걸 좋아하는 외향적 타입',
+          description: "사람들과 함께 있을 때 더 빛나는 타입이에요. 새로운 경험을 좋아하고 트렌드에 민감하죠. 주변 사람들에게 긍정적인 에너지를 전파하는 매력이 있어요.",
+          traits: ['사교적', '적극적', '트렌드 관심', '에너지 충전', '소통력'],
+          compatibility: '균형잡힌 에겐형',
+          percentage: '35%',
+          gender: 'female'
+        },
+        'balanced-male': {
+          type: '균형형',
+          emoji: '⚖️',
+          title: '중간 균형형',
+          subtitle: '상황에 따라 유연하게 대처하는 균형잡힌 타입',
+          description: "테토와 에겐의 장점을 모두 가진 균형잡힌 타입이에요. 상황에 맞게 외향적일 수도, 내향적일 수도 있는 유연함이 장점입니다.",
+          traits: ['균형감', '유연성', '적응력', '중재력', '안정성'],
+          compatibility: '어떤 타입과도 잘 맞음',
+          percentage: '30%',
+          gender: 'male'
+        },
+        'balanced-female': {
+          type: '균형형',
+          emoji: '🌿',
+          title: '중간 균형형',
+          subtitle: '상황에 따라 유연하게 대처하는 균형잡힌 타입',
+          description: "테토와 에겐의 장점을 모두 가진 균형잡힌 타입이에요. 상황에 맞게 외향적일 수도, 내향적일 수도 있는 유연함이 장점입니다.",
+          traits: ['균형감', '유연성', '적응력', '중재력', '안정성'],
+          compatibility: '어떤 타입과도 잘 맞음',
+          percentage: '30%',
+          gender: 'female'
+        },
+        'egen-male': {
+          type: '에겐형',
+          emoji: '🤔',
+          title: '차분한 내향형',
+          subtitle: '혼자만의 시간을 즐기는 사색적 타입',
+          description: "혼자만의 시간을 소중히 여기고 깊이 있는 관계를 선호하는 타입이에요. 신중하고 사려깊어서 주변 사람들에게 신뢰받는 존재죠.",
+          traits: ['신중함', '사려깊음', '집중력', '성찰력', '진정성'],
+          compatibility: '활발한 테토형',
+          percentage: '8%',
+          gender: 'male'
+        },
+        'egen-female': {
+          type: '에겐형',
+          emoji: '🌙',
+          title: '차분한 내향형',
+          subtitle: '혼자만의 시간을 즐기는 사색적 타입',
+          description: "혼자만의 시간을 소중히 여기고 깊이 있는 관계를 선호하는 타입이에요. 신중하고 사려깊어서 주변 사람들에게 신뢰받는 존재죠.",
+          traits: ['신중함', '사려깊음', '집중력', '성찰력', '진정성'],
+          compatibility: '활발한 테토형',
+          percentage: '8%',
+          gender: 'female'
+        },
+        'super-egen-male': {
+          type: '슈퍼 에겐형',
+          emoji: '🌌',
+          title: '완전 내향형',
+          subtitle: '혼자만의 세계를 깊이 탐구하는 타입',
+          description: "완전한 내향형으로 자신만의 세계가 확고한 타입이에요. 깊이 있는 사고를 즐기고 의미 있는 관계를 중요시하죠. 혼자만의 시간에서 진정한 에너지를 얻어요.",
+          traits: ['독립성', '창의성', '깊은사고', '진정성', '집중력'],
+          compatibility: '이해심 많은 테토형',
+          percentage: '2%',
+          gender: 'male'
+        },
+        'super-egen-female': {
+          type: '슈퍼 에겐형',
+          emoji: '✨',
+          title: '완전 내향형',
+          subtitle: '혼자만의 세계를 깊이 탐구하는 타입',
+          description: "완전한 내향형으로 자신만의 세계가 확고한 타입이에요. 깊이 있는 사고를 즐기고 의미 있는 관계를 중요시하죠. 혼자만의 시간에서 진정한 에너지를 얻어요.",
+          traits: ['독립성', '창의성', '깊은사고', '진정성', '집중력'],
+          compatibility: '이해심 많은 테토형',
+          percentage: '2%',
+          gender: 'female'
+        }
+      };
+      
+      async function initializeTetoEgen() {
+        try {
+          console.log('🚀 테토-에겐 테스트 초기화 시작');
+          
+          // 테토-에겐 질문 데이터 - 20개 문항
+          tetoQuestions = [
+            {
+              id: 1,
+              question: '회식에서 2차 제안이 나왔을 때 당신의 반응은?',
+              category: 'social',
+              options: [
+                { text: '좋아요! 어디로 갈까요? 제가 알아볼게요!', score: 3, type: 'teto' },
+                { text: '다들 가시면 저도 따라갈게요~', score: 1, type: 'teto' },
+                { text: '오늘은 좀 피곤해서... 다음에 가요', score: -1, type: 'egen' },
+                { text: '집에 일이 있어서 먼저 들어가야 해요', score: -3, type: 'egen' }
+              ]
+            },
+            {
+              id: 2,
+              question: '새로운 맛집이 인스타에서 핫할 때 당신은?',
+              category: 'trend',
+              options: [
+                { text: '바로 예약하고 스토리에 올려야지!', score: 3, type: 'teto' },
+                { text: '친구들과 함께 가서 인증샷 찍기', score: 2, type: 'teto' },
+                { text: '리뷰 좀 더 보고 결정할래', score: 0, type: 'balanced' },
+                { text: '유행 지나고 한산해지면 가는 게 낫지', score: -2, type: 'egen' },
+                { text: '굳이 줄 서면서까지 먹고 싶지 않아', score: -3, type: 'egen' }
+              ]
+            },
+            {
+              id: 3,
+              question: '팀 프로젝트 역할 분담할 때 당신의 포지션은?',
+              category: 'work',
+              options: [
+                { text: '제가 팀장 할게요! 전체적으로 관리하면서 진행할게요', score: 3, type: 'teto' },
+                { text: '발표는 제가 할게요, 사람들 앞에서 말하는 거 좋아해요', score: 2, type: 'teto' },
+                { text: '각자 잘하는 걸로 나눠서 하면 될 것 같아요', score: 0, type: 'balanced' },
+                { text: '자료 조사나 분석 쪽이 제 스타일이에요', score: -2, type: 'egen' },
+                { text: '뒤에서 서포트 역할이 편해요', score: -3, type: 'egen' }
+              ]
+            },
+            {
+              id: 4,
+              question: '친구가 연애 고민을 털어놓을 때 당신은?',
+              category: 'relationship',
+              options: [
+                { text: '직접 만나서 술 한잔하면서 속 시원히 들어줄게!', score: 3, type: 'teto' },
+                { text: '구체적인 해결책을 제시하면서 조언해줌', score: 2, type: 'teto' },
+                { text: '충분히 들어주고 공감하면서 위로해줌', score: 0, type: 'balanced' },
+                { text: '조용히 들어주고 필요할 때만 의견 제시', score: -2, type: 'egen' },
+                { text: '메시지로 따뜻하게 위로의 말 전해줌', score: -3, type: 'egen' }
+              ]
+            },
+            {
+              id: 5,
+              question: '주말 계획 없이 집에 있을 때 갑자기 연락 오면?',
+              category: 'lifestyle',
+              options: [
+                { text: '좋아! 뭐하자? 나갈 준비 바로 할게!', score: 3, type: 'teto' },
+                { text: '어디 가는지 물어보고 재밌으면 갈게', score: 1, type: 'teto' },
+                { text: '지금은 좀... 다음에 미리 말해줘', score: -1, type: 'egen' },
+                { text: '집에서 쉬고 있었는데 오늘은 패스할게', score: -3, type: 'egen' }
+              ]
+            },
+            {
+              id: 6,
+              question: '처음 만난 사람들과 있을 때 당신의 모습은?',
+              category: 'social',
+              options: [
+                { text: '먼저 자기소개하고 분위기 띄우기', score: 3, type: 'teto' },
+                { text: '적극적으로 대화에 참여하며 친해지기', score: 2, type: 'teto' },
+                { text: '상황 보면서 적당히 어울리기', score: 0, type: 'balanced' },
+                { text: '말 걸어주면 대답하지만 먼저 다가가지는 않음', score: -2, type: 'egen' },
+                { text: '주로 듣기만 하고 조용히 관찰', score: -3, type: 'egen' }
+              ]
+            },
+            {
+              id: 7,
+              question: '기쁜 일이 생겼을 때 당신의 표현 방식은?',
+              category: 'emotion',
+              options: [
+                { text: 'SNS에 바로 올리고 사람들과 공유!', score: 3, type: 'teto' },
+                { text: '가까운 친구들에게 전화해서 자랑하기', score: 2, type: 'teto' },
+                { text: '몇몇 사람들에게만 조용히 알리기', score: 0, type: 'balanced' },
+                { text: '가족이나 진짜 친한 사람에게만', score: -2, type: 'egen' },
+                { text: '혼자서 조용히 기뻐하며 만끽', score: -3, type: 'egen' }
+              ]
+            },
+            {
+              id: 8,
+              question: '음식점에서 주문과 다른 메뉴가 나왔을 때?',
+              category: 'conflict',
+              options: [
+                { text: '바로 직원 부르고 명확하게 말하기', score: 3, type: 'teto' },
+                { text: '정중하게 말씀드리고 바꿔달라고 요청', score: 1, type: 'teto' },
+                { text: '한 번 더 확인하고 상황에 따라 결정', score: 0, type: 'balanced' },
+                { text: '조용히 직원한테 살짝 말하기', score: -2, type: 'egen' },
+                { text: '그냥 나온 거 먹기 (귀찮고 민망함)', score: -3, type: 'egen' }
+              ]
+            },
+            {
+              id: 9,
+              question: '회사에서 새로운 프로젝트 기회가 생겼을 때?',
+              category: 'work',
+              options: [
+                { text: '저 하겠습니다! 도전적인 일 좋아해요', score: 3, type: 'teto' },
+                { text: '자세한 내용 듣고 적극 고려해보겠어요', score: 1, type: 'teto' },
+                { text: '다른 업무와 조율 가능하면 할게요', score: 0, type: 'balanced' },
+                { text: '업무 부담이 너무 클까봐 고민됩니다', score: -2, type: 'egen' },
+                { text: '지금 업무도 벅찬데 힘들 것 같아요', score: -3, type: 'egen' }
+              ]
+            },
+            {
+              id: 10,
+              question: '새로운 K-POP 아이돌이 데뷔했을 때?',
+              category: 'trend',
+              options: [
+                { text: '뮤비 보고 바로 플레이리스트 추가, SNS 팔로우!', score: 3, type: 'teto' },
+                { text: '친구들과 같이 보면서 이야기하기', score: 2, type: 'teto' },
+                { text: '나중에 시간 날 때 한 번 들어보기', score: 0, type: 'balanced' },
+                { text: '유명해지면 자연스럽게 접하게 되겠지', score: -2, type: 'egen' },
+                { text: '특별히 관심 없음, 기존 취향으로 충분', score: -3, type: 'egen' }
+              ]
+            },
+            {
+              id: 11,
+              question: '새로운 취미를 시작하려 할 때?',
+              category: 'lifestyle',
+              options: [
+                { text: '바로 용품 사고 레슨 등록하기', score: 3, type: 'teto' },
+                { text: '일단 체험해보고 재밌으면 본격 시작', score: 2, type: 'teto' },
+                { text: '충분히 알아보고 신중하게 결정', score: 0, type: 'balanced' },
+                { text: '유튜브로 먼저 배워보고 천천히', score: -2, type: 'egen' },
+                { text: '생각만 하다가 결국 시작 안함', score: -3, type: 'egen' }
+              ]
+            },
+            {
+              id: 12,
+              question: '단톡방에서 당신의 역할은?',
+              category: 'social',
+              options: [
+                { text: '대화 주도하고 모임 기획하는 총무', score: 3, type: 'teto' },
+                { text: '적극 참여하며 분위기 띄우는 역할', score: 2, type: 'teto' },
+                { text: '필요할 때만 적당히 참여', score: 0, type: 'balanced' },
+                { text: '주로 읽기만 하고 가끔 반응', score: -2, type: 'egen' },
+                { text: '알림 끄고 나중에 몰아서 확인', score: -3, type: 'egen' }
+              ]
+            },
+            {
+              id: 13,
+              question: '운동할 때 선호하는 방식은?',
+              category: 'lifestyle',
+              options: [
+                { text: '헬스장에서 PT받으며 같이 운동하기', score: 3, type: 'teto' },
+                { text: '친구들과 함께 스포츠 즐기기', score: 2, type: 'teto' },
+                { text: '상황에 따라 혼자도 하고 같이도 하고', score: 0, type: 'balanced' },
+                { text: '집에서 홈트레이닝 하기', score: -2, type: 'egen' },
+                { text: '혼자 조용히 산책이나 요가', score: -3, type: 'egen' }
+              ]
+            },
+            {
+              id: 14,
+              question: '생일 때 원하는 것은?',
+              category: 'emotion',
+              options: [
+                { text: '많은 사람들과 파티하며 축하받기', score: 3, type: 'teto' },
+                { text: '친한 친구들과 즐거운 시간 보내기', score: 2, type: 'teto' },
+                { text: '소규모로 조용히 축하받기', score: 0, type: 'balanced' },
+                { text: '가족이나 연인과만 보내기', score: -2, type: 'egen' },
+                { text: '평소처럼 혼자 조용히 보내기', score: -3, type: 'egen' }
+              ]
+            },
+            {
+              id: 15,
+              question: '새로운 동네로 이사했을 때?',
+              category: 'social',
+              options: [
+                { text: '바로 동네 탐방하며 이웃들과 인사', score: 3, type: 'teto' },
+                { text: '주변 맛집과 카페 찾아다니기', score: 2, type: 'teto' },
+                { text: '필요한 곳들만 천천히 알아가기', score: 0, type: 'balanced' },
+                { text: '집 근처만 조용히 다니기', score: -2, type: 'egen' },
+                { text: '최대한 집에만 있기', score: -3, type: 'egen' }
+              ]
+            },
+            {
+              id: 16,
+              question: '프레젠테이션을 해야 할 때?',
+              category: 'work',
+              options: [
+                { text: '즉흥적으로도 잘할 자신 있음', score: 3, type: 'teto' },
+                { text: '준비하면 자신있게 발표 가능', score: 2, type: 'teto' },
+                { text: '연습 많이 하면 괜찮을 듯', score: 0, type: 'balanced' },
+                { text: '떨리지만 준비 철저히 해서 극복', score: -2, type: 'egen' },
+                { text: '너무 부담스러워서 피하고 싶음', score: -3, type: 'egen' }
+              ]
+            },
+            {
+              id: 17,
+              question: '휴가 계획을 세울 때?',
+              category: 'lifestyle',
+              options: [
+                { text: '많은 사람들과 함께 신나는 여행', score: 3, type: 'teto' },
+                { text: '친구 몇 명과 재미있는 여행', score: 2, type: 'teto' },
+                { text: '상황에 따라 다르게 계획', score: 0, type: 'balanced' },
+                { text: '연인이나 가족과 조용한 여행', score: -2, type: 'egen' },
+                { text: '혼자서 힐링 여행 또는 집에서 휴식', score: -3, type: 'egen' }
+              ]
+            },
+            {
+              id: 18,
+              question: '쇼핑할 때 당신의 스타일은?',
+              category: 'lifestyle',
+              options: [
+                { text: '친구들과 함께 쇼핑하며 의견 나누기', score: 3, type: 'teto' },
+                { text: '점원과 대화하며 추천받기', score: 2, type: 'teto' },
+                { text: '필요에 따라 혼자도 가고 같이도 가고', score: 0, type: 'balanced' },
+                { text: '혼자서 조용히 둘러보기', score: -2, type: 'egen' },
+                { text: '온라인 쇼핑이 최고', score: -3, type: 'egen' }
+              ]
+            },
+            {
+              id: 19,
+              question: '갈등 상황이 생겼을 때?',
+              category: 'conflict',
+              options: [
+                { text: '바로 만나서 대화로 해결하기', score: 3, type: 'teto' },
+                { text: '적극적으로 중재하며 해결 시도', score: 2, type: 'teto' },
+                { text: '상황 봐가며 적절히 대응', score: 0, type: 'balanced' },
+                { text: '시간을 두고 차분히 해결', score: -2, type: 'egen' },
+                { text: '최대한 피하고 자연스럽게 해결되길 기다림', score: -3, type: 'egen' }
+              ]
+            },
+            {
+              id: 20,
+              question: '새로운 직장에 출근한 첫날?',
+              category: 'work',
+              options: [
+                { text: '적극적으로 인사하고 친해지려 노력', score: 3, type: 'teto' },
+                { text: '먼저 다가와주면 밝게 대응', score: 2, type: 'teto' },
+                { text: '적당히 인사하고 천천히 적응', score: 0, type: 'balanced' },
+                { text: '조용히 업무 파악에 집중', score: -2, type: 'egen' },
+                { text: '최대한 눈에 안 띄게 조용히', score: -3, type: 'egen' }
+              ]
+            }
+          ];
+          
+          console.log('✅ 테토-에겐 질문 데이터 준비됨:', tetoQuestions.length, '문항');
+          
+          // 시작 버튼 이벤트
+          const startButton = document.querySelector('.test-start-button');
+          if (startButton) {
+            startButton.addEventListener('click', startGenderSelection);
+            console.log('✅ 시작 버튼 이벤트 연결됨');
+          } else {
+            console.warn('⚠️ 시작 버튼을 찾을 수 없습니다');
+          }
+          
+        } catch (error) {
+          console.error('❌ 테토-에겐 초기화 실패:', error);
+          showError('테토-에겐 테스트를 불러올 수 없습니다: ' + error.message);
+        }
+      }
+      
+      function startGenderSelection() {
+        console.log('🎯 성별 선택 화면 표시');
+        
+        const introScreen = document.querySelector('#intro-screen');
+        const genderScreen = document.querySelector('#gender-screen');
+        
+        if (introScreen) {
+          introScreen.style.display = 'none';
+          introScreen.classList.add('hidden');
+        }
+        if (genderScreen) {
+          genderScreen.classList.remove('hidden');
+          genderScreen.style.display = 'block';
+          genderScreen.style.visibility = 'visible';
+        }
+        
+        // 성별 선택 버튼 이벤트
+        const genderButtons = document.querySelectorAll('.teto-gender-btn');
+        genderButtons.forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const gender = e.target.closest('.teto-gender-btn').dataset.gender;
+            selectGender(gender);
+          });
+        });
+      }
+      
+      function selectGender(gender) {
+        selectedGender = gender;
+        console.log('👤 성별 선택:', gender);
+        startTetoTest();
+      }
+      
+      function startTetoTest() {
+        if (tetoTestActive) return;
+        
+        console.log('🎯 테토-에겐 테스트 시작');
+        tetoTestActive = true;
+        currentQuestion = 0;
+        answers = [];
+        totalScore = 0;
+        
+        // 화면 전환
+        const genderScreen = document.querySelector('#gender-screen');
+        const testScreen = document.querySelector('#test-screen');
+        
+        if (genderScreen) {
+          genderScreen.style.display = 'none';
+          genderScreen.classList.add('hidden');
+        }
+        if (testScreen) {
+          testScreen.classList.remove('hidden');
+          testScreen.style.display = 'block';
+          testScreen.style.visibility = 'visible';
+          console.log('✅ 테스트 화면 표시됨');
+        }
+        
+        showTetoQuestion();
+      }
+      
+      function showTetoQuestion() {
+        if (currentQuestion >= tetoQuestions.length) {
+          showTetoResult();
+          return;
+        }
+        
+        const question = tetoQuestions[currentQuestion];
+        console.log('📋 질문 표시:', currentQuestion + 1, '/', tetoQuestions.length);
+        
+        // 진행도 업데이트
+        const progressBar = document.querySelector('#progress');
+        const progressText = document.querySelector('#progress-text');
+        const progressPercent = document.querySelector('#progress-percent');
+        
+        const progress = ((currentQuestion + 1) / tetoQuestions.length) * 100;
+        
+        if (progressBar) progressBar.style.width = progress + '%';
+        if (progressText) progressText.textContent = `질문 ${currentQuestion + 1} / ${tetoQuestions.length}`;
+        if (progressPercent) progressPercent.textContent = Math.round(progress) + '%';
+        
+        // 질문 표시
+        const questionElement = document.querySelector('#question');
+        const questionNumber = document.querySelector('#question-number');
+        
+        if (questionElement) questionElement.textContent = question.question;
+        if (questionNumber) questionNumber.textContent = `Q${currentQuestion + 1}`;
+        
+        // 선택지 표시
+        const optionsContainer = document.querySelector('#options');
+        if (optionsContainer) {
+          optionsContainer.innerHTML = '';
+          
+          question.options.forEach((option, index) => {
+            const optionDiv = document.createElement('div');
+            optionDiv.className = 'teto-option';
+            optionDiv.innerHTML = `
+              <button class="teto-option-btn" data-score="${option.score}" data-index="${index}">
+                <span class="option-text">${option.text}</span>
+              </button>
+            `;
+            optionsContainer.appendChild(optionDiv);
+          });
+          
+          // 옵션 클릭 이벤트 (이벤트 위임 방식)
+          optionsContainer.replaceWith(optionsContainer.cloneNode(true)); // 기존 이벤트 제거
+          const newOptionsContainer = document.querySelector('#options');
+          newOptionsContainer.addEventListener('click', handleTetoOptionClick);
+        }
+        
+        // 네비게이션 버튼
+        updateNavigationButtons();
+      }
+      
+      function handleTetoOptionClick(event) {
+        const button = event.target.closest('.teto-option-btn');
+        if (!button) return;
+        
+        const score = parseInt(button.dataset.score) || 0;
+        const index = parseInt(button.dataset.index);
+        
+        console.log('✅ 선택:', '점수:', score);
+        
+        // 기존 선택 해제
+        document.querySelectorAll('.teto-option-btn').forEach(btn => {
+          btn.classList.remove('selected');
+        });
+        button.classList.add('selected');
+        
+        // 답변 저장
+        if (answers[currentQuestion]) {
+          totalScore -= answers[currentQuestion].score;
+        }
+        answers[currentQuestion] = { score, index };
+        totalScore += score;
+        
+        // 짧은 지연 후 다음 질문으로
+        setTimeout(() => {
+          currentQuestion++;
+          showTetoQuestion();
+        }, 800);
+      }
+      
+      function updateNavigationButtons() {
+        const prevBtn = document.querySelector('#prev-btn');
+        const nextBtn = document.querySelector('#next-btn');
+        
+        if (prevBtn) {
+          if (currentQuestion > 0) {
+            prevBtn.style.display = 'inline-flex';
+            prevBtn.onclick = () => {
+              currentQuestion--;
+              showTetoQuestion();
+            };
+          } else {
+            prevBtn.style.display = 'none';
+          }
+        }
+        
+        if (nextBtn) {
+          nextBtn.style.display = 'none'; // 자동으로 넘어감
+        }
+      }
+      
+      function showTetoResult() {
+        console.log('🎊 테토-에겐 결과 계산, 총 점수:', totalScore);
+        
+        // 결과 유형 결정
+        let resultKey;
+        const genderSuffix = selectedGender === 'male' ? 'male' : 'female';
+        
+        if (totalScore >= 40) {
+          resultKey = `super-teto-${genderSuffix}`;
+        } else if (totalScore >= 15) {
+          resultKey = `teto-${genderSuffix}`;
+        } else if (totalScore >= -15) {
+          resultKey = `balanced-${genderSuffix}`;
+        } else if (totalScore >= -40) {
+          resultKey = `egen-${genderSuffix}`;
+        } else {
+          resultKey = `super-egen-${genderSuffix}`;
+        }
+        
+        const resultInfo = tetoResultTypes[resultKey];
+        
+        console.log('🎯 테토-에겐 결과:', resultKey, resultInfo);
+        
+        // 결과 데이터
+        const resultData = {
+          ...resultInfo,
+          totalScore,
+          gender: selectedGender
+        };
+        
+        // localStorage에 결과 저장
+        localStorage.setItem('tetoEgenResult', JSON.stringify(resultData));
+        
+        // 결과 화면 표시
+        showInlineResult(resultData);
+      }
+      
+      function showInlineResult(result) {
+        const testScreen = document.querySelector('#test-screen');
+        const resultScreen = document.querySelector('#result-screen');
+        
+        if (testScreen) {
+          testScreen.style.display = 'none';
+          testScreen.classList.add('hidden');
+        }
+        
+        if (resultScreen) {
+          resultScreen.classList.remove('hidden');
+          resultScreen.style.display = 'block';
+          resultScreen.style.visibility = 'visible';
+          
+          resultScreen.innerHTML = `
+            <div class="teto-result-content">
+              <div class="teto-result-header">
+                <h2 class="teto-result-main-title">🎉 당신의 테토-에겐 유형</h2>
+                <div class="teto-result-type-card">
+                  <div class="teto-result-emoji">${result.emoji}</div>
+                  <div class="teto-result-type">${result.type}</div>
+                  <div class="teto-result-title">${result.title}</div>
+                  <div class="teto-result-subtitle">"${result.subtitle}"</div>
+                  <div class="teto-result-percentage">전체 인구의 약 ${result.percentage}</div>
+                </div>
+              </div>
+              
+              <div class="teto-result-description">
+                <h3>📝 특징 설명</h3>
+                <p>${result.description}</p>
+              </div>
+              
+              <div class="teto-result-traits">
+                <h3>✨ 주요 특성</h3>
+                <div class="trait-tags">
+                  ${result.traits.map(trait => `<span class="trait-tag">#${trait}</span>`).join('')}
+                </div>
+              </div>
+              
+              <div class="teto-result-compatibility">
+                <h3>💕 잘 맞는 유형</h3>
+                <p>${result.compatibility}</p>
+              </div>
+              
+              <div class="teto-result-score">
+                <h3>📊 총 점수</h3>
+                <div class="score-display">
+                  <span class="score-number">${result.totalScore}</span> / 60점
+                </div>
+              </div>
+              
+              <div class="teto-result-actions">
+                <button onclick="location.reload()" class="teto-btn teto-btn-primary">
+                  🔄 다시 테스트하기
+                </button>
+                <a href="../../tests/" class="teto-btn teto-btn-secondary">
+                  다른 테스트 보기
+                </a>
+              </div>
+            </div>
+          `;
+        }
+      }
+      
+      function showError(message) {
+        const testContainer = document.querySelector('.teto-test-container');
+        if (testContainer) {
+          testContainer.innerHTML = `
+            <div class="error-container">
+              <h3>⚠️ 오류 발생</h3>
+              <p>${message}</p>
+              <button onclick="location.reload()" class="teto-btn teto-btn-primary">
+                🔄 페이지 새로고침
+              </button>
+            </div>
+          `;
+        }
+      }
+      
+      // 백업 초기화 오류 표시 함수
+      async function showTetoEgenBackupInitError() {
+        console.error('❌ Teto-Egen 테스트 초기화 완전 실패');
+        const testContainer = document.querySelector('.teto-test-container') || document.querySelector('main');
+        if (testContainer) {
+          testContainer.innerHTML = `
+            <div class="error-container" style="text-align: center; padding: 60px 30px; color: #666;">
+              <h3 style="color: #dc3545; font-size: 1.5rem; margin-bottom: 20px;">⚠️ 초기화 오류</h3>
+              <p style="margin-bottom: 30px; line-height: 1.6;">테토-에겐 테스트를 불러올 수 없습니다.<br/>
+              페이지를 새로고침하거나 잠시 후 다시 시도해주세요.</p>
+              <div>
+                <button onclick="location.reload()" class="teto-btn teto-btn-primary" 
+                        style="padding: 12px 24px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; border-radius: 8px; margin-right: 10px;">
+                  🔄 페이지 새로고침
+                </button>
+                <a href="../../tests/" class="teto-btn teto-btn-secondary" 
+                   style="padding: 12px 24px; background: #6c757d; color: white; border: none; border-radius: 8px; text-decoration: none;">
+                  다른 테스트 보기
+                </a>
+              </div>
+            </div>
+          `;
+        } else {
+          alert('테토-에겐 테스트를 불러올 수 없습니다. 페이지를 새로고침해주세요.');
+        }
+      }
+
+      // 강화된 초기화 실행 (다중 트리거)
+      function startTetoEgenInitialization() {
+        console.log('📋 Teto-Egen 초기화 스케줄링 시작');
+        console.log('- Document ready state:', document.readyState);
+        
+        if (document.readyState === 'loading') {
+          console.log('🔄 DOMContentLoaded 이벤트 대기 중...');
+          document.addEventListener('DOMContentLoaded', initializeTetoEgenTest);
+        } else if (document.readyState === 'interactive' || document.readyState === 'complete') {
+          console.log('✅ DOM 이미 준비됨 - 즉시 초기화');
+          initializeTetoEgenTest();
+          setTimeout(() => {
+            if (initializationAttempts === 0 || !testActive) {
+              console.log('🔄 Teto-Egen 백업 초기화 실행');
+              initializeTetoEgenTest();
+            }
+          }, 500);
+        }
+        
+        if (document.readyState !== 'complete') {
+          window.addEventListener('load', () => {
+            setTimeout(() => {
+              if (initializationAttempts === 0 || !testActive) {
+                console.log('🔄 Teto-Egen Window load 백업 초기화');
+                initializeTetoEgenTest();
+              }
+            }, 200);
+          });
+        }
+      }
+
+      // 초기화 시작
+      startTetoEgenInitialization();
     </script>
 
     <!-- External SDKs (지연 로딩) -->
