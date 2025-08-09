@@ -108,8 +108,35 @@ export class TextCounterService extends ToolService {
   bindCheckboxEvents() {
     const checkboxes = document.querySelectorAll('.setting-checkbox');
     checkboxes.forEach((checkbox) => {
-      checkbox.addEventListener('change', () => this.updateCount());
+      checkbox.addEventListener('change', () => {
+        // 체크박스 설정에 따른 UI 업데이트
+        this.updateDisplayOptions();
+        this.updateCount();
+      });
     });
+  }
+  
+  /**
+   * 표시 옵션 업데이트
+   */
+  updateDisplayOptions() {
+    const settings = {
+      includeSpaces: document.getElementById('includeSpaces')?.checked ?? true,
+      includeNewlines: document.getElementById('includeNewlines')?.checked ?? true,
+      showBytes: document.getElementById('showBytes')?.checked ?? true,
+      showManuscript: document.getElementById('showManuscript')?.checked ?? true
+    };
+    
+    // UI 요소 표시/숨김 처리
+    const bytesCard = document.querySelector('#bytes')?.closest('.result-card');
+    const manuscriptCard = document.querySelector('#manuscript')?.closest('.result-card');
+    
+    if (bytesCard) {
+      bytesCard.style.display = settings.showBytes ? 'block' : 'none';
+    }
+    if (manuscriptCard) {
+      manuscriptCard.style.display = settings.showManuscript ? 'block' : 'none';
+    }
   }
 
   /**

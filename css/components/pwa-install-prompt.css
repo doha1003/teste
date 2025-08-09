@@ -1,0 +1,272 @@
+/**
+ * PWA Install Prompt Styles
+ * PWA 설치 프롬프트 컴포넌트 스타일
+ */
+
+.pwa-install-section {
+  padding: 1.5rem 0;
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  border-top: 1px solid #e0f2fe;
+  border-bottom: 1px solid #e0f2fe;
+  margin: 2rem 0;
+  animation: slideIn 0.3s ease-out;
+}
+
+.pwa-install-card {
+  background: white;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.1);
+  border: 1px solid #e0f2fe;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  position: relative;
+}
+
+.pwa-install-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+}
+
+.pwa-install-icon {
+  font-size: 2.5rem;
+  flex-shrink: 0;
+}
+
+.pwa-install-text h3 {
+  margin: 0 0 0.5rem;
+  color: #1e40af;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.pwa-install-text p {
+  margin: 0 0 0.75rem;
+  color: #64748b;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.pwa-benefits {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 1rem;
+  font-size: 0.85rem;
+  color: #10b981;
+  font-weight: 500;
+}
+
+.pwa-benefits li {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.pwa-install-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+.pwa-install-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.pwa-install-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.pwa-install-button:not(:disabled):hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.3);
+}
+
+.pwa-close-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid #e2e8f0;
+  background: white;
+  color: #64748b;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.pwa-close-button:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  color: #475569;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .pwa-install-card {
+    flex-direction: column;
+    text-align: center;
+    padding: 1.25rem;
+  }
+
+  .pwa-install-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .pwa-benefits {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .pwa-install-actions {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .pwa-install-button {
+    flex: 1;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .pwa-install-section {
+    padding: 1rem 0;
+    margin: 1rem 0;
+  }
+
+  .pwa-benefits {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .pwa-install-text h3 {
+    font-size: 1.1rem;
+  }
+
+  .pwa-install-text p {
+    font-size: 0.85rem;
+  }
+}
+
+/* 애니메이션 */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.pwa-install-card {
+  animation: cardAppear 0.4s ease-out;
+}
+
+@keyframes cardAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* PWA 설치 상태별 스타일 */
+.pwa-install-button.ready {
+  background: #10b981;
+  color: white;
+}
+
+.pwa-install-button.ready:hover:not(:disabled) {
+  background: #059669;
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
+}
+
+.pwa-install-button.installed {
+  background: #6b7280;
+  color: white;
+}
+
+/* 다크 모드 지원 */
+@media (prefers-color-scheme: dark) {
+  .pwa-install-section {
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    border-color: #475569;
+  }
+
+  .pwa-install-card {
+    background: #1e293b;
+    border-color: #475569;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  .pwa-install-text h3 {
+    color: #60a5fa;
+  }
+
+  .pwa-install-text p {
+    color: #94a3b8;
+  }
+
+  .pwa-close-button {
+    background: #334155;
+    border-color: #475569;
+    color: #94a3b8;
+  }
+
+  .pwa-close-button:hover {
+    background: #475569;
+    border-color: #64748b;
+    color: #cbd5e1;
+  }
+}
+
+/* 높은 대비 모드 지원 */
+@media (prefers-contrast: high) {
+  .pwa-install-card {
+    border: 2px solid #000;
+  }
+
+  .pwa-install-button {
+    border: 2px solid currentColor;
+  }
+}
+
+/* 동작 줄임 모드 지원 */
+@media (prefers-reduced-motion: reduce) {
+  .pwa-install-section,
+  .pwa-install-card,
+  .pwa-install-button,
+  .pwa-close-button {
+    animation: none;
+    transition: none;
+  }
+}

@@ -263,9 +263,7 @@
      */
     static showSecurityWarning(count) {
       if (this.isDevelopmentEnvironment()) {
-
-        for better security');
-
+        console.warn(`[Security] 잠재적으로 위험한 DOM 조작 패턴이 ${count}개 감지되었습니다. 더 안전한 방법으로 리팩터링하세요.`);
       }
     }
 
@@ -387,8 +385,7 @@
      */
     static autoMigrate() {
       if (!this.isDevelopmentEnvironment()) {
-        should only be used in development environment');
-        return;
+        throw new Error('autoMigrate()는 개발 환경에서만 사용해야 합니다.');
       }
 
       // 모든 스크립트 검사
@@ -572,9 +569,8 @@
     Object.defineProperty(Element.prototype, 'innerHTML', {
       get: originalInnerHTML.get,
       set: function (value) {
-        ');
-        
-        return originalInnerHTML.set.call(this, value);
+        console.warn('[SecureDOM] innerHTML 직접 대입이 감지되었습니다. 가능한 경우 safeHTML과 setHTML을 사용하세요.');
+        originalInnerHTML.set.call(this, value);
       },
       configurable: true,
     });

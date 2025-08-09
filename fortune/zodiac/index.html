@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
  <head>
-  <meta content="upgrade-insecure-requests; default-src 'self' https:; script-src 'unsafe-inline' 'self' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'unsafe-inline' 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;" http-equiv="Content-Security-Policy"/>
+  <meta content="upgrade-insecure-requests; default-src 'self' https:; script-src 'unsafe-inline' 'self' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'unsafe-inline' 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net data:; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;" http-equiv="Content-Security-Policy"/>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
   <title>
@@ -49,154 +49,134 @@
     </p>
    </div>
   </section>
-  <!-- 별자리 선택 섹션 -->
-  <section class="zodiac-section">
+  <!-- 별자리 운세 입력 폼 -->
+  <section class="fortune-section" aria-labelledby="zodiac-form-title">
    <div class="container">
-    <div class="zodiac-selection" id="zodiacSelection">
-     <h2 class="text-center mb-40">
-      당신의 별자리를 선택하세요
-     </h2>
-     <div class="zodiac-grid">
-      <div class="zodiac-card" data-zodiac="aries">
-       <div class="zodiac-symbol">
-        ♈
+    <div class="fortune-form-container" id="zodiacForm">
+     <h2 id="zodiac-form-title">당신의 정보를 입력해주세요</h2>
+     
+     <!-- 이름 입력 -->
+     <form data-form="zodiac-fortune" aria-label="별자리 운세 입력 폼">
+       <div class="form-group">
+         <label for="userName" class="form-label">
+           이름
+           <span aria-label="필수">*</span>
+         </label>
+         <input
+           type="text"
+           id="userName"
+           name="userName"
+           class="form-control"
+           placeholder="홍길동"
+           required
+           aria-required="true"
+           aria-describedby="userName-desc"
+         />
+         <span id="userName-desc" class="visually-hidden">별자리 운세에 표시될 이름을 입력해주세요</span>
        </div>
-       <div class="zodiac-name">
-        양자리
+       
+       <!-- 별자리 선택 -->
+       <div class="form-group">
+         <fieldset>
+           <legend class="form-label">별자리 선택 <span aria-label="필수">*</span></legend>
+           <div class="zodiac-grid" role="radiogroup" aria-describedby="zodiac-desc">
+             <label class="zodiac-card" for="zodiac-aries">
+               <input type="radio" id="zodiac-aries" name="zodiac" value="aries" class="zodiac-radio" required aria-describedby="aries-desc" />
+               <div class="zodiac-symbol" aria-hidden="true">♈</div>
+               <div class="zodiac-name">양자리</div>
+               <div class="zodiac-date" id="aries-desc">3.21 - 4.19</div>
+             </label>
+             <label class="zodiac-card" for="zodiac-taurus">
+               <input type="radio" id="zodiac-taurus" name="zodiac" value="taurus" class="zodiac-radio" aria-describedby="taurus-desc" />
+               <div class="zodiac-symbol" aria-hidden="true">♉</div>
+               <div class="zodiac-name">황소자리</div>
+               <div class="zodiac-date" id="taurus-desc">4.20 - 5.20</div>
+             </label>
+             <label class="zodiac-card" for="zodiac-gemini">
+               <input type="radio" id="zodiac-gemini" name="zodiac" value="gemini" class="zodiac-radio" aria-describedby="gemini-desc" />
+               <div class="zodiac-symbol" aria-hidden="true">♊</div>
+               <div class="zodiac-name">쌍둥이자리</div>
+               <div class="zodiac-date" id="gemini-desc">5.21 - 6.21</div>
+             </label>
+             <label class="zodiac-card" for="zodiac-cancer">
+               <input type="radio" id="zodiac-cancer" name="zodiac" value="cancer" class="zodiac-radio" aria-describedby="cancer-desc" />
+               <div class="zodiac-symbol" aria-hidden="true">♋</div>
+               <div class="zodiac-name">게자리</div>
+               <div class="zodiac-date" id="cancer-desc">6.22 - 7.22</div>
+             </label>
+             <label class="zodiac-card" for="zodiac-leo">
+               <input type="radio" id="zodiac-leo" name="zodiac" value="leo" class="zodiac-radio" aria-describedby="leo-desc" />
+               <div class="zodiac-symbol" aria-hidden="true">♌</div>
+               <div class="zodiac-name">사자자리</div>
+               <div class="zodiac-date" id="leo-desc">7.23 - 8.22</div>
+             </label>
+             <label class="zodiac-card" for="zodiac-virgo">
+               <input type="radio" id="zodiac-virgo" name="zodiac" value="virgo" class="zodiac-radio" aria-describedby="virgo-desc" />
+               <div class="zodiac-symbol" aria-hidden="true">♍</div>
+               <div class="zodiac-name">처녀자리</div>
+               <div class="zodiac-date" id="virgo-desc">8.23 - 9.22</div>
+             </label>
+             <label class="zodiac-card" for="zodiac-libra">
+               <input type="radio" id="zodiac-libra" name="zodiac" value="libra" class="zodiac-radio" aria-describedby="libra-desc" />
+               <div class="zodiac-symbol" aria-hidden="true">♎</div>
+               <div class="zodiac-name">천칭자리</div>
+               <div class="zodiac-date" id="libra-desc">9.23 - 10.22</div>
+             </label>
+             <label class="zodiac-card" for="zodiac-scorpio">
+               <input type="radio" id="zodiac-scorpio" name="zodiac" value="scorpio" class="zodiac-radio" aria-describedby="scorpio-desc" />
+               <div class="zodiac-symbol" aria-hidden="true">♏</div>
+               <div class="zodiac-name">전갈자리</div>
+               <div class="zodiac-date" id="scorpio-desc">10.23 - 11.22</div>
+             </label>
+             <label class="zodiac-card" for="zodiac-sagittarius">
+               <input type="radio" id="zodiac-sagittarius" name="zodiac" value="sagittarius" class="zodiac-radio" aria-describedby="sagittarius-desc" />
+               <div class="zodiac-symbol" aria-hidden="true">♐</div>
+               <div class="zodiac-name">사수자리</div>
+               <div class="zodiac-date" id="sagittarius-desc">11.23 - 12.21</div>
+             </label>
+             <label class="zodiac-card" for="zodiac-capricorn">
+               <input type="radio" id="zodiac-capricorn" name="zodiac" value="capricorn" class="zodiac-radio" aria-describedby="capricorn-desc" />
+               <div class="zodiac-symbol" aria-hidden="true">♑</div>
+               <div class="zodiac-name">염소자리</div>
+               <div class="zodiac-date" id="capricorn-desc">12.22 - 1.19</div>
+             </label>
+             <label class="zodiac-card" for="zodiac-aquarius">
+               <input type="radio" id="zodiac-aquarius" name="zodiac" value="aquarius" class="zodiac-radio" aria-describedby="aquarius-desc" />
+               <div class="zodiac-symbol" aria-hidden="true">♒</div>
+               <div class="zodiac-name">물병자리</div>
+               <div class="zodiac-date" id="aquarius-desc">1.20 - 2.18</div>
+             </label>
+             <label class="zodiac-card" for="zodiac-pisces">
+               <input type="radio" id="zodiac-pisces" name="zodiac" value="pisces" class="zodiac-radio" aria-describedby="pisces-desc" />
+               <div class="zodiac-symbol" aria-hidden="true">♓</div>
+               <div class="zodiac-name">물고기자리</div>
+               <div class="zodiac-date" id="pisces-desc">2.19 - 3.20</div>
+             </label>
+           </div>
+           <div id="zodiac-desc" class="form-text">태어난 날짜에 맞는 별자리를 선택해주세요.</div>
+         </fieldset>
        </div>
-       <div class="zodiac-date">
-        3.21 - 4.19
-       </div>
-      </div>
-      <div class="zodiac-card" data-zodiac="taurus">
-       <div class="zodiac-symbol">
-        ♉
-       </div>
-       <div class="zodiac-name">
-        황소자리
-       </div>
-       <div class="zodiac-date">
-        4.20 - 5.20
-       </div>
-      </div>
-      <div class="zodiac-card" data-zodiac="gemini">
-       <div class="zodiac-symbol">
-        ♊
-       </div>
-       <div class="zodiac-name">
-        쌍둥이자리
-       </div>
-       <div class="zodiac-date">
-        5.21 - 6.21
-       </div>
-      </div>
-      <div class="zodiac-card" data-zodiac="cancer">
-       <div class="zodiac-symbol">
-        ♋
-       </div>
-       <div class="zodiac-name">
-        게자리
-       </div>
-       <div class="zodiac-date">
-        6.22 - 7.22
-       </div>
-      </div>
-      <div class="zodiac-card" data-zodiac="leo">
-       <div class="zodiac-symbol">
-        ♌
-       </div>
-       <div class="zodiac-name">
-        사자자리
-       </div>
-       <div class="zodiac-date">
-        7.23 - 8.22
-       </div>
-      </div>
-      <div class="zodiac-card" data-zodiac="virgo">
-       <div class="zodiac-symbol">
-        ♍
-       </div>
-       <div class="zodiac-name">
-        처녀자리
-       </div>
-       <div class="zodiac-date">
-        8.23 - 9.22
-       </div>
-      </div>
-      <div class="zodiac-card" data-zodiac="libra">
-       <div class="zodiac-symbol">
-        ♎
-       </div>
-       <div class="zodiac-name">
-        천칭자리
-       </div>
-       <div class="zodiac-date">
-        9.23 - 10.22
-       </div>
-      </div>
-      <div class="zodiac-card" data-zodiac="scorpio">
-       <div class="zodiac-symbol">
-        ♏
-       </div>
-       <div class="zodiac-name">
-        전갈자리
-       </div>
-       <div class="zodiac-date">
-        10.23 - 11.22
-       </div>
-      </div>
-      <div class="zodiac-card" data-zodiac="sagittarius">
-       <div class="zodiac-symbol">
-        ♐
-       </div>
-       <div class="zodiac-name">
-        사수자리
-       </div>
-       <div class="zodiac-date">
-        11.23 - 12.21
-       </div>
-      </div>
-      <div class="zodiac-card" data-zodiac="capricorn">
-       <div class="zodiac-symbol">
-        ♑
-       </div>
-       <div class="zodiac-name">
-        염소자리
-       </div>
-       <div class="zodiac-date">
-        12.22 - 1.19
-       </div>
-      </div>
-      <div class="zodiac-card" data-zodiac="aquarius">
-       <div class="zodiac-symbol">
-        ♒
-       </div>
-       <div class="zodiac-name">
-        물병자리
-       </div>
-       <div class="zodiac-date">
-        1.20 - 2.18
-       </div>
-      </div>
-      <div class="zodiac-card" data-zodiac="pisces">
-       <div class="zodiac-symbol">
-        ♓
-       </div>
-       <div class="zodiac-name">
-        물고기자리
-       </div>
-       <div class="zodiac-date">
-        2.19 - 3.20
-       </div>
-      </div>
-     </div>
+       
+       <button type="submit" class="btn btn-primary btn-lg" aria-label="입력한 정보로 별자리 운세 분석하기">
+         ♈ 별자리 운세 보기
+       </button>
+     </form>
     </div>
-    <!-- 운세 결과 영역 -->
-    <div class="zodiac-result d-none-init" id="zodiacResult">
+
+    <!-- 운세 결과 -->
+    <div id="zodiacResult" class="d-none-init" role="region" aria-label="별자리 운세 분석 결과" aria-live="polite">
      <!-- 결과가 여기에 표시됩니다 -->
     </div>
    </div>
   </section>
+
+  <!-- 광고 영역 -->
+  <aside class="ad-container" aria-label="광고 영역">
+    <div class="ad-label">광고</div>
+    <div id="ad-container-zodiac" class="ad-container-min" data-ad-slot="2789891628">
+      <div class="ad-placeholder ad-container-styled">광고 로딩 중...</div>
+    </div>
+  </aside>
   <!-- 별자리 안내 섹션 -->
   <section class="info-section">
    <div class="container">
@@ -253,47 +233,47 @@
       <div class="footer-section">
         <h3>서비스</h3>
         <ul class="footer-links">
-          <li><a href="/">홈</a></li>
-          <li><a href="/tests/">심리테스트</a></li>
-          <li><a href="/fortune/">운세</a></li>
-          <li><a href="/tools/">실용도구</a></li>
-          <li><a href="/about/">사이트 소개</a></li>
+          <li><a href="../../">홈</a></li>
+          <li><a href="../../tests/">심리테스트</a></li>
+          <li><a href="../../fortune/">운세</a></li>
+          <li><a href="../../tools/">실용도구</a></li>
+          <li><a href="../../about/">사이트 소개</a></li>
         </ul>
       </div>
 
       <div class="footer-section">
         <h3>인기 콘텐츠</h3>
         <ul class="footer-links">
-          <li><a href="/tests/teto-egen/">테토-에겐 테스트</a></li>
-          <li><a href="/tests/mbti/">MBTI 테스트</a></li>
-          <li><a href="/fortune/daily/">오늘의 운세</a></li>
-          <li><a href="/tools/text-counter.html">글자수 세기</a></li>
+          <li><a href="../../tests/teto-egen/">테토-에겐 테스트</a></li>
+          <li><a href="../../tests/mbti/">MBTI 테스트</a></li>
+          <li><a href="../../fortune/daily/">오늘의 운세</a></li>
+          <li><a href="../../tools/text-counter.html">글자수 세기</a></li>
         </ul>
       </div>
 
       <div class="footer-section">
         <h3>운세 서비스</h3>
         <ul class="footer-links">
-          <li><a href="/fortune/daily/">오늘의 운세</a></li>
-          <li><a href="/fortune/zodiac/">별자리 운세</a></li>
-          <li><a href="/fortune/zodiac-animal/">띠별 운세</a></li>
-          <li><a href="/fortune/tarot/">AI 타로</a></li>
+          <li><a href="../../fortune/daily/">오늘의 운세</a></li>
+          <li><a href="../../fortune/zodiac/">별자리 운세</a></li>
+          <li><a href="../../fortune/zodiac-animal/">띠별 운세</a></li>
+          <li><a href="../../fortune/tarot/">AI 타로</a></li>
         </ul>
       </div>
 
       <div class="footer-section">
         <h3>고객지원</h3>
         <ul class="footer-links">
-          <li><a href="/contact/">문의하기</a></li>
-          <li><a href="/faq/">자주 묻는 질문</a></li>
+          <li><a href="../../contact/">문의하기</a></li>
+          <li><a href="../../faq/">자주 묻는 질문</a></li>
         </ul>
       </div>
     </div>
 
     <div class="footer-bottom">
       <div class="footer-legal">
-        <a href="/privacy/">개인정보처리방침</a>
-        <a href="/terms/">이용약관</a>
+        <a href="../../privacy/">개인정보처리방침</a>
+        <a href="../../terms/">이용약관</a>
       </div>
       <p>&copy; 2025 doha.kr. All rights reserved.</p>
     </div>
@@ -325,22 +305,72 @@
       try {
         console.log('⭐ 별자리 운세 초기화 시작');
         
-        // 별자리 서비스 인스턴스 생성
+        // ZodiacFortuneService 인스턴스 생성
         zodiacFortuneService = new ZodiacFortuneService();
+        console.log('✅ 별자리 운세 서비스 생성됨');
         
-        // DohaKR 네임스페이스에 등록
-        if (window.DohaKR) {
-          window.DohaKR.services = window.DohaKR.services || {};
-          window.DohaKR.services.zodiacFortune = zodiacFortuneService;
-          console.log('✅ 별자리 운세 서비스 등록 완료');
+        // 폼 제출 이벤트 연결
+        const form = document.querySelector('form[data-form="zodiac-fortune"]');
+        if (form) {
+          form.addEventListener('submit', handleZodiacSubmit);
+          console.log('✅ 폼 이벤트 연결됨');
         }
         
       } catch (error) {
         console.error('❌ 별자리 운세 초기화 실패:', error);
       }
     });
+    
+    async function handleZodiacSubmit(event) {
+      event.preventDefault();
+      
+      try {
+        console.log('⭐ 별자리 운세 분석 시작');
+        
+        // 폼 데이터 수집
+        const formData = new FormData(event.target);
+        const userData = {
+          name: formData.get('userName'),
+          zodiac: formData.get('zodiac')
+        };
+        
+        // 입력 검증
+        if (!userData.name || !userData.zodiac) {
+          alert('이름과 별자리를 모두 선택해주세요.');
+          return;
+        }
+        
+        console.log('📋 별자리 운세 데이터:', userData);
+        
+        // 별자리 운세 분석 실행
+        await zodiacFortuneService.generateFortune(userData);
+        
+      } catch (error) {
+        console.error('❌ 별자리 운세 분석 실패:', error);
+        alert('별자리 운세 분석 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+      }
+    }
+    
+    // 전역 접근을 위한 설정
+    window.zodiacFortuneService = zodiacFortuneService;
   </script>
   
+  <!-- Core JavaScript Modules -->
+  <script type="module" src="../../js/app.js"></script>
+  <script type="module" src="../../js/features/fortune/zodiac-fortune.js"></script>
+  
+  <!-- Zodiac Fortune Initialization -->
+  <script type="module">
+    import { ZodiacFortuneService } from '../../js/features/fortune/zodiac-fortune.js';
+    
+    // Initialize service when DOM is ready
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('⭐ Zodiac Fortune Service 초기화 시작');
+      window.zodiacFortuneService = new ZodiacFortuneService();
+      console.log('✅ Zodiac Fortune Service 준비됨');
+    });
+  </script>
+
   <!-- Structured Data -->
   <script type="application/ld+json">
   {

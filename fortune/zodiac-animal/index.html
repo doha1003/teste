@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
  <head>
-  <meta content="upgrade-insecure-requests; default-src 'self' https:; script-src 'unsafe-inline' 'self' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'unsafe-inline' 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;" http-equiv="Content-Security-Policy"/>
+  <meta content="upgrade-insecure-requests; default-src 'self' https:; script-src 'unsafe-inline' 'self' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'unsafe-inline' 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net data:; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;" http-equiv="Content-Security-Policy"/>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
   <title>
@@ -26,7 +26,7 @@
   <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
   <link crossorigin="" href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
   <!-- Favicon -->
-  <link href="/images/logo.svg" rel="icon" type="image/svg+xml"/>
+  <link href="../../images/logo.svg" rel="icon" type="image/svg+xml"/>
   <!-- Google AdSense -->
   <!-- Moved to end of body -->
   <!-- Main CSS -->
@@ -54,16 +54,37 @@
     </p>
    </div>
   </section>
-  <!-- 띠별 운세 섹션 -->
-  <section class="zodiac-animal-section">
+  <!-- 띠별 운세 입력 폼 -->
+  <section class="fortune-section" aria-labelledby="zodiac-animal-form-title">
    <div class="container">
-    <!-- 날짜 표시 -->
-    <div class="zodiac-date">
-     <h2 id="todayDate">
-     </h2>
-    </div>
-    <!-- 띠 선택 그리드 -->
-    <div class="zodiac-grid fortune-grid grid-6">
+    <div class="fortune-form-container" id="zodiacAnimalForm">
+     <h2 id="zodiac-animal-form-title">당신의 정보를 입력해주세요</h2>
+     
+     <!-- 이름 입력 -->
+     <form data-form="zodiac-animal-fortune" aria-label="띠별 운세 입력 폼">
+       <div class="form-group">
+         <label for="userName" class="form-label">
+           이름
+           <span aria-label="필수">*</span>
+         </label>
+         <input
+           type="text"
+           id="userName"
+           name="userName"
+           class="form-control"
+           placeholder="홍길동"
+           required
+           aria-required="true"
+           aria-describedby="userName-desc"
+         />
+         <span id="userName-desc" class="visually-hidden">띠별 운세에 표시될 이름을 입력해주세요</span>
+       </div>
+       
+       <!-- 띠 선택 -->
+       <div class="form-group">
+         <fieldset>
+           <legend class="form-label">띠 선택 <span aria-label="필수">*</span></legend>
+           <div class="zodiac-grid fortune-grid grid-6" role="radiogroup" aria-describedby="zodiac-animal-desc">
      <div class="zodiac-card fortune-card" data-animal="rat">
       <div class="zodiac-emoji fortune-emoji">
        🐀
@@ -196,9 +217,19 @@
        亥
       </div>
      </div>
+           </div>
+           <div id="zodiac-animal-desc" class="form-text">태어난 해의 12지신 띠를 선택해주세요.</div>
+         </fieldset>
+       </div>
+       
+       <button type="submit" class="btn btn-primary btn-lg" aria-label="입력한 정보로 띠별 운세 분석하기">
+         🐲 띠별 운세 보기
+       </button>
+     </form>
     </div>
+
     <!-- 운세 결과 -->
-    <div class="d-none-init" id="fortuneResult">
+    <div id="zodiacAnimalResult" class="d-none-init" role="region" aria-label="띠별 운세 분석 결과" aria-live="polite">
      <!-- 결과가 여기에 표시됩니다 -->
     </div>
    </div>
@@ -259,47 +290,47 @@
       <div class="footer-section">
         <h3>서비스</h3>
         <ul class="footer-links">
-          <li><a href="/">홈</a></li>
-          <li><a href="/tests/">심리테스트</a></li>
-          <li><a href="/fortune/">운세</a></li>
-          <li><a href="/tools/">실용도구</a></li>
-          <li><a href="/about/">사이트 소개</a></li>
+          <li><a href="../../">홈</a></li>
+          <li><a href="../../tests/">심리테스트</a></li>
+          <li><a href="../../fortune/">운세</a></li>
+          <li><a href="../../tools/">실용도구</a></li>
+          <li><a href="../../about/">사이트 소개</a></li>
         </ul>
       </div>
 
       <div class="footer-section">
         <h3>인기 콘텐츠</h3>
         <ul class="footer-links">
-          <li><a href="/tests/teto-egen/">테토-에겐 테스트</a></li>
-          <li><a href="/tests/mbti/">MBTI 테스트</a></li>
-          <li><a href="/fortune/daily/">오늘의 운세</a></li>
-          <li><a href="/tools/text-counter.html">글자수 세기</a></li>
+          <li><a href="../../tests/teto-egen/">테토-에겐 테스트</a></li>
+          <li><a href="../../tests/mbti/">MBTI 테스트</a></li>
+          <li><a href="../../fortune/daily/">오늘의 운세</a></li>
+          <li><a href="../../tools/text-counter.html">글자수 세기</a></li>
         </ul>
       </div>
 
       <div class="footer-section">
         <h3>운세 서비스</h3>
         <ul class="footer-links">
-          <li><a href="/fortune/daily/">오늘의 운세</a></li>
-          <li><a href="/fortune/zodiac/">별자리 운세</a></li>
-          <li><a href="/fortune/zodiac-animal/">띠별 운세</a></li>
-          <li><a href="/fortune/tarot/">AI 타로</a></li>
+          <li><a href="../../fortune/daily/">오늘의 운세</a></li>
+          <li><a href="../../fortune/zodiac/">별자리 운세</a></li>
+          <li><a href="../../fortune/zodiac-animal/">띠별 운세</a></li>
+          <li><a href="../../fortune/tarot/">AI 타로</a></li>
         </ul>
       </div>
 
       <div class="footer-section">
         <h3>고객지원</h3>
         <ul class="footer-links">
-          <li><a href="/contact/">문의하기</a></li>
-          <li><a href="/faq/">자주 묻는 질문</a></li>
+          <li><a href="../../contact/">문의하기</a></li>
+          <li><a href="../../faq/">자주 묻는 질문</a></li>
         </ul>
       </div>
     </div>
 
     <div class="footer-bottom">
       <div class="footer-legal">
-        <a href="/privacy/">개인정보처리방침</a>
-        <a href="/terms/">이용약관</a>
+        <a href="../../privacy/">개인정보처리방침</a>
+        <a href="../../terms/">이용약관</a>
       </div>
       <p>&copy; 2025 doha.kr. All rights reserved.</p>
     </div>
@@ -329,24 +360,74 @@
     
     document.addEventListener('DOMContentLoaded', async () => {
       try {
-        console.log('🐀 띠별 운세 초기화 시작');
+        console.log('🐲 띠별 운세 초기화 시작');
         
-        // 띠별 운세 서비스 인스턴스 생성
+        // ZodiacAnimalFortuneService 인스턴스 생성
         zodiacAnimalFortuneService = new ZodiacAnimalFortuneService();
+        console.log('✅ 띠별 운세 서비스 생성됨');
         
-        // DohaKR 네임스페이스에 등록
-        if (window.DohaKR) {
-          window.DohaKR.services = window.DohaKR.services || {};
-          window.DohaKR.services.zodiacAnimalFortune = zodiacAnimalFortuneService;
-          console.log('✅ 띠별 운세 서비스 등록 완료');
+        // 폼 제출 이벤트 연결
+        const form = document.querySelector('form[data-form="zodiac-animal-fortune"]');
+        if (form) {
+          form.addEventListener('submit', handleZodiacAnimalSubmit);
+          console.log('✅ 폼 이벤트 연결됨');
         }
         
       } catch (error) {
         console.error('❌ 띠별 운세 초기화 실패:', error);
       }
     });
+    
+    async function handleZodiacAnimalSubmit(event) {
+      event.preventDefault();
+      
+      try {
+        console.log('🐲 띠별 운세 분석 시작');
+        
+        // 폼 데이터 수집
+        const formData = new FormData(event.target);
+        const userData = {
+          name: formData.get('userName'),
+          zodiacAnimal: formData.get('zodiacAnimal')
+        };
+        
+        // 입력 검증
+        if (!userData.name || !userData.zodiacAnimal) {
+          alert('이름과 띠를 모두 선택해주세요.');
+          return;
+        }
+        
+        console.log('📋 띠별 운세 데이터:', userData);
+        
+        // 띠별 운세 분석 실행
+        await zodiacAnimalFortuneService.generateFortune(userData);
+        
+      } catch (error) {
+        console.error('❌ 띠별 운세 분석 실패:', error);
+        alert('띠별 운세 분석 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+      }
+    }
+    
+    // 전역 접근을 위한 설정
+    window.zodiacAnimalFortuneService = zodiacAnimalFortuneService;
   </script>
   
+  <!-- Core JavaScript Modules -->
+  <script type="module" src="../../js/app.js"></script>
+  <script type="module" src="../../js/features/fortune/zodiac-animal-fortune.js"></script>
+  
+  <!-- Zodiac Animal Fortune Initialization -->
+  <script type="module">
+    import { ZodiacAnimalFortuneService } from '../../js/features/fortune/zodiac-animal-fortune.js';
+    
+    // Initialize service when DOM is ready
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('🐲 Zodiac Animal Fortune Service 초기화 시작');
+      window.zodiacAnimalFortuneService = new ZodiacAnimalFortuneService();
+      console.log('✅ Zodiac Animal Fortune Service 준비됨');
+    });
+  </script>
+
   <!-- Structured Data -->
   <script type="application/ld+json">
   {

@@ -3,7 +3,7 @@
 
 // 환경별 허용 도메인 설정
 const getAllowedOrigins = () => {
-  const env = process.env.NODE_ENV || 'production';
+  const env = process.env.NODE_ENV || 'development';
 
   // 기본 허용 도메인
   const allowedOrigins = [
@@ -13,14 +13,15 @@ const getAllowedOrigins = () => {
   ];
 
   // 개발 환경에서만 localhost 허용
-  if (env === 'development') {
+  if (env === 'development' || !process.env.VERCEL_ENV) {
     allowedOrigins.push(
       'http://localhost:5173', // Vite 개발 서버
       'http://localhost:5174', // Vite 대체 포트
       'http://localhost:3000', // 기타 개발 서버
       'http://localhost:8080', // Webpack 개발 서버
       'http://127.0.0.1:5173', // Vite IP 주소
-      'http://127.0.0.1:3000' // 기타 IP 주소
+      'http://127.0.0.1:3000', // 기타 IP 주소
+      'null' // 파일:// 프로토콜 지원
     );
   }
 

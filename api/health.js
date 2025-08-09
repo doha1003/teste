@@ -14,24 +14,13 @@ export default async function handler(req, res) {
   const requestStart = Date.now();
 
   try {
-    // CORS 헤더 설정
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    // CORS 및 보안 헤더 설정 (통합 방식 사용)
+    const { setCorsHeaders, validateRequest } = await import('./cors-config.js');
+    setCorsHeaders(req, res);
 
-    // OPTIONS 요청 처리 (preflight)
-    if (req.method === 'OPTIONS') {
-      res.status(200).end();
+    // 요청 검증 (OPTIONS 및 메소드 체크 포함)
+    if (validateRequest(req, res, ['GET'])) {
       return;
-    }
-
-    // GET 요청만 허용
-    if (req.method !== 'GET') {
-      return res.status(405).json({
-        status: 'error',
-        message: 'Method not allowed',
-        allowedMethods: ['GET'],
-      });
     }
 
     // 캐시된 응답 확인 (성능 최적화)

@@ -70,4 +70,611 @@ class IOSSafariOptimizer {
   /**
    * 초기화
    */
-  init() {\n    this.detectIOSEnvironment();\n    \n    if (this.state.isIOSDevice) {\n      this.setupIOSOptimizations();\n      this.setupSafeAreaHandling();\n      this.setupTouchOptimization();\n      this.setupViewportHandling();\n      this.setupPWASpecificFeatures();\n      this.setupIOSInstallPrompt();\n      \n      console.log('[iOS Safari] iOS 최적화 적용됨:', this.state);\n    }\n    \n    // 모든 브라우저에서 공통 적용할 터치 개선사항\n    this.setupUniversalTouchImprovements();\n  }\n  \n  /**\n   * iOS 환경 감지\n   */\n  detectIOSEnvironment() {\n    this.state.isIOSDevice = this.config.detection.iOS;\n    this.state.isSafari = this.config.detection.Safari;\n    this.state.isPWAMode = this.config.detection.PWAMode;\n    this.state.orientation = this.getOrientation();\n    \n    // iOS 버전별 특별 처리\n    const iosVersion = this.config.detection.version;\n    if (iosVersion) {\n      this.handleIOSVersionSpecifics(iosVersion);\n    }\n    \n    // Body에 클래스 추가\n    document.body.classList.toggle('ios-device', this.state.isIOSDevice);\n    document.body.classList.toggle('safari-browser', this.state.isSafari);\n    document.body.classList.toggle('pwa-mode', this.state.isPWAMode);\n  }\n  \n  /**\n   * iOS 최적화 설정\n   */\n  setupIOSOptimizations() {\n    // CSS 변수 설정\n    this.setCSSOptimizations();\n    \n    // 메타 태그 동적 설정\n    this.setIOSMetaTags();\n    \n    // 스크롤 최적화\n    this.setupScrollOptimization();\n    \n    // 터치 피드백 최적화\n    this.setupTouchFeedback();\n    \n    // 키보드 처리\n    this.setupKeyboardHandling();\n  }\n  \n  /**\n   * CSS 최적화 설정\n   */\n  setCSSOptimizations() {\n    const style = document.createElement('style');\n    style.id = 'ios-safari-optimizations';\n    style.textContent = `\n      :root {\n        /* iOS Safe Area 변수 */\n        --safe-area-inset-top: env(safe-area-inset-top);\n        --safe-area-inset-right: env(safe-area-inset-right);\n        --safe-area-inset-bottom: env(safe-area-inset-bottom);\n        --safe-area-inset-left: env(safe-area-inset-left);\n      }\n      \n      /* iOS 전용 최적화 */\n      .ios-device {\n        /* 터치 최적화 */\n        -webkit-touch-callout: none;\n        -webkit-text-size-adjust: 100%;\n        -webkit-tap-highlight-color: transparent;\n        \n        /* 스크롤 최적화 */\n        -webkit-overflow-scrolling: touch;\n        overscroll-behavior: none;\n      }\n      \n      /* PWA 모드 최적화 */\n      .pwa-mode {\n        /* 상태바 영역 고려 */\n        padding-top: env(safe-area-inset-top);\n        padding-bottom: env(safe-area-inset-bottom);\n      }\n      \n      /* 터치 타겟 최적화 */\n      .ios-device button,\n      .ios-device [role=\"button\"],\n      .ios-device .btn {\n        min-height: 44px;\n        min-width: 44px;\n        touch-action: manipulation;\n      }\n      \n      /* 스크롤 영역 최적화 */\n      .ios-device .scroll-container {\n        -webkit-overflow-scrolling: touch;\n        overflow-scrolling: touch;\n      }\n      \n      /* 입력 필드 최적화 */\n      .ios-device input,\n      .ios-device textarea,\n      .ios-device select {\n        -webkit-appearance: none;\n        -webkit-border-radius: 0;\n        border-radius: 8px;\n        font-size: 16px; /* 줌 방지 */\n      }\n      \n      /* 터치 피드백 */\n      .ios-device .touch-feedback {\n        -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);\n        transition: background-color 0.1s ease;\n      }\n      \n      .ios-device .touch-feedback:active {\n        background-color: rgba(0, 0, 0, 0.05);\n      }\n      \n      /* 스크롤 락 */\n      .ios-device.scroll-locked {\n        position: fixed;\n        width: 100%;\n        overflow: hidden;\n      }\n      \n      /* Safari 바 숨김 처리 */\n      .safari-browser.pwa-mode {\n        /* 전체 화면 활용 */\n        height: 100vh;\n        height: -webkit-fill-available;\n      }\n    `;\n    \n    document.head.appendChild(style);\n  }\n  \n  /**\n   * iOS 메타 태그 설정\n   */\n  setIOSMetaTags() {\n    // 기존 메타 태그 확인 및 업데이트\n    this.updateMetaTag('apple-mobile-web-app-capable', 'yes');\n    this.updateMetaTag('apple-mobile-web-app-status-bar-style', 'default');\n    this.updateMetaTag('apple-mobile-web-app-title', 'doha.kr');\n    \n    // 뷰포트 최적화\n    const viewportMeta = document.querySelector('meta[name=\"viewport\"]');\n    if (viewportMeta) {\n      viewportMeta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover';\n    }\n  }\n  \n  /**\n   * Safe Area 처리\n   */\n  setupSafeAreaHandling() {\n    // Safe Area Inset 값 계산\n    this.calculateSafeAreaInsets();\n    \n    // 오리엔테이션 변경 감지\n    window.addEventListener('orientationchange', () => {\n      setTimeout(() => {\n        this.handleOrientationChange();\n      }, this.config.viewport.orientationChangeDelay);\n    });\n    \n    // 리사이즈 이벤트\n    window.addEventListener('resize', this.debounce(() => {\n      this.calculateSafeAreaInsets();\n    }, 300));\n  }\n  \n  /**\n   * 터치 최적화\n   */\n  setupTouchOptimization() {\n    // 패시브 이벤트 리스너 설정\n    const passiveOptions = this.config.performance.passiveEventListeners ? \n      { passive: true } : false;\n    \n    // 터치 이벤트 통합 처리\n    document.addEventListener('touchstart', (e) => {\n      this.handleTouchStart(e);\n    }, passiveOptions);\n    \n    document.addEventListener('touchmove', (e) => {\n      this.handleTouchMove(e);\n    }, { passive: false }); // 스크롤 제어를 위해 passive: false\n    \n    document.addEventListener('touchend', (e) => {\n      this.handleTouchEnd(e);\n    }, passiveOptions);\n    \n    // 더블 탭 줌 방지\n    this.preventDoubleZoom();\n    \n    // 스와이프 제스처 설정\n    this.setupSwipeGestures();\n  }\n  \n  /**\n   * 터치 시작 처리\n   */\n  handleTouchStart(e) {\n    this.state.touchStartTime = Date.now();\n    this.state.touchStartPos = {\n      x: e.touches[0].clientX,\n      y: e.touches[0].clientY,\n    };\n    \n    // 터치 피드백 추가\n    this.addTouchFeedback(e.target);\n  }\n  \n  /**\n   * 터치 이동 처리\n   */\n  handleTouchMove(e) {\n    if (!this.state.touchStartPos) return;\n    \n    const currentPos = {\n      x: e.touches[0].clientX,\n      y: e.touches[0].clientY,\n    };\n    \n    const deltaX = Math.abs(currentPos.x - this.state.touchStartPos.x);\n    const deltaY = Math.abs(currentPos.y - this.state.touchStartPos.y);\n    \n    // 스크롤이 감지되면 터치 피드백 제거\n    if (deltaX > this.config.touch.scrollThreshold || \n        deltaY > this.config.touch.scrollThreshold) {\n      this.removeTouchFeedback();\n    }\n    \n    // 바운스 스크롤 방지 (필요시)\n    if (this.config.ui.bounceScrollDisabled) {\n      this.preventBounceScroll(e);\n    }\n  }\n  \n  /**\n   * 터치 종료 처리\n   */\n  handleTouchEnd(e) {\n    const touchEndTime = Date.now();\n    const touchDuration = touchEndTime - this.state.touchStartTime;\n    \n    // 터치 피드백 제거\n    setTimeout(() => {\n      this.removeTouchFeedback();\n    }, 100);\n    \n    // 탭 제스처 감지\n    if (this.state.touchStartPos && touchDuration < this.config.touch.maxTapTime) {\n      const endPos = {\n        x: e.changedTouches[0].clientX,\n        y: e.changedTouches[0].clientY,\n      };\n      \n      const distance = Math.sqrt(\n        Math.pow(endPos.x - this.state.touchStartPos.x, 2) +\n        Math.pow(endPos.y - this.state.touchStartPos.y, 2)\n      );\n      \n      if (distance < this.config.touch.maxTapDistance) {\n        this.handleTap(e, endPos);\n      }\n    }\n    \n    // 상태 초기화\n    this.state.touchStartTime = 0;\n    this.state.touchStartPos = null;\n  }\n  \n  /**\n   * 뷰포트 처리 설정\n   */\n  setupViewportHandling() {\n    // Visual Viewport API 지원 확인\n    if (window.visualViewport) {\n      window.visualViewport.addEventListener('resize', () => {\n        this.handleVisualViewportChange();\n      });\n    }\n    \n    // 화면 크기 변경 대응\n    this.setupResponsiveHandling();\n  }\n  \n  /**\n   * PWA 전용 기능 설정\n   */\n  setupPWASpecificFeatures() {\n    if (this.state.isPWAMode) {\n      // PWA 모드에서의 특별 처리\n      this.setupPWAModeOptimizations();\n    } else {\n      // 브라우저 모드에서의 Safari 바 처리\n      this.setupSafariBarHiding();\n    }\n  }\n  \n  /**\n   * iOS PWA 설치 안내\n   */\n  setupIOSInstallPrompt() {\n    // iOS는 자동 설치 프롬프트가 없으므로 수동 안내\n    if (this.state.isIOSDevice && this.state.isSafari && !this.state.isPWAMode) {\n      this.showIOSInstallInstructions();\n    }\n  }\n  \n  /**\n   * iOS 설치 안내 표시\n   */\n  showIOSInstallInstructions() {\n    // 이미 안내를 본 사용자는 제외\n    const dismissed = localStorage.getItem('ios-install-instructions-dismissed');\n    if (dismissed && Date.now() - parseInt(dismissed) < 30 * 24 * 60 * 60 * 1000) {\n      return; // 30일 동안 표시하지 않음\n    }\n    \n    // 페이지 로드 후 일정 시간 뒤 표시\n    setTimeout(() => {\n      this.createIOSInstallPrompt();\n    }, 3000);\n  }\n  \n  /**\n   * iOS 설치 프롬프트 생성\n   */\n  createIOSInstallPrompt() {\n    const prompt = document.createElement('div');\n    prompt.id = 'ios-install-prompt';\n    prompt.innerHTML = `\n      <div class=\"ios-install-content\">\n        <div class=\"ios-install-header\">\n          <div class=\"ios-install-icon\">📱</div>\n          <h3>홈 화면에 추가하기</h3>\n          <button class=\"ios-install-close\">&times;</button>\n        </div>\n        \n        <div class=\"ios-install-body\">\n          <p>더 편리하게 이용하려면 홈 화면에 추가하세요!</p>\n          \n          <div class=\"ios-install-steps\">\n            <div class=\"step\">\n              <div class=\"step-icon\">📤</div>\n              <div class=\"step-text\">하단의 공유 버튼을 누르세요</div>\n            </div>\n            \n            <div class=\"step\">\n              <div class=\"step-icon\">➕</div>\n              <div class=\"step-text\">\"홈 화면에 추가\"를 선택하세요</div>\n            </div>\n            \n            <div class=\"step\">\n              <div class=\"step-icon\">✅</div>\n              <div class=\"step-text\">\"추가\"를 눌러 완료하세요</div>\n            </div>\n          </div>\n        </div>\n        \n        <div class=\"ios-install-footer\">\n          <button class=\"ios-install-dismiss\">나중에 하기</button>\n        </div>\n      </div>\n    `;\n    \n    // 스타일 적용\n    this.applyIOSInstallPromptStyles(prompt);\n    \n    // 이벤트 리스너\n    this.setupIOSInstallPromptEvents(prompt);\n    \n    // DOM에 추가\n    document.body.appendChild(prompt);\n    \n    // 애니메이션과 함께 표시\n    setTimeout(() => {\n      prompt.classList.add('visible');\n    }, 100);\n  }\n  \n  /**\n   * 공통 터치 개선사항\n   */\n  setupUniversalTouchImprovements() {\n    // 모든 브라우저에서 적용할 터치 개선사항\n    this.improveButtonTouchTargets();\n    this.setupTouchActionOptimization();\n    this.improveScrollPerformance();\n  }\n  \n  /**\n   * 버튼 터치 타겟 개선\n   */\n  improveButtonTouchTargets() {\n    const buttons = document.querySelectorAll('button, [role=\"button\"], .btn');\n    \n    buttons.forEach(button => {\n      const rect = button.getBoundingClientRect();\n      \n      // 44px 미만의 터치 타겟 개선\n      if (rect.width < 44 || rect.height < 44) {\n        button.style.minWidth = '44px';\n        button.style.minHeight = '44px';\n        button.style.padding = Math.max(\n          parseInt(getComputedStyle(button).padding) || 0,\n          8\n        ) + 'px';\n      }\n      \n      // 터치 액션 최적화\n      button.style.touchAction = 'manipulation';\n    });\n  }\n  \n  /**\n   * 스크롤 성능 개선\n   */\n  improveScrollPerformance() {\n    const scrollContainers = document.querySelectorAll(\n      '.scroll-container, [data-scroll], .overflow-auto, .overflow-scroll'\n    );\n    \n    scrollContainers.forEach(container => {\n      if (this.state.isIOSDevice) {\n        container.style.webkitOverflowScrolling = 'touch';\n      }\n      container.style.overscrollBehavior = 'contain';\n    });\n  }\n  \n  /**\n   * 키보드 처리\n   */\n  setupKeyboardHandling() {\n    // iOS에서 키보드가 나타날 때 뷰포트 조정\n    if (window.visualViewport) {\n      window.visualViewport.addEventListener('resize', () => {\n        const currentHeight = window.visualViewport.height;\n        const fullHeight = window.screen.height;\n        \n        // 키보드가 나타났는지 감지 (높이가 75% 미만으로 줄어들면)\n        const keyboardVisible = currentHeight < fullHeight * 0.75;\n        \n        document.body.classList.toggle('keyboard-visible', keyboardVisible);\n        \n        if (keyboardVisible) {\n          this.handleKeyboardShow(currentHeight);\n        } else {\n          this.handleKeyboardHide();\n        }\n      });\n    }\n  }\n  \n  /**\n   * 키보드 표시 처리\n   */\n  handleKeyboardShow(viewportHeight) {\n    // 활성 입력 필드가 키보드에 가려지지 않도록 스크롤\n    const activeElement = document.activeElement;\n    \n    if (activeElement && this.isInputElement(activeElement)) {\n      setTimeout(() => {\n        activeElement.scrollIntoView({\n          behavior: 'smooth',\n          block: 'center',\n        });\n      }, 300);\n    }\n  }\n  \n  /**\n   * 키보드 숨김 처리\n   */\n  handleKeyboardHide() {\n    // 키보드가 사라진 후 뷰포트 복원\n    window.scrollTo(0, 0);\n  }\n  \n  /**\n   * 유틸리티 메서드들\n   */\n  \n  getIOSVersion() {\n    const match = navigator.userAgent.match(/OS (\\d+)_?(\\d+)?_?(\\d+)?/);\n    if (match) {\n      return {\n        major: parseInt(match[1], 10),\n        minor: parseInt(match[2] || '0', 10),\n        patch: parseInt(match[3] || '0', 10),\n      };\n    }\n    return null;\n  }\n  \n  getOrientation() {\n    if (screen.orientation) {\n      return screen.orientation.type;\n    }\n    return window.orientation ? 'landscape' : 'portrait';\n  }\n  \n  updateMetaTag(name, content) {\n    let meta = document.querySelector(`meta[name=\"${name}\"]`);\n    if (!meta) {\n      meta = document.createElement('meta');\n      meta.name = name;\n      document.head.appendChild(meta);\n    }\n    meta.content = content;\n  }\n  \n  calculateSafeAreaInsets() {\n    if (CSS.supports('padding: env(safe-area-inset-top)')) {\n      // CSS 환경 변수로 자동 처리됨\n      return;\n    }\n    \n    // 폴백: 수동 계산\n    this.state.safeAreaInsets = {\n      top: 0,\n      right: 0,\n      bottom: 0,\n      left: 0,\n    };\n    \n    // iPhone X 이상에서 노치 영역 고려\n    if (this.hasNotch()) {\n      this.state.safeAreaInsets.top = 44;\n      this.state.safeAreaInsets.bottom = 34;\n    }\n  }\n  \n  hasNotch() {\n    if (this.state.isIOSDevice) {\n      const iosVersion = this.config.detection.version;\n      if (iosVersion && iosVersion.major >= 11) {\n        // iPhone X 이상 감지 (대략적)\n        return window.screen.height >= 812;\n      }\n    }\n    return false;\n  }\n  \n  isInputElement(element) {\n    const inputTypes = ['input', 'textarea', 'select'];\n    return inputTypes.includes(element.tagName.toLowerCase()) ||\n           element.contentEditable === 'true';\n  }\n  \n  debounce(func, wait) {\n    let timeout;\n    return function executedFunction(...args) {\n      const later = () => {\n        clearTimeout(timeout);\n        func(...args);\n      };\n      clearTimeout(timeout);\n      timeout = setTimeout(later, wait);\n    };\n  }\n  \n  // ... 기타 메서드들 계속 구현\n  \n  addTouchFeedback(element) {\n    // 터치 피드백 추가 로직\n  }\n  \n  removeTouchFeedback() {\n    // 터치 피드백 제거 로직\n  }\n  \n  preventDoubleZoom() {\n    // 더블 탭 줌 방지 로직\n  }\n  \n  // ... 나머지 메서드들\n}\n\n// 전역 인스턴스 생성\nif (typeof window !== 'undefined') {\n  window.IOSSafariOptimizer = IOSSafariOptimizer;\n  \n  // 자동 초기화\n  if (document.readyState === 'loading') {\n    document.addEventListener('DOMContentLoaded', () => {\n      window.iosSafariOptimizer = new IOSSafariOptimizer();\n    });\n  } else {\n    window.iosSafariOptimizer = new IOSSafariOptimizer();\n  }\n}\n\nexport default IOSSafariOptimizer;"
+  init() {
+this.detectIOSEnvironment();
+
+if (this.state.isIOSDevice) {
+this.setupIOSOptimizations();
+this.setupSafeAreaHandling();
+this.setupTouchOptimization();
+this.setupViewportHandling();
+this.setupPWASpecificFeatures();
+this.setupIOSInstallPrompt();
+
+console.log('[iOS Safari] iOS 최적화 적용됨:', this.state);
+}
+
+// 모든 브라우저에서 공통 적용할 터치 개선사항
+this.setupUniversalTouchImprovements();
+}
+
+/**
+* iOS 환경 감지
+*/
+detectIOSEnvironment() {
+this.state.isIOSDevice = this.config.detection.iOS;
+this.state.isSafari = this.config.detection.Safari;
+this.state.isPWAMode = this.config.detection.PWAMode;
+this.state.orientation = this.getOrientation();
+
+// iOS 버전별 특별 처리
+const iosVersion = this.config.detection.version;
+if (iosVersion) {
+this.handleIOSVersionSpecifics(iosVersion);
+}
+
+// Body에 클래스 추가
+document.body.classList.toggle('ios-device', this.state.isIOSDevice);
+document.body.classList.toggle('safari-browser', this.state.isSafari);
+document.body.classList.toggle('pwa-mode', this.state.isPWAMode);
+}
+
+/**
+* iOS 최적화 설정
+*/
+setupIOSOptimizations() {
+// CSS 변수 설정
+this.setCSSOptimizations();
+
+// 메타 태그 동적 설정
+this.setIOSMetaTags();
+
+// 스크롤 최적화
+this.setupScrollOptimization();
+
+// 터치 피드백 최적화
+this.setupTouchFeedback();
+
+// 키보드 처리
+this.setupKeyboardHandling();
+}
+
+/**
+* CSS 최적화 설정
+*/
+setCSSOptimizations() {
+const style = document.createElement('style');
+style.id = 'ios-safari-optimizations';
+style.textContent = `
+:root {
+/* iOS Safe Area 변수 */
+--safe-area-inset-top: env(safe-area-inset-top);
+--safe-area-inset-right: env(safe-area-inset-right);
+--safe-area-inset-bottom: env(safe-area-inset-bottom);
+--safe-area-inset-left: env(safe-area-inset-left);
+}
+
+/* iOS 전용 최적화 */
+.ios-device {
+/* 터치 최적화 */
+-webkit-touch-callout: none;
+-webkit-text-size-adjust: 100%;
+-webkit-tap-highlight-color: transparent;
+
+/* 스크롤 최적화 */
+-webkit-overflow-scrolling: touch;
+overscroll-behavior: none;
+}
+
+/* PWA 모드 최적화 */
+.pwa-mode {
+/* 상태바 영역 고려 */
+padding-top: env(safe-area-inset-top);
+padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* 터치 타겟 최적화 */
+.ios-device button,
+.ios-device [role=\"button\"],
+.ios-device .btn {
+min-height: 44px;
+min-width: 44px;
+touch-action: manipulation;
+}
+
+/* 스크롤 영역 최적화 */
+.ios-device .scroll-container {
+-webkit-overflow-scrolling: touch;
+overflow-scrolling: touch;
+}
+
+/* 입력 필드 최적화 */
+.ios-device input,
+.ios-device textarea,
+.ios-device select {
+-webkit-appearance: none;
+-webkit-border-radius: 0;
+border-radius: 8px;
+font-size: 16px; /* 줌 방지 */
+}
+
+/* 터치 피드백 */
+.ios-device .touch-feedback {
+-webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+transition: background-color 0.1s ease;
+}
+
+.ios-device .touch-feedback:active {
+background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* 스크롤 락 */
+.ios-device.scroll-locked {
+position: fixed;
+width: 100%;
+overflow: hidden;
+}
+
+/* Safari 바 숨김 처리 */
+.safari-browser.pwa-mode {
+/* 전체 화면 활용 */
+height: 100vh;
+height: -webkit-fill-available;
+}
+`;
+
+document.head.appendChild(style);
+}
+
+/**
+* iOS 메타 태그 설정
+*/
+setIOSMetaTags() {
+// 기존 메타 태그 확인 및 업데이트
+this.updateMetaTag('apple-mobile-web-app-capable', 'yes');
+this.updateMetaTag('apple-mobile-web-app-status-bar-style', 'default');
+this.updateMetaTag('apple-mobile-web-app-title', 'doha.kr');
+
+// 뷰포트 최적화
+const viewportMeta = document.querySelector('meta[name=\"viewport\"]');
+if (viewportMeta) {
+viewportMeta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover';
+}
+}
+
+/**
+* Safe Area 처리
+*/
+setupSafeAreaHandling() {
+// Safe Area Inset 값 계산
+this.calculateSafeAreaInsets();
+
+// 오리엔테이션 변경 감지
+window.addEventListener('orientationchange', () => {
+setTimeout(() => {
+this.handleOrientationChange();
+}, this.config.viewport.orientationChangeDelay);
+});
+
+// 리사이즈 이벤트
+window.addEventListener('resize', this.debounce(() => {
+this.calculateSafeAreaInsets();
+}, 300));
+}
+
+/**
+* 터치 최적화
+*/
+setupTouchOptimization() {
+// 패시브 이벤트 리스너 설정
+const passiveOptions = this.config.performance.passiveEventListeners ? 
+{ passive: true } : false;
+
+// 터치 이벤트 통합 처리
+document.addEventListener('touchstart', (e) => {
+this.handleTouchStart(e);
+}, passiveOptions);
+
+document.addEventListener('touchmove', (e) => {
+this.handleTouchMove(e);
+}, { passive: false }); // 스크롤 제어를 위해 passive: false
+
+document.addEventListener('touchend', (e) => {
+this.handleTouchEnd(e);
+}, passiveOptions);
+
+// 더블 탭 줌 방지
+this.preventDoubleZoom();
+
+// 스와이프 제스처 설정
+this.setupSwipeGestures();
+}
+
+/**
+* 터치 시작 처리
+*/
+handleTouchStart(e) {
+this.state.touchStartTime = Date.now();
+this.state.touchStartPos = {
+x: e.touches[0].clientX,
+y: e.touches[0].clientY,
+};
+
+// 터치 피드백 추가
+this.addTouchFeedback(e.target);
+}
+
+/**
+* 터치 이동 처리
+*/
+handleTouchMove(e) {
+if (!this.state.touchStartPos) return;
+
+const currentPos = {
+x: e.touches[0].clientX,
+y: e.touches[0].clientY,
+};
+
+const deltaX = Math.abs(currentPos.x - this.state.touchStartPos.x);
+const deltaY = Math.abs(currentPos.y - this.state.touchStartPos.y);
+
+// 스크롤이 감지되면 터치 피드백 제거
+if (deltaX > this.config.touch.scrollThreshold || 
+deltaY > this.config.touch.scrollThreshold) {
+this.removeTouchFeedback();
+}
+
+// 바운스 스크롤 방지 (필요시)
+if (this.config.ui.bounceScrollDisabled) {
+this.preventBounceScroll(e);
+}
+}
+
+/**
+* 터치 종료 처리
+*/
+handleTouchEnd(e) {
+const touchEndTime = Date.now();
+const touchDuration = touchEndTime - this.state.touchStartTime;
+
+// 터치 피드백 제거
+setTimeout(() => {
+this.removeTouchFeedback();
+}, 100);
+
+// 탭 제스처 감지
+if (this.state.touchStartPos && touchDuration < this.config.touch.maxTapTime) {
+const endPos = {
+x: e.changedTouches[0].clientX,
+y: e.changedTouches[0].clientY,
+};
+
+const distance = Math.sqrt(
+Math.pow(endPos.x - this.state.touchStartPos.x, 2) +
+Math.pow(endPos.y - this.state.touchStartPos.y, 2)
+);
+
+if (distance < this.config.touch.maxTapDistance) {
+this.handleTap(e, endPos);
+}
+}
+
+// 상태 초기화
+this.state.touchStartTime = 0;
+this.state.touchStartPos = null;
+}
+
+/**
+* 뷰포트 처리 설정
+*/
+setupViewportHandling() {
+// Visual Viewport API 지원 확인
+if (window.visualViewport) {
+window.visualViewport.addEventListener('resize', () => {
+this.handleVisualViewportChange();
+});
+}
+
+// 화면 크기 변경 대응
+this.setupResponsiveHandling();
+}
+
+/**
+* PWA 전용 기능 설정
+*/
+setupPWASpecificFeatures() {
+if (this.state.isPWAMode) {
+// PWA 모드에서의 특별 처리
+this.setupPWAModeOptimizations();
+} else {
+// 브라우저 모드에서의 Safari 바 처리
+this.setupSafariBarHiding();
+}
+}
+
+/**
+* iOS PWA 설치 안내
+*/
+setupIOSInstallPrompt() {
+// iOS는 자동 설치 프롬프트가 없으므로 수동 안내
+if (this.state.isIOSDevice && this.state.isSafari && !this.state.isPWAMode) {
+this.showIOSInstallInstructions();
+}
+}
+
+/**
+* iOS 설치 안내 표시
+*/
+showIOSInstallInstructions() {
+// 이미 안내를 본 사용자는 제외
+const dismissed = localStorage.getItem('ios-install-instructions-dismissed');
+if (dismissed && Date.now() - parseInt(dismissed) < 30 * 24 * 60 * 60 * 1000) {
+return; // 30일 동안 표시하지 않음
+}
+
+// 페이지 로드 후 일정 시간 뒤 표시
+setTimeout(() => {
+this.createIOSInstallPrompt();
+}, 3000);
+}
+
+/**
+* iOS 설치 프롬프트 생성
+*/
+createIOSInstallPrompt() {
+const prompt = document.createElement('div');
+prompt.id = 'ios-install-prompt';
+prompt.innerHTML = `
+<div class=\"ios-install-content\">
+<div class=\"ios-install-header\">
+<div class=\"ios-install-icon\">📱</div>
+<h3>홈 화면에 추가하기</h3>
+<button class=\"ios-install-close\">&times;</button>
+</div>
+
+<div class=\"ios-install-body\">
+<p>더 편리하게 이용하려면 홈 화면에 추가하세요!</p>
+
+<div class=\"ios-install-steps\">
+<div class=\"step\">
+<div class=\"step-icon\">📤</div>
+<div class=\"step-text\">하단의 공유 버튼을 누르세요</div>
+</div>
+
+<div class=\"step\">
+<div class=\"step-icon\">➕</div>
+<div class=\"step-text\">\"홈 화면에 추가\"를 선택하세요</div>
+</div>
+
+<div class=\"step\">
+<div class=\"step-icon\">✅</div>
+<div class=\"step-text\">\"추가\"를 눌러 완료하세요</div>
+</div>
+</div>
+</div>
+
+<div class=\"ios-install-footer\">
+<button class=\"ios-install-dismiss\">나중에 하기</button>
+</div>
+</div>
+`;
+
+// 스타일 적용
+this.applyIOSInstallPromptStyles(prompt);
+
+// 이벤트 리스너
+this.setupIOSInstallPromptEvents(prompt);
+
+// DOM에 추가
+document.body.appendChild(prompt);
+
+// 애니메이션과 함께 표시
+setTimeout(() => {
+prompt.classList.add('visible');
+}, 100);
+}
+
+/**
+* 공통 터치 개선사항
+*/
+setupUniversalTouchImprovements() {
+// 모든 브라우저에서 적용할 터치 개선사항
+this.improveButtonTouchTargets();
+this.setupTouchActionOptimization();
+this.improveScrollPerformance();
+}
+
+/**
+* 버튼 터치 타겟 개선
+*/
+improveButtonTouchTargets() {
+const buttons = document.querySelectorAll('button, [role=\"button\"], .btn');
+
+buttons.forEach(button => {
+const rect = button.getBoundingClientRect();
+
+// 44px 미만의 터치 타겟 개선
+if (rect.width < 44 || rect.height < 44) {
+button.style.minWidth = '44px';
+button.style.minHeight = '44px';
+button.style.padding = Math.max(
+parseInt(getComputedStyle(button).padding) || 0,
+8
+) + 'px';
+}
+
+// 터치 액션 최적화
+button.style.touchAction = 'manipulation';
+});
+}
+
+/**
+* 스크롤 성능 개선
+*/
+improveScrollPerformance() {
+const scrollContainers = document.querySelectorAll(
+'.scroll-container, [data-scroll], .overflow-auto, .overflow-scroll'
+);
+
+scrollContainers.forEach(container => {
+if (this.state.isIOSDevice) {
+container.style.webkitOverflowScrolling = 'touch';
+}
+container.style.overscrollBehavior = 'contain';
+});
+}
+
+/**
+* 키보드 처리
+*/
+setupKeyboardHandling() {
+// iOS에서 키보드가 나타날 때 뷰포트 조정
+if (window.visualViewport) {
+window.visualViewport.addEventListener('resize', () => {
+const currentHeight = window.visualViewport.height;
+const fullHeight = window.screen.height;
+
+// 키보드가 나타났는지 감지 (높이가 75% 미만으로 줄어들면)
+const keyboardVisible = currentHeight < fullHeight * 0.75;
+
+document.body.classList.toggle('keyboard-visible', keyboardVisible);
+
+if (keyboardVisible) {
+this.handleKeyboardShow(currentHeight);
+} else {
+this.handleKeyboardHide();
+}
+});
+}
+}
+
+/**
+* 키보드 표시 처리
+*/
+handleKeyboardShow(viewportHeight) {
+// 활성 입력 필드가 키보드에 가려지지 않도록 스크롤
+const activeElement = document.activeElement;
+
+if (activeElement && this.isInputElement(activeElement)) {
+setTimeout(() => {
+activeElement.scrollIntoView({
+behavior: 'smooth',
+block: 'center',
+});
+}, 300);
+}
+}
+
+/**
+* 키보드 숨김 처리
+*/
+handleKeyboardHide() {
+// 키보드가 사라진 후 뷰포트 복원
+window.scrollTo(0, 0);
+}
+
+/**
+* 유틸리티 메서드들
+*/
+
+getIOSVersion() {
+const match = navigator.userAgent.match(/OS (\\d+)_?(\\d+)?_?(\\d+)?/);
+if (match) {
+return {
+major: parseInt(match[1], 10),
+minor: parseInt(match[2] || '0', 10),
+patch: parseInt(match[3] || '0', 10),
+};
+}
+return null;
+}
+
+getOrientation() {
+if (screen.orientation) {
+return screen.orientation.type;
+}
+return window.orientation ? 'landscape' : 'portrait';
+}
+
+updateMetaTag(name, content) {
+let meta = document.querySelector(`meta[name=\"${name}\"]`);
+if (!meta) {
+meta = document.createElement('meta');
+meta.name = name;
+document.head.appendChild(meta);
+}
+meta.content = content;
+}
+
+calculateSafeAreaInsets() {
+if (CSS.supports('padding: env(safe-area-inset-top)')) {
+// CSS 환경 변수로 자동 처리됨
+return;
+}
+
+// 폴백: 수동 계산
+this.state.safeAreaInsets = {
+top: 0,
+right: 0,
+bottom: 0,
+left: 0,
+};
+
+// iPhone X 이상에서 노치 영역 고려
+if (this.hasNotch()) {
+this.state.safeAreaInsets.top = 44;
+this.state.safeAreaInsets.bottom = 34;
+}
+}
+
+hasNotch() {
+if (this.state.isIOSDevice) {
+const iosVersion = this.config.detection.version;
+if (iosVersion && iosVersion.major >= 11) {
+// iPhone X 이상 감지 (대략적)
+return window.screen.height >= 812;
+}
+}
+return false;
+}
+
+isInputElement(element) {
+const inputTypes = ['input', 'textarea', 'select'];
+return inputTypes.includes(element.tagName.toLowerCase()) ||
+element.contentEditable === 'true';
+}
+
+debounce(func, wait) {
+let timeout;
+return function executedFunction(...args) {
+const later = () => {
+clearTimeout(timeout);
+func(...args);
+};
+clearTimeout(timeout);
+timeout = setTimeout(later, wait);
+};
+}
+
+// ... 기타 메서드들 계속 구현
+
+addTouchFeedback(element) {
+// 터치 피드백 추가 로직
+}
+
+removeTouchFeedback() {
+// 터치 피드백 제거 로직
+}
+
+preventDoubleZoom() {
+// 더블 탭 줌 방지 로직
+}
+
+// ... 나머지 메서드들
+}
+
+// 전역 인스턴스 생성
+if (typeof window !== 'undefined') {
+window.IOSSafariOptimizer = IOSSafariOptimizer;
+
+// 자동 초기화
+if (document.readyState === 'loading') {
+document.addEventListener('DOMContentLoaded', () => {
+window.iosSafariOptimizer = new IOSSafariOptimizer();
+});
+} else {
+window.iosSafariOptimizer = new IOSSafariOptimizer();
+}
+}
+
+export default IOSSafariOptimizer;

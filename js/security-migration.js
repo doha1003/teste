@@ -124,8 +124,7 @@ function executeMigration() {
 // 특정 파일의 innerHTML 사용을 분석하는 함수
 function analyzeFile(content, filename) {
   const results = [];
-  const lines = content.split('
-');
+  const lines = content.split('\n');
 
   lines.forEach((line, index) => {
     // innerHTML 사용 감지

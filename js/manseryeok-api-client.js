@@ -362,7 +362,7 @@ if (manseryeokAPI['isDevelopmentEnvironment']()) {
       const start = performance.now();
       const result = await window.ManseryeokAPI.getManseryeokData(year, month, day);
       const end = performance.now();
-      }ms)`);
+      console.log(`[ManseryeokAPI] API call took ${(end - start).toFixed(2)}ms`);
       return result;
     },
   };

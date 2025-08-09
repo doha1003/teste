@@ -19,7 +19,7 @@
     <!-- Security Headers -->
     <meta
       http-equiv="Content-Security-Policy"
-      content="upgrade-insecure-requests; default-src 'self' https:; script-src 'self' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://cdn.jsdelivr.net; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https: https://doha-kr-ap.vercel.app;"
+      content="upgrade-insecure-requests; default-src 'self' https:; script-src 'unsafe-inline' 'self' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://cdn.jsdelivr.net; style-src 'unsafe-inline' 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net data:; img-src 'self' data: https:; connect-src 'self' https: https://doha-kr-ap.vercel.app; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;"
     />
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
@@ -214,47 +214,47 @@
         <div class="footer-section">
           <h3>서비스</h3>
           <ul class="footer-links">
-            <li><a href="/">홈</a></li>
-            <li><a href="/tests/">심리테스트</a></li>
-            <li><a href="/fortune/">운세</a></li>
-            <li><a href="/tools/">실용도구</a></li>
-            <li><a href="/about/">사이트 소개</a></li>
+            <li><a href="../../">홈</a></li>
+            <li><a href="../../tests/">심리테스트</a></li>
+            <li><a href="../../fortune/">운세</a></li>
+            <li><a href="../../tools/">실용도구</a></li>
+            <li><a href="../../about/">사이트 소개</a></li>
           </ul>
         </div>
 
         <div class="footer-section">
           <h3>인기 콘텐츠</h3>
           <ul class="footer-links">
-            <li><a href="/tests/teto-egen/">테토-에겐 테스트</a></li>
-            <li><a href="/tests/mbti/">MBTI 테스트</a></li>
-            <li><a href="/fortune/daily/">오늘의 운세</a></li>
-            <li><a href="/tools/text-counter.html">글자수 세기</a></li>
+            <li><a href="../../tests/teto-egen/">테토-에겐 테스트</a></li>
+            <li><a href="../../tests/mbti/">MBTI 테스트</a></li>
+            <li><a href="../../fortune/daily/">오늘의 운세</a></li>
+            <li><a href="../../tools/text-counter.html">글자수 세기</a></li>
           </ul>
         </div>
 
         <div class="footer-section">
           <h3>운세 서비스</h3>
           <ul class="footer-links">
-            <li><a href="/fortune/daily/">오늘의 운세</a></li>
-            <li><a href="/fortune/zodiac/">별자리 운세</a></li>
-            <li><a href="/fortune/zodiac-animal/">띠별 운세</a></li>
-            <li><a href="/fortune/tarot/">AI 타로</a></li>
+            <li><a href="../../fortune/daily/">오늘의 운세</a></li>
+            <li><a href="../../fortune/zodiac/">별자리 운세</a></li>
+            <li><a href="../../fortune/zodiac-animal/">띠별 운세</a></li>
+            <li><a href="../../fortune/tarot/">AI 타로</a></li>
           </ul>
         </div>
 
         <div class="footer-section">
           <h3>고객지원</h3>
           <ul class="footer-links">
-            <li><a href="/contact/">문의하기</a></li>
-            <li><a href="/faq/">자주 묻는 질문</a></li>
+            <li><a href="../../contact/">문의하기</a></li>
+            <li><a href="../../faq/">자주 묻는 질문</a></li>
           </ul>
         </div>
       </div>
 
       <div class="footer-bottom">
         <div class="footer-legal">
-          <a href="/privacy/">개인정보처리방침</a>
-          <a href="/terms/">이용약관</a>
+          <a href="../../privacy/">개인정보처리방침</a>
+          <a href="../../terms/">이용약관</a>
         </div>
         <p>&copy; 2025 doha.kr. All rights reserved.</p>
       </div>
@@ -400,6 +400,22 @@
       
       // 전역 접근을 위한 설정
       window.dailyFortuneService = dailyFortuneService;
+    </script>
+
+    <!-- Core JavaScript Modules -->
+    <script type="module" src="../../js/app.js"></script>
+    <script type="module" src="../../js/features/fortune/daily-fortune.js"></script>
+    
+    <!-- Daily Fortune Initialization -->
+    <script type="module">
+      import { DailyFortuneService } from '../../js/features/fortune/daily-fortune.js';
+      
+      // Initialize service when DOM is ready
+      document.addEventListener('DOMContentLoaded', function() {
+        console.log('🌟 Daily Fortune Service 초기화 시작');
+        window.dailyFortuneService = new DailyFortuneService();
+        console.log('✅ Daily Fortune Service 준비됨');
+      });
     </script>
 
     <!-- Structured Data -->

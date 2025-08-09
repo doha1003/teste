@@ -11,4 +11,733 @@
  */
 
 class MobileTouchOptimizer {
-  constructor() {\n    this.config = {\n      // 터치 설정\n      touch: {\n        fastTapDelay: 300, // 빠른 탭 인식 시간\n        longTapDelay: 500, // 롱 탭 인식 시간\n        maxTapDistance: 10, // 탭 최대 이동 거리\n        swipeThreshold: 50, // 스와이프 최소 거리\n        swipeMaxTime: 1000, // 스와이프 최대 시간\n        preventDoubleZoom: true, // 더블 탭 줌 방지\n      },\n      \n      // 스크롤 최적화\n      scroll: {\n        enablePassive: true, // 패시브 스크롤\n        improveInertia: true, // 관성 스크롤 개선\n        preventOverscroll: true, // 오버스크롤 방지\n        enableSnapPoints: false, // 스냅 포인트 (필요시)\n      },\n      \n      // 성능 최적화\n      performance: {\n        enableTouchActionOptimization: true,\n        improveRenderingPerformance: true,\n        optimizeEventListeners: true,\n        enableVirtualizedScrolling: false, // 큰 리스트용\n      },\n      \n      // 키보드 대응\n      keyboard: {\n        enableViewportResize: true,\n        preventZoomOnFocus: true,\n        improveInputExperience: true,\n        enableSmartScrolling: true,\n      },\n      \n      // 피드백 설정\n      feedback: {\n        enableTouchRipple: true,\n        enableHapticFeedback: false, // 진동 피드백\n        improveVisualFeedback: true,\n        customTouchStates: true,\n      },\n    };\n    \n    this.state = {\n      isMobile: false,\n      isTouch: false,\n      currentTouch: null,\n      touchStartTime: 0,\n      touchStartPos: null,\n      isScrolling: false,\n      keyboardVisible: false,\n      lastTouchEnd: 0,\n      gestureRecognizers: new Map(),\n    };\n    \n    this.elements = {\n      activeElements: new Set(),\n      scrollContainers: new Set(),\n      inputElements: new Set(),\n    };\n    \n    this.init();\n  }\n  \n  /**\n   * 초기화\n   */\n  init() {\n    this.detectMobileEnvironment();\n    \n    if (this.state.isMobile || this.state.isTouch) {\n      this.setupTouchOptimizations();\n      this.setupScrollOptimizations();\n      this.setupKeyboardHandling();\n      this.setupTouchFeedback();\n      this.setupPerformanceOptimizations();\n      this.setupGestureRecognition();\n      \n      console.log('[Mobile Touch] 모바일 터치 최적화 활성화됨');\n    }\n    \n    // 터치 지원 여부와 관계없이 적용할 최적화\n    this.setupUniversalOptimizations();\n  }\n  \n  /**\n   * 모바일 환경 감지\n   */\n  detectMobileEnvironment() {\n    // 모바일 기기 감지\n    this.state.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i\n      .test(navigator.userAgent);\n    \n    // 터치 지원 감지\n    this.state.isTouch = (\n      'ontouchstart' in window ||\n      navigator.maxTouchPoints > 0 ||\n      navigator.msMaxTouchPoints > 0\n    );\n    \n    // CSS 클래스 추가\n    document.body.classList.toggle('mobile-device', this.state.isMobile);\n    document.body.classList.toggle('touch-device', this.state.isTouch);\n    \n    // 뷰포트 메타 태그 최적화\n    this.optimizeViewportMeta();\n  }\n  \n  /**\n   * 터치 최적화 설정\n   */\n  setupTouchOptimizations() {\n    // 터치 이벤트 등록\n    this.setupTouchEventListeners();\n    \n    // 더블 탭 줌 방지\n    if (this.config.touch.preventDoubleZoom) {\n      this.preventDoubleZoom();\n    }\n    \n    // 터치 액션 최적화\n    if (this.config.performance.enableTouchActionOptimization) {\n      this.optimizeTouchActions();\n    }\n    \n    // 빠른 탭 구현\n    this.setupFastTap();\n  }\n  \n  /**\n   * 터치 이벤트 리스너 설정\n   */\n  setupTouchEventListeners() {\n    const options = this.config.performance.optimizeEventListeners ? \n      { passive: false, capture: true } : {};\n    \n    document.addEventListener('touchstart', this.handleTouchStart.bind(this), options);\n    document.addEventListener('touchmove', this.handleTouchMove.bind(this), options);\n    document.addEventListener('touchend', this.handleTouchEnd.bind(this), options);\n    document.addEventListener('touchcancel', this.handleTouchCancel.bind(this), options);\n    \n    // 포인터 이벤트 지원시 추가 최적화\n    if ('PointerEvent' in window) {\n      this.setupPointerEventOptimizations();\n    }\n  }\n  \n  /**\n   * 터치 시작 처리\n   */\n  handleTouchStart(e) {\n    this.state.currentTouch = e.touches[0];\n    this.state.touchStartTime = Date.now();\n    this.state.touchStartPos = {\n      x: this.state.currentTouch.clientX,\n      y: this.state.currentTouch.clientY,\n    };\n    \n    const target = e.target;\n    \n    // 터치 피드백 시작\n    this.startTouchFeedback(target);\n    \n    // 제스처 인식 시작\n    this.startGestureRecognition(e);\n    \n    // 활성 요소로 등록\n    this.elements.activeElements.add(target);\n  }\n  \n  /**\n   * 터치 이동 처리\n   */\n  handleTouchMove(e) {\n    if (!this.state.currentTouch) return;\n    \n    const currentPos = {\n      x: e.touches[0].clientX,\n      y: e.touches[0].clientY,\n    };\n    \n    const deltaX = currentPos.x - this.state.touchStartPos.x;\n    const deltaY = currentPos.y - this.state.touchStartPos.y;\n    const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);\n    \n    // 스크롤 감지\n    if (!this.state.isScrolling && distance > this.config.touch.maxTapDistance) {\n      this.state.isScrolling = true;\n      this.stopTouchFeedback();\n    }\n    \n    // 제스처 업데이트\n    this.updateGestureRecognition(e, { deltaX, deltaY, distance });\n    \n    // 스크롤 최적화\n    this.optimizeScrolling(e, deltaY);\n  }\n  \n  /**\n   * 터치 종료 처리\n   */\n  handleTouchEnd(e) {\n    const touchEndTime = Date.now();\n    const touchDuration = touchEndTime - this.state.touchStartTime;\n    \n    // 빠른 탭 처리\n    if (!this.state.isScrolling && touchDuration < this.config.touch.fastTapDelay) {\n      this.handleFastTap(e);\n    }\n    \n    // 롱 탭 처리\n    if (touchDuration > this.config.touch.longTapDelay && !this.state.isScrolling) {\n      this.handleLongTap(e);\n    }\n    \n    // 제스처 완료 처리\n    this.completeGestureRecognition(e);\n    \n    // 터치 피드백 종료\n    this.stopTouchFeedback();\n    \n    // 상태 초기화\n    this.resetTouchState();\n    \n    // 더블 탭 방지를 위한 시간 기록\n    this.state.lastTouchEnd = touchEndTime;\n  }\n  \n  /**\n   * 터치 취소 처리\n   */\n  handleTouchCancel(e) {\n    this.stopTouchFeedback();\n    this.cancelGestureRecognition();\n    this.resetTouchState();\n  }\n  \n  /**\n   * 스크롤 최적화 설정\n   */\n  setupScrollOptimizations() {\n    // 패시브 스크롤 활성화\n    if (this.config.scroll.enablePassive) {\n      this.enablePassiveScrolling();\n    }\n    \n    // 관성 스크롤 개선\n    if (this.config.scroll.improveInertia) {\n      this.improveScrollInertia();\n    }\n    \n    // 오버스크롤 방지\n    if (this.config.scroll.preventOverscroll) {\n      this.preventOverscroll();\n    }\n    \n    // 스크롤 컨테이너 최적화\n    this.optimizeScrollContainers();\n  }\n  \n  /**\n   * 키보드 처리 설정\n   */\n  setupKeyboardHandling() {\n    if (!this.config.keyboard.enableViewportResize) return;\n    \n    // Visual Viewport API 사용 (지원시)\n    if (window.visualViewport) {\n      window.visualViewport.addEventListener('resize', () => {\n        this.handleViewportResize();\n      });\n    } else {\n      // 폴백: 윈도우 리사이즈 이벤트\n      window.addEventListener('resize', this.debounce(() => {\n        this.handleLegacyViewportResize();\n      }, 100));\n    }\n    \n    // 입력 필드 포커스 처리\n    this.setupInputFocusHandling();\n  }\n  \n  /**\n   * 입력 필드 포커스 처리\n   */\n  setupInputFocusHandling() {\n    const inputSelectors = 'input, textarea, select, [contenteditable]';\n    \n    document.addEventListener('focusin', (e) => {\n      if (e.target.matches(inputSelectors)) {\n        this.handleInputFocus(e.target);\n      }\n    });\n    \n    document.addEventListener('focusout', (e) => {\n      if (e.target.matches(inputSelectors)) {\n        this.handleInputBlur(e.target);\n      }\n    });\n  }\n  \n  /**\n   * 입력 필드 포커스 처리\n   */\n  handleInputFocus(input) {\n    this.state.keyboardVisible = true;\n    document.body.classList.add('keyboard-visible');\n    \n    // 줌 방지\n    if (this.config.keyboard.preventZoomOnFocus) {\n      this.preventZoomOnFocus(input);\n    }\n    \n    // 스마트 스크롤링\n    if (this.config.keyboard.enableSmartScrolling) {\n      this.scrollInputIntoView(input);\n    }\n    \n    this.elements.inputElements.add(input);\n  }\n  \n  /**\n   * 입력 필드 블러 처리\n   */\n  handleInputBlur(input) {\n    // 약간의 지연 후 키보드 상태 업데이트 (키보드 애니메이션 고려)\n    setTimeout(() => {\n      if (!document.activeElement || !document.activeElement.matches('input, textarea, select, [contenteditable]')) {\n        this.state.keyboardVisible = false;\n        document.body.classList.remove('keyboard-visible');\n      }\n    }, 100);\n    \n    this.elements.inputElements.delete(input);\n  }\n  \n  /**\n   * 터치 피드백 설정\n   */\n  setupTouchFeedback() {\n    if (!this.config.feedback.improveVisualFeedback) return;\n    \n    // CSS 스타일 적용\n    this.applyTouchFeedbackStyles();\n    \n    // 햅틱 피드백 설정 (지원시)\n    if (this.config.feedback.enableHapticFeedback && 'vibrate' in navigator) {\n      this.setupHapticFeedback();\n    }\n  }\n  \n  /**\n   * 터치 피드백 시작\n   */\n  startTouchFeedback(element) {\n    if (!this.config.feedback.improveVisualFeedback) return;\n    \n    // 터치 상태 클래스 추가\n    element.classList.add('touch-active');\n    \n    // 리플 효과 (옵션)\n    if (this.config.feedback.enableTouchRipple) {\n      this.createRippleEffect(element, this.state.touchStartPos);\n    }\n    \n    // 햅틱 피드백\n    if (this.config.feedback.enableHapticFeedback) {\n      this.triggerHapticFeedback('light');\n    }\n  }\n  \n  /**\n   * 터치 피드백 중지\n   */\n  stopTouchFeedback() {\n    // 모든 활성 요소에서 터치 상태 제거\n    this.elements.activeElements.forEach(element => {\n      element.classList.remove('touch-active');\n    });\n    \n    this.elements.activeElements.clear();\n  }\n  \n  /**\n   * 리플 효과 생성\n   */\n  createRippleEffect(element, position) {\n    const rect = element.getBoundingClientRect();\n    const ripple = document.createElement('div');\n    \n    ripple.className = 'touch-ripple';\n    ripple.style.cssText = `\n      position: absolute;\n      border-radius: 50%;\n      background: rgba(255, 255, 255, 0.6);\n      transform: scale(0);\n      animation: ripple-animation 0.6s linear;\n      pointer-events: none;\n      left: ${position.x - rect.left - 10}px;\n      top: ${position.y - rect.top - 10}px;\n      width: 20px;\n      height: 20px;\n    `;\n    \n    // 상대적 포지셔닝을 위해 부모 요소 설정\n    if (getComputedStyle(element).position === 'static') {\n      element.style.position = 'relative';\n    }\n    \n    element.appendChild(ripple);\n    \n    // 애니메이션 완료 후 제거\n    setTimeout(() => {\n      if (ripple.parentNode) {\n        ripple.parentNode.removeChild(ripple);\n      }\n    }, 600);\n  }\n  \n  /**\n   * 성능 최적화 설정\n   */\n  setupPerformanceOptimizations() {\n    if (this.config.performance.improveRenderingPerformance) {\n      this.optimizeRendering();\n    }\n    \n    // 가상화된 스크롤링 (큰 리스트용)\n    if (this.config.performance.enableVirtualizedScrolling) {\n      this.setupVirtualizedScrolling();\n    }\n  }\n  \n  /**\n   * 렌더링 최적화\n   */\n  optimizeRendering() {\n    // will-change 속성 자동 적용\n    const animatedElements = document.querySelectorAll(\n      '.animated, .transition, [data-animate]'\n    );\n    \n    animatedElements.forEach(element => {\n      element.style.willChange = 'transform, opacity';\n    });\n    \n    // 스크롤 컨테이너 최적화\n    const scrollContainers = document.querySelectorAll(\n      '.scroll-container, .overflow-auto, .overflow-scroll'\n    );\n    \n    scrollContainers.forEach(container => {\n      container.style.contain = 'layout style paint';\n      container.style.willChange = 'scroll-position';\n    });\n  }\n  \n  /**\n   * 제스처 인식 설정\n   */\n  setupGestureRecognition() {\n    // 스와이프 제스처\n    this.addGestureRecognizer('swipe', {\n      minDistance: this.config.touch.swipeThreshold,\n      maxTime: this.config.touch.swipeMaxTime,\n      callback: this.handleSwipeGesture.bind(this),\n    });\n    \n    // 핀치 제스처 (멀티터치)\n    if ('TouchEvent' in window) {\n      this.addGestureRecognizer('pinch', {\n        minScale: 0.5,\n        maxScale: 3.0,\n        callback: this.handlePinchGesture.bind(this),\n      });\n    }\n  }\n  \n  /**\n   * 스와이프 제스처 처리\n   */\n  handleSwipeGesture(gesture) {\n    const { direction, distance, velocity } = gesture;\n    \n    // 커스텀 스와이프 이벤트 발송\n    const swipeEvent = new CustomEvent('swipe', {\n      detail: { direction, distance, velocity },\n      bubbles: true,\n    });\n    \n    gesture.target.dispatchEvent(swipeEvent);\n    \n    console.log(`[Mobile Touch] 스와이프 제스처: ${direction}, 거리: ${distance}px`);\n  }\n  \n  /**\n   * 빠른 탭 처리\n   */\n  handleFastTap(e) {\n    // 더블 탭 방지\n    const timeSinceLastTap = Date.now() - this.state.lastTouchEnd;\n    if (timeSinceLastTap < 300) {\n      e.preventDefault();\n      return;\n    }\n    \n    // 빠른 탭 이벤트 발송\n    const fastTapEvent = new CustomEvent('fasttap', {\n      detail: {\n        originalEvent: e,\n        position: this.state.touchStartPos,\n      },\n      bubbles: true,\n    });\n    \n    e.target.dispatchEvent(fastTapEvent);\n  }\n  \n  /**\n   * 더블 탭 줌 방지\n   */\n  preventDoubleZoom() {\n    let lastTouchEnd = 0;\n    \n    document.addEventListener('touchend', (e) => {\n      const now = Date.now();\n      if (now - lastTouchEnd <= 300) {\n        e.preventDefault();\n      }\n      lastTouchEnd = now;\n    }, { passive: false });\n  }\n  \n  /**\n   * 터치 액션 최적화\n   */\n  optimizeTouchActions() {\n    // 버튼 요소들에 manipulation 적용\n    const interactiveElements = document.querySelectorAll(\n      'button, [role=\"button\"], a, input, textarea, select'\n    );\n    \n    interactiveElements.forEach(element => {\n      element.style.touchAction = 'manipulation';\n    });\n    \n    // 스크롤 컨테이너에 pan 적용\n    const scrollContainers = document.querySelectorAll(\n      '.scroll-container, .overflow-auto, .overflow-scroll'\n    );\n    \n    scrollContainers.forEach(container => {\n      container.style.touchAction = 'pan-y';\n    });\n  }\n  \n  /**\n   * 뷰포트 메타 최적화\n   */\n  optimizeViewportMeta() {\n    const viewport = document.querySelector('meta[name=\"viewport\"]');\n    if (viewport && this.state.isMobile) {\n      // 모바일 최적화된 뷰포트 설정\n      viewport.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover';\n    }\n  }\n  \n  /**\n   * 공통 최적화 설정\n   */\n  setupUniversalOptimizations() {\n    // 터치 지연 제거 CSS 적용\n    this.applyTouchOptimizationStyles();\n    \n    // 스크롤 성능 개선\n    this.improveScrollPerformance();\n    \n    // 이미지 로딩 최적화\n    this.optimizeImageLoading();\n  }\n  \n  /**\n   * 터치 최적화 스타일 적용\n   */\n  applyTouchOptimizationStyles() {\n    if (document.getElementById('mobile-touch-optimization')) return;\n    \n    const style = document.createElement('style');\n    style.id = 'mobile-touch-optimization';\n    style.textContent = `\n      /* 모바일 터치 최적화 */\n      .mobile-device,\n      .touch-device {\n        -webkit-touch-callout: none;\n        -webkit-text-size-adjust: 100%;\n        -webkit-tap-highlight-color: transparent;\n        -ms-touch-action: manipulation;\n        touch-action: manipulation;\n      }\n      \n      /* 터치 피드백 */\n      .touch-active {\n        transform: scale(0.98);\n        opacity: 0.8;\n        transition: transform 0.1s ease, opacity 0.1s ease;\n      }\n      \n      /* 리플 애니메이션 */\n      @keyframes ripple-animation {\n        to {\n          transform: scale(4);\n          opacity: 0;\n        }\n      }\n      \n      /* 터치 타겟 최적화 */\n      .mobile-device button,\n      .mobile-device [role=\"button\"],\n      .mobile-device a,\n      .touch-device button,\n      .touch-device [role=\"button\"],\n      .touch-device a {\n        min-height: 44px;\n        min-width: 44px;\n        padding: 8px 12px;\n        touch-action: manipulation;\n      }\n      \n      /* 스크롤 최적화 */\n      .mobile-device .scroll-container,\n      .touch-device .scroll-container {\n        -webkit-overflow-scrolling: touch;\n        overscroll-behavior: contain;\n        scroll-behavior: smooth;\n      }\n      \n      /* 입력 필드 최적화 */\n      .mobile-device input,\n      .mobile-device textarea,\n      .touch-device input,\n      .touch-device textarea {\n        font-size: 16px; /* 줌 방지 */\n        -webkit-appearance: none;\n        border-radius: 4px;\n      }\n      \n      /* 키보드 활성화시 */\n      .keyboard-visible {\n        /* 뷰포트 조정을 위한 스타일 */\n      }\n      \n      /* 터치 제스처 최적화 */\n      .swipe-container {\n        touch-action: pan-x;\n        overflow-x: auto;\n        overflow-y: hidden;\n      }\n      \n      .pinch-zoom {\n        touch-action: pinch-zoom;\n      }\n      \n      /* 성능 최적화 */\n      .will-change-transform {\n        will-change: transform;\n      }\n      \n      .will-change-scroll {\n        will-change: scroll-position;\n      }\n      \n      /* iOS 전용 최적화 */\n      @supports (-webkit-touch-callout: none) {\n        .ios-scroll-fix {\n          -webkit-overflow-scrolling: touch;\n        }\n      }\n    `;\n    \n    document.head.appendChild(style);\n  }\n  \n  /**\n   * 유틸리티 메서드들\n   */\n  \n  resetTouchState() {\n    this.state.currentTouch = null;\n    this.state.touchStartTime = 0;\n    this.state.touchStartPos = null;\n    this.state.isScrolling = false;\n  }\n  \n  debounce(func, wait) {\n    let timeout;\n    return function executedFunction(...args) {\n      const later = () => {\n        clearTimeout(timeout);\n        func(...args);\n      };\n      clearTimeout(timeout);\n      timeout = setTimeout(later, wait);\n    };\n  }\n  \n  throttle(func, limit) {\n    let inThrottle;\n    return function() {\n      const args = arguments;\n      const context = this;\n      if (!inThrottle) {\n        func.apply(context, args);\n        inThrottle = true;\n        setTimeout(() => inThrottle = false, limit);\n      }\n    };\n  }\n  \n  // ... 기타 유틸리티 메서드들\n  \n  /**\n   * 정리 함수\n   */\n  destroy() {\n    // 이벤트 리스너 제거\n    this.removeEventListeners();\n    \n    // 스타일 제거\n    const style = document.getElementById('mobile-touch-optimization');\n    if (style) {\n      style.remove();\n    }\n    \n    // 상태 초기화\n    this.elements.activeElements.clear();\n    this.elements.scrollContainers.clear();\n    this.elements.inputElements.clear();\n    this.state.gestureRecognizers.clear();\n  }\n}\n\n// 전역 인스턴스 생성\nif (typeof window !== 'undefined') {\n  window.MobileTouchOptimizer = MobileTouchOptimizer;\n  \n  // 자동 초기화\n  if (document.readyState === 'loading') {\n    document.addEventListener('DOMContentLoaded', () => {\n      window.mobileTouchOptimizer = new MobileTouchOptimizer();\n    });\n  } else {\n    window.mobileTouchOptimizer = new MobileTouchOptimizer();\n  }\n}\n\nexport default MobileTouchOptimizer;"
+  constructor() {
+    this.config = {
+      // 터치 설정
+      touch: {
+        fastTapDelay: 300, // 빠른 탭 인식 시간
+        longTapDelay: 500, // 롱 탭 인식 시간
+        maxTapDistance: 10, // 탭 최대 이동 거리
+        swipeThreshold: 50, // 스와이프 최소 거리
+        swipeMaxTime: 1000, // 스와이프 최대 시간
+        preventDoubleZoom: true, // 더블 탭 줌 방지
+      },
+      
+      // 스크롤 최적화
+      scroll: {
+        enablePassive: true, // 패시브 스크롤
+        improveInertia: true, // 관성 스크롤 개선
+        preventOverscroll: true, // 오버스크롤 방지
+        enableSnapPoints: false, // 스냅 포인트 (필요시)
+      },
+      
+      // 성능 최적화
+      performance: {
+        enableTouchActionOptimization: true,
+        improveRenderingPerformance: true,
+        optimizeEventListeners: true,
+        enableVirtualizedScrolling: false, // 큰 리스트용
+      },
+      
+      // 키보드 대응
+      keyboard: {
+        enableViewportResize: true,
+        preventZoomOnFocus: true,
+        improveInputExperience: true,
+        enableSmartScrolling: true,
+      },
+      
+      // 피드백 설정
+      feedback: {
+        enableTouchRipple: true,
+        enableHapticFeedback: false, // 진동 피드백
+        improveVisualFeedback: true,
+        customTouchStates: true,
+      },
+    };
+    
+    this.state = {
+      isMobile: false,
+      isTouch: false,
+      currentTouch: null,
+      touchStartTime: 0,
+      touchStartPos: null,
+      isScrolling: false,
+      keyboardVisible: false,
+      lastTouchEnd: 0,
+      gestureRecognizers: new Map(),
+    };
+    
+    this.elements = {
+      activeElements: new Set(),
+      scrollContainers: new Set(),
+      inputElements: new Set(),
+    };
+    
+    this.init();
+  }
+  /**
+   * 초기화
+   */
+  init() {
+    this.detectMobileEnvironment();
+    
+    if (this.state.isMobile || this.state.isTouch) {
+      this.setupTouchOptimizations();
+      this.setupScrollOptimizations();
+      this.setupKeyboardHandling();
+      this.setupTouchFeedback();
+      this.setupPerformanceOptimizations();
+      this.setupGestureRecognition();
+      
+      console.log('[Mobile Touch] 모바일 터치 최적화 활성화됨');
+    }
+    
+    // 터치 지원 여부와 관계없이 적용할 최적화
+    this.setupUniversalOptimizations();
+  }
+  /**
+   * 모바일 환경 감지
+   */
+  detectMobileEnvironment() {
+    // 모바일 기기 감지
+    this.state.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i
+      .test(navigator.userAgent);
+    
+    // 터치 지원 감지
+    this.state.isTouch = (
+      'ontouchstart' in window ||
+      navigator.maxTouchPoints > 0 ||
+      navigator.msMaxTouchPoints > 0
+    );
+    
+    // CSS 클래스 추가
+    document.body.classList.toggle('mobile-device', this.state.isMobile);
+    document.body.classList.toggle('touch-device', this.state.isTouch);
+    
+    // 뷰포트 메타 태그 최적화
+    this.optimizeViewportMeta();
+  }
+  /**
+   * 터치 최적화 설정
+   */
+  setupTouchOptimizations() {
+    // 터치 이벤트 등록
+    this.setupTouchEventListeners();
+    
+    // 더블 탭 줌 방지
+    if (this.config.touch.preventDoubleZoom) {
+      this.preventDoubleZoom();
+    }
+    
+    // 터치 액션 최적화
+    if (this.config.performance.enableTouchActionOptimization) {
+      this.optimizeTouchActions();
+    }
+    
+    // 빠른 탭 구현
+    this.setupFastTap();
+  }
+  /**
+   * 터치 이벤트 리스너 설정
+   */
+  setupTouchEventListeners() {
+    const options = this.config.performance.optimizeEventListeners ? 
+      { passive: false, capture: true } : {};
+    
+    document.addEventListener('touchstart', this.handleTouchStart.bind(this), options);
+    document.addEventListener('touchmove', this.handleTouchMove.bind(this), options);
+    document.addEventListener('touchend', this.handleTouchEnd.bind(this), options);
+    document.addEventListener('touchcancel', this.handleTouchCancel.bind(this), options);
+    
+    // 포인터 이벤트 지원시 추가 최적화
+    if ('PointerEvent' in window) {
+      this.setupPointerEventOptimizations();
+    }
+  }
+  /**
+   * 터치 시작 처리
+   */
+  handleTouchStart(e) {
+    this.state.currentTouch = e.touches[0];
+    this.state.touchStartTime = Date.now();
+    this.state.touchStartPos = {
+      x: this.state.currentTouch.clientX,
+      y: this.state.currentTouch.clientY,
+    };
+    
+    const target = e.target;
+    
+    // 터치 피드백 시작
+    this.startTouchFeedback(target);
+    
+    // 제스처 인식 시작
+    this.startGestureRecognition(e);
+    
+    // 활성 요소로 등록
+    this.elements.activeElements.add(target);
+  }
+  /**
+   * 터치 이동 처리
+   */
+  handleTouchMove(e) {
+    if (!this.state.currentTouch) return;
+    
+    const currentPos = {
+      x: e.touches[0].clientX,
+      y: e.touches[0].clientY,
+    };
+    
+    const deltaX = currentPos.x - this.state.touchStartPos.x;
+    const deltaY = currentPos.y - this.state.touchStartPos.y;
+    const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+    
+    // 스크롤 감지
+    if (!this.state.isScrolling && distance > this.config.touch.maxTapDistance) {
+      this.state.isScrolling = true;
+      this.stopTouchFeedback();
+    }
+    
+    // 제스처 업데이트
+    this.updateGestureRecognition(e, { deltaX, deltaY, distance });
+    
+    // 스크롤 최적화
+    this.optimizeScrolling(e, deltaY);
+  }
+  /**
+   * 터치 종료 처리
+   */
+  handleTouchEnd(e) {
+    const touchEndTime = Date.now();
+    const touchDuration = touchEndTime - this.state.touchStartTime;
+    
+    // 빠른 탭 처리
+    if (!this.state.isScrolling && touchDuration < this.config.touch.fastTapDelay) {
+      this.handleFastTap(e);
+    }
+    
+    // 롱 탭 처리
+    if (touchDuration > this.config.touch.longTapDelay && !this.state.isScrolling) {
+      this.handleLongTap(e);
+    }
+    
+    // 제스처 완료 처리
+    this.completeGestureRecognition(e);
+    
+    // 터치 피드백 종료
+    this.stopTouchFeedback();
+    
+    // 상태 초기화
+    this.resetTouchState();
+    
+    // 더블 탭 방지를 위한 시간 기록
+    this.state.lastTouchEnd = touchEndTime;
+  }
+  /**
+   * 터치 취소 처리
+   */
+  handleTouchCancel(e) {
+    this.stopTouchFeedback();
+    this.cancelGestureRecognition();
+    this.resetTouchState();
+  }
+  /**
+   * 스크롤 최적화 설정
+   */
+  setupScrollOptimizations() {
+    // 패시브 스크롤 활성화
+    if (this.config.scroll.enablePassive) {
+      this.enablePassiveScrolling();
+    }
+    
+    // 관성 스크롤 개선
+    if (this.config.scroll.improveInertia) {
+      this.improveScrollInertia();
+    }
+    
+    // 오버스크롤 방지
+    if (this.config.scroll.preventOverscroll) {
+      this.preventOverscroll();
+    }
+    
+    // 스크롤 컨테이너 최적화
+    this.optimizeScrollContainers();
+  }
+  /**
+   * 키보드 처리 설정
+   */
+  setupKeyboardHandling() {
+    if (!this.config.keyboard.enableViewportResize) return;
+    
+    // Visual Viewport API 사용 (지원시)
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', () => {
+        this.handleViewportResize();
+      });
+    } else {
+      // 폴백: 윈도우 리사이즈 이벤트
+      window.addEventListener('resize', this.debounce(() => {
+        this.handleLegacyViewportResize();
+      }, 100));
+    }
+    
+    // 입력 필드 포커스 처리
+    this.setupInputFocusHandling();
+  }
+  /**
+   * 입력 필드 포커스 처리
+   */
+  setupInputFocusHandling() {
+    const inputSelectors = 'input, textarea, select, [contenteditable]';
+    
+    document.addEventListener('focusin', (e) => {
+      if (e.target.matches(inputSelectors)) {
+        this.handleInputFocus(e.target);
+      }
+    });
+    
+    document.addEventListener('focusout', (e) => {
+      if (e.target.matches(inputSelectors)) {
+        this.handleInputBlur(e.target);
+      }
+    });
+  }
+  /**
+   * 입력 필드 포커스 처리
+   */
+  handleInputFocus(input) {
+    this.state.keyboardVisible = true;
+    document.body.classList.add('keyboard-visible');
+    
+    // 줌 방지
+    if (this.config.keyboard.preventZoomOnFocus) {
+      this.preventZoomOnFocus(input);
+    }
+    
+    // 스마트 스크롤링
+    if (this.config.keyboard.enableSmartScrolling) {
+      this.scrollInputIntoView(input);
+    }
+    
+    this.elements.inputElements.add(input);
+  }
+  /**
+   * 입력 필드 블러 처리
+   */
+  handleInputBlur(input) {
+    // 약간의 지연 후 키보드 상태 업데이트 (키보드 애니메이션 고려)
+    setTimeout(() => {
+      if (!document.activeElement || !document.activeElement.matches('input, textarea, select, [contenteditable]')) {
+        this.state.keyboardVisible = false;
+        document.body.classList.remove('keyboard-visible');
+      }
+    }, 100);
+    
+    this.elements.inputElements.delete(input);
+  }
+  /**
+   * 터치 피드백 설정
+   */
+  setupTouchFeedback() {
+    if (!this.config.feedback.improveVisualFeedback) return;
+    
+    // CSS 스타일 적용
+    this.applyTouchFeedbackStyles();
+    
+    // 햅틱 피드백 설정 (지원시)
+    if (this.config.feedback.enableHapticFeedback && 'vibrate' in navigator) {
+      this.setupHapticFeedback();
+    }
+  }
+  /**
+   * 터치 피드백 시작
+   */
+  startTouchFeedback(element) {
+    if (!this.config.feedback.improveVisualFeedback) return;
+    
+    // 터치 상태 클래스 추가
+    element.classList.add('touch-active');
+    
+    // 리플 효과 (옵션)
+    if (this.config.feedback.enableTouchRipple) {
+      this.createRippleEffect(element, this.state.touchStartPos);
+    }
+    
+    // 햅틱 피드백
+    if (this.config.feedback.enableHapticFeedback) {
+      this.triggerHapticFeedback('light');
+    }
+  }
+  /**
+   * 터치 피드백 중지
+   */
+  stopTouchFeedback() {
+    // 모든 활성 요소에서 터치 상태 제거
+    this.elements.activeElements.forEach(element => {
+      element.classList.remove('touch-active');
+    });
+    
+    this.elements.activeElements.clear();
+  }
+  /**
+   * 리플 효과 생성
+   */
+  createRippleEffect(element, position) {
+    const rect = element.getBoundingClientRect();
+    const ripple = document.createElement('div');
+    
+    ripple.className = 'touch-ripple';
+    ripple.style.cssText = `
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.6);
+      transform: scale(0);
+      animation: ripple-animation 0.6s linear;
+      pointer-events: none;
+      left: ${position.x - rect.left - 10}px;
+      top: ${position.y - rect.top - 10}px;
+      width: 20px;
+      height: 20px;
+    `;
+    
+    // 상대적 포지셔닝을 위해 부모 요소 설정
+    if (getComputedStyle(element).position === 'static') {
+      element.style.position = 'relative';
+    }
+    
+    element.appendChild(ripple);
+    
+    // 애니메이션 완료 후 제거
+    setTimeout(() => {
+      if (ripple.parentNode) {
+        ripple.parentNode.removeChild(ripple);
+      }
+    }, 600);
+  }
+  /**
+   * 성능 최적화 설정
+   */
+  setupPerformanceOptimizations() {
+    if (this.config.performance.improveRenderingPerformance) {
+      this.optimizeRendering();
+    }
+    
+    // 가상화된 스크롤링 (큰 리스트용)
+    if (this.config.performance.enableVirtualizedScrolling) {
+      this.setupVirtualizedScrolling();
+    }
+  }
+  /**
+   * 렌더링 최적화
+   */
+  optimizeRendering() {
+    // will-change 속성 자동 적용
+    const animatedElements = document.querySelectorAll(
+      '.animated, .transition, [data-animate]'
+    );
+    
+    animatedElements.forEach(element => {
+      element.style.willChange = 'transform, opacity';
+    });
+    
+    // 스크롤 컨테이너 최적화
+    const scrollContainers = document.querySelectorAll(
+      '.scroll-container, .overflow-auto, .overflow-scroll'
+    );
+    
+    scrollContainers.forEach(container => {
+      container.style.contain = 'layout style paint';
+      container.style.willChange = 'scroll-position';
+    });
+  }
+  /**
+   * 제스처 인식 설정
+   */
+  setupGestureRecognition() {
+    // 스와이프 제스처
+    this.addGestureRecognizer('swipe', {
+      minDistance: this.config.touch.swipeThreshold,
+      maxTime: this.config.touch.swipeMaxTime,
+      callback: this.handleSwipeGesture.bind(this),
+    });
+    
+    // 핀치 제스처 (멀티터치)
+    if ('TouchEvent' in window) {
+      this.addGestureRecognizer('pinch', {
+        minScale: 0.5,
+        maxScale: 3.0,
+        callback: this.handlePinchGesture.bind(this),
+      });
+    }
+  }
+  /**
+   * 스와이프 제스처 처리
+   */
+  handleSwipeGesture(gesture) {
+    const { direction, distance, velocity } = gesture;
+    
+    // 커스텀 스와이프 이벤트 발송
+    const swipeEvent = new CustomEvent('swipe', {
+      detail: { direction, distance, velocity },
+      bubbles: true,
+    });
+    
+    gesture.target.dispatchEvent(swipeEvent);
+    
+    console.log(`[Mobile Touch] 스와이프 제스처: ${direction}, 거리: ${distance}px`);
+  }
+  /**
+   * 빠른 탭 처리
+   */
+  handleFastTap(e) {
+    // 더블 탭 방지
+    const timeSinceLastTap = Date.now() - this.state.lastTouchEnd;
+    if (timeSinceLastTap < 300) {
+      e.preventDefault();
+      return;
+    }
+    
+    // 빠른 탭 이벤트 발송
+    const fastTapEvent = new CustomEvent('fasttap', {
+      detail: {
+        originalEvent: e,
+        position: this.state.touchStartPos,
+      },
+      bubbles: true,
+    });
+    
+    e.target.dispatchEvent(fastTapEvent);
+  }
+  /**
+   * 더블 탭 줌 방지
+   */
+  preventDoubleZoom() {
+    let lastTouchEnd = 0;
+    
+    document.addEventListener('touchend', (e) => {
+      const now = Date.now();
+      if (now - lastTouchEnd <= 300) {
+        e.preventDefault();
+      }
+      lastTouchEnd = now;
+    }, { passive: false });
+  }
+  /**
+   * 터치 액션 최적화
+   */
+  optimizeTouchActions() {
+    // 버튼 요소들에 manipulation 적용
+    const interactiveElements = document.querySelectorAll(
+      'button, [role="button"], a, input, textarea, select'
+    );
+    
+    interactiveElements.forEach(element => {
+      element.style.touchAction = 'manipulation';
+    });
+    
+    // 스크롤 컨테이너에 pan 적용
+    const scrollContainers = document.querySelectorAll(
+      '.scroll-container, .overflow-auto, .overflow-scroll'
+    );
+    
+    scrollContainers.forEach(container => {
+      container.style.touchAction = 'pan-y';
+    });
+  }
+  /**
+   * 뷰포트 메타 최적화
+   */
+  optimizeViewportMeta() {
+    const viewport = document.querySelector('meta[name="viewport"]');
+    if (viewport && this.state.isMobile) {
+      // 모바일 최적화된 뷰포트 설정
+      viewport.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover';
+    }
+  }
+  /**
+   * 공통 최적화 설정
+   */
+  setupUniversalOptimizations() {
+    // 터치 지연 제거 CSS 적용
+    this.applyTouchOptimizationStyles();
+    
+    // 스크롤 성능 개선
+    this.improveScrollPerformance();
+    
+    // 이미지 로딩 최적화
+    this.optimizeImageLoading();
+  }
+  /**
+   * 터치 최적화 스타일 적용
+   */
+  applyTouchOptimizationStyles() {
+    if (document.getElementById('mobile-touch-optimization')) return;
+    
+    const style = document.createElement('style');
+    style.id = 'mobile-touch-optimization';
+    style.textContent = `
+      /* 모바일 터치 최적화 */
+      .mobile-device,
+      .touch-device {
+        -webkit-touch-callout: none;
+        -webkit-text-size-adjust: 100%;
+        -webkit-tap-highlight-color: transparent;
+        -ms-touch-action: manipulation;
+        touch-action: manipulation;
+      }
+      
+      /* 터치 피드백 */
+      .touch-active {
+        transform: scale(0.98);
+        opacity: 0.8;
+        transition: transform 0.1s ease, opacity 0.1s ease;
+      }
+      
+      /* 리플 애니메이션 */
+      @keyframes ripple-animation {
+        to {
+          transform: scale(4);
+          opacity: 0;
+        }
+      }
+      
+      /* 터치 타겟 최적화 */
+      .mobile-device button,
+      .mobile-device [role="button"],
+      .mobile-device a,
+      .touch-device button,
+      .touch-device [role="button"],
+      .touch-device a {
+        min-height: 44px;
+        min-width: 44px;
+        padding: 8px 12px;
+        touch-action: manipulation;
+      }
+      
+      /* 스크롤 최적화 */
+      .mobile-device .scroll-container,
+      .touch-device .scroll-container {
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior: contain;
+        scroll-behavior: smooth;
+      }
+      
+      /* 입력 필드 최적화 */
+      .mobile-device input,
+      .mobile-device textarea,
+      .touch-device input,
+      .touch-device textarea {
+        font-size: 16px; /* 줌 방지 */
+        -webkit-appearance: none;
+        border-radius: 4px;
+      }
+      
+      /* 키보드 활성화시 */
+      .keyboard-visible {
+        /* 뷰포트 조정을 위한 스타일 */
+      }
+      
+      /* 터치 제스처 최적화 */
+      .swipe-container {
+        touch-action: pan-x;
+        overflow-x: auto;
+        overflow-y: hidden;
+      }
+      
+      .pinch-zoom {
+        touch-action: pinch-zoom;
+      }
+      
+      /* 성능 최적화 */
+      .will-change-transform {
+        will-change: transform;
+      }
+      
+      .will-change-scroll {
+        will-change: scroll-position;
+      }
+      
+      /* iOS 전용 최적화 */
+      @supports (-webkit-touch-callout: none) {
+        .ios-scroll-fix {
+          -webkit-overflow-scrolling: touch;
+        }
+      }
+    `;
+    
+    document.head.appendChild(style);
+  }
+  /**
+   * 유틸리티 메서드들
+   */
+  
+  resetTouchState() {
+    this.state.currentTouch = null;
+    this.state.touchStartTime = 0;
+    this.state.touchStartPos = null;
+    this.state.isScrolling = false;
+  }
+  
+  debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+      const later = () => {
+        clearTimeout(timeout);
+        func(...args);
+      };
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+    };
+  }
+  
+  throttle(func, limit) {
+    let inThrottle;
+    return function() {
+      const args = arguments;
+      const context = this;
+      if (!inThrottle) {
+        func.apply(context, args);
+        inThrottle = true;
+        setTimeout(() => inThrottle = false, limit);
+      }
+    };
+  }
+  
+  // ... 기타 유틸리티 메서드들
+  
+  /**
+   * 정리 함수
+   */
+  destroy() {
+    // 이벤트 리스너 제거
+    this.removeEventListeners();
+    
+    // 스타일 제거
+    const style = document.getElementById('mobile-touch-optimization');
+    if (style) {
+      style.remove();
+    }
+    
+    // 상태 초기화
+    this.elements.activeElements.clear();
+    this.elements.scrollContainers.clear();
+    this.elements.inputElements.clear();
+    this.state.gestureRecognizers.clear();
+  }
+}
+
+// 전역 인스턴스 생성
+if (typeof window !== 'undefined') {
+  window.MobileTouchOptimizer = MobileTouchOptimizer;
+  
+  // 자동 초기화
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      window.mobileTouchOptimizer = new MobileTouchOptimizer();
+    });
+  } else {
+    window.mobileTouchOptimizer = new MobileTouchOptimizer();
+  }
+}
+
+export default MobileTouchOptimizer;

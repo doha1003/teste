@@ -3,7 +3,7 @@
  * 체질량지수(BMI) 계산기 구현
  */
 
-import { ToolService } from "../service-base.js";
+import { ToolService } from "./tool-service.js";
 
 export class BMICalculatorService extends ToolService {
   constructor() {
@@ -114,10 +114,20 @@ export class BMICalculatorService extends ToolService {
     // 폼 이벤트 바인딩
     const form = document.querySelector(this.ui.form);
     if (form) {
+      // 폼 제출 이벤트
       form.addEventListener('submit', (e) => {
         e.preventDefault();
         this.calculate();
       });
+      
+      // 계산 버튼 클릭 이벤트
+      const calculateBtn = form.querySelector('.btn-calculate');
+      if (calculateBtn) {
+        calculateBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          this.calculate();
+        });
+      }
     }
 
     // 입력 필드 실시간 유효성 검사
@@ -125,6 +135,9 @@ export class BMICalculatorService extends ToolService {
 
     // 기준표 행 하이라이트 이벤트
     this.setupTableHighlight();
+    
+    // 결과 액션 버튼 이벤트 바인딩
+    this.bindResultActions();
   }
 
   /**
@@ -389,11 +402,60 @@ export class BMICalculatorService extends ToolService {
   }
 
   /**
+   * 결과 액션 버튼 바인딩
+   */
+  bindResultActions() {
+    document.addEventListener('click', (e) => {
+      const target = e.target.closest('[data-action]');
+      if (!target) return;
+      
+      const action = target.dataset.action;
+      switch (action) {
+        case 'copy-result':
+          this.copyResult();
+          break;
+        case 'share-kakao':
+          this.shareKakao();
+          break;
+        case 'reset':
+          this.resetCalculator();
+          break;
+      }
+    });
+  }
+  
+  /**
+   * 계산기 초기화
+   */
+  resetCalculator() {
+    // 입력 필드 초기화
+    const heightInput = document.querySelector(this.ui.height);
+    const weightInput = document.querySelector(this.ui.weight);
+    
+    if (heightInput) heightInput.value = '';
+    if (weightInput) weightInput.value = '';
+    
+    // 결과 영역 숨기기
+    const resultContainer = document.querySelector(this.ui.resultContainer);
+    if (resultContainer) {
+      resultContainer.style.display = 'none';
+    }
+    
+    // 상태 초기화
+    this.toolState.currentValues = {};
+    this.toolState.result = null;
+    
+    // 첫 번째 입력 필드에 포커스
+    if (heightInput) heightInput.focus();
+  }
+
+  /**
    * 결과 복사 (오버라이드)
    */
   copyResult() {
     const { result } = this.toolState;
     if (!result) {
+      this.showNotification('복사할 결과가 없습니다.');
       return;
     }
 

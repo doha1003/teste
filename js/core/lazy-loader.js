@@ -275,7 +275,7 @@ class LazyLoader {
     // 높은 우선순위: 필수 기능
     const highPriorityResources = [
       '/js/utils/common-utils.js',
-      '/js/core/error-handler.js'
+      '/js/error-handler.js'
     ];
 
     // 중간 우선순위: 주요 기능

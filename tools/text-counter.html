@@ -3,7 +3,7 @@
   <head>
     <meta
       http-equiv="Content-Security-Policy"
-      content="upgrade-insecure-requests; default-src 'self' https:; script-src 'unsafe-inline' 'self' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'unsafe-inline' 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;"
+      content="upgrade-insecure-requests; default-src 'self' https:; script-src 'unsafe-inline' 'self' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'unsafe-inline' 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net data:; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;"
     />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -385,47 +385,47 @@
           <div class="footer-section">
             <h3>서비스</h3>
             <ul class="footer-links">
-              <li><a href="/">홈</a></li>
-              <li><a href="/tests/">심리테스트</a></li>
-              <li><a href="/fortune/">운세</a></li>
-              <li><a href="/tools/">실용도구</a></li>
-              <li><a href="/about/">사이트 소개</a></li>
+              <li><a href="../">홈</a></li>
+              <li><a href="../tests/">심리테스트</a></li>
+              <li><a href="../fortune/">운세</a></li>
+              <li><a href="../tools/">실용도구</a></li>
+              <li><a href="../about/">사이트 소개</a></li>
             </ul>
           </div>
 
           <div class="footer-section">
             <h3>인기 콘텐츠</h3>
             <ul class="footer-links">
-              <li><a href="/tests/teto-egen/">테토-에겐 테스트</a></li>
-              <li><a href="/tests/mbti/">MBTI 테스트</a></li>
-              <li><a href="/fortune/daily/">오늘의 운세</a></li>
-              <li><a href="/tools/text-counter.html">글자수 세기</a></li>
+              <li><a href="../tests/teto-egen/">테토-에겐 테스트</a></li>
+              <li><a href="../tests/mbti/">MBTI 테스트</a></li>
+              <li><a href="../fortune/daily/">오늘의 운세</a></li>
+              <li><a href="../tools/text-counter.html">글자수 세기</a></li>
             </ul>
           </div>
 
           <div class="footer-section">
             <h3>운세 서비스</h3>
             <ul class="footer-links">
-              <li><a href="/fortune/daily/">오늘의 운세</a></li>
-              <li><a href="/fortune/zodiac/">별자리 운세</a></li>
-              <li><a href="/fortune/zodiac-animal/">띠별 운세</a></li>
-              <li><a href="/fortune/tarot/">AI 타로</a></li>
+              <li><a href="../fortune/daily/">오늘의 운세</a></li>
+              <li><a href="../fortune/zodiac/">별자리 운세</a></li>
+              <li><a href="../fortune/zodiac-animal/">띠별 운세</a></li>
+              <li><a href="../fortune/tarot/">AI 타로</a></li>
             </ul>
           </div>
 
           <div class="footer-section">
             <h3>고객지원</h3>
             <ul class="footer-links">
-              <li><a href="/contact/">문의하기</a></li>
-              <li><a href="/faq/">자주 묻는 질문</a></li>
+              <li><a href="../contact/">문의하기</a></li>
+              <li><a href="../faq/">자주 묻는 질문</a></li>
             </ul>
           </div>
         </div>
 
         <div class="footer-bottom">
           <div class="footer-legal">
-            <a href="/privacy/">개인정보처리방침</a>
-            <a href="/terms/">이용약관</a>
+            <a href="../privacy/">개인정보처리방침</a>
+            <a href="../terms/">이용약관</a>
           </div>
           <p>&copy; 2025 doha.kr. All rights reserved.</p>
         </div>
@@ -442,16 +442,157 @@
     <script type="module" src="../js/features/tools/text-counter.js"></script>
 
     <!-- Text Counter Initialization -->
-    <script type="module">
-      // 글자수 세기 초기화
-      import { textCounterService } from '../js/features/tools/text-counter.js';
-      
-      // DOM이 로드되면 서비스 초기화
-      document.addEventListener('DOMContentLoaded', () => {
-        if (textCounterService && typeof textCounterService.initializeService === 'function') {
-          textCounterService.initializeService();
+    <script>
+      // 기본 글자수 세기 기능 (ES6 모듈 로딩 실패시 백업)
+      document.addEventListener('DOMContentLoaded', function() {
+        console.log('🔢 기본 글자수 세기 초기화 시작');
+        
+        const textInput = document.getElementById('textInput');
+        const charCountEl = document.getElementById('totalChars');
+        const charCountNoSpaceEl = document.getElementById('charsNoSpaces');
+        const wordCountEl = document.getElementById('words');
+        const byteCountEl = document.getElementById('bytes');
+        const manuscriptEl = document.getElementById('manuscript');
+        
+        // 설정 체크박스들
+        const includeSpaces = document.getElementById('includeSpaces');
+        const includeNewlines = document.getElementById('includeNewlines');
+        const showBytes = document.getElementById('showBytes');
+        const showManuscript = document.getElementById('showManuscript');
+        
+        // 버튼들
+        const clearBtn = document.querySelector('[data-action="clear"]');
+        const copyBtn = document.querySelector('[data-action="copy"]');
+        const pasteBtn = document.querySelector('[data-action="paste"]');
+        
+        if (!textInput) {
+          console.error('❌ 텍스트 입력창을 찾을 수 없습니다');
+          return;
         }
+        
+        // 글자수 계산 함수
+        function calculateStats() {
+          const text = textInput.value;
+          
+          // 공백 포함 글자수
+          let charCount = text.length;
+          
+          // 공백 제외 글자수
+          let charCountNoSpace = text.replace(/\s/g, '').length;
+          
+          // 단어수 (공백으로 구분)
+          let wordCount = text.trim() ? text.trim().split(/\s+/).length : 0;
+          
+          // 바이트 수 (UTF-8 기준)
+          let byteCount = new Blob([text], {type: 'text/plain'}).size;
+          
+          // 원고지 환산 (200자 기준)
+          let manuscriptCount = Math.ceil(charCount / 200);
+          
+          // 결과 업데이트
+          if (charCountEl) charCountEl.textContent = charCount.toLocaleString();
+          if (charCountNoSpaceEl) charCountNoSpaceEl.textContent = charCountNoSpace.toLocaleString();
+          if (wordCountEl) wordCountEl.textContent = wordCount.toLocaleString();
+          if (byteCountEl) byteCountEl.textContent = byteCount.toLocaleString();
+          if (manuscriptEl) manuscriptEl.textContent = manuscriptCount.toLocaleString();
+          
+          console.log('📊 계산 완료:', {
+            글자수: charCount,
+            글자수제외공백: charCountNoSpace,
+            단어수: wordCount,
+            바이트: byteCount,
+            원고지: manuscriptCount
+          });
+        }
+        
+        // 실시간 계산
+        if (textInput) {
+          textInput.addEventListener('input', calculateStats);
+          textInput.addEventListener('paste', function() {
+            setTimeout(calculateStats, 100);
+          });
+        }
+        
+        // 버튼 기능들
+        if (clearBtn) {
+          clearBtn.addEventListener('click', function() {
+            textInput.value = '';
+            calculateStats();
+            textInput.focus();
+            console.log('🗑️ 텍스트 지우기');
+          });
+        }
+        
+        if (copyBtn) {
+          copyBtn.addEventListener('click', function() {
+            if (textInput.value) {
+              navigator.clipboard.writeText(textInput.value).then(function() {
+                console.log('📋 텍스트 복사 완료');
+                // 임시로 버튼 텍스트 변경
+                const originalText = copyBtn.textContent;
+                copyBtn.textContent = '복사됨!';
+                setTimeout(function() {
+                  copyBtn.innerHTML = '<span aria-hidden="true">📋</span> 복사';
+                }, 1500);
+              }).catch(function(err) {
+                console.error('복사 실패:', err);
+              });
+            }
+          });
+        }
+        
+        if (pasteBtn) {
+          pasteBtn.addEventListener('click', function() {
+            navigator.clipboard.readText().then(function(text) {
+              textInput.value = text;
+              calculateStats();
+              console.log('📄 텍스트 붙여넣기 완료');
+            }).catch(function(err) {
+              console.error('붙여넣기 실패:', err);
+            });
+          });
+        }
+        
+        // FAQ 아코디언 기능
+        const faqQuestions = document.querySelectorAll('.faq-question');
+        faqQuestions.forEach(function(question) {
+          question.addEventListener('click', function() {
+            const isExpanded = question.getAttribute('aria-expanded') === 'true';
+            const answer = document.getElementById(question.getAttribute('aria-controls'));
+            const arrow = question.querySelector('.faq-arrow');
+            
+            if (isExpanded) {
+              question.setAttribute('aria-expanded', 'false');
+              answer.hidden = true;
+              arrow.textContent = '▼';
+            } else {
+              question.setAttribute('aria-expanded', 'true');
+              answer.hidden = false;
+              arrow.textContent = '▲';
+            }
+          });
+        });
+        
+        // 초기 계산
+        calculateStats();
+        
+        console.log('✅ 기본 글자수 세기 초기화 완료');
       });
+    </script>
+    <script type="module">
+      // 글자수 세기 초기화 (모듈 시스템)
+      try {
+        const { textCounterService } = await import('../js/features/tools/text-counter.js');
+        
+        // DOM이 로드되면 서비스 초기화
+        document.addEventListener('DOMContentLoaded', () => {
+          if (textCounterService && typeof textCounterService.initializeService === 'function') {
+            textCounterService.initializeService();
+          }
+        });
+      } catch (error) {
+        console.log('📝 모듈 로딩 실패 - 기본 기능으로 대체:', error.message);
+      }
     </script>
 
     <!-- External SDKs (지연 로딩) -->

@@ -126,8 +126,26 @@ DohaKR.loadIncludes = function () {
   // 네비게이션 로드
   const navPlaceholder = document.getElementById('navbar-placeholder');
   if (navPlaceholder) {
+    // 현재 경로에 따라 올바른 includes 경로 결정
+    const pathname = window.location.pathname;
+    const pathDepth = (pathname.match(/\//g) || []).length;
+    let navbarPath;
+    
+    if (pathDepth >= 3 || pathname.includes('/tests/') || pathname.includes('/fortune/')) {
+      // 2-depth 이상 또는 tests/fortune 하위 디렉토리
+      navbarPath = '../../includes/navbar.html';
+    } else if (pathDepth >= 2 || pathname.includes('/about/') || pathname.includes('/contact/') || 
+               pathname.includes('/faq/') || pathname.includes('/privacy/') || 
+               pathname.includes('/terms/') || pathname.includes('/tools/')) {
+      // 1-depth 디렉토리
+      navbarPath = '../includes/navbar.html';
+    } else {
+      // 루트 디렉토리
+      navbarPath = 'includes/navbar.html';
+    }
+    
     const navXhr = new XMLHttpRequest();
-    navXhr.open('GET', '/includes/navbar.html', true);
+    navXhr.open('GET', navbarPath, true);
     navXhr.onreadystatechange = function () {
       if (navXhr.readyState === 4) {
         if (navXhr.status === 200 || navXhr.status === 0) {
@@ -136,16 +154,17 @@ DohaKR.loadIncludes = function () {
           DohaKR.initMobileMenu();
         } else {
           // file:// 프로토콜에서 실패하면 직접 삽입
+          const baseHref = isInSubdirectory ? '../' : '';
           navPlaceholder.innerHTML = `<nav class="navbar navbar-fixed">
     <div class="navbar-container navbar-flex">
-        <a href="/" class="logo navbar-logo">doha.kr</a>
+        <a href="${baseHref}" class="logo navbar-logo">doha.kr</a>
         <ul class="nav-menu navbar-menu nav-flex" id="nav-menu">
-            <li class="nav-item"><a href="/" class="nav-link nav-link-padded">홈</a></li>
-            <li class="nav-item"><a href="/tests/" class="nav-link nav-link-padded">심리테스트</a></li>
-            <li class="nav-item"><a href="/fortune/" class="nav-link nav-link-padded">운세</a></li>
-            <li class="nav-item"><a href="/tools/" class="nav-link nav-link-padded">실용도구</a></li>
-            <li class="nav-item"><a href="/contact/" class="nav-link nav-link-padded">문의</a></li>
-            <li class="nav-item"><a href="/about/" class="nav-link nav-link-padded">소개</a></li>
+            <li class="nav-item"><a href="${baseHref}" class="nav-link nav-link-padded">홈</a></li>
+            <li class="nav-item"><a href="${baseHref}tests/" class="nav-link nav-link-padded">심리테스트</a></li>
+            <li class="nav-item"><a href="${baseHref}fortune/" class="nav-link nav-link-padded">운세</a></li>
+            <li class="nav-item"><a href="${baseHref}tools/" class="nav-link nav-link-padded">실용도구</a></li>
+            <li class="nav-item"><a href="${baseHref}contact/" class="nav-link nav-link-padded">문의</a></li>
+            <li class="nav-item"><a href="${baseHref}about/" class="nav-link nav-link-padded">소개</a></li>
         </ul>
         <button class="mobile-menu-btn navbar-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="메뉴 열기">
             <span class="menu-bar"></span>
@@ -164,15 +183,34 @@ DohaKR.loadIncludes = function () {
   // 푸터 로드
   const footerPlaceholder = document.getElementById('footer-placeholder');
   if (footerPlaceholder) {
+    // 현재 경로에 따라 올바른 includes 경로 결정
+    const pathname = window.location.pathname;
+    const pathDepth = (pathname.match(/\//g) || []).length;
+    let footerPath;
+    
+    if (pathDepth >= 3 || pathname.includes('/tests/') || pathname.includes('/fortune/')) {
+      // 2-depth 이상 또는 tests/fortune 하위 디렉토리
+      footerPath = '../../includes/footer.html';
+    } else if (pathDepth >= 2 || pathname.includes('/about/') || pathname.includes('/contact/') || 
+               pathname.includes('/faq/') || pathname.includes('/privacy/') || 
+               pathname.includes('/terms/') || pathname.includes('/tools/')) {
+      // 1-depth 디렉토리
+      footerPath = '../includes/footer.html';
+    } else {
+      // 루트 디렉토리
+      footerPath = 'includes/footer.html';
+    }
+    
     const footerXhr = new XMLHttpRequest();
-    footerXhr.open('GET', '/includes/footer.html', true);
+    footerXhr.open('GET', footerPath, true);
     footerXhr.onreadystatechange = function () {
       if (footerXhr.readyState === 4) {
         if (footerXhr.status === 200 || footerXhr.status === 0) {
           footerPlaceholder.innerHTML = footerXhr.responseText;
         } else {
           // file:// 프로토콜에서 실패하면 직접 삽입
-          footerPlaceholder.innerHTML = `<footer class="footer"> <div class="footer-content"> <div class="footer-section"> <h3>doha.kr</h3> <p class="text-gray-400 mt-8"> 일상을 더 재미있게 만드는 공간<br> 심리테스트, 운세, 실용도구의 만남 </p> <div class="footer-social"> <a href="mailto:youtubdoha@gmail.com" class="social-link">📧</a> </div> </div> <div class="footer-section"> <h3>서비스</h3> <ul class="footer-links"> <li><a href="/">홈</a></li> <li><a href="/tests/">심리테스트</a></li> <li><a href="/fortune/">운세</a></li> <li><a href="/tools/">실용도구</a></li> <li><a href="/about/">사이트 소개</a></li> </ul> </div> <div class="footer-section"> <h3>인기 콘텐츠</h3> <ul class="footer-links"> <li><a href="/tests/teto-egen/">테토-에겐 테스트</a></li> <li><a href="/tests/mbti/">MBTI 테스트</a></li> <li><a href="/fortune/daily/">오늘의 운세</a></li> <li><a href="/tools/text-counter.html">글자수 세기</a></li> </ul> </div> <div class="footer-section"> <h3>운세 서비스</h3> <ul class="footer-links"> <li><a href="/fortune/daily/">오늘의 운세</a></li> <li><a href="/fortune/zodiac/">별자리 운세</a></li> <li><a href="/fortune/zodiac-animal/">띠별 운세</a></li> <li><a href="/fortune/tarot/">AI 타로</a></li> </ul> </div> <div class="footer-section"> <h3>고객지원</h3> <ul class="footer-links"> <li><a href="/contact/">문의하기</a></li> <li><a href="/faq/">자주 묻는 질문</a></li> </ul> </div> </div> <div class="footer-bottom"> <div class="footer-legal"> <a href="/privacy/">개인정보처리방침</a> <a href="/terms/">이용약관</a> </div> <p>&copy; 2025 doha.kr. All rights reserved.</p> </div> </footer>`;
+          const baseHref = isInSubdirectory ? '../' : '';
+          footerPlaceholder.innerHTML = `<footer class="footer"> <div class="footer-content"> <div class="footer-section"> <h3>doha.kr</h3> <p class="text-gray-400 mt-8"> 일상을 더 재미있게 만드는 공간<br> 심리테스트, 운세, 실용도구의 만남 </p> <div class="footer-social"> <a href="mailto:youtubdoha@gmail.com" class="social-link">📧</a> </div> </div> <div class="footer-section"> <h3>서비스</h3> <ul class="footer-links"> <li><a href="${baseHref}">홈</a></li> <li><a href="${baseHref}tests/">심리테스트</a></li> <li><a href="${baseHref}fortune/">운세</a></li> <li><a href="${baseHref}tools/">실용도구</a></li> <li><a href="${baseHref}about/">사이트 소개</a></li> </ul> </div> <div class="footer-section"> <h3>인기 콘텐츠</h3> <ul class="footer-links"> <li><a href="${baseHref}tests/teto-egen/">테토-에겐 테스트</a></li> <li><a href="${baseHref}tests/mbti/">MBTI 테스트</a></li> <li><a href="${baseHref}fortune/daily/">오늘의 운세</a></li> <li><a href="${baseHref}tools/text-counter.html">글자수 세기</a></li> </ul> </div> <div class="footer-section"> <h3>운세 서비스</h3> <ul class="footer-links"> <li><a href="${baseHref}fortune/daily/">오늘의 운세</a></li> <li><a href="${baseHref}fortune/zodiac/">별자리 운세</a></li> <li><a href="${baseHref}fortune/zodiac-animal/">띠별 운세</a></li> <li><a href="${baseHref}fortune/tarot/">AI 타로</a></li> </ul> </div> <div class="footer-section"> <h3>고객지원</h3> <ul class="footer-links"> <li><a href="${baseHref}contact/">문의하기</a></li> <li><a href="${baseHref}faq/">자주 묻는 질문</a></li> </ul> </div> </div> <div class="footer-bottom"> <div class="footer-legal"> <a href="${baseHref}privacy/">개인정보처리방침</a> <a href="${baseHref}terms/">이용약관</a> </div> <p>&copy; 2025 doha.kr. All rights reserved.</p> </div> </footer>`;
         }
       }
     };
@@ -181,11 +219,53 @@ DohaKR.loadIncludes = function () {
 };
 
 /**
- * 모바일 메뉴 초기화
+ * 모바일 메뉴 초기화 (개선된 버전)
  */
 DohaKR.initMobileMenu = function () {
-  const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-  const navMenu = document.querySelector('.nav-menu');
+  // 네비게이션이 로드될 때까지 대기
+  setTimeout(() => {
+    try {
+      // 새로운 모바일 메뉴 시스템 사용
+      initMobileMenu();
+      
+      // 기존 시스템과의 호환성을 위한 추가 초기화
+      const mobileMenuBtn = document.querySelector('.mobile-menu-toggle, .mobile-menu-btn, .navbar-toggle');
+      const navMenu = document.querySelector('.nav-menu, .navbar-menu');
+
+      if (mobileMenuBtn && navMenu) {
+        console.log('✅ Enhanced mobile menu initialized successfully');
+        
+        // PWA에서 모바일 메뉴 사용 추적
+        if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+          navigator.serviceWorker.controller.postMessage({
+            type: 'PWA_MOBILE_MENU_INIT',
+            timestamp: Date.now()
+          });
+        }
+        
+      } else {
+        console.warn('⚠️ Mobile menu elements not found for enhanced initialization:', {
+          button: !!mobileMenuBtn,
+          menu: !!navMenu
+        });
+        
+        // 폴백: 기본 모바일 메뉴 시스템
+        DohaKR.initBasicMobileMenu();
+      }
+    } catch (error) {
+      console.error('❌ Enhanced mobile menu initialization failed:', error);
+      // 폴백: 기본 모바일 메뉴 시스템
+      DohaKR.initBasicMobileMenu();
+    }
+  }, 100); // 네비게이션 로드 대기
+};
+
+/**
+ * 기본 모바일 메뉴 초기화 (폴백)
+ */
+DohaKR.initBasicMobileMenu = function () {
+  const mobileMenuBtn = document.querySelector('.mobile-menu-btn, .navbar-toggle');
+  const navMenu = document.querySelector('.nav-menu, .navbar-menu');
 
   if (mobileMenuBtn && navMenu) {
     // 기존 이벤트 리스너 제거 (중복 방지)
@@ -231,9 +311,9 @@ DohaKR.initMobileMenu = function () {
       }
     });
 
-    console.log('✅ Mobile menu initialized with button:', mobileMenuBtn ? 'found' : 'not found');
+    console.log('✅ Basic mobile menu initialized as fallback');
   } else {
-    console.warn('⚠️ Mobile menu elements not found:', {
+    console.warn('⚠️ Mobile menu elements not found for basic initialization:', {
       button: !!mobileMenuBtn,
       menu: !!navMenu
     });
@@ -364,9 +444,51 @@ DohaKR.registerServiceWorker = function () {
 };
 
 /**
- * PWA 설치 프롬프트 초기화
+ * PWA 설치 프롬프트 초기화 (향상된 버전)
  */
 DohaKR.initPWAInstall = function () {
+  try {
+    // 새로운 PWA 헬퍼 시스템 사용
+    PWAHelpers.setupInstallPrompt();
+    
+    console.log('✅ Enhanced PWA install system initialized');
+    
+    // 기존 시스템과의 호환성을 위한 추가 이벤트 리스너
+    window.addEventListener('appinstalled', (event) => {
+      console.log('✅ PWA installed successfully');
+      
+      // Service Worker에 설치 완료 알림
+      if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+        navigator.serviceWorker.controller.postMessage({
+          type: 'PWA_INSTALL_COMPLETED',
+          timestamp: Date.now()
+        });
+      }
+      
+      // 분석 이벤트
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'pwa_installed_via_enhanced_system');
+      }
+    });
+    
+    // PWA 상태 모니터링
+    if (PWAHelpers.isPWAInstalled()) {
+      console.log('✅ App is running in PWA mode');
+    } else {
+      console.log('ℹ️ App is running in browser mode');
+    }
+    
+  } catch (error) {
+    console.error('❌ Enhanced PWA system failed:', error);
+    // 폴백: 기본 PWA 시스템
+    DohaKR.initBasicPWAInstall();
+  }
+};
+
+/**
+ * 기본 PWA 설치 프롬프트 초기화 (폴백)
+ */
+DohaKR.initBasicPWAInstall = function () {
   let deferredPrompt = null;
 
   // beforeinstallprompt 이벤트 캐치
@@ -376,14 +498,20 @@ DohaKR.initPWAInstall = function () {
     // 나중에 사용하기 위해 이벤트 저장
     deferredPrompt = e;
 
-    // 설치 버튼 표시
-    DohaKR.showInstallButton(deferredPrompt);
+    // 쿠키로 이미 거부했는지 확인
+    if (DohaKR.utils.getCookie('pwa-install-dismissed')) {
+      return;
+    }
+
+    // 설치 버튼 표시 (5초 후)
+    setTimeout(() => {
+      DohaKR.showInstallButton(deferredPrompt);
+    }, 5000);
   });
 
   // 설치 상태 확인
   window.addEventListener('appinstalled', () => {
     deferredPrompt = null;
-
     // 설치 완료 메시지 표시
     DohaKR.showInstallSuccess();
   });
@@ -393,11 +521,13 @@ DohaKR.initPWAInstall = function () {
   const isInStandaloneMode = window.matchMedia('(display-mode: standalone)').matches;
 
   if (isIOS && !isInStandaloneMode) {
-    // iOS에서 설치 안내 표시
+    // iOS에서 설치 안내 표시 (10초 후)
     setTimeout(() => {
       DohaKR.showiOSInstallPrompt();
-    }, 5000);
+    }, 10000);
   }
+  
+  console.log('✅ Basic PWA install system initialized as fallback');
 };
 
 /**

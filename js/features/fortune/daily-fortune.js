@@ -15,45 +15,57 @@ export class DailyFortuneService extends FortuneService {
   }
 
   /**
-   * 일일 운세 API 호출
+   * 메인 운세 생성 메서드 (HTML에서 호출됨)
+   */
+  async generateFortune(userData) {
+    try {
+      console.log('🔮 generateFortune 호출됨:', userData);
+      
+      // 생년월일 데이터 저장
+      this.fortuneState.birthData = {
+        name: userData.name,
+        year: userData.year,
+        month: userData.month,
+        day: userData.day,
+        hour: userData.time !== -1 ? userData.time : null,
+        isLunar: userData.isLunar,
+      };
+
+      console.log('💾 Fortune State 저장됨:', this.fortuneState.birthData);
+
+      // 로딩 표시
+      this.showLoading('오늘의 운세를 분석하고 있습니다...');
+
+      // 운세 데이터 생성
+      const result = await this.fetchDailyFortune();
+      
+      console.log('✨ 운세 결과:', result);
+
+      // 결과 표시
+      this.showResult(result);
+      
+      return result;
+    } catch (error) {
+      console.error('❌ generateFortune 오류:', error);
+      this.showError('운세 분석 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+      throw error;
+    }
+  }
+
+  /**
+   * 일일 운세 생성 (완전 클라이언트 사이드)
    */
   async fetchDailyFortune() {
     const { birthData } = this.fortuneState;
 
     try {
-      // 만세력 데이터 가져오기 (선택사항)
-      let manseryeokData = null;
-      if (window.calculateSaju) {
-        let { year } = birthData;
-        let { month } = birthData;
-        let { day } = birthData;
-
-        // 음력 변환
-        if (birthData.isLunar && window.lunarToSolar) {
-          const solarDate = window.lunarToSolar(year, month, day);
-          if (solarDate) {
-            year = solarDate.year;
-            month = solarDate.month;
-            day = solarDate.day;
-          }
-        }
-
-        const sajuData = window.calculateSaju(year, month, day, birthData.hour || 12);
-        if (sajuData) {
-          manseryeokData = {
-            yearPillar: sajuData.year,
-            monthPillar: sajuData.month,
-            dayPillar: sajuData.day,
-            hourPillar: sajuData.hour,
-            dayMaster: sajuData.day ? sajuData.day.substring(0, 1) : null,
-          };
-        }
-      }
+      // 만세력 데이터 계산 (클라이언트 사이드)
+      let manseryeokData = this.calculateManseryeok(birthData);
 
       // 기본 운세 데이터 생성
       const fortuneData = this.generateDailyFortune(birthData, manseryeokData);
 
-      // API 호출 시도 (선택사항)
+      // API 호출은 선택사항으로 유지하되, 실패 시 기본 데이터 반환
       if (window.generateDailyFortuneWithAI) {
         try {
           const apiData = await window.generateDailyFortuneWithAI(
@@ -67,15 +79,75 @@ export class DailyFortuneService extends FortuneService {
             return { ...fortuneData, ...apiData, manseryeokData };
           }
         } catch (error) {
-          // API 에러 발생시 사용자에게 알리고 기본 데이터 사용
-          // 에러가 발생해도 기본 운세 데이터를 사용하여 서비스 계속 제공
+          console.log('AI API 사용 불가, 기본 운세 제공');
         }
       }
 
       return fortuneData;
     } catch (error) {
-      throw error;
+      // 모든 계산 실패 시에도 최소한의 운세 제공
+      return this.generateDailyFortune(birthData, null);
     }
+  }
+
+  /**
+   * 클라이언트 사이드 만세력 계산
+   */
+  calculateManseryeok(birthData) {
+    try {
+      let { year, month, day } = birthData;
+
+      // 음력 변환 (있는 경우)
+      if (birthData.isLunar && window.lunarToSolar) {
+        const solarDate = window.lunarToSolar(year, month, day);
+        if (solarDate) {
+          year = solarDate.year;
+          month = solarDate.month;
+          day = solarDate.day;
+        }
+      }
+
+      // 사주 계산 (있는 경우)
+      if (window.calculateSaju) {
+        const sajuData = window.calculateSaju(year, month, day, birthData.hour || 12);
+        if (sajuData) {
+          return {
+            yearPillar: sajuData.year,
+            monthPillar: sajuData.month,
+            dayPillar: sajuData.day,
+            hourPillar: sajuData.hour,
+            dayMaster: sajuData.day ? sajuData.day.substring(0, 1) : null,
+          };
+        }
+      }
+
+      // 기본 만세력 데이터 생성 (간단한 계산)
+      return this.generateBasicManseryeok(year, month, day, birthData.hour || 12);
+    } catch (error) {
+      return null;
+    }
+  }
+
+  /**
+   * 기본 만세력 생성
+   */
+  generateBasicManseryeok(year, month, day, hour) {
+    const stems = ['갑', '을', '병', '정', '무', '기', '경', '신', '임', '계'];
+    const branches = ['자', '축', '인', '묘', '진', '사', '오', '미', '신', '유', '술', '해'];
+    
+    // 간단한 60갑자 계산
+    const yearIndex = (year - 4) % 60;
+    const monthIndex = ((year - 4) * 12 + month - 1) % 60;
+    const dayIndex = Math.floor((Date.UTC(year, month - 1, day) - Date.UTC(1900, 0, 1)) / (1000 * 60 * 60 * 24)) % 60;
+    const hourIndex = (Math.floor(hour / 2)) % 12;
+
+    return {
+      yearPillar: stems[yearIndex % 10] + branches[yearIndex % 12],
+      monthPillar: stems[monthIndex % 10] + branches[monthIndex % 12],
+      dayPillar: stems[dayIndex % 10] + branches[dayIndex % 12],
+      hourPillar: stems[Math.floor(hour / 2) % 10] + branches[hourIndex],
+      dayMaster: stems[dayIndex % 10],
+    };
   }
 
   /**

@@ -469,3 +469,5 @@ export class ServiceBase {
     };
   }
 }
+
+// Export ServiceBase class

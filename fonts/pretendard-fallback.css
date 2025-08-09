@@ -1,0 +1,93 @@
+/* Pretendard Font Fallback System with Working URLs */
+
+/* Use CDN.JSDELIVR.NET for Pretendard fonts - Most reliable Korean font CDN */
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css");
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-gov-dynamic-subset.min.css");
+
+/* Fallback to Google Fonts Korean fonts */
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap");
+
+/* Local Font Definitions for Offline Support */
+@font-face {
+  font-family: "Pretendard Variable";
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: 
+    local("Pretendard Variable"),
+    local("Pretendard-Variable"),
+    local("PretendardVariable"),
+    url("./pretendardvariable-400.woff2") format("woff2"),
+    url("./Pretendard-Regular.woff2") format("woff2"),
+    url("./Pretendard-Medium.woff2") format("woff2"),
+    url("./Pretendard-SemiBold.woff2") format("woff2"),
+    url("./Pretendard-Bold.woff2") format("woff2");
+}
+
+/* System Font Stack with Perfect Korean Support */
+:root {
+  --font-korean-ui: "Pretendard Variable", "Pretendard", "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕", "Segoe UI", Roboto, system-ui, sans-serif;
+  --font-korean-body: "Pretendard Variable", "Pretendard", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-fallback: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, system-ui, sans-serif;
+}
+
+/* Korean Text Optimization Rules */
+html {
+  font-family: var(--font-korean-ui);
+  font-feature-settings: "kern" 1;
+  text-rendering: optimizeSpeed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-korean-body);
+  word-break: keep-all;
+  line-height: 1.7;
+  letter-spacing: -0.01em;
+}
+
+/* Korean Typography Enhancements */
+.korean-text,
+.korean-title,
+p[lang="ko"],
+span[lang="ko"],
+div[lang="ko"] {
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  hyphens: none;
+  line-height: 1.7;
+}
+
+/* Mobile Optimization for Korean */
+@media screen and (max-width: 768px) {
+  body {
+    font-size: 16px; /* Prevent zoom on iOS */
+  }
+  
+  .korean-text {
+    line-height: 1.8; /* More space on mobile */
+  }
+}
+
+/* Performance: Font Loading States */
+.font-loading {
+  font-family: var(--font-fallback);
+  opacity: 0.9;
+}
+
+.font-loaded {
+  font-family: var(--font-korean-ui);
+  opacity: 1;
+  transition: opacity 0.2s ease;
+}
+
+/* Ensure proper rendering for Korean characters */
+.korean-input,
+input[lang="ko"],
+textarea[lang="ko"] {
+  font-family: var(--font-korean-ui);
+  font-size: 16px; /* iOS zoom prevention */
+  line-height: 1.6;
+  word-break: keep-all;
+}

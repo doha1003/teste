@@ -3,6 +3,8 @@
  * 메인 홈페이지 기능 구현 - 모듈화된 구조
  */
 
+import { installApp, isPWAInstalled, hideInstallPrompt } from '../core/pwa-helpers.js';
+
 class HomePage {
   constructor() {
     this.config = {
@@ -23,6 +25,14 @@ class HomePage {
     };
 
     // 서비스 데이터
+    // PWA 설치 프롬프트
+    this.pwaPrompt = {
+      element: null,
+      installButton: null,
+      closeButton: null,
+      isVisible: false,
+    };
+
     this.services = [
       {
         name: '테토-에겐 테스트',
@@ -151,6 +161,7 @@ class HomePage {
     this.initServiceCounter();
     this.initScrollAnimations();
     this.initHeroButtons();
+    this.initPWAPrompt();
   }
 
   /**
@@ -446,6 +457,259 @@ class HomePage {
   }
 
   /**
+   * PWA 설치 프롬프트 초기화
+   */
+  initPWAPrompt() {
+    this.pwaPrompt.element = document.getElementById('pwa-install-prompt');
+    this.pwaPrompt.installButton = document.getElementById('pwa-install-btn');
+    this.pwaPrompt.closeButton = document.getElementById('pwa-close-btn');
+
+    if (!this.pwaPrompt.element) return;
+
+    // 이벤트 리스너 설정
+    this.setupPWAEventListeners();
+
+    // 초기 상태 확인
+    this.checkPWAInstallAvailability();
+  }
+
+  /**
+   * PWA 이벤트 리스너 설정
+   */
+  setupPWAEventListeners() {
+    // 설치 버튼 클릭
+    this.pwaPrompt.installButton?.addEventListener('click', () => {
+      this.handlePWAInstall();
+    });
+
+    // 닫기 버튼 클릭
+    this.pwaPrompt.closeButton?.addEventListener('click', () => {
+      this.hidePWAPrompt();
+      sessionStorage.setItem('pwa-prompt-dismissed', 'true');
+      this.trackEvent('pwa_prompt_dismissed', { source: 'home_page' });
+    });
+
+    // PWA 이벤트
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      window.deferredPrompt = e;
+      this.updatePWAInstallButton();
+      this.showPWAPrompt();
+      this.trackEvent('pwa_prompt_available', { source: 'home_page' });
+    });
+
+    window.addEventListener('appinstalled', () => {
+      this.updatePWAInstallButton();
+      this.hidePWAPrompt();
+      this.showPWAInstallSuccessNotification();
+      this.trackEvent('pwa_installed', { source: 'home_page' });
+    });
+  }
+
+  /**
+   * PWA 설치 가능 여부 확인
+   */
+  checkPWAInstallAvailability() {
+    const isDismissed = sessionStorage.getItem('pwa-prompt-dismissed');
+    const isInstalled = isPWAInstalled();
+
+    // 이미 설치되었거나 사용자가 거부한 경우
+    if (isDismissed || isInstalled) {
+      this.hidePWAPrompt();
+      return;
+    }
+
+    // 버튼 상태 업데이트
+    this.updatePWAInstallButton();
+
+    // 5초 후 프롬프트 표시
+    setTimeout(() => {
+      if (!isPWAInstalled() && !sessionStorage.getItem('pwa-prompt-dismissed')) {
+        this.showPWAPrompt();
+      }
+    }, 5000);
+  }
+
+  /**
+   * PWA 프롬프트 표시
+   */
+  showPWAPrompt() {
+    if (!this.pwaPrompt.element || this.pwaPrompt.isVisible || isPWAInstalled()) {
+      return;
+    }
+
+    this.pwaPrompt.element.style.display = 'block';
+    
+    // 애니메이션을 위한 지연
+    requestAnimationFrame(() => {
+      this.pwaPrompt.element.style.opacity = '1';
+      this.pwaPrompt.element.style.transform = 'translateY(0)';
+      this.pwaPrompt.isVisible = true;
+    });
+
+    this.trackEvent('pwa_prompt_shown', { source: 'home_page' });
+  }
+
+  /**
+   * PWA 프롬프트 숨기기
+   */
+  hidePWAPrompt() {
+    if (!this.pwaPrompt.element || !this.pwaPrompt.isVisible) {
+      return;
+    }
+
+    this.pwaPrompt.element.style.opacity = '0';
+    this.pwaPrompt.element.style.transform = 'translateY(-10px)';
+    
+    setTimeout(() => {
+      this.pwaPrompt.element.style.display = 'none';
+      this.pwaPrompt.isVisible = false;
+    }, 300);
+  }
+
+  /**
+   * PWA 설치 버튼 상태 업데이트
+   */
+  updatePWAInstallButton() {
+    if (!this.pwaPrompt.installButton) return;
+
+    const isInstalled = isPWAInstalled();
+    const hasPrompt = !!window.deferredPrompt;
+    const buttonIcon = this.pwaPrompt.installButton.querySelector('.btn-icon');
+    const buttonText = this.pwaPrompt.installButton.querySelector('.btn-text');
+
+    if (isInstalled) {
+      this.pwaPrompt.installButton.disabled = true;
+      this.pwaPrompt.installButton.className = 'btn btn--primary pwa-install-button installed';
+      buttonIcon.textContent = '✅';
+      buttonText.textContent = '설치 완료';
+    } else if (hasPrompt) {
+      this.pwaPrompt.installButton.disabled = false;
+      this.pwaPrompt.installButton.className = 'btn btn--primary pwa-install-button ready';
+      buttonIcon.textContent = '📲';
+      buttonText.textContent = '지금 설치';
+    } else {
+      this.pwaPrompt.installButton.disabled = true;
+      this.pwaPrompt.installButton.className = 'btn btn--primary pwa-install-button';
+      buttonIcon.textContent = '⏳';
+      buttonText.textContent = '설치 준비 중...';
+    }
+  }
+
+  /**
+   * PWA 설치 처리
+   */
+  async handlePWAInstall() {
+    if (!window.deferredPrompt || isPWAInstalled()) {
+      return;
+    }
+
+    try {
+      this.trackEvent('pwa_install_clicked', { source: 'home_page' });
+      
+      const result = await installApp();
+      
+      if (result) {
+        this.hidePWAPrompt();
+        this.trackEvent('pwa_install_success', { source: 'home_page' });
+      } else {
+        this.showManualInstallGuide();
+        this.trackEvent('pwa_install_failed', { source: 'home_page' });
+      }
+    } catch (error) {
+      console.error('PWA install error:', error);
+      this.showManualInstallGuide();
+      this.trackEvent('pwa_install_error', { 
+        source: 'home_page',
+        error: error.message 
+      });
+    }
+  }
+
+  /**
+   * PWA 설치 성공 알림 표시
+   */
+  showPWAInstallSuccessNotification() {
+    const notification = document.createElement('div');
+    notification.innerHTML = `
+      <div style="
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: white;
+        border: 2px solid #10b981;
+        border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(16, 185, 129, 0.2);
+        padding: 1rem 1.5rem;
+        z-index: 10000;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        max-width: 320px;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      ">
+        <span style="font-size: 1.5rem;">🎉</span>
+        <div>
+          <strong style="color: #065f46; display: block; margin-bottom: 0.25rem;">설치 완료!</strong>
+          <p style="margin: 0; color: #10b981; font-size: 0.9rem;">홈 화면에서 doha.kr 앱을 확인하세요.</p>
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(notification);
+
+    // 애니메이션
+    requestAnimationFrame(() => {
+      notification.firstElementChild.style.transform = 'translateX(0)';
+    });
+
+    // 5초 후 제거
+    setTimeout(() => {
+      notification.firstElementChild.style.transform = 'translateX(100%)';
+      setTimeout(() => {
+        if (notification.parentNode) {
+          notification.remove();
+        }
+      }, 300);
+    }, 5000);
+  }
+
+  /**
+   * 수동 설치 안내 표시
+   */
+  showManualInstallGuide() {
+    const toast = document.createElement('div');
+    toast.innerHTML = `
+      <div style="
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #1f2937;
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        z-index: 10000;
+        max-width: 90%;
+        text-align: center;
+        font-size: 0.9rem;
+        line-height: 1.4;
+      ">
+        브라우저 메뉴에서 '홈 화면에 추가' 또는 '앱 설치'를 선택하세요 📱
+      </div>
+    `;
+
+    document.body.appendChild(toast);
+    
+    setTimeout(() => {
+      if (toast.parentNode) {
+        toast.remove();
+      }
+    }, 4000);
+  }
+
+  /**
    * 이벤트 추적
    */
   trackEvent(eventName, eventData) {
@@ -456,7 +720,7 @@ class HomePage {
 
     // 개발 환경에서 로그
     if (window.location.hostname === 'localhost') {
-      console.log('Development mode'); // eslint-disable-line no-console
+      console.log(`Event: ${eventName}`, eventData); // eslint-disable-line no-console
     }
   }
 }

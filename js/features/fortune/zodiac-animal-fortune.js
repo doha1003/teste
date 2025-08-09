@@ -117,6 +117,41 @@ export class ZodiacAnimalFortuneService extends FortuneService {
   }
 
   /**
+   * 메인 띠별 운세 생성 메서드 (HTML에서 호출됨)
+   */
+  async generateFortune(userData) {
+    try {
+      console.log('🐲 generateFortune 호출됨:', userData);
+      
+      // 띠 데이터 저장
+      this.selectedAnimal = userData.zodiacAnimal;
+      this.userName = userData.name;
+      
+      console.log('💾 Zodiac Animal State 저장됨:', {
+        animal: this.selectedAnimal,
+        name: this.userName
+      });
+
+      // 로딩 표시
+      this.showLoading('🐲 띠별 운세를 분석하고 있습니다...');
+
+      // 띠별 운세 생성
+      const result = await this.fetchZodiacAnimalFortune(this.selectedAnimal);
+      
+      console.log('✨ 띠별 운세 결과:', result);
+
+      // 결과 표시
+      this.showResult(result);
+      
+      return result;
+    } catch (error) {
+      console.error('❌ generateFortune 오류:', error);
+      this.showError('띠별 운세 분석 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+      throw error;
+    }
+  }
+
+  /**
    * 서비스 초기화 (오버라이드)
    */
   initializeService() {
@@ -180,16 +215,19 @@ export class ZodiacAnimalFortuneService extends FortuneService {
   }
 
   /**
-   * 띠별 운세 API 호출
+   * 띠별 운세 생성 (완전 클라이언트 사이드)
    */
   async fetchZodiacAnimalFortune(animal) {
     try {
       const animalData = this.zodiacAnimals[animal];
-      const today = new Date();
+      
+      // 기본 운세 생성
+      const basicFortune = this.generateZodiacAnimalFortune(animal, animalData);
 
-      // AI API 호출 시도
+      // AI API 호출은 선택사항으로 유지
       if (window.API_CONFIG && window.API_CONFIG.FORTUNE_API_URL) {
         try {
+          const today = new Date();
           const response = await fetch(`${window.API_CONFIG.FORTUNE_API_URL}/fortune`, {
             method: 'POST',
             headers: {
@@ -206,32 +244,235 @@ export class ZodiacAnimalFortuneService extends FortuneService {
           if (response.ok) {
             const result = await response.json();
             if (result.success && result.data) {
-              const fortune = this.parseZodiacAnimalAIResponse(result.data);
+              const aiFortune = this.parseZodiacAnimalAIResponse(result.data);
               this.showResult({
                 animal,
                 animalData,
-                fortune,
+                fortune: { ...basicFortune, ...aiFortune },
                 isAIGenerated: true,
               });
               return;
             }
           }
         } catch (error) {
-          // 에러가 발생해도 기본 운세로 계속 진행
+          console.log('AI API 사용 불가, 기본 운세 제공');
         }
       }
 
-      // 기본 운세 생성
-      const fallbackFortune = this.generateFallbackFortune(animal, animalData);
+      // 기본 운세 결과 표시
       this.showResult({
         animal,
         animalData,
-        fortune: fallbackFortune,
+        fortune: basicFortune,
         isAIGenerated: false,
       });
     } catch (error) {
-      this.showError('운세 분석 중 오류가 발생했습니다.');
+      // 실패 시에도 최소한의 운세 제공
+      const animalData = this.zodiacAnimals[animal];
+      const basicFortune = this.generateZodiacAnimalFortune(animal, animalData);
+      this.showResult({
+        animal,
+        animalData,
+        fortune: basicFortune,
+        isAIGenerated: false,
+      });
     }
+  }
+
+  /**
+   * 띠별 운세 생성 (클라이언트 사이드)
+   */
+  generateZodiacAnimalFortune(animal, animalData) {
+    const today = new Date();
+    const dayOfWeek = today.getDay();
+    const dateNumber = today.getDate();
+    
+    // 동물별 특성을 기반으로 한 운세 시드 생성
+    const animalSeeds = {
+      rat: 1, ox: 2, tiger: 3, rabbit: 4, dragon: 5, snake: 6,
+      horse: 7, sheep: 8, monkey: 9, rooster: 10, dog: 11, pig: 12
+    };
+    
+    const seed = (animalSeeds[animal] * dayOfWeek + dateNumber) % 100;
+
+    // 운세 템플릿 (동물별 특성 반영)
+    const fortuneTemplates = {
+      overall: this.getOverallFortunes(animalData.element),
+      love: this.getLoveFortunes(animal),
+      money: this.getMoneyFortunes(animalData.element),
+      work: this.getWorkFortunes(animal),
+      health: this.getHealthFortunes(animalData.element),
+    };
+
+    return {
+      overall: fortuneTemplates.overall[seed % fortuneTemplates.overall.length],
+      love: fortuneTemplates.love[seed % fortuneTemplates.love.length],
+      money: fortuneTemplates.money[seed % fortuneTemplates.money.length],
+      work: fortuneTemplates.work[seed % fortuneTemplates.work.length],
+      health: fortuneTemplates.health[seed % fortuneTemplates.health.length],
+      advice: this.getAdviceForAnimal(animal),
+      luckyNumbers: this.getLuckyNumbers(seed),
+      luckyColor: this.getLuckyColor(animalData.element, seed),
+      date: this.formatDate(today),
+    };
+  }
+
+  /**
+   * 전체운 템플릿 (오행별)
+   */
+  getOverallFortunes(element) {
+    const templates = {
+      '水': [
+        '지혜와 유연함이 빛나는 하루입니다. 변화에 잘 적응하며 좋은 결과를 얻을 수 있습니다.',
+        '직감이 예리해지는 날입니다. 중요한 결정은 마음의 소리를 따라 하세요.',
+        '흐르는 물처럼 자연스럽게 상황을 이끌어가면 좋은 성과를 얻을 수 있습니다.'
+      ],
+      '土': [
+        '안정적이고 꾸준한 하루가 예상됩니다. 차근차근 진행하면 좋은 결과가 있을 것입니다.',
+        '신뢰를 바탕으로 한 관계가 더욱 깊어질 수 있는 날입니다.',
+        '포용력과 인내심이 큰 힘을 발휘하는 시기입니다.'
+      ],
+      '木': [
+        '성장과 발전의 기운이 강한 날입니다. 새로운 도전에 나서보세요.',
+        '창의적인 아이디어가 떠오르기 쉬운 하루입니다. 적극 활용하세요.',
+        '주변 사람들과의 조화로운 관계가 큰 도움이 될 것입니다.'
+      ],
+      '火': [
+        '열정과 에너지가 넘치는 하루입니다. 적극적으로 행동하면 좋은 기회를 잡을 수 있습니다.',
+        '리더십을 발휘하기 좋은 날입니다. 주변 사람들을 이끌어보세요.',
+        '밝고 긍정적인 에너지로 주변에 좋은 영향을 미칠 수 있습니다.'
+      ],
+      '金': [
+        '정확하고 체계적인 접근이 성공의 열쇠입니다.',
+        '계획한 일들이 순조롭게 진행되는 하루가 될 것입니다.',
+        '품격과 절제가 큰 힘을 발휘하는 시기입니다.'
+      ]
+    };
+    
+    return templates[element] || templates['土'];
+  }
+
+  /**
+   * 연애운 템플릿 (동물별)
+   */
+  getLoveFortunes(animal) {
+    const templates = {
+      rat: ['지혜로운 대화로 상대방의 마음을 사로잡을 수 있습니다.', '새로운 만남의 기회가 있을 수 있습니다.'],
+      ox: ['진실된 마음이 전해지는 날입니다.', '꾸준한 관심이 좋은 결과를 가져올 것입니다.'],
+      tiger: ['당당하고 자신감 있는 모습이 매력적으로 보일 것입니다.', '적극적인 어프로치가 효과적입니다.'],
+      rabbit: ['부드럽고 온화한 매력이 빛나는 날입니다.', '상대방을 배려하는 마음이 중요합니다.'],
+      dragon: ['카리스마 있는 모습으로 많은 이의 관심을 받을 수 있습니다.', '자신감 있게 다가가세요.'],
+      snake: ['신비로운 매력이 상대방을 끌어당길 것입니다.', '직감을 믿고 행동하세요.'],
+      horse: ['자유롭고 활발한 에너지가 좋은 인상을 줄 것입니다.', '새로운 만남에 열린 마음으로 임하세요.'],
+      sheep: ['따뜻하고 배려심 깊은 모습이 사랑받을 것입니다.', '진심 어린 마음을 표현하세요.'],
+      monkey: ['재치 있는 유머로 분위기를 밝게 만들 수 있습니다.', '창의적인 데이트 아이디어를 생각해보세요.'],
+      rooster: ['정직하고 성실한 모습이 신뢰를 줄 것입니다.', '계획적인 접근이 좋은 결과를 가져올 것입니다.'],
+      dog: ['충성스럽고 진실한 마음이 전해질 것입니다.', '믿을 수 있는 관계를 만들어가세요.'],
+      pig: ['순수하고 따뜻한 마음이 상대방에게 감동을 줄 것입니다.', '솔직한 마음을 표현하세요.']
+    };
+    
+    return templates[animal] || templates['rat'];
+  }
+
+  /**
+   * 재물운 템플릿 (오행별)
+   */
+  getMoneyFortunes(element) {
+    const templates = {
+      '水': ['유연한 사고로 새로운 수입원을 찾을 수 있습니다.', '투자에 대한 정보를 잘 분석해보세요.'],
+      '土': ['안정적인 저축이 중요한 시기입니다.', '꾸준한 관리로 재정을 안정화하세요.'],
+      '木': ['성장 가능성이 높은 분야에 관심을 가져보세요.', '새로운 사업 기회가 보일 수 있습니다.'],
+      '火': ['적극적인 투자보다는 신중한 접근이 필요합니다.', '열정적으로 일하면 수입이 늘 수 있습니다.'],
+      '金': ['체계적인 재정 관리가 좋은 결과를 가져올 것입니다.', '정확한 계산으로 투자 계획을 세우세요.']
+    };
+    
+    return templates[element] || templates['土'];
+  }
+
+  /**
+   * 직업운 템플릿 (동물별)
+   */
+  getWorkFortunes(animal) {
+    const templates = {
+      rat: ['빠른 판단력으로 좋은 성과를 낼 수 있습니다.', '정보 수집 능력이 도움이 될 것입니다.'],
+      ox: ['꾸준한 노력이 인정받는 날입니다.', '책임감 있는 모습으로 신뢰를 얻을 수 있습니다.'],
+      tiger: ['리더십을 발휘할 기회가 올 수 있습니다.', '도전적인 업무에서 능력을 보일 수 있습니다.'],
+      rabbit: ['섬세한 작업에서 좋은 결과를 얻을 수 있습니다.', '동료들과의 협력이 중요합니다.'],
+      dragon: ['큰 그림을 그리는 능력이 빛날 것입니다.', '중요한 프로젝트를 맡을 수 있습니다.'],
+      snake: ['신중한 계획으로 완벽한 결과를 만들 수 있습니다.', '직감적인 판단이 도움이 될 것입니다.'],
+      horse: ['활동적인 업무에서 탁월한 능력을 보일 수 있습니다.', '새로운 분야에 도전해보세요.'],
+      sheep: ['팀워크를 통해 좋은 성과를 낼 수 있습니다.', '배려심이 인정받을 것입니다.'],
+      monkey: ['창의적인 아이디어로 문제를 해결할 수 있습니다.', '유연한 사고가 도움이 될 것입니다.'],
+      rooster: ['정확하고 체계적인 업무 처리가 인정받을 것입니다.', '시간 관리를 잘하면 성과가 클 것입니다.'],
+      dog: ['성실한 업무 태도가 좋은 평가를 받을 것입니다.', '동료들의 신뢰를 얻을 수 있습니다.'],
+      pig: ['정직하고 성실한 모습으로 좋은 기회를 얻을 수 있습니다.', '꾸준한 노력이 결실을 맺을 것입니다.']
+    };
+    
+    return templates[animal] || templates['ox'];
+  }
+
+  /**
+   * 건강운 템플릿 (오행별)
+   */
+  getHealthFortunes(element) {
+    const templates = {
+      '水': ['충분한 수분 섭취와 휴식이 중요합니다.', '스트레스 관리에 신경쓰세요.'],
+      '土': ['규칙적인 식사와 충분한 영양 섭취가 필요합니다.', '소화기 건강에 주의하세요.'],
+      '木': ['적당한 운동으로 몸의 균형을 맞추세요.', '간 건강에 신경쓰는 것이 좋습니다.'],
+      '火': ['심장 건강과 혈액순환에 주의하세요.', '과도한 스트레스를 피하는 것이 중요합니다.'],
+      '金': ['호흡기 건강에 주의하세요.', '규칙적인 생활 패턴을 유지하는 것이 좋습니다.']
+    };
+    
+    return templates[element] || templates['土'];
+  }
+
+  /**
+   * 동물별 조언
+   */
+  getAdviceForAnimal(animal) {
+    const advice = {
+      rat: '지혜를 발휘하되 성급하게 판단하지 마세요.',
+      ox: '꾸준함이 성공의 열쇠입니다. 인내심을 갖고 기다리세요.',
+      tiger: '용기와 신중함의 균형을 잡는 것이 중요합니다.',
+      rabbit: '온화함과 섬세함으로 주변 사람들과 좋은 관계를 유지하세요.',
+      dragon: '리더십을 발휘하되 겸손함을 잃지 마세요.',
+      snake: '직감을 믿되 신중한 검토도 필요합니다.',
+      horse: '자유로운 정신을 유지하면서도 책임감을 갖고 행동하세요.',
+      sheep: '배려심을 발휘하되 자신의 의견도 중요하게 생각하세요.',
+      monkey: '창의성을 발휘하되 현실적인 접근도 중요합니다.',
+      rooster: '정확성을 유지하면서도 유연한 사고를 갖추세요.',
+      dog: '충성심과 성실함으로 신뢰를 쌓아가세요.',
+      pig: '순수한 마음을 유지하면서도 현명한 판단을 하세요.'
+    };
+    
+    return advice[animal] || '자신의 장점을 살려 최선을 다하세요.';
+  }
+
+  /**
+   * 행운의 숫자 생성
+   */
+  getLuckyNumbers(seed) {
+    const numbers = [];
+    for (let i = 0; i < 3; i++) {
+      numbers.push(((seed + i * 7) % 45) + 1);
+    }
+    return numbers;
+  }
+
+  /**
+   * 행운의 색상 (오행별)
+   */
+  getLuckyColor(element, seed) {
+    const colors = {
+      '水': ['검정', '진주색', '은색'],
+      '土': ['노랑', '갈색', '베이지'],
+      '木': ['녹색', '청록색', '연두색'],
+      '火': ['빨강', '주황색', '분홍색'],
+      '金': ['흰색', '금색', '회색']
+    };
+    
+    const elementColors = colors[element] || colors['土'];
+    return elementColors[seed % elementColors.length];
   }
 
   /**

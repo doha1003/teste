@@ -3,50 +3,23 @@
    한글 웹사이트 통합 최적화 - 26개 페이지 전체 적용
    ========================================================================== */
 
-/* ===== 1. 한글 폰트 최적화 ===== */
-@font-face {
-  font-family: "Pretendard";
-  font-weight: 300;
-  font-display: swap;
-  src:
-    local("Pretendard Light"),
-    url("/fonts/Pretendard-Light.woff2") format("woff2");
-}
+/* ===== 1. 한글 폰트 최적화 - 시스템 폰트 우선 ===== */
+/* Google Fonts로 대체 */
+@import url("https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700&display=swap");
 
+/* 시스템 폰트 우선 전략 */
 @font-face {
-  font-family: "Pretendard";
+  font-family: "Korean System";
+  font-style: normal;
   font-weight: 400;
   font-display: swap;
   src:
-    local("Pretendard Regular"),
-    url("/fonts/Pretendard-Regular.woff2") format("woff2");
-}
-
-@font-face {
-  font-family: "Pretendard";
-  font-weight: 500;
-  font-display: swap;
-  src:
-    local("Pretendard Medium"),
-    url("/fonts/Pretendard-Medium.woff2") format("woff2");
-}
-
-@font-face {
-  font-family: "Pretendard";
-  font-weight: 600;
-  font-display: swap;
-  src:
-    local("Pretendard SemiBold"),
-    url("/fonts/Pretendard-SemiBold.woff2") format("woff2");
-}
-
-@font-face {
-  font-family: "Pretendard";
-  font-weight: 700;
-  font-display: swap;
-  src:
-    local("Pretendard Bold"),
-    url("/fonts/Pretendard-Bold.woff2") format("woff2");
+    local("Apple SD Gothic Neo"),
+    local("Malgun Gothic"),
+    local("맑은 고딕"),
+    local("Noto Sans KR"),
+    local("system-ui"),
+    local("sans-serif");
 }
 
 /* ===== 2. CSS 변수 - 한글 최적화 값 ===== */
@@ -83,7 +56,7 @@
   --shadow-lg: 0 4px 8px rgba(0, 0, 0, 0.12);
 
   /* 폰트 - 한글 최적화 */
-  --font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Korean System", "Pretendard", "Noto Sans KR", "Malgun Gothic", "맑은 고딕", "Segoe UI", sans-serif;
   --font-size-xs: 0.75rem; /* 12px */
   --font-size-sm: 0.875rem; /* 14px */
   --font-size-base: 1rem; /* 16px */

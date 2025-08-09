@@ -670,9 +670,135 @@ function showInstallSuccessNotification() {
 }
 
 /**
+ * 서비스 워커 등록
+ */
+export async function registerServiceWorker() {
+  if (!('serviceWorker' in navigator)) {
+    console.log('PWA: Service Worker not supported');
+    return false;
+  }
+
+  try {
+    console.log('PWA: Registering Service Worker...');
+    const registration = await navigator.serviceWorker.register('/sw.js');
+    
+    // 업데이트 감지
+    registration.addEventListener('updatefound', () => {
+      const newWorker = registration.installing;
+      
+      if (newWorker) {
+        newWorker.addEventListener('statechange', () => {
+          if (newWorker.state === 'installed') {
+            if (navigator.serviceWorker.controller) {
+              // 새 버전 사용 가능
+              showUpdateAvailableNotification();
+            } else {
+              // 첫 설치 완료
+              console.log('PWA: Service Worker installed for the first time');
+            }
+          }
+        });
+      }
+    });
+
+    console.log('PWA: Service Worker registered successfully');
+    return true;
+    
+  } catch (error) {
+    console.error('PWA: Service Worker registration failed:', error);
+    return false;
+  }
+}
+
+/**
+ * 업데이트 사용 가능 알림
+ */
+function showUpdateAvailableNotification() {
+  const notification = document.createElement('div');
+  notification.innerHTML = `
+    <div style="
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #3b82f6;
+      color: white;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+      z-index: 10000;
+      max-width: 300px;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+    ">
+      <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+        <span style="font-size: 1.2rem;">🔄</span>
+        <strong>업데이트 사용 가능</strong>
+      </div>
+      <p style="margin: 0 0 0.75rem; font-size: 0.9rem; opacity: 0.9;">
+        새로운 버전이 준비되었습니다.
+      </p>
+      <button id="update-app-btn" style="
+        background: white;
+        color: #3b82f6;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        font-weight: 600;
+        cursor: pointer;
+        margin-right: 0.5rem;
+      ">업데이트</button>
+      <button id="dismiss-update-btn" style="
+        background: transparent;
+        color: white;
+        border: 1px solid rgba(255,255,255,0.3);
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        cursor: pointer;
+      ">나중에</button>
+    </div>
+  `;
+
+  document.body.appendChild(notification);
+
+  // 애니메이션
+  requestAnimationFrame(() => {
+    notification.firstElementChild.style.transform = 'translateX(0)';
+  });
+
+  // 이벤트 리스너
+  notification.querySelector('#update-app-btn').addEventListener('click', () => {
+    window.location.reload();
+  });
+
+  notification.querySelector('#dismiss-update-btn').addEventListener('click', () => {
+    notification.firstElementChild.style.transform = 'translateX(100%)';
+    setTimeout(() => {
+      if (notification.parentNode) {
+        notification.remove();
+      }
+    }, 300);
+  });
+
+  // 10초 후 자동 제거
+  setTimeout(() => {
+    if (notification.parentNode) {
+      notification.firstElementChild.style.transform = 'translateX(100%)';
+      setTimeout(() => {
+        if (notification.parentNode) {
+          notification.remove();
+        }
+      }, 300);
+    }
+  }, 10000);
+}
+
+/**
  * PWA 초기화 함수
  */
-export function initializePWA() {
+export async function initializePWA() {
+  // 서비스 워커 등록
+  await registerServiceWorker();
+  
   // 설치 프롬프트 설정
   setupInstallPrompt();
 

@@ -2,7 +2,7 @@
 <html lang="ko">
   <head>
     <meta
-      content="upgrade-insecure-requests; default-src 'self' https:; script-src 'unsafe-inline' 'self' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'unsafe-inline' 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;"
+      content="upgrade-insecure-requests; default-src 'self' https:; script-src 'unsafe-inline' 'self' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'unsafe-inline' 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net data:; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;"
       http-equiv="Content-Security-Policy"
     />
     <meta charset="utf-8" />
@@ -69,86 +69,126 @@
         </p>
       </div>
     </section>
-    <!-- 사주 입력 폼 -->
-    <section class="saju-section">
+    <!-- 사주팔자 입력 폼 -->
+    <section class="fortune-section" aria-labelledby="saju-form-title">
       <div class="container">
-        <div class="saju-form-container" id="sajuForm">
-          <h2>사주팔자 정보 입력</h2>
-          <form data-form="birth-data">
-            <div class="form-row">
-              <div class="form-group">
-                <label for="userName">이름</label>
-                <input class="form-control" id="userName" name="userName" required="" type="text" />
-              </div>
-              <div class="form-group">
-                <label for="gender">성별</label>
-                <select class="form-control" id="gender" name="gender" required="">
-                  <option value="">선택해주세요</option>
-                  <option value="male">남성</option>
-                  <option value="female">여성</option>
-                </select>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label for="birthYear">생년</label>
-                <input
-                  class="form-control"
-                  id="birthYear"
-                  max="2025"
-                  min="1900"
-                  name="birthYear"
-                  required=""
-                  type="number"
-                />
-              </div>
-              <div class="form-group">
-                <label for="birthMonth">생월</label>
-                <input
-                  class="form-control"
-                  id="birthMonth"
-                  max="12"
-                  min="1"
-                  name="birthMonth"
-                  required=""
-                  type="number"
-                />
-              </div>
-              <div class="form-group">
-                <label for="birthDay">생일</label>
-                <input class="form-control" id="birthDay" max="31" min="1" name="birthDay" required="" type="number" />
-              </div>
-            </div>
+        <div class="fortune-form-container" id="sajuForm">
+          <h2 id="saju-form-title">사주팔자 정보를 입력해주세요</h2>
+          <form data-form="birth-data" aria-label="사주팔자 생년월일 입력 폼">
             <div class="form-group">
-              <label for="birthTime">출생시간</label>
-              <select class="form-control" id="birthTime" name="birthTime" required="">
-                <option value="">선택해주세요</option>
-                <option value="23">자시 (23:00-00:59)</option>
-                <option value="1">축시 (01:00-02:59)</option>
-                <option value="3">인시 (03:00-04:59)</option>
-                <option value="5">묘시 (05:00-06:59)</option>
-                <option value="7">진시 (07:00-08:59)</option>
-                <option value="9">사시 (09:00-10:59)</option>
-                <option value="11">오시 (11:00-12:59)</option>
-                <option value="13">미시 (13:00-14:59)</option>
-                <option value="15">신시 (15:00-16:59)</option>
-                <option value="17">유시 (17:00-18:59)</option>
-                <option value="19">술시 (19:00-20:59)</option>
-                <option value="21">해시 (21:00-22:59)</option>
+              <label for="userName" class="form-label">
+                이름
+                <span aria-label="필수">*</span>
+              </label>
+              <input
+                type="text"
+                id="userName"
+                name="userName"
+                class="form-control"
+                placeholder="홍길동"
+                required
+                aria-required="true"
+                aria-describedby="userName-desc"
+              />
+              <span id="userName-desc" class="visually-hidden">사주팔자 분석에 표시될 이름을 입력해주세요</span>
+            </div>
+
+            <div class="form-group">
+              <label for="gender" class="form-label">
+                성별
+                <span aria-label="필수">*</span>
+              </label>
+              <select id="gender" name="gender" class="form-control" required aria-required="true">
+                <option value="">성별 선택</option>
+                <option value="male">남성</option>
+                <option value="female">여성</option>
               </select>
             </div>
-            <div class="form-group">
-              <label class="checkbox-label">
-                <input id="isLunar" name="isLunar" type="checkbox" />
-                <span class="checkmark"></span>
-                음력 생일입니다
-              </label>
+
+            <div class="form-row">
+              <div class="form-col">
+                <div class="form-group">
+                  <label for="birthYear" class="form-label">
+                    생년
+                    <span aria-label="필수">*</span>
+                  </label>
+                  <select id="birthYear" name="birthYear" class="form-control" required aria-required="true">
+                    <option value="">연도 선택</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-col">
+                <div class="form-group">
+                  <label for="birthMonth" class="form-label">
+                    생월
+                    <span aria-label="필수">*</span>
+                  </label>
+                  <select id="birthMonth" name="birthMonth" class="form-control" required aria-required="true">
+                    <option value="">월 선택</option>
+                    <option value="1">1월</option>
+                    <option value="2">2월</option>
+                    <option value="3">3월</option>
+                    <option value="4">4월</option>
+                    <option value="5">5월</option>
+                    <option value="6">6월</option>
+                    <option value="7">7월</option>
+                    <option value="8">8월</option>
+                    <option value="9">9월</option>
+                    <option value="10">10월</option>
+                    <option value="11">11월</option>
+                    <option value="12">12월</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-col">
+                <div class="form-group">
+                  <label for="birthDay" class="form-label">
+                    생일
+                    <span aria-label="필수">*</span>
+                  </label>
+                  <select id="birthDay" name="birthDay" class="form-control" required aria-required="true">
+                    <option value="">일 선택</option>
+                  </select>
+                </div>
+              </div>
             </div>
-            <button class="btn btn-primary btn-full-width" type="submit">🔮 사주팔자 분석하기</button>
+
+            <div class="form-group">
+              <label for="birthTime" class="form-label">
+                출생시간
+                <span aria-label="필수">*</span>
+              </label>
+              <select id="birthTime" name="birthTime" class="form-control" required aria-required="true" aria-describedby="birthTime-desc">
+                <option value="">시간 선택</option>
+                <option value="0">자시 (23:00-01:00)</option>
+                <option value="2">축시 (01:00-03:00)</option>
+                <option value="4">인시 (03:00-05:00)</option>
+                <option value="6">묘시 (05:00-07:00)</option>
+                <option value="8">진시 (07:00-09:00)</option>
+                <option value="10">사시 (09:00-11:00)</option>
+                <option value="12">오시 (11:00-13:00)</option>
+                <option value="14">미시 (13:00-15:00)</option>
+                <option value="16">신시 (15:00-17:00)</option>
+                <option value="18">유시 (17:00-19:00)</option>
+                <option value="20">술시 (19:00-21:00)</option>
+                <option value="22">해시 (21:00-23:00)</option>
+              </select>
+              <span id="birthTime-desc" class="visually-hidden">정확한 사주팔자 분석을 위해 출생시간을 선택해주세요</span>
+            </div>
+
+            <div class="form-check">
+              <input type="checkbox" id="isLunar" name="isLunar" class="form-check-input" />
+              <label for="isLunar" class="form-check-label">음력 생일입니다</label>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg" aria-label="입력한 정보로 사주팔자 분석하기">
+              🔮 사주팔자 분석하기
+            </button>
           </form>
         </div>
-        <!-- 사주 결과 영역 -->
-        <div id="sajuResult" class="d-none-init">
+
+        <!-- 사주 결과 -->
+        <div id="sajuResult" class="d-none-init" role="region" aria-label="사주팔자 분석 결과" aria-live="polite">
           <!-- 결과가 여기에 표시됩니다 -->
         </div>
       </div>
@@ -193,47 +233,47 @@
         <div class="footer-section">
           <h3>서비스</h3>
           <ul class="footer-links">
-            <li><a href="/">홈</a></li>
-            <li><a href="/tests/">심리테스트</a></li>
-            <li><a href="/fortune/">운세</a></li>
-            <li><a href="/tools/">실용도구</a></li>
-            <li><a href="/about/">사이트 소개</a></li>
+            <li><a href="../../">홈</a></li>
+            <li><a href="../../tests/">심리테스트</a></li>
+            <li><a href="../../fortune/">운세</a></li>
+            <li><a href="../../tools/">실용도구</a></li>
+            <li><a href="../../about/">사이트 소개</a></li>
           </ul>
         </div>
 
         <div class="footer-section">
           <h3>인기 콘텐츠</h3>
           <ul class="footer-links">
-            <li><a href="/tests/teto-egen/">테토-에겐 테스트</a></li>
-            <li><a href="/tests/mbti/">MBTI 테스트</a></li>
-            <li><a href="/fortune/daily/">오늘의 운세</a></li>
-            <li><a href="/tools/text-counter.html">글자수 세기</a></li>
+            <li><a href="../../tests/teto-egen/">테토-에겐 테스트</a></li>
+            <li><a href="../../tests/mbti/">MBTI 테스트</a></li>
+            <li><a href="../../fortune/daily/">오늘의 운세</a></li>
+            <li><a href="../../tools/text-counter.html">글자수 세기</a></li>
           </ul>
         </div>
 
         <div class="footer-section">
           <h3>운세 서비스</h3>
           <ul class="footer-links">
-            <li><a href="/fortune/daily/">오늘의 운세</a></li>
-            <li><a href="/fortune/zodiac/">별자리 운세</a></li>
-            <li><a href="/fortune/zodiac-animal/">띠별 운세</a></li>
-            <li><a href="/fortune/tarot/">AI 타로</a></li>
+            <li><a href="../../fortune/daily/">오늘의 운세</a></li>
+            <li><a href="../../fortune/zodiac/">별자리 운세</a></li>
+            <li><a href="../../fortune/zodiac-animal/">띠별 운세</a></li>
+            <li><a href="../../fortune/tarot/">AI 타로</a></li>
           </ul>
         </div>
 
         <div class="footer-section">
           <h3>고객지원</h3>
           <ul class="footer-links">
-            <li><a href="/contact/">문의하기</a></li>
-            <li><a href="/faq/">자주 묻는 질문</a></li>
+            <li><a href="../../contact/">문의하기</a></li>
+            <li><a href="../../faq/">자주 묻는 질문</a></li>
           </ul>
         </div>
       </div>
 
       <div class="footer-bottom">
         <div class="footer-legal">
-          <a href="/privacy/">개인정보처리방침</a>
-          <a href="/terms/">이용약관</a>
+          <a href="../../privacy/">개인정보처리방침</a>
+          <a href="../../terms/">이용약관</a>
         </div>
         <p>&copy; 2025 doha.kr. All rights reserved.</p>
       </div>
@@ -274,26 +314,26 @@
       
       document.addEventListener('DOMContentLoaded', async () => {
         try {
-          console.log('🎯 사주팔자 초기화 시작');
+          console.log('🔮 사주팔자 초기화 시작');
           
           // SajuFortuneService 인스턴스 생성
           sajuFortuneService = new SajuFortuneService();
           console.log('✅ 사주팔자 서비스 생성됨');
           
+          // 생년월일 드롭다운 초기화
+          initializeBirthDateSelectors();
+          
           // 폼 제출 이벤트 연결
           const form = document.querySelector('form[data-form="birth-data"]');
           if (form) {
             form.addEventListener('submit', handleSajuSubmit);
-            console.log('✅ 사주 폼 이벤트 연결됨');
+            console.log('✅ 폼 이벤트 연결됨');
           }
           
-          // 월/일 유효성 검사
-          const monthInput = document.getElementById('birthMonth');
-          const dayInput = document.getElementById('birthDay');
-          
-          if (monthInput && dayInput) {
-            monthInput.addEventListener('change', validateDayInput);
-            dayInput.addEventListener('change', validateDayInput);
+          // 월 변경 시 일 옵션 업데이트
+          const monthSelect = document.getElementById('birthMonth');
+          if (monthSelect) {
+            monthSelect.addEventListener('change', updateDayOptions);
           }
           
         } catch (error) {
@@ -301,17 +341,44 @@
         }
       });
       
-      function validateDayInput() {
-        const month = parseInt(document.getElementById('birthMonth').value);
-        const day = parseInt(document.getElementById('birthDay').value);
-        const year = parseInt(document.getElementById('birthYear').value) || new Date().getFullYear();
-        
-        if (month && day) {
-          const daysInMonth = new Date(year, month, 0).getDate();
-          if (day > daysInMonth) {
-            document.getElementById('birthDay').value = daysInMonth;
-            alert(`${month}월은 최대 ${daysInMonth}일까지 있습니다.`);
+      function initializeBirthDateSelectors() {
+        // 연도 선택 초기화
+        const yearSelect = document.getElementById('birthYear');
+        if (yearSelect && yearSelect.options.length <= 1) {
+          const currentYear = new Date().getFullYear();
+          for (let year = currentYear; year >= 1920; year--) {
+            const option = document.createElement('option');
+            option.value = year;
+            option.textContent = `${year}년`;
+            yearSelect.appendChild(option);
           }
+        }
+        
+        // 일 선택 초기화
+        updateDayOptions();
+      }
+      
+      function updateDayOptions() {
+        const monthSelect = document.getElementById('birthMonth');
+        const daySelect = document.getElementById('birthDay');
+        
+        if (!monthSelect || !daySelect) return;
+        
+        const month = parseInt(monthSelect.value);
+        if (!month) {
+          daySelect.innerHTML = '<option value="">일 선택</option>';
+          return;
+        }
+        
+        const year = parseInt(document.getElementById('birthYear').value) || new Date().getFullYear();
+        const daysInMonth = new Date(year, month, 0).getDate();
+        
+        daySelect.innerHTML = '<option value="">일 선택</option>';
+        for (let day = 1; day <= daysInMonth; day++) {
+          const option = document.createElement('option');
+          option.value = day;
+          option.textContent = `${day}일`;
+          daySelect.appendChild(option);
         }
       }
       
@@ -334,27 +401,12 @@
           };
           
           // 입력 검증
-          if (!userData.name || !userData.gender || !userData.year || !userData.month || !userData.day || userData.time === undefined) {
+          if (!userData.name || !userData.gender || !userData.year || !userData.month || !userData.day || userData.time === null || isNaN(userData.time)) {
             alert('모든 필수 정보를 입력해주세요.');
             return;
           }
           
-          if (userData.year < 1900 || userData.year > new Date().getFullYear()) {
-            alert('올바른 생년을 입력해주세요.');
-            return;
-          }
-          
-          if (userData.month < 1 || userData.month > 12) {
-            alert('올바른 생월을 입력해주세요.');
-            return;
-          }
-          
-          if (userData.day < 1 || userData.day > 31) {
-            alert('올바른 생일을 입력해주세요.');
-            return;
-          }
-          
-          console.log('📋 사주 분석 데이터:', userData);
+          console.log('📋 사용자 데이터:', userData);
           
           // 사주팔자 분석 실행
           await sajuFortuneService.generateFortune(userData);
@@ -367,6 +419,22 @@
       
       // 전역 접근을 위한 설정
       window.sajuFortuneService = sajuFortuneService;
+    </script>
+
+    <!-- Core JavaScript Modules -->
+    <script type="module" src="../../js/app.js"></script>
+    <script type="module" src="../../js/features/fortune/saju-fortune.js"></script>
+    
+    <!-- Saju Fortune Initialization -->
+    <script type="module">
+      import { SajuFortuneService } from '../../js/features/fortune/saju-fortune.js';
+      
+      // Initialize service when DOM is ready
+      document.addEventListener('DOMContentLoaded', function() {
+        console.log('📿 Saju Fortune Service 초기화 시작');
+        window.sajuFortuneService = new SajuFortuneService();
+        console.log('✅ Saju Fortune Service 준비됨');
+      });
     </script>
 
     <!-- Structured Data -->

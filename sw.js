@@ -1,18 +1,18 @@
 /**
- * Service Worker 5.0 for doha.kr - Optimized PWA
- * 최적화된 캐싱 전략, 향상된 성능, 간소화된 구조
- * Version: 5.0.0 - Performance Optimized Implementation
+ * Service Worker 5.2 for doha.kr - PWA 및 모바일 메뉴 최적화
+ * 최적화된 캐싱 전략, 향상된 성능, PWA 기능 개선
+ * Version: 5.2.0 - PWA & Mobile Menu Optimized Implementation
  * 
  * Features:
- * - Streamlined caching strategies
- * - Fast offline-first architecture  
- * - Smart cache size management
- * - Optimized for Korean web services
+ * - Enhanced mobile menu support
+ * - Improved PWA installation flow
+ * - Optimized caching for mobile components
+ * - Better offline functionality for mobile users
  * - Background sync for critical features
  */
 
-// 캐시 버전 관리 - 하이라이터 패턴 CSS 추가로 버전 업데이트
-const SW_VERSION = '5.1.0';
+// 캐시 버전 관리 - PWA 기능 및 모바일 메뉴 수정으로 버전 업데이트
+const SW_VERSION = '5.2.0';
 const CACHE_VERSION = `v${SW_VERSION}`;
 const STATIC_CACHE = `doha-static-${CACHE_VERSION}`;
 const DYNAMIC_CACHE = `doha-dynamic-${CACHE_VERSION}`;
@@ -25,17 +25,19 @@ let performanceMetrics = {
   cacheMisses: 0,
   networkRequests: 0,
   offlineRequests: 0,
+  mobileMenuRequests: 0,
+  pwaInstalls: 0,
   startTime: Date.now(),
 };
 
 // 최적화된 캐시 설정
 const CACHE_CONFIG = {
-  maxCacheSize: 25, // 캐시 크기 최적화 (25MB)
+  maxCacheSize: 30, // 모바일 컴포넌트 포함으로 증가
   maxEntries: {
-    static: 30,    // 정적 자원 최적화
-    dynamic: 25,   // 동적 콘텐츠 최적화
+    static: 40,    // 모바일 메뉴 CSS/JS 포함
+    dynamic: 30,   // 동적 콘텐츠 최적화
     api: 50,       // API 응답 최적화
-    images: 100,   // 이미지 최적화
+    images: 120,   // PWA 아이콘 포함
   },
   // 캐시 만료 시간 최적화
   cacheExpiry: {
@@ -46,21 +48,27 @@ const CACHE_CONFIG = {
   },
 };
 
-// 핵심 자산 최적화 (필수만 선별) - 하이라이터 패턴 포함된 CSS 번들
+// 핵심 자산 최적화 (필수만 선별) - PWA 및 모바일 메뉴 포함
 const CRITICAL_ASSETS = [
   '/',
   '/offline.html',
   '/manifest.json',
-  // 핵심 CSS (하이라이터 패턴 포함된 번들)
-  '/dist/styles.min.css',
-  '/dist/styles.css', // 개발용 번들도 포함
+  // 핵심 CSS (현재 사용 중인 번들)
+  '/dist/styles.css',
   // 핵심 JavaScript
   '/js/app.js',
   '/js/core/common-init.js',
+  '/js/core/pwa-helpers.js',
+  '/js/core/mobile-menu.js',
+  // CSS 컴포넌트
+  '/css/components/mobile-menu.css',
   // 필수 이미지
   '/images/logo.svg',
   '/images/icon-192x192.png',
+  '/images/icon-256x256.png',
   '/images/icon-512x512.png',
+  '/images/icon-maskable-192x192.png',
+  '/images/icon-maskable-512x512.png',
 ];
 
 // 최적화된 API 캐시 전략
@@ -89,6 +97,8 @@ const CACHE_STRATEGIES = {
     patterns: [
       /\.(?:css|js|woff2?|ttf|eot)$/,
       /^\/dist\//,
+      /^\/css\//,
+      /^\/js\//,
       /manifest\.json$/,
     ],
     cacheName: STATIC_CACHE,
@@ -120,13 +130,13 @@ const CACHE_STRATEGIES = {
 
 // Install event - 최적화된 자산 캐싱
 self.addEventListener('install', (event) => {
-  console.log(`[SW ${SW_VERSION}] Installing...`);
+  console.log(`[SW ${SW_VERSION}] Installing with mobile menu & PWA optimizations...`);
   
   event.waitUntil(
     Promise.all([
       // 핵심 자산 캐싱
       caches.open(STATIC_CACHE).then((cache) => {
-        console.log(`[SW ${SW_VERSION}] Caching critical assets`);
+        console.log(`[SW ${SW_VERSION}] Caching critical assets including mobile components`);
         return cache.addAll(CRITICAL_ASSETS.filter(asset => asset)); // 유효한 자산만 캐시
       }),
       
@@ -134,7 +144,7 @@ self.addEventListener('install', (event) => {
       initializePerformanceTracking(),
     ])
     .then(() => {
-      console.log(`[SW ${SW_VERSION}] Installation complete`);
+      console.log(`[SW ${SW_VERSION}] Installation complete with PWA features`);
       return self.skipWaiting(); // 즉시 활성화
     })
     .catch((error) => {
@@ -145,7 +155,7 @@ self.addEventListener('install', (event) => {
 
 // Activate event - 최적화된 캐시 정리
 self.addEventListener('activate', (event) => {
-  console.log(`[SW ${SW_VERSION}] Activating...`);
+  console.log(`[SW ${SW_VERSION}] Activating with enhanced mobile support...`);
   
   event.waitUntil(
     Promise.all([
@@ -159,7 +169,7 @@ self.addEventListener('activate', (event) => {
       notifyClientsOfUpdate(),
     ])
     .then(() => {
-      console.log(`[SW ${SW_VERSION}] Activation complete`);
+      console.log(`[SW ${SW_VERSION}] Activation complete with PWA enhancements`);
       return self.clients.claim(); // 모든 탭에서 즉시 제어
     })
     .catch((error) => {
@@ -175,6 +185,14 @@ self.addEventListener('fetch', (event) => {
   
   // 성능 메트릭 업데이트
   performanceMetrics.networkRequests++;
+  
+  // PWA 및 모바일 관련 요청 로깅
+  if (url.pathname.includes('pwa') || url.pathname.includes('install') || url.pathname.includes('mobile-menu')) {
+    console.log(`[SW] PWA/Mobile request: ${url.pathname}`);
+    if (url.pathname.includes('mobile-menu')) {
+      performanceMetrics.mobileMenuRequests++;
+    }
+  }
   
   // 처리할 수 없는 요청 필터링
   if (!shouldHandleRequest(url, request)) {
@@ -488,7 +506,7 @@ async function getOfflinePage() {
 }
 
 /**
- * 기본 오프라인 HTML 생성
+ * 모바일 최적화된 오프라인 HTML 생성
  */
 function createOfflineHTML() {
   return `
@@ -499,25 +517,76 @@ function createOfflineHTML() {
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>오프라인 - doha.kr</title>
       <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; 
-               text-align: center; padding: 50px; background: #f5f5f5; }
-        .offline-msg { background: white; padding: 40px; border-radius: 8px; 
-                      box-shadow: 0 2px 10px rgba(0,0,0,0.1); max-width: 400px; 
-                      margin: 0 auto; }
-        h1 { color: #333; margin-bottom: 20px; }
-        p { color: #666; line-height: 1.6; }
-        button { background: #6366f1; color: white; border: none; 
-                padding: 12px 24px; border-radius: 6px; cursor: pointer; 
-                font-size: 16px; margin-top: 20px; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+          font-family: -apple-system, BlinkMacSystemFont, 'Pretendard Variable', 'Pretendard', 'Segoe UI', sans-serif; 
+          text-align: center; padding: 20px; background: #f9fafb; 
+          min-height: 100vh; display: flex; align-items: center; justify-content: center;
+        }
+        .offline-container { 
+          background: white; padding: 40px 30px; border-radius: 16px; 
+          box-shadow: 0 4px 20px rgba(0,0,0,0.08); max-width: 400px; width: 100%;
+        }
+        .offline-icon { font-size: 4rem; margin-bottom: 20px; }
+        h1 { color: #1f2937; margin-bottom: 16px; font-size: 1.5rem; }
+        p { color: #6b7280; line-height: 1.6; margin-bottom: 24px; }
+        .features { 
+          text-align: left; background: #f3f4f6; padding: 20px; border-radius: 12px; 
+          margin: 20px 0;
+        }
+        .features h3 { color: #374151; margin-bottom: 12px; font-size: 1rem; }
+        .features ul { list-style: none; }
+        .features li { color: #6b7280; padding: 4px 0; font-size: 0.9rem; }
+        .features li::before { content: '✓ '; color: #10b981; font-weight: bold; }
+        .actions { display: flex; gap: 12px; flex-wrap: wrap; }
+        button { 
+          background: #6366f1; color: white; border: none; 
+          padding: 12px 20px; border-radius: 8px; cursor: pointer; 
+          font-size: 16px; font-weight: 600; flex: 1; min-width: 120px;
+          transition: background 0.2s;
+        }
         button:hover { background: #5856eb; }
+        .btn-secondary {
+          background: #e5e7eb; color: #374151;
+        }
+        .btn-secondary:hover { background: #d1d5db; }
+        @media (max-width: 480px) {
+          .offline-container { padding: 30px 20px; }
+          .actions { flex-direction: column; }
+          button { min-width: auto; }
+        }
       </style>
     </head>
     <body>
-      <div class="offline-msg">
-        <h1>🔌 인터넷 연결 없음</h1>
+      <div class="offline-container">
+        <div class="offline-icon">📵</div>
+        <h1>인터넷 연결 없음</h1>
         <p>현재 오프라인 상태입니다.<br>연결을 확인한 후 다시 시도해주세요.</p>
-        <button onclick="window.location.reload()">다시 시도</button>
+        
+        <div class="features">
+          <h3>오프라인에서도 사용 가능:</h3>
+          <ul>
+            <li>캐시된 심리테스트 결과 확인</li>
+            <li>텍스트 카운터 도구 사용</li>
+            <li>BMI 계산기 이용</li>
+            <li>이전 운세 결과 보기</li>
+          </ul>
+        </div>
+        
+        <div class="actions">
+          <button onclick="window.location.reload()">다시 시도</button>
+          <button class="btn-secondary" onclick="history.back()">이전 페이지</button>
+        </div>
       </div>
+      
+      <script>
+        // 연결 복구 시 자동 새로고침
+        window.addEventListener('online', () => {
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
+        });
+      </script>
     </body>
     </html>
   `;
@@ -649,6 +718,7 @@ async function notifyClientsOfUpdate() {
       type: 'SW_UPDATED',
       version: SW_VERSION,
       timestamp: Date.now(),
+      features: ['mobile-menu-fix', 'pwa-install-improvements', 'cache-optimization', 'offline-enhancements'],
     });
   });
 }
@@ -676,6 +746,11 @@ self.addEventListener('message', (event) => {
       event.ports[0]?.postMessage({ metrics: performanceMetrics });
       break;
       
+    case 'PWA_INSTALL_STARTED':
+      performanceMetrics.pwaInstalls++;
+      console.log(`[SW] PWA install started, total: ${performanceMetrics.pwaInstalls}`);
+      break;
+      
     default:
       console.log(`[SW] Unknown message type: ${data.type}`);
   }
@@ -689,9 +764,35 @@ self.addEventListener('sync', (event) => {
     case 'cache-cleanup':
       event.waitUntil(manageCacheSize());
       break;
+    case 'mobile-menu-sync':
+      event.waitUntil(precacheMobileComponents());
+      break;
     default:
       console.log(`[SW] Unknown sync tag: ${event.tag}`);
   }
 });
 
-console.log(`[SW ${SW_VERSION}] Service Worker script loaded successfully`);
+/**
+ * 모바일 컴포넌트 사전 캐싱
+ */
+async function precacheMobileComponents() {
+  try {
+    const cache = await caches.open(STATIC_CACHE);
+    const mobileAssets = [
+      '/css/components/mobile-menu.css',
+      '/js/core/mobile-menu.js',
+    ];
+    
+    for (const asset of mobileAssets) {
+      const response = await fetch(asset);
+      if (response.ok) {
+        await cache.put(asset, response);
+        console.log(`[SW] Pre-cached mobile asset: ${asset}`);
+      }
+    }
+  } catch (error) {
+    console.error('[SW] Mobile component pre-caching failed:', error);
+  }
+}
+
+console.log(`[SW ${SW_VERSION}] Service Worker script loaded with PWA & Mobile enhancements`);

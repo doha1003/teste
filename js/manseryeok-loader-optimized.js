@@ -139,7 +139,7 @@ window.ManseryeokDatabase = new Proxy(window.ManseryeokDatabase, {
     
     // 기존 코드가 직접 날짜를 접근하려고 할 때
     if (typeof prop === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(prop)) {
-      사용을 권장합니다.`);
+      console.warn('ManseryeokDatabase: 직접 날짜 키 접근 대신 비동기 메서드 사용을 권장합니다.');
       // 비동기를 동기로 변환할 수 없으므로 null 반환
       return null;
     }
