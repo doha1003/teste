@@ -272,7 +272,7 @@
       client: 'ca-pub-7905640648499222',
     },
     // Vercel API 베이스 URL
-    VERCEL_API_BASE: 'https://doha-kr-api.vercel.app/api',
+    VERCEL_API_BASE: 'https://doha-kr-ap.vercel.app/api',
   };
   /**
    * API 보안 설정

@@ -55,7 +55,7 @@ describe('API Endpoints Integration', () => {
   });
 
   describe('Fortune API Integration', () => {
-    const fortuneEndpoint = 'https://doha-kr-api.vercel.app/api/fortune';
+    const fortuneEndpoint = 'https://doha-kr-ap.vercel.app/api/fortune';
 
     it('일일 운세 요청을 처리해야 함', { timeout: 2000 }, async () => {
       const payload = {
@@ -317,7 +317,7 @@ describe('API Endpoints Integration', () => {
       });
 
       // 2. 변환된 날짜로 운세 요청
-      const fortuneEndpoint = 'https://doha-kr-api.vercel.app/api/fortune';
+      const fortuneEndpoint = 'https://doha-kr-ap.vercel.app/api/fortune';
       const fortuneRequest = {
         type: 'saju',
         userData: {

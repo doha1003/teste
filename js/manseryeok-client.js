@@ -7,7 +7,7 @@ class ManseryeokClient {
     this.apiUrl =
       window.location.hostname === 'localhost'
         ? 'http://localhost:3000/api/manseryeok'
-        : 'https://doha-kr-api.vercel.app/api/manseryeok';
+        : 'https://doha-kr-ap.vercel.app/api/manseryeok';
 
     // 캐시 설정 (메모리 캐시)
     this.cache = new Map();

@@ -52,7 +52,7 @@ if (fs.existsSync(apiConfigPath)) {
     
     // manseryeok API URL도 수정
     content = content.replace(
-        /https:\/\/doha-kr-api\.vercel\.app\/api\/manseryeok/g,
+        /https:\/\/doha-kr-ap\.vercel\.app\/api\/manseryeok/g,
         '/api/manseryeok'
     );
     
