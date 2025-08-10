@@ -8,16 +8,20 @@ import { logger } from '../../utils/logger.js';
 
 export class FortuneService extends ServiceBase {
   constructor(config) {
+    // 운세 서비스 공통 상태를 먼저 설정
+    const fortuneType = config.fortuneType || 'daily';
+    
     super({
       serviceType: 'fortune',
       loadingText: '운세를 분석하고 있습니다...',
+      fortuneType: fortuneType,
       ...config,
     });
 
     // 운세 서비스 공통 상태
     this.fortuneState = {
       birthData: null,
-      fortuneType: config.fortuneType || 'daily', // daily, saju, tarot, zodiac, zodiac-animal
+      fortuneType: fortuneType, // daily, saju, tarot, zodiac, zodiac-animal
     };
 
     // config에도 fortuneType 저장 (하위 호환성)
@@ -28,13 +32,16 @@ export class FortuneService extends ServiceBase {
    * 운세 서비스 초기화
    */
   initializeService() {
+    // fortuneState가 있는지 확인
+    const fortuneType = this.fortuneState?.fortuneType || this.config?.fortuneType || 'daily';
+    
     logger.info('Fortune Service Initializing', {
-      fortuneType: this.fortuneState.fortuneType,
+      fortuneType: fortuneType,
       serviceId: this.serviceId,
     });
 
     // 각 운세 타입별 초기화
-    switch (this.fortuneState.fortuneType) {
+    switch (fortuneType) {
       case 'daily':
       case 'saju':
         this.initBirthDataForm();
@@ -51,7 +58,7 @@ export class FortuneService extends ServiceBase {
     }
 
     logger.info('Fortune Service Initialized', {
-      fortuneType: this.fortuneState.fortuneType,
+      fortuneType: fortuneType,
       serviceId: this.serviceId,
     });
   }
