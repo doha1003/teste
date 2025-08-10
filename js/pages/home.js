@@ -3,7 +3,7 @@
  * 메인 홈페이지 기능 구현 - 모듈화된 구조
  */
 
-import { installApp, isPWAInstalled, hideInstallPrompt } from '../core/pwa-helpers.js';
+import { installApp, isPWAInstalled } from '../core/pwa-helpers.js';
 
 class HomePage {
   constructor() {
@@ -334,7 +334,7 @@ class HomePage {
     });
 
     // 그리드 애니메이션 재시작
-    const dh-l-grid = document.querySelector('.services-grid');
+    const grid = document.querySelector('.services-grid');
     if (grid) {
       grid.classList.remove('animated');
       void grid.offsetWidth; // 리플로우 강제
@@ -464,7 +464,9 @@ class HomePage {
     this.pwaPrompt.installButton = document.getElementById('pwa-install-btn');
     this.pwaPrompt.closeButton = document.getElementById('pwa-close-btn');
 
-    if (!this.pwaPrompt.element) {return;}
+    if (!this.pwaPrompt.element) {
+      return;
+    }
 
     // 이벤트 리스너 설정
     this.setupPWAEventListeners();
@@ -539,7 +541,7 @@ class HomePage {
     }
 
     this.pwaPrompt.element.style.display = 'block';
-    
+
     // 애니메이션을 위한 지연
     requestAnimationFrame(() => {
       this.pwaPrompt.element.style.opacity = '1';
@@ -560,7 +562,7 @@ class HomePage {
 
     this.pwaPrompt.element.style.opacity = '0';
     this.pwaPrompt.element.style.transform = 'translateY(-10px)';
-    
+
     setTimeout(() => {
       this.pwaPrompt.element.style.display = 'none';
       this.pwaPrompt.isVisible = false;
@@ -571,21 +573,30 @@ class HomePage {
    * PWA 설치 버튼 상태 업데이트
    */
   updatePWAInstallButton() {
-    if (!this.pwaPrompt.installButton) {return;}
+    if (!this.pwaPrompt.installButton) {
+      return;
+    }
 
     const isInstalled = isPWAInstalled();
     const hasPrompt = !!window.deferredPrompt;
     const buttonIcon = this.pwaPrompt.installButton.querySelector('.btn-icon');
     const buttonText = this.pwaPrompt.installButton.querySelector('.btn-text');
 
+    // 버튼 요소가 없는 경우 안전하게 처리
+    if (!buttonIcon || !buttonText) {
+      return;
+    }
+
     if (isInstalled) {
       this.pwaPrompt.installButton.disabled = true;
-      this.pwaPrompt.installButton.className = 'dh-c-btn btn--primary pwa-install-dh-c-button installed';
+      this.pwaPrompt.installButton.className =
+        'dh-c-btn btn--primary pwa-install-dh-c-button installed';
       buttonIcon.textContent = '✅';
       buttonText.textContent = '설치 완료';
     } else if (hasPrompt) {
       this.pwaPrompt.installButton.disabled = false;
-      this.pwaPrompt.installButton.className = 'dh-c-btn btn--primary pwa-install-dh-c-button ready';
+      this.pwaPrompt.installButton.className =
+        'dh-c-btn btn--primary pwa-install-dh-c-button ready';
       buttonIcon.textContent = '📲';
       buttonText.textContent = '지금 설치';
     } else {
@@ -606,9 +617,9 @@ class HomePage {
 
     try {
       this.trackEvent('pwa_install_clicked', { source: 'home_page' });
-      
+
       const result = await installApp();
-      
+
       if (result) {
         this.hidePWAPrompt();
         this.trackEvent('pwa_install_success', { source: 'home_page' });
@@ -619,9 +630,9 @@ class HomePage {
     } catch (error) {
       console.error('PWA install error:', error);
       this.showManualInstallGuide();
-      this.trackEvent('pwa_install_error', { 
+      this.trackEvent('pwa_install_error', {
         source: 'home_page',
-        error: error.message 
+        error: error.message,
       });
     }
   }
@@ -701,7 +712,7 @@ class HomePage {
     `;
 
     document.body.appendChild(toast);
-    
+
     setTimeout(() => {
       if (toast.parentNode) {
         toast.remove();

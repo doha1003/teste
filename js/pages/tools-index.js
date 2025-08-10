@@ -180,7 +180,7 @@
      */
     handleCardHover(card, isHovering) {
       const icon = card.querySelector('.tool-icon');
-      const dh-c-button = card.querySelector('.tool-button');
+      const button = card.querySelector('.tool-button');
 
       if (icon) {
         if (isHovering) {
@@ -237,7 +237,7 @@
       // 각 도구별 사용 횟수 표시
       this.config.tools.forEach((tool) => {
         if (tool.status === 'dh-state-active' && stats[tool.id]) {
-          const dh-c-card = document.querySelector(`[data-tool="${tool.id}"]`);
+          const card = document.querySelector(`[data-tool="${tool.id}"]`);
           if (card) {
             this.updateToolUsageDisplay(card, stats[tool.id]);
           }
@@ -321,7 +321,7 @@
       if (title) {
         title.style.cursor = 'pointer';
         title.addEventListener('click', () => {
-          const dh-l-content = guideSection.querySelector('.tool-guide-content');
+          const content = guideSection.querySelector('.tool-guide-content');
           if (content) {
             content.style.display = content.style.display === 'none' ? 'block' : 'none';
           }

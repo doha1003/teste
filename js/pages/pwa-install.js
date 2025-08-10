@@ -3,7 +3,7 @@
  * PWA 설치 관련 페이지 스크립트
  */
 
-import { installApp, isPWAInstalled, hideInstallPrompt } from '../core/pwa-helpers.js';
+import { installApp, isPWAInstalled } from '../core/pwa-helpers.js';
 
 class PWAInstallManager {
   constructor() {
@@ -88,7 +88,7 @@ class PWAInstallManager {
     this.addInstallUIStyles();
 
     // 페이지에 추가
-    const dh-l-main = document.querySelector('main') || document.body;
+    const main = document.querySelector('main') || document.body;
     main.appendChild(installUI);
 
     // 요소 참조 저장

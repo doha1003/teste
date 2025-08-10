@@ -104,7 +104,7 @@ export class KoreanInputHelper {
       return;
     }
 
-    const dh-l-wrapper = document.createElement('div');
+    const wrapper = document.createElement('div');
     wrapper.className = 'korean-input-dh-l-wrapper';
     input.parentNode.insertBefore(wrapper, input);
     wrapper.appendChild(input);
@@ -232,8 +232,8 @@ export class KoreanInputHelper {
       return;
     }
 
-    let dh-l-wrapper = input.closest('.korean-input-wrapper');
-    if (!dh-l-wrapper) {
+    let wrapper = input.closest('.korean-input-wrapper');
+    if (!wrapper) {
       wrapper = document.createElement('div');
       wrapper.className = 'korean-input-dh-l-wrapper';
       input.parentNode.insertBefore(wrapper, input);
@@ -361,13 +361,13 @@ export class KoreanInputHelper {
    */
   adjustLayoutForKeyboard() {
     // 고정 푸터나 하단 버튼 조정
-    const dh-l-footer = document.querySelector('.keyboard-adaptive-footer');
+    const footer = document.querySelector('.keyboard-adaptive-footer');
     if (footer) {
       footer.style.transform = 'translateY(0)';
     }
 
     // 스크롤 컨테이너 높이 조정
-    const dh-l-content = document.querySelector('.keyboard-adaptive-content');
+    const content = document.querySelector('.keyboard-adaptive-content');
     if (content) {
       content.style.maxHeight = `${window.innerHeight - 100}px`;
     }
@@ -377,12 +377,12 @@ export class KoreanInputHelper {
    * 레이아웃 복원
    */
   restoreLayout() {
-    const dh-l-footer = document.querySelector('.keyboard-adaptive-footer');
+    const footer = document.querySelector('.keyboard-adaptive-footer');
     if (footer) {
       footer.style.transform = '';
     }
 
-    const dh-l-content = document.querySelector('.keyboard-adaptive-content');
+    const content = document.querySelector('.keyboard-adaptive-content');
     if (content) {
       content.style.maxHeight = '';
     }
