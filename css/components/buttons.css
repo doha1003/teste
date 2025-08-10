@@ -4,7 +4,7 @@
 
 /* ===== BASE BUTTON ===== */
 /* 모든 버튼의 기본 스타일 */
-.btn {
+.legacy-btn {
   /* Layout */
   display: inline-flex;
   align-items: center;
@@ -51,21 +51,21 @@
 }
 
 /* Button States - Linear.app sophisticated interactions */
-.btn:hover:not(:disabled) {
+.legacy-btn:hover:not(:disabled) {
   background-color: rgba(0, 0, 0, 0.05);
   border-color: rgba(0, 0, 0, 0.15);
   transform: translateY(-1px); /* Subtle lift effect */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.06);
 }
 
-.btn:active:not(:disabled) {
+.legacy-btn:active:not(:disabled) {
   transform: scale(0.98); /* Quick scale feedback */
   background-color: rgba(0, 0, 0, 0.08);
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
   transition-duration: 50ms; /* Instant feedback */
 }
 
-.btn:focus-visible {
+.legacy-btn:focus-visible {
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;
   box-shadow: 
@@ -73,13 +73,13 @@
     0 0 0 2px rgba(94, 106, 210, 0.2);
 }
 
-.btn:focus:not(:focus-visible) {
+.legacy-btn:focus:not(:focus-visible) {
   outline: none;
 }
 
-.btn:disabled,
+.legacy-btn:disabled,
 .btn[aria-disabled="true"],
-.btn.disabled {
+.legacy-btn.disabled {
   opacity: var(--disabled-opacity, 0.6);
   cursor: not-allowed;
   pointer-events: none;
@@ -87,8 +87,8 @@
 
 /* ===== BUTTON VARIANTS ===== */
 /* Primary Button - Linear.app 미니멀 스타일 */
-.btn-primary,
-.btn--primary {
+.legacy-btn-primary,
+.legacy-btn--primary {
   color: var(--color-white);
   background-color: #1f2937; /* Linear.app 다크 버튼 */
   border: 1px solid #1f2937;
@@ -96,8 +96,8 @@
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); /* 미묘한 그림자 */
 }
 
-.btn-primary:hover:not(:disabled),
-.btn--primary:hover:not(:disabled) {
+.legacy-btn-primary:hover:not(:disabled),
+.legacy-btn--primary:hover:not(:disabled) {
   background-color: #374151;
   border-color: #374151;
   transform: translateY(-1px);
@@ -105,83 +105,83 @@
 }
 
 /* Secondary Button - Linear.app 미니멀 스타일 */
-.btn-secondary,
-.btn--secondary {
+.legacy-btn-secondary,
+.legacy-btn--secondary {
   color: var(--color-gray-700);
   background-color: var(--color-white);
   border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.btn-secondary:hover:not(:disabled),
-.btn--secondary:hover:not(:disabled) {
+.legacy-btn-secondary:hover:not(:disabled),
+.legacy-btn--secondary:hover:not(:disabled) {
   background-color: rgba(0, 0, 0, 0.05);
   border-color: rgba(0, 0, 0, 0.15);
 }
 
 /* Ghost Button - Linear.app 미니멀 스타일 */
-.btn-ghost,
-.btn--ghost {
+.legacy-btn-ghost,
+.legacy-btn--ghost {
   color: var(--color-gray-700);
   background-color: transparent;
   border: 1px solid transparent;
 }
 
-.btn-ghost:hover:not(:disabled),
-.btn--ghost:hover:not(:disabled) {
+.legacy-btn-ghost:hover:not(:disabled),
+.legacy-btn--ghost:hover:not(:disabled) {
   background-color: rgba(0, 0, 0, 0.05);
   border-color: rgba(0, 0, 0, 0.1);
 }
 
 /* Success Button */
-.btn-success,
-.btn--success {
+.legacy-btn-success,
+.legacy-btn--success {
   color: var(--color-gray-0, var(--color-white));
   background-color: var(--semantic-success, var(--color-success));
   border-color: var(--semantic-success, var(--color-success));
 }
 
-.btn-success:hover:not(:disabled),
-.btn--success:hover:not(:disabled) {
+.legacy-btn-success:hover:not(:disabled),
+.legacy-btn--success:hover:not(:disabled) {
   background-color: var(--color-success-dark);
   border-color: var(--color-success-dark);
 }
 
 /* Danger Button */
-.btn-danger,
-.btn--danger {
+.legacy-btn-danger,
+.legacy-btn--danger {
   color: var(--color-gray-0, var(--color-white));
   background-color: var(--semantic-danger, var(--color-danger));
   border-color: var(--semantic-danger, var(--color-danger));
 }
 
-.btn-danger:hover:not(:disabled),
-.btn--danger:hover:not(:disabled) {
+.legacy-btn-danger:hover:not(:disabled),
+.legacy-btn--danger:hover:not(:disabled) {
   background-color: var(--color-danger-dark);
   border-color: var(--color-danger-dark);
 }
 
 /* Outline Button */
-.btn-outline {
+.legacy-btn-outline {
   color: var(--color-primary);
   background-color: transparent;
   border-color: var(--color-primary);
 }
 
-.btn-outline:hover:not(:disabled) {
+.legacy-btn-outline:hover:not(:disabled) {
   color: var(--color-white);
   background-color: var(--color-primary);
 }
 
 /* ===== BUTTON SIZES ===== */
-.btn-sm,
-.btn--sm {
+.legacy-btn-sm,
+.legacy-btn--sm {
   padding: 6px 12px; /* 8px 배수로 정밀한 패딩 */
   min-height: 32px; /* 더 컴팩트 */
   font-size: var(--font-size-xs, var(--font-size-sm));
 }
 
-.btn-lg,
-.btn--lg {
+.legacy-btn-lg,
+.legacy-btn--lg {
   padding: 12px 24px; /* 8px 배수로 정밀한 패딩 */
   min-height: 44px; /* 적당한 크기 */
   font-size: var(--font-size-base, var(--font-size-lg));
@@ -189,42 +189,42 @@
 
 /* ===== BUTTON MODIFIERS ===== */
 /* Full Width */
-.btn-block,
-.btn--full {
+.legacy-btn-block,
+.legacy-btn--full {
   width: 100%;
 }
 
 /* Icon Only */
-.btn--icon {
+.legacy-btn--icon {
   padding: var(--space-2, var(--spacing-2));
   min-width: var(--button-height-md, 40px);
 }
 
-.btn--icon.btn--sm,
-.btn--icon.btn-sm {
+.legacy-btn--icon.legacy-btn--sm,
+.legacy-btn--icon.legacy-btn-sm {
   padding: var(--space-1, var(--spacing-1));
   min-width: var(--button-height-sm, 36px);
 }
 
-.btn--icon.btn--lg,
-.btn--icon.btn-lg {
+.legacy-btn--icon.legacy-btn--lg,
+.legacy-btn--icon.legacy-btn-lg {
   padding: var(--space-3, var(--spacing-3));
   min-width: var(--button-height-lg, 52px);
 }
 
 /* Rounded */
-.btn--rounded {
+.legacy-btn--rounded {
   border-radius: var(--radius-full, 999px);
 }
 
 /* Loading State */
-.btn--loading {
+.legacy-btn--loading {
   color: transparent;
   position: relative;
   pointer-events: none;
 }
 
-.btn--loading::after {
+.legacy-btn--loading::after {
   content: "";
   position: absolute;
   width: 16px;
@@ -247,8 +247,8 @@
 
 /* ===== SPECIAL PURPOSE BUTTONS ===== */
 /* CTA Button - Linear.app 미니멀 스타일 (그라데이션 제거) */
-.btn-cta,
-.cta-button {
+.legacy-btn-cta,
+.home-cta-button {
   background-color: #1f2937; /* 단색 배경 */
   color: var(--color-white);
   font-size: var(--font-size-lg);
@@ -265,8 +265,8 @@
   transition: all 0.2s ease; /* 빠른 전환 */
 }
 
-.btn-cta:hover:not(:disabled),
-.cta-button:hover:not(:disabled) {
+.legacy-btn-cta:hover:not(:disabled),
+.home-cta-button:hover:not(:disabled) {
   background-color: #374151;
   border-color: #374151;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12); /* 미묘한 그림자 증가 */
@@ -276,14 +276,14 @@
 }
 
 /* 특수 버튼 변형 - Linear.app 미니멀 스타일 */
-.btn-tools {
+.legacy-btn-tools {
   background-color: #1f2937; /* 통일된 다크 버튼 */
   color: var(--color-white);
   border: 1px solid #1f2937;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
-.btn-tools:hover:not(:disabled) {
+.legacy-btn-tools:hover:not(:disabled) {
   background-color: #374151;
   border-color: #374151;
   color: var(--color-white);
@@ -292,14 +292,14 @@
   transform: none;
 }
 
-.btn-fortune {
+.legacy-btn-fortune {
   background-color: #1f2937; /* 통일된 다크 버튼 */
   color: var(--color-white);
   border: 1px solid #1f2937;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
-.btn-fortune:hover:not(:disabled) {
+.legacy-btn-fortune:hover:not(:disabled) {
   background-color: #374151;
   border-color: #374151;
   color: var(--color-white);
@@ -309,7 +309,7 @@
 }
 
 /* Share Buttons */
-.share-btn {
+.feat-share-btn {
   display: inline-flex;
   align-items: center;
   gap: var(--spacing-2);
@@ -322,28 +322,28 @@
   transition: var(--transition-all);
 }
 
-.share-btn:hover {
+.feat-share-btn:hover {
   background-color: #fdd835;
   text-decoration: none;
   transform: translateY(-1px);
 }
 
-.share-btn-kakao {
+.feat-share-btn-kakao {
   background-color: #fee500;
 }
 
-.share-btn-facebook {
+.feat-share-btn-facebook {
   background-color: #1877f2;
   color: var(--color-white);
 }
 
-.share-btn-twitter {
+.feat-share-btn-twitter {
   background-color: #1da1f2;
   color: var(--color-white);
 }
 
 /* ===== BUTTON GROUP ===== */
-.btn-group {
+.legacy-btn-group {
   display: inline-flex;
   gap: var(--space-2, var(--spacing-2));
   align-items: center;
@@ -351,34 +351,34 @@
   margin-top: var(--spacing-4);
 }
 
-.btn-group-center {
+.legacy-btn-group-center {
   justify-content: center;
 }
 
-.btn-group--vertical {
+.legacy-btn-group--vertical {
   flex-direction: column;
   width: 100%;
 }
 
-.btn-group--attached {
+.legacy-btn-group--attached {
   gap: 0;
 }
 
-.btn-group--attached .btn {
+.legacy-btn-group--attached .legacy-btn {
   border-radius: 0;
 }
 
-.btn-group--attached .btn:first-child {
+.legacy-btn-group--attached .legacy-btn:first-child {
   border-top-left-radius: var(--radius-md, var(--radius-lg));
   border-bottom-left-radius: var(--radius-md, var(--radius-lg));
 }
 
-.btn-group--attached .btn:last-child {
+.legacy-btn-group--attached .legacy-btn:last-child {
   border-top-right-radius: var(--radius-md, var(--radius-lg));
   border-bottom-right-radius: var(--radius-md, var(--radius-lg));
 }
 
-.btn-group--attached .btn:not(:last-child) {
+.legacy-btn-group--attached .legacy-btn:not(:last-child) {
   border-right: none;
 }
 
@@ -404,23 +404,23 @@
 
 /* ===== RESPONSIVE BUTTONS ===== */
 @media (max-width: 768px) {
-  .btn {
+  .legacy-btn {
     min-height: 44px; /* 모바일 터치 타겟 크기 - 한글 입력 고려 */
     font-size: var(--font-size-base);
     padding: 12px 20px; /* 한글 텍스트 여백 충분히 */
   }
 
-  .btn-sm,
-  .btn--sm {
+  .legacy-btn-sm,
+  .legacy-btn--sm {
     min-height: 40px;
     font-size: var(--font-size-sm);
   }
 
-  .btn-group:not(.btn-group--vertical) {
+  .legacy-btn-group:not(.legacy-btn-group--vertical) {
     flex-wrap: wrap;
   }
 
-  .btn-group .btn {
+  .legacy-btn-group .legacy-btn {
     width: 100%;
     max-width: 300px;
     margin-left: auto;
@@ -431,7 +431,7 @@
 /* ===== PRINT STYLES ===== */
 @media print {
   /* Print styles - 높은 특이성으로 !important 제거 */
-  html .btn {
+  html .legacy-btn {
     border: 1px solid currentColor;
     background: none;
     color: inherit;
@@ -441,11 +441,11 @@
 /* ===== ACCESSIBILITY ===== */
 /* 고대비 모드 */
 @media (prefers-contrast: high) {
-  .btn {
+  .legacy-btn {
     border-width: 2px;
   }
 
-  .btn:focus-visible {
+  .legacy-btn:focus-visible {
     outline-width: 3px;
   }
 }

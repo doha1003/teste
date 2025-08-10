@@ -75,7 +75,7 @@
   margin-bottom: 60px;
 }
 
-.test-card {
+.page-test-card {
   background: white;
   border-radius: 20px;
   padding: 40px 30px;
@@ -87,7 +87,7 @@
   text-align: center;
 }
 
-.test-card::before {
+.page-test-card::before {
   content: "";
   position: absolute;
   top: 0;
@@ -99,11 +99,11 @@
   transition: transform 0.3s ease;
 }
 
-.test-card:hover::before {
+.page-test-card:hover::before {
   transform: scaleX(1);
 }
 
-.test-card:hover {
+.page-test-card:hover {
   transform: translateY(-8px);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
   border-color: var(--primary-color);
@@ -222,48 +222,48 @@
 }
 
 /* 특별한 테스트 카드 스타일 */
-.test-card.featured {
+.page-test-card.featured {
   background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
   color: white;
   position: relative;
 }
 
-.test-card.featured::before {
+.page-test-card.featured::before {
   background: rgba(255, 255, 255, 0.3);
 }
 
-.test-card.featured .test-title,
-.test-card.featured .test-subtitle,
-.test-card.featured .test-description {
+.page-test-card.featured .test-title,
+.page-test-card.featured .test-subtitle,
+.page-test-card.featured .test-description {
   color: white;
 }
 
-.test-card.featured .test-features li {
+.page-test-card.featured .test-features li {
   color: rgba(255, 255, 255, 0.9);
 }
 
-.test-card.featured .test-features li::before {
+.page-test-card.featured .test-features li::before {
   color: rgba(255, 255, 255, 0.8);
 }
 
-.test-card.featured .test-stats {
+.page-test-card.featured .test-stats {
   background: rgba(255, 255, 255, 0.1);
 }
 
-.test-card.featured .test-stat-number {
+.page-test-card.featured .test-stat-number {
   color: white;
 }
 
-.test-card.featured .test-stat-label {
+.page-test-card.featured .test-stat-label {
   color: rgba(255, 255, 255, 0.8);
 }
 
-.test-card.featured .test-link {
+.page-test-card.featured .test-link {
   background: white;
   color: var(--primary-color);
 }
 
-.test-card.featured .test-link:hover {
+.page-test-card.featured .test-link:hover {
   background: rgba(255, 255, 255, 0.95);
   color: var(--primary-color);
 }
@@ -359,7 +359,7 @@
     gap: 25px;
   }
 
-  .test-card {
+  .page-test-card {
     padding: 30px 25px;
   }
 
@@ -422,7 +422,7 @@
     font-size: 1rem;
   }
 
-  .test-card {
+  .page-test-card {
     padding: 25px 20px;
   }
 

@@ -4,7 +4,7 @@
 
 /* ===== BASE CARD ===== */
 /* 기본 카드 컴포넌트 */
-.card {
+.legacy-card {
   /* Layout */
   display: flex;
   flex-direction: column;
@@ -35,23 +35,23 @@
 }
 
 /* Card States - Linear.app 미니먀 호버 */
-.card:hover,
-.card--hover:hover {
+.legacy-card:hover,
+.legacy-card--hover:hover {
   transform: translateY(-1px); /* 살짝 올라오는 효과 */
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* 부드럽게 늘어난 그림자 */
   border-color: rgba(0, 0, 0, 0.15);
 }
 
-.card--clickable {
+.legacy-card--clickable {
   cursor: pointer;
 }
 
-.card--clickable:active {
+.legacy-card--clickable:active {
   transform: translateY(0px) scale(0.99);
   transition-duration: 100ms; /* Instant feedback */
 }
 
-.card--clickable:focus-visible {
+.legacy-card--clickable:focus-visible {
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;
   box-shadow: 
@@ -61,7 +61,7 @@
 
 /* ===== CARD STRUCTURE ===== */
 /* Card Header - Linear.app 미니먀 스타일 */
-.card-header,
+.legacy-card-header,
 .card__header {
   padding: 24px 24px 16px; /* 8px 배수로 정밀한 패딩 */
   border-bottom: 1px solid rgba(0, 0, 0, 0.08); /* 더 미묘한 보더 */
@@ -69,7 +69,7 @@
 }
 
 /* Card Body - Linear.app 미니먀 스타일 */
-.card-body,
+.legacy-card-body,
 .card__body {
   flex: 1;
   padding: 24px; /* 8px 배수로 정밀한 패딩 */
@@ -77,7 +77,7 @@
 }
 
 /* Card Footer - Linear.app 미니먀 스타일 */
-.card-footer,
+.legacy-card-footer,
 .card__footer {
   padding: 16px 24px; /* 8px 배수로 정밀한 패딩 */
   background-color: transparent; /* 배경 색상 제거 */
@@ -85,18 +85,18 @@
 }
 
 /* Compact padding - Linear.app 미니먀 스타일 */
-.card--compact .card__header,
-.card--compact .card__body,
-.card--compact .card__footer,
-.card--compact .card-header,
-.card--compact .card-body,
-.card--compact .card-footer {
+.legacy-card--compact .card__header,
+.legacy-card--compact .card__body,
+.legacy-card--compact .card__footer,
+.legacy-card--compact .legacy-card-header,
+.legacy-card--compact .legacy-card-body,
+.legacy-card--compact .legacy-card-footer {
   padding: 16px; /* 8px 배수로 정밀한 패딩 */
 }
 
 /* ===== CARD CONTENT ===== */
 /* Card Title - 한글 최적화 */
-.card-title,
+.legacy-card-title,
 .card__title {
   margin: 0 0 8px 0; /* 8px 배수 */
   font-size: var(--font-size-lg, var(--font-size-xl));
@@ -107,7 +107,7 @@
 }
 
 /* Card Subtitle */
-.card-subtitle,
+.legacy-card-subtitle,
 .card__subtitle {
   margin: 0 0 var(--space-3, var(--spacing-3)) 0;
   font-size: var(--font-size-sm);
@@ -116,7 +116,7 @@
 }
 
 /* Card Text - 한글 최적화 */
-.card-text,
+.legacy-card-text,
 .card__text {
   margin: 0 0 16px 0; /* 8px 배수 */
   font-size: var(--font-size-base);
@@ -136,7 +136,7 @@
 
 /* ===== CARD MEDIA ===== */
 /* Card Image */
-.card-img-top,
+.legacy-card-img-top,
 .card__image {
   position: relative;
   width: 100%;
@@ -145,7 +145,7 @@
   background-color: var(--bg-tertiary, var(--color-gray-100));
 }
 
-.card-img-top,
+.legacy-card-img-top,
 .card__image img {
   width: 100%;
   height: 100%;
@@ -191,78 +191,78 @@
 
 /* ===== CARD VARIANTS ===== */
 /* Bordered Card - Linear.app 미니먀 스타일 */
-.card-bordered,
-.card--borderless {
+.legacy-card-bordered,
+.legacy-card--borderless {
   border: 1px solid rgba(0, 0, 0, 0.1);
   box-shadow: none;
 }
 
-.card--borderless {
+.legacy-card--borderless {
   border: none;
 }
 
-.card--borderless .card__header,
-.card--borderless .card__footer,
-.card--borderless .card-header,
-.card--borderless .card-footer {
+.legacy-card--borderless .card__header,
+.legacy-card--borderless .card__footer,
+.legacy-card--borderless .legacy-card-header,
+.legacy-card--borderless .legacy-card-footer {
   border: none;
 }
 
 /* Flat Card - Linear.app 미니먀 스타일 */
-.card-flat {
+.legacy-card-flat {
   box-shadow: none;
   background-color: var(--color-white); /* 흰색 배경 유지 */
   border: 1px solid rgba(0, 0, 0, 0.08); /* 더 미묘한 보더 */
 }
 
 /* Elevated Card - Linear.app 미니먀 스타일 */
-.card--elevated {
+.legacy-card--elevated {
   border: 1px solid rgba(0, 0, 0, 0.05); /* 미묘한 보더 유지 */
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* 미묘한 그림자 */
 }
 
-.card--elevated:hover {
+.legacy-card--elevated:hover {
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12); /* 호버 시 미묘하게 증가 */
   transform: translateY(-1px); /* 살짝 올라오는 효과 */
 }
 
 /* Ghost Card - Linear.app 미니먀 스타일 */
-.card--ghost {
+.legacy-card--ghost {
   background-color: transparent;
   border: 1px dashed rgba(0, 0, 0, 0.15); /* 더 미묘한 dashed 보더 */
 }
 
 /* Highlighted Card */
-.card--highlighted {
+.legacy-card--highlighted {
   border-color: var(--color-primary);
   box-shadow: 0 0 0 1px var(--color-primary);
 }
 
 /* Status Cards */
-.card-primary,
-.card--primary {
+.legacy-card-primary,
+.legacy-card--primary {
   border-top: 4px solid var(--color-primary);
 }
 
-.card-success,
-.card--success {
+.legacy-card-success,
+.legacy-card--success {
   border-color: var(--semantic-success, var(--color-success));
   background-color: var(--semantic-success-bg, rgba(34, 197, 94, 0.05));
 }
 
-.card-warning,
-.card--warning {
+.legacy-card-warning,
+.legacy-card--warning {
   border-color: var(--semantic-warning, var(--color-warning));
   background-color: var(--semantic-warning-bg, rgba(250, 204, 21, 0.05));
 }
 
-.card-danger,
-.card--danger {
+.legacy-card-danger,
+.legacy-card--danger {
   border-color: var(--semantic-danger, var(--color-danger));
   background-color: var(--semantic-danger-bg, rgba(239, 68, 68, 0.05));
 }
 
-.card--info {
+.legacy-card--info {
   border-color: var(--semantic-info, var(--color-info));
   background-color: var(--semantic-info-bg, rgba(59, 130, 246, 0.05));
 }
@@ -278,19 +278,19 @@
   margin: var(--spacing-8) auto;
 }
 
-.fortune-result-card .card-header {
+.fortune-result-card .legacy-card-header {
   background: transparent;
   border-bottom: 2px solid var(--color-primary-light);
   padding-bottom: var(--spacing-4);
   margin-bottom: var(--spacing-6);
 }
 
-.fortune-result-card .card-title {
+.fortune-result-card .legacy-card-title {
   color: var(--color-primary);
   font-size: var(--font-size-2xl);
 }
 
-.fortune-result-card .card-body {
+.fortune-result-card .legacy-card-body {
   font-size: var(--font-size-lg);
   line-height: var(--line-height-loose);
   color: var(--color-gray-800);
@@ -339,7 +339,7 @@
 
 /* Feature/Service Card - Linear.app 미니먀 스타일 */
 .feature-card,
-.service-card {
+.home-service-card {
   text-align: center;
   padding: 32px 24px; /* 8px 배수로 정밀한 패딩 */
   border-radius: 8px; /* 6-8px 범위 */
@@ -351,19 +351,19 @@
 }
 
 .feature-card:hover,
-.service-card:hover {
+.home-service-card:hover {
   transform: translateY(-1px); /* Subtle lift */
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
   border-color: rgba(0, 0, 0, 0.15);
 }
 
-.service-card:active {
+.home-service-card:active {
   transform: translateY(0px) scale(0.98);
   transition-duration: 100ms;
 }
 
 .feature-card-icon,
-.service-card__icon {
+.home-service-card__icon {
   width: 64px;
   height: 64px;
   margin: 0 auto var(--space-4, var(--spacing-4));
@@ -377,14 +377,14 @@
 }
 
 .feature-card-title,
-.service-card__title {
+.home-service-card__title {
   margin: 0 0 var(--space-3, var(--spacing-3)) 0;
   font-size: var(--font-size-xl);
   font-weight: var(--font-weight-semibold);
 }
 
 .feature-card-description,
-.service-card__description {
+.home-service-card__description {
   margin: 0;
   color: var(--text-secondary, var(--color-gray-600));
   line-height: var(--line-height-relaxed);
@@ -392,33 +392,33 @@
 }
 
 /* ===== CARD GRID ===== */
-.card-grid {
+.legacy-card-grid {
   display: grid;
   gap: var(--space-6, var(--spacing-6));
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 }
 
-.card-grid--2 {
+.legacy-card-grid--2 {
   grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
 }
 
-.card-grid--3 {
+.legacy-card-grid--3 {
   grid-template-columns: repeat(3, 1fr);
 }
 
-.card-grid--4 {
+.legacy-card-grid--4 {
   grid-template-columns: repeat(4, 1fr);
 }
 
 /* ===== RESPONSIVE CARDS ===== */
 @media (max-width: 768px) {
-  .card {
+  .legacy-card {
     margin-bottom: 16px; /* 8px 배수 */
   }
 
-  .card-header,
-  .card-body,
-  .card-footer,
+  .legacy-card-header,
+  .legacy-card-body,
+  .legacy-card-footer,
   .card__header,
   .card__body,
   .card__footer {
@@ -437,10 +437,10 @@
     font-size: var(--font-size-2xl);
   }
 
-  .card-grid,
-  .card-grid--2,
-  .card-grid--3,
-  .card-grid--4 {
+  .legacy-card-grid,
+  .legacy-card-grid--2,
+  .legacy-card-grid--3,
+  .legacy-card-grid--4 {
     grid-template-columns: 1fr;
   }
 
@@ -449,27 +449,27 @@
     width: 100%;
   }
 
-  .card__actions .btn {
+  .card__actions .legacy-btn {
     width: 100%;
   }
 }
 
 @media (max-width: 1024px) {
-  .card-grid--3,
-  .card-grid--4 {
+  .legacy-card-grid--3,
+  .legacy-card-grid--4 {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 /* ===== PRINT STYLES ===== */
 @media print {
-  .card {
+  .legacy-card {
     break-inside: avoid;
     box-shadow: none;
     border: 1px solid #ddd;
   }
 
-  .card--elevated {
+  .legacy-card--elevated {
     border: 1px solid #ddd;
   }
 }
