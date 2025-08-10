@@ -23,6 +23,11 @@
     }
 
     async init() {
+      // 긴급 상황: API 완전 차단 상태이므로 즉시 Emergency 모드 활성화
+      console.warn('🚨 긴급 상황 감지: API 서비스 접근 불가 - Emergency 모드 활성화');
+      this.isEmergencyMode = true;
+      this.showEmergencyNotification();
+      
       // 즉시 헬스 체크 실행
       await this.performHealthCheck();
       
@@ -336,6 +341,28 @@
         }
       };
     }
+  }
+
+  // APIManager가 없는 경우 직접 대체 (GitHub Pages 환경)
+  if (!window.APIManager && !window.apiHelpers) {
+    console.log('🚑 API Manager 없음 - 완전 오프라인 모드 활성화');
+    
+    window.apiHelpers = {
+      fortune: async function(payload) {
+        console.log('🔄 오프라인 운세 생성:', payload.type);
+        return emergencyManager.generateOfflineFortune(payload.type, payload.userData);
+      }
+    };
+
+    // APIManager 대체
+    window.APIManager = {
+      callAPI: async function(endpoint, payload) {
+        if (endpoint === 'fortune') {
+          return window.apiHelpers.fortune(payload);
+        }
+        throw new Error(`오프라인 모드: ${endpoint} 엔드포인트 지원되지 않음`);
+      }
+    };
   }
 
   // 전역 노출
