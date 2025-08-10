@@ -131,7 +131,7 @@
       const hamburger = document.querySelector('.mobile-menu-toggle-enhanced') || document.querySelector('.mobile-menu-toggle');
       const overlay = document.querySelector('.mobile-menu-overlay-enhanced') || document.querySelector('.mobile-menu-overlay');
       
-      if (!hamburger || !overlay) return;
+      if (!hamburger || !overlay) {return;}
 
       this.menuOpen = open !== null ? open : !this.menuOpen;
 
@@ -215,7 +215,7 @@
       }, { passive: true });
 
       document.addEventListener('touchend', (e) => {
-        if (!this.touchStartY || !this.touchStartX) return;
+        if (!this.touchStartY || !this.touchStartX) {return;}
         
         const touchEndY = e.changedTouches[0].clientY;
         const touchEndX = e.changedTouches[0].clientX;
@@ -261,7 +261,7 @@
 
     handleIOSViewport() {
       // iOS에서 주소창이 숨겨질 때 화면 높이 변화 대응
-      let initialViewportHeight = window.innerHeight;
+      const initialViewportHeight = window.innerHeight;
       
       window.addEventListener('resize', () => {
         const currentHeight = window.innerHeight;
@@ -300,9 +300,9 @@
       
       const ripple = document.createElement('span');
       ripple.className = 'ripple-effect';
-      ripple.style.width = ripple.style.height = size + 'px';
-      ripple.style.left = x + 'px';
-      ripple.style.top = y + 'px';
+      ripple.style.width = ripple.style.height = `${size  }px`;
+      ripple.style.left = `${x  }px`;
+      ripple.style.top = `${y  }px`;
       
       button.appendChild(ripple);
       

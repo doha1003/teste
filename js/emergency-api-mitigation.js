@@ -118,7 +118,7 @@
 
       // 기존 알림 제거
       const existing = document.getElementById('emergency-notification');
-      if (existing) existing.remove();
+      if (existing) {existing.remove();}
 
       document.body.appendChild(notification);
 
@@ -189,9 +189,9 @@
 
       return {
         success: true,
-        fortune: fortune,
+        fortune,
         isOffline: true,
-        type: type,
+        type,
         timestamp: date.toISOString(),
         notice: '현재 오프라인 모드로 운영 중입니다. 서비스 복구 후 더 정확한 운세를 제공받으실 수 있습니다.'
       };
@@ -394,7 +394,7 @@
           `;
           notification.innerHTML = `⚠️ UI 문제 ${issues.length}개 감지`;
           notification.onclick = () => {
-            alert('감지된 문제:\\n• ' + issues.join('\\n• '));
+            alert(`감지된 문제:\\n• ${  issues.join('\\n• ')}`);
             notification.remove();
           };
           document.body.appendChild(notification);

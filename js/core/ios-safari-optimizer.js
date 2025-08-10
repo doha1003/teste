@@ -298,7 +298,7 @@ this.addTouchFeedback(e.target);
 * 터치 이동 처리
 */
 handleTouchMove(e) {
-if (!this.state.touchStartPos) return;
+if (!this.state.touchStartPos) {return;}
 
 const currentPos = {
 x: e.touches[0].clientX,
@@ -487,10 +487,10 @@ const rect = button.getBoundingClientRect();
 if (rect.width < 44 || rect.height < 44) {
 button.style.minWidth = '44px';
 button.style.minHeight = '44px';
-button.style.padding = Math.max(
+button.style.padding = `${Math.max(
 parseInt(getComputedStyle(button).padding) || 0,
 8
-) + 'px';
+)  }px`;
 }
 
 // 터치 액션 최적화
@@ -543,7 +543,7 @@ this.handleKeyboardHide();
 */
 handleKeyboardShow(viewportHeight) {
 // 활성 입력 필드가 키보드에 가려지지 않도록 스크롤
-const activeElement = document.activeElement;
+const {activeElement} = document;
 
 if (activeElement && this.isInputElement(activeElement)) {
 setTimeout(() => {

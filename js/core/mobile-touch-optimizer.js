@@ -166,7 +166,7 @@ class MobileTouchOptimizer {
       y: this.state.currentTouch.clientY,
     };
     
-    const target = e.target;
+    const {target} = e;
     
     // 터치 피드백 시작
     this.startTouchFeedback(target);
@@ -181,7 +181,7 @@ class MobileTouchOptimizer {
    * 터치 이동 처리
    */
   handleTouchMove(e) {
-    if (!this.state.currentTouch) return;
+    if (!this.state.currentTouch) {return;}
     
     const currentPos = {
       x: e.touches[0].clientX,
@@ -267,7 +267,7 @@ class MobileTouchOptimizer {
    * 키보드 처리 설정
    */
   setupKeyboardHandling() {
-    if (!this.config.keyboard.enableViewportResize) return;
+    if (!this.config.keyboard.enableViewportResize) {return;}
     
     // Visual Viewport API 사용 (지원시)
     if (window.visualViewport) {
@@ -339,7 +339,7 @@ class MobileTouchOptimizer {
    * 터치 피드백 설정
    */
   setupTouchFeedback() {
-    if (!this.config.feedback.improveVisualFeedback) return;
+    if (!this.config.feedback.improveVisualFeedback) {return;}
     
     // CSS 스타일 적용
     this.applyTouchFeedbackStyles();
@@ -353,7 +353,7 @@ class MobileTouchOptimizer {
    * 터치 피드백 시작
    */
   startTouchFeedback(element) {
-    if (!this.config.feedback.improveVisualFeedback) return;
+    if (!this.config.feedback.improveVisualFeedback) {return;}
     
     // 터치 상태 클래스 추가
     element.classList.add('touch-active');
@@ -571,7 +571,7 @@ class MobileTouchOptimizer {
    * 터치 최적화 스타일 적용
    */
   applyTouchOptimizationStyles() {
-    if (document.getElementById('mobile-touch-optimization')) return;
+    if (document.getElementById('mobile-touch-optimization')) {return;}
     
     const style = document.createElement('style');
     style.id = 'mobile-touch-optimization';

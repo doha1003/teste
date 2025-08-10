@@ -64,7 +64,7 @@ export class SajuFortuneService extends FortuneService {
 
     try {
       // 사주 데이터 생성 (클라이언트 사이드)
-      let saju = this.calculateSajuData(birthData);
+      const saju = this.calculateSajuData(birthData);
 
       // 사주 데이터 저장
       this.sajuData = saju;
@@ -126,7 +126,7 @@ export class SajuFortuneService extends FortuneService {
       // 고급 사주 계산 (있는 경우)
       if (window.calculateSaju) {
         const saju = window.calculateSaju(year, month, day, birthData.hour || 12);
-        if (saju) return saju;
+        if (saju) {return saju;}
       }
 
       // 만세력 API 호출 시도

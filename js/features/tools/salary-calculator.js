@@ -411,9 +411,9 @@ export class SalaryCalculatorService extends ToolService {
   bindResultActions() {
     document.addEventListener('click', (e) => {
       const target = e.target.closest('[data-action]');
-      if (!target) return;
+      if (!target) {return;}
       
-      const action = target.dataset.action;
+      const {action} = target.dataset;
       switch (action) {
         case 'copy-result':
           this.copyResult();

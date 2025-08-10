@@ -309,7 +309,7 @@ class PWAInstallManager {
   }
 
   updateInstallStatus() {
-    if (!this.statusElement || !this.installButton) return;
+    if (!this.statusElement || !this.installButton) {return;}
 
     const isInstalled = isPWAInstalled();
     

@@ -119,7 +119,7 @@
     /**
      * 환경 감지 (개발 목적용 유틸리티)
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // eslint-disable-next-line no-unused-vars
     detectEnvironment() {
       const { hostname } = window.location;
       if (hostname === 'localhost' || hostname === '127.0.0.1' || hostname.includes('test')) {
@@ -434,7 +434,7 @@
       // 간소화된 폴백
       try {
         const d = new Date(date);
-        if (isNaN(d.getTime())) return format;
+        if (isNaN(d.getTime())) {return format;}
         const year = d.getFullYear();
         const month = String(d.getMonth() + 1).padStart(2, '0');
         const day = String(d.getDate()).padStart(2, '0');
@@ -452,7 +452,7 @@
       }
       // 간소화된 폴백
       try {
-        if (num == null) return '0';
+        if (num == null) {return '0';}
         return Number(num).toLocaleString('ko-KR');
       } catch (error) {
         return '0';
@@ -681,8 +681,8 @@
         `;
         if (window.SecureDOM) {
           window.SecureDOM.setInnerHTML(target, navbarHtml);
-        } else if (typeof safeHTML !== 'undefined' && typeof safeHTML === 'function') {
-          target.innerHTML = safeHTML(navbarHtml);
+        } else if (typeof window.safeHTML === 'function') {
+          target.innerHTML = window.safeHTML(navbarHtml);
         } else {
           target.innerHTML = navbarHtml;
         }
@@ -744,8 +744,8 @@
         `;
         if (window.SecureDOM) {
           window.SecureDOM.setInnerHTML(target, footerHtml);
-        } else if (typeof safeHTML !== 'undefined' && typeof safeHTML === 'function') {
-          target.innerHTML = safeHTML(footerHtml);
+        } else if (typeof window.safeHTML === 'function') {
+          target.innerHTML = window.safeHTML(footerHtml);
         } else {
           target.innerHTML = footerHtml;
         }
@@ -897,6 +897,14 @@
       this.eventListeners.clear();
       this.components.clear();
       this.initialized = false;
+    }
+  }
+  // Simple ApplicationError fallback for runtime and lint
+  class ApplicationError extends Error {
+    constructor(message, options = {}) {
+      super(message);
+      this.name = 'ApplicationError';
+      if (options && options.cause) this.cause = options.cause;
     }
   }
   // 전역 인스턴스 생성 및 초기화

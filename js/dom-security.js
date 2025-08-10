@@ -89,7 +89,7 @@
         // 2차 검증: 길이 제한 확인
         if (content.length > this.config.maxContentLength) {
           console.warn(`Content length exceeds limit (${this.config.maxContentLength})`); // eslint-disable-line no-console
-          content = content.substring(0, this.config.maxContentLength) + '...';
+          content = `${content.substring(0, this.config.maxContentLength)  }...`;
         }
 
         // 3차 검증: DOMPurify 라이브러리 확인
@@ -194,7 +194,7 @@
         
         this.logSecurityEvent('dangerous_attribute_blocked', {
           attribute: name,
-          value: value,
+          value,
           element: element.tagName || 'unknown',
         });
         return false;
@@ -205,7 +205,7 @@
         
         this.logSecurityEvent('javascript_url_blocked', {
           attribute: name,
-          value: value,
+          value,
           element: element.tagName || 'unknown',
         });
         return false;
@@ -315,9 +315,9 @@
       const highEvents = ['content_sanitized'];
       const mediumEvents = ['text_content_set'];
 
-      if (criticalEvents.includes(type)) return 'critical';
-      if (highEvents.includes(type)) return 'high';
-      if (mediumEvents.includes(type)) return 'medium';
+      if (criticalEvents.includes(type)) {return 'critical';}
+      if (highEvents.includes(type)) {return 'high';}
+      if (mediumEvents.includes(type)) {return 'medium';}
       return 'low';
     }
 
@@ -371,10 +371,10 @@
         ...this.stats,
         successRate:
           this.stats.totalCalls > 0
-            ? (
+            ? `${(
                 ((this.stats.totalCalls - this.stats.blockedCalls) / this.stats.totalCalls) *
                 100
-              ).toFixed(2) + '%'
+              ).toFixed(2)  }%`
             : '0%',
         timestamp: new Date().toISOString(),
       };
@@ -439,7 +439,7 @@
      * 기본 입력값 검증 (Security 모듈 폴백)
      */
     static basicInputValidation(input, type) {
-      if (!input) return '';
+      if (!input) {return '';}
 
       const str = String(input);
 
@@ -482,7 +482,7 @@
           if (validated !== e.target.value) {
             this.logSecurityEvent('input_sanitized', {
               element: e.target.tagName,
-              type: type,
+              type,
               original: e.target.value,
               sanitized: validated,
             });
@@ -509,7 +509,7 @@
               hasIssues = true;
               this.logSecurityEvent('dangerous_content_blocked', {
                 field: key,
-                value: value,
+                value,
               });
             }
           }
@@ -568,7 +568,7 @@
 
     Object.defineProperty(Element.prototype, 'innerHTML', {
       get: originalInnerHTML.get,
-      set: function (value) {
+      set (value) {
         console.warn('[SecureDOM] innerHTML 직접 대입이 감지되었습니다. 가능한 경우 safeHTML과 setHTML을 사용하세요.');
         originalInnerHTML.set.call(this, value);
       },

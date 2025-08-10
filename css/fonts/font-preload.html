@@ -1,25 +1,5 @@
 <!-- Font Preloading for Critical Fonts -->
 <link rel="preload" href="../../fonts/pretendardvariable-400.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="preload" href="../../fonts/pretendardvariable-500.woff2" as="font" type="font/woff2" crossorigin />
-
-<!-- Font Loading Script -->
-<script>
-  // Font loading optimization
-  (function () {
-    document.documentElement.classList.add('font-loading');
-
-    // Check if fonts are already loaded (cached)
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(function () {
-        document.documentElement.classList.remove('font-loading');
-        document.documentElement.classList.add('font-loaded');
-      });
-    } else {
-      // Fallback for older browsers
-      setTimeout(function () {
-        document.documentElement.classList.remove('font-loading');
-        document.documentElement.classList.add('font-loaded');
-      }, 3000); // 3s timeout
-    }
-  })();
+<link rel="preload" href="../../fonts/pretendardvariable-500.woff2" as="font" type="font/woff2" crossorigin /> <!-- Font Loading Script -->
+<script> // Font loading optimization (function () { document.documentElement.classList.add('font-loading'); // Check if fonts are already loaded (cached) if (document.fonts && document.fonts.ready) { document.fonts.ready.then(function () { document.documentElement.classList.remove('font-loading'); document.documentElement.classList.add('font-loaded'); }); } else { // Fallback for older browsers setTimeout(function () { document.documentElement.classList.remove('font-loading'); document.documentElement.classList.add('font-loaded'); }, 3000); // 3s timeout } })();
 </script>

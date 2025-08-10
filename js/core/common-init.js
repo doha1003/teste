@@ -127,8 +127,10 @@ DohaKR.loadIncludes = function () {
   const navPlaceholder = document.getElementById('navbar-placeholder');
   if (navPlaceholder) {
     // 현재 경로에 따라 올바른 includes 경로 결정
-    const pathname = window.location.pathname;
+    const {pathname} = window.location;
     const pathDepth = (pathname.match(/\//g) || []).length;
+    const isInSubdirectory = pathDepth >= 2 || pathname.includes('/about/') || pathname.includes('/contact/') || 
+      pathname.includes('/faq/') || pathname.includes('/privacy/') || pathname.includes('/terms/') || pathname.includes('/tools/');
     let navbarPath;
     
     if (pathDepth >= 3 || pathname.includes('/tests/') || pathname.includes('/fortune/')) {
@@ -184,7 +186,7 @@ DohaKR.loadIncludes = function () {
   const footerPlaceholder = document.getElementById('footer-placeholder');
   if (footerPlaceholder) {
     // 현재 경로에 따라 올바른 includes 경로 결정
-    const pathname = window.location.pathname;
+    const {pathname} = window.location;
     const pathDepth = (pathname.match(/\//g) || []).length;
     let footerPath;
     
@@ -209,6 +211,10 @@ DohaKR.loadIncludes = function () {
           footerPlaceholder.innerHTML = footerXhr.responseText;
         } else {
           // file:// 프로토콜에서 실패하면 직접 삽입
+          const {pathname} = window.location;
+          const pathDepth = (pathname.match(/\//g) || []).length;
+          const isInSubdirectory = pathDepth >= 2 || pathname.includes('/about/') || pathname.includes('/contact/') || 
+            pathname.includes('/faq/') || pathname.includes('/privacy/') || pathname.includes('/terms/') || pathname.includes('/tools/');
           const baseHref = isInSubdirectory ? '../' : '';
           footerPlaceholder.innerHTML = `<footer class="footer"> <div class="footer-content"> <div class="footer-section"> <h3>doha.kr</h3> <p class="text-gray-400 mt-8"> 일상을 더 재미있게 만드는 공간<br> 심리테스트, 운세, 실용도구의 만남 </p> <div class="footer-social"> <a href="mailto:youtubdoha@gmail.com" class="social-link">📧</a> </div> </div> <div class="footer-section"> <h3>서비스</h3> <ul class="footer-links"> <li><a href="${baseHref}">홈</a></li> <li><a href="${baseHref}tests/">심리테스트</a></li> <li><a href="${baseHref}fortune/">운세</a></li> <li><a href="${baseHref}tools/">실용도구</a></li> <li><a href="${baseHref}about/">사이트 소개</a></li> </ul> </div> <div class="footer-section"> <h3>인기 콘텐츠</h3> <ul class="footer-links"> <li><a href="${baseHref}tests/teto-egen/">테토-에겐 테스트</a></li> <li><a href="${baseHref}tests/mbti/">MBTI 테스트</a></li> <li><a href="${baseHref}fortune/daily/">오늘의 운세</a></li> <li><a href="${baseHref}tools/text-counter.html">글자수 세기</a></li> </ul> </div> <div class="footer-section"> <h3>운세 서비스</h3> <ul class="footer-links"> <li><a href="${baseHref}fortune/daily/">오늘의 운세</a></li> <li><a href="${baseHref}fortune/zodiac/">별자리 운세</a></li> <li><a href="${baseHref}fortune/zodiac-animal/">띠별 운세</a></li> <li><a href="${baseHref}fortune/tarot/">AI 타로</a></li> </ul> </div> <div class="footer-section"> <h3>고객지원</h3> <ul class="footer-links"> <li><a href="${baseHref}contact/">문의하기</a></li> <li><a href="${baseHref}faq/">자주 묻는 질문</a></li> </ul> </div> </div> <div class="footer-bottom"> <div class="footer-legal"> <a href="${baseHref}privacy/">개인정보처리방침</a> <a href="${baseHref}terms/">이용약관</a> </div> <p>&copy; 2025 doha.kr. All rights reserved.</p> </div> </footer>`;
         }
@@ -292,7 +298,7 @@ DohaKR.initBasicMobileMenu = function () {
     mobileMenuBtn.addEventListener('click', DohaKR._mobileMenuClickHandler);
 
     // 메뉴 외부 클릭 시 닫기
-    document.addEventListener('click', (event) => {
+    document.addEventListener('click', function (_event) {
       if (!event.target.closest('.navbar') && navMenu.classList.contains('active')) {
         navMenu.classList.remove('active');
         mobileMenuBtn.classList.remove('active');

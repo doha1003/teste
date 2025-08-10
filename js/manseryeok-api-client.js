@@ -214,9 +214,9 @@ class ManseryeokAPIClient {
    * 캐시에서 데이터 가져오기
    */
   getCachedData(key) {
-    if (!this.config.cacheEnabled) return null;
+    if (!this.config.cacheEnabled) {return null;}
     const cached = this.cache.get(key);
-    if (!cached) return null;
+    if (!cached) {return null;}
     // 캐시 만료 확인
     if (Date.now() - cached.timestamp > this.config.cacheExpiry) {
       this.cache.delete(key);
@@ -228,9 +228,9 @@ class ManseryeokAPIClient {
    * 캐시에 데이터 저장
    */
   setCachedData(key, data) {
-    if (!this.config.cacheEnabled) return;
+    if (!this.config.cacheEnabled) {return;}
     this.cache.set(key, {
-      data: data,
+      data,
       timestamp: Date.now(),
     });
     // 캐시 크기 제한 (최대 1000개)
@@ -267,7 +267,7 @@ class ManseryeokAPIClient {
     }
     if (typeof window.Analytics !== 'undefined') {
       window.Analytics.trackEvent('ManseryeokAPI', 'error', {
-        method: method,
+        method,
         error: error.message,
       });
     }
@@ -298,7 +298,7 @@ class ManseryeokAPIClient {
   calculateSuccessRate() {
     const total = this.metrics.apiCalls + this.metrics.cacheHits + this.metrics.fallbackUses;
     return total > 0
-      ? (((this.metrics.apiCalls + this.metrics.cacheHits) / total) * 100).toFixed(2) + '%'
+      ? `${(((this.metrics.apiCalls + this.metrics.cacheHits) / total) * 100).toFixed(2)  }%`
       : '0%';
   }
   /**

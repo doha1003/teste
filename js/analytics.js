@@ -486,14 +486,14 @@
       const self = this;
 
       // This will work with the global error handler
-      if (typeof ErrorHandler !== 'undefined') {
-        const originalHandleError = ErrorHandler.handleError;
-        ErrorHandler.handleError = function (errorInfo) {
-          // Call original handler
-          originalHandleError.call(this, errorInfo);
-
-          // Track in analytics
-          self.trackError(errorInfo);
+      if (typeof window.ErrorHandler !== 'undefined') {
+        const originalHandleError = window.ErrorHandler.handleError;
+        window.ErrorHandler.handleError = function (errorInfo) {
+          try {
+            return originalHandleError.call(this, errorInfo);
+          } catch (e) {
+            return originalHandleError(errorInfo);
+          }
         };
       }
     },
@@ -750,7 +750,7 @@
 
     // Track GA4 events with enhanced data
     trackGA4Event(eventName, parameters = {}) {
-      if (!this.ga4Initialized || this.botDetected) return;
+      if (!this.ga4Initialized || this.botDetected) {return;}
 
       try {
         const enhancedParams = {
@@ -1015,7 +1015,7 @@
           },
           body: JSON.stringify({
             event: 'real_time_data',
-            data: data,
+            data,
           }),
         });
       } catch (error) {

@@ -34,7 +34,7 @@ class AnalyticsDashboard {
     const dashboard = document.createElement('div');
     dashboard.id = 'analytics-dashboard';
     dashboard.className = 'analytics-dashboard';
-    dashboard.innerHTML = safeHTML(`
+    dashboard.innerHTML = window.safeHTML(`
             <div class="dashboard-header">
                 <h3>📊 실시간 분석 대시보드</h3>
                 <div class="dashboard-controls">
@@ -607,7 +607,7 @@ class AnalyticsDashboard {
     const recentEvents = this.data.realtime.events.slice(0, 10);
     recentEvents.forEach((event) => {
       const row = document.createElement('tr');
-      row.innerHTML = safeHTML(`
+      row.innerHTML = window.safeHTML(`
                 <td>${this.formatTime(event.timestamp)}</td>
                 <td>${this.formatEventName(event.event)}</td>
                 <td>${event.url}</td>

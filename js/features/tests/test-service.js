@@ -88,7 +88,7 @@ export class TestService extends ServiceBase {
    * 테스트 시작
    */
   startTest() {
-    if (this.testState.testStarted) return;
+    if (this.testState.testStarted) {return;}
 
     this.testState.testStarted = true;
     this.testState.currentQuestion = 0;
@@ -120,7 +120,7 @@ export class TestService extends ServiceBase {
    */
   showQuestion() {
     const question = this.testState.questions[this.testState.currentQuestion];
-    if (!question) return;
+    if (!question) {return;}
 
     // 진행도 업데이트
     this.updateProgress();
@@ -149,7 +149,7 @@ export class TestService extends ServiceBase {
    */
   showOptions(question) {
     const optionsContainer = document.querySelector(this.ui.optionsContainer);
-    if (!optionsContainer) return;
+    if (!optionsContainer) {return;}
 
     let options = [...question.options];
 
@@ -184,13 +184,13 @@ export class TestService extends ServiceBase {
    * 답변 선택
    */
   selectAnswer(optionElement) {
-    const value = optionElement.dataset.value;
+    const {value} = optionElement.dataset;
     const question = this.testState.questions[this.testState.currentQuestion];
     const selectedOption = question.options.find(
       (opt) => (opt.value || question.options.indexOf(opt)).toString() === value
     );
 
-    if (!selectedOption) return;
+    if (!selectedOption) {return;}
 
     // 이전 선택 제거
     const container = optionElement.parentElement;
@@ -205,7 +205,7 @@ export class TestService extends ServiceBase {
     this.testState.answers[this.testState.currentQuestion] = {
       questionIndex: this.testState.currentQuestion,
       question: question.question,
-      value: value,
+      value,
       answer: selectedOption,
     };
 
@@ -219,8 +219,8 @@ export class TestService extends ServiceBase {
    * 이전 질문으로
    */
   previousQuestion() {
-    if (!this.testConfig.allowBack) return;
-    if (this.testState.currentQuestion <= 0) return;
+    if (!this.testConfig.allowBack) {return;}
+    if (this.testState.currentQuestion <= 0) {return;}
 
     this.testState.currentQuestion--;
     this.showQuestion();
@@ -250,7 +250,7 @@ export class TestService extends ServiceBase {
    * 테스트 완료
    */
   completeTest() {
-    if (this.testState.testCompleted) return;
+    if (this.testState.testCompleted) {return;}
 
     this.testState.testCompleted = true;
 
@@ -289,7 +289,7 @@ export class TestService extends ServiceBase {
    * 진행도 업데이트
    */
   updateProgress() {
-    if (!this.testConfig.showProgress) return;
+    if (!this.testConfig.showProgress) {return;}
 
     const current = this.testState.currentQuestion + 1;
     const total = this.testState.totalQuestions;

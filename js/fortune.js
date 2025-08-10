@@ -63,11 +63,12 @@ function validateNumber(value, min = 0, max = Number.MAX_SAFE_INTEGER) {
 
     // Check API configuration
     checkAPIConfig() {
-      if (typeof APIConfig !== 'undefined') {
-        const geminiConfig = APIConfig.getConfig('gemini');
-        if (geminiConfig && geminiConfig.apiKey) {
+      if (typeof window.API_CONFIG !== 'undefined' && window.API_CONFIG) {
+        const geminiConfig = window.API_CONFIG.gemini;
+        if (geminiConfig && window.API_CONFIG.GEMINI_API_KEY) {
           this.config.hasAPI = true;
         } else {
+          // no-op
         }
       }
     },

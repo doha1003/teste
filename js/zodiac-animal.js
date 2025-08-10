@@ -129,8 +129,8 @@ async function generateAnimalFortuneWithAI(animal, animalData) {
   const prompt = `오늘은 ${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일입니다. ${animalData.korean}의 오늘 운세를 상세히 분석해주세요. 다음 형식으로 응답해주세요: { "overall": "전체 운세 (80-120자)", "love": "연애운 (60-80자)", "money": "재물운 (60-80자)", "career": "직업운 (60-80자)", "health": "건강운 (60-80자)", "lucky": { "number": [1~99 사이의 숫자], "color": "행운의 색깔", "direction": "행운의 방향" }, "advice": "오늘의 조언 (80-100자)" } ${animalData.korean}의 특성을 고려하여 실용적이고 긍정적인 운세를 제공해주세요.`;
 
   try {
-    if (typeof callGeminiAPI === 'function') {
-      const aiResponse = await callGeminiAPI(prompt);
+    if (typeof window.callGeminiAPI === 'function') {
+      const aiResponse = await window.callGeminiAPI(prompt);
       if (aiResponse) {
         const cleanResponse = aiResponse.replace(/```json|```/g, '').trim();
         const parsed = JSON.parse(cleanResponse);

@@ -407,9 +407,9 @@ export class BMICalculatorService extends ToolService {
   bindResultActions() {
     document.addEventListener('click', (e) => {
       const target = e.target.closest('[data-action]');
-      if (!target) return;
+      if (!target) {return;}
       
-      const action = target.dataset.action;
+      const {action} = target.dataset;
       switch (action) {
         case 'copy-result':
           this.copyResult();
@@ -432,8 +432,8 @@ export class BMICalculatorService extends ToolService {
     const heightInput = document.querySelector(this.ui.height);
     const weightInput = document.querySelector(this.ui.weight);
     
-    if (heightInput) heightInput.value = '';
-    if (weightInput) weightInput.value = '';
+    if (heightInput) {heightInput.value = '';}
+    if (weightInput) {weightInput.value = '';}
     
     // 결과 영역 숨기기
     const resultContainer = document.querySelector(this.ui.resultContainer);
@@ -446,7 +446,7 @@ export class BMICalculatorService extends ToolService {
     this.toolState.result = null;
     
     // 첫 번째 입력 필드에 포커스
-    if (heightInput) heightInput.focus();
+    if (heightInput) {heightInput.focus();}
   }
 
   /**

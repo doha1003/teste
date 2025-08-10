@@ -124,7 +124,7 @@ class LazyLoader {
    */
   loadImage(img) {
     const src = img.getAttribute('data-src');
-    if (!src) return;
+    if (!src) {return;}
 
     // 로딩 스피너 추가
     img.classList.add('loading');
@@ -156,7 +156,7 @@ class LazyLoader {
    */
   loadIframe(iframe) {
     const src = iframe.getAttribute('data-src');
-    if (!src) return;
+    if (!src) {return;}
 
     iframe.src = src;
     iframe.removeAttribute('data-src');
@@ -168,7 +168,7 @@ class LazyLoader {
    */
   async loadComponent(element) {
     const componentName = element.getAttribute('data-lazy-component');
-    if (!componentName) return;
+    if (!componentName) {return;}
 
     try {
       // 로딩 상태 표시

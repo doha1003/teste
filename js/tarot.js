@@ -34,7 +34,7 @@ const spreads = {
 };
 
 // 페이지 로드 시 초기화
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
     const tarotForm = document.getElementById('tarotFormElement');
     if (tarotForm) {
         tarotForm.addEventListener('submit', handleTarotReading);
@@ -122,7 +122,7 @@ function createCardDeck(requiredCards) {
                 
                 selectedCards.push({
                     ...cardData,
-                    isReversed: isReversed,
+                    isReversed,
                     position: selectedCards.length
                 });
                 
@@ -194,7 +194,7 @@ async function performReading(selectedCards) {
             },
             body: JSON.stringify({
                 type: 'tarot',
-                question: question,
+                question,
                 cards: selectedCards.map((card, idx) => `${idx+1}. ${card.name}${card.isReversed ? '(역방향)' : '(정방향)'} - ${spread.positions[idx]}`).join(', '),
                 prompt: `타로 질문: ${question}\n\n뽑은 카드:\n${selectedCards.map((card, idx) => `${idx+1}. ${card.name}${card.isReversed ? '(역방향)' : '(정방향)'} - ${spread.positions[idx]}`).join('\n')}\n\n각 카드의 의미를 해석하고 전체적인 메시지를 전달해주세요.`
             })
@@ -246,9 +246,9 @@ function generateTarotInterpretation(cards, spread, question) {
         }
         
         interpretations.push({
-            position: position,
-            card: card,
-            interpretation: interpretation
+            position,
+            card,
+            interpretation
         });
     });
     
@@ -256,7 +256,7 @@ function generateTarotInterpretation(cards, spread, question) {
     const overallMessage = generateOverallMessage(cards, question);
     
     return {
-        interpretations: interpretations,
+        interpretations,
         overall: overallMessage,
         advice: generateFinalAdvice(cards)
     };
@@ -337,9 +337,9 @@ function generateOverallMessage(cards, question) {
     
     // 주요 테마 분석
     cards.forEach(card => {
-        if (card.id <= 7) majorThemes.push("시작과 성장");
-        else if (card.id <= 14) majorThemes.push("도전과 변화");
-        else majorThemes.push("완성과 깨달음");
+        if (card.id <= 7) {majorThemes.push("시작과 성장");}
+        else if (card.id <= 14) {majorThemes.push("도전과 변화");}
+        else {majorThemes.push("완성과 깨달음");}
     });
     
     const uniqueThemes = [...new Set(majorThemes)];
@@ -371,13 +371,13 @@ function parseTarotAIResponse(aiText, cards, spread) {
     cards.forEach((card, idx) => {
         interpretations.push({
             position: spread.positions[idx],
-            card: card,
+            card,
             interpretation: `AI 해석: ${card.name} 카드가 ${spread.positions[idx]} 자리에서 보여주는 메시지입니다.`
         });
     });
     
     return {
-        interpretations: interpretations,
+        interpretations,
         overall: aiText,
         advice: "AI가 분석한 결과에 따르면, 현재 상황에서 가장 중요한 것은 내면의 지혜를 신뢰하는 것입니다."
     };
@@ -387,7 +387,7 @@ function parseTarotAIResponse(aiText, cards, spread) {
 function displayTarotResult(interpretation, cards, spread, isAIGenerated = false) {
     const resultDiv = document.getElementById('tarotResult');
     
-    let resultHTML = `
+    const resultHTML = `
         <div class="fortune-result-container">
         <div class="fortune-result-card">
             <h3>🔮 타로 리딩 결과</h3>

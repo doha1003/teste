@@ -130,7 +130,7 @@ async function generateZodiacFortuneWithAI(zodiacSign) {
   const dateStr = today.toLocaleDateString('ko-KR');
   const prompt = `당신은 전문 점성술사입니다. ${zodiac.name}(${zodiac.symbol})의 오늘(${dateStr}) 운세를 분석해주세요. 별자리 정보: - 원소: ${zodiac.element} - 지배행성: ${zodiac.planet} - 특성: ${zodiac.traits.join(', ')} 다음 형식으로 응답해주세요: { "totalScore": 70-95 사이의 점수, "loveScore": 65-95 사이의 점수, "moneyScore": 65-95 사이의 점수, "healthScore": 65-95 사이의 점수, "overallMessage": "전체적인 운세 메시지 (150-250자, 구체적이고 상세하게)", "loveMessage": "애정운 메시지 (100-150자, 구체적인 상황과 조언)", "moneyMessage": "금전운 메시지 (100-150자, 구체적인 투자/소비 조언)", "healthMessage": "건강운 메시지 (100-150자, 구체적인 건강 관리 방법)", "advice": "구체적인 조언 (200-300자, 실행 가능한 행동 지침)", "luckyColor": "오늘의 행운 색상", "luckyNumber": 1-30 사이의 숫자, "luckyDirection": "행운의 방향 (동/서/남/북/동남/서남/동북/서북 중 하나)" } ${zodiac.name}의 특성과 2025년 을사년 에너지를 고려하여 구체적이고 실용적인 조언을 포함해주세요. 뻔한 내용이 아닌 개인적이고 디테일한 내용으로 작성해주세요.`;
   try {
-    const aiResponse = await callGeminiAPI(prompt);
+    const aiResponse = await window.callGeminiAPI(prompt);
     if (aiResponse) {
       const cleanResponse = aiResponse.replace(/```json|```/g, '').trim();
       const parsed = JSON.parse(cleanResponse);

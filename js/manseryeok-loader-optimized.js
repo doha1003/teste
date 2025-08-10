@@ -81,13 +81,13 @@ class ManseryeokOptimizedLoader {
       solarYear: year,
       solarMonth: month,
       solarDay: day,
-      lunarYear: lunarYear,
-      lunarMonth: lunarMonth,
-      lunarDay: lunarDay,
+      lunarYear,
+      lunarMonth,
+      lunarDay,
       yearGanji: yearStem + yearBranch,
       dayGanji: '계산중',
-      weekDay: weekDay,
-      zodiac: zodiac,
+      weekDay,
+      zodiac,
       isLeapMonth: false,
       isFallback: true // 폴백 데이터임을 표시
     };

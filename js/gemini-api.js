@@ -224,3 +224,11 @@ function generateBackupFortune(name, birthDate) {
     },
   };
 }
+
+// 전역 노출
+if (typeof window !== 'undefined') {
+  window.callGeminiAPI = callGeminiAPI;
+  window.generateDailyFortuneWithAI = generateDailyFortuneWithAI;
+  window.generateZodiacFortuneWithAI = generateZodiacFortuneWithAI;
+  window.generateSajuWithAI = generateSajuWithAI;
+}

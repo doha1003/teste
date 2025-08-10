@@ -60,7 +60,7 @@ export class DailyFortuneService extends FortuneService {
 
     try {
       // 만세력 데이터 계산 (클라이언트 사이드)
-      let manseryeokData = this.calculateManseryeok(birthData);
+      const manseryeokData = this.calculateManseryeok(birthData);
 
       // 기본 운세 데이터 생성
       const fortuneData = this.generateDailyFortune(birthData, manseryeokData);

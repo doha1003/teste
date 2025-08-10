@@ -570,7 +570,7 @@ class PWAInstallManager {
    * 프롬프트 숨기기
    */
   async hideInstallPrompt() {
-    if (!this.elements.promptContainer) return;
+    if (!this.elements.promptContainer) {return;}
     
     await this.animatePromptOut(this.elements.promptContainer);
     
@@ -641,10 +641,10 @@ class PWAInstallManager {
  
   getBrowserName() {
     const info = this.state.browserInfo;
-    if (info.isChrome) return 'chrome';
-    if (info.isEdge) return 'edge';
-    if (info.isFirefox) return 'firefox';
-    if (info.isSafari) return 'safari';
+    if (info.isChrome) {return 'chrome';}
+    if (info.isEdge) {return 'edge';}
+    if (info.isFirefox) {return 'firefox';}
+    if (info.isSafari) {return 'safari';}
     return 'unknown';
   }
  
@@ -658,8 +658,8 @@ class PWAInstallManager {
   }
  
   getInstallationMethod() {
-    if (this.state.installPromptEvent) return 'native_prompt';
-    if (this.state.browserInfo.isIOSDevice) return 'ios_manual';
+    if (this.state.installPromptEvent) {return 'native_prompt';}
+    if (this.state.browserInfo.isIOSDevice) {return 'ios_manual';}
     return 'unknown';
   }
  
@@ -722,7 +722,7 @@ class PWAInstallManager {
   // ... 기타 메서드들 (스타일 적용, 이벤트 처리 등)
  
   applyPromptStyles() {
-    if (document.getElementById('pwa-prompt-styles')) return;
+    if (document.getElementById('pwa-prompt-styles')) {return;}
     
     const style = document.createElement('style');
     style.id = 'pwa-prompt-styles';

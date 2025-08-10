@@ -174,9 +174,9 @@ function getSuggestion(line) {
 if (typeof window !== 'undefined') {
   window.securityMigration = {
     execute: executeMigration,
-    analyzeFile: analyzeFile,
+    analyzeFile,
     patterns: migrationPatterns,
-    fileAnalysis: fileAnalysis,
+    fileAnalysis,
   };
 }
 

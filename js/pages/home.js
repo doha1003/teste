@@ -464,7 +464,7 @@ class HomePage {
     this.pwaPrompt.installButton = document.getElementById('pwa-install-btn');
     this.pwaPrompt.closeButton = document.getElementById('pwa-close-btn');
 
-    if (!this.pwaPrompt.element) return;
+    if (!this.pwaPrompt.element) {return;}
 
     // 이벤트 리스너 설정
     this.setupPWAEventListeners();
@@ -571,7 +571,7 @@ class HomePage {
    * PWA 설치 버튼 상태 업데이트
    */
   updatePWAInstallButton() {
-    if (!this.pwaPrompt.installButton) return;
+    if (!this.pwaPrompt.installButton) {return;}
 
     const isInstalled = isPWAInstalled();
     const hasPrompt = !!window.deferredPrompt;
