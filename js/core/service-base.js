@@ -66,7 +66,7 @@ export class ServiceBase {
   initializeCommon() {
     // 광고 초기화
     this.initializeAds();
-    
+
     // 카카오 SDK 초기화 (지연 로딩)
     if (typeof window.Kakao !== 'undefined' && !window.Kakao.isInitialized()) {
       try {
@@ -75,7 +75,7 @@ export class ServiceBase {
         console.warn('Kakao SDK initialization failed:', e);
       }
     }
-    
+
     // 전역 에러 핸들러
     window.addEventListener('error', (e) => {
       console.error('Global error:', e.error);

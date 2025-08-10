@@ -750,7 +750,9 @@
 
     // Track GA4 events with enhanced data
     trackGA4Event(eventName, parameters = {}) {
-      if (!this.ga4Initialized || this.botDetected) {return;}
+      if (!this.ga4Initialized || this.botDetected) {
+        return;
+      }
 
       try {
         const enhancedParams = {

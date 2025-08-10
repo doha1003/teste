@@ -25,9 +25,9 @@ class ManseryeokOptimizedLoader {
       const response = await fetch('/api/manseryeok', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ date: dateString })
+        body: JSON.stringify({ date: dateString }),
       });
 
       if (!response.ok) {
@@ -35,7 +35,7 @@ class ManseryeokOptimizedLoader {
       }
 
       const data = await response.json();
-      
+
       // 캐시에 저장
       if (data) {
         this.cache.set(dateString, data);
@@ -43,7 +43,6 @@ class ManseryeokOptimizedLoader {
 
       return data;
     } catch (error) {
-      
       // 폴백: 현재 날짜 기준으로 대략적인 음력 계산
       return this.fallbackCalculation(dateString);
     }
@@ -66,8 +65,34 @@ class ManseryeokOptimizedLoader {
 
     // 60갑자 계산
     const heavenlyStems = ['갑', '을', '병', '정', '무', '기', '경', '신', '임', '계'];
-    const earthlyBranches = ['자', '축', '인', '묘', '진', '사', '오', '미', '신', '유', '술', '해'];
-    const zodiacAnimals = ['쥐', '소', '호랑이', '토끼', '용', '뱀', '말', '양', '원숭이', '닭', '개', '돼지'];
+    const earthlyBranches = [
+      '자',
+      '축',
+      '인',
+      '묘',
+      '진',
+      '사',
+      '오',
+      '미',
+      '신',
+      '유',
+      '술',
+      '해',
+    ];
+    const zodiacAnimals = [
+      '쥐',
+      '소',
+      '호랑이',
+      '토끼',
+      '용',
+      '뱀',
+      '말',
+      '양',
+      '원숭이',
+      '닭',
+      '개',
+      '돼지',
+    ];
 
     const yearIndex = (year - 4) % 60;
     const yearStem = heavenlyStems[yearIndex % 10];
@@ -89,7 +114,7 @@ class ManseryeokOptimizedLoader {
       weekDay,
       zodiac,
       isLeapMonth: false,
-      isFallback: true // 폴백 데이터임을 표시
+      isFallback: true, // 폴백 데이터임을 표시
     };
   }
 
@@ -101,9 +126,9 @@ class ManseryeokOptimizedLoader {
       const response = await fetch('/api/manseryeok/range', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ startDate, endDate })
+        body: JSON.stringify({ startDate, endDate }),
       });
 
       if (!response.ok) {
@@ -112,7 +137,6 @@ class ManseryeokOptimizedLoader {
 
       return await response.json();
     } catch (error) {
-      
       return {};
     }
   }
@@ -136,15 +160,14 @@ window.ManseryeokDatabase = new Proxy(window.ManseryeokDatabase, {
     if (prop in target) {
       return target[prop];
     }
-    
+
     // 기존 코드가 직접 날짜를 접근하려고 할 때
     if (typeof prop === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(prop)) {
       console.warn('ManseryeokDatabase: 직접 날짜 키 접근 대신 비동기 메서드 사용을 권장합니다.');
       // 비동기를 동기로 변환할 수 없으므로 null 반환
       return null;
     }
-    
-    return undefined;
-  }
-});
 
+    return undefined;
+  },
+});

@@ -681,11 +681,11 @@ export async function registerServiceWorker() {
   try {
     console.log('PWA: Registering Service Worker...');
     const registration = await navigator.serviceWorker.register('/sw.js');
-    
+
     // 업데이트 감지
     registration.addEventListener('updatefound', () => {
       const newWorker = registration.installing;
-      
+
       if (newWorker) {
         newWorker.addEventListener('statechange', () => {
           if (newWorker.state === 'installed') {
@@ -703,7 +703,6 @@ export async function registerServiceWorker() {
 
     console.log('PWA: Service Worker registered successfully');
     return true;
-    
   } catch (error) {
     console.error('PWA: Service Worker registration failed:', error);
     return false;
@@ -798,7 +797,7 @@ function showUpdateAvailableNotification() {
 export async function initializePWA() {
   // 서비스 워커 등록
   await registerServiceWorker();
-  
+
   // 설치 프롬프트 설정
   setupInstallPrompt();
 

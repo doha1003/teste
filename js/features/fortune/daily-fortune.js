@@ -20,7 +20,7 @@ export class DailyFortuneService extends FortuneService {
   async generateFortune(userData) {
     try {
       console.log('🔮 generateFortune 호출됨:', userData);
-      
+
       // 생년월일 데이터 저장
       this.fortuneState.birthData = {
         name: userData.name,
@@ -38,12 +38,12 @@ export class DailyFortuneService extends FortuneService {
 
       // 운세 데이터 생성
       const result = await this.fetchDailyFortune();
-      
+
       console.log('✨ 운세 결과:', result);
 
       // 결과 표시
       this.showResult(result);
-      
+
       return result;
     } catch (error) {
       console.error('❌ generateFortune 오류:', error);
@@ -69,7 +69,7 @@ export class DailyFortuneService extends FortuneService {
       if (window.FortuneAPI) {
         try {
           console.log('🔮 통합 API로 일일 운세 생성 중...');
-          
+
           const apiData = await window.FortuneAPI.daily(
             birthData.name,
             `${birthData.year}-${String(birthData.month).padStart(2, '0')}-${String(birthData.day).padStart(2, '0')}`,
@@ -88,7 +88,6 @@ export class DailyFortuneService extends FortuneService {
 
       console.log('📱 클라이언트 사이드 운세 사용');
       return { ...fortuneData, manseryeokData, source: 'client' };
-      
     } catch (error) {
       console.error('❌ 운세 생성 실패:', error);
       // 모든 계산 실패 시에도 최소한의 운세 제공
@@ -140,12 +139,14 @@ export class DailyFortuneService extends FortuneService {
   generateBasicManseryeok(year, month, day, hour) {
     const stems = ['갑', '을', '병', '정', '무', '기', '경', '신', '임', '계'];
     const branches = ['자', '축', '인', '묘', '진', '사', '오', '미', '신', '유', '술', '해'];
-    
+
     // 간단한 60갑자 계산
     const yearIndex = (year - 4) % 60;
     const monthIndex = ((year - 4) * 12 + month - 1) % 60;
-    const dayIndex = Math.floor((Date.UTC(year, month - 1, day) - Date.UTC(1900, 0, 1)) / (1000 * 60 * 60 * 24)) % 60;
-    const hourIndex = (Math.floor(hour / 2)) % 12;
+    const dayIndex =
+      Math.floor((Date.UTC(year, month - 1, day) - Date.UTC(1900, 0, 1)) / (1000 * 60 * 60 * 24)) %
+      60;
+    const hourIndex = Math.floor(hour / 2) % 12;
 
     return {
       yearPillar: stems[yearIndex % 10] + branches[yearIndex % 12],

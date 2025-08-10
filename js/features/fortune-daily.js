@@ -211,7 +211,8 @@
     if (resultDiv) {
       resultDiv.classList.remove('d-none-init');
       resultDiv.style.display = 'block';
-      resultDiv.innerHTML = '<div class="dh-u-loading">AI가 당신의 운세를 분석하고 있습니다...</div>';
+      resultDiv.innerHTML =
+        '<div class="dh-u-loading">AI가 당신의 운세를 분석하고 있습니다...</div>';
     }
   }
 

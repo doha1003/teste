@@ -60,13 +60,13 @@
         // 타임아웃 설정 (30초)
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 30000);
-        
-        const response = await fetch(url, { 
-          ...defaultOptions, 
+
+        const response = await fetch(url, {
+          ...defaultOptions,
           ...options,
-          signal: options.signal || controller.signal
+          signal: options.signal || controller.signal,
         });
-        
+
         clearTimeout(timeoutId);
         const duration = performance.now() - startTime;
 
@@ -110,6 +110,7 @@
             duration,
           });
         } else {
+          // 로깅 비활성화
         }
 
         throw error;
@@ -174,12 +175,15 @@
       try {
         if (typeof window.Kakao === 'undefined') {
           if (this.detectEnvironment() === 'development') {
+            console.warn('Kakao SDK not loaded');
           } else {
+            // Production: Silent handling
           }
           return;
         }
         if (window.Kakao.isInitialized && window.Kakao.isInitialized()) {
           if (this.detectEnvironment() === 'development') {
+            console.log('Kakao already initialized');
           }
           return;
         }
@@ -187,13 +191,18 @@
         if (kakaoKey && kakaoKey !== 'KAKAO_APP_KEY_PLACEHOLDER') {
           window.Kakao.init(kakaoKey);
           if (this.detectEnvironment() === 'development') {
+            console.log('Kakao initialized successfully');
           }
         } else {
           if (this.detectEnvironment() === 'development') {
+            console.warn('Kakao key not configured');
           } else {
+            // Production: Silent handling
           }
         }
-      } catch (error) {}
+      } catch (error) {
+        console.error('Kakao initialization failed:', error);
+      }
     }
     /**
      * 카카오 키 가져오기
@@ -311,7 +320,7 @@
    * DOM 로드 후 초기화
    */
   function initializeAPIConfig() {
-    if (document.readyState === 'dh-u-loading') {
+    if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', () => {
         setTimeout(initKakao, 100);
       });
@@ -360,12 +369,23 @@
     },
   };
 
-  // 전역으로 노출
+  // 전역으로 노출 - 레거시 코드와의 호환성을 위해
   window.apiHelpers = apiHelpers;
-  // export { APIManager, API_CONFIG, SECURITY_CONFIG, apiManager };
-  // export default apiManager;
-  //# sourceMappingURL=api-config.js.map
-
-  // Export to global scope
   window.APIManager = APIManager;
+  
+  // 통합된 API 인터페이스 제공
+  window.API = {
+    fortune: apiHelpers.fortune,
+    request: apiHelpers.request,
+    checkRateLimit: apiHelpers.checkRateLimit,
+    getConfig: apiHelpers.getConfig,
+    getEnvironment: apiHelpers.getEnvironment,
+    manager: apiManager
+  };
+  
+  // doha.kr 네임스페이스에도 연결 (DohaKR이 있는 경우)
+  if (typeof window.DohaKR !== 'undefined') {
+    window.DohaKR.API.Manager = apiManager;
+    window.DohaKR.API.Config = API_CONFIG;
+  }
 })();

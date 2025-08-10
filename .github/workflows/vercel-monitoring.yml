@@ -1,0 +1,346 @@
+name: 📊 Vercel 배포 모니터링
+
+on:
+  schedule:
+    # 매 5분마다 실행 (프로덕션 환경 모니터링)
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+    inputs:
+      force_check:
+        description: '강제 전체 검사 수행'
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  issues: write
+
+env:
+  MONITORING_TIMEOUT: 30
+
+jobs:
+  # 1️⃣ 사이트 헬스체크
+  health-monitoring:
+    name: 🏥 사이트 헬스체크
+    runs-on: ubuntu-latest
+    outputs:
+      site-status: ${{ steps.health.outputs.status }}
+      api-status: ${{ steps.api.outputs.status }}
+      performance-status: ${{ steps.performance.outputs.status }}
+    steps:
+      - name: 메인 사이트 헬스체크
+        id: health
+        run: |
+          echo "🌍 doha.kr 메인 사이트 상태 확인..."
+          
+          # 메인 페이지 접근 확인 (3회 재시도)
+          for i in {1..3}; do
+            if curl -f -L -m ${{ env.MONITORING_TIMEOUT }} -s https://doha.kr -o /dev/null; then
+              echo "status=healthy" >> $GITHUB_OUTPUT
+              echo "✅ 메인 사이트 정상 (시도 $i)"
+              break
+            elif [ $i -eq 3 ]; then
+              echo "status=unhealthy" >> $GITHUB_OUTPUT
+              echo "❌ 메인 사이트 접근 불가 (3회 시도 모두 실패)"
+            else
+              echo "⚠️ 메인 사이트 접근 실패 (시도 $i/3), 10초 후 재시도..."
+              sleep 10
+            fi
+          done
+
+      - name: API 엔드포인트 헬스체크
+        id: api
+        run: |
+          echo "🔌 API 엔드포인트 상태 확인..."
+          
+          # Health API 확인
+          if curl -f -L -m 15 -s https://doha.kr/api/health -o /dev/null; then
+            echo "status=healthy" >> $GITHUB_OUTPUT
+            echo "✅ Health API 정상"
+          else
+            echo "status=unhealthy" >> $GITHUB_OUTPUT
+            echo "❌ Health API 접근 불가"
+          fi
+          
+          # Fortune API 간단 테스트
+          FORTUNE_TEST=$(curl -s -X POST https://doha.kr/api/fortune \
+            -H "Content-Type: application/json" \
+            -d '{"type":"daily","userData":{"name":"모니터링","birthDate":"1990-01-01","gender":"male"}}' \
+            -m 25 | jq -r '.success' 2>/dev/null || echo "false")
+          
+          if [ "$FORTUNE_TEST" = "true" ]; then
+            echo "✅ Fortune API 정상"
+          else
+            echo "⚠️ Fortune API 응답 이상: $FORTUNE_TEST"
+          fi
+
+      - name: 성능 모니터링
+        id: performance
+        run: |
+          echo "⚡ 사이트 성능 모니터링..."
+          
+          # 응답 시간 측정
+          RESPONSE_TIME=$(curl -o /dev/null -s -w '%{time_total}' -m ${{ env.MONITORING_TIMEOUT }} https://doha.kr)
+          echo "메인 페이지 응답 시간: ${RESPONSE_TIME}초"
+          
+          # API 응답 시간 측정
+          API_RESPONSE_TIME=$(curl -o /dev/null -s -w '%{time_total}' -m 15 https://doha.kr/api/health)
+          echo "API 응답 시간: ${API_RESPONSE_TIME}초"
+          
+          # 성능 임계값 확인 (메인: 5초, API: 3초)
+          if (( $(echo "$RESPONSE_TIME > 5.0" | bc -l) )) || (( $(echo "$API_RESPONSE_TIME > 3.0" | bc -l) )); then
+            echo "status=degraded" >> $GITHUB_OUTPUT
+            echo "⚠️ 성능 저하 감지"
+          else
+            echo "status=good" >> $GITHUB_OUTPUT
+            echo "✅ 성능 상태 양호"
+          fi
+
+  # 2️⃣ Vercel 배포 상태 확인
+  vercel-status:
+    name: ⚡ Vercel 배포 상태
+    runs-on: ubuntu-latest
+    needs: health-monitoring
+    if: github.event.inputs.force_check == 'true' || needs.health-monitoring.outputs.site-status == 'unhealthy'
+    steps:
+      - name: 최근 배포 상태 확인
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          echo "📋 Vercel 최근 배포 상태 확인..."
+          
+          if [ -n "$VERCEL_TOKEN" ]; then
+            # Vercel API를 통한 배포 상태 확인
+            DEPLOYMENTS=$(curl -s -H "Authorization: Bearer $VERCEL_TOKEN" \
+              "https://api.vercel.com/v6/deployments?projectId=${{ secrets.PROJECT_ID }}&limit=5")
+            
+            echo "최근 5개 배포 상태:"
+            echo "$DEPLOYMENTS" | jq -r '.deployments[] | "\(.created | strftime("%Y-%m-%d %H:%M:%S")) - \(.state) - \(.url)"' 2>/dev/null || echo "배포 정보 파싱 실패"
+          else
+            echo "⚠️ VERCEL_TOKEN이 설정되지 않아 Vercel API 확인 불가"
+          fi
+
+  # 3️⃣ 핵심 기능 테스트
+  critical-functions-test:
+    name: 🧪 핵심 기능 테스트
+    runs-on: ubuntu-latest
+    needs: health-monitoring
+    if: github.event.inputs.force_check == 'true' || needs.health-monitoring.outputs.api-status == 'unhealthy'
+    steps:
+      - name: 심리테스트 기능 확인
+        run: |
+          echo "🧠 심리테스트 페이지 접근 확인..."
+          
+          # 주요 테스트 페이지들 확인
+          TEST_PAGES=("/tests/mbti/" "/tests/love-dna/" "/tests/teto-egen/")
+          
+          for page in "${TEST_PAGES[@]}"; do
+            if curl -f -L -m 20 -s "https://doha.kr$page" -o /dev/null; then
+              echo "✅ $page 정상"
+            else
+              echo "❌ $page 접근 실패"
+            fi
+          done
+
+      - name: 운세 서비스 확인
+        run: |
+          echo "🔮 운세 서비스 페이지 접근 확인..."
+          
+          # 운세 페이지들 확인
+          FORTUNE_PAGES=("/fortune/daily/" "/fortune/saju/" "/fortune/tarot/")
+          
+          for page in "${FORTUNE_PAGES[@]}"; do
+            if curl -f -L -m 20 -s "https://doha.kr$page" -o /dev/null; then
+              echo "✅ $page 정상"
+            else
+              echo "❌ $page 접근 실패"
+            fi
+          done
+
+      - name: 도구 서비스 확인
+        run: |
+          echo "🛠️ 도구 서비스 페이지 접근 확인..."
+          
+          # 도구 페이지들 확인
+          TOOL_PAGES=("/tools/bmi-calculator.html" "/tools/salary-calculator.html" "/tools/text-counter.html")
+          
+          for page in "${TOOL_PAGES[@]}"; do
+            if curl -f -L -m 20 -s "https://doha.kr$page" -o /dev/null; then
+              echo "✅ $page 정상"
+            else
+              echo "❌ $page 접근 실패"
+            fi
+          done
+
+  # 4️⃣ 문제 감지시 알림
+  alert-on-issues:
+    name: 🚨 문제 감지 알림
+    runs-on: ubuntu-latest
+    needs: [health-monitoring, critical-functions-test]
+    if: |
+      always() && (
+        needs.health-monitoring.outputs.site-status == 'unhealthy' ||
+        needs.health-monitoring.outputs.api-status == 'unhealthy' ||
+        needs.critical-functions-test.result == 'failure'
+      )
+    steps:
+      - name: 문제 상황 알림
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          echo "🚨 doha.kr 문제 상황 감지"
+          
+          # 문제 상황 분석
+          ISSUES=""
+          if [ "${{ needs.health-monitoring.outputs.site-status }}" = "unhealthy" ]; then
+            ISSUES="$ISSUES\n• 메인 사이트 접근 불가"
+          fi
+          if [ "${{ needs.health-monitoring.outputs.api-status }}" = "unhealthy" ]; then
+            ISSUES="$ISSUES\n• API 엔드포인트 접근 불가"
+          fi
+          if [ "${{ needs.critical-functions-test.result }}" = "failure" ]; then
+            ISSUES="$ISSUES\n• 핵심 기능 테스트 실패"
+          fi
+          
+          ALERT_MESSAGE="🚨 doha.kr 모니터링 알림
+          
+          ❌ 감지된 문제:$ISSUES
+          
+          📊 상태 정보:
+          • 사이트 상태: ${{ needs.health-monitoring.outputs.site-status }}
+          • API 상태: ${{ needs.health-monitoring.outputs.api-status }}
+          • 성능 상태: ${{ needs.health-monitoring.outputs.performance-status }}
+          • 감지 시간: $(date -u '+%Y-%m-%d %H:%M:%S') UTC
+          
+          🔍 확인 필요 사항:
+          • Vercel 대시보드 상태
+          • DNS 설정 확인
+          • CDN 캐시 상태
+          • 서버 리소스 사용량
+          
+          🌍 사이트: https://doha.kr
+          📊 모니터링 로그: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          
+          # Slack 알림
+          if [ -n "$SLACK_WEBHOOK_URL" ]; then
+            curl -X POST -H 'Content-type: application/json' \
+              --data "{\"text\":\"$ALERT_MESSAGE\", \"channel\": \"#alerts\"}" \
+              "$SLACK_WEBHOOK_URL" || echo "⚠️ Slack 알림 실패"
+          fi
+          
+          # Discord 알림
+          if [ -n "$DISCORD_WEBHOOK_URL" ]; then
+            curl -X POST -H 'Content-Type: application/json' \
+              --data "{\"content\":\"$ALERT_MESSAGE\"}" \
+              "$DISCORD_WEBHOOK_URL" || echo "⚠️ Discord 알림 실패"
+          fi
+
+      - name: 자동 이슈 생성
+        if: needs.health-monitoring.outputs.site-status == 'unhealthy'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const now = new Date().toISOString();
+            const title = `🚨 사이트 다운 감지 - ${now}`;
+            const body = `## 🚨 doha.kr 사이트 다운 감지
+            
+            **감지 시간:** ${now}
+            
+            **상태 정보:**
+            - 사이트 상태: ${{ needs.health-monitoring.outputs.site-status }}
+            - API 상태: ${{ needs.health-monitoring.outputs.api-status }}
+            - 성능 상태: ${{ needs.health-monitoring.outputs.performance-status }}
+            
+            **확인 사항:**
+            - [ ] Vercel 대시보드 상태 확인
+            - [ ] DNS 설정 확인
+            - [ ] 최근 배포 상태 확인
+            - [ ] 서버 리소스 확인
+            - [ ] CDN 상태 확인
+            
+            **모니터링 워크플로우:** ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+            
+            이 이슈는 모니터링 시스템에 의해 자동 생성되었습니다.
+            `;
+            
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: title,
+              body: body,
+              labels: ['monitoring', 'site-down', 'urgent']
+            });
+
+  # 5️⃣ 복구 확인 및 이슈 자동 닫기
+  recovery-check:
+    name: ✅ 복구 확인
+    runs-on: ubuntu-latest
+    needs: health-monitoring
+    if: needs.health-monitoring.outputs.site-status == 'healthy' && needs.health-monitoring.outputs.api-status == 'healthy'
+    steps:
+      - name: 기존 모니터링 이슈 자동 닫기
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // 최근 24시간 내의 모니터링 관련 열린 이슈들 조회
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: 'monitoring,site-down',
+              state: 'open',
+              since: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString()
+            });
+            
+            // 각 이슈에 복구 완료 코멘트 추가 후 닫기
+            for (const issue of issues) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                body: `🎉 **사이트 복구 완료**
+                
+                모니터링 시스템에서 사이트가 정상 상태로 복구된 것을 확인했습니다.
+                
+                **복구 확인 시간:** ${new Date().toISOString()}
+                **현재 상태:**
+                - 사이트 상태: ✅ 정상
+                - API 상태: ✅ 정상
+                
+                이 이슈는 자동으로 닫힙니다.`
+              });
+              
+              await github.rest.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                state: 'closed'
+              });
+            }
+            
+            console.log(`${issues.length}개의 모니터링 이슈를 자동으로 닫았습니다.`);
+
+      - name: 복구 알림 (필요시)
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          echo "✅ 사이트 정상 상태 확인됨"
+          
+          # 만약 이전에 문제가 있었다면 복구 알림
+          # (실제로는 상태 추적 로직 필요)
+          if [ -n "$SLACK_WEBHOOK_URL" ] && [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            RECOVERY_MESSAGE="✅ doha.kr 상태 정상 확인
+            
+            📊 현재 상태:
+            • 사이트 상태: 정상 ✅
+            • API 상태: 정상 ✅
+            • 성능 상태: 양호 ✅
+            • 확인 시간: $(date -u '+%Y-%m-%d %H:%M:%S') UTC
+            
+            🌍 사이트: https://doha.kr"
+            
+            curl -X POST -H 'Content-type: application/json' \
+              --data "{\"text\":\"$RECOVERY_MESSAGE\"}" \
+              "$SLACK_WEBHOOK_URL" || echo "⚠️ 복구 알림 실패"
+          fi

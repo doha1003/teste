@@ -216,7 +216,9 @@
             element.classList.add('animated');
           }
         });
-      } catch (error) {}
+      } catch (error) {
+        // Error handling - silent in production
+      }
     }
     /**
      * 부드러운 스크롤
@@ -236,7 +238,9 @@
         // 접근성을 위한 포커스 설정
         element.setAttribute('tabindex', '-1');
         element.focus();
-      } catch (error) {}
+      } catch (error) {
+        // Error handling - silent in production
+      }
     }
     /**
      * 페이지 애니메이션 초기화
@@ -408,7 +412,9 @@
             }
           }, 300);
         }, 3000);
-      } catch (error) {}
+      } catch (error) {
+        // Error handling - silent in production
+      }
     }
     /**
      * 디바운스 함수 (CommonUtils 사용)
@@ -434,7 +440,9 @@
       // 간소화된 폴백
       try {
         const d = new Date(date);
-        if (isNaN(d.getTime())) {return format;}
+        if (isNaN(d.getTime())) {
+          return format;
+        }
         const year = d.getFullYear();
         const month = String(d.getMonth() + 1).padStart(2, '0');
         const day = String(d.getDate()).padStart(2, '0');
@@ -452,7 +460,9 @@
       }
       // 간소화된 폴백
       try {
-        if (num == null) {return '0';}
+        if (num === null || num === undefined) {
+          return '0';
+        }
         return Number(num).toLocaleString('ko-KR');
       } catch (error) {
         return '0';
@@ -501,7 +511,9 @@
             }
           });
         }
-      } catch (error) {}
+      } catch (error) {
+        // Error handling - silent in production
+      }
     }
     /**
      * 다크 모드 토글
@@ -590,7 +602,7 @@
     min-height: 90px !important;
     width: 100% !important;
     max-width: 100% !important;
-    overflow: dh-u-hidden !important;
+    overflow: hidden !important;
     display: block !important;
   }
   
@@ -781,7 +793,7 @@
           ins.style.minHeight = '90px';
           ins.style.width = '100%';
           ins.style.maxWidth = '100%';
-          ins.style.overflow = 'dh-u-hidden';
+          ins.style.overflow = 'hidden';
           ins.style.display = 'block';
           if (!ins.hasAttribute('data-full-width-responsive')) {
             ins.setAttribute('data-full-width-responsive', 'true');
@@ -837,7 +849,9 @@
         } else {
           setTimeout(() => this.initAdSense(), 2000);
         }
-      } catch (error) {}
+      } catch (error) {
+        // Error handling - silent in production
+      }
     }
     /**
      * 데이터 시스템 로드
@@ -853,7 +867,9 @@
         if (!window.analyticsDashboard) {
           await this.loadScript('/js/analytics-dashboard.js');
         }
-      } catch (error) {}
+      } catch (error) {
+        // Error handling - silent in production
+      }
     }
     /**
      * 성능 최적화 시스템 로드
@@ -863,7 +879,9 @@
         if (!window.performanceOptimizer) {
           await this.loadScript('/js/performance-optimizer.js');
         }
-      } catch (error) {}
+      } catch (error) {
+        // Error handling - silent in production
+      }
     }
     /**
      * 스크립트 동적 로딩
@@ -904,7 +922,9 @@
     constructor(message, options = {}) {
       super(message);
       this.name = 'ApplicationError';
-      if (options && options.cause) this.cause = options.cause;
+      if (options && options.cause) {
+        this.cause = options.cause;
+      }
     }
   }
   // 전역 인스턴스 생성 및 초기화

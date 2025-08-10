@@ -189,8 +189,8 @@
         return true;
       }
 
-      const basicPattern = /^[가-힣a-zA-Z0-9\s\-\_\.\,\!\?]+$/;
-      const specialPattern = /^[가-힣a-zA-Z0-9\s\-\_\.\,\!\?\@\#\$\%\&\*\(\)\[\]\{\}]+$/;
+      const basicPattern = /^[가-힣a-zA-Z0-9\s\-_.!?]+$/;
+      const specialPattern = /^[가-힣a-zA-Z0-9\s\-_.!?@#$%&*()[\]{}]+$/;
 
       const pattern = allowSpecial ? specialPattern : basicPattern;
       return pattern.test(str);
@@ -278,8 +278,8 @@
           // console.error removed('Form submission blocked: dangerous dh-l-content detected');
 
           // Show user-friendly error
-          if (typeof showNotification === 'function') {
-            showNotification('입력 내용에 허용되지 않는 문자가 포함되어 있습니다.', 'error');
+          if (typeof window.showNotification === 'function') {
+            window.showNotification('입력 내용에 허용되지 않는 문자가 포함되어 있습니다.', 'error');
           } else {
             alert('입력 내용에 허용되지 않는 문자가 포함되어 있습니다.');
           }

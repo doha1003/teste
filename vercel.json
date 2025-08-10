@@ -21,24 +21,34 @@
   },
   "functions": {
     "api/fortune.js": {
-      "maxDuration": 15,
-      "memory": 1024
+      "maxDuration": 25,
+      "memory": 1024,
+      "runtime": "nodejs20.x"
     },
     "api/manseryeok.js": {
-      "maxDuration": 8,
-      "memory": 512
+      "maxDuration": 10,
+      "memory": 512,
+      "runtime": "nodejs20.x"
     },
     "api/csp-report.js": {
       "maxDuration": 5,
-      "memory": 256
+      "memory": 256,
+      "runtime": "nodejs20.x"
     },
     "api/health.js": {
       "maxDuration": 5,
-      "memory": 256
+      "memory": 256,
+      "runtime": "nodejs20.x"
     },
     "api/analytics.js": {
-      "maxDuration": 10,
-      "memory": 512
+      "maxDuration": 15,
+      "memory": 512,
+      "runtime": "nodejs20.x"
+    },
+    "api/logs.js": {
+      "maxDuration": 8,
+      "memory": 256,
+      "runtime": "nodejs20.x"
     }
   },
   "headers": [
@@ -166,15 +176,19 @@
         },
         {
           "key": "Access-Control-Allow-Origin",
-          "value": "https://doha.kr"
+          "value": "*"
         },
         {
           "key": "Access-Control-Allow-Methods",
-          "value": "GET, POST, OPTIONS"
+          "value": "GET, POST, OPTIONS, HEAD"
         },
         {
           "key": "Access-Control-Allow-Headers",
-          "value": "Content-Type, Authorization"
+          "value": "Content-Type, Authorization, X-Requested-With, Accept, Origin, User-Agent"
+        },
+        {
+          "key": "Access-Control-Max-Age",
+          "value": "86400"
         }
       ]
     }
@@ -221,5 +235,12 @@
       "path": "/api/analytics/daily-report",
       "schedule": "0 9 * * *"
     }
-  ]
+  ],
+  "buildCommand": "npm run build",
+  "devCommand": "npm run dev",
+  "installCommand": "npm ci",
+  "ignoreCommand": "bash ignore-build.sh",
+  "outputDirectory": ".",
+  "serverlessFunctionRegion": "icn1",
+  "skipGitIgnore": false
 }

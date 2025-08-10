@@ -9,6 +9,7 @@ async function loadComponents() {
         const navHtml = await navResponse.text();
         navPlaceholder.innerHTML = navHtml;
       } else {
+        console.warn('Failed to load navbar');
       }
     }
 
@@ -20,6 +21,7 @@ async function loadComponents() {
         const footerHtml = await footerResponse.text();
         footerPlaceholder.innerHTML = footerHtml;
       } else {
+        console.warn('Failed to load footer');
       }
     }
 
@@ -31,9 +33,13 @@ async function loadComponents() {
         if (!Kakao.isInitialized()) {
           Kakao.init(window.KAKAO_KEY);
         }
-      } catch (error) {}
+      } catch (error) {
+        console.warn('Failed to initialize Kakao:', error);
+      }
     }
-  } catch (error) {}
+  } catch (error) {
+    console.error('Failed to load components:', error);
+  }
 }
 
 // 페이지 로드 시 실행

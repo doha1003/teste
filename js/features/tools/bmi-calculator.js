@@ -3,7 +3,7 @@
  * 체질량지수(BMI) 계산기 구현
  */
 
-import { ToolService } from "./tool-service.js";
+import { ToolService } from './tool-service.js';
 
 export class BMICalculatorService extends ToolService {
   constructor() {
@@ -119,7 +119,7 @@ export class BMICalculatorService extends ToolService {
         e.preventDefault();
         this.calculate();
       });
-      
+
       // 계산 버튼 클릭 이벤트
       const calculateBtn = form.querySelector('.btn-calculate');
       if (calculateBtn) {
@@ -135,7 +135,7 @@ export class BMICalculatorService extends ToolService {
 
     // 기준표 행 하이라이트 이벤트
     this.setupTableHighlight();
-    
+
     // 결과 액션 버튼 이벤트 바인딩
     this.bindResultActions();
   }
@@ -407,9 +407,11 @@ export class BMICalculatorService extends ToolService {
   bindResultActions() {
     document.addEventListener('click', (e) => {
       const target = e.target.closest('[data-action]');
-      if (!target) {return;}
-      
-      const {action} = target.dataset;
+      if (!target) {
+        return;
+      }
+
+      const { action } = target.dataset;
       switch (action) {
         case 'copy-result':
           this.copyResult();
@@ -423,7 +425,7 @@ export class BMICalculatorService extends ToolService {
       }
     });
   }
-  
+
   /**
    * 계산기 초기화
    */
@@ -431,22 +433,28 @@ export class BMICalculatorService extends ToolService {
     // 입력 필드 초기화
     const heightInput = document.querySelector(this.ui.height);
     const weightInput = document.querySelector(this.ui.weight);
-    
-    if (heightInput) {heightInput.value = '';}
-    if (weightInput) {weightInput.value = '';}
-    
+
+    if (heightInput) {
+      heightInput.value = '';
+    }
+    if (weightInput) {
+      weightInput.value = '';
+    }
+
     // 결과 영역 숨기기
     const resultContainer = document.querySelector(this.ui.resultContainer);
     if (resultContainer) {
       resultContainer.style.display = 'none';
     }
-    
+
     // 상태 초기화
     this.toolState.currentValues = {};
     this.toolState.result = null;
-    
+
     // 첫 번째 입력 필드에 포커스
-    if (heightInput) {heightInput.focus();}
+    if (heightInput) {
+      heightInput.focus();
+    }
   }
 
   /**

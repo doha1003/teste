@@ -523,7 +523,7 @@ class PWAAnalytics {
    * 수동 설치 버튼 표시 제어
    */
   showInstallButton(selector) {
-    const dh-c-button = document.querySelector(selector);
+    const button = document.querySelector(selector);
     if (button && this.canInstall()) {
       button.style.display = 'block';
       button.onclick = () => this.triggerInstallPrompt();

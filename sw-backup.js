@@ -2,10 +2,10 @@
  * Service Worker 5.0 for doha.kr - Optimized PWA
  * 최적화된 캐싱 전략, 향상된 성능, 간소화된 구조
  * Version: 5.0.0 - Performance Optimized Implementation
- * 
+ *
  * Features:
  * - Streamlined caching strategies
- * - Fast offline-first architecture  
+ * - Fast offline-first architecture
  * - Smart cache size management
  * - Optimized for Korean web services
  * - Background sync for critical features
@@ -32,17 +32,17 @@ let performanceMetrics = {
 const CACHE_CONFIG = {
   maxCacheSize: 25, // 캐시 크기 최적화 (25MB)
   maxEntries: {
-    static: 30,    // 정적 자원 최적화
-    dynamic: 25,   // 동적 콘텐츠 최적화
-    api: 50,       // API 응답 최적화
-    images: 100,   // 이미지 최적화
+    static: 30, // 정적 자원 최적화
+    dynamic: 25, // 동적 콘텐츠 최적화
+    api: 50, // API 응답 최적화
+    images: 100, // 이미지 최적화
   },
   // 캐시 만료 시간 최적화
   cacheExpiry: {
-    static: 60 * 60 * 24 * 7,  // 7일
+    static: 60 * 60 * 24 * 7, // 7일
     dynamic: 60 * 60 * 24 * 3, // 3일
-    api: 60 * 60,              // 1시간
-    images: 60 * 60 * 24 * 7,  // 7일
+    api: 60 * 60, // 1시간
+    images: 60 * 60 * 24 * 7, // 7일
   },
 };
 
@@ -87,23 +87,16 @@ const API_CACHE_CONFIG = {
 const CACHE_STRATEGIES = {
   // Cache First - 정적 자산
   cacheFirst: {
-    patterns: [
-      /\.(?:css|js|woff2?|ttf|eot)$/,
-      /^\/dist\//,
-      /manifest\.json$/,
-    ],
+    patterns: [/\.(?:css|js|woff2?|ttf|eot)$/, /^\/dist\//, /manifest\.json$/],
     cacheName: STATIC_CACHE,
   },
-  
+
   // Stale While Revalidate - 이미지
   staleWhileRevalidate: {
-    patterns: [
-      /\.(?:png|jpg|jpeg|webp|gif|svg|ico)$/,
-      /^\/images\//,
-    ],
+    patterns: [/\.(?:png|jpg|jpeg|webp|gif|svg|ico)$/, /^\/images\//],
     cacheName: IMAGE_CACHE,
   },
-  
+
   // Network First - HTML 페이지
   networkFirst: {
     patterns: [
@@ -122,50 +115,50 @@ const CACHE_STRATEGIES = {
 // Install event - 최적화된 자산 캐싱
 self.addEventListener('install', (event) => {
   console.log(`[SW ${SW_VERSION}] Installing...`);
-  
+
   event.waitUntil(
     Promise.all([
       // 핵심 자산 캐싱
       caches.open(STATIC_CACHE).then((cache) => {
         console.log(`[SW ${SW_VERSION}] Caching critical assets`);
-        return cache.addAll(CRITICAL_ASSETS.filter(asset => asset)); // 유효한 자산만 캐시
+        return cache.addAll(CRITICAL_ASSETS.filter((asset) => asset)); // 유효한 자산만 캐시
       }),
-      
+
       // 성능 추적 초기화
       initializePerformanceTracking(),
     ])
-    .then(() => {
-      console.log(`[SW ${SW_VERSION}] Installation complete`);
-      return self.skipWaiting(); // 즉시 활성화
-    })
-    .catch((error) => {
-      console.error(`[SW ${SW_VERSION}] Installation failed:`, error);
-    })
+      .then(() => {
+        console.log(`[SW ${SW_VERSION}] Installation complete`);
+        return self.skipWaiting(); // 즉시 활성화
+      })
+      .catch((error) => {
+        console.error(`[SW ${SW_VERSION}] Installation failed:`, error);
+      })
   );
 });
 
 // Activate event - 최적화된 캐시 정리
 self.addEventListener('activate', (event) => {
   console.log(`[SW ${SW_VERSION}] Activating...`);
-  
+
   event.waitUntil(
     Promise.all([
       // 구버전 캐시 정리
       cleanupOldCaches(),
-      
+
       // 캐시 크기 관리
       manageCacheSize(),
-      
+
       // 클라이언트에게 업데이트 알림
       notifyClientsOfUpdate(),
     ])
-    .then(() => {
-      console.log(`[SW ${SW_VERSION}] Activation complete`);
-      return self.clients.claim(); // 모든 탭에서 즉시 제어
-    })
-    .catch((error) => {
-      console.error(`[SW ${SW_VERSION}] Activation failed:`, error);
-    })
+      .then(() => {
+        console.log(`[SW ${SW_VERSION}] Activation complete`);
+        return self.clients.claim(); // 모든 탭에서 즉시 제어
+      })
+      .catch((error) => {
+        console.error(`[SW ${SW_VERSION}] Activation failed:`, error);
+      })
   );
 });
 
@@ -173,19 +166,19 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);
-  
+
   // 성능 메트릭 업데이트
   performanceMetrics.networkRequests++;
-  
+
   // 처리할 수 없는 요청 필터링
   if (!shouldHandleRequest(url, request)) {
     return;
   }
-  
+
   // 요청 타입별 처리
   event.respondWith(
     handleRequestWithStrategy(request)
-      .then(response => {
+      .then((response) => {
         if (response && response.ok) {
           performanceMetrics.cacheHits++;
         } else {
@@ -193,7 +186,7 @@ self.addEventListener('fetch', (event) => {
         }
         return response;
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(`[SW ${SW_VERSION}] Fetch error:`, error);
         performanceMetrics.cacheMisses++;
         return handleFetchError(request, error);
@@ -209,32 +202,28 @@ function shouldHandleRequest(url, request) {
   if (!request.url.startsWith('http')) {
     return false;
   }
-  
+
   // Chrome extension 요청 제외
   if (url.protocol === 'chrome-extension:') {
     return false;
   }
-  
+
   // 외부 도메인 제외 (허용된 도메인 제외)
-  const allowedDomains = [
-    location.origin,
-    'fonts.googleapis.com',
-    'fonts.gstatic.com',
-  ];
-  
-  const isAllowed = allowedDomains.some(domain => 
-    url.hostname === domain || url.hostname.endsWith('.' + domain)
+  const allowedDomains = [location.origin, 'fonts.googleapis.com', 'fonts.gstatic.com'];
+
+  const isAllowed = allowedDomains.some(
+    (domain) => url.hostname === domain || url.hostname.endsWith('.' + domain)
   );
-  
+
   if (!isAllowed) {
     return false;
   }
-  
+
   // POST 요청은 API만 처리
   if (request.method !== 'GET') {
     return url.pathname.startsWith('/api/');
   }
-  
+
   return true;
 }
 
@@ -244,15 +233,15 @@ function shouldHandleRequest(url, request) {
 async function handleRequestWithStrategy(request) {
   const url = new URL(request.url);
   const pathname = url.pathname;
-  
+
   // API 요청 처리
   if (pathname.startsWith('/api/')) {
     return await handleApiRequest(request);
   }
-  
+
   // 전략 결정
   const strategy = determineStrategy(pathname);
-  
+
   switch (strategy.name) {
     case 'cacheFirst':
       return await cacheFirst(request, strategy.cacheName);
@@ -270,7 +259,7 @@ async function handleRequestWithStrategy(request) {
  */
 function determineStrategy(pathname) {
   for (const [strategyName, config] of Object.entries(CACHE_STRATEGIES)) {
-    if (config.patterns.some(pattern => pattern.test(pathname))) {
+    if (config.patterns.some((pattern) => pattern.test(pathname))) {
       return { name: strategyName, cacheName: config.cacheName };
     }
   }
@@ -284,20 +273,20 @@ async function cacheFirst(request, cacheName = STATIC_CACHE) {
   try {
     const cache = await caches.open(cacheName);
     const cachedResponse = await cache.match(request);
-    
+
     if (cachedResponse) {
       // 백그라운드에서 캐시 업데이트
       updateCacheInBackground(request, cache);
       return cachedResponse;
     }
-    
+
     // 캐시에 없으면 네트워크에서 가져오기
     const networkResponse = await fetchWithTimeout(request, 5000);
-    
+
     if (networkResponse.ok) {
       await safeCachePut(cache, request, networkResponse.clone());
     }
-    
+
     return networkResponse;
   } catch (error) {
     console.error(`[SW] Cache First error:`, error);
@@ -310,32 +299,32 @@ async function cacheFirst(request, cacheName = STATIC_CACHE) {
  */
 async function networkFirst(request, cacheName = DYNAMIC_CACHE) {
   const cache = await caches.open(cacheName);
-  
+
   try {
     // 네트워크 요청 (타임아웃 포함)
     const networkResponse = await fetchWithTimeout(request, 3000);
-    
+
     if (networkResponse.ok) {
       await safeCachePut(cache, request, networkResponse.clone());
     }
-    
+
     return networkResponse;
   } catch (error) {
     console.log(`[SW] Network failed, trying cache:`, request.url);
-    
+
     // 네트워크 실패 시 캐시에서 찾기
     const cachedResponse = await cache.match(request);
-    
+
     if (cachedResponse) {
       return cachedResponse;
     }
-    
+
     // 네비게이션 요청의 경우 오프라인 페이지 반환
     if (request.mode === 'navigate') {
       performanceMetrics.offlineRequests++;
       return await getOfflinePage();
     }
-    
+
     throw error;
   }
 }
@@ -345,10 +334,10 @@ async function networkFirst(request, cacheName = DYNAMIC_CACHE) {
  */
 async function staleWhileRevalidate(request, cacheName = IMAGE_CACHE) {
   const cache = await caches.open(cacheName);
-  
+
   // 캐시된 응답 확인
   const cachedResponse = await cache.match(request);
-  
+
   // 백그라운드에서 네트워크 요청
   const fetchPromise = fetchWithTimeout(request, 5000)
     .then(async (networkResponse) => {
@@ -358,9 +347,9 @@ async function staleWhileRevalidate(request, cacheName = IMAGE_CACHE) {
       return networkResponse;
     })
     .catch(() => cachedResponse);
-  
+
   // 캐시된 응답이 있으면 즉시 반환, 없으면 네트워크 대기
-  return cachedResponse || await fetchPromise;
+  return cachedResponse || (await fetchPromise);
 }
 
 /**
@@ -369,14 +358,14 @@ async function staleWhileRevalidate(request, cacheName = IMAGE_CACHE) {
 async function handleApiRequest(request) {
   const url = new URL(request.url);
   const pathname = url.pathname;
-  
+
   // API별 캐시 설정 확인
   const config = API_CACHE_CONFIG[pathname] || {
     strategy: 'networkFirst',
   };
-  
+
   const cache = await caches.open(API_CACHE);
-  
+
   // POST 요청 처리
   if (request.method === 'POST') {
     try {
@@ -385,10 +374,10 @@ async function handleApiRequest(request) {
     } catch (error) {
       console.log(`[SW] POST request failed:`, error);
       return new Response(
-        JSON.stringify({ 
-          success: false, 
+        JSON.stringify({
+          success: false,
           message: '요청이 실패했습니다. 인터넷 연결을 확인해주세요.',
-          offline: true 
+          offline: true,
         }),
         {
           status: 503,
@@ -398,7 +387,7 @@ async function handleApiRequest(request) {
       );
     }
   }
-  
+
   // 전략에 따른 처리
   switch (config.strategy) {
     case 'cacheFirst':
@@ -416,7 +405,7 @@ async function handleApiRequest(request) {
 async function fetchWithTimeout(request, timeout = 5000) {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), timeout);
-  
+
   try {
     const response = await fetch(request, {
       signal: controller.signal,
@@ -443,9 +432,9 @@ async function safeCachePut(cache, request, response) {
       console.log(`[SW] Response too large to cache: ${responseSize} bytes`);
       return;
     }
-    
+
     await cache.put(request, response);
-    
+
     // 캐시 크기 관리
     await manageCacheSizeForCache(cache);
   } catch (error) {
@@ -458,7 +447,7 @@ async function safeCachePut(cache, request, response) {
  */
 function updateCacheInBackground(request, cache) {
   fetchWithTimeout(request, 3000)
-    .then(response => {
+    .then((response) => {
       if (response.ok) {
         return safeCachePut(cache, request, response);
       }
@@ -476,16 +465,13 @@ async function getOfflinePage() {
   if (offlinePage) {
     return offlinePage;
   }
-  
+
   // 오프라인 페이지도 없으면 기본 응답
-  return new Response(
-    createOfflineHTML(),
-    {
-      status: 503,
-      statusText: 'Service Unavailable',
-      headers: { 'Content-Type': 'text/html; charset=utf-8' },
-    }
-  );
+  return new Response(createOfflineHTML(), {
+    status: 503,
+    statusText: 'Service Unavailable',
+    headers: { 'Content-Type': 'text/html; charset=utf-8' },
+  });
 }
 
 /**
@@ -529,11 +515,11 @@ function createOfflineHTML() {
  */
 async function handleFetchError(request, error) {
   console.error(`[SW] Fetch error for ${request.url}:`, error);
-  
+
   if (request.mode === 'navigate') {
     return await getOfflinePage();
   }
-  
+
   // 오프라인 요청 처리
   return await handleOfflineRequest(request);
 }
@@ -545,10 +531,10 @@ async function handleOfflineRequest(request) {
   if (request.mode === 'navigate') {
     return await getOfflinePage();
   }
-  
+
   // 모든 캐시에서 검색
   const cacheNames = await caches.keys();
-  
+
   for (const cacheName of cacheNames) {
     const cache = await caches.open(cacheName);
     const cachedResponse = await cache.match(request);
@@ -556,7 +542,7 @@ async function handleOfflineRequest(request) {
       return cachedResponse;
     }
   }
-  
+
   // 아무것도 찾을 수 없으면 기본 오프라인 응답
   return new Response('Offline - Content not available', {
     status: 503,
@@ -569,20 +555,15 @@ async function handleOfflineRequest(request) {
  */
 async function cleanupOldCaches() {
   const cacheNames = await caches.keys();
-  const currentCaches = new Set([
-    STATIC_CACHE,
-    DYNAMIC_CACHE,
-    API_CACHE,
-    IMAGE_CACHE,
-  ]);
-  
+  const currentCaches = new Set([STATIC_CACHE, DYNAMIC_CACHE, API_CACHE, IMAGE_CACHE]);
+
   const deletionPromises = cacheNames
-    .filter(cacheName => !currentCaches.has(cacheName))
-    .map(cacheName => {
+    .filter((cacheName) => !currentCaches.has(cacheName))
+    .map((cacheName) => {
       console.log(`[SW] Deleting old cache: ${cacheName}`);
       return caches.delete(cacheName);
     });
-  
+
   await Promise.all(deletionPromises);
   console.log(`[SW] Cleaned up ${deletionPromises.length} old caches`);
 }
@@ -592,7 +573,7 @@ async function cleanupOldCaches() {
  */
 async function manageCacheSize() {
   const cacheNames = await caches.keys();
-  
+
   for (const cacheName of cacheNames) {
     await manageCacheSizeForCache(await caches.open(cacheName));
   }
@@ -604,17 +585,17 @@ async function manageCacheSize() {
 async function manageCacheSizeForCache(cache) {
   const requests = await cache.keys();
   const cacheType = getCacheType(cache);
-  
+
   const maxEntries = CACHE_CONFIG.maxEntries[cacheType] || 25;
-  
+
   if (requests.length > maxEntries) {
     // 오래된 항목부터 삭제
     const entriesToDelete = requests.slice(0, requests.length - maxEntries);
-    
+
     for (const request of entriesToDelete) {
       await cache.delete(request);
     }
-    
+
     console.log(`[SW] Cleaned ${entriesToDelete.length} entries from ${cacheType} cache`);
   }
 }
@@ -644,8 +625,8 @@ async function initializePerformanceTracking() {
  */
 async function notifyClientsOfUpdate() {
   const clients = await self.clients.matchAll();
-  
-  clients.forEach(client => {
+
+  clients.forEach((client) => {
     client.postMessage({
       type: 'SW_UPDATED',
       version: SW_VERSION,
@@ -657,26 +638,26 @@ async function notifyClientsOfUpdate() {
 // 클라이언트 메시지 처리
 self.addEventListener('message', (event) => {
   const { data } = event;
-  
+
   if (!data || !data.type) {
     return;
   }
-  
+
   console.log(`[SW] Message received:`, data.type);
-  
+
   switch (data.type) {
     case 'SKIP_WAITING':
       self.skipWaiting();
       break;
-      
+
     case 'GET_VERSION':
       event.ports[0]?.postMessage({ version: SW_VERSION });
       break;
-      
+
     case 'GET_METRICS':
       event.ports[0]?.postMessage({ metrics: performanceMetrics });
       break;
-      
+
     default:
       console.log(`[SW] Unknown message type: ${data.type}`);
   }
@@ -685,7 +666,7 @@ self.addEventListener('message', (event) => {
 // 백그라운드 동기화 (간소화)
 self.addEventListener('sync', (event) => {
   console.log(`[SW] Background sync triggered: ${event.tag}`);
-  
+
   switch (event.tag) {
     case 'cache-cleanup':
       event.waitUntil(manageCacheSize());

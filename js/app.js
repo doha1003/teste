@@ -15,4 +15,26 @@ init();
 // PWA 기능 초기화
 initializePWA();
 
-// 개발자 콘솔 메시지
+// 개발자 콘솔 메시지 - DohaKR 초기화 후 실행
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => {
+    if (typeof DohaKR !== 'undefined' && DohaKR.utils && typeof DohaKR.utils.isDevelopment === 'function' && DohaKR.utils.isDevelopment()) {
+      console.log('%c🎯 doha.kr Application Ready!', 'color: #3B82F6; font-size: 16px; font-weight: bold;');
+      console.log('🔧 Development mode enabled');
+    }
+  }, 100);
+});
+
+// 전역 에러 핸들러 - 안전한 체크
+window.addEventListener('error', (event) => {
+  if (typeof DohaKR !== 'undefined' && DohaKR.utils && typeof DohaKR.utils.isDevelopment === 'function' && DohaKR.utils.isDevelopment()) {
+    console.error('🚨 Global Error:', event.error);
+  }
+});
+
+// 처리되지 않은 Promise 거부 핸들러 - 안전한 체크
+window.addEventListener('unhandledrejection', (event) => {
+  if (typeof DohaKR !== 'undefined' && DohaKR.utils && typeof DohaKR.utils.isDevelopment === 'function' && DohaKR.utils.isDevelopment()) {
+    console.error('🚨 Unhandled Promise Rejection:', event.reason);
+  }
+});

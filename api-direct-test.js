@@ -12,8 +12,8 @@ async function testFortuneAPI() {
         name: '테스트유저',
         birth: '1990-05-15',
         gender: 'male',
-        hour: 12
-      }
+        hour: 12,
+      },
     };
 
     console.log('📤 요청 데이터:', JSON.stringify(testData, null, 2));
@@ -49,7 +49,6 @@ async function testFortuneAPI() {
     }
 
     return result;
-
   } catch (error) {
     console.error('💥 API 테스트 실패:', error.message);
     throw error;
@@ -63,8 +62,8 @@ async function testZodiacAPI() {
     const testData = {
       type: 'zodiac',
       data: {
-        zodiac: 'aries'
-      }
+        zodiac: 'aries',
+      },
     };
 
     console.log('📤 별자리 요청 데이터:', JSON.stringify(testData, null, 2));
@@ -89,7 +88,6 @@ async function testZodiacAPI() {
     console.log('✅ 별자리 API 응답 성공:', JSON.stringify(result, null, 2));
 
     return result;
-
   } catch (error) {
     console.error('💥 별자리 API 테스트 실패:', error.message);
     return null;
@@ -110,7 +108,6 @@ async function runTests() {
 
     console.log('\n' + '='.repeat(50));
     console.log('✅ 모든 API 테스트 완료!');
-    
   } catch (error) {
     console.log('\n' + '='.repeat(50));
     console.log('❌ API 테스트 중 오류 발생:', error.message);

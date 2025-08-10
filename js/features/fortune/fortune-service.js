@@ -10,18 +10,18 @@ export class FortuneService extends ServiceBase {
   constructor(config) {
     // 운세 서비스 공통 상태를 먼저 설정
     const fortuneType = config.fortuneType || 'daily';
-    
+
     super({
       serviceType: 'fortune',
       loadingText: '운세를 분석하고 있습니다...',
-      fortuneType: fortuneType,
+      fortuneType,
       ...config,
     });
 
     // 운세 서비스 공통 상태
     this.fortuneState = {
       birthData: null,
-      fortuneType: fortuneType, // daily, saju, tarot, zodiac, zodiac-animal
+      fortuneType, // daily, saju, tarot, zodiac, zodiac-animal
     };
 
     // config에도 fortuneType 저장 (하위 호환성)
@@ -34,9 +34,9 @@ export class FortuneService extends ServiceBase {
   initializeService() {
     // fortuneState가 있는지 확인
     const fortuneType = this.fortuneState?.fortuneType || this.config?.fortuneType || 'daily';
-    
+
     logger.info('Fortune Service Initializing', {
-      fortuneType: fortuneType,
+      fortuneType,
       serviceId: this.serviceId,
     });
 
@@ -58,7 +58,7 @@ export class FortuneService extends ServiceBase {
     }
 
     logger.info('Fortune Service Initialized', {
-      fortuneType: fortuneType,
+      fortuneType,
       serviceId: this.serviceId,
     });
   }

@@ -68,7 +68,7 @@ async function handleTarotReading(e) {
     e.preventDefault();
     
     const formData = new FormData(e.target);
-    const question = formData.get('question');
+    const _question = formData.get('question');
     const spreadType = formData.get('spread');
     
     // 카드 뽑기 애니메이션 표시
@@ -108,7 +108,7 @@ function createCardDeck(requiredCards) {
     
     // 22장의 뒷면 카드 생성
     for (let i = 0; i < 22; i++) {
-        const dh-c-card = document.createElement('div');
+        const card = document.createElement('div');
         card.className = 'tarot-dh-c-card card-back';
         card.innerHTML = '🎴';
         card.dataset.index = i;
@@ -157,11 +157,11 @@ function createCardDeck(requiredCards) {
 // 선택된 카드 업데이트
 function updateSelectedCards(selectedCards, requiredCards) {
     const container = document.querySelector('.selected-card-list');
-    const dh-l-header = document.querySelector('#selectedCards h4');
+    const header = document.querySelector('#selectedCards h4');
     
     header.textContent = `선택된 카드 (${selectedCards.length}/${requiredCards})`;
     
-    container.innerHTML = selectedCards.map((card, idx) => `
+    container.innerHTML = selectedCards.map((card, _idx) => `
         <div class="mini-card ${card.isReversed ? 'reversed' : ''}">
             <span class="mini-emoji">${card.emoji}</span>
             <span class="mini-name">${card.name}</span>
@@ -263,7 +263,7 @@ function generateTarotInterpretation(cards, spread, question) {
 }
 
 // 맥락적 의미 생성
-function generateContextualMeaning(card, question) {
+function generateContextualMeaning(card, _question) {
     const meanings = {
         0: "새로운 여정을 시작해야 할 때",
         1: "자신의 능력을 발휘해야 할 때",
@@ -332,7 +332,7 @@ function generateFutureGuidance(card) {
 }
 
 // 종합 메시지 생성
-function generateOverallMessage(cards, question) {
+function generateOverallMessage(cards, _question) {
     const majorThemes = [];
     
     // 주요 테마 분석
@@ -431,6 +431,7 @@ function displayTarotResult(interpretation, cards, spread, isAIGenerated = false
 }
 
 // 리딩 공유
+// eslint-disable-next-line no-unused-vars
 function shareReading() {
     if (navigator.share) {
         navigator.share({
@@ -446,6 +447,7 @@ function shareReading() {
 }
 
 // 새로운 리딩
+// eslint-disable-next-line no-unused-vars
 function newReading() {
     document.getElementById('tarotForm').reset();
     document.getElementById('tarotResult').style.display = 'none';

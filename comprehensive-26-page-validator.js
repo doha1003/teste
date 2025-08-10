@@ -2,7 +2,7 @@
 
 /**
  * doha.kr 26개 주요 페이지 완전 자동화 검증 시스템
- * 
+ *
  * 기능:
  * - 스크린샷 캡처 (데스크톱/모바일)
  * - 콘솔 에러 수집
@@ -32,55 +32,110 @@ class Comprehensive26PageValidator {
     this.screenshotDir = path.join(this.resultsDir, 'screenshots');
     this.reportPath = path.join(this.resultsDir, 'comprehensive-report.html');
     this.jsonReportPath = path.join(this.resultsDir, 'comprehensive-report.json');
-    
+
     // 26개 주요 페이지 정의
     this.pages = [
       // 메인 페이지들
       { name: '홈페이지', url: '/', selector: 'main', critical: true },
       { name: '404 페이지', url: '/404.html', selector: 'body', critical: false },
       { name: '오프라인 페이지', url: '/offline.html', selector: 'body', critical: false },
-      
+
       // 심리테스트 섹션 (8개)
       { name: '심리테스트 메인', url: '/tests/', selector: '.tests-grid', critical: true },
       { name: 'MBTI 소개', url: '/tests/mbti/', selector: '.test-intro', critical: true },
-      { name: 'MBTI 테스트', url: '/tests/mbti/test.html', selector: '.question-container', critical: true },
-      { name: 'MBTI 결과', url: '/tests/mbti/result.html', selector: '.result-content', critical: true },
+      {
+        name: 'MBTI 테스트',
+        url: '/tests/mbti/test.html',
+        selector: '.question-container',
+        critical: true,
+      },
+      {
+        name: 'MBTI 결과',
+        url: '/tests/mbti/result.html',
+        selector: '.result-content',
+        critical: true,
+      },
       { name: 'Teto-Egen 소개', url: '/tests/teto-egen/', selector: '.test-intro', critical: true },
-      { name: 'Teto-Egen 테스트', url: '/tests/teto-egen/test.html', selector: '.question-container', critical: true },
-      { name: 'Teto-Egen 결과', url: '/tests/teto-egen/result.html', selector: '.result-content', critical: true },
+      {
+        name: 'Teto-Egen 테스트',
+        url: '/tests/teto-egen/test.html',
+        selector: '.question-container',
+        critical: true,
+      },
+      {
+        name: 'Teto-Egen 결과',
+        url: '/tests/teto-egen/result.html',
+        selector: '.result-content',
+        critical: true,
+      },
       { name: 'Love DNA 소개', url: '/tests/love-dna/', selector: '.test-intro', critical: true },
-      { name: 'Love DNA 테스트', url: '/tests/love-dna/test.html', selector: '.question-container', critical: true },
-      { name: 'Love DNA 결과', url: '/tests/love-dna/result.html', selector: '.result-content', critical: true },
-      
+      {
+        name: 'Love DNA 테스트',
+        url: '/tests/love-dna/test.html',
+        selector: '.question-container',
+        critical: true,
+      },
+      {
+        name: 'Love DNA 결과',
+        url: '/tests/love-dna/result.html',
+        selector: '.result-content',
+        critical: true,
+      },
+
       // 운세 섹션 (6개)
       { name: '운세 메인', url: '/fortune/', selector: '.fortune-grid', critical: true },
-      { name: '오늘의 운세', url: '/fortune/daily/', selector: '.daily-fortune-form', critical: true },
+      {
+        name: '오늘의 운세',
+        url: '/fortune/daily/',
+        selector: '.daily-fortune-form',
+        critical: true,
+      },
       { name: 'AI 사주팔자', url: '/fortune/saju/', selector: '.saju-form', critical: true },
       { name: 'AI 타로 리딩', url: '/fortune/tarot/', selector: '.tarot-deck', critical: true },
       { name: '별자리 운세', url: '/fortune/zodiac/', selector: '.zodiac-grid', critical: true },
-      { name: '띠별 운세', url: '/fortune/zodiac-animal/', selector: '.animal-grid', critical: true },
-      
+      {
+        name: '띠별 운세',
+        url: '/fortune/zodiac-animal/',
+        selector: '.animal-grid',
+        critical: true,
+      },
+
       // 도구 섹션 (4개)
       { name: '실용도구 메인', url: '/tools/', selector: '.tools-grid', critical: true },
-      { name: 'BMI 계산기', url: '/tools/bmi-calculator.html', selector: '.calculator-form', critical: true },
-      { name: '연봉 계산기', url: '/tools/salary-calculator.html', selector: '.calculator-form', critical: true },
-      { name: '글자수 세기', url: '/tools/text-counter.html', selector: '.text-counter-form', critical: true },
-      
+      {
+        name: 'BMI 계산기',
+        url: '/tools/bmi-calculator.html',
+        selector: '.calculator-form',
+        critical: true,
+      },
+      {
+        name: '연봉 계산기',
+        url: '/tools/salary-calculator.html',
+        selector: '.calculator-form',
+        critical: true,
+      },
+      {
+        name: '글자수 세기',
+        url: '/tools/text-counter.html',
+        selector: '.text-counter-form',
+        critical: true,
+      },
+
       // 정보 페이지들 (5개)
       { name: '소개 페이지', url: '/about/', selector: '.about-content', critical: false },
       { name: '문의하기', url: '/contact/', selector: '.contact-form', critical: false },
       { name: 'FAQ', url: '/faq/', selector: '.faq-content', critical: false },
       { name: '개인정보처리방침', url: '/privacy/', selector: '.legal-content', critical: false },
-      { name: '이용약관', url: '/terms/', selector: '.legal-content', critical: false }
+      { name: '이용약관', url: '/terms/', selector: '.legal-content', critical: false },
     ];
-    
+
     this.results = [];
     this.server = null;
   }
 
   async startServer() {
     console.log('🚀 Node.js HTTP 서버 시작...');
-    
+
     return new Promise((resolve, reject) => {
       const mimeTypes = {
         '.html': 'text/html',
@@ -95,15 +150,15 @@ class Comprehensive26PageValidator {
         '.woff': 'font/woff',
         '.woff2': 'font/woff2',
         '.ttf': 'font/ttf',
-        '.eot': 'font/eot'
+        '.eot': 'font/eot',
       };
 
       this.server = http.createServer((req, res) => {
         let filePath = path.join(process.cwd(), req.url === '/' ? '/index.html' : req.url);
-        
+
         // URL 쿼리 파라미터 제거
         filePath = filePath.split('?')[0];
-        
+
         // 디렉토리 요청시 index.html 추가
         try {
           if (statSync(filePath).isDirectory()) {
@@ -125,7 +180,7 @@ class Comprehensive26PageValidator {
         res.writeHead(200, { 'Content-Type': contentType });
         const fileStream = createReadStream(filePath);
         fileStream.pipe(res);
-        
+
         fileStream.on('error', (error) => {
           res.writeHead(500);
           res.end('Internal Server Error');
@@ -163,9 +218,9 @@ class Comprehensive26PageValidator {
   async validatePage(browser, pageInfo) {
     const { name, url, selector, critical } = pageInfo;
     const fullUrl = `${this.baseUrl}${url}`;
-    
+
     console.log(`🔍 검증 중: ${name} (${fullUrl})`);
-    
+
     const page = await browser.newPage();
     const result = {
       name,
@@ -184,49 +239,49 @@ class Comprehensive26PageValidator {
         selectorExists: false,
         networkErrors: [],
         consoleErrors: [],
-        brokenElements: []
-      }
+        brokenElements: [],
+      },
     };
 
     try {
       // 네트워크 요청 모니터링
       const networkErrors = [];
-      page.on('response', response => {
+      page.on('response', (response) => {
         if (!response.ok() && response.status() !== 304) {
           networkErrors.push({
             url: response.url(),
             status: response.status(),
-            statusText: response.statusText()
+            statusText: response.statusText(),
           });
         }
       });
 
       // 콘솔 에러 모니터링
       const consoleErrors = [];
-      page.on('console', msg => {
+      page.on('console', (msg) => {
         if (msg.type() === 'error') {
           consoleErrors.push({
             type: msg.type(),
             text: msg.text(),
-            location: msg.location()
+            location: msg.location(),
           });
         }
       });
 
       // 페이지 자바스크립트 에러 모니터링
-      page.on('pageerror', error => {
+      page.on('pageerror', (error) => {
         consoleErrors.push({
           type: 'pageerror',
           text: error.message,
-          stack: error.stack
+          stack: error.stack,
         });
       });
 
       // 페이지 로드
       const startTime = Date.now();
-      const response = await page.goto(fullUrl, { 
+      const response = await page.goto(fullUrl, {
         waitUntil: 'networkidle2',
-        timeout: 30000 
+        timeout: 30000,
       });
       const loadTime = Date.now() - startTime;
 
@@ -241,14 +296,14 @@ class Comprehensive26PageValidator {
       }
 
       // CSS 로드 확인
-      const cssLinks = await page.$$eval('link[rel="stylesheet"]', links => 
-        links.map(link => ({ href: link.href, loaded: true }))
+      const cssLinks = await page.$$eval('link[rel="stylesheet"]', (links) =>
+        links.map((link) => ({ href: link.href, loaded: true }))
       );
       result.validation.cssLoaded = cssLinks.length > 0;
 
       // JavaScript 로드 확인
-      const scriptTags = await page.$$eval('script[src]', scripts =>
-        scripts.map(script => ({ src: script.src, loaded: true }))
+      const scriptTags = await page.$$eval('script[src]', (scripts) =>
+        scripts.map((script) => ({ src: script.src, loaded: true }))
       );
       result.validation.jsLoaded = scriptTags.length > 0;
 
@@ -265,7 +320,7 @@ class Comprehensive26PageValidator {
       const cssValidation = await page.evaluate((sel) => {
         const elements = document.querySelectorAll(sel);
         const results = [];
-        
+
         elements.forEach((el, index) => {
           const styles = window.getComputedStyle(el);
           results.push({
@@ -275,10 +330,10 @@ class Comprehensive26PageValidator {
             visibility: styles.visibility,
             display: styles.display,
             opacity: styles.opacity,
-            color: styles.color
+            color: styles.color,
           });
         });
-        
+
         return results;
       }, selector);
 
@@ -288,29 +343,30 @@ class Comprehensive26PageValidator {
       const brokenImages = await page.evaluate(() => {
         const images = document.querySelectorAll('img');
         const broken = [];
-        
+
         images.forEach((img, index) => {
           if (img.naturalWidth === 0 || img.naturalHeight === 0) {
             broken.push({
               src: img.src,
               alt: img.alt,
-              index
+              index,
             });
           }
         });
-        
+
         return broken;
       });
-      
+
       result.validation.brokenElements = brokenImages;
 
       // 폼 검증 (해당되는 경우)
       if (url.includes('calculator') || url.includes('test') || url.includes('fortune')) {
         const formValidation = await page.evaluate(() => {
           const forms = document.querySelectorAll('form');
-          return Array.from(forms).map(form => ({
+          return Array.from(forms).map((form) => ({
             hasInputs: form.querySelectorAll('input, select, textarea').length > 0,
-            hasSubmitButton: form.querySelectorAll('button[type="submit"], input[type="submit"]').length > 0
+            hasSubmitButton:
+              form.querySelectorAll('button[type="submit"], input[type="submit"]').length > 0,
           }));
         });
         result.validation.forms = formValidation;
@@ -321,7 +377,7 @@ class Comprehensive26PageValidator {
       const desktopScreenshot = `${name}-desktop.png`;
       await page.screenshot({
         path: path.join(this.screenshotDir, desktopScreenshot),
-        fullPage: true
+        fullPage: true,
       });
       result.screenshots.desktop = desktopScreenshot;
 
@@ -330,7 +386,7 @@ class Comprehensive26PageValidator {
       const mobileScreenshot = `${name}-mobile.png`;
       await page.screenshot({
         path: path.join(this.screenshotDir, mobileScreenshot),
-        fullPage: true
+        fullPage: true,
       });
       result.screenshots.mobile = mobileScreenshot;
 
@@ -350,7 +406,11 @@ class Comprehensive26PageValidator {
       }
 
       // 최종 상태 결정
-      if (result.errors.length === 0 && result.validation.selectorExists && result.validation.cssLoaded) {
+      if (
+        result.errors.length === 0 &&
+        result.validation.selectorExists &&
+        result.validation.cssLoaded
+      ) {
         result.status = 'success';
       } else if (result.errors.length > 0) {
         result.status = 'error';
@@ -359,7 +419,6 @@ class Comprehensive26PageValidator {
       }
 
       console.log(`✅ ${name}: ${result.status} (${loadTime}ms)`);
-
     } catch (error) {
       result.status = 'error';
       result.errors.push(`검증 실패: ${error.message}`);
@@ -373,13 +432,13 @@ class Comprehensive26PageValidator {
 
   async generateHtmlReport() {
     const totalPages = this.results.length;
-    const successPages = this.results.filter(r => r.status === 'success').length;
-    const errorPages = this.results.filter(r => r.status === 'error').length;
-    const warningPages = this.results.filter(r => r.status === 'warning').length;
-    
-    const criticalPages = this.results.filter(r => r.critical);
-    const criticalSuccess = criticalPages.filter(r => r.status === 'success').length;
-    
+    const successPages = this.results.filter((r) => r.status === 'success').length;
+    const errorPages = this.results.filter((r) => r.status === 'error').length;
+    const warningPages = this.results.filter((r) => r.status === 'warning').length;
+
+    const criticalPages = this.results.filter((r) => r.critical);
+    const criticalSuccess = criticalPages.filter((r) => r.status === 'success').length;
+
     const html = `
 <!DOCTYPE html>
 <html lang="ko">
@@ -661,7 +720,9 @@ class Comprehensive26PageValidator {
         </section>
 
         <div class="results-grid">
-            ${this.results.map(result => `
+            ${this.results
+              .map(
+                (result) => `
             <div class="result-card ${result.status}">
                 <div class="result-header">
                     <div>
@@ -717,23 +778,31 @@ class Comprehensive26PageValidator {
                         </div>
                     </div>
 
-                    ${result.errors?.length > 0 ? `
+                    ${
+                      result.errors?.length > 0
+                        ? `
                     <div class="errors-list">
                         <h4 style="color: #dc2626; margin-bottom: 0.5rem;">❌ 오류</h4>
                         <ul>
-                            ${result.errors.map(error => `<li>${error}</li>`).join('')}
+                            ${result.errors.map((error) => `<li>${error}</li>`).join('')}
                         </ul>
                     </div>
-                    ` : ''}
+                    `
+                        : ''
+                    }
 
-                    ${result.warnings?.length > 0 ? `
+                    ${
+                      result.warnings?.length > 0
+                        ? `
                     <div class="warnings-list">
                         <h4 style="color: #d97706; margin-bottom: 0.5rem;">⚠️ 경고</h4>
                         <ul>
-                            ${result.warnings.map(warning => `<li>${warning}</li>`).join('')}
+                            ${result.warnings.map((warning) => `<li>${warning}</li>`).join('')}
                         </ul>
                     </div>
-                    ` : ''}
+                    `
+                        : ''
+                    }
 
                     <div class="screenshots">
                         <div class="screenshot-item">
@@ -747,7 +816,9 @@ class Comprehensive26PageValidator {
                     </div>
                 </div>
             </div>
-            `).join('')}
+            `
+              )
+              .join('')}
         </div>
 
         <footer style="text-align: center; padding: 2rem; color: #6b7280;">
@@ -767,21 +838,22 @@ class Comprehensive26PageValidator {
     const summary = {
       timestamp: new Date().toISOString(),
       totalPages: this.results.length,
-      successPages: this.results.filter(r => r.status === 'success').length,
-      errorPages: this.results.filter(r => r.status === 'error').length,
-      warningPages: this.results.filter(r => r.status === 'warning').length,
+      successPages: this.results.filter((r) => r.status === 'success').length,
+      errorPages: this.results.filter((r) => r.status === 'error').length,
+      warningPages: this.results.filter((r) => r.status === 'warning').length,
       criticalPages: {
-        total: this.results.filter(r => r.critical).length,
-        success: this.results.filter(r => r.critical && r.status === 'success').length
+        total: this.results.filter((r) => r.critical).length,
+        success: this.results.filter((r) => r.critical && r.status === 'success').length,
       },
       averageLoadTime: Math.round(
-        this.results.reduce((sum, r) => sum + (r.performance.loadTime || 0), 0) / this.results.length
-      )
+        this.results.reduce((sum, r) => sum + (r.performance.loadTime || 0), 0) /
+          this.results.length
+      ),
     };
 
     const jsonReport = {
       summary,
-      results: this.results
+      results: this.results,
     };
 
     await fs.writeFile(this.jsonReportPath, JSON.stringify(jsonReport, null, 2));
@@ -791,13 +863,13 @@ class Comprehensive26PageValidator {
   async run() {
     try {
       console.log('🎯 doha.kr 26개 페이지 완전 자동화 검증 시작');
-      
+
       await this.setupDirectories();
       await this.startServer();
 
       const browser = await puppeteer.launch({
         headless: 'new',
-        args: ['--no-sandbox', '--disable-setuid-sandbox']
+        args: ['--no-sandbox', '--disable-setuid-sandbox'],
       });
 
       console.log(`📋 검증할 페이지: ${this.pages.length}개`);
@@ -805,7 +877,7 @@ class Comprehensive26PageValidator {
       for (let i = 0; i < this.pages.length; i++) {
         const page = this.pages[i];
         console.log(`\n[${i + 1}/${this.pages.length}] ${page.name} 검증 중...`);
-        
+
         const result = await this.validatePage(browser, page);
         this.results.push(result);
 
@@ -825,17 +897,18 @@ class Comprehensive26PageValidator {
       console.log('\n🎉 검증 완료!');
       console.log('=' * 50);
       console.log(`총 페이지: ${this.results.length}개`);
-      console.log(`정상: ${this.results.filter(r => r.status === 'success').length}개`);
-      console.log(`경고: ${this.results.filter(r => r.status === 'warning').length}개`);
-      console.log(`오류: ${this.results.filter(r => r.status === 'error').length}개`);
-      
-      const criticalPages = this.results.filter(r => r.critical);
-      const criticalSuccess = criticalPages.filter(r => r.status === 'success').length;
-      console.log(`핵심 페이지 성공률: ${Math.round((criticalSuccess / criticalPages.length) * 100)}%`);
-      
+      console.log(`정상: ${this.results.filter((r) => r.status === 'success').length}개`);
+      console.log(`경고: ${this.results.filter((r) => r.status === 'warning').length}개`);
+      console.log(`오류: ${this.results.filter((r) => r.status === 'error').length}개`);
+
+      const criticalPages = this.results.filter((r) => r.critical);
+      const criticalSuccess = criticalPages.filter((r) => r.status === 'success').length;
+      console.log(
+        `핵심 페이지 성공률: ${Math.round((criticalSuccess / criticalPages.length) * 100)}%`
+      );
+
       console.log(`\n📊 상세 리포트: ${this.reportPath}`);
       console.log(`📋 JSON 데이터: ${this.jsonReportPath}`);
-
     } catch (error) {
       console.error('❌ 검증 실패:', error);
       await this.stopServer();

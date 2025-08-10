@@ -1,7 +1,7 @@
 /**
  * App Shell Manager
  * PWA App Shell 아키텍처 구현
- * 
+ *
  * Features:
  * - Critical UI 빠른 로딩
  * - 점진적 콘텐츠 로딩
@@ -19,37 +19,28 @@ class AppShell {
         mainContent: 'dh-l-main',
         loadingIndicator: '.loading-indicator',
       },
-      
+
       // 로딩 상태
       loading: {
         shellLoaded: false,
         contentLoaded: false,
         componentsLoaded: new Set(),
       },
-      
+
       // 캐시 설정
       cache: {
-        shellComponents: [
-          '/includes/navbar.html',
-          '/includes/footer.html',
-        ],
-        criticalCSS: [
-          '/dist/styles.min.css',
-          '/css/design-system/tokens.css',
-        ],
-        criticalJS: [
-          '/js/app.js',
-          '/js/core/common-init.js',
-        ],
+        shellComponents: ['/includes/navbar.html', '/includes/footer.html'],
+        criticalCSS: ['/dist/styles.min.css', '/css/design-system/tokens.css'],
+        criticalJS: ['/js/app.js', '/js/core/common-init.js'],
       },
-      
+
       // 성능 임계값
       performance: {
-        shellTimeout: 2000,  // 2초 내 Shell 로딩
+        shellTimeout: 2000, // 2초 내 Shell 로딩
         contentTimeout: 5000, // 5초 내 콘텐츠 로딩
         criticalResourceTimeout: 3000, // 3초 내 핵심 리소스
       },
-      
+
       // 애니메이션 설정
       animations: {
         shellFadeIn: 200,
@@ -57,7 +48,7 @@ class AppShell {
         skeletonPulse: 1500,
       },
     };
-    
+
     this.loadStartTime = performance.now();
     this.metrics = {
       shellLoadTime: 0,
@@ -65,30 +56,30 @@ class AppShell {
       totalLoadTime: 0,
       resourceLoadTimes: new Map(),
     };
-    
+
     this.init();
   }
-  
+
   /**
    * App Shell 초기화
    */
   init() {
     // 성능 측정 시작
     this.startPerformanceTracking();
-    
+
     // Shell 우선 로딩
     this.loadShell();
-    
+
     // 컨텐츠 지연 로딩
     this.scheduleContentLoading();
-    
+
     // 오프라인 감지 및 처리
     this.setupOfflineHandling();
-    
+
     // 설치 프롬프트 관리
     this.setupInstallPrompt();
   }
-  
+
   /**
    * App Shell 로딩
    */
@@ -96,50 +87,49 @@ class AppShell {
     try {
       // 스켈레톤 UI 표시
       this.showSkeletonUI();
-      
+
       // 병렬로 Shell 컴포넌트 로딩
       const shellPromises = [
         this.loadComponent('navbar', this.config.shell.navbar),
         this.loadComponent('dh-l-footer', this.config.shell.footer),
         this.preloadCriticalResources(),
       ];
-      
+
       await Promise.allSettled(shellPromises);
-      
+
       // Shell 로딩 완료
       this.config.loading.shellLoaded = true;
       this.metrics.shellLoadTime = performance.now() - this.loadStartTime;
-      
+
       // Shell UI 표시
       this.showShell();
-      
+
       // Shell 로딩 이벤트 발송
       this.dispatchEvent('shell:loaded', {
         loadTime: this.metrics.shellLoadTime,
         timestamp: Date.now(),
       });
-      
     } catch (error) {
       console.error('[App Shell] Shell 로딩 실패:', error);
       this.handleShellLoadError(error);
     }
   }
-  
+
   /**
    * 컴포넌트 로딩
    */
   async loadComponent(name, selector) {
     const startTime = performance.now();
-    
+
     try {
       const element = document.querySelector(selector);
       if (!element) {
         throw new Error(`Element not found: ${selector}`);
       }
-      
+
       // 캐시에서 먼저 확인
       let html = await this.getFromCache(`component:${name}`);
-      
+
       if (!html) {
         // 네트워크에서 로딩
         const response = await fetch(`/includes/${name}.html`);
@@ -147,54 +137,53 @@ class AppShell {
           throw new Error(`HTTP ${response.status}`);
         }
         html = await response.text();
-        
+
         // 캐시에 저장
         await this.saveToCache(`component:${name}`, html);
       }
-      
+
       // DOM에 삽입
       element.innerHTML = html;
-      
+
       // 컴포넌트별 초기화
       await this.initializeComponent(name, element);
-      
+
       // 로딩 완료 표시
       this.config.loading.componentsLoaded.add(name);
-      
+
       const loadTime = performance.now() - startTime;
       this.metrics.resourceLoadTimes.set(name, loadTime);
-      
+
       console.log(`[App Shell] ${name} 컴포넌트 로딩 완료 (${loadTime.toFixed(2)}ms)`);
-      
     } catch (error) {
       console.error(`[App Shell] ${name} 컴포넌트 로딩 실패:`, error);
-      
+
       // 오프라인 폴백
       await this.loadOfflineFallback(name, selector);
     }
   }
-  
+
   /**
    * 핵심 리소스 프리로딩
    */
   async preloadCriticalResources() {
     const preloadPromises = [];
-    
+
     // CSS 프리로딩
     for (const cssUrl of this.config.cache.criticalCSS) {
       preloadPromises.push(this.preloadResource(cssUrl, 'style'));
     }
-    
+
     // JS 프리로딩 (이미 로드된 것 제외)
     for (const jsUrl of this.config.cache.criticalJS) {
       if (!this.isScriptLoaded(jsUrl)) {
         preloadPromises.push(this.preloadResource(jsUrl, 'script'));
       }
     }
-    
+
     await Promise.allSettled(preloadPromises);
   }
-  
+
   /**
    * 리소스 프리로딩
    */
@@ -204,7 +193,7 @@ class AppShell {
       element.rel = 'preload';
       element.href = url;
       element.as = type;
-      
+
       if (type === 'style') {
         element.onload = () => {
           // CSS를 실제로 적용
@@ -217,18 +206,18 @@ class AppShell {
       } else {
         element.onload = resolve;
       }
-      
+
       element.onerror = reject;
-      
+
       // 타임아웃 설정
       setTimeout(() => {
         reject(new Error(`Preload timeout: ${url}`));
       }, this.config.performance.criticalResourceTimeout);
-      
+
       document.head.appendChild(element);
     });
   }
-  
+
   /**
    * 컨텐츠 로딩 스케줄링
    */
@@ -241,77 +230,75 @@ class AppShell {
         setTimeout(checkShellReady, 50);
       }
     };
-    
+
     setTimeout(checkShellReady, 100);
   }
-  
+
   /**
    * 컨텐츠 로딩
    */
   async loadContent() {
     try {
       const contentStartTime = performance.now();
-      
+
       // 페이지별 컨텐츠 로딩
       await this.loadPageContent();
-      
+
       // 비핵심 리소스 지연 로딩
       this.scheduleNonCriticalLoading();
-      
+
       // 컨텐츠 로딩 완료
       this.config.loading.contentLoaded = true;
       this.metrics.contentLoadTime = performance.now() - contentStartTime;
       this.metrics.totalLoadTime = performance.now() - this.loadStartTime;
-      
+
       // 스켈레톤 UI 숨기기
       this.hideSkeletonUI();
-      
+
       // 컨텐츠 표시
       this.showContent();
-      
+
       // 로딩 완료 이벤트
       this.dispatchEvent('content:loaded', {
         contentLoadTime: this.metrics.contentLoadTime,
         totalLoadTime: this.metrics.totalLoadTime,
       });
-      
+
       // 성능 메트릭 보고
       this.reportPerformanceMetrics();
-      
     } catch (error) {
       console.error('[App Shell] 컨텐츠 로딩 실패:', error);
       this.handleContentLoadError(error);
     }
   }
-  
+
   /**
    * 페이지별 컨텐츠 로딩
    */
   async loadPageContent() {
     const page = document.documentElement.dataset.page || 'home';
-    
+
     try {
       // 페이지별 스크립트 동적 로딩
       const pageScript = `/js/pages/${page}.js`;
       if (await this.resourceExists(pageScript)) {
         await this.loadScript(pageScript);
       }
-      
+
       // 페이지별 추가 리소스 로딩
       await this.loadPageSpecificResources(page);
-      
     } catch (error) {
       console.warn(`[App Shell] 페이지 컨텐츠 로딩 경고 (${page}):`, error);
     }
   }
-  
+
   /**
    * 스켈레톤 UI 표시
    */
   showSkeletonUI() {
     // 스켈레톤 HTML 생성
     const skeletonHTML = this.generateSkeletonHTML();
-    
+
     // 메인 컨텐츠 영역에 스켈레톤 삽입
     const mainElement = document.querySelector(this.config.shell.mainContent);
     if (mainElement) {
@@ -322,11 +309,11 @@ class AppShell {
         opacity: 1;
         transition: opacity ${this.config.animations.shellFadeIn}ms ease;
       `;
-      
+
       mainElement.appendChild(skeletonContainer);
     }
   }
-  
+
   /**
    * 스켈레톤 HTML 생성
    */
@@ -421,19 +408,19 @@ class AppShell {
       </style>
     `;
   }
-  
+
   /**
    * Shell 표시
    */
   showShell() {
     document.body.classList.add('shell-loaded');
-    
+
     // Shell 컴포넌트들 fade-in 애니메이션
     const shellElements = [
       document.querySelector(this.config.shell.navbar),
       document.querySelector(this.config.shell.footer),
     ];
-    
+
     shellElements.forEach((element, index) => {
       if (element) {
         element.style.cssText = `
@@ -442,7 +429,7 @@ class AppShell {
           transition: opacity ${this.config.animations.shellFadeIn}ms ease ${index * 100}ms,
                       transform ${this.config.animations.shellFadeIn}ms ease ${index * 100}ms;
         `;
-        
+
         // 애니메이션 트리거
         setTimeout(() => {
           element.style.opacity = '1';
@@ -451,7 +438,7 @@ class AppShell {
       }
     });
   }
-  
+
   /**
    * 컨텐츠 표시
    */
@@ -459,10 +446,10 @@ class AppShell {
     const mainElement = document.querySelector(this.config.shell.mainContent);
     if (mainElement) {
       mainElement.classList.add('content-loaded');
-      
+
       // 컨텐츠 slide-in 애니메이션
       const contentElements = mainElement.querySelectorAll(':scope > *:not(#app-shell-skeleton)');
-      
+
       contentElements.forEach((element, index) => {
         element.style.cssText = `
           opacity: 0;
@@ -470,7 +457,7 @@ class AppShell {
           transition: opacity ${this.config.animations.contentSlideIn}ms ease ${index * 50}ms,
                       transform ${this.config.animations.contentSlideIn}ms ease ${index * 50}ms;
         `;
-        
+
         setTimeout(() => {
           element.style.opacity = '1';
           element.style.transform = 'translateY(0)';
@@ -478,7 +465,7 @@ class AppShell {
       });
     }
   }
-  
+
   /**
    * 스켈레톤 UI 숨기기
    */
@@ -486,13 +473,13 @@ class AppShell {
     const skeleton = document.getElementById('app-shell-skeleton');
     if (skeleton) {
       skeleton.style.opacity = '0';
-      
+
       setTimeout(() => {
         skeleton.remove();
       }, this.config.animations.shellFadeIn);
     }
   }
-  
+
   /**
    * 오프라인 처리 설정
    */
@@ -500,21 +487,21 @@ class AppShell {
     window.addEventListener('online', () => {
       this.handleOnlineStateChange(true);
     });
-    
+
     window.addEventListener('offline', () => {
       this.handleOnlineStateChange(false);
     });
-    
+
     // 초기 온라인 상태 확인
     this.updateOnlineStatus(navigator.onLine);
   }
-  
+
   /**
    * 온라인 상태 변경 처리
    */
   handleOnlineStateChange(isOnline) {
     this.updateOnlineStatus(isOnline);
-    
+
     if (isOnline) {
       // 온라인 복구 시 대기 중인 리소스 로딩
       this.retryFailedLoading();
@@ -523,41 +510,41 @@ class AppShell {
       this.showOfflineIndicator();
     }
   }
-  
+
   /**
    * 온라인 상태 업데이트
    */
   updateOnlineStatus(isOnline) {
     document.body.classList.toggle('offline', !isOnline);
     document.body.classList.toggle('online', isOnline);
-    
+
     // 이벤트 발송
     this.dispatchEvent('connectivity:changed', {
       online: isOnline,
       timestamp: Date.now(),
     });
   }
-  
+
   /**
    * 설치 프롬프트 설정
    */
   setupInstallPrompt() {
     let deferredPrompt = null;
-    
+
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
       deferredPrompt = e;
-      
+
       // 설치 프롬프트 UI 표시
       this.showInstallPrompt(deferredPrompt);
     });
-    
+
     // 설치 완료 감지
     window.addEventListener('appinstalled', () => {
       this.handleAppInstalled();
     });
   }
-  
+
   /**
    * 설치 프롬프트 표시
    */
@@ -566,23 +553,23 @@ class AppShell {
     if (window.matchMedia('(display-mode: standalone)').matches) {
       return;
     }
-    
+
     // 사용자가 이미 거부한 경우 확인
     const dismissed = localStorage.getItem('pwa-install-dismissed');
     if (dismissed && Date.now() - parseInt(dismissed) < 7 * 24 * 60 * 60 * 1000) {
       return; // 7일 동안 표시하지 않음
     }
-    
+
     // 설치 프롬프트 UI 생성
     const installBanner = this.createInstallPromptUI(deferredPrompt);
     document.body.appendChild(installBanner);
-    
+
     // 애니메이션과 함께 표시
     setTimeout(() => {
       installBanner.classList.add('dh-u-visible');
     }, 2000); // 2초 후 표시
   }
-  
+
   /**
    * 설치 프롬프트 UI 생성
    */
@@ -606,7 +593,7 @@ class AppShell {
         </div>
       </div>
     `;
-    
+
     // 스타일 적용
     banner.style.cssText = `
       position: fixed;
@@ -622,29 +609,28 @@ class AppShell {
       max-width: 400px;
       margin: 0 auto;
     `;
-    
+
     // 이벤트 리스너
     banner.querySelector('#install-accept').addEventListener('click', async () => {
       try {
         await deferredPrompt.prompt();
         const choiceResult = await deferredPrompt.userChoice;
-        
+
         this.trackInstallPromptResult(choiceResult.outcome);
         banner.remove();
-        
       } catch (error) {
         console.error('설치 프롬프트 오류:', error);
       }
     });
-    
+
     banner.querySelector('#install-dismiss').addEventListener('click', () => {
       localStorage.setItem('pwa-install-dismissed', Date.now().toString());
       banner.classList.remove('dh-u-visible');
       setTimeout(() => banner.remove(), 300);
-      
+
       this.trackInstallPromptResult('dismissed');
     });
-    
+
     // CSS 추가
     if (!document.getElementById('install-prompt-styles')) {
       const styles = document.createElement('style');
@@ -727,30 +713,30 @@ class AppShell {
       `;
       document.head.appendChild(styles);
     }
-    
+
     return banner;
   }
-  
+
   /**
    * 앱 설치 완료 처리
    */
   handleAppInstalled() {
     // 설치 완료 알림
     this.showInstallSuccessMessage();
-    
+
     // 설치 프롬프트 제거
     const installBanner = document.getElementById('pwa-install-banner');
     if (installBanner) {
       installBanner.remove();
     }
-    
+
     // 설치 완료 추적
     this.trackEvent('pwa_installed', {
       timestamp: Date.now(),
       user_agent: navigator.userAgent,
     });
   }
-  
+
   /**
    * 성능 메트릭 보고
    */
@@ -765,10 +751,10 @@ class AppShell {
       },
       connection: this.getConnectionInfo(),
     };
-    
+
     // 분석 도구로 전송
     this.trackEvent('app_shell_performance', metrics);
-    
+
     // 콘솔에 성능 요약 출력
     console.group('[App Shell] 성능 메트릭');
     console.log('Shell 로딩 시간:', `${metrics.shellLoadTime.toFixed(2)}ms`);
@@ -777,11 +763,11 @@ class AppShell {
     console.log('컴포넌트 로딩 시간:', Object.fromEntries(metrics.resourceLoadTimes));
     console.groupEnd();
   }
-  
+
   /**
    * 유틸리티 메서드들
    */
-  
+
   async getFromCache(key) {
     try {
       const cache = await caches.open('app-shell-v1');
@@ -791,7 +777,7 @@ class AppShell {
       return null;
     }
   }
-  
+
   async saveToCache(key, data) {
     try {
       const cache = await caches.open('app-shell-v1');
@@ -800,11 +786,11 @@ class AppShell {
       console.warn('캐시 저장 실패:', error);
     }
   }
-  
+
   isScriptLoaded(src) {
-    return Array.from(document.scripts).some(script => script.src.includes(src));
+    return Array.from(document.scripts).some((script) => script.src.includes(src));
   }
-  
+
   async resourceExists(url) {
     try {
       const response = await fetch(url, { method: 'HEAD' });
@@ -813,7 +799,7 @@ class AppShell {
       return false;
     }
   }
-  
+
   async loadScript(src) {
     return new Promise((resolve, reject) => {
       const script = document.createElement('script');
@@ -824,7 +810,7 @@ class AppShell {
       document.head.appendChild(script);
     });
   }
-  
+
   getConnectionInfo() {
     if ('connection' in navigator) {
       const conn = navigator.connection;
@@ -836,36 +822,36 @@ class AppShell {
     }
     return null;
   }
-  
+
   dispatchEvent(eventName, detail) {
     window.dispatchEvent(new CustomEvent(`appshell:${eventName}`, { detail }));
   }
-  
+
   trackEvent(eventName, eventData) {
     if (typeof gtag !== 'undefined') {
       gtag('event', eventName, eventData);
     }
   }
-  
+
   trackInstallPromptResult(outcome) {
     this.trackEvent('pwa_install_prompt', {
       outcome,
       timestamp: Date.now(),
     });
   }
-  
+
   // ... 기타 유틸리티 메서드들
-  
+
   /**
    * 오류 처리 메서드들
    */
-  
+
   handleShellLoadError(error) {
     console.error('[App Shell] Shell 로딩 실패, 기본 UI로 전환');
-    
+
     // 기본 네비게이션 표시
     this.showFallbackNavigation();
-    
+
     // 오류 추적
     this.trackEvent('app_shell_error', {
       type: 'shell_load_failed',
@@ -873,13 +859,13 @@ class AppShell {
       timestamp: Date.now(),
     });
   }
-  
+
   handleContentLoadError(error) {
     console.error('[App Shell] 컨텐츠 로딩 실패');
-    
+
     // 스켈레톤 UI는 유지하되 오류 메시지 표시
     this.showContentLoadError();
-    
+
     // 오류 추적
     this.trackEvent('app_shell_error', {
       type: 'content_load_failed',
@@ -887,7 +873,7 @@ class AppShell {
       timestamp: Date.now(),
     });
   }
-  
+
   showFallbackNavigation() {
     // 간단한 네비게이션 HTML 생성
     const fallbackNav = `
@@ -902,13 +888,13 @@ class AppShell {
         </div>
       </nav>
     `;
-    
+
     const navElement = document.querySelector(this.config.shell.navbar);
     if (navElement) {
       navElement.innerHTML = fallbackNav;
     }
   }
-  
+
   showContentLoadError() {
     const mainElement = document.querySelector(this.config.shell.mainContent);
     if (mainElement) {
@@ -923,11 +909,11 @@ class AppShell {
           </button>
         </div>
       `;
-      
+
       mainElement.innerHTML = errorHTML;
     }
   }
-  
+
   showInstallSuccessMessage() {
     // 설치 성공 토스트 메시지
     const toast = document.createElement('div');
@@ -945,29 +931,29 @@ class AppShell {
       transform: translateX(100%);
       transition: transform 300ms ease;
     `;
-    
+
     toast.textContent = '앱이 성공적으로 설치되었습니다!';
     document.body.appendChild(toast);
-    
+
     // 애니메이션
     setTimeout(() => {
       toast.style.transform = 'translateX(0)';
     }, 100);
-    
+
     // 3초 후 제거
     setTimeout(() => {
       toast.style.transform = 'translateX(100%)';
       setTimeout(() => toast.remove(), 300);
     }, 3000);
   }
-  
+
   // ... 기타 메서드들 계속
 }
 
 // 전역 인스턴스 생성
 if (typeof window !== 'undefined') {
   window.AppShell = AppShell;
-  
+
   // DOM 준비 시 자동 초기화
   if (document.readyState === 'dh-u-loading') {
     document.addEventListener('DOMContentLoaded', () => {

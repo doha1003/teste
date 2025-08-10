@@ -16,19 +16,22 @@ const __dirname = path.dirname(__filename);
 const CLEANUP_RULES = [
   // 중복된 linear- 접두사 제거
   [/linear-linear-/g, 'linear-'],
-  
+
   // 중복된 text-korean 제거
   [/text-korean\s+text-korean/g, 'text-korean'],
-  
+
   // 중복된 highlight 패턴 제거
-  [/highlight-([a-z]+)\s+highlight-korean\s+([a-z]+)\s+highlight-([a-z]+)\s+highlight-korean\s+([a-z]+)/g, 'highlight-$1 highlight-korean $2'],
-  
+  [
+    /highlight-([a-z]+)\s+highlight-korean\s+([a-z]+)\s+highlight-([a-z]+)\s+highlight-korean\s+([a-z]+)/g,
+    'highlight-$1 highlight-korean $2',
+  ],
+
   // 기타 중복 패턴들
   [/linear-button\s+linear-button/g, 'linear-button'],
   [/linear-card\s+linear-card/g, 'linear-card'],
   [/linear-input\s+linear-input/g, 'linear-input'],
   [/linear-badge\s+linear-badge/g, 'linear-badge'],
-  
+
   // 공백 정리
   [/\s{2,}/g, ' '],
   [/class="\s+/g, 'class="'],
@@ -51,7 +54,7 @@ function cleanupDuplicateClasses(htmlContent, filePath = '') {
   // 각 정리 규칙 적용
   CLEANUP_RULES.forEach(([regex, replacement], index) => {
     const matches = cleanedContent.match(regex);
-    
+
     if (matches) {
       cleanedContent = cleanedContent.replace(regex, replacement);
       changeCount += matches.length;
@@ -62,7 +65,7 @@ function cleanupDuplicateClasses(htmlContent, filePath = '') {
   // 결과 출력
   if (changes.length > 0) {
     console.log(`  📊 Total cleanups: ${changeCount}`);
-    changes.forEach(change => console.log(change));
+    changes.forEach((change) => console.log(change));
   } else {
     console.log(`  ✨ Already clean`);
   }
@@ -81,32 +84,32 @@ function cleanupDirectory(dirPath, excludePaths = []) {
     processedFiles: 0,
     modifiedFiles: 0,
     totalChanges: 0,
-    errors: []
+    errors: [],
   };
 
   function processDirectory(currentPath) {
     const items = fs.readdirSync(currentPath);
-    
-    items.forEach(item => {
+
+    items.forEach((item) => {
       const fullPath = path.join(currentPath, item);
       const relativePath = path.relative(dirPath, fullPath);
-      
+
       // 제외 경로 확인
-      if (excludePaths.some(excludePath => relativePath.startsWith(excludePath))) {
+      if (excludePaths.some((excludePath) => relativePath.startsWith(excludePath))) {
         return;
       }
-      
+
       const stat = fs.statSync(fullPath);
-      
+
       if (stat.isDirectory()) {
         processDirectory(fullPath);
       } else if (path.extname(fullPath) === '.html') {
         try {
           const originalContent = fs.readFileSync(fullPath, 'utf8');
           const cleanedContent = cleanupDuplicateClasses(originalContent, relativePath);
-          
+
           stats.processedFiles++;
-          
+
           if (originalContent !== cleanedContent) {
             fs.writeFileSync(fullPath, cleanedContent, 'utf8');
             stats.modifiedFiles++;
@@ -140,7 +143,7 @@ function main() {
     'test-reports',
     'coverage',
     'dist',
-    '.backup'
+    '.backup',
   ];
 
   const stats = cleanupDirectory(projectRoot, excludePaths);
@@ -154,7 +157,7 @@ function main() {
 
   if (stats.errors.length > 0) {
     console.log('\n❌ Errors encountered:');
-    stats.errors.forEach(error => console.log(`  ${error}`));
+    stats.errors.forEach((error) => console.log(`  ${error}`));
   }
 
   console.log('\n✨ Linear System cleanup completed successfully!');

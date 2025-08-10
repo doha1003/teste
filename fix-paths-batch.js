@@ -16,7 +16,7 @@ class PathFixer {
     console.log('🔧 모든 HTML 파일의 절대 경로를 상대 경로로 수정합니다...\n');
 
     const htmlFiles = this.getHtmlFiles();
-    
+
     for (const filePath of htmlFiles) {
       await this.fixHtmlFile(filePath);
     }
@@ -34,67 +34,69 @@ class PathFixer {
       for (const item of items) {
         const fullPath = path.join(dir, item);
         const itemRelativePath = path.join(relativePath, item);
-        
+
         if (fs.statSync(fullPath).isDirectory()) {
           // 제외할 디렉토리들
-          if (!item.startsWith('.') && 
-              !['node_modules', 'dist', 'playwright-report', 'coverage', '.backup'].includes(item)) {
+          if (
+            !item.startsWith('.') &&
+            !['node_modules', 'dist', 'playwright-report', 'coverage', '.backup'].includes(item)
+          ) {
             scanDir(fullPath, itemRelativePath);
           }
         } else if (item.endsWith('.html')) {
           files.push({
             fullPath,
             relativePath: itemRelativePath,
-            depth: itemRelativePath.split(path.sep).length - 1
+            depth: itemRelativePath.split(path.sep).length - 1,
           });
         }
       }
     };
-    
+
     scanDir('.');
     return files;
   }
 
   async fixHtmlFile(fileInfo) {
     const { fullPath, relativePath, depth } = fileInfo;
-    
+
     try {
       console.log(`🔍 처리 중: ${relativePath} (depth: ${depth})`);
-      
+
       let content = fs.readFileSync(fullPath, 'utf8');
       let fileFixed = false;
       const originalContent = content;
 
       // depth에 따른 상위 경로 계산
       const upPath = '../'.repeat(depth);
-      
+
       // 수정할 절대 경로 패턴들
       const patterns = [
         // CSS 파일들
         { from: /href="\/dist\//g, to: `href="${upPath}dist/` },
         { from: /href="\/css\//g, to: `href="${upPath}css/` },
-        
-        // JavaScript 파일들  
+
+        // JavaScript 파일들
         { from: /src="\/js\//g, to: `src="${upPath}js/` },
         { from: /src="\/dist\/js\//g, to: `src="${upPath}dist/js/` },
-        
+
         // 이미지 파일들
         { from: /href="\/images\//g, to: `href="${upPath}images/` },
         { from: /src="\/images\//g, to: `src="${upPath}images/` },
-        
+
         // 매니페스트
         { from: /href="\/manifest\.json"/g, to: `href="${upPath}manifest.json"` },
-        
+
         // 내부 페이지 링크들 (주의: 루트 / 는 제외)
         { from: /href="\/([a-zA-Z][^"]*?)"/g, to: `href="${upPath}$1"` },
-        
+
         // Service Worker
         { from: /'\/sw\.js'/g, to: `'${upPath}sw.js'` },
-        { from: /"\/sw\.js"/g, to: `"${upPath}sw.js"` }
+        { from: /"\/sw\.js"/g, to: `"${upPath}sw.js"` },
       ];
 
       // 각 패턴 적용
-      patterns.forEach(pattern => {
+      patterns.forEach((pattern) => {
         const matches = content.match(pattern.from);
         if (matches) {
           content = content.replace(pattern.from, pattern.to);
@@ -122,41 +124,40 @@ class PathFixer {
       } else {
         console.log(`  ⏭️  ${relativePath} - 수정할 내용 없음`);
       }
-
     } catch (error) {
       console.error(`❌ ${relativePath} 처리 중 오류:`, error.message);
       this.errors++;
     }
-    
+
     console.log(''); // 줄바꿈
   }
 
   // 추가: CSS 번들 참조 통일
   unifyCssReferences() {
     console.log('\n🎨 CSS 번들 참조 통일 작업...');
-    
+
     const htmlFiles = this.getHtmlFiles();
-    
+
     for (const fileInfo of htmlFiles) {
       try {
         let content = fs.readFileSync(fileInfo.fullPath, 'utf8');
         const upPath = '../'.repeat(fileInfo.depth);
-        
+
         // 다양한 CSS 참조를 통일된 번들로 변경
         const cssPatterns = [
           /href="[^"]*\/styles\.css"/g,
           /href="[^"]*\/bundle\.css"/g,
-          /href="[^"]*\/main\.css"/g
+          /href="[^"]*\/main\.css"/g,
         ];
-        
+
         let changed = false;
-        cssPatterns.forEach(pattern => {
+        cssPatterns.forEach((pattern) => {
           if (pattern.test(content)) {
             content = content.replace(pattern, `href="${upPath}dist/styles.min.css"`);
             changed = true;
           }
         });
-        
+
         if (changed) {
           fs.writeFileSync(fileInfo.fullPath, content, 'utf8');
           console.log(`  ✅ CSS 참조 통일: ${fileInfo.relativePath}`);
@@ -170,7 +171,7 @@ class PathFixer {
   // 누락된 JS 파일들 생성
   createMissingJsFiles() {
     console.log('\n📁 누락된 핵심 JS 파일들 생성...');
-    
+
     const missingFiles = [
       {
         path: 'js/core/mobile-menu.js',
@@ -244,7 +245,7 @@ if (typeof window !== 'undefined') {
   window.MobileMenu = MobileMenu;
 }
 
-export default MobileMenu;`
+export default MobileMenu;`,
       },
       {
         path: 'js/core/pwa-helpers.js',
@@ -352,20 +353,20 @@ if (typeof window !== 'undefined') {
   window.PWAHelpers = PWAHelpers;
 }
 
-export default PWAHelpers;`
-      }
+export default PWAHelpers;`,
+      },
     ];
 
-    missingFiles.forEach(file => {
+    missingFiles.forEach((file) => {
       const fullPath = path.join(__dirname, file.path);
       const dir = path.dirname(fullPath);
-      
+
       try {
         // 디렉토리 생성
         if (!fs.existsSync(dir)) {
           fs.mkdirSync(dir, { recursive: true });
         }
-        
+
         // 파일 생성 (이미 존재하면 스킵)
         if (!fs.existsSync(fullPath)) {
           fs.writeFileSync(fullPath, file.content, 'utf8');

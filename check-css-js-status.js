@@ -14,17 +14,17 @@ console.log('📋 CSS 클래스 상태:');
 const cssFiles = [
   'css/components/buttons.css',
   'css/design-system/linear-components.css',
-  'css/core/typography.css'
+  'css/core/typography.css',
 ];
 
 const foundClasses = new Map();
 
-cssFiles.forEach(file => {
+cssFiles.forEach((file) => {
   if (fs.existsSync(file)) {
     const content = fs.readFileSync(file, 'utf8');
     const classMatches = content.match(/\.[a-z][a-z0-9-_]*/gi) || [];
-    
-    classMatches.forEach(cls => {
+
+    classMatches.forEach((cls) => {
       if (!foundClasses.has(cls)) {
         foundClasses.set(cls, []);
       }
@@ -48,15 +48,11 @@ if (duplicates === 0) {
 
 // 2. JS 전역 변수 체크
 console.log('\n📋 JS 전역 변수 상태:');
-const jsFiles = [
-  'js/app.js',
-  'js/api-config.js',
-  'js/error-handler.js'
-];
+const jsFiles = ['js/app.js', 'js/api-config.js', 'js/error-handler.js'];
 
 const globalVars = [];
 
-jsFiles.forEach(file => {
+jsFiles.forEach((file) => {
   if (fs.existsSync(file)) {
     const content = fs.readFileSync(file, 'utf8');
     const windowMatches = content.match(/window\.[A-Z][a-zA-Z]*/g) || [];
@@ -66,7 +62,7 @@ jsFiles.forEach(file => {
 
 const uniqueGlobals = [...new Set(globalVars)];
 console.log(`  📌 발견된 전역 변수: ${uniqueGlobals.length}개`);
-uniqueGlobals.slice(0, 5).forEach(v => {
+uniqueGlobals.slice(0, 5).forEach((v) => {
   console.log(`     - ${v}`);
 });
 
@@ -74,12 +70,12 @@ uniqueGlobals.slice(0, 5).forEach(v => {
 console.log('\n📋 z-index 사용 현황:');
 const zIndexUsage = new Map();
 
-['css/core/variables.css', 'css/korean-optimization.css'].forEach(file => {
+['css/core/variables.css', 'css/korean-optimization.css'].forEach((file) => {
   if (fs.existsSync(file)) {
     const content = fs.readFileSync(file, 'utf8');
     const zIndexMatches = content.match(/z-index:\s*\d+/g) || [];
-    
-    zIndexMatches.forEach(match => {
+
+    zIndexMatches.forEach((match) => {
       const value = match.match(/\d+/)[0];
       if (!zIndexUsage.has(value)) {
         zIndexUsage.set(value, 0);
@@ -101,11 +97,11 @@ const htmlFiles = [
   'index.html',
   'tests/mbti/index.html',
   'fortune/daily/index.html',
-  'tools/bmi-calculator.html'
+  'tools/bmi-calculator.html',
 ];
 
 let linearUsageCount = 0;
-htmlFiles.forEach(file => {
+htmlFiles.forEach((file) => {
   if (fs.existsSync(file)) {
     const content = fs.readFileSync(file, 'utf8');
     const linearClasses = content.match(/linear-[a-z]+/g) || [];

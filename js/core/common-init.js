@@ -31,40 +31,40 @@ export const DohaKR = {
   // 핵심 유틸리티
   utils: { safeLog, isDevelopment },
   PWAHelpers,
-  
+
   // 각 기능별 네임스페이스
   Tests: {
-    MBTI: null,    // MBTITestService 인스턴스
+    MBTI: null, // MBTITestService 인스턴스
     TetoEgen: null, // TetoEgenTestService 인스턴스
-    LoveDNA: null   // LoveDNATestService 인스턴스
+    LoveDNA: null, // LoveDNATestService 인스턴스
   },
-  
+
   Fortune: {
-    Daily: null,    // DailyFortuneService 인스턴스
-    Tarot: null,    // TarotFortuneService 인스턴스
-    Saju: null,     // SajuFortuneService 인스턴스
-    Zodiac: null    // ZodiacFortuneService 인스턴스
+    Daily: null, // DailyFortuneService 인스턴스
+    Tarot: null, // TarotFortuneService 인스턴스
+    Saju: null, // SajuFortuneService 인스턴스
+    Zodiac: null, // ZodiacFortuneService 인스턴스
   },
-  
+
   Tools: {
-    BMI: null,      // BMICalculatorService 인스턴스
-    Salary: null,   // SalaryCalculatorService 인스턴스
-    TextCounter: null // TextCounterService 인스턴스
+    BMI: null, // BMICalculatorService 인스턴스
+    Salary: null, // SalaryCalculatorService 인스턴스
+    TextCounter: null, // TextCounterService 인스턴스
   },
-  
+
   // API 및 데이터 관리
   API: {
-    Manager: null,  // APIManager 인스턴스
-    Config: null    // API 설정
+    Manager: null, // APIManager 인스턴스
+    Config: null, // API 설정
   },
-  
+
   // UI 및 상호작용
   UI: {
     MobileMenu: null,
     Theme: null,
-    Analytics: null
+    Analytics: null,
   },
-  
+
   // 서비스 등록 함수
   registerService(category, name, instance) {
     if (this[category] && typeof this[category] === 'object') {
@@ -74,7 +74,7 @@ export const DohaKR = {
       safeLog.warn(`⚠️ Invalid category: ${category}`);
     }
   },
-  
+
   // 서비스 가져오기 함수
   getService(category, name) {
     if (this[category] && this[category][name]) {
@@ -82,7 +82,7 @@ export const DohaKR = {
     }
     safeLog.warn(`⚠️ Service not found: DohaKR.${category}.${name}`);
     return null;
-  }
+  },
 };
 
 /**
@@ -127,25 +127,37 @@ DohaKR.loadIncludes = function () {
   const navPlaceholder = document.getElementById('navbar-placeholder');
   if (navPlaceholder) {
     // 현재 경로에 따라 올바른 includes 경로 결정
-    const {pathname} = window.location;
+    const { pathname } = window.location;
     const pathDepth = (pathname.match(/\//g) || []).length;
-    const isInSubdirectory = pathDepth >= 2 || pathname.includes('/about/') || pathname.includes('/contact/') || 
-      pathname.includes('/faq/') || pathname.includes('/privacy/') || pathname.includes('/terms/') || pathname.includes('/tools/');
+    const isInSubdirectory =
+      pathDepth >= 2 ||
+      pathname.includes('/about/') ||
+      pathname.includes('/contact/') ||
+      pathname.includes('/faq/') ||
+      pathname.includes('/privacy/') ||
+      pathname.includes('/terms/') ||
+      pathname.includes('/tools/');
     let navbarPath;
-    
+
     if (pathDepth >= 3 || pathname.includes('/tests/') || pathname.includes('/fortune/')) {
       // 2-depth 이상 또는 tests/fortune 하위 디렉토리
       navbarPath = '../../includes/navbar.html';
-    } else if (pathDepth >= 2 || pathname.includes('/about/') || pathname.includes('/contact/') || 
-               pathname.includes('/faq/') || pathname.includes('/privacy/') || 
-               pathname.includes('/terms/') || pathname.includes('/tools/')) {
+    } else if (
+      pathDepth >= 2 ||
+      pathname.includes('/about/') ||
+      pathname.includes('/contact/') ||
+      pathname.includes('/faq/') ||
+      pathname.includes('/privacy/') ||
+      pathname.includes('/terms/') ||
+      pathname.includes('/tools/')
+    ) {
       // 1-depth 디렉토리
       navbarPath = '../includes/navbar.html';
     } else {
       // 루트 디렉토리
       navbarPath = 'includes/navbar.html';
     }
-    
+
     const navXhr = new XMLHttpRequest();
     navXhr.open('GET', navbarPath, true);
     navXhr.onreadystatechange = function () {
@@ -186,23 +198,29 @@ DohaKR.loadIncludes = function () {
   const footerPlaceholder = document.getElementById('footer-placeholder');
   if (footerPlaceholder) {
     // 현재 경로에 따라 올바른 includes 경로 결정
-    const {pathname} = window.location;
+    const { pathname } = window.location;
     const pathDepth = (pathname.match(/\//g) || []).length;
     let footerPath;
-    
+
     if (pathDepth >= 3 || pathname.includes('/tests/') || pathname.includes('/fortune/')) {
       // 2-depth 이상 또는 tests/fortune 하위 디렉토리
       footerPath = '../../includes/footer.html';
-    } else if (pathDepth >= 2 || pathname.includes('/about/') || pathname.includes('/contact/') || 
-               pathname.includes('/faq/') || pathname.includes('/privacy/') || 
-               pathname.includes('/terms/') || pathname.includes('/tools/')) {
+    } else if (
+      pathDepth >= 2 ||
+      pathname.includes('/about/') ||
+      pathname.includes('/contact/') ||
+      pathname.includes('/faq/') ||
+      pathname.includes('/privacy/') ||
+      pathname.includes('/terms/') ||
+      pathname.includes('/tools/')
+    ) {
       // 1-depth 디렉토리
       footerPath = '../includes/footer.html';
     } else {
       // 루트 디렉토리
       footerPath = 'includes/footer.html';
     }
-    
+
     const footerXhr = new XMLHttpRequest();
     footerXhr.open('GET', footerPath, true);
     footerXhr.onreadystatechange = function () {
@@ -211,10 +229,16 @@ DohaKR.loadIncludes = function () {
           footerPlaceholder.innerHTML = footerXhr.responseText;
         } else {
           // file:// 프로토콜에서 실패하면 직접 삽입
-          const {pathname} = window.location;
+          const { pathname } = window.location;
           const pathDepth = (pathname.match(/\//g) || []).length;
-          const isInSubdirectory = pathDepth >= 2 || pathname.includes('/about/') || pathname.includes('/contact/') || 
-            pathname.includes('/faq/') || pathname.includes('/privacy/') || pathname.includes('/terms/') || pathname.includes('/tools/');
+          const isInSubdirectory =
+            pathDepth >= 2 ||
+            pathname.includes('/about/') ||
+            pathname.includes('/contact/') ||
+            pathname.includes('/faq/') ||
+            pathname.includes('/privacy/') ||
+            pathname.includes('/terms/') ||
+            pathname.includes('/tools/');
           const baseHref = isInSubdirectory ? '../' : '';
           footerPlaceholder.innerHTML = `<footer class="dh-l-footer"> <div class="footer-content"> <div class="footer-section"> <h3>doha.kr</h3> <p class="text-gray-400 mt-8"> 일상을 더 재미있게 만드는 공간<br> 심리테스트, 운세, 실용도구의 만남 </p> <div class="footer-social"> <a href="mailto:youtubdoha@gmail.com" class="social-link">📧</a> </div> </div> <div class="footer-section"> <h3>서비스</h3> <ul class="footer-links"> <li><a href="${baseHref}">홈</a></li> <li><a href="${baseHref}tests/">심리테스트</a></li> <li><a href="${baseHref}fortune/">운세</a></li> <li><a href="${baseHref}tools/">실용도구</a></li> <li><a href="${baseHref}about/">사이트 소개</a></li> </ul> </div> <div class="footer-section"> <h3>인기 콘텐츠</h3> <ul class="footer-links"> <li><a href="${baseHref}tests/teto-egen/">테토-에겐 테스트</a></li> <li><a href="${baseHref}tests/mbti/">MBTI 테스트</a></li> <li><a href="${baseHref}fortune/daily/">오늘의 운세</a></li> <li><a href="${baseHref}tools/text-counter.html">글자수 세기</a></li> </ul> </div> <div class="footer-section"> <h3>운세 서비스</h3> <ul class="footer-links"> <li><a href="${baseHref}fortune/daily/">오늘의 운세</a></li> <li><a href="${baseHref}fortune/zodiac/">별자리 운세</a></li> <li><a href="${baseHref}fortune/zodiac-animal/">띠별 운세</a></li> <li><a href="${baseHref}fortune/tarot/">AI 타로</a></li> </ul> </div> <div class="footer-section"> <h3>고객지원</h3> <ul class="footer-links"> <li><a href="${baseHref}contact/">문의하기</a></li> <li><a href="${baseHref}faq/">자주 묻는 질문</a></li> </ul> </div> </div> <div class="footer-bottom"> <div class="footer-legal"> <a href="${baseHref}privacy/">개인정보처리방침</a> <a href="${baseHref}terms/">이용약관</a> </div> <p>&copy; 2025 doha.kr. All rights reserved.</p> </div> </footer>`;
         }
@@ -233,28 +257,29 @@ DohaKR.initMobileMenu = function () {
     try {
       // 새로운 모바일 메뉴 시스템 사용
       initMobileMenu();
-      
+
       // 기존 시스템과의 호환성을 위한 추가 초기화
-      const mobileMenuBtn = document.querySelector('.mobile-menu-toggle, .mobile-menu-btn, .navbar-toggle');
+      const mobileMenuBtn = document.querySelector(
+        '.mobile-menu-toggle, .mobile-menu-btn, .navbar-toggle'
+      );
       const navMenu = document.querySelector('.nav-menu, .navbar-menu');
 
       if (mobileMenuBtn && navMenu) {
         console.log('✅ Enhanced mobile menu initialized successfully');
-        
+
         // PWA에서 모바일 메뉴 사용 추적
         if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
           navigator.serviceWorker.controller.postMessage({
             type: 'PWA_MOBILE_MENU_INIT',
-            timestamp: Date.now()
+            timestamp: Date.now(),
           });
         }
-        
       } else {
         console.warn('⚠️ Mobile menu elements not found for enhanced initialization:', {
           button: !!mobileMenuBtn,
-          menu: !!navMenu
+          menu: !!navMenu,
         });
-        
+
         // 폴백: 기본 모바일 메뉴 시스템
         DohaKR.initBasicMobileMenu();
       }
@@ -276,11 +301,11 @@ DohaKR.initBasicMobileMenu = function () {
   if (mobileMenuBtn && navMenu) {
     // 기존 이벤트 리스너 제거 (중복 방지)
     mobileMenuBtn.removeEventListener('click', DohaKR._mobileMenuClickHandler);
-    
+
     // 클릭 핸들러 정의
     DohaKR._mobileMenuClickHandler = () => {
       const isActive = navMenu.classList.contains('dh-state-active');
-      
+
       if (isActive) {
         navMenu.classList.remove('dh-state-active');
         mobileMenuBtn.classList.remove('dh-state-active');
@@ -290,7 +315,7 @@ DohaKR.initBasicMobileMenu = function () {
         navMenu.classList.add('dh-state-active');
         mobileMenuBtn.classList.add('dh-state-active');
         mobileMenuBtn.setAttribute('aria-expanded', 'true');
-        document.body.style.overflow = 'dh-u-hidden';
+        document.body.style.overflow = 'hidden';
       }
     };
 
@@ -298,7 +323,7 @@ DohaKR.initBasicMobileMenu = function () {
     mobileMenuBtn.addEventListener('click', DohaKR._mobileMenuClickHandler);
 
     // 메뉴 외부 클릭 시 닫기
-    document.addEventListener('click', function (_event) {
+    document.addEventListener('click', (event) => {
       if (!event.target.closest('.navbar') && navMenu.classList.contains('dh-state-active')) {
         navMenu.classList.remove('dh-state-active');
         mobileMenuBtn.classList.remove('dh-state-active');
@@ -321,7 +346,7 @@ DohaKR.initBasicMobileMenu = function () {
   } else {
     console.warn('⚠️ Mobile menu elements not found for basic initialization:', {
       button: !!mobileMenuBtn,
-      menu: !!navMenu
+      menu: !!navMenu,
     });
   }
 };
@@ -456,34 +481,33 @@ DohaKR.initPWAInstall = function () {
   try {
     // 새로운 PWA 헬퍼 시스템 사용
     PWAHelpers.setupInstallPrompt();
-    
+
     console.log('✅ Enhanced PWA install system initialized');
-    
+
     // 기존 시스템과의 호환성을 위한 추가 이벤트 리스너
-    window.addEventListener('appinstalled', (event) => {
+    window.addEventListener('appinstalled', (_event) => {
       console.log('✅ PWA installed successfully');
-      
+
       // Service Worker에 설치 완료 알림
       if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
         navigator.serviceWorker.controller.postMessage({
           type: 'PWA_INSTALL_COMPLETED',
-          timestamp: Date.now()
+          timestamp: Date.now(),
         });
       }
-      
+
       // 분석 이벤트
       if (typeof gtag !== 'undefined') {
         gtag('event', 'pwa_installed_via_enhanced_system');
       }
     });
-    
+
     // PWA 상태 모니터링
     if (PWAHelpers.isPWAInstalled()) {
       console.log('✅ App is running in PWA mode');
     } else {
       console.log('ℹ️ App is running in browser mode');
     }
-    
   } catch (error) {
     console.error('❌ Enhanced PWA system failed:', error);
     // 폴백: 기본 PWA 시스템
@@ -532,7 +556,7 @@ DohaKR.initBasicPWAInstall = function () {
       DohaKR.showiOSInstallPrompt();
     }, 10000);
   }
-  
+
   console.log('✅ Basic PWA install system initialized as fallback');
 };
 
@@ -703,7 +727,7 @@ DohaKR.showInstallSuccess = function () {
 // 초기화 함수 export
 export function init() {
   // DOM 로드 완료 시 초기화
-  if (document.readyState === 'dh-u-loading') {
+  if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initializeAll);
   } else {
     initializeAll();
@@ -741,16 +765,21 @@ function initializeAll() {
   // 모바일 메뉴는 네비게이션 로드 후 자동 초기화됨
 
   // 이미지 지연 로딩 polyfill
-  if ('dh-u-loading' in HTMLImageElement.prototype) {
+  if ('loading' in HTMLImageElement.prototype) {
     const images = document.querySelectorAll('img[loading="lazy"]');
     images.forEach((img) => {
       // Force reload by changing URL
       img.src = `${img.src + (img.src.includes('?') ? '&' : '?')}t=${Date.now()}`;
     });
   } else {
-    // Fallback for browsers that don't support lazy dh-u-loading
-    const script = document.createElement('script');
-    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js';
-    document.body.appendChild(script);
+    // Fallback for browsers that don't support lazy loading
+    // 로컬 polyfill 사용 또는 간단한 구현
+    const images = document.querySelectorAll('img[data-src]');
+    images.forEach((img) => {
+      if (img && img.dataset && 'src' in img.dataset) {
+        img.src = img.dataset['src'];
+        img.removeAttribute('data-src');
+      }
+    });
   }
 }

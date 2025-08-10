@@ -10,23 +10,23 @@ async function testToolsPage() {
   try {
     browser = await puppeteer.launch({ headless: false });
     const page = await browser.newPage();
-    
+
     // 브라우저 콘솔 로그 캐치
-    page.on('console', msg => {
+    page.on('console', (msg) => {
       console.log(`[BROWSER] ${msg.type()}: ${msg.text()}`);
     });
 
     // 에러 캐치
-    page.on('error', err => {
+    page.on('error', (err) => {
       console.error(`[PAGE ERROR] ${err.message}`);
     });
 
-    page.on('pageerror', err => {
+    page.on('pageerror', (err) => {
       console.error(`[PAGE ERROR] ${err.message}`);
     });
 
     // 네트워크 요청 실패 캐치
-    page.on('requestfailed', request => {
+    page.on('requestfailed', (request) => {
       console.error(`[REQUEST FAILED] ${request.url()} - ${request.failure()?.errorText}`);
     });
 
@@ -35,7 +35,7 @@ async function testToolsPage() {
     await page.goto(`file://${toolsPath}`, { waitUntil: 'networkidle0' });
 
     // 1초 대기 후 요소들 확인
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     // 중요한 요소들이 로드되었는지 확인
     const elements = await page.evaluate(() => {
@@ -46,7 +46,7 @@ async function testToolsPage() {
         buttons: document.querySelectorAll('button').length,
         cssLoaded: getComputedStyle(document.body).fontFamily !== 'Times',
         // 추가 정보
-        allIds: Array.from(document.querySelectorAll('[id]')).map(el => el.id)
+        allIds: Array.from(document.querySelectorAll('[id]')).map((el) => el.id),
       };
     });
 
@@ -62,16 +62,16 @@ async function testToolsPage() {
     if (elements.textArea) {
       await page.type('#textInput', '안녕하세요! 이것은 테스트 메시지입니다.');
     }
-    
-    await new Promise(resolve => setTimeout(resolve, 500));
-    
+
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
     const results = await page.evaluate(() => {
       const textArea = document.querySelector('#textInput');
       const charCountElement = document.querySelector('#totalChars');
-      
+
       return {
         inputValue: textArea ? textArea.value : null,
-        charCountText: charCountElement ? charCountElement.textContent : null
+        charCountText: charCountElement ? charCountElement.textContent : null,
       };
     });
 
@@ -80,12 +80,11 @@ async function testToolsPage() {
     console.log('글자수 표시:', results.charCountText);
 
     // 스크린샷 찍기
-    await page.screenshot({path: 'tools-test.png', fullPage: true});
+    await page.screenshot({ path: 'tools-test.png', fullPage: true });
     console.log('\n스크린샷 저장됨: tools-test.png');
 
     // 3초 대기 후 닫기
-    await new Promise(resolve => setTimeout(resolve, 3000));
-
+    await new Promise((resolve) => setTimeout(resolve, 3000));
   } catch (error) {
     console.error('테스트 에러:', error);
   } finally {

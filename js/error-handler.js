@@ -9,7 +9,7 @@ let logger = {
   error: () => {},
   critical: () => {},
   warn: () => {},
-  info: () => {}
+  info: () => {},
 };
 
 // Try to import logger dynamically
@@ -39,14 +39,14 @@ let logger = {
     errorCache: new Set(),
 
     // Initialize error handling
-    init () {
+    init() {
       this.setupGlobalErrorHandlers();
       this.setupPromiseRejectionHandler();
       this.setupResourceErrorHandlers();
     },
 
     // Setup global error handlers
-    setupGlobalErrorHandlers () {
+    setupGlobalErrorHandlers() {
       const self = this;
 
       // Global JavaScript error handler
@@ -64,7 +64,7 @@ let logger = {
     },
 
     // Setup promise rejection handler
-    setupPromiseRejectionHandler () {
+    setupPromiseRejectionHandler() {
       const self = this;
 
       window.addEventListener('unhandledrejection', (event) => {
@@ -82,7 +82,7 @@ let logger = {
     },
 
     // Setup resource error handlers
-    setupResourceErrorHandlers () {
+    setupResourceErrorHandlers() {
       const self = this;
 
       // Image dh-u-loading errors
@@ -121,7 +121,7 @@ let logger = {
     },
 
     // Handle JavaScript errors
-    handleError (errorInfo) {
+    handleError(errorInfo) {
       // Prevent error flooding
       if (this.errorCount >= this.config.maxErrorsPerSession) {
         return;
@@ -159,7 +159,7 @@ let logger = {
     },
 
     // Handle resource dh-u-loading errors
-    handleResourceError (type, src) {
+    handleResourceError(type, src) {
       const errorInfo = {
         type: 'resource',
         resourceType: type,
@@ -171,7 +171,7 @@ let logger = {
     },
 
     // Handle image dh-u-loading errors with fallback
-    handleImageError (imgElement) {
+    handleImageError(imgElement) {
       // Try fallback image
       if (!imgElement.dataset.errorHandled) {
         imgElement.dataset.errorHandled = 'true';
@@ -184,12 +184,12 @@ let logger = {
     },
 
     // Create error signature for deduplication
-    createErrorSignature (errorInfo) {
+    createErrorSignature(errorInfo) {
       return `${errorInfo.type}_${errorInfo.message}_${errorInfo.filename || ''}_${errorInfo.lineno || ''}`;
     },
 
     // Check if error is critical
-    isCriticalError (errorInfo) {
+    isCriticalError(errorInfo) {
       const criticalKeywords = ['network', 'fetch', 'api', 'security', 'permission', 'quota'];
 
       const message = (errorInfo.message || '').toLowerCase();
@@ -197,7 +197,7 @@ let logger = {
     },
 
     // Show user-friendly error message
-    showUserErrorMessage (errorInfo) {
+    showUserErrorMessage(errorInfo) {
       const userMessages = {
         network: '네트워크 연결을 확인해 주세요.',
         fetch: '데이터를 불러오는 중 문제가 발생했습니다. 잠시 후 다시 시도해 주세요.',
@@ -222,7 +222,7 @@ let logger = {
     },
 
     // Show notification to user
-    showNotification (message, type = 'info') {
+    showNotification(message, type = 'info') {
       // Try to use existing notification system
       if (typeof window.showNotification === 'function') {
         window.showNotification(message, type);
@@ -251,36 +251,40 @@ let logger = {
     },
 
     // Escape HTML for safe display
-    escapeHtml (text) {
+    escapeHtml(text) {
       const div = document.createElement('div');
       div.textContent = text;
       return div.innerHTML;
     },
 
     // Log to DohaLogger
-    logToDohaLogger (errorInfo) {
+    logToDohaLogger(errorInfo) {
       try {
         if (typeof logger !== 'undefined') {
           const logLevel = this.isCriticalError(errorInfo) ? 'critical' : 'error';
-          
-          logger[logLevel]('Client Error Caught', {
-            type: errorInfo.type,
-            message: errorInfo.message,
-            filename: errorInfo.filename,
-            lineno: errorInfo.lineno,
-            colno: errorInfo.colno,
-            stack: errorInfo.stack,
-            resourceType: errorInfo.resourceType,
-            src: errorInfo.src,
-            reason: errorInfo.reason,
-            details: errorInfo.details,
-            retryCount: errorInfo.retryCount,
-            signature: this.createErrorSignature(errorInfo)
-          }, {
-            errorHandler: 'global',
-            isCritical: this.isCriticalError(errorInfo),
-            errorCount: this.errorCount
-          });
+
+          logger[logLevel](
+            'Client Error Caught',
+            {
+              type: errorInfo.type,
+              message: errorInfo.message,
+              filename: errorInfo.filename,
+              lineno: errorInfo.lineno,
+              colno: errorInfo.colno,
+              stack: errorInfo.stack,
+              resourceType: errorInfo.resourceType,
+              src: errorInfo.src,
+              reason: errorInfo.reason,
+              details: errorInfo.details,
+              retryCount: errorInfo.retryCount,
+              signature: this.createErrorSignature(errorInfo),
+            },
+            {
+              errorHandler: 'global',
+              isCritical: this.isCriticalError(errorInfo),
+              errorCount: this.errorCount,
+            }
+          );
         } else if (typeof window.DohaLogger !== 'undefined') {
           // Fallback to global logger
           const logLevel = this.isCriticalError(errorInfo) ? 'critical' : 'error';
@@ -288,12 +292,11 @@ let logger = {
         }
       } catch (loggerError) {
         // Fallback to console if logger fails
-        
       }
     },
 
     // Send error to analytics
-    sendToAnalytics (errorInfo) {
+    sendToAnalytics(errorInfo) {
       try {
         // Google Analytics 4
         if (typeof gtag !== 'undefined') {
@@ -316,7 +319,7 @@ let logger = {
     },
 
     // Attempt automatic recovery
-    attemptRecovery (errorInfo) {
+    attemptRecovery(errorInfo) {
       // Retry failed API calls
       if (errorInfo.type === 'promise' && errorInfo.message.includes('fetch')) {
         this.retryFailedRequest(errorInfo);
@@ -329,7 +332,7 @@ let logger = {
     },
 
     // Retry failed requests
-    retryFailedRequest (errorInfo) {
+    retryFailedRequest(errorInfo) {
       if (errorInfo.retryCount >= this.config.retryAttempts) {
         return;
       }
@@ -342,7 +345,7 @@ let logger = {
     },
 
     // Retry resource dh-u-loading
-    retryResourceLoad (errorInfo) {
+    retryResourceLoad(errorInfo) {
       // Only retry critical resources
       if (errorInfo.resourceType === 'script' && errorInfo.src.includes('dh-l-main')) {
         setTimeout(() => {
@@ -354,7 +357,7 @@ let logger = {
     },
 
     // Safe function dh-l-wrapper
-    safeExecute (fn, context = null, args = []) {
+    safeExecute(fn, context = null, args = []) {
       try {
         return fn.apply(context, args);
       } catch (error) {
@@ -369,7 +372,7 @@ let logger = {
     },
 
     // Safe async function dh-l-wrapper
-    async safeExecuteAsync (asyncFn, context = null, args = []) {
+    async safeExecuteAsync(asyncFn, context = null, args = []) {
       try {
         return await asyncFn.apply(context, args);
       } catch (error) {
@@ -384,7 +387,7 @@ let logger = {
     },
 
     // Manual error reporting
-    reportError (message, details = {}) {
+    reportError(message, details = {}) {
       this.handleError({
         type: 'manual',
         message,
@@ -394,13 +397,13 @@ let logger = {
     },
 
     // Clear error cache
-    clearErrorCache () {
+    clearErrorCache() {
       this.errorCache.clear();
       this.errorCount = 0;
     },
 
     // Get error statistics
-    getErrorStats () {
+    getErrorStats() {
       return {
         totalErrors: this.errorCount,
         cachedErrors: this.errorCache.size,

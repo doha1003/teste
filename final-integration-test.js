@@ -14,7 +14,7 @@ const results = {
   총_항목수: 0,
   성공: 0,
   실패: 0,
-  상세결과: {}
+  상세결과: {},
 };
 
 function 테스트결과_기록(카테고리, 항목, 성공여부, 메시지 = '') {
@@ -22,7 +22,7 @@ function 테스트결과_기록(카테고리, 항목, 성공여부, 메시지 = 
   if (!results.상세결과[카테고리]) {
     results.상세결과[카테고리] = { 성공: 0, 실패: 0, 항목들: [] };
   }
-  
+
   if (성공여부) {
     results.성공++;
     results.상세결과[카테고리].성공++;
@@ -32,25 +32,23 @@ function 테스트결과_기록(카테고리, 항목, 성공여부, 메시지 = 
     results.상세결과[카테고리].실패++;
     console.log(`❌ ${항목} - ${메시지}`);
   }
-  
+
   results.상세결과[카테고리].항목들.push({
-    항목, 성공여부, 메시지
+    항목,
+    성공여부,
+    메시지,
   });
 }
 
 // 1. CSS 번들링 시스템 검증
 console.log('📄 1. CSS 번들링 시스템 검증');
-const cssFiles = [
-  'dist/styles.css',
-  'dist/styles.min.css',
-  'dist/styles.css.map'
-];
+const cssFiles = ['dist/styles.css', 'dist/styles.min.css', 'dist/styles.css.map'];
 
-cssFiles.forEach(file => {
+cssFiles.forEach((file) => {
   const exists = existsSync(file);
   if (exists) {
     const size = readFileSync(file, 'utf8').length;
-    테스트결과_기록('CSS시스템', `${file} 존재 (${(size/1024).toFixed(1)}KB)`, true);
+    테스트결과_기록('CSS시스템', `${file} 존재 (${(size / 1024).toFixed(1)}KB)`, true);
   } else {
     테스트결과_기록('CSS시스템', `${file} 존재`, false, '파일 없음');
   }
@@ -64,14 +62,14 @@ const jsFiles = [
   'js/features/fortune/tarot-fortune.js',
   'js/features/tests/love-dna-test.js',
   'js/features/tools/bmi-calculator.js',
-  'dist/js/bundle.min.js'
+  'dist/js/bundle.min.js',
 ];
 
-jsFiles.forEach(file => {
+jsFiles.forEach((file) => {
   const exists = existsSync(file);
   if (exists) {
     const size = readFileSync(file, 'utf8').length;
-    테스트결과_기록('JS모듈시스템', `${file} 존재 (${(size/1024).toFixed(1)}KB)`, true);
+    테스트결과_기록('JS모듈시스템', `${file} 존재 (${(size / 1024).toFixed(1)}KB)`, true);
   } else {
     테스트결과_기록('JS모듈시스템', `${file} 존재`, false, '파일 없음');
   }
@@ -86,16 +84,16 @@ const htmlPages = [
   'tests/teto-egen/test.html',
   'fortune/daily/index.html',
   'fortune/tarot/index.html',
-  'tools/bmi-calculator.html'
+  'tools/bmi-calculator.html',
 ];
 
-htmlPages.forEach(file => {
+htmlPages.forEach((file) => {
   const exists = existsSync(file);
   if (exists) {
     const content = readFileSync(file, 'utf8');
     const hasCSS = content.includes('dist/styles');
     const hasJS = content.includes('type="module"');
-    
+
     테스트결과_기록('HTML페이지', `${file} 존재`, true);
     테스트결과_기록('HTML페이지', `${file} CSS 연결`, hasCSS, !hasCSS ? 'CSS 참조 없음' : '');
     테스트결과_기록('HTML페이지', `${file} JS 모듈 연결`, hasJS, !hasJS ? 'JS 모듈 없음' : '');
@@ -112,14 +110,14 @@ const apiFiles = [
   'api/cors-config.js',
   'api/validation.js',
   'data/manseryeok-compact.json',
-  'vercel.json'
+  'vercel.json',
 ];
 
-apiFiles.forEach(file => {
+apiFiles.forEach((file) => {
   const exists = existsSync(file);
   if (exists) {
     const size = readFileSync(file, 'utf8').length;
-    테스트결과_기록('API시스템', `${file} 존재 (${(size/1024).toFixed(1)}KB)`, true);
+    테스트결과_기록('API시스템', `${file} 존재 (${(size / 1024).toFixed(1)}KB)`, true);
   } else {
     테스트결과_기록('API시스템', `${file} 존재`, false, '파일 없음');
   }
@@ -127,13 +125,9 @@ apiFiles.forEach(file => {
 
 // 5. PWA 시스템 검증
 console.log('\n📱 5. PWA 시스템 검증');
-const pwaFiles = [
-  'manifest.json',
-  'sw.js',
-  'offline.html'
-];
+const pwaFiles = ['manifest.json', 'sw.js', 'offline.html'];
 
-pwaFiles.forEach(file => {
+pwaFiles.forEach((file) => {
   const exists = existsSync(file);
   if (exists) {
     테스트결과_기록('PWA시스템', `${file} 존재`, true);
@@ -144,14 +138,9 @@ pwaFiles.forEach(file => {
 
 // 6. 빌드 시스템 검증
 console.log('\n🔨 6. 빌드 시스템 검증');
-const buildFiles = [
-  'package.json',
-  'tools/build-css.js',
-  'build-js.js',
-  'rollup.config.js'
-];
+const buildFiles = ['package.json', 'tools/build-css.js', 'build-js.js', 'rollup.config.js'];
 
-buildFiles.forEach(file => {
+buildFiles.forEach((file) => {
   const exists = existsSync(file);
   테스트결과_기록('빌드시스템', `${file} 존재`, exists, !exists ? '파일 없음' : '');
 });
@@ -207,10 +196,10 @@ console.log('✅ 빌드 시스템 복구');
 if (results.실패 > 0) {
   console.log('\n⚠️ 실패한 항목들:');
   Object.entries(results.상세결과).forEach(([카테고리, 데이터]) => {
-    const 실패항목들 = 데이터.항목들.filter(item => !item.성공여부);
+    const 실패항목들 = 데이터.항목들.filter((item) => !item.성공여부);
     if (실패항목들.length > 0) {
       console.log(`\n${카테고리}:`);
-      실패항목들.forEach(item => {
+      실패항목들.forEach((item) => {
         console.log(`   ❌ ${item.항목}: ${item.메시지}`);
       });
     }

@@ -2,7 +2,7 @@
  * Common Utilities Module
  * doha.kr 프로젝트의 공통 유틸리티 함수들을 통합
  * 중복 제거 및 성능 최적화된 버전
- * 
+ *
  * @version 2.0.0
  * @author doha.kr
  */
@@ -70,7 +70,7 @@ export function formatNumber(num) {
 export function throttle(func, limit) {
   let inThrottle;
   let lastResult;
-  
+
   const throttledFunc = function (...args) {
     if (!inThrottle) {
       lastResult = func.apply(this, args);
@@ -169,7 +169,7 @@ export const storage = {
       if (item === null) {
         return defaultValue;
       }
-      
+
       try {
         return JSON.parse(item);
       } catch (parseError) {
@@ -223,7 +223,7 @@ export const storage = {
       console.warn('Storage has error:', error);
       return false;
     }
-  }
+  },
 };
 
 /**
@@ -276,7 +276,7 @@ export const urlParams = {
     } catch (error) {
       console.warn('URL params set error:', error);
     }
-  }
+  },
 };
 
 /**
@@ -318,7 +318,7 @@ export const clipboard = {
       document.body.appendChild(textArea);
       textArea.focus();
       textArea.select();
-      
+
       const successful = document.execCommand('copy');
       document.body.removeChild(textArea);
       return successful;
@@ -326,7 +326,7 @@ export const clipboard = {
       console.warn('Fallback clipboard copy error:', error);
       return false;
     }
-  }
+  },
 };
 
 /**
@@ -345,10 +345,12 @@ export const dom = {
       const windowHeight = window.innerHeight || document.documentElement.clientHeight;
       const windowWidth = window.innerWidth || document.documentElement.clientWidth;
 
-      const vertInView = (rect.top <= windowHeight * (1 - threshold)) && 
-                        ((rect.top + rect.height) >= windowHeight * threshold);
-      const horInView = (rect.left <= windowWidth * (1 - threshold)) && 
-                       ((rect.left + rect.width) >= windowWidth * threshold);
+      const vertInView =
+        rect.top <= windowHeight * (1 - threshold) &&
+        rect.top + rect.height >= windowHeight * threshold;
+      const horInView =
+        rect.left <= windowWidth * (1 - threshold) &&
+        rect.left + rect.width >= windowWidth * threshold;
 
       return vertInView && horInView;
     } catch (error) {
@@ -375,7 +377,7 @@ export const dom = {
 
       window.scrollTo({
         top: targetPosition,
-        behavior: 'smooth'
+        behavior: 'smooth',
       });
 
       // 접근성을 위한 포커스 설정
@@ -384,7 +386,7 @@ export const dom = {
     } catch (error) {
       console.warn('Smooth scroll error:', error);
     }
-  }
+  },
 };
 
 /**
@@ -419,7 +421,7 @@ export const validate = {
   koreanName(name) {
     const nameRegex = /^[가-힣]{2,5}$/;
     return nameRegex.test(name);
-  }
+  },
 };
 
 /**
@@ -452,13 +454,13 @@ export const performance = {
         renderTime: navigation ? navigation.domContentLoadedEventEnd - navigation.fetchStart : 0,
         interactionTime: navigation ? navigation.domInteractive - navigation.fetchStart : 0,
         memoryUsage: window.performance.memory?.usedJSHeapSize || 0,
-        networkRequests: window.performance.getEntriesByType('resource').length
+        networkRequests: window.performance.getEntriesByType('resource').length,
       };
     } catch (error) {
       console.warn('Performance metrics error:', error);
       return {};
     }
-  }
+  },
 };
 
 // 전역 호환성을 위한 폴백 (기존 코드와의 호환성 유지)
@@ -468,7 +470,7 @@ if (typeof window !== 'undefined') {
   window.formatNumber = formatNumber;
   window.throttle = throttle;
   window.debounce = debounce;
-  
+
   // 새로운 유틸리티도 전역으로 노출 (선택적)
   window.CommonUtils = {
     formatDate,
@@ -480,7 +482,7 @@ if (typeof window !== 'undefined') {
     clipboard,
     dom,
     validate,
-    performance
+    performance,
   };
 }
 
@@ -494,5 +496,5 @@ export default {
   clipboard,
   dom,
   validate,
-  performance
+  performance,
 };

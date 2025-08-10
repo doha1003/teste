@@ -7,27 +7,27 @@
 
 :root {
   /* ========== INTERACTION TOKENS ========== */
-  
+
   /* Hover transform values */
   --hover-lift-distance: -2px;
   --hover-scale-factor: 1.02;
   --hover-button-scale: 0.98;
-  
+
   /* Active transform values */
   --active-scale-factor: 0.98;
   --active-lift-distance: 0px;
-  
+
   /* Focus ring dimensions */
   --focus-ring-width: 2px;
   --focus-ring-offset: 2px;
   --focus-ring-blur: 0px;
-  
+
   /* Interaction timing */
   --interaction-duration: 200ms;
   --interaction-timing: cubic-bezier(0.25, 0.46, 0.45, 0.94);
   --quick-interaction: 150ms;
   --instant-feedback: 100ms;
-  
+
   /* Loading pulse timing */
   --pulse-duration: 2s;
   --skeleton-shimmer: 1.5s;
@@ -47,7 +47,7 @@
 
 /* Prevent layout shift during transforms */
 .interactive-base::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -60,11 +60,11 @@
 /* ========== BUTTON INTERACTIONS ========== */
 
 /* Primary button interactions */
-.dh-c-btn, 
+.dh-c-btn,
 .dh-c-button,
 button:not(.btn-minimal) {
   @extend .interactive-base;
-  transition: 
+  transition:
     background-color var(--quick-interaction) var(--interaction-timing),
     border-color var(--quick-interaction) var(--interaction-timing),
     color var(--quick-interaction) var(--interaction-timing),
@@ -118,7 +118,7 @@ button:not(.btn-minimal):active {
 button:focus {
   outline: var(--focus-ring-width) solid var(--color-primary);
   outline-offset: var(--focus-ring-offset);
-  box-shadow: 
+  box-shadow:
     var(--shadow-button-rest),
     0 0 0 var(--focus-ring-width) var(--color-primary-alpha-20);
 }
@@ -268,7 +268,7 @@ select:disabled {
   position: relative;
   padding: var(--spacing-sm) var(--spacing-md);
   border-radius: var(--radius-md);
-  transition: 
+  transition:
     background-color var(--interaction-duration) var(--interaction-timing),
     color var(--interaction-duration) var(--interaction-timing);
 }
@@ -305,7 +305,7 @@ select:disabled {
 
 .btn.dh-u-loading::after,
 .button.dh-u-loading::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   left: 50%;
@@ -359,7 +359,7 @@ select:disabled {
     min-height: 44px;
     min-width: 44px;
   }
-  
+
   /* Reduce hover effects on touch devices */
   .dh-c-btn:hover,
   .dh-c-button:hover,
@@ -368,7 +368,7 @@ select:disabled {
   .nav-link:hover {
     transform: none;
   }
-  
+
   /* Enhance active states for touch */
   .dh-c-btn:active,
   .dh-c-button:active,
@@ -378,7 +378,7 @@ select:disabled {
     opacity: 0.8;
     transition-duration: 50ms;
   }
-  
+
   /* Touch-friendly form elements */
   input,
   textarea,
@@ -394,17 +394,17 @@ select:disabled {
   /* Adjust hover colors for dark theme */
   --color-neutral-hover: var(--color-neutral-800);
   --color-neutral-active: var(--color-neutral-700);
-  
+
   /* Enhanced glow effects in dark mode */
   .dh-c-btn:focus,
   .dh-c-button:focus,
   input:focus,
   textarea:focus {
-    box-shadow: 
+    box-shadow:
       var(--shadow-glow),
       0 0 0 var(--focus-ring-width) var(--color-primary-alpha-30);
   }
-  
+
   /* Dark theme skeleton */
   .skeleton {
     background: linear-gradient(
@@ -433,7 +433,7 @@ select:disabled {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
   }
-  
+
   /* Remove transform animations */
   .dh-c-btn:hover,
   .dh-c-button:hover,
@@ -443,7 +443,7 @@ select:disabled {
   .dh-c-button:active {
     transform: none !important;
   }
-  
+
   /* Keep essential focus outlines */
   .dh-c-btn:focus,
   .dh-c-button:focus,
@@ -546,7 +546,7 @@ select:disabled {
 }
 
 .ripple::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   left: 50%;
@@ -555,11 +555,15 @@ select:disabled {
   border-radius: 50%;
   background: var(--color-primary-alpha-20);
   transform: translate(-50%, -50%);
-  transition: width 0.6s, height 0.6s;
+  transition:
+    width 0.6s,
+    height 0.6s;
 }
 
 .ripple:active::after {
   width: 300px;
   height: 300px;
-  transition: width 0s, height 0s;
+  transition:
+    width 0s,
+    height 0s;
 }

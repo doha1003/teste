@@ -1,7 +1,7 @@
 /**
  * Lazy Loading Manager
  * doha.kr 성능 최적화를 위한 지연 로딩 시스템
- * 
+ *
  * @version 1.0.0
  * @author doha.kr
  */
@@ -20,19 +20,16 @@ class LazyLoader {
   init() {
     // Intersection Observer 설정 (이미지 지연 로딩용)
     if ('IntersectionObserver' in window) {
-      this.intersectionObserver = new IntersectionObserver(
-        this.handleIntersection.bind(this),
-        {
-          root: null,
-          rootMargin: '50px',
-          threshold: 0.1
-        }
-      );
+      this.intersectionObserver = new IntersectionObserver(this.handleIntersection.bind(this), {
+        root: null,
+        rootMargin: '50px',
+        threshold: 0.1,
+      });
     }
 
     // 초기 지연 로딩 요소들 관찰 시작
     this.observeElements();
-    
+
     // DOM 변경 감지해서 새로운 요소들도 관찰
     this.setupMutationObserver();
   }
@@ -43,7 +40,7 @@ class LazyLoader {
   observeElements() {
     // 이미지 지연 로딩
     const lazyImages = document.querySelectorAll('img[data-src]:not(.lazy-observed)');
-    lazyImages.forEach(img => {
+    lazyImages.forEach((img) => {
       img.classList.add('lazy-observed');
       if (this.intersectionObserver) {
         this.intersectionObserver.observe(img);
@@ -55,7 +52,7 @@ class LazyLoader {
 
     // iframe 지연 로딩
     const lazyIframes = document.querySelectorAll('iframe[data-src]:not(.lazy-observed)');
-    lazyIframes.forEach(iframe => {
+    lazyIframes.forEach((iframe) => {
       iframe.classList.add('lazy-observed');
       if (this.intersectionObserver) {
         this.intersectionObserver.observe(iframe);
@@ -64,7 +61,7 @@ class LazyLoader {
 
     // 컴포넌트 지연 로딩
     const lazyComponents = document.querySelectorAll('[data-lazy-component]:not(.lazy-observed)');
-    lazyComponents.forEach(component => {
+    lazyComponents.forEach((component) => {
       component.classList.add('lazy-observed');
       if (this.intersectionObserver) {
         this.intersectionObserver.observe(component);
@@ -77,14 +74,14 @@ class LazyLoader {
    */
   setupMutationObserver() {
     if ('MutationObserver' in window) {
-      const observer = new MutationObserver(mutations => {
+      const observer = new MutationObserver((mutations) => {
         let hasNewElements = false;
-        mutations.forEach(mutation => {
+        mutations.forEach((mutation) => {
           if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
             hasNewElements = true;
           }
         });
-        
+
         if (hasNewElements) {
           // 새로운 요소들에 대해 지연 로딩 적용
           setTimeout(() => this.observeElements(), 100);
@@ -93,7 +90,7 @@ class LazyLoader {
 
       observer.observe(document.body, {
         childList: true,
-        subtree: true
+        subtree: true,
       });
     }
   }
@@ -102,10 +99,10 @@ class LazyLoader {
    * Intersection Observer 콜백
    */
   handleIntersection(entries) {
-    entries.forEach(entry => {
+    entries.forEach((entry) => {
       if (entry.isIntersecting) {
         const element = entry.target;
-        
+
         if (element.tagName === 'IMG') {
           this.loadImage(element);
         } else if (element.tagName === 'IFRAME') {
@@ -113,7 +110,7 @@ class LazyLoader {
         } else if (element.hasAttribute('data-lazy-component')) {
           this.loadComponent(element);
         }
-        
+
         this.intersectionObserver.unobserve(element);
       }
     });
@@ -124,30 +121,32 @@ class LazyLoader {
    */
   loadImage(img) {
     const src = img.getAttribute('data-src');
-    if (!src) {return;}
+    if (!src) {
+      return;
+    }
 
     // 로딩 스피너 추가
     img.classList.add('dh-u-loading');
-    
+
     const newImg = new Image();
     newImg.onload = () => {
       img.src = src;
       img.removeAttribute('data-src');
       img.classList.remove('dh-u-loading');
       img.classList.add('loaded');
-      
+
       // 페이드인 효과
       if (img.style.opacity !== undefined) {
         img.style.opacity = '1';
       }
     };
-    
+
     newImg.onerror = () => {
       img.classList.remove('dh-u-loading');
       img.classList.add('error');
       console.warn('Image dh-u-loading failed:', src);
     };
-    
+
     newImg.src = src;
   }
 
@@ -156,7 +155,9 @@ class LazyLoader {
    */
   loadIframe(iframe) {
     const src = iframe.getAttribute('data-src');
-    if (!src) {return;}
+    if (!src) {
+      return;
+    }
 
     iframe.src = src;
     iframe.removeAttribute('data-src');
@@ -168,24 +169,25 @@ class LazyLoader {
    */
   async loadComponent(element) {
     const componentName = element.getAttribute('data-lazy-component');
-    if (!componentName) {return;}
+    if (!componentName) {
+      return;
+    }
 
     try {
       // 로딩 상태 표시
       element.classList.add('component-loading');
-      
+
       // 컴포넌트 스크립트 로딩
       await this.loadScript(`/js/features/${componentName}.js`);
-      
+
       // 컴포넌트 초기화
       const ComponentClass = window[componentName];
       if (ComponentClass && typeof ComponentClass === 'function') {
         new ComponentClass(element);
       }
-      
+
       element.classList.remove('component-loading');
       element.classList.add('component-loaded');
-      
     } catch (error) {
       console.error(`Failed to load component: ${componentName}`, error);
       element.classList.remove('component-loading');
@@ -212,18 +214,18 @@ class LazyLoader {
       const script = document.createElement('script');
       script.src = src;
       script.type = 'module'; // ES6 모듈 지원
-      
+
       script.onload = () => {
         this.loadedModules.add(src);
         this.pendingModules.delete(src);
         resolve();
       };
-      
+
       script.onerror = () => {
         this.pendingModules.delete(src);
         reject(new Error(`Failed to load script: ${src}`));
       };
-      
+
       document.head.appendChild(script);
     });
 
@@ -246,10 +248,10 @@ class LazyLoader {
       const link = document.createElement('link');
       link.rel = 'stylesheet';
       link.href = href;
-      
+
       link.onload = () => resolve();
       link.onerror = () => reject(new Error(`Failed to load CSS: ${href}`));
-      
+
       document.head.appendChild(link);
     });
   }
@@ -273,42 +275,36 @@ class LazyLoader {
    */
   loadResourcesByPriority() {
     // 높은 우선순위: 필수 기능
-    const highPriorityResources = [
-      '/js/utils/common-utils.js',
-      '/js/error-handler.js'
-    ];
+    const highPriorityResources = ['/js/utils/common-utils.js', '/js/error-handler.js'];
 
     // 중간 우선순위: 주요 기능
     const mediumPriorityResources = [
       '/js/features/fortune/daily-fortune.js',
-      '/js/features/tests/mbti-test.js'
+      '/js/features/tests/mbti-test.js',
     ];
 
     // 낮은 우선순위: 부가 기능
-    const lowPriorityResources = [
-      '/js/features/tools/text-counter.js',
-      '/js/analytics.js'
-    ];
+    const lowPriorityResources = ['/js/features/tools/text-counter.js', '/js/analytics.js'];
 
     // 순차적 로딩
-    Promise.all(highPriorityResources.map(src => this.loadScript(src)))
+    Promise.all(highPriorityResources.map((src) => this.loadScript(src)))
       .then(() => {
         // 높은 우선순위 로딩 완료 후 중간 우선순위 로딩
-        return Promise.all(mediumPriorityResources.map(src => this.loadScript(src)));
+        return Promise.all(mediumPriorityResources.map((src) => this.loadScript(src)));
       })
       .then(() => {
         // 사용자 상호작용 후 낮은 우선순위 로딩
         const loadLowPriority = () => {
-          lowPriorityResources.forEach(src => this.loadScript(src));
+          lowPriorityResources.forEach((src) => this.loadScript(src));
         };
 
         // 2초 후 또는 사용자 상호작용 시 로딩
         setTimeout(loadLowPriority, 2000);
-        ['click', 'scroll', 'keydown'].forEach(event => {
+        ['click', 'scroll', 'keydown'].forEach((event) => {
           document.addEventListener(event, loadLowPriority, { once: true });
         });
       })
-      .catch(error => {
+      .catch((error) => {
         console.error('Resource dh-u-loading failed:', error);
       });
   }
@@ -321,7 +317,7 @@ class LazyLoader {
       loadedModules: this.loadedModules.size,
       pendingModules: this.pendingModules.size,
       observedElements: document.querySelectorAll('.lazy-observed').length,
-      loadedElements: document.querySelectorAll('.loaded').length
+      loadedElements: document.querySelectorAll('.loaded').length,
     };
   }
 

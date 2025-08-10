@@ -3,7 +3,7 @@
  * 러브 DNA 테스트 구현
  */
 
-import { TestService } from "./test-service.js";
+import { TestService } from './test-service.js';
 
 export class LoveDNATestService extends TestService {
   constructor() {
@@ -80,7 +80,7 @@ export class LoveDNATestService extends TestService {
       return this.loadLoveDNAQuestions();
     }
   }
-  
+
   /**
    * Love DNA 질문 데이터 동적 로드
    */

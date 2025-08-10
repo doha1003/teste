@@ -1,0 +1,314 @@
+name: 🔙 긴급 수동 롤백
+
+on:
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: '롤백 사유'
+        required: true
+        type: string
+      target_env:
+        description: '롤백할 환경'
+        required: true
+        default: 'blue'
+        type: choice
+        options:
+          - blue
+          - green
+      skip_confirmation:
+        description: '확인 단계 건너뛰기 (긴급시에만 사용)'
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+env:
+  NODE_VERSION: '20.x'
+
+jobs:
+  # 1️⃣ 사전 확인
+  pre-rollback-check:
+    name: 🔍 롤백 사전 확인
+    runs-on: ubuntu-latest
+    outputs:
+      current-env: ${{ steps.check-env.outputs.current }}
+      target-env: ${{ github.event.inputs.target_env }}
+      can-rollback: ${{ steps.check-env.outputs.can-rollback }}
+    steps:
+      - name: 현재 환경 상태 확인
+        id: check-env
+        run: |
+          echo "🔍 현재 프로덕션 환경 상태 확인..."
+          
+          # 현재 활성 환경 확인
+          CURRENT_RESPONSE=$(curl -s -f -m 10 "https://doha.kr/api/health" || echo "none")
+          
+          if echo "$CURRENT_RESPONSE" | grep -q "blue"; then
+            echo "current=blue" >> $GITHUB_OUTPUT
+            echo "📍 현재 환경: Blue"
+          elif echo "$CURRENT_RESPONSE" | grep -q "green"; then
+            echo "current=green" >> $GITHUB_OUTPUT
+            echo "📍 현재 환경: Green"
+          else
+            echo "current=unknown" >> $GITHUB_OUTPUT
+            echo "⚠️ 현재 환경을 확인할 수 없음"
+          fi
+          
+          # 롤백 가능성 확인
+          TARGET_ENV="${{ github.event.inputs.target_env }}"
+          CURRENT_ENV=$(echo "$GITHUB_OUTPUT" | grep current= | cut -d= -f2)
+          
+          if [ "$TARGET_ENV" != "$CURRENT_ENV" ]; then
+            echo "can-rollback=true" >> $GITHUB_OUTPUT
+            echo "✅ 롤백 가능: $CURRENT_ENV → $TARGET_ENV"
+          else
+            echo "can-rollback=false" >> $GITHUB_OUTPUT
+            echo "❌ 롤백 불가능: 현재와 동일한 환경"
+            exit 1
+          fi
+
+      - name: 롤백 사유 기록
+        run: |
+          echo "📝 롤백 사유: ${{ github.event.inputs.reason }}"
+          echo "👤 요청자: ${{ github.actor }}"
+          echo "⏰ 요청 시간: $(date -u '+%Y-%m-%d %H:%M:%S') UTC"
+
+  # 2️⃣ 롤백 확인 (건너뛰기 가능)
+  rollback-confirmation:
+    name: ⚠️ 롤백 확인
+    runs-on: ubuntu-latest
+    needs: pre-rollback-check
+    if: github.event.inputs.skip_confirmation != 'true' && needs.pre-rollback-check.outputs.can-rollback == 'true'
+    steps:
+      - name: 롤백 영향 분석
+        run: |
+          echo "⚠️ 수동 롤백 영향 분석"
+          echo "================================"
+          echo "현재 환경: ${{ needs.pre-rollback-check.outputs.current-env }}"
+          echo "타겟 환경: ${{ needs.pre-rollback-check.outputs.target-env }}"
+          echo "롤백 사유: ${{ github.event.inputs.reason }}"
+          echo ""
+          echo "📋 예상 영향:"
+          echo "• 사용자는 일시적으로 이전 버전 경험"
+          echo "• CDN 캐시 무효화로 인한 일시적 성능 저하"
+          echo "• 모니터링 및 로그 시스템에 롤백 기록"
+          echo ""
+          echo "⏳ 30초 대기 후 자동 진행..."
+          sleep 30
+
+  # 3️⃣ DNS 트래픽 전환
+  execute-rollback:
+    name: 🔙 롤백 실행
+    runs-on: ubuntu-latest
+    needs: [pre-rollback-check, rollback-confirmation]
+    if: |
+      always() && 
+      needs.pre-rollback-check.outputs.can-rollback == 'true' && 
+      (needs.rollback-confirmation.result == 'success' || github.event.inputs.skip_confirmation == 'true')
+    steps:
+      - name: 체크아웃
+        uses: actions/checkout@v4
+
+      - name: DNS 트래픽 전환 시작
+        run: |
+          echo "🔄 DNS 트래픽 전환 시작"
+          echo "현재 환경: ${{ needs.pre-rollback-check.outputs.current-env }}"
+          echo "타겟 환경: ${{ needs.pre-rollback-check.outputs.target-env }}"
+          
+          # 실제 DNS 전환은 Cloudflare API를 통해 수행
+          # 여기서는 로그만 출력 (실제 구현시 DNS API 호출 필요)
+          echo "📡 Cloudflare DNS 레코드 업데이트 필요"
+
+      - name: CDN 캐시 무효화
+        run: |
+          echo "🗑️ CDN 캐시 무효화"
+          
+          if [ -n "${{ secrets.CLOUDFLARE_API_TOKEN }}" ]; then
+            echo "🌐 Cloudflare 캐시 퍼지 실행..."
+            curl -X POST "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/purge_cache" \
+              -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+              -H "Content-Type: application/json" \
+              --data '{"purge_everything":true}' || echo "⚠️ CDN 캐시 무효화 실패"
+            echo "✅ CDN 캐시 무효화 완료"
+          else
+            echo "⚠️ Cloudflare API 토큰이 설정되지 않음"
+          fi
+
+      - name: 롤백 완료 대기
+        run: |
+          echo "⏳ 롤백 전환 완료 대기..."
+          sleep 60
+
+  # 4️⃣ 롤백 검증
+  verify-rollback:
+    name: ✅ 롤백 검증
+    runs-on: ubuntu-latest
+    needs: [pre-rollback-check, execute-rollback]
+    steps:
+      - name: 체크아웃
+        uses: actions/checkout@v4
+
+      - name: Node.js 설정
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: 롤백 환경 확인
+        run: |
+          echo "🔍 롤백 환경 확인..."
+          
+          # 최대 10회 재시도로 환경 확인
+          for i in {1..10}; do
+            CURRENT_RESPONSE=$(curl -s -f -m 10 "https://doha.kr/api/health" || echo "none")
+            
+            if echo "$CURRENT_RESPONSE" | grep -q "${{ needs.pre-rollback-check.outputs.target-env }}"; then
+              echo "✅ 롤백 성공: ${{ needs.pre-rollback-check.outputs.target-env }} 환경 활성화 (시도 $i)"
+              break
+            elif [ $i -eq 10 ]; then
+              echo "❌ 롤백 검증 실패: 10회 시도 모두 실패"
+              exit 1
+            else
+              echo "⚠️ 롤백 환경 확인 중... (시도 $i/10)"
+              sleep 30
+            fi
+          done
+
+      - name: 기본 기능 테스트
+        run: |
+          echo "🧪 롤백 후 기본 기능 테스트..."
+          
+          # 메인 페이지 접근 확인
+          curl -f -L -m 30 https://doha.kr -o /dev/null || (echo "❌ 메인 페이지 접근 실패" && exit 1)
+          echo "✅ 메인 페이지 접근 성공"
+          
+          # API 기본 기능 확인
+          curl -f -L -m 15 https://doha.kr/api/health -o /dev/null || (echo "❌ API 헬스체크 실패" && exit 1)
+          echo "✅ API 헬스체크 성공"
+          
+          # 주요 정적 리소스 확인
+          curl -f -L -m 15 https://doha.kr/js/main.js -o /dev/null || echo "⚠️ JavaScript 파일 확인 필요"
+          curl -f -L -m 15 https://doha.kr/manifest.json -o /dev/null || echo "⚠️ PWA manifest 확인 필요"
+          
+          echo "✅ 롤백 후 기본 기능 확인 완료"
+
+  # 5️⃣ 롤백 알림
+  rollback-notification:
+    name: 📢 롤백 알림
+    runs-on: ubuntu-latest
+    needs: [pre-rollback-check, execute-rollback, verify-rollback]
+    if: always()
+    steps:
+      - name: 롤백 성공 알림
+        if: needs.verify-rollback.result == 'success'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          echo "✅ 수동 롤백 성공 알림"
+          
+          SUCCESS_MESSAGE="✅ doha.kr 수동 롤백 성공
+          
+          📋 롤백 정보:
+          • 요청자: ${{ github.actor }}
+          • 롤백 사유: ${{ github.event.inputs.reason }}
+          • 이전 환경: ${{ needs.pre-rollback-check.outputs.current-env }}
+          • 현재 환경: ${{ needs.pre-rollback-check.outputs.target-env }}
+          • 롤백 시간: $(date -u '+%Y-%m-%d %H:%M:%S') UTC
+          
+          ✅ 검증 완료:
+          • 환경 전환 확인
+          • 기본 기능 테스트 통과
+          • CDN 캐시 무효화 완료
+          
+          🌍 사이트 상태: https://doha.kr
+          📊 워크플로우: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          
+          # Slack 알림
+          if [ -n "$SLACK_WEBHOOK_URL" ]; then
+            curl -X POST -H 'Content-type: application/json' \
+              --data "{\"text\":\"$SUCCESS_MESSAGE\"}" \
+              "$SLACK_WEBHOOK_URL"
+          fi
+          
+          # Discord 알림
+          if [ -n "$DISCORD_WEBHOOK_URL" ]; then
+            curl -X POST -H 'Content-Type: application/json' \
+              --data "{\"content\":\"$SUCCESS_MESSAGE\"}" \
+              "$DISCORD_WEBHOOK_URL"
+          fi
+
+      - name: 롤백 실패 알림
+        if: failure()
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          echo "❌ 수동 롤백 실패 알림"
+          
+          FAILURE_MESSAGE="❌ doha.kr 수동 롤백 실패
+          
+          🚨 긴급 상황: 수동 롤백 시도 실패
+          
+          📋 실패 정보:
+          • 요청자: ${{ github.actor }}
+          • 롤백 사유: ${{ github.event.inputs.reason }}
+          • 시도 환경: ${{ needs.pre-rollback-check.outputs.target-env }}
+          • 실패 시간: $(date -u '+%Y-%m-%d %H:%M:%S') UTC
+          
+          🚨 즉시 필요한 조치:
+          1. 현재 사이트 상태 긴급 점검
+          2. 인프라 팀 즉시 호출
+          3. DNS 설정 수동 확인
+          4. 서버 상태 점검
+          
+          📊 실패 로그: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          
+          # 긴급 알림
+          if [ -n "$SLACK_WEBHOOK_URL" ]; then
+            curl -X POST -H 'Content-type: application/json' \
+              --data "{\"text\":\"$FAILURE_MESSAGE\", \"channel\": \"#alerts\", \"username\": \"GitHub Actions - ROLLBACK FAILURE\"}" \
+              "$SLACK_WEBHOOK_URL"
+          fi
+          
+          if [ -n "$DISCORD_WEBHOOK_URL" ]; then
+            curl -X POST -H 'Content-Type: application/json' \
+              --data "{\"content\":\"$FAILURE_MESSAGE\"}" \
+              "$DISCORD_WEBHOOK_URL"
+          fi
+
+      - name: 이슈 생성 (롤백 실패시)
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const title = `🚨 긴급: 수동 롤백 실패 - ${new Date().toISOString()}`;
+            const body = `## 🚨 긴급 상황: 수동 롤백 실패
+            
+            **롤백 정보:**
+            - 요청자: ${{ github.actor }}
+            - 롤백 사유: ${{ github.event.inputs.reason }}
+            - 시도 시간: ${new Date().toISOString()}
+            - 워크플로우: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+            
+            **즉시 필요한 조치:**
+            - [ ] 현재 사이트 상태 점검
+            - [ ] DNS 설정 수동 확인
+            - [ ] 인프라 팀 호출
+            - [ ] 서버 로그 분석
+            - [ ] 사용자 영향 범위 파악
+            
+            **담당자:** 인프라 팀 전체
+            **우선순위:** P0 (최고 우선순위)
+            `;
+            
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: title,
+              body: body,
+              labels: ['emergency', 'rollback-failure', 'P0']
+            });

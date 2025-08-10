@@ -3,12 +3,12 @@
 // Kakao SDK 초기화 (config.js 필요)
 if (
   typeof Kakao !== 'undefined' &&
-  typeof Config !== 'undefined' &&
-  Config.kakao &&
-  Config.kakao.appKey
+  typeof window.Config !== 'undefined' &&
+  window.Config.kakao &&
+  window.Config.kakao.appKey
 ) {
-  if (Config.validateDomain()) {
-    Kakao.init(Config.kakao.appKey);
+  if (window.Config.validateDomain()) {
+    Kakao.init(window.Config.kakao.appKey);
     // console.log removed('MBTI Test: Kakao SDK initialized successfully');
   } else {
     // console.warn removed('MBTI Test: Domain validation failed - Kakao SDK not initialized');

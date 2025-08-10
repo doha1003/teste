@@ -16,14 +16,14 @@ class DohaErrorTester {
       cssErrors: 0,
       pathErrors: 0,
       missingFiles: 0,
-      passed: 0
+      passed: 0,
     };
   }
 
   async testAllPages() {
-    const browser = await puppeteer.launch({ 
+    const browser = await puppeteer.launch({
       headless: 'new',
-      args: ['--no-sandbox', '--disable-setuid-sandbox']
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
 
     try {
@@ -56,7 +56,7 @@ class DohaErrorTester {
         }
       }
     };
-    
+
     scanDir('.');
     return files;
   }
@@ -66,37 +66,37 @@ class DohaErrorTester {
     const pageErrors = [];
 
     // Console 오류 수집
-    page.on('console', msg => {
+    page.on('console', (msg) => {
       if (msg.type() === 'error') {
         pageErrors.push({
           type: 'console-error',
           file: filePath,
           message: msg.text(),
-          location: msg.location()
+          location: msg.location(),
         });
       }
     });
 
     // 네트워크 오류 수집
-    page.on('response', response => {
+    page.on('response', (response) => {
       if (response.status() >= 400) {
         pageErrors.push({
           type: 'network-error',
           file: filePath,
           message: `${response.status()} - ${response.url()}`,
           status: response.status(),
-          url: response.url()
+          url: response.url(),
         });
       }
     });
 
     // JavaScript 오류 수집
-    page.on('pageerror', error => {
+    page.on('pageerror', (error) => {
       pageErrors.push({
         type: 'js-error',
         file: filePath,
         message: error.message,
-        stack: error.stack
+        stack: error.stack,
       });
     });
 
@@ -104,10 +104,10 @@ class DohaErrorTester {
       const urlPath = filePath.replace(/\\/g, '/');
       const url = `http://localhost:3000/${urlPath}`;
       console.log(`🔍 테스트 중: ${path.relative('.', filePath)}`);
-      
-      await page.goto(url, { 
+
+      await page.goto(url, {
         waitUntil: 'networkidle2',
-        timeout: 10000 
+        timeout: 10000,
       });
 
       // 페이지 로드 후 약간 대기
@@ -115,12 +115,11 @@ class DohaErrorTester {
 
       // HTML 내 경로 분석
       await this.analyzePagePaths(page, filePath, pageErrors);
-
     } catch (error) {
       pageErrors.push({
         type: 'page-error',
         file: filePath,
-        message: error.message
+        message: error.message,
       });
     }
 
@@ -141,45 +140,45 @@ class DohaErrorTester {
   async analyzePagePaths(page, filePath, pageErrors) {
     const results = await page.evaluate(() => {
       const errors = [];
-      
+
       // CSS 링크 확인
       const cssLinks = document.querySelectorAll('link[rel="stylesheet"], link[href$=".css"]');
-      cssLinks.forEach(link => {
+      cssLinks.forEach((link) => {
         const href = link.getAttribute('href');
         if (href && !href.startsWith('http') && !href.startsWith('//')) {
           errors.push({
             type: 'css-path',
             element: 'link',
             path: href,
-            absolute: href.startsWith('/')
+            absolute: href.startsWith('/'),
           });
         }
       });
 
       // JS 스크립트 확인
       const scripts = document.querySelectorAll('script[src]');
-      scripts.forEach(script => {
+      scripts.forEach((script) => {
         const src = script.getAttribute('src');
         if (src && !src.startsWith('http') && !src.startsWith('//')) {
           errors.push({
             type: 'js-path',
             element: 'script',
             path: src,
-            absolute: src.startsWith('/')
+            absolute: src.startsWith('/'),
           });
         }
       });
 
       // 이미지 확인
       const images = document.querySelectorAll('img[src]');
-      images.forEach(img => {
+      images.forEach((img) => {
         const src = img.getAttribute('src');
         if (src && !src.startsWith('http') && !src.startsWith('//') && !src.startsWith('data:')) {
           errors.push({
             type: 'image-path',
             element: 'img',
             path: src,
-            absolute: src.startsWith('/')
+            absolute: src.startsWith('/'),
           });
         }
       });
@@ -187,19 +186,19 @@ class DohaErrorTester {
       return errors;
     });
 
-    results.forEach(result => {
+    results.forEach((result) => {
       pageErrors.push({
         type: 'path-analysis',
         file: filePath,
-        ...result
+        ...result,
       });
     });
   }
 
   updateStats(pageErrors) {
     this.testResults.totalErrors += pageErrors.length;
-    
-    pageErrors.forEach(error => {
+
+    pageErrors.forEach((error) => {
       switch (error.type) {
         case 'network-error':
           this.testResults.networkErrors++;
@@ -223,7 +222,7 @@ class DohaErrorTester {
       summary: this.testResults,
       timestamp: new Date().toISOString(),
       errors: this.errors,
-      recommendations: this.generateRecommendations()
+      recommendations: this.generateRecommendations(),
     };
 
     // 콘솔 출력
@@ -248,20 +247,20 @@ class DohaErrorTester {
   }
 
   analyzeMainIssues() {
-    const pathErrors = this.errors.filter(e => e.type === 'path-analysis');
-    const networkErrors = this.errors.filter(e => e.type === 'network-error');
-    
+    const pathErrors = this.errors.filter((e) => e.type === 'path-analysis');
+    const networkErrors = this.errors.filter((e) => e.type === 'network-error');
+
     // 절대 경로 vs 상대 경로 분석
-    const absolutePaths = pathErrors.filter(e => e.absolute);
-    const relativePaths = pathErrors.filter(e => !e.absolute);
+    const absolutePaths = pathErrors.filter((e) => e.absolute);
+    const relativePaths = pathErrors.filter((e) => !e.absolute);
 
     console.log(`- 절대 경로 사용: ${absolutePaths.length}개`);
     console.log(`- 상대 경로 사용: ${relativePaths.length}개`);
-    
+
     // 가장 많이 누락된 파일들
     const missing404 = networkErrors
-      .filter(e => e.status === 404)
-      .map(e => e.url)
+      .filter((e) => e.status === 404)
+      .map((e) => e.url)
       .reduce((acc, url) => {
         acc[url] = (acc[url] || 0) + 1;
         return acc;
@@ -269,7 +268,7 @@ class DohaErrorTester {
 
     console.log('\n📋 가장 많이 누락된 파일:');
     Object.entries(missing404)
-      .sort(([,a], [,b]) => b - a)
+      .sort(([, a], [, b]) => b - a)
       .slice(0, 10)
       .forEach(([url, count]) => {
         console.log(`  ${count}회: ${url}`);
@@ -278,12 +277,12 @@ class DohaErrorTester {
 
   generateRecommendations() {
     const recommendations = [];
-    
+
     if (this.testResults.pathErrors > 0) {
       recommendations.push({
         priority: 'high',
         issue: 'Path Resolution Issues',
-        solution: '모든 HTML 파일의 CSS/JS 경로를 상대 경로로 통일하여 수정'
+        solution: '모든 HTML 파일의 CSS/JS 경로를 상대 경로로 통일하여 수정',
       });
     }
 
@@ -291,7 +290,7 @@ class DohaErrorTester {
       recommendations.push({
         priority: 'high',
         issue: 'Missing Files',
-        solution: '누락된 핵심 JS/CSS 파일들을 생성하거나 경로 수정'
+        solution: '누락된 핵심 JS/CSS 파일들을 생성하거나 경로 수정',
       });
     }
 
@@ -299,7 +298,7 @@ class DohaErrorTester {
       recommendations.push({
         priority: 'medium',
         issue: 'JavaScript Errors',
-        solution: 'import/export 구문 및 모듈 로딩 오류 수정'
+        solution: 'import/export 구문 및 모듈 로딩 오류 수정',
       });
     }
 

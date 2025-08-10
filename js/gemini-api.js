@@ -20,7 +20,7 @@ async function callFortuneAPI(type, data) {
     if (!response.ok) {
       const errorText = await response.text();
       console.error(`❌ API 호출 실패:`, { status: response.status, errorText });
-      
+
       if (response.status === 503) {
         throw new Error('운세 서비스가 일시적으로 이용할 수 없습니다. 잠시 후 다시 시도해주세요.');
       } else if (response.status === 429) {
@@ -190,7 +190,7 @@ if (typeof window !== 'undefined') {
   window.generateSajuWithAI = generateSajuWithAI;
   window.generateZodiacAnimalFortuneWithAI = generateZodiacAnimalFortuneWithAI;
   window.generateTarotFortuneWithAI = generateTarotFortuneWithAI;
-  
+
   // 통합된 API 호출 함수 (모든 운세에서 사용)
   window.FortuneAPI = {
     call: callFortuneAPI,
@@ -199,6 +199,6 @@ if (typeof window !== 'undefined') {
     saju: generateSajuWithAI,
     zodiacAnimal: generateZodiacAnimalFortuneWithAI,
     tarot: generateTarotFortuneWithAI,
-    general: callGeminiAPI
+    general: callGeminiAPI,
   };
 }

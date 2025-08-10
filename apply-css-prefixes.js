@@ -15,27 +15,27 @@ const renamingRules = {
   // 레거시 버튼 클래스
   'class="btn ': 'class="legacy-btn ',
   'class="btn-': 'class="legacy-btn-',
-  'class=\'btn ': 'class=\'legacy-btn ',
-  'class=\'btn-': 'class=\'legacy-btn-',
-  
+  "class='btn ": "class='legacy-btn ",
+  "class='btn-": "class='legacy-btn-",
+
   // 레거시 카드 클래스
   'class="card ': 'class="legacy-card ',
   'class="card-': 'class="legacy-card-',
-  'class=\'card ': 'class=\'legacy-card ',
-  'class=\'card-': 'class=\'legacy-card-',
-  
+  "class='card ": "class='legacy-card ",
+  "class='card-": "class='legacy-card-",
+
   // 페이지별 클래스
   'class="service-card': 'class="home-service-card',
   'class="test-card': 'class="page-test-card',
   'class="fortune-card': 'class="page-fortune-card',
   'class="tool-card': 'class="page-tool-card',
-  
+
   // 중복 버튼 클래스 정리
   'class="cta-button': 'class="home-cta-button',
   'class="share-btn': 'class="feat-share-btn',
   'class="btn-tools': 'class="tool-btn',
   'class="btn-fortune': 'class="fortune-btn',
-  
+
   // 기타 공통 클래스
   'class="app ': 'class="legacy-app ',
   'class="container ': 'class="layout-container ',
@@ -49,25 +49,25 @@ const cssRenamingRules = {
   '.btn-': '.legacy-btn-',
   '.btn.': '.legacy-btn.',
   '.btn:': '.legacy-btn:',
-  
+
   // 레거시 카드
   '.card {': '.legacy-card {',
   '.card-': '.legacy-card-',
   '.card.': '.legacy-card.',
   '.card:': '.legacy-card:',
-  
+
   // 페이지별 클래스
   '.service-card': '.home-service-card',
   '.test-card': '.page-test-card',
   '.fortune-card': '.page-fortune-card',
   '.tool-card': '.page-tool-card',
-  
+
   // 중복 버튼
   '.cta-button': '.home-cta-button',
   '.share-btn': '.feat-share-btn',
   '.btn-tools': '.tool-btn',
   '.btn-fortune': '.fortune-btn',
-  
+
   // 기타
   '.app {': '.legacy-app {',
   '.container {': '.layout-container {',
@@ -75,23 +75,19 @@ const cssRenamingRules = {
 };
 
 // Linear 클래스는 건드리지 않음 (이미 접두사 있음)
-const preservePatterns = [
-  'linear-',
-  'highlight-',
-  'text-korean'
-];
+const preservePatterns = ['linear-', 'highlight-', 'text-korean'];
 
 // 파일 처리 함수
 function processFile(filePath, rules, fileType) {
   try {
     let content = fs.readFileSync(filePath, 'utf8');
     let changesMade = 0;
-    
+
     // 보존해야 할 패턴 체크
     const shouldPreserve = (text) => {
-      return preservePatterns.some(pattern => text.includes(pattern));
+      return preservePatterns.some((pattern) => text.includes(pattern));
     };
-    
+
     // 규칙 적용
     Object.entries(rules).forEach(([oldPattern, newPattern]) => {
       if (!shouldPreserve(oldPattern)) {
@@ -103,14 +99,14 @@ function processFile(filePath, rules, fileType) {
         }
       }
     });
-    
+
     if (changesMade > 0) {
       // 백업 생성
       const backupPath = filePath + '.backup';
       if (!fs.existsSync(backupPath)) {
         fs.copyFileSync(filePath, backupPath);
       }
-      
+
       // 변경사항 저장
       fs.writeFileSync(filePath, content, 'utf8');
       console.log(`✅ ${path.basename(filePath)}: ${changesMade}개 변경`);
@@ -156,11 +152,11 @@ const htmlFiles = [
   'privacy/index.html',
   'terms/index.html',
   'offline.html',
-  '404.html'
+  '404.html',
 ];
 
 let totalHtmlChanges = 0;
-htmlFiles.forEach(file => {
+htmlFiles.forEach((file) => {
   if (fs.existsSync(file)) {
     totalHtmlChanges += processFile(file, renamingRules, 'HTML');
   }
@@ -177,11 +173,11 @@ const cssFiles = [
   'css/pages/tests-index.css',
   'css/features/test-common.css',
   'css/features/fortune-common.css',
-  'css/features/tool-common.css'
+  'css/features/tool-common.css',
 ];
 
 let totalCssChanges = 0;
-cssFiles.forEach(file => {
+cssFiles.forEach((file) => {
   if (fs.existsSync(file)) {
     totalCssChanges += processFile(file, cssRenamingRules, 'CSS');
   }

@@ -28,9 +28,9 @@ function createMissingIcons() {
     // manifest.json에서 참조하는 모든 아이콘 검증
     const manifestPath = path.join(__dirname, '..', 'manifest.json');
     const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
-    
+
     const missingIcons = [];
-    manifest.icons.forEach(icon => {
+    manifest.icons.forEach((icon) => {
       const iconPath = path.join(__dirname, '..', icon.src);
       if (!fs.existsSync(iconPath)) {
         missingIcons.push(icon.src);
@@ -44,7 +44,6 @@ function createMissingIcons() {
 
     console.log('✅ All PWA icons are now available');
     return true;
-
   } catch (error) {
     console.error('❌ Error creating missing icons:', error);
     return false;

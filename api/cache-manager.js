@@ -70,14 +70,14 @@ class MemoryCache {
    */
   set(key, value, ttl = null) {
     const expireAt = ttl ? Date.now() + ttl : Date.now() + this.options.defaultTtl;
-    
+
     // 크기 제한 확인
     if (this.data.size >= this.options.maxSize && !this.data.has(key)) {
       this.evictOldest();
     }
 
     const compressedValue = this.compressValue(value);
-    
+
     this.data.set(key, {
       value: compressedValue,
       createdAt: Date.now(),
@@ -224,9 +224,10 @@ class MemoryCache {
   getStats() {
     const now = Date.now();
     const uptime = now - this.stats.createdAt;
-    const hitRate = this.stats.hits + this.stats.misses > 0 
-      ? (this.stats.hits / (this.stats.hits + this.stats.misses) * 100).toFixed(2)
-      : 0;
+    const hitRate =
+      this.stats.hits + this.stats.misses > 0
+        ? ((this.stats.hits / (this.stats.hits + this.stats.misses)) * 100).toFixed(2)
+        : 0;
 
     let totalSize = 0;
     let expiredCount = 0;
@@ -260,13 +261,13 @@ class MemoryCache {
   has(key) {
     const entry = this.data.get(key);
     if (!entry) return false;
-    
+
     // TTL 확인
     if (entry.expireAt && Date.now() > entry.expireAt) {
       this.data.delete(key);
       return false;
     }
-    
+
     return true;
   }
 
@@ -313,10 +314,10 @@ export function getCache(name, options = {}) {
   }
 
   const cache = globalCaches.get(name);
-  
+
   // 주기적 정리 수행
   cache.maybeCleanup();
-  
+
   return cache;
 }
 
@@ -325,7 +326,7 @@ export function getCache(name, options = {}) {
  */
 export function getAllCacheStats() {
   const stats = {};
-  
+
   for (const [name, cache] of globalCaches.entries()) {
     stats[name] = cache.getStats();
   }
@@ -342,11 +343,11 @@ export function getAllCacheStats() {
  */
 export function clearAllCaches() {
   let totalCleared = 0;
-  
+
   for (const [name, cache] of globalCaches.entries()) {
     totalCleared += cache.clear();
   }
-  
+
   return totalCleared;
 }
 
@@ -355,11 +356,11 @@ export function clearAllCaches() {
  */
 export function cleanupAllCaches() {
   let totalCleaned = 0;
-  
+
   for (const [name, cache] of globalCaches.entries()) {
     totalCleaned += cache.cleanup();
   }
-  
+
   return totalCleaned;
 }
 

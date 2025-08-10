@@ -1,0 +1,93 @@
+
+> doha-kr@3.0.0 build
+> npm run build:css && npm run build:js && npm run minify:css
+
+
+> doha-kr@3.0.0 build:css
+> node tools/build-css.js
+
+Starting CSS build script...
+Checking if script is called directly...
+import.meta.url: file:///C:/Users/pc/teste/tools/build-css.js
+process.argv[1]: C:\Users\pc\teste\tools\build-css.js
+
+[34mCSS Bundle Builder[0m
+
+[34mℹ[0m Building development bundle...
+[34mℹ[0m Processing 80 @import statements from main.css
+[32m✓[0m CSS bundle created successfully!
+[90m  Output: styles.css[0m
+[90m  Size: 8.21 KB → 564.92 KB[0m
+[90m  Time: 285ms[0m
+[34mℹ[0m 
+Building production bundle...
+[34mℹ[0m Processing 80 @import statements from main.css
+[32m✓[0m CSS bundle created successfully!
+[90m  Output: styles.min.css[0m
+[90m  Size: 8.21 KB → 388.76 KB[0m
+[90m  Time: 825ms[0m
+[90m  Compression: -4635.2% reduction[0m
+
+[32mBuild Summary:[0m
+┌─────────────────────────────────────────────────┐
+│ Development:  styles.css             564.92 KB │
+│ Production:   styles.min.css         388.76 KB │
+│ Imports bundled: 80                             │
+│ Total time: 1110                            ms │
+└─────────────────────────────────────────────────┘
+
+[34mHTML Integration:[0m
+
+<!-- CSS Bundle Integration -->
+<!-- Replace the existing main.css link with one of these: -->
+
+<!-- Development (with source maps): -->
+<link rel="stylesheet" href="/dist/styles.css">
+
+<!-- Production (minified): -->
+<link rel="stylesheet" href="/dist/styles.min.css">
+
+<!-- Or use environment-based loading: -->
+<script>
+  const isDev = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  const cssFile = isDev ? '/dist/styles.css' : '/dist/styles.min.css';
+  document.write('<link rel="stylesheet" href="' + cssFile + '">');
+</script>
+
+
+[32mPerformance Improvement:[0m
+Network requests reduced from 81 to 1
+Estimated load time improvement: ~4000ms
+(Based on 50ms average per HTTP request)
+
+
+> doha-kr@3.0.0 build:js
+> node build-js.js
+
+
+🚀 JavaScript Build Script
+📦 Mode: Production
+👀 Watch: No
+
+🔨 실행 중: rollup -c rollup.config.js
+🌍 환경: production
+
+Skipping mbti-intro.js due to parse error
+[36m
+[1m./js/app.js[22m → [1mdist/js/bundle.min.js[22m...[39m
+┌────────────────────────────────────────┐
+│                                        │
+│   [32m[1mDestination: [22m[39m[33mdist/js/bundle.min.js[39m   │
+│   [32m[1mBundle Size: [22m[39m [33m29.18 KB[39m               │
+│   [32m[1mMinified Size: [22m[39m [33m26.85 KB[39m             │
+│   [32m[1mGzipped Size: [22m[39m [33m7.57 KB[39m               │
+│   [32m[1mBrotli size: [22m[39m[33m6.54 KB[39m                 │
+│                                        │
+└────────────────────────────────────────┘
+[32mcreated [1mdist/js/bundle.min.js[22m in [1m457ms[22m[39m
+
+✅ JavaScript 빌드 완료!
+
+> doha-kr@3.0.0 minify:css
+> node tools/minify-css.js
+

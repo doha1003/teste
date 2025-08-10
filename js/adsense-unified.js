@@ -60,10 +60,10 @@
     const ads = document.querySelectorAll('.adsbygoogle:not([data-adsbygoogle-status="done"])');
     // Found ad slots to initialize
 
-    ads.forEach((ad, index) => {
+    ads.forEach((ad) => {
       try {
         // Push the ad
-        (adsbygoogle = window.adsbygoogle || []).push({});
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
         ad.setAttribute('data-adsbygoogle-status', 'done');
         // Initialized ad slot
       } catch (e) {
@@ -87,7 +87,7 @@
     }
 
     try {
-      (adsbygoogle = window.adsbygoogle || []).push({});
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
       adElement.setAttribute('data-adsbygoogle-status', 'done');
       // Initialized dynamic ad
     } catch (e) {

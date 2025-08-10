@@ -16,10 +16,12 @@ const app = express();
 const PORT = 3001;
 
 // CORS 설정
-app.use(cors({
-  origin: ['http://localhost:3000', 'https://doha.kr', 'https://www.doha.kr'],
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: ['http://localhost:3000', 'https://doha.kr', 'https://www.doha.kr'],
+    credentials: true,
+  })
+);
 
 // JSON 파싱 미들웨어
 app.use(express.json({ limit: '1mb' }));
@@ -32,7 +34,7 @@ app.use(express.static(__dirname));
 async function loadAndExecuteAPI(apiPath, req, res) {
   try {
     const { default: handler } = await import(`./api/${apiPath}.js`);
-    
+
     // Vercel 함수 시그니처에 맞게 변환
     const mockVercelRequest = {
       method: req.method,
@@ -40,9 +42,9 @@ async function loadAndExecuteAPI(apiPath, req, res) {
       headers: req.headers,
       body: JSON.stringify(req.body),
       query: req.query,
-      json: async () => req.body
+      json: async () => req.body,
     };
-    
+
     const mockVercelResponse = {
       status: (code) => {
         res.status(code);
@@ -59,17 +61,16 @@ async function loadAndExecuteAPI(apiPath, req, res) {
       setHeader: (name, value) => {
         res.setHeader(name, value);
         return mockVercelResponse;
-      }
+      },
     };
-    
+
     await handler(mockVercelRequest, mockVercelResponse);
-    
   } catch (error) {
     console.error(`Error in ${apiPath}:`, error);
-    res.status(500).json({ 
+    res.status(500).json({
       error: 'Internal Server Error',
       message: error.message,
-      stack: error.stack
+      stack: error.stack,
     });
   }
 }
@@ -94,7 +95,7 @@ app.use((error, req, res, next) => {
   console.error('Server error:', error);
   res.status(500).json({
     error: 'Internal Server Error',
-    message: error.message
+    message: error.message,
   });
 });
 

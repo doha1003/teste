@@ -67,9 +67,7 @@ test.describe('MBTI 테스트 플로우', () => {
       await expect(question).toBeVisible();
 
       // 답변 옵션 확인
-      const options = page.locator(
-        '.mbti-option-btn'
-      );
+      const options = page.locator('.mbti-option-btn');
       const optionCount = await options.count();
 
       if (optionCount === 0) {

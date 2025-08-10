@@ -1,0 +1,2031 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>doha.kr 26페이지 완전 검증 리포트</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.6; color: #333; background: #f5f7fa; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; border-radius: 12px; margin-bottom: 30px; text-align: center; }
+        .header h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .header p { font-size: 1.1rem; opacity: 0.9; }
+        .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 40px; }
+        .stat-card { background: white; padding: 30px; border-radius: 12px; text-align: center; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
+        .stat-number { font-size: 3rem; font-weight: bold; margin-bottom: 10px; }
+        .stat-card.success .stat-number { color: #10b981; }
+        .stat-card.warning .stat-number { color: #f59e0b; }
+        .stat-card.error .stat-number { color: #ef4444; }
+        .stat-card.info .stat-number { color: #3b82f6; }
+        .stat-label { color: #6b7280; font-weight: 500; }
+        .page-results { display: grid; gap: 20px; }
+        .page-result { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
+        .page-header { padding: 20px; border-left: 5px solid #e5e7eb; }
+        .page-header.passed { border-left-color: #10b981; background: #ecfdf5; }
+        .page-header.warning { border-left-color: #f59e0b; background: #fffbeb; }
+        .page-header.failed { border-left-color: #ef4444; background: #fef2f2; }
+        .page-title { font-size: 1.25rem; font-weight: bold; margin-bottom: 5px; }
+        .page-url { color: #6b7280; font-size: 0.9rem; }
+        .page-details { padding: 0 20px 20px; }
+        .detail-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 15px 0; }
+        .detail-item { background: #f9fafb; padding: 12px; border-radius: 6px; }
+        .detail-label { font-weight: 600; color: #374151; font-size: 0.85rem; }
+        .detail-value { color: #6b7280; font-size: 0.9rem; }
+        .screenshot { margin: 15px 0; text-align: center; }
+        .screenshot img { max-width: 300px; height: auto; border: 1px solid #e5e7eb; border-radius: 8px; }
+        .status-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
+        .status-passed { background: #ecfdf5; color: #065f46; }
+        .status-warning { background: #fffbeb; color: #92400e; }
+        .status-failed { background: #fef2f2; color: #991b1b; }
+        .category-stats { background: white; padding: 30px; border-radius: 12px; margin-bottom: 30px; }
+        .category-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 20px; }
+        .category-item { text-align: center; padding: 20px; background: #f9fafb; border-radius: 8px; }
+        .progress-bar { width: 100%; height: 8px; background: #e5e7eb; border-radius: 4px; margin: 10px 0; }
+        .progress-fill { height: 100%; background: #10b981; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 doha.kr 26페이지 완전 검증 리포트</h1>
+            <p>검증 일시: 2025-08-10T15:42:36.756Z ~ 2025-08-10T15:44:00.712Z</p>
+            <p>소요 시간: 84초 | 대상 사이트: https://doha.kr</p>
+        </div>
+
+        <div class="summary">
+            <div class="stat-card success">
+                <div class="stat-number">100.0%</div>
+                <div class="stat-label">성공률</div>
+            </div>
+            <div class="stat-card info">
+                <div class="stat-number">26</div>
+                <div class="stat-label">총 페이지</div>
+            </div>
+            <div class="stat-card success">
+                <div class="stat-number">26</div>
+                <div class="stat-label">성공</div>
+            </div>
+            <div class="stat-card warning">
+                <div class="stat-number">0</div>
+                <div class="stat-label">경고</div>
+            </div>
+            <div class="stat-card error">
+                <div class="stat-number">0</div>
+                <div class="stat-label">실패</div>
+            </div>
+        </div>
+
+        <div class="category-stats">
+            <h2>📊 카테고리별 분석</h2>
+            <div class="category-grid">
+                
+                    <div class="category-item">
+                        <h3>main</h3>
+                        <div class="stat-number" style="font-size: 1.5rem; color: #3b82f6;">6/6</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 100%"></div>
+                        </div>
+                        <div class="stat-label">100.0% 성공</div>
+                    </div>
+                
+                    <div class="category-item">
+                        <h3>tests</h3>
+                        <div class="stat-number" style="font-size: 1.5rem; color: #3b82f6;">7/7</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 100%"></div>
+                        </div>
+                        <div class="stat-label">100.0% 성공</div>
+                    </div>
+                
+                    <div class="category-item">
+                        <h3>fortune</h3>
+                        <div class="stat-number" style="font-size: 1.5rem; color: #3b82f6;">6/6</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 100%"></div>
+                        </div>
+                        <div class="stat-label">100.0% 성공</div>
+                    </div>
+                
+                    <div class="category-item">
+                        <h3>tools</h3>
+                        <div class="stat-number" style="font-size: 1.5rem; color: #3b82f6;">4/4</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 100%"></div>
+                        </div>
+                        <div class="stat-label">100.0% 성공</div>
+                    </div>
+                
+                    <div class="category-item">
+                        <h3>special</h3>
+                        <div class="stat-number" style="font-size: 1.5rem; color: #3b82f6;">3/3</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 100%"></div>
+                        </div>
+                        <div class="stat-label">100.0% 성공</div>
+                    </div>
+                
+            </div>
+        </div>
+
+        <div class="page-results">
+            <h2>📋 페이지별 상세 결과</h2>
+            
+                <div class="page-result">
+                    <div class="page-header passed">
+                        <div class="page-title">
+                            ✅ 
+                            [1] 홈페이지
+                            <span class="status-badge status-passed">PASSED</span>
+                        </div>
+                        <div class="page-url">
+                            <a href="https://doha.kr/" target="_blank">https://doha.kr/</a>
+                        </div>
+                    </div>
+                    <div class="page-details">
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <div class="detail-label">HTTP 상태</div>
+                                <div class="detail-value">200</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">로딩 시간</div>
+                                <div class="detail-value">1147ms</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">카테고리</div>
+                                <div class="detail-value">main</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">페이지 검증</div>
+                                <div class="detail-value">✅ 통과</div>
+                            </div>
+                        </div>
+
+                        
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <div class="detail-label">제목</div>
+                                    <div class="detail-value">✅ doha.kr - 일상을 더 재미있게 만드는 공간</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">헤더/네비</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">푸터</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">메인 콘텐츠</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                            </div>
+                        
+
+                        
+
+                        
+
+                        
+
+                        
+
+                        
+                            <div class="screenshot">
+                                <img src="screenshots\01-홈페이지.png" alt="홈페이지 스크린샷" loading="lazy">
+                            </div>
+                        
+                    </div>
+                </div>
+            
+                <div class="page-result">
+                    <div class="page-header passed">
+                        <div class="page-title">
+                            ✅ 
+                            [2] 소개 페이지
+                            <span class="status-badge status-passed">PASSED</span>
+                        </div>
+                        <div class="page-url">
+                            <a href="https://doha.kr/about/" target="_blank">https://doha.kr/about/</a>
+                        </div>
+                    </div>
+                    <div class="page-details">
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <div class="detail-label">HTTP 상태</div>
+                                <div class="detail-value">200</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">로딩 시간</div>
+                                <div class="detail-value">643ms</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">카테고리</div>
+                                <div class="detail-value">main</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">페이지 검증</div>
+                                <div class="detail-value">✅ 통과</div>
+                            </div>
+                        </div>
+
+                        
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <div class="detail-label">제목</div>
+                                    <div class="detail-value">✅ 소개 - doha.kr | 일상을 더 재미있게 만드는 공간</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">헤더/네비</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">푸터</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">메인 콘텐츠</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                            </div>
+                        
+
+                        
+
+                        
+
+                        
+
+                        
+
+                        
+                            <div class="screenshot">
+                                <img src="screenshots\02-소개-페이지.png" alt="소개 페이지 스크린샷" loading="lazy">
+                            </div>
+                        
+                    </div>
+                </div>
+            
+                <div class="page-result">
+                    <div class="page-header passed">
+                        <div class="page-title">
+                            ✅ 
+                            [3] 문의하기
+                            <span class="status-badge status-passed">PASSED</span>
+                        </div>
+                        <div class="page-url">
+                            <a href="https://doha.kr/contact/" target="_blank">https://doha.kr/contact/</a>
+                        </div>
+                    </div>
+                    <div class="page-details">
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <div class="detail-label">HTTP 상태</div>
+                                <div class="detail-value">200</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">로딩 시간</div>
+                                <div class="detail-value">654ms</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">카테고리</div>
+                                <div class="detail-value">main</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">페이지 검증</div>
+                                <div class="detail-value">✅ 통과</div>
+                            </div>
+                        </div>
+
+                        
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <div class="detail-label">제목</div>
+                                    <div class="detail-value">✅ 문의하기 - doha.kr | 고객지원 및 의견수렴</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">헤더/네비</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">푸터</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">메인 콘텐츠</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                            </div>
+                        
+
+                        
+
+                        
+
+                        
+
+                        
+
+                        
+                            <div class="screenshot">
+                                <img src="screenshots\03-문의하기.png" alt="문의하기 스크린샷" loading="lazy">
+                            </div>
+                        
+                    </div>
+                </div>
+            
+                <div class="page-result">
+                    <div class="page-header passed">
+                        <div class="page-title">
+                            ✅ 
+                            [4] FAQ
+                            <span class="status-badge status-passed">PASSED</span>
+                        </div>
+                        <div class="page-url">
+                            <a href="https://doha.kr/faq/" target="_blank">https://doha.kr/faq/</a>
+                        </div>
+                    </div>
+                    <div class="page-details">
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <div class="detail-label">HTTP 상태</div>
+                                <div class="detail-value">200</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">로딩 시간</div>
+                                <div class="detail-value">652ms</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">카테고리</div>
+                                <div class="detail-value">main</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">페이지 검증</div>
+                                <div class="detail-value">✅ 통과</div>
+                            </div>
+                        </div>
+
+                        
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <div class="detail-label">제목</div>
+                                    <div class="detail-value">✅ 자주 묻는 질문 - doha.kr | FAQ</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">헤더/네비</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">푸터</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">메인 콘텐츠</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                            </div>
+                        
+
+                        
+
+                        
+
+                        
+
+                        
+
+                        
+                            <div class="screenshot">
+                                <img src="screenshots\04-FAQ.png" alt="FAQ 스크린샷" loading="lazy">
+                            </div>
+                        
+                    </div>
+                </div>
+            
+                <div class="page-result">
+                    <div class="page-header passed">
+                        <div class="page-title">
+                            ✅ 
+                            [5] 개인정보처리방침
+                            <span class="status-badge status-passed">PASSED</span>
+                        </div>
+                        <div class="page-url">
+                            <a href="https://doha.kr/privacy/" target="_blank">https://doha.kr/privacy/</a>
+                        </div>
+                    </div>
+                    <div class="page-details">
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <div class="detail-label">HTTP 상태</div>
+                                <div class="detail-value">200</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">로딩 시간</div>
+                                <div class="detail-value">625ms</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">카테고리</div>
+                                <div class="detail-value">main</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">페이지 검증</div>
+                                <div class="detail-value">✅ 통과</div>
+                            </div>
+                        </div>
+
+                        
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <div class="detail-label">제목</div>
+                                    <div class="detail-value">✅ 개인정보처리방침 - doha.kr</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">헤더/네비</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">푸터</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">메인 콘텐츠</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                            </div>
+                        
+
+                        
+
+                        
+
+                        
+
+                        
+
+                        
+                            <div class="screenshot">
+                                <img src="screenshots\05-개인정보처리방침.png" alt="개인정보처리방침 스크린샷" loading="lazy">
+                            </div>
+                        
+                    </div>
+                </div>
+            
+                <div class="page-result">
+                    <div class="page-header passed">
+                        <div class="page-title">
+                            ✅ 
+                            [6] 이용약관
+                            <span class="status-badge status-passed">PASSED</span>
+                        </div>
+                        <div class="page-url">
+                            <a href="https://doha.kr/terms/" target="_blank">https://doha.kr/terms/</a>
+                        </div>
+                    </div>
+                    <div class="page-details">
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <div class="detail-label">HTTP 상태</div>
+                                <div class="detail-value">200</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">로딩 시간</div>
+                                <div class="detail-value">663ms</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">카테고리</div>
+                                <div class="detail-value">main</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">페이지 검증</div>
+                                <div class="detail-value">✅ 통과</div>
+                            </div>
+                        </div>
+
+                        
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <div class="detail-label">제목</div>
+                                    <div class="detail-value">✅ 이용약관 - doha.kr</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">헤더/네비</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">푸터</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">메인 콘텐츠</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                            </div>
+                        
+
+                        
+
+                        
+
+                        
+
+                        
+
+                        
+                            <div class="screenshot">
+                                <img src="screenshots\06-이용약관.png" alt="이용약관 스크린샷" loading="lazy">
+                            </div>
+                        
+                    </div>
+                </div>
+            
+                <div class="page-result">
+                    <div class="page-header passed">
+                        <div class="page-title">
+                            ✅ 
+                            [7] 심리테스트 메인
+                            <span class="status-badge status-passed">PASSED</span>
+                        </div>
+                        <div class="page-url">
+                            <a href="https://doha.kr/tests/" target="_blank">https://doha.kr/tests/</a>
+                        </div>
+                    </div>
+                    <div class="page-details">
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <div class="detail-label">HTTP 상태</div>
+                                <div class="detail-value">200</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">로딩 시간</div>
+                                <div class="detail-value">639ms</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">카테고리</div>
+                                <div class="detail-value">tests</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">페이지 검증</div>
+                                <div class="detail-value">✅ 통과</div>
+                            </div>
+                        </div>
+
+                        
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <div class="detail-label">제목</div>
+                                    <div class="detail-value">✅ 무료 심리테스트 모음 - MBTI, 테토에겐, 러브DNA 성격분석 | doha.kr</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">헤더/네비</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">푸터</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">메인 콘텐츠</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                            </div>
+                        
+
+                        
+
+                        
+
+                        
+
+                        
+
+                        
+                            <div class="screenshot">
+                                <img src="screenshots\07-심리테스트-메인.png" alt="심리테스트 메인 스크린샷" loading="lazy">
+                            </div>
+                        
+                    </div>
+                </div>
+            
+                <div class="page-result">
+                    <div class="page-header passed">
+                        <div class="page-title">
+                            ✅ 
+                            [8] MBTI 소개
+                            <span class="status-badge status-passed">PASSED</span>
+                        </div>
+                        <div class="page-url">
+                            <a href="https://doha.kr/tests/mbti/" target="_blank">https://doha.kr/tests/mbti/</a>
+                        </div>
+                    </div>
+                    <div class="page-details">
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <div class="detail-label">HTTP 상태</div>
+                                <div class="detail-value">200</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">로딩 시간</div>
+                                <div class="detail-value">639ms</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">카테고리</div>
+                                <div class="detail-value">tests</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">페이지 검증</div>
+                                <div class="detail-value">✅ 통과</div>
+                            </div>
+                        </div>
+
+                        
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <div class="detail-label">제목</div>
+                                    <div class="detail-value">✅ MBTI 성격유형 검사 - 16가지 성격 유형 무료 테스트 | doha.kr</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">헤더/네비</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">푸터</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">메인 콘텐츠</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                            </div>
+                        
+
+                        
+
+                        
+
+                        
+
+                        
+
+                        
+                            <div class="screenshot">
+                                <img src="screenshots\08-MBTI-소개.png" alt="MBTI 소개 스크린샷" loading="lazy">
+                            </div>
+                        
+                    </div>
+                </div>
+            
+                <div class="page-result">
+                    <div class="page-header passed">
+                        <div class="page-title">
+                            ✅ 
+                            [9] MBTI 테스트
+                            <span class="status-badge status-passed">PASSED</span>
+                        </div>
+                        <div class="page-url">
+                            <a href="https://doha.kr/tests/mbti/test.html" target="_blank">https://doha.kr/tests/mbti/test.html</a>
+                        </div>
+                    </div>
+                    <div class="page-details">
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <div class="detail-label">HTTP 상태</div>
+                                <div class="detail-value">200</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">로딩 시간</div>
+                                <div class="detail-value">452ms</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">카테고리</div>
+                                <div class="detail-value">tests</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">페이지 검증</div>
+                                <div class="detail-value">✅ 통과</div>
+                            </div>
+                        </div>
+
+                        
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <div class="detail-label">제목</div>
+                                    <div class="detail-value">✅ MBTI 성격유형 검사 - 24문항 성격 분석 | doha.kr</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">헤더/네비</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">푸터</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">메인 콘텐츠</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                            </div>
+                        
+
+                        
+
+                        
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <div class="detail-label">시작 버튼</div>
+                                    <div class="detail-value">0개</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">질문/폼</div>
+                                    <div class="detail-value">0개</div>
+                                </div>
+                            </div>
+                        
+
+                        
+
+                        
+
+                        
+                            <div class="screenshot">
+                                <img src="screenshots\09-MBTI-테스트.png" alt="MBTI 테스트 스크린샷" loading="lazy">
+                            </div>
+                        
+                    </div>
+                </div>
+            
+                <div class="page-result">
+                    <div class="page-header passed">
+                        <div class="page-title">
+                            ✅ 
+                            [10] Teto-Egen 소개
+                            <span class="status-badge status-passed">PASSED</span>
+                        </div>
+                        <div class="page-url">
+                            <a href="https://doha.kr/tests/teto-egen/" target="_blank">https://doha.kr/tests/teto-egen/</a>
+                        </div>
+                    </div>
+                    <div class="page-details">
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <div class="detail-label">HTTP 상태</div>
+                                <div class="detail-value">200</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">로딩 시간</div>
+                                <div class="detail-value">625ms</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">카테고리</div>
+                                <div class="detail-value">tests</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">페이지 검증</div>
+                                <div class="detail-value">✅ 통과</div>
+                            </div>
+                        </div>
+
+                        
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <div class="detail-label">제목</div>
+                                    <div class="detail-value">✅ 테토-에겐 성격 유형 테스트 - 재미있는 성격 분석 | doha.kr</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">헤더/네비</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">푸터</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">메인 콘텐츠</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                            </div>
+                        
+
+                        
+
+                        
+
+                        
+
+                        
+
+                        
+                            <div class="screenshot">
+                                <img src="screenshots\10-Teto-Egen-소개.png" alt="Teto-Egen 소개 스크린샷" loading="lazy">
+                            </div>
+                        
+                    </div>
+                </div>
+            
+                <div class="page-result">
+                    <div class="page-header passed">
+                        <div class="page-title">
+                            ✅ 
+                            [11] Teto-Egen 테스트
+                            <span class="status-badge status-passed">PASSED</span>
+                        </div>
+                        <div class="page-url">
+                            <a href="https://doha.kr/tests/teto-egen/test.html" target="_blank">https://doha.kr/tests/teto-egen/test.html</a>
+                        </div>
+                    </div>
+                    <div class="page-details">
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <div class="detail-label">HTTP 상태</div>
+                                <div class="detail-value">200</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">로딩 시간</div>
+                                <div class="detail-value">913ms</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">카테고리</div>
+                                <div class="detail-value">tests</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">페이지 검증</div>
+                                <div class="detail-value">✅ 통과</div>
+                            </div>
+                        </div>
+
+                        
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <div class="detail-label">제목</div>
+                                    <div class="detail-value">✅ 테토-에겐 성격 유형 테스트 - 10문항 성격 분석 | doha.kr</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">헤더/네비</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">푸터</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">메인 콘텐츠</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                            </div>
+                        
+
+                        
+
+                        
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <div class="detail-label">시작 버튼</div>
+                                    <div class="detail-value">0개</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">질문/폼</div>
+                                    <div class="detail-value">0개</div>
+                                </div>
+                            </div>
+                        
+
+                        
+
+                        
+
+                        
+                            <div class="screenshot">
+                                <img src="screenshots\11-Teto-Egen-테스트.png" alt="Teto-Egen 테스트 스크린샷" loading="lazy">
+                            </div>
+                        
+                    </div>
+                </div>
+            
+                <div class="page-result">
+                    <div class="page-header passed">
+                        <div class="page-title">
+                            ✅ 
+                            [12] Love DNA 소개
+                            <span class="status-badge status-passed">PASSED</span>
+                        </div>
+                        <div class="page-url">
+                            <a href="https://doha.kr/tests/love-dna/" target="_blank">https://doha.kr/tests/love-dna/</a>
+                        </div>
+                    </div>
+                    <div class="page-details">
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <div class="detail-label">HTTP 상태</div>
+                                <div class="detail-value">200</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">로딩 시간</div>
+                                <div class="detail-value">631ms</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">카테고리</div>
+                                <div class="detail-value">tests</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">페이지 검증</div>
+                                <div class="detail-value">✅ 통과</div>
+                            </div>
+                        </div>
+
+                        
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <div class="detail-label">제목</div>
+                                    <div class="detail-value">✅ 러브 DNA 테스트 - 나의 연애 스타일 분석 | doha.kr</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">헤더/네비</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">푸터</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">메인 콘텐츠</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                            </div>
+                        
+
+                        
+
+                        
+
+                        
+
+                        
+
+                        
+                            <div class="screenshot">
+                                <img src="screenshots\12-Love-DNA-소개.png" alt="Love DNA 소개 스크린샷" loading="lazy">
+                            </div>
+                        
+                    </div>
+                </div>
+            
+                <div class="page-result">
+                    <div class="page-header passed">
+                        <div class="page-title">
+                            ✅ 
+                            [13] Love DNA 테스트
+                            <span class="status-badge status-passed">PASSED</span>
+                        </div>
+                        <div class="page-url">
+                            <a href="https://doha.kr/tests/love-dna/test.html" target="_blank">https://doha.kr/tests/love-dna/test.html</a>
+                        </div>
+                    </div>
+                    <div class="page-details">
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <div class="detail-label">HTTP 상태</div>
+                                <div class="detail-value">200</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">로딩 시간</div>
+                                <div class="detail-value">459ms</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">카테고리</div>
+                                <div class="detail-value">tests</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">페이지 검증</div>
+                                <div class="detail-value">✅ 통과</div>
+                            </div>
+                        </div>
+
+                        
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <div class="detail-label">제목</div>
+                                    <div class="detail-value">✅ 러브 DNA 테스트 - 나의 연애 스타일은? | doha.kr</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">헤더/네비</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">푸터</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">메인 콘텐츠</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                            </div>
+                        
+
+                        
+
+                        
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <div class="detail-label">시작 버튼</div>
+                                    <div class="detail-value">0개</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">질문/폼</div>
+                                    <div class="detail-value">0개</div>
+                                </div>
+                            </div>
+                        
+
+                        
+
+                        
+
+                        
+                            <div class="screenshot">
+                                <img src="screenshots\13-Love-DNA-테스트.png" alt="Love DNA 테스트 스크린샷" loading="lazy">
+                            </div>
+                        
+                    </div>
+                </div>
+            
+                <div class="page-result">
+                    <div class="page-header passed">
+                        <div class="page-title">
+                            ✅ 
+                            [14] 운세 메인
+                            <span class="status-badge status-passed">PASSED</span>
+                        </div>
+                        <div class="page-url">
+                            <a href="https://doha.kr/fortune/" target="_blank">https://doha.kr/fortune/</a>
+                        </div>
+                    </div>
+                    <div class="page-details">
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <div class="detail-label">HTTP 상태</div>
+                                <div class="detail-value">200</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">로딩 시간</div>
+                                <div class="detail-value">644ms</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">카테고리</div>
+                                <div class="detail-value">fortune</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">페이지 검증</div>
+                                <div class="detail-value">✅ 통과</div>
+                            </div>
+                        </div>
+
+                        
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <div class="detail-label">제목</div>
+                                    <div class="detail-value">✅ AI 운세 - 사주팔자, 타로, 별자리 운세 | doha.kr</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">헤더/네비</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">푸터</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">메인 콘텐츠</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                            </div>
+                        
+
+                        
+
+                        
+
+                        
+
+                        
+
+                        
+                            <div class="screenshot">
+                                <img src="screenshots\14-운세-메인.png" alt="운세 메인 스크린샷" loading="lazy">
+                            </div>
+                        
+                    </div>
+                </div>
+            
+                <div class="page-result">
+                    <div class="page-header passed">
+                        <div class="page-title">
+                            ✅ 
+                            [15] 오늘의 운세
+                            <span class="status-badge status-passed">PASSED</span>
+                        </div>
+                        <div class="page-url">
+                            <a href="https://doha.kr/fortune/daily/" target="_blank">https://doha.kr/fortune/daily/</a>
+                        </div>
+                    </div>
+                    <div class="page-details">
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <div class="detail-label">HTTP 상태</div>
+                                <div class="detail-value">200</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">로딩 시간</div>
+                                <div class="detail-value">818ms</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">카테고리</div>
+                                <div class="detail-value">fortune</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">페이지 검증</div>
+                                <div class="detail-value">✅ 통과</div>
+                            </div>
+                        </div>
+
+                        
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <div class="detail-label">제목</div>
+                                    <div class="detail-value">✅ 오늘의 운세 - 사주 기반 정확한 일일운세 | doha.kr</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">헤더/네비</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">푸터</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">메인 콘텐츠</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                            </div>
+                        
+
+                        
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <div class="detail-label">Emergency API</div>
+                                    <div class="detail-value">❌ Manager</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">API 헬퍼</div>
+                                    <div class="detail-value">✅ Helpers</div>
+                                </div>
+                            </div>
+                        
+
+                        
+
+                        
+
+                        
+
+                        
+                            <div class="screenshot">
+                                <img src="screenshots\15-오늘의-운세.png" alt="오늘의 운세 스크린샷" loading="lazy">
+                            </div>
+                        
+                    </div>
+                </div>
+            
+                <div class="page-result">
+                    <div class="page-header passed">
+                        <div class="page-title">
+                            ✅ 
+                            [16] AI 사주팔자
+                            <span class="status-badge status-passed">PASSED</span>
+                        </div>
+                        <div class="page-url">
+                            <a href="https://doha.kr/fortune/saju/" target="_blank">https://doha.kr/fortune/saju/</a>
+                        </div>
+                    </div>
+                    <div class="page-details">
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <div class="detail-label">HTTP 상태</div>
+                                <div class="detail-value">200</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">로딩 시간</div>
+                                <div class="detail-value">764ms</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">카테고리</div>
+                                <div class="detail-value">fortune</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">페이지 검증</div>
+                                <div class="detail-value">✅ 통과</div>
+                            </div>
+                        </div>
+
+                        
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <div class="detail-label">제목</div>
+                                    <div class="detail-value">✅ AI 사주팔자 - 정확한 만세력 기반 사주 분석 | doha.kr</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">헤더/네비</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">푸터</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">메인 콘텐츠</div>
+                                    <div class="detail-value">❌ 존재</div>
+                                </div>
+                            </div>
+                        
+
+                        
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <div class="detail-label">Emergency API</div>
+                                    <div class="detail-value">❌ Manager</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">API 헬퍼</div>
+                                    <div class="detail-value">✅ Helpers</div>
+                                </div>
+                            </div>
+                        
+
+                        
+
+                        
+
+                        
+
+                        
+                            <div class="screenshot">
+                                <img src="screenshots\16-AI-사주팔자.png" alt="AI 사주팔자 스크린샷" loading="lazy">
+                            </div>
+                        
+                    </div>
+                </div>
+            
+                <div class="page-result">
+                    <div class="page-header passed">
+                        <div class="page-title">
+                            ✅ 
+                            [17] AI 타로 리딩
+                            <span class="status-badge status-passed">PASSED</span>
+                        </div>
+                        <div class="page-url">
+                            <a href="https://doha.kr/fortune/tarot/" target="_blank">https://doha.kr/fortune/tarot/</a>
+                        </div>
+                    </div>
+                    <div class="page-details">
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <div class="detail-label">HTTP 상태</div>
+                                <div class="detail-value">200</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">로딩 시간</div>
+                                <div class="detail-value">637ms</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">카테고리</div>
+                                <div class="detail-value">fortune</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">페이지 검증</div>
+                                <div class="detail-value">✅ 통과</div>
+                            </div>
+                        </div>
+
+                        
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <div class="detail-label">제목</div>
+                                    <div class="detail-value">✅ AI 타로 리딩 - 무료 온라인 타로 카드 | doha.kr</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">헤더/네비</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">푸터</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">메인 콘텐츠</div>
+                                    <div class="detail-value">❌ 존재</div>
+                                </div>
+                            </div>
+                        
+
+                        
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <div class="detail-label">Emergency API</div>
+                                    <div class="detail-value">❌ Manager</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">API 헬퍼</div>
+                                    <div class="detail-value">✅ Helpers</div>
+                                </div>
+                            </div>
+                        
+
+                        
+
+                        
+
+                        
+
+                        
+                            <div class="screenshot">
+                                <img src="screenshots\17-AI-타로-리딩.png" alt="AI 타로 리딩 스크린샷" loading="lazy">
+                            </div>
+                        
+                    </div>
+                </div>
+            
+                <div class="page-result">
+                    <div class="page-header passed">
+                        <div class="page-title">
+                            ✅ 
+                            [18] 별자리 운세
+                            <span class="status-badge status-passed">PASSED</span>
+                        </div>
+                        <div class="page-url">
+                            <a href="https://doha.kr/fortune/zodiac/" target="_blank">https://doha.kr/fortune/zodiac/</a>
+                        </div>
+                    </div>
+                    <div class="page-details">
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <div class="detail-label">HTTP 상태</div>
+                                <div class="detail-value">200</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">로딩 시간</div>
+                                <div class="detail-value">778ms</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">카테고리</div>
+                                <div class="detail-value">fortune</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">페이지 검증</div>
+                                <div class="detail-value">✅ 통과</div>
+                            </div>
+                        </div>
+
+                        
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <div class="detail-label">제목</div>
+                                    <div class="detail-value">✅ 별자리 운세 - AI 운세 | doha.kr</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">헤더/네비</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">푸터</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">메인 콘텐츠</div>
+                                    <div class="detail-value">❌ 존재</div>
+                                </div>
+                            </div>
+                        
+
+                        
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <div class="detail-label">Emergency API</div>
+                                    <div class="detail-value">❌ Manager</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">API 헬퍼</div>
+                                    <div class="detail-value">✅ Helpers</div>
+                                </div>
+                            </div>
+                        
+
+                        
+
+                        
+
+                        
+
+                        
+                            <div class="screenshot">
+                                <img src="screenshots\18-별자리-운세.png" alt="별자리 운세 스크린샷" loading="lazy">
+                            </div>
+                        
+                    </div>
+                </div>
+            
+                <div class="page-result">
+                    <div class="page-header passed">
+                        <div class="page-title">
+                            ✅ 
+                            [19] 띠별 운세
+                            <span class="status-badge status-passed">PASSED</span>
+                        </div>
+                        <div class="page-url">
+                            <a href="https://doha.kr/fortune/zodiac-animal/" target="_blank">https://doha.kr/fortune/zodiac-animal/</a>
+                        </div>
+                    </div>
+                    <div class="page-details">
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <div class="detail-label">HTTP 상태</div>
+                                <div class="detail-value">200</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">로딩 시간</div>
+                                <div class="detail-value">768ms</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">카테고리</div>
+                                <div class="detail-value">fortune</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">페이지 검증</div>
+                                <div class="detail-value">✅ 통과</div>
+                            </div>
+                        </div>
+
+                        
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <div class="detail-label">제목</div>
+                                    <div class="detail-value">✅ 띠별 운세 - 12지신 운세 | doha.kr</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">헤더/네비</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">푸터</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">메인 콘텐츠</div>
+                                    <div class="detail-value">❌ 존재</div>
+                                </div>
+                            </div>
+                        
+
+                        
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <div class="detail-label">Emergency API</div>
+                                    <div class="detail-value">❌ Manager</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">API 헬퍼</div>
+                                    <div class="detail-value">✅ Helpers</div>
+                                </div>
+                            </div>
+                        
+
+                        
+
+                        
+
+                        
+
+                        
+                            <div class="screenshot">
+                                <img src="screenshots\19-띠별-운세.png" alt="띠별 운세 스크린샷" loading="lazy">
+                            </div>
+                        
+                    </div>
+                </div>
+            
+                <div class="page-result">
+                    <div class="page-header passed">
+                        <div class="page-title">
+                            ✅ 
+                            [20] 도구 메인
+                            <span class="status-badge status-passed">PASSED</span>
+                        </div>
+                        <div class="page-url">
+                            <a href="https://doha.kr/tools/" target="_blank">https://doha.kr/tools/</a>
+                        </div>
+                    </div>
+                    <div class="page-details">
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <div class="detail-label">HTTP 상태</div>
+                                <div class="detail-value">200</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">로딩 시간</div>
+                                <div class="detail-value">636ms</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">카테고리</div>
+                                <div class="detail-value">tools</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">페이지 검증</div>
+                                <div class="detail-value">✅ 통과</div>
+                            </div>
+                        </div>
+
+                        
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <div class="detail-label">제목</div>
+                                    <div class="detail-value">✅ 실용도구 - 무료 연봉계산기, 글자수세기, BMI계산기 | doha.kr</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">헤더/네비</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">푸터</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">메인 콘텐츠</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                            </div>
+                        
+
+                        
+
+                        
+
+                        
+
+                        
+
+                        
+                            <div class="screenshot">
+                                <img src="screenshots\20-도구-메인.png" alt="도구 메인 스크린샷" loading="lazy">
+                            </div>
+                        
+                    </div>
+                </div>
+            
+                <div class="page-result">
+                    <div class="page-header passed">
+                        <div class="page-title">
+                            ✅ 
+                            [21] BMI 계산기
+                            <span class="status-badge status-passed">PASSED</span>
+                        </div>
+                        <div class="page-url">
+                            <a href="https://doha.kr/tools/bmi-calculator.html" target="_blank">https://doha.kr/tools/bmi-calculator.html</a>
+                        </div>
+                    </div>
+                    <div class="page-details">
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <div class="detail-label">HTTP 상태</div>
+                                <div class="detail-value">200</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">로딩 시간</div>
+                                <div class="detail-value">648ms</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">카테고리</div>
+                                <div class="detail-value">tools</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">페이지 검증</div>
+                                <div class="detail-value">✅ 통과</div>
+                            </div>
+                        </div>
+
+                        
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <div class="detail-label">제목</div>
+                                    <div class="detail-value">✅ BMI 계산기 - 체질량지수 계산 | doha.kr</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">헤더/네비</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">푸터</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">메인 콘텐츠</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                            </div>
+                        
+
+                        
+
+                        
+
+                        
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <div class="detail-label">입력 필드</div>
+                                    <div class="detail-value">2개</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">계산 버튼</div>
+                                    <div class="detail-value">1개</div>
+                                </div>
+                            </div>
+                        
+
+                        
+
+                        
+                            <div class="screenshot">
+                                <img src="screenshots\21-BMI-계산기.png" alt="BMI 계산기 스크린샷" loading="lazy">
+                            </div>
+                        
+                    </div>
+                </div>
+            
+                <div class="page-result">
+                    <div class="page-header passed">
+                        <div class="page-title">
+                            ✅ 
+                            [22] 연봉 계산기
+                            <span class="status-badge status-passed">PASSED</span>
+                        </div>
+                        <div class="page-url">
+                            <a href="https://doha.kr/tools/salary-calculator.html" target="_blank">https://doha.kr/tools/salary-calculator.html</a>
+                        </div>
+                    </div>
+                    <div class="page-details">
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <div class="detail-label">HTTP 상태</div>
+                                <div class="detail-value">200</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">로딩 시간</div>
+                                <div class="detail-value">645ms</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">카테고리</div>
+                                <div class="detail-value">tools</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">페이지 검증</div>
+                                <div class="detail-value">✅ 통과</div>
+                            </div>
+                        </div>
+
+                        
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <div class="detail-label">제목</div>
+                                    <div class="detail-value">✅ 연봉 실수령액 계산기 - 2025년 최신 세율 | doha.kr</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">헤더/네비</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">푸터</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">메인 콘텐츠</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                            </div>
+                        
+
+                        
+
+                        
+
+                        
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <div class="detail-label">입력 필드</div>
+                                    <div class="detail-value">1개</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">계산 버튼</div>
+                                    <div class="detail-value">1개</div>
+                                </div>
+                            </div>
+                        
+
+                        
+
+                        
+                            <div class="screenshot">
+                                <img src="screenshots\22-연봉-계산기.png" alt="연봉 계산기 스크린샷" loading="lazy">
+                            </div>
+                        
+                    </div>
+                </div>
+            
+                <div class="page-result">
+                    <div class="page-header passed">
+                        <div class="page-title">
+                            ✅ 
+                            [23] 글자수 세기
+                            <span class="status-badge status-passed">PASSED</span>
+                        </div>
+                        <div class="page-url">
+                            <a href="https://doha.kr/tools/text-counter.html" target="_blank">https://doha.kr/tools/text-counter.html</a>
+                        </div>
+                    </div>
+                    <div class="page-details">
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <div class="detail-label">HTTP 상태</div>
+                                <div class="detail-value">200</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">로딩 시간</div>
+                                <div class="detail-value">638ms</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">카테고리</div>
+                                <div class="detail-value">tools</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">페이지 검증</div>
+                                <div class="detail-value">✅ 통과</div>
+                            </div>
+                        </div>
+
+                        
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <div class="detail-label">제목</div>
+                                    <div class="detail-value">✅ 글자수 세기 - 자소서, 리포트 글자수 계산기 | doha.kr</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">헤더/네비</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">푸터</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">메인 콘텐츠</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                            </div>
+                        
+
+                        
+
+                        
+
+                        
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <div class="detail-label">입력 필드</div>
+                                    <div class="detail-value">1개</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">계산 버튼</div>
+                                    <div class="detail-value">0개</div>
+                                </div>
+                            </div>
+                        
+
+                        
+
+                        
+                            <div class="screenshot">
+                                <img src="screenshots\23-글자수-세기.png" alt="글자수 세기 스크린샷" loading="lazy">
+                            </div>
+                        
+                    </div>
+                </div>
+            
+                <div class="page-result">
+                    <div class="page-header passed">
+                        <div class="page-title">
+                            ✅ 
+                            [24] 404 오류 페이지
+                            <span class="status-badge status-passed">PASSED</span>
+                        </div>
+                        <div class="page-url">
+                            <a href="https://doha.kr/404.html" target="_blank">https://doha.kr/404.html</a>
+                        </div>
+                    </div>
+                    <div class="page-details">
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <div class="detail-label">HTTP 상태</div>
+                                <div class="detail-value">200</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">로딩 시간</div>
+                                <div class="detail-value">619ms</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">카테고리</div>
+                                <div class="detail-value">special</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">페이지 검증</div>
+                                <div class="detail-value">✅ 통과</div>
+                            </div>
+                        </div>
+
+                        
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <div class="detail-label">제목</div>
+                                    <div class="detail-value">✅ 404 - 페이지를 찾을 수 없습니다 | doha.kr</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">헤더/네비</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">푸터</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">메인 콘텐츠</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                            </div>
+                        
+
+                        
+
+                        
+
+                        
+
+                        
+
+                        
+                            <div class="screenshot">
+                                <img src="screenshots\24-404-오류-페이지.png" alt="404 오류 페이지 스크린샷" loading="lazy">
+                            </div>
+                        
+                    </div>
+                </div>
+            
+                <div class="page-result">
+                    <div class="page-header passed">
+                        <div class="page-title">
+                            ✅ 
+                            [25] 오프라인 페이지
+                            <span class="status-badge status-passed">PASSED</span>
+                        </div>
+                        <div class="page-url">
+                            <a href="https://doha.kr/offline.html" target="_blank">https://doha.kr/offline.html</a>
+                        </div>
+                    </div>
+                    <div class="page-details">
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <div class="detail-label">HTTP 상태</div>
+                                <div class="detail-value">200</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">로딩 시간</div>
+                                <div class="detail-value">454ms</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">카테고리</div>
+                                <div class="detail-value">special</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">페이지 검증</div>
+                                <div class="detail-value">✅ 통과</div>
+                            </div>
+                        </div>
+
+                        
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <div class="detail-label">제목</div>
+                                    <div class="detail-value">✅ 오프라인 - doha.kr</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">헤더/네비</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">푸터</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">메인 콘텐츠</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                            </div>
+                        
+
+                        
+
+                        
+
+                        
+
+                        
+
+                        
+                            <div class="screenshot">
+                                <img src="screenshots\25-오프라인-페이지.png" alt="오프라인 페이지 스크린샷" loading="lazy">
+                            </div>
+                        
+                    </div>
+                </div>
+            
+                <div class="page-result">
+                    <div class="page-header passed">
+                        <div class="page-title">
+                            ✅ 
+                            [26] 결과 상세 페이지
+                            <span class="status-badge status-passed">PASSED</span>
+                        </div>
+                        <div class="page-url">
+                            <a href="https://doha.kr/result-detail.html" target="_blank">https://doha.kr/result-detail.html</a>
+                        </div>
+                    </div>
+                    <div class="page-details">
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <div class="detail-label">HTTP 상태</div>
+                                <div class="detail-value">200</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">로딩 시간</div>
+                                <div class="detail-value">441ms</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">카테고리</div>
+                                <div class="detail-value">special</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">페이지 검증</div>
+                                <div class="detail-value">✅ 통과</div>
+                            </div>
+                        </div>
+
+                        
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <div class="detail-label">제목</div>
+                                    <div class="detail-value">✅ 결과 상세 - doha.kr</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">헤더/네비</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">푸터</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">메인 콘텐츠</div>
+                                    <div class="detail-value">✅ 존재</div>
+                                </div>
+                            </div>
+                        
+
+                        
+
+                        
+
+                        
+
+                        
+
+                        
+                            <div class="screenshot">
+                                <img src="screenshots\26-결과-상세-페이지.png" alt="결과 상세 페이지 스크린샷" loading="lazy">
+                            </div>
+                        
+                    </div>
+                </div>
+            
+        </div>
+
+        <div style="margin-top: 40px; text-align: center; color: #6b7280;">
+            <p>리포트 생성 시간: 2025. 8. 11. 오전 12:44:00</p>
+            <p>QA 전문가 검증 완료</p>
+        </div>
+    </div>
+</body>
+</html>

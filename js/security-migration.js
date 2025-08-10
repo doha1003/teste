@@ -101,15 +101,13 @@ const fileAnalysis = {
 
 // 마이그레이션 실행 함수
 function executeMigration() {
-
   // 1. DOMPurify CDN 추가 확인
 
   // 2. 파일별 수정 가이드
-  
-  Object.entries(fileAnalysis).forEach(([file, data]) => {
-    
-    data.locations.forEach((loc) => {
-      
+
+  Object.entries(fileAnalysis).forEach(([_file, data]) => {
+    data.locations.forEach((_loc) => {
+      // TODO: Implement security migration for this location
     });
   });
 
@@ -118,11 +116,10 @@ function executeMigration() {
   // 4. localStorage 암호화
 
   // 5. 입력값 검증
-
 }
 
 // 특정 파일의 innerHTML 사용을 분석하는 함수
-function analyzeFile(content, filename) {
+function analyzeFile(content, _filename) {
   const results = [];
   const lines = content.split('\n');
 

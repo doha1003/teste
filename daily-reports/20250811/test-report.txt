@@ -1,0 +1,86 @@
+
+> doha-kr@3.0.0 test
+> vitest
+
+
+[7m[1m[36m RUN [39m[22m[27m [36mv1.6.1[39m [90mC:/Users/pc/teste[39m
+
+ [32m✓[39m tests/integration/api-v2-endpoints.test.js [2m ([22m[2m18 tests[22m[2m)[22m[90m 25[2mms[22m[39m[35m 46 MB heap used[39m
+ [32m✓[39m tests/unit/storage.test.js [2m ([22m[2m25 tests[22m [2m|[22m [33m5 skipped[39m[2m)[22m[90m 27[2mms[22m[39m[35m 46 MB heap used[39m
+ [32m✓[39m tests/unit/event-bus.test.js [2m ([22m[2m27 tests[22m[2m)[22m[90m 27[2mms[22m[39m[35m 49 MB heap used[39m
+ [33m❯[39m tests/integration/api-endpoints.test.js [2m ([22m[2m12 tests[22m [2m|[22m [31m1 failed[39m [2m|[22m [33m4 skipped[39m[2m)[22m[90m 32[2mms[22m[39m[35m 48 MB heap used[39m
+[31m   [33m❯[31m tests/integration/api-endpoints.test.js[2m > [22mAPI Endpoints Integration[2m > [22mFortune API Integration[2m > [22m일일 운세 요청을 처리해야 함[39m
+[31m     → expected "spy" to be called with arguments: [ …(2) ][90m
+
+Received: 
+
+[1m  1st spy call:
+
+[22m[2m  Array [[22m
+[32m-   "https://doha-kr-ap.vercel.app/api/fortune",[90m
+[32m-   ObjectContaining {[90m
+[31m+   "/api/fortune",[90m
+[31m+   Object {[90m
+[2m      "body": "{\"type\":\"daily\",\"userData\":{\"name\":\"홍길동\",\"birthDate\":\"1990-05-15\",\"birthHour\":null,\"isLunar\":false}}",[22m
+[32m-     "headers": ObjectContaining {[90m
+[31m+     "credentials": "same-origin",[90m
+[31m+     "headers": Object {[90m
+[2m        "Content-Type": "application/json",[22m
+[2m      },[22m
+[2m      "method": "POST",[22m
+[31m+     "signal": AbortSignal {},[90m
+[2m    },[22m
+[2m  ][22m
+[31m[90m
+
+Number of calls: [1m1[22m
+[31m[39m
+ [32m✓[39m tests/unit/api-config.test.js [2m ([22m[2m28 tests[22m [2m|[22m [33m5 skipped[39m[2m)[22m[90m 39[2mms[22m[39m[35m 48 MB heap used[39m
+ [32m✓[39m tests/unit/design-system.test.js [2m ([22m[2m30 tests[22m[2m)[22m[90m 70[2mms[22m[39m[35m 56 MB heap used[39m
+ [32m✓[39m tests/integration/frontend-backend.test.js [2m ([22m[2m17 tests[22m [2m|[22m [33m1 skipped[39m[2m)[22m[90m 112[2mms[22m[39m[35m 58 MB heap used[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[1m[7m Failed Tests 1 [27m[22m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[31m[1m[7m FAIL [27m[22m[39m tests/integration/api-endpoints.test.js[2m > [22mAPI Endpoints Integration[2m > [22mFortune API Integration[2m > [22m일일 운세 요청을 처리해야 함
+[31m[1mAssertionError[22m: expected "spy" to be called with arguments: [ …(2) ][90m
+
+Received: 
+
+[1m  1st spy call:
+
+[22m[2m  Array [[22m
+[32m-   "https://doha-kr-ap.vercel.app/api/fortune",[90m
+[32m-   ObjectContaining {[90m
+[31m+   "/api/fortune",[90m
+[31m+   Object {[90m
+[2m      "body": "{\"type\":\"daily\",\"userData\":{\"name\":\"홍길동\",\"birthDate\":\"1990-05-15\",\"birthHour\":null,\"isLunar\":false}}",[22m
+[32m-     "headers": ObjectContaining {[90m
+[31m+     "credentials": "same-origin",[90m
+[31m+     "headers": Object {[90m
+[2m        "Content-Type": "application/json",[22m
+[2m      },[22m
+[2m      "method": "POST",[22m
+[31m+     "signal": AbortSignal {},[90m
+[2m    },[22m
+[2m  ][22m
+[31m[90m
+
+Number of calls: [1m1[22m
+[31m[39m
+[36m [2m❯[22m tests/integration/api-endpoints.test.js:[2m85:21[22m[39m
+    [90m 83| [39m
+    [90m 84| [39m      [34mexpect[39m(result)[33m.[39m[34mtoEqual[39m(expectedResponse)[33m;[39m
+    [90m 85| [39m      [34mexpect[39m(fetch)[33m.[39m[34mtoHaveBeenCalledWith[39m(
+    [90m   | [39m                    [31m^[39m
+    [90m 86| [39m        fortuneEndpoint[33m,[39m
+    [90m 87| [39m        expect[33m.[39m[34mobjectContaining[39m({
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m6 passed[39m[22m[90m (7)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m141 passed[39m[22m[2m | [22m[33m15 skipped[39m[90m (157)[39m
+[2m   Start at [22m 00:35:51
+[2m   Duration [22m 1.66s[2m (transform 202ms, setup 267ms, collect 297ms, tests 332ms, environment 6.45s, prepare 1.62s)[22m
+
+[1m[7m[35m HTML [39m[27m[22m [35mReport is generated[39m
+[2m       You can run [22m[1mnpx vite preview --outDir html[22m[2m to see the test results.[22m

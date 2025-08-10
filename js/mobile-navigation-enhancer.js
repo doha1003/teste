@@ -1,12 +1,12 @@
 /**
  * 모바일 네비게이션 향상 시스템
  * 팀리더 지시: 모바일 UX 개선을 위한 햄버거 메뉴 및 터치 최적화
- * 
+ *
  * @version 1.0.0
  * @created 2025-08-03
  */
 
-(function() {
+(function () {
   'use strict';
 
   class MobileNavigationEnhancer {
@@ -15,7 +15,7 @@
       this.menuOpen = false;
       this.touchStartY = 0;
       this.touchStartX = 0;
-      
+
       this.init();
     }
 
@@ -24,15 +24,17 @@
       this.setupTouchOptimization();
       this.setupViewportHandler();
       this.enhanceExistingButtons();
-      
+
       console.log('📱 모바일 네비게이션 향상 시스템 활성화됨');
     }
 
     createMobileNavigation() {
       // 네비게이션 placeholder가 로드될 때까지 기다림
       const checkNavigation = () => {
-        const nav = document.querySelector('nav, [role="navigation"], .navbar, #navbar-placeholder');
-        
+        const nav = document.querySelector(
+          'nav, [role="navigation"], .navbar, #navbar-placeholder'
+        );
+
         if (!nav) {
           // 1초 후 재시도
           setTimeout(checkNavigation, 1000);
@@ -49,8 +51,10 @@
         const actualNav = nav.querySelector('.navbar') || nav;
 
         // 기존 모바일 메뉴 버튼이 있는지 확인
-        const existingToggle = actualNav.querySelector('.mobile-menu-btn, .navbar-toggle, .mobile-menu-toggle');
-        
+        const existingToggle = actualNav.querySelector(
+          '.mobile-menu-btn, .navbar-toggle, .mobile-menu-toggle'
+        );
+
         if (!existingToggle && !document.querySelector('.mobile-menu-toggle-enhanced')) {
           const hamburger = this.createHamburgerMenu();
           hamburger.classList.add('mobile-menu-toggle-enhanced'); // 중복 방지용 클래스
@@ -77,7 +81,7 @@
       hamburger.className = 'mobile-menu-toggle';
       hamburger.setAttribute('aria-label', '메뉴 열기');
       hamburger.setAttribute('aria-expanded', 'false');
-      
+
       hamburger.innerHTML = `
         <span class="hamburger-line"></span>
         <span class="hamburger-line"></span>
@@ -85,7 +89,7 @@
       `;
 
       hamburger.addEventListener('click', () => this.toggleMobileMenu());
-      
+
       return hamburger;
     }
 
@@ -128,10 +132,16 @@
     }
 
     toggleMobileMenu(open = null) {
-      const hamburger = document.querySelector('.mobile-menu-toggle-enhanced') || document.querySelector('.mobile-menu-toggle');
-      const overlay = document.querySelector('.mobile-menu-overlay-enhanced') || document.querySelector('.mobile-menu-overlay');
-      
-      if (!hamburger || !overlay) {return;}
+      const hamburger =
+        document.querySelector('.mobile-menu-toggle-enhanced') ||
+        document.querySelector('.mobile-menu-toggle');
+      const overlay =
+        document.querySelector('.mobile-menu-overlay-enhanced') ||
+        document.querySelector('.mobile-menu-overlay');
+
+      if (!hamburger || !overlay) {
+        return;
+      }
 
       this.menuOpen = open !== null ? open : !this.menuOpen;
 
@@ -152,14 +162,14 @@
 
     optimizeNavigationLinks(nav) {
       const links = nav.querySelectorAll('a');
-      
-      links.forEach(link => {
+
+      links.forEach((link) => {
         // 터치 영역 확대
         link.style.minHeight = '44px';
         link.style.display = 'dh-l-flex';
         link.style.alignItems = 'center';
         link.style.padding = '12px 16px';
-        
+
         // 터치 피드백 추가
         link.addEventListener('touchstart', this.handleTouchFeedback);
         link.addEventListener('touchend', this.handleTouchEnd);
@@ -169,8 +179,8 @@
     setupTouchOptimization() {
       // 모든 버튼과 링크에 터치 최적화 적용
       const interactiveElements = document.querySelectorAll('button, a, [role="dh-c-button"]');
-      
-      interactiveElements.forEach(element => {
+
+      interactiveElements.forEach((element) => {
         this.optimizeTouchTarget(element);
       });
 
@@ -182,7 +192,7 @@
       const styles = window.getComputedStyle(element);
       const currentHeight = parseInt(styles.height);
       const currentPadding = parseInt(styles.padding);
-      
+
       // 최소 44px 터치 영역 보장 (Apple HIG 권장사항)
       if (currentHeight < 44) {
         const additionalPadding = Math.max(0, (44 - currentHeight) / 2);
@@ -197,57 +207,67 @@
 
     handleTouchFeedback = (e) => {
       e.currentTarget.classList.add('touch-feedback');
-    }
+    };
 
     handleTouchEnd = (e) => {
       setTimeout(() => {
         e.currentTarget.classList.remove('touch-feedback');
       }, 150);
-    }
+    };
 
     setupSwipeGestures() {
       let startTime = 0;
-      
-      document.addEventListener('touchstart', (e) => {
-        this.touchStartY = e.touches[0].clientY;
-        this.touchStartX = e.touches[0].clientX;
-        startTime = Date.now();
-      }, { passive: true });
 
-      document.addEventListener('touchend', (e) => {
-        if (!this.touchStartY || !this.touchStartX) {return;}
-        
-        const touchEndY = e.changedTouches[0].clientY;
-        const touchEndX = e.changedTouches[0].clientX;
-        const diffY = this.touchStartY - touchEndY;
-        const diffX = this.touchStartX - touchEndX;
-        const timeDiff = Date.now() - startTime;
-        
-        // 빠른 스와이프 감지 (500ms 이내, 50px 이상)
-        if (timeDiff < 500 && Math.abs(diffX) > 50 && Math.abs(diffY) < 100) {
-          if (diffX > 0) {
-            // 왼쪽 스와이프: 메뉴 닫기
-            if (this.menuOpen) {
-              this.toggleMobileMenu(false);
-            }
-          } else {
-            // 오른쪽 스와이프: 메뉴 열기 (화면 왼쪽 끝에서만)
-            if (!this.menuOpen && this.touchStartX < 50) {
-              this.toggleMobileMenu(true);
+      document.addEventListener(
+        'touchstart',
+        (e) => {
+          this.touchStartY = e.touches[0].clientY;
+          this.touchStartX = e.touches[0].clientX;
+          startTime = Date.now();
+        },
+        { passive: true }
+      );
+
+      document.addEventListener(
+        'touchend',
+        (e) => {
+          if (!this.touchStartY || !this.touchStartX) {
+            return;
+          }
+
+          const touchEndY = e.changedTouches[0].clientY;
+          const touchEndX = e.changedTouches[0].clientX;
+          const diffY = this.touchStartY - touchEndY;
+          const diffX = this.touchStartX - touchEndX;
+          const timeDiff = Date.now() - startTime;
+
+          // 빠른 스와이프 감지 (500ms 이내, 50px 이상)
+          if (timeDiff < 500 && Math.abs(diffX) > 50 && Math.abs(diffY) < 100) {
+            if (diffX > 0) {
+              // 왼쪽 스와이프: 메뉴 닫기
+              if (this.menuOpen) {
+                this.toggleMobileMenu(false);
+              }
+            } else {
+              // 오른쪽 스와이프: 메뉴 열기 (화면 왼쪽 끝에서만)
+              if (!this.menuOpen && this.touchStartX < 50) {
+                this.toggleMobileMenu(true);
+              }
             }
           }
-        }
-        
-        this.touchStartY = 0;
-        this.touchStartX = 0;
-      }, { passive: true });
+
+          this.touchStartY = 0;
+          this.touchStartX = 0;
+        },
+        { passive: true }
+      );
     }
 
     setupViewportHandler() {
       // 뷰포트 변화 감지 (회전 등)
       window.addEventListener('resize', () => {
         this.isMobile = window.innerWidth <= 768;
-        
+
         if (!this.isMobile && this.menuOpen) {
           this.toggleMobileMenu(false);
         }
@@ -262,17 +282,14 @@
     handleIOSViewport() {
       // iOS에서 주소창이 숨겨질 때 화면 높이 변화 대응
       const initialViewportHeight = window.innerHeight;
-      
+
       window.addEventListener('resize', () => {
         const currentHeight = window.innerHeight;
         const heightDiff = initialViewportHeight - currentHeight;
-        
+
         // 주소창 숨김/표시로 인한 높이 변화 감지
         if (Math.abs(heightDiff) > 60) {
-          document.documentElement.style.setProperty(
-            '--viewport-height', 
-            `${currentHeight}px`
-          );
+          document.documentElement.style.setProperty('--viewport-height', `${currentHeight}px`);
         }
       });
     }
@@ -280,11 +297,11 @@
     enhanceExistingButtons() {
       // 기존 버튼들의 터치 반응성 개선
       const buttons = document.querySelectorAll('.btn, .dh-c-button, button');
-      
-      buttons.forEach(button => {
+
+      buttons.forEach((button) => {
         if (!button.classList.contains('touch-optimized')) {
           button.classList.add('touch-optimized');
-          
+
           // 리플 효과 추가
           button.addEventListener('click', this.createRippleEffect);
         }
@@ -297,15 +314,15 @@
       const size = Math.max(rect.width, rect.height);
       const x = e.clientX - rect.left - size / 2;
       const y = e.clientY - rect.top - size / 2;
-      
+
       const ripple = document.createElement('span');
       ripple.className = 'ripple-effect';
-      ripple.style.width = ripple.style.height = `${size  }px`;
-      ripple.style.left = `${x  }px`;
-      ripple.style.top = `${y  }px`;
-      
+      ripple.style.width = ripple.style.height = `${size}px`;
+      ripple.style.left = `${x}px`;
+      ripple.style.top = `${y}px`;
+
       button.appendChild(ripple);
-      
+
       setTimeout(() => {
         if (ripple.parentNode) {
           ripple.parentNode.removeChild(ripple);

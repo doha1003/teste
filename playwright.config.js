@@ -51,7 +51,7 @@ export default defineConfig({
     // 액션 타임아웃 - 안정성 개선
     actionTimeout: 60000, // 60초로 증가
 
-    // 네비게이션 타임아웃 - 안정성 개선  
+    // 네비게이션 타임아웃 - 안정성 개선
     navigationTimeout: 90000, // 90초로 증가
 
     // 요소 대기 타임아웃

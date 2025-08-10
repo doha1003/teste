@@ -16,7 +16,9 @@ const cardsHTML = `
 <!-- 타로 카드 선택 영역 -->
 <div id="tarot-cards-container" class="tarot-cards-grid" style="display: none; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 10px; margin: 30px 0;">
     <h3 style="grid-column: 1 / -1; text-align: center;">카드를 선택하세요</h3>
-    ${Array.from({length: 22}, (_, i) => `
+    ${Array.from(
+      { length: 22 },
+      (_, i) => `
     <div class="tarot-card" data-card="${i}" style="
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         border-radius: 8px;
@@ -29,7 +31,8 @@ const cardsHTML = `
         user-select: none;
     " onclick="selectCard(this, ${i})">
         🎴
-    </div>`).join('')}
+    </div>`
+    ).join('')}
 </div>
 <div id="selected-cards-info" style="display: none; text-align: center; margin: 20px 0;">
     <p>선택한 카드: <span id="selected-count">0</span>개</p>
@@ -127,11 +130,11 @@ document.addEventListener('DOMContentLoaded', function() {
 // 타로 결과 div 앞에 카드 선택 UI 삽입
 const insertPosition = html.indexOf('<div id="tarotResult"');
 if (insertPosition > -1) {
-    html = html.slice(0, insertPosition) + cardsHTML + html.slice(insertPosition);
-    
-    // 파일 저장
-    fs.writeFileSync(htmlFile, html, 'utf8');
-    console.log('✅ 타로카드 UI 추가 완료');
+  html = html.slice(0, insertPosition) + cardsHTML + html.slice(insertPosition);
+
+  // 파일 저장
+  fs.writeFileSync(htmlFile, html, 'utf8');
+  console.log('✅ 타로카드 UI 추가 완료');
 } else {
-    console.error('❌ 삽입 위치를 찾을 수 없습니다');
+  console.error('❌ 삽입 위치를 찾을 수 없습니다');
 }

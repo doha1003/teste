@@ -237,6 +237,7 @@ function showScreen(screenId) {
 }
 
 // 테스트 시작
+// eslint-disable-next-line no-unused-vars
 function startTest() {
   if (!selectedGender) {
     alert('성별을 선택해주세요!');
@@ -330,6 +331,7 @@ function nextQuestion() {
 }
 
 // 이전 질문
+// eslint-disable-next-line no-unused-vars
 function previousQuestion() {
   if (currentQuestion > 0) {
     currentQuestion--;
@@ -430,6 +432,7 @@ function showResult() {
 }
 
 // 카카오톡 공유 (간단하고 안정적인 버전)
+// eslint-disable-next-line no-unused-vars
 function shareToKakao() {
   if (typeof Kakao !== 'undefined' && currentTypeData) {
     // 상세한 설명 텍스트 생성
@@ -487,6 +490,7 @@ function copyResultLink() {
 }
 
 // 테스트 재시작
+// eslint-disable-next-line no-unused-vars
 function restartTest() {
   currentQuestion = -1;
   answers = {};

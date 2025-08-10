@@ -558,9 +558,9 @@ mbtiTest.initialize();
 // DohaKR 네임스페이스에 등록
 if (typeof window !== 'undefined' && window.DohaKR) {
   window.DohaKR.registerService('Tests', 'MBTI', mbtiTest);
-  
+
   // 레거시 호환성을 위한 전역 연결 (점진적 제거 예정)
   window.mbtiTest = mbtiTest;
-  
+
   console.log('✅ MBTI Test Service registered in DohaKR.Tests.MBTI');
 }

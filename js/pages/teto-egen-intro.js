@@ -232,7 +232,7 @@
      * 버튼이 속한 섹션 확인
      */
     getButtonSection(button) {
-      const dh-l-section = button.closest('section');
+      const section = button.closest('section');
       if (section) {
         if (section.classList.contains('hero')) {
           return 'hero';

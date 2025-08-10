@@ -5,7 +5,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vercel dev",
+    "dev:vercel": "vercel dev --listen 3001",
+    "dev": "python -m http.server 3000",
     "build": "npm run build:css && npm run build:js && npm run minify:css",
     "build:pwa": "NODE_ENV=production node build-pwa.cjs",
     "build:pwa:dev": "NODE_ENV=development node build-pwa.cjs",

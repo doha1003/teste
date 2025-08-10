@@ -28,7 +28,7 @@ const CLASS_MAPPINGS = {
   'btn btn--ghost': 'linear-button linear-button--ghost text-korean',
   'tab-button': 'linear-button linear-button--tab text-korean',
   'cta-button': 'linear-button linear-button--primary linear-button--large text-korean',
-  
+
   // 카드 시스템
   'service-card': 'linear-card service-card',
   'feature-card': 'linear-card feature-card',
@@ -37,26 +37,26 @@ const CLASS_MAPPINGS = {
   'tool-card': 'linear-card tool-card',
   'fortune-card': 'linear-card fortune-card',
   'info-card': 'linear-card info-card',
-  'card': 'linear-card',
-  
+  card: 'linear-card',
+
   // 입력 필드
   'form-control': 'linear-input text-korean',
   'form-input': 'linear-input text-korean',
   'form-select': 'linear-select text-korean',
   'form-textarea': 'linear-textarea text-korean',
-  'input': 'linear-input text-korean',
-  'select': 'linear-select text-korean',
-  'textarea': 'linear-textarea text-korean',
-  
+  input: 'linear-input text-korean',
+  select: 'linear-select text-korean',
+  textarea: 'linear-textarea text-korean',
+
   // 알림 시스템
-  'alert': 'linear-alert',
+  alert: 'linear-alert',
   'alert-success': 'linear-alert linear-alert--success',
   'alert-warning': 'linear-alert linear-alert--warning',
   'alert-danger': 'linear-alert linear-alert--danger',
   'alert-info': 'linear-alert linear-alert--info',
-  
+
   // 배지 시스템
-  'badge': 'linear-badge',
+  badge: 'linear-badge',
   'service-badge': 'linear-badge linear-badge--popular',
   'service-badge fortune-gradient': 'linear-badge linear-badge--popular',
   'service-badge new-pink': 'linear-badge linear-badge--new',
@@ -64,7 +64,7 @@ const CLASS_MAPPINGS = {
   'new-badge': 'linear-badge linear-badge--new',
   'hot-badge': 'linear-badge linear-badge--hot',
   'popular-badge': 'linear-badge linear-badge--popular',
-  
+
   // 아이콘 시스템
   'service-emoji': 'service-emoji icon',
   'feature-icon': 'feature-icon icon',
@@ -72,7 +72,7 @@ const CLASS_MAPPINGS = {
   'test-icon': 'test-icon icon',
   'result-icon': 'result-icon icon',
   'btn-icon': 'icon',
-  
+
   // 타이포그래피 (한국어 최적화)
   'service-name': 'service-name text-subheading text-korean',
   'service-desc': 'service-desc text-body text-korean',
@@ -137,7 +137,7 @@ function migrateHtmlToLinear(htmlContent, filePath = '') {
   Object.entries(CLASS_MAPPINGS).forEach(([oldClass, newClass]) => {
     const regex = new RegExp(`class="${oldClass.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}"`, 'g');
     const matches = modifiedContent.match(regex);
-    
+
     if (matches) {
       modifiedContent = modifiedContent.replace(regex, `class="${newClass}"`);
       changeCount += matches.length;
@@ -148,22 +148,28 @@ function migrateHtmlToLinear(htmlContent, filePath = '') {
   // 2. 부분 클래스 매핑 (더 복잡한 패턴)
   const partialMappings = [
     // btn이 포함된 클래스들
-    [/class="([^"]*\b)btn(\b[^"]*)"/g, (match, prefix, suffix) => {
-      if (prefix.includes('linear-button')) return match; // 이미 변환된 경우 스킵
-      const newClass = `${prefix}linear-button${suffix} text-korean`.trim();
-      changeCount++;
-      changes.push(`  🔄 btn pattern: ${match} → class="${newClass}"`);
-      return `class="${newClass}"`;
-    }],
-    
+    [
+      /class="([^"]*\b)btn(\b[^"]*)"/g,
+      (match, prefix, suffix) => {
+        if (prefix.includes('linear-button')) return match; // 이미 변환된 경우 스킵
+        const newClass = `${prefix}linear-button${suffix} text-korean`.trim();
+        changeCount++;
+        changes.push(`  🔄 btn pattern: ${match} → class="${newClass}"`);
+        return `class="${newClass}"`;
+      },
+    ],
+
     // card가 포함된 클래스들
-    [/class="([^"]*\b)card(\b[^"]*)"/g, (match, prefix, suffix) => {
-      if (prefix.includes('linear-card')) return match;
-      const newClass = `${prefix}linear-card${suffix}`.trim();
-      changeCount++;
-      changes.push(`  🔄 card pattern: ${match} → class="${newClass}"`);
-      return `class="${newClass}"`;
-    }],
+    [
+      /class="([^"]*\b)card(\b[^"]*)"/g,
+      (match, prefix, suffix) => {
+        if (prefix.includes('linear-card')) return match;
+        const newClass = `${prefix}linear-card${suffix}`.trim();
+        changeCount++;
+        changes.push(`  🔄 card pattern: ${match} → class="${newClass}"`);
+        return `class="${newClass}"`;
+      },
+    ],
   ];
 
   partialMappings.forEach(([regex, replacer]) => {
@@ -173,7 +179,7 @@ function migrateHtmlToLinear(htmlContent, filePath = '') {
   // 3. 한국어 텍스트 최적화 (기본적인 한글 감지)
   const koreanTextRegex = />[^<]*[가-힣][^<]*</g;
   const koreanMatches = modifiedContent.match(koreanTextRegex);
-  
+
   if (koreanMatches) {
     console.log(`  🇰🇷 Korean text detected: ${koreanMatches.length} instances`);
   }
@@ -182,7 +188,7 @@ function migrateHtmlToLinear(htmlContent, filePath = '') {
   Object.entries(HIGHLIGHTER_PATTERNS).forEach(([className, highlighterClass]) => {
     const regex = new RegExp(`class="([^"]*\\b)${className}(\\b[^"]*)"`, 'g');
     const replacement = `class="$1${className}$2 ${highlighterClass}"`;
-    
+
     if (modifiedContent.match(regex)) {
       modifiedContent = modifiedContent.replace(regex, replacement);
       changes.push(`  ✨ Added highlighter: ${className} + ${highlighterClass}`);
@@ -193,7 +199,7 @@ function migrateHtmlToLinear(htmlContent, filePath = '') {
   // 결과 출력
   if (changes.length > 0) {
     console.log(`  📊 Total changes: ${changeCount}`);
-    changes.slice(0, 10).forEach(change => console.log(change)); // 최대 10개만 표시
+    changes.slice(0, 10).forEach((change) => console.log(change)); // 최대 10개만 표시
     if (changes.length > 10) {
       console.log(`  ... and ${changes.length - 10} more changes`);
     }
@@ -215,33 +221,33 @@ function migrateDirectory(dirPath, excludePaths = []) {
     processedFiles: 0,
     modifiedFiles: 0,
     totalChanges: 0,
-    errors: []
+    errors: [],
   };
 
   function processDirectory(currentPath) {
     const items = fs.readdirSync(currentPath);
-    
-    items.forEach(item => {
+
+    items.forEach((item) => {
       const fullPath = path.join(currentPath, item);
       const relativePath = path.relative(dirPath, fullPath);
-      
+
       // 제외 경로 확인
-      if (excludePaths.some(excludePath => relativePath.startsWith(excludePath))) {
+      if (excludePaths.some((excludePath) => relativePath.startsWith(excludePath))) {
         console.log(`⏭️  Skipping excluded: ${relativePath}`);
         return;
       }
-      
+
       const stat = fs.statSync(fullPath);
-      
+
       if (stat.isDirectory()) {
         processDirectory(fullPath);
       } else if (path.extname(fullPath) === '.html') {
         try {
           const originalContent = fs.readFileSync(fullPath, 'utf8');
           const modifiedContent = migrateHtmlToLinear(originalContent, relativePath);
-          
+
           stats.processedFiles++;
-          
+
           if (originalContent !== modifiedContent) {
             fs.writeFileSync(fullPath, modifiedContent, 'utf8');
             stats.modifiedFiles++;
@@ -269,10 +275,10 @@ function migrateSpecificFiles(filePaths) {
     processedFiles: 0,
     modifiedFiles: 0,
     totalChanges: 0,
-    errors: []
+    errors: [],
   };
 
-  filePaths.forEach(filePath => {
+  filePaths.forEach((filePath) => {
     try {
       if (!fs.existsSync(filePath)) {
         console.log(`⚠️  File not found: ${filePath}`);
@@ -281,9 +287,9 @@ function migrateSpecificFiles(filePaths) {
 
       const originalContent = fs.readFileSync(filePath, 'utf8');
       const modifiedContent = migrateHtmlToLinear(originalContent, filePath);
-      
+
       stats.processedFiles++;
-      
+
       if (originalContent !== modifiedContent) {
         fs.writeFileSync(filePath, modifiedContent, 'utf8');
         stats.modifiedFiles++;
@@ -313,7 +319,7 @@ function main() {
     'playwright-report',
     'test-reports',
     'coverage',
-    'dist'
+    'dist',
   ];
 
   // 주요 페이지들 우선 처리
@@ -349,7 +355,7 @@ function main() {
 
   if (majorStats.errors.length + allStats.errors.length > 0) {
     console.log('\n❌ Errors encountered:');
-    [...majorStats.errors, ...allStats.errors].forEach(error => console.log(`  ${error}`));
+    [...majorStats.errors, ...allStats.errors].forEach((error) => console.log(`  ${error}`));
   }
 
   console.log('\n🎉 Linear Design System migration completed successfully!');
@@ -364,5 +370,5 @@ export {
   migrateSpecificFiles,
   CLASS_MAPPINGS,
   KOREAN_TEXT_PATTERNS,
-  HIGHLIGHTER_PATTERNS
+  HIGHLIGHTER_PATTERNS,
 };

@@ -3,7 +3,7 @@
  * 연봉 실수령액 계산기 구현
  */
 
-import { ToolService } from "./tool-service.js";
+import { ToolService } from './tool-service.js';
 
 export class SalaryCalculatorService extends ToolService {
   constructor() {
@@ -46,7 +46,7 @@ export class SalaryCalculatorService extends ToolService {
 
     // 비과세 한도
     this.taxExemption = 200000; // 월 20만원
-    
+
     // 디바운스 타이머
     this.debounceTimer = null;
   }
@@ -63,7 +63,7 @@ export class SalaryCalculatorService extends ToolService {
         e.preventDefault();
         this.calculate();
       });
-      
+
       // 계산 버튼 클릭 이벤트
       const calculateBtn = form.querySelector('.calculate-btn');
       if (calculateBtn) {
@@ -76,7 +76,7 @@ export class SalaryCalculatorService extends ToolService {
 
     // 입력 필드 실시간 변경 이벤트
     this.setupRealTimeCalculation();
-    
+
     // 결과 액션 버튼 이벤트 바인딩
     this.bindResultActions();
 
@@ -91,32 +91,40 @@ export class SalaryCalculatorService extends ToolService {
     const inputs = [
       document.querySelector(this.ui.annualSalary),
       document.querySelector(this.ui.familyCount),
-      document.querySelector(this.ui.childCount)
+      document.querySelector(this.ui.childCount),
     ];
-    
-    inputs.forEach(input => {
+
+    inputs.forEach((input) => {
       if (input) {
         input.addEventListener('input', () => {
           // 디바운스 처리
           clearTimeout(this.debounceTimer);
           this.debounceTimer = setTimeout(() => {
             const annualSalaryInput = document.querySelector(this.ui.annualSalary);
-            if (annualSalaryInput && annualSalaryInput.value && parseFloat(annualSalaryInput.value) > 0) {
+            if (
+              annualSalaryInput &&
+              annualSalaryInput.value &&
+              parseFloat(annualSalaryInput.value) > 0
+            ) {
               this.calculate();
             }
           }, 500);
         });
-        
+
         input.addEventListener('change', () => {
           const annualSalaryInput = document.querySelector(this.ui.annualSalary);
-          if (annualSalaryInput && annualSalaryInput.value && parseFloat(annualSalaryInput.value) > 0) {
+          if (
+            annualSalaryInput &&
+            annualSalaryInput.value &&
+            parseFloat(annualSalaryInput.value) > 0
+          ) {
             this.calculate();
           }
         });
       }
     });
   }
-  
+
   /**
    * 초기 계산 실행
    */
@@ -411,9 +419,11 @@ export class SalaryCalculatorService extends ToolService {
   bindResultActions() {
     document.addEventListener('click', (e) => {
       const target = e.target.closest('[data-action]');
-      if (!target) {return;}
-      
-      const {action} = target.dataset;
+      if (!target) {
+        return;
+      }
+
+      const { action } = target.dataset;
       switch (action) {
         case 'copy-result':
           this.copyResult();
@@ -427,7 +437,7 @@ export class SalaryCalculatorService extends ToolService {
       }
     });
   }
-  
+
   /**
    * 계산기 초기화
    */
@@ -442,13 +452,13 @@ export class SalaryCalculatorService extends ToolService {
         annualSalaryInput.value = '4000';
       }
     }
-    
+
     // 결과 영역 숨기기
     const resultContainer = document.querySelector(this.ui.resultContainer);
     if (resultContainer) {
       resultContainer.classList.remove('show');
     }
-    
+
     // 상태 초기화
     this.toolState.currentValues = {};
     this.toolState.result = null;

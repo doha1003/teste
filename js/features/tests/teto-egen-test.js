@@ -3,7 +3,7 @@
  * 테토-에겐 성격유형 테스트 구현
  */
 
-import { TestService } from "./test-service.js";
+import { TestService } from './test-service.js';
 
 export class TetoEgenTestService extends TestService {
   constructor() {
@@ -123,7 +123,7 @@ export class TetoEgenTestService extends TestService {
       console.error('❌ Teto-Egen questions not found in window.tetoEgenQuestions');
       throw new Error('Teto-Egen 질문 데이터를 찾을 수 없습니다');
     }
-    
+
     // 성별 선택 화면 이벤트 바인딩
     this.bindGenderSelection();
 

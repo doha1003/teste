@@ -137,7 +137,9 @@ async function generateAnimalFortuneWithAI(animal, animalData) {
         return parsed;
       }
     }
-  } catch (error) {}
+  } catch (error) {
+    console.warn('Failed to get AI fortune, using fallback');
+  }
 
   return null;
 }

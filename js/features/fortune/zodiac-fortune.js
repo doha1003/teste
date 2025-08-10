@@ -3,7 +3,7 @@
  * 별자리 운세 서비스 구현
  */
 
-import { FortuneService } from "./fortune-service.js";
+import { FortuneService } from './fortune-service.js';
 
 export class ZodiacFortuneService extends FortuneService {
   constructor() {
@@ -134,14 +134,14 @@ export class ZodiacFortuneService extends FortuneService {
   async generateFortune(userData) {
     try {
       console.log('⭐ generateFortune 호출됨:', userData);
-      
+
       // 별자리 데이터 저장
       this.selectedZodiac = userData.zodiac;
       this.userName = userData.name;
-      
+
       console.log('💾 Zodiac State 저장됨:', {
         zodiac: this.selectedZodiac,
-        name: this.userName
+        name: this.userName,
       });
 
       // 로딩 표시
@@ -149,12 +149,12 @@ export class ZodiacFortuneService extends FortuneService {
 
       // 별자리 운세 생성
       const result = await this.fetchZodiacFortune(this.selectedZodiac);
-      
+
       console.log('✨ 별자리 운세 결과:', result);
 
       // 결과 표시
       this.showResult(result);
-      
+
       return result;
     } catch (error) {
       console.error('❌ generateFortune 오류:', error);
@@ -205,7 +205,7 @@ export class ZodiacFortuneService extends FortuneService {
   async fetchZodiacFortune(zodiacSign) {
     try {
       const zodiac = this.zodiacData[zodiacSign];
-      
+
       // 기본 운세 생성
       const basicFortune = this.generateZodiacFortune(zodiacSign, zodiac);
 
@@ -253,13 +253,23 @@ export class ZodiacFortuneService extends FortuneService {
     const today = new Date();
     const dayOfWeek = today.getDay();
     const dateNumber = today.getDate();
-    
+
     // 별자리별 특성을 기반으로 한 운세 시드 생성
     const zodiacSeeds = {
-      aries: 1, taurus: 2, gemini: 3, cancer: 4, leo: 5, virgo: 6,
-      libra: 7, scorpio: 8, sagittarius: 9, capricorn: 10, aquarius: 11, pisces: 12
+      aries: 1,
+      taurus: 2,
+      gemini: 3,
+      cancer: 4,
+      leo: 5,
+      virgo: 6,
+      libra: 7,
+      scorpio: 8,
+      sagittarius: 9,
+      capricorn: 10,
+      aquarius: 11,
+      pisces: 12,
     };
-    
+
     const seed = (zodiacSeeds[zodiacSign] * dayOfWeek + dateNumber) % 100;
 
     // 점수 계산 (65-95 범위)
@@ -301,28 +311,28 @@ export class ZodiacFortuneService extends FortuneService {
    */
   getOverallMessages(element) {
     const messages = {
-      '불': [
+      불: [
         '열정적인 에너지가 강하게 작용하는 하루입니다. 적극적으로 나서면 좋은 기회를 잡을 수 있습니다.',
         '창의적인 아이디어가 빛을 발하는 시기입니다. 새로운 도전에 나서보세요.',
-        '리더십을 발휘하기 좋은 날입니다. 주변 사람들을 이끌어나가세요.'
+        '리더십을 발휘하기 좋은 날입니다. 주변 사람들을 이끌어나가세요.',
       ],
-      '흙': [
+      흙: [
         '안정적이고 착실한 하루가 예상됩니다. 계획한 일들을 차근차근 진행하세요.',
         '실용적인 접근이 좋은 결과를 가져올 것입니다. 현실적인 목표를 세우세요.',
-        '꾸준함과 인내심이 성과로 이어지는 시기입니다.'
+        '꾸준함과 인내심이 성과로 이어지는 시기입니다.',
       ],
-      '바람': [
+      바람: [
         '소통과 교류가 활발해지는 날입니다. 새로운 인연을 만들어보세요.',
         '유연한 사고와 적응력이 도움이 될 것입니다. 변화에 열린 마음을 갖으세요.',
-        '다양한 관점에서 문제를 바라보면 해결책이 보일 것입니다.'
+        '다양한 관점에서 문제를 바라보면 해결책이 보일 것입니다.',
       ],
-      '물': [
+      물: [
         '직감과 감성이 예민해지는 하루입니다. 마음의 소리에 귀 기울여보세요.',
         '감정적인 깊이가 더해지는 시기입니다. 내면의 성찰 시간을 가져보세요.',
-        '공감 능력이 뛰어난 날입니다. 주변 사람들과의 유대감이 깊어질 것입니다.'
-      ]
+        '공감 능력이 뛰어난 날입니다. 주변 사람들과의 유대감이 깊어질 것입니다.',
+      ],
     };
-    
+
     return messages[element] || messages['흙'];
   }
 
@@ -331,20 +341,53 @@ export class ZodiacFortuneService extends FortuneService {
    */
   getLoveMessages(zodiacSign) {
     const messages = {
-      aries: ['당당한 매력으로 상대방의 시선을 사로잡을 수 있습니다.', '적극적인 어프로치가 좋은 결과를 가져올 것입니다.'],
+      aries: [
+        '당당한 매력으로 상대방의 시선을 사로잡을 수 있습니다.',
+        '적극적인 어프로치가 좋은 결과를 가져올 것입니다.',
+      ],
       taurus: ['진실한 마음이 상대방에게 전해지는 날입니다.', '안정적인 관계 발전이 기대됩니다.'],
-      gemini: ['재치 있는 대화로 분위기를 밝게 만들 수 있습니다.', '다양한 만남의 기회가 생길 수 있습니다.'],
-      cancer: ['따뜻한 배려심이 상대방에게 감동을 줄 것입니다.', '가족 같은 친밀감이 형성될 수 있습니다.'],
-      leo: ['드라마틱한 매력으로 많은 관심을 받을 수 있습니다.', '자신감 있는 모습이 매력적으로 보일 것입니다.'],
-      virgo: ['세심한 관심과 배려가 좋은 인상을 줄 것입니다.', '완벽한 데이트 계획으로 상대방을 감동시키세요.'],
-      libra: ['균형 잡힌 매력으로 조화로운 관계를 만들 수 있습니다.', '미적 감각이 데이트에 도움이 될 것입니다.'],
-      scorpio: ['신비로운 매력이 상대방을 끌어당길 것입니다.', '깊은 감정적 유대가 형성될 수 있습니다.'],
-      sagittarius: ['자유분방한 매력이 상대방에게 신선함을 줄 것입니다.', '모험적인 데이트를 계획해보세요.'],
-      capricorn: ['성실한 모습이 신뢰감을 줄 것입니다.', '장기적인 관점에서 관계를 발전시켜보세요.'],
-      aquarius: ['독특한 개성이 특별한 인연을 만들어낼 수 있습니다.', '친구 같은 편안한 관계에서 시작해보세요.'],
-      pisces: ['로맨틱한 감성이 상대방의 마음을 움직일 것입니다.', '예술적인 데이트가 좋은 추억이 될 것입니다.']
+      gemini: [
+        '재치 있는 대화로 분위기를 밝게 만들 수 있습니다.',
+        '다양한 만남의 기회가 생길 수 있습니다.',
+      ],
+      cancer: [
+        '따뜻한 배려심이 상대방에게 감동을 줄 것입니다.',
+        '가족 같은 친밀감이 형성될 수 있습니다.',
+      ],
+      leo: [
+        '드라마틱한 매력으로 많은 관심을 받을 수 있습니다.',
+        '자신감 있는 모습이 매력적으로 보일 것입니다.',
+      ],
+      virgo: [
+        '세심한 관심과 배려가 좋은 인상을 줄 것입니다.',
+        '완벽한 데이트 계획으로 상대방을 감동시키세요.',
+      ],
+      libra: [
+        '균형 잡힌 매력으로 조화로운 관계를 만들 수 있습니다.',
+        '미적 감각이 데이트에 도움이 될 것입니다.',
+      ],
+      scorpio: [
+        '신비로운 매력이 상대방을 끌어당길 것입니다.',
+        '깊은 감정적 유대가 형성될 수 있습니다.',
+      ],
+      sagittarius: [
+        '자유분방한 매력이 상대방에게 신선함을 줄 것입니다.',
+        '모험적인 데이트를 계획해보세요.',
+      ],
+      capricorn: [
+        '성실한 모습이 신뢰감을 줄 것입니다.',
+        '장기적인 관점에서 관계를 발전시켜보세요.',
+      ],
+      aquarius: [
+        '독특한 개성이 특별한 인연을 만들어낼 수 있습니다.',
+        '친구 같은 편안한 관계에서 시작해보세요.',
+      ],
+      pisces: [
+        '로맨틱한 감성이 상대방의 마음을 움직일 것입니다.',
+        '예술적인 데이트가 좋은 추억이 될 것입니다.',
+      ],
     };
-    
+
     return messages[zodiacSign] || messages['taurus'];
   }
 
@@ -353,12 +396,21 @@ export class ZodiacFortuneService extends FortuneService {
    */
   getMoneyMessages(element) {
     const messages = {
-      '불': ['투자에 대한 직감이 예리해지는 시기입니다.', '적극적인 투자보다는 신중한 접근이 필요합니다.'],
-      '흙': ['안정적인 저축과 투자가 좋은 결과를 가져올 것입니다.', '실물 자산에 관심을 가져보세요.'],
-      '바람': ['다양한 수입원을 모색해볼 수 있는 시기입니다.', '정보를 잘 활용하면 좋은 기회를 찾을 수 있습니다.'],
-      '물': ['직감적인 투자 판단이 도움이 될 것입니다.', '감정에 휩쓸리지 말고 냉정한 분석이 필요합니다.']
+      불: [
+        '투자에 대한 직감이 예리해지는 시기입니다.',
+        '적극적인 투자보다는 신중한 접근이 필요합니다.',
+      ],
+      흙: ['안정적인 저축과 투자가 좋은 결과를 가져올 것입니다.', '실물 자산에 관심을 가져보세요.'],
+      바람: [
+        '다양한 수입원을 모색해볼 수 있는 시기입니다.',
+        '정보를 잘 활용하면 좋은 기회를 찾을 수 있습니다.',
+      ],
+      물: [
+        '직감적인 투자 판단이 도움이 될 것입니다.',
+        '감정에 휩쓸리지 말고 냉정한 분석이 필요합니다.',
+      ],
     };
-    
+
     return messages[element] || messages['흙'];
   }
 
@@ -367,12 +419,15 @@ export class ZodiacFortuneService extends FortuneService {
    */
   getHealthMessages(element) {
     const messages = {
-      '불': ['활발한 운동으로 에너지를 발산하는 것이 좋습니다.', '스트레스 관리에 특히 신경쓰세요.'],
-      '흙': ['규칙적인 식사와 충분한 수면이 중요합니다.', '소화기 건강에 신경쓰는 것이 좋습니다.'],
-      '바람': ['호흡 운동과 명상이 도움이 될 것입니다.', '충분한 휴식으로 컨디션을 회복하세요.'],
-      '물': ['충분한 수분 섭취가 중요합니다.', '감정적 스트레스가 건강에 영향을 줄 수 있으니 주의하세요.']
+      불: ['활발한 운동으로 에너지를 발산하는 것이 좋습니다.', '스트레스 관리에 특히 신경쓰세요.'],
+      흙: ['규칙적인 식사와 충분한 수면이 중요합니다.', '소화기 건강에 신경쓰는 것이 좋습니다.'],
+      바람: ['호흡 운동과 명상이 도움이 될 것입니다.', '충분한 휴식으로 컨디션을 회복하세요.'],
+      물: [
+        '충분한 수분 섭취가 중요합니다.',
+        '감정적 스트레스가 건강에 영향을 줄 수 있으니 주의하세요.',
+      ],
     };
-    
+
     return messages[element] || messages['흙'];
   }
 
@@ -392,9 +447,9 @@ export class ZodiacFortuneService extends FortuneService {
       sagittarius: `사수자리인 당신의 모험심을 발휘하되, 신중한 계획도 필요합니다.`,
       capricorn: `염소자리인 당신의 책임감과 인내심이 성과로 이어질 것입니다.`,
       aquarius: `물병자리인 당신의 독창성을 살려보세요. 새로운 아이디어가 성공을 가져올 것입니다.`,
-      pisces: `물고기자리인 당신의 직관력을 믿고 행동하세요. 예술적 감각을 활용해보세요.`
+      pisces: `물고기자리인 당신의 직관력을 믿고 행동하세요. 예술적 감각을 활용해보세요.`,
     };
-    
+
     return advice[zodiacSign] || '자신만의 특별한 장점을 살려 최선을 다하세요.';
   }
 
@@ -403,20 +458,20 @@ export class ZodiacFortuneService extends FortuneService {
    */
   getLuckyElements(element, seed) {
     const colors = {
-      '불': ['빨간색', '주황색', '골드'],
-      '흙': ['갈색', '베이지', '노란색'],
-      '바람': ['하늘색', '연두색', '흰색'],
-      '물': ['파란색', '보라색', '은색']
+      불: ['빨간색', '주황색', '골드'],
+      흙: ['갈색', '베이지', '노란색'],
+      바람: ['하늘색', '연두색', '흰색'],
+      물: ['파란색', '보라색', '은색'],
     };
 
     const directions = ['동쪽', '서쪽', '남쪽', '북쪽', '동남쪽', '서남쪽', '동북쪽', '서북쪽'];
 
     const elementColors = colors[element] || colors['흙'];
-    
+
     return {
       color: elementColors[seed % elementColors.length],
       number: (seed % 30) + 1,
-      direction: directions[seed % directions.length]
+      direction: directions[seed % directions.length],
     };
   }
 

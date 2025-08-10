@@ -156,7 +156,7 @@
      */
     handleCardHover(card, isHovering) {
       const icon = card.querySelector('.test-icon');
-      const dh-c-button = card.querySelector('.test-button');
+      const button = card.querySelector('.test-button');
 
       if (icon) {
         if (isHovering) {
@@ -249,7 +249,7 @@
 
       // 테스트별 인기도 표시
       this.config.tests.forEach((test) => {
-        const dh-c-card = document.querySelector(`[data-test="${test.id}"]`);
+        const card = document.querySelector(`[data-test="${test.id}"]`);
         if (card && stats[test.id]) {
           this.updateTestPopularity(card, stats[test.id]);
         }

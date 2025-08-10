@@ -53,7 +53,7 @@ class UserDataManager {
 
         // 사용자 설정 저장소
         if (!db.objectStoreNames.contains('userSettings')) {
-          const settingsStore = db.createObjectStore('userSettings', {
+          db.createObjectStore('userSettings', {
             keyPath: 'key',
           });
         }
@@ -85,28 +85,23 @@ class UserDataManager {
       url: window.location.href,
     };
 
-    try {
-      // IndexedDB에 저장
-      if (this.db) {
-        await this.saveToIndexedDB('testResults', testData);
-      }
-
-      // LocalStorage에도 백업 저장 (최근 5개만)
-      const recentResults = this.getRecentResults(testType, 4);
-      recentResults.unshift(testData);
-      localStorage.setItem(
-        `${this.storagePrefix}recent_${testType}`,
-        JSON.stringify(recentResults)
-      );
-
-      // 통계 업데이트
-      await this.updateStatistics('testCompleted', testType);
-
-      return testData;
-    } catch (error) {
-      // Failed to save test result
-      throw error;
+    // IndexedDB에 저장
+    if (this.db) {
+      await this.saveToIndexedDB('testResults', testData);
     }
+
+    // LocalStorage에도 백업 저장 (최근 5개만)
+    const recentResults = this.getRecentResults(testType, 4);
+    recentResults.unshift(testData);
+    localStorage.setItem(
+      `${this.storagePrefix}recent_${testType}`,
+      JSON.stringify(recentResults)
+    );
+
+    // 통계 업데이트
+    await this.updateStatistics('testCompleted', testType);
+
+    return testData;
   }
 
   /**
@@ -289,24 +284,19 @@ class UserDataManager {
    * 모든 사용자 데이터 삭제
    */
   async clearAllData() {
-    try {
-      // IndexedDB 데이터 삭제
-      if (this.db) {
-        const stores = ['testResults', 'userSettings', 'statistics'];
-        for (const storeName of stores) {
-          await this.clearIndexedDBStore(storeName);
-        }
+    // IndexedDB 데이터 삭제
+    if (this.db) {
+      const stores = ['testResults', 'userSettings', 'statistics'];
+      for (const storeName of stores) {
+        await this.clearIndexedDBStore(storeName);
       }
-
-      // localStorage 데이터 삭제
-      const keys = Object.keys(localStorage).filter((key) => key.startsWith(this.storagePrefix));
-      keys.forEach((key) => localStorage.removeItem(key));
-
-      // All user data cleared successfully
-    } catch (error) {
-      // Failed to clear user data
-      throw error;
     }
+
+    // localStorage 데이터 삭제
+    const keys = Object.keys(localStorage).filter((key) => key.startsWith(this.storagePrefix));
+    keys.forEach((key) => localStorage.removeItem(key));
+
+    // All user data cleared successfully
   }
 
   // Helper methods for IndexedDB operations

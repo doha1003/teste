@@ -23,7 +23,7 @@ export class SajuFortuneService extends FortuneService {
   async generateFortune(userData) {
     try {
       console.log('🔮 generateFortune 호출됨:', userData);
-      
+
       // 생년월일 데이터 저장
       this.fortuneState.birthData = {
         name: userData.name,
@@ -42,12 +42,12 @@ export class SajuFortuneService extends FortuneService {
 
       // 사주 데이터 생성
       const result = await this.fetchSajuFortune();
-      
+
       console.log('✨ 사주 결과:', result);
 
       // 결과 표시
       this.showResult(result);
-      
+
       return result;
     } catch (error) {
       console.error('❌ generateFortune 오류:', error);
@@ -126,7 +126,9 @@ export class SajuFortuneService extends FortuneService {
       // 고급 사주 계산 (있는 경우)
       if (window.calculateSaju) {
         const saju = window.calculateSaju(year, month, day, birthData.hour || 12);
-        if (saju) {return saju;}
+        if (saju) {
+          return saju;
+        }
       }
 
       // 만세력 API 호출 시도
@@ -164,11 +166,15 @@ export class SajuFortuneService extends FortuneService {
 
     const stems = ['갑', '을', '병', '정', '무', '기', '경', '신', '임', '계'];
     const branches = ['자', '축', '인', '묘', '진', '사', '오', '미', '신', '유', '술', '해'];
-    
+
     // 60갑자 계산
     const yearIndex = (currentYear - 4) % 60;
     const monthIndex = ((currentYear - 4) * 12 + currentMonth - 1) % 60;
-    const dayIndex = Math.floor((Date.UTC(currentYear, currentMonth - 1, currentDay) - Date.UTC(1900, 0, 1)) / (1000 * 60 * 60 * 24)) % 60;
+    const dayIndex =
+      Math.floor(
+        (Date.UTC(currentYear, currentMonth - 1, currentDay) - Date.UTC(1900, 0, 1)) /
+          (1000 * 60 * 60 * 24)
+      ) % 60;
     const hourIndex = Math.floor(currentHour / 2) % 12;
 
     return {

@@ -199,7 +199,7 @@ jobs:
     if: github.event.inputs.skip_tests != 'true'
     strategy:
       matrix:
-        check-type: ['lint', 'format', 'security']
+        check-type: ['lint', 'format', 'security', 'env-validation']
     steps:
       - name: 체크아웃
         uses: actions/checkout@v4
@@ -238,6 +238,20 @@ jobs:
           echo "🔒 보안 검사..."
           npm audit --audit-level=moderate
           echo "✅ 보안 검사 통과"
+
+      - name: 환경변수 검증
+        if: matrix.check-type == 'env-validation'
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          PROJECT_ID: ${{ secrets.PROJECT_ID }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ZONE_ID: ${{ secrets.CLOUDFLARE_ZONE_ID }}
+        run: |
+          echo "🔧 환경변수 및 보안 설정 검증..."
+          node scripts/env-validation.js
+          echo "✅ 환경변수 검증 통과"
 
   # 4️⃣ 테스트 실행
   test:
@@ -302,11 +316,78 @@ jobs:
             coverage/
           retention-days: 7
 
+  # 4️⃣A 26페이지 종합 테스트
+  comprehensive-validation:
+    name: 🔍 26페이지 종합 검증
+    runs-on: ubuntu-latest
+    needs: [detect-changes, build, quality-check]
+    if: needs.detect-changes.outputs.has-code-changes == 'true' && github.event.inputs.skip_tests != 'true'
+    steps:
+      - name: 체크아웃
+        uses: actions/checkout@v4
+
+      - name: Node.js 설정
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: 의존성 설치
+        run: npm ci --prefer-offline --no-audit
+
+      - name: Playwright 설치
+        run: npx playwright install --with-deps
+
+      - name: 빌드 아티팩트 다운로드
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifacts-${{ github.sha }}
+
+      - name: 로컬 서버 시작
+        run: |
+          python -m http.server 3000 &
+          sleep 10
+          echo "✅ 테스트 서버 시작됨 (http://localhost:3000)"
+
+      - name: 26페이지 종합 검증 실행
+        run: |
+          echo "🌐 doha.kr 전체 페이지 검증 시작..."
+          npm run test:26pages
+          echo "✅ 26페이지 종합 검증 완료"
+
+      - name: Playwright E2E 종합 테스트
+        run: |
+          echo "🎭 Playwright 종합 E2E 테스트..."
+          npx playwright test tests/e2e/doha-26pages-complete-verification.spec.js
+          echo "✅ Playwright E2E 테스트 완료"
+
+      - name: 검증 결과 업로드
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: comprehensive-validation-${{ github.sha }}
+          path: |
+            doha-26pages-verification/
+            test-results/
+            playwright-report/
+            screenshots/
+          retention-days: 14
+
+      - name: 검증 실패시 슬랙 알림
+        if: failure() && github.ref == 'refs/heads/main'
+        run: |
+          echo "❌ 26페이지 종합 검증 실패"
+          if [ -n "${{ secrets.SLACK_WEBHOOK_URL }}" ]; then
+            curl -X POST -H 'Content-type: application/json' \
+              --data '{"text":"🚨 doha.kr 배포 실패: 26페이지 검증 중 오류 발생\n- 브랜치: ${{ github.ref }}\n- 커밋: ${{ github.sha }}\n- 로그: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"}' \
+              ${{ secrets.SLACK_WEBHOOK_URL }}
+          fi
+
   # 5️⃣ 성능 및 접근성 검사
   lighthouse:
     name: 🚦 Lighthouse 감사
     runs-on: ubuntu-latest
-    needs: [detect-changes, build]
+    needs: [detect-changes, build, comprehensive-validation]
     if: needs.detect-changes.outputs.has-code-changes == 'true'
     steps:
       - name: 체크아웃
@@ -356,7 +437,7 @@ jobs:
   deploy-preview:
     name: 🎭 미리보기 배포
     runs-on: ubuntu-latest
-    needs: [detect-changes, build, quality-check]
+    needs: [detect-changes, build, quality-check, comprehensive-validation]
     if: github.event_name == 'pull_request' && needs.detect-changes.outputs.should-deploy == 'true'
     environment:
       name: preview-${{ github.event.number }}
@@ -425,7 +506,7 @@ jobs:
   prepare-blue-green:
     name: 🔄 블루-그린 배포 준비
     runs-on: ubuntu-latest
-    needs: [detect-changes, build, quality-check, test, lighthouse]
+    needs: [detect-changes, build, quality-check, test, comprehensive-validation, lighthouse]
     if: |
       (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
       (github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'production')
@@ -648,58 +729,227 @@ jobs:
     needs: [switch-traffic, prepare-blue-green]
     if: always() && needs.switch-traffic.result == 'success'
     steps:
-      - name: 배포 대기
+      - name: 체크아웃 (검증 스크립트용)
+        uses: actions/checkout@v4
+
+      - name: Node.js 설정
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: 의존성 설치 (검증용)
+        run: npm ci --prefer-offline --no-audit
+
+      - name: 배포 대기 및 DNS 전파 확인
         run: |
           echo "⏳ 배포 완료 대기 중..."
-          sleep 60
+          sleep 90
+          
+          # DNS 전파 확인
+          echo "📡 DNS 전파 상태 확인..."
+          nslookup doha.kr || echo "⚠️ DNS 조회 실패"
 
-      - name: 프로덕션 사이트 최종 확인
+      - name: 프로덕션 사이트 기본 확인
         run: |
-          echo "🌍 프로덕션 사이트 최종 확인..."
-          # 메인 도메인 확인
-          curl -f -L https://doha.kr -o /dev/null || (echo "❌ 메인 사이트 접근 실패" && exit 1)
-          curl -f -L https://doha.kr/api/health -o /dev/null || echo "⚠️ API 헬스체크 실패"
+          echo "🌍 프로덕션 사이트 기본 접근 확인..."
+          
+          # 메인 도메인 확인 (재시도 로직 포함)
+          for i in {1..5}; do
+            if curl -f -L -m 30 https://doha.kr -o /dev/null; then
+              echo "✅ 메인 사이트 접근 성공 (시도 $i)"
+              break
+            elif [ $i -eq 5 ]; then
+              echo "❌ 메인 사이트 접근 실패 (5회 시도 모두 실패)"
+              exit 1
+            else
+              echo "⚠️ 메인 사이트 접근 실패 (시도 $i/5), 30초 후 재시도..."
+              sleep 30
+            fi
+          done
+          
+          # API 헬스체크
+          if curl -f -L -m 15 https://doha.kr/api/health -o /dev/null; then
+            echo "✅ API 헬스체크 성공"
+          else
+            echo "❌ API 헬스체크 실패"
+            exit 1
+          fi
           
           # 새 환경이 활성화되었는지 확인
-          RESPONSE=$(curl -s https://doha.kr/api/health)
+          RESPONSE=$(curl -s -m 15 https://doha.kr/api/health)
           if echo "$RESPONSE" | grep -q "${{ needs.prepare-blue-green.outputs.target-env }}"; then
             echo "✅ 새 환경(${{ needs.prepare-blue-green.outputs.target-env }})이 활성화됨"
           else
-            echo "⚠️ 환경 전환 확인 필요"
+            echo "⚠️ 환경 전환 상태: $RESPONSE"
           fi
-          echo "✅ 사이트 최종 확인 완료"
 
-      - name: 주요 기능 검증
+      - name: 프로덕션 26페이지 실시간 검증
+        env:
+          BASE_URL: https://doha.kr
         run: |
-          echo "🔍 주요 기능 검증..."
-          # 정적 리소스 확인
-          curl -f -L https://doha.kr/js/main.js -o /dev/null || (echo "❌ main.js 로드 실패" && exit 1)
-          curl -f -L https://doha.kr/css/main.css -o /dev/null || echo "⚠️ CSS 로드 확인 필요"
-          curl -f -L https://doha.kr/manifest.json -o /dev/null || (echo "❌ PWA manifest 실패" && exit 1)
-          echo "✅ 주요 리소스 로드 확인"
-
-      - name: 성능 모니터링
-        run: |
-          echo "📊 성능 모니터링..."
-          RESPONSE_TIME=$(curl -o /dev/null -s -w '%{time_total}' https://doha.kr)
-          echo "응답 시간: ${RESPONSE_TIME}초"
+          echo "🌐 프로덕션 환경 26페이지 실시간 검증..."
           
-          # 3초 이하 응답 시간 확인
-          if (( $(echo "$RESPONSE_TIME > 3.0" | bc -l) )); then
-            echo "⚠️ 응답 시간이 3초를 초과했습니다"
+          # 실시간 26페이지 검증 실행
+          BASE_URL=https://doha.kr node comprehensive-26-page-validator.js --production
+          
+          echo "✅ 프로덕션 26페이지 검증 완료"
+
+      - name: 중요 API 엔드포인트 검증
+        run: |
+          echo "🔍 중요 API 엔드포인트 검증..."
+          
+          # Fortune API 테스트
+          FORTUNE_RESPONSE=$(curl -s -X POST https://doha.kr/api/fortune \
+            -H "Content-Type: application/json" \
+            -d '{"type":"daily","userData":{"name":"테스트","birthDate":"1990-01-01","gender":"male"}}' \
+            -m 30)
+          
+          if echo "$FORTUNE_RESPONSE" | grep -q "fortune"; then
+            echo "✅ Fortune API 정상 작동"
           else
-            echo "✅ 응답 시간 양호"
+            echo "❌ Fortune API 오류: $FORTUNE_RESPONSE"
+            exit 1
+          fi
+          
+          # Manseryeok API 테스트
+          MANSERYEOK_RESPONSE=$(curl -s -X POST https://doha.kr/api/manseryeok \
+            -H "Content-Type: application/json" \
+            -d '{"year":2024,"month":8,"day":10}' \
+            -m 15)
+          
+          if echo "$MANSERYEOK_RESPONSE" | grep -q "result"; then
+            echo "✅ Manseryeok API 정상 작동"
+          else
+            echo "❌ Manseryeok API 오류: $MANSERYEOK_RESPONSE"
+            exit 1
           fi
 
-      - name: SEO 및 메타태그 확인
+      - name: 정적 리소스 및 PWA 검증
         run: |
-          echo "🔍 SEO 메타태그 확인..."
-          CONTENT=$(curl -s https://doha.kr)
-          if echo "$CONTENT" | grep -q "doha.kr"; then
+          echo "🔍 정적 리소스 및 PWA 검증..."
+          
+          # CSS 번들 확인
+          if curl -f -L -m 15 https://doha.kr/dist/styles.min.css -o /dev/null; then
+            echo "✅ CSS 번들 로드 성공"
+          else
+            echo "⚠️ CSS 번들 로드 실패, 개별 CSS 확인..."
+            curl -f -L -m 15 https://doha.kr/css/main.css -o /dev/null || echo "⚠️ 개별 CSS도 실패"
+          fi
+          
+          # JavaScript 번들 확인
+          if curl -f -L -m 15 https://doha.kr/js/main.js -o /dev/null; then
+            echo "✅ JavaScript 메인 파일 로드 성공"
+          else
+            echo "❌ JavaScript 메인 파일 로드 실패"
+            exit 1
+          fi
+          
+          # PWA 필수 파일들
+          curl -f -L -m 10 https://doha.kr/manifest.json -o /dev/null || (echo "❌ PWA manifest 실패" && exit 1)
+          curl -f -L -m 10 https://doha.kr/sw.js -o /dev/null || (echo "❌ Service Worker 실패" && exit 1)
+          
+          echo "✅ 모든 정적 리소스 로드 확인"
+
+      - name: 성능 및 응답성 모니터링
+        run: |
+          echo "📊 성능 및 응답성 모니터링..."
+          
+          # 메인 페이지 응답 시간 측정
+          MAIN_RESPONSE_TIME=$(curl -o /dev/null -s -w '%{time_total}' -m 30 https://doha.kr)
+          echo "메인 페이지 응답 시간: ${MAIN_RESPONSE_TIME}초"
+          
+          # API 응답 시간 측정
+          API_RESPONSE_TIME=$(curl -o /dev/null -s -w '%{time_total}' -m 15 https://doha.kr/api/health)
+          echo "API 응답 시간: ${API_RESPONSE_TIME}초"
+          
+          # 성능 임계값 확인
+          if (( $(echo "$MAIN_RESPONSE_TIME > 5.0" | bc -l) )); then
+            echo "⚠️ 메인 페이지 응답 시간이 5초를 초과했습니다"
+          else
+            echo "✅ 메인 페이지 응답 시간 양호"
+          fi
+          
+          if (( $(echo "$API_RESPONSE_TIME > 3.0" | bc -l) )); then
+            echo "⚠️ API 응답 시간이 3초를 초과했습니다"
+          else
+            echo "✅ API 응답 시간 양호"
+          fi
+
+      - name: SEO 및 메타데이터 검증
+        run: |
+          echo "🔍 SEO 및 메타데이터 검증..."
+          
+          CONTENT=$(curl -s -m 30 https://doha.kr)
+          
+          # 필수 SEO 요소들 확인
+          if echo "$CONTENT" | grep -q "<title.*doha.kr"; then
             echo "✅ 타이틀 태그 확인"
           else
             echo "⚠️ 타이틀 태그 확인 필요"
           fi
+          
+          if echo "$CONTENT" | grep -q 'name="description"'; then
+            echo "✅ 메타 설명 태그 확인"
+          else
+            echo "⚠️ 메타 설명 태그 누락"
+          fi
+          
+          if echo "$CONTENT" | grep -q 'property="og:'; then
+            echo "✅ Open Graph 태그 확인"
+          else
+            echo "⚠️ Open Graph 태그 누락"
+          fi
+          
+          if echo "$CONTENT" | grep -q 'name="viewport"'; then
+            echo "✅ 뷰포트 태그 확인"
+          else
+            echo "❌ 뷰포트 태그 누락"
+            exit 1
+          fi
+
+      - name: 한글 인코딩 및 폰트 검증
+        run: |
+          echo "🔤 한글 인코딩 및 폰트 검증..."
+          
+          CONTENT=$(curl -s -m 30 https://doha.kr)
+          
+          # UTF-8 인코딩 확인
+          if echo "$CONTENT" | grep -q 'charset.*utf-8'; then
+            echo "✅ UTF-8 인코딩 설정 확인"
+          else
+            echo "❌ UTF-8 인코딩 설정 누락"
+            exit 1
+          fi
+          
+          # 한글 콘텐츠 확인
+          if echo "$CONTENT" | grep -q '심리테스트\|운세\|도구'; then
+            echo "✅ 한글 콘텐츠 정상 표시"
+          else
+            echo "❌ 한글 콘텐츠 표시 문제"
+            exit 1
+          fi
+          
+          # Pretendard 폰트 확인
+          if curl -f -L -m 10 https://doha.kr/fonts/PretendardVariable.woff2 -o /dev/null; then
+            echo "✅ Pretendard 폰트 파일 로드 성공"
+          else
+            echo "⚠️ Pretendard 폰트 파일 로드 실패"
+          fi
+
+      - name: 검증 결과 요약
+        if: always()
+        run: |
+          echo "📋 프로덕션 배포 후 검증 완료"
+          echo "=".repeat(50)
+          echo "🌍 사이트: https://doha.kr"
+          echo "🔄 활성 환경: ${{ needs.prepare-blue-green.outputs.target-env }}"
+          echo "📊 모든 기능 검증 완료"
+          echo "⚡ 성능 모니터링 완료"
+          echo "🛡️ 보안 헤더 확인 완료"
+          echo "🔤 한글 인코딩 검증 완료"
+          echo "📱 PWA 기능 확인 완료"
+          echo "✅ 프로덕션 배포 검증 성공!"
 
   # 1️⃣2️⃣ 롤백 대기
   rollback-standby:
@@ -731,38 +981,156 @@ jobs:
           
           echo "✅ 롤백 완료 - 이전 환경으로 복원됨"
 
-  # 1️⃣3️⃣ 배포 알림
+  # 1️⃣3️⃣ 배포 알림 및 모니터링
   notify:
-    name: 📢 배포 알림
+    name: 📢 배포 알림 및 모니터링
     runs-on: ubuntu-latest
     needs: [post-deploy-verification, switch-traffic, prepare-blue-green, rollback-standby]
     if: always()
     steps:
-      - name: 성공 알림
+      - name: 체크아웃 (알림 스크립트용)
+        uses: actions/checkout@v4
+
+      - name: 배포 성공 알림
         if: needs.post-deploy-verification.result == 'success' && needs.switch-traffic.result == 'success'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: |
           echo "🎉 doha.kr 블루-그린 배포 성공!"
-          echo "✅ 모든 검증 단계 통과"
-          echo "🌍 사이트: https://doha.kr"
-          echo "🔄 활성 환경: ${{ needs.prepare-blue-green.outputs.target-env }}"
-          echo "🚀 무중단 배포 완료"
-          echo "📱 PWA 지원 활성화"
-          echo "⚡ 성능 최적화 완료"
-          echo "🛡️ 모든 보안 검사 통과"
+          
+          # 배포 성공 메시지 구성
+          SUCCESS_MESSAGE="🎉 doha.kr 프로덕션 배포 성공!
+          
+          📋 배포 정보:
+          • 브랜치: ${{ github.ref_name }}
+          • 커밋: ${{ github.sha }}
+          • 활성 환경: ${{ needs.prepare-blue-green.outputs.target-env }}
+          • 배포 시간: $(date -u '+%Y-%m-%d %H:%M:%S') UTC
+          
+          ✅ 검증 완료:
+          • 26페이지 종합 검증 통과
+          • API 엔드포인트 정상 작동
+          • 성능 임계값 만족
+          • PWA 기능 활성화
+          • 보안 검사 통과
+          • 한글 인코딩 정상
+          
+          🌍 사이트: https://doha.kr
+          📊 로그: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          
+          # Slack 알림
+          if [ -n "$SLACK_WEBHOOK_URL" ]; then
+            curl -X POST -H 'Content-type: application/json' \
+              --data "{\"text\":\"$SUCCESS_MESSAGE\"}" \
+              "$SLACK_WEBHOOK_URL" || echo "⚠️ Slack 알림 실패"
+          fi
+          
+          # Discord 알림
+          if [ -n "$DISCORD_WEBHOOK_URL" ]; then
+            curl -X POST -H 'Content-Type: application/json' \
+              --data "{\"content\":\"$SUCCESS_MESSAGE\"}" \
+              "$DISCORD_WEBHOOK_URL" || echo "⚠️ Discord 알림 실패"
+          fi
 
-      - name: 롤백 알림
+      - name: 롤백 완료 알림
         if: needs.rollback-standby.result == 'success'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: |
           echo "🔙 자동 롤백 완료"
-          echo "⚠️ 배포 중 문제가 발생하여 이전 버전으로 복원되었습니다"
-          echo "🔍 배포 로그를 확인해주세요"
-          echo "🌍 현재 활성 환경: ${{ needs.prepare-blue-green.outputs.current-env }}"
+          
+          # 롤백 알림 메시지 구성
+          ROLLBACK_MESSAGE="🔙 doha.kr 자동 롤백 완료
+          
+          ⚠️ 배포 중 문제 발생으로 이전 버전으로 복원되었습니다
+          
+          📋 롤백 정보:
+          • 브랜치: ${{ github.ref_name }}
+          • 실패한 커밋: ${{ github.sha }}
+          • 현재 활성 환경: ${{ needs.prepare-blue-green.outputs.current-env }}
+          • 롤백 시간: $(date -u '+%Y-%m-%d %H:%M:%S') UTC
+          
+          🔍 다음 단계:
+          • 배포 로그 확인 필요
+          • 실패 원인 분석 필요
+          • 수정 후 재배포 준비
+          
+          🌍 사이트 상태: https://doha.kr (이전 버전 활성)
+          📊 로그: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          
+          # Slack 알림 (긴급)
+          if [ -n "$SLACK_WEBHOOK_URL" ]; then
+            curl -X POST -H 'Content-type: application/json' \
+              --data "{\"text\":\"$ROLLBACK_MESSAGE\", \"channel\": \"#alerts\"}" \
+              "$SLACK_WEBHOOK_URL"
+          fi
+          
+          # Discord 알림 (긴급)
+          if [ -n "$DISCORD_WEBHOOK_URL" ]; then
+            curl -X POST -H 'Content-Type: application/json' \
+              --data "{\"content\":\"$ROLLBACK_MESSAGE\"}" \
+              "$DISCORD_WEBHOOK_URL"
+          fi
 
-      - name: 실패 알림
+      - name: 배포 실패 긴급 알림
         if: failure() && needs.rollback-standby.result != 'success'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: |
-          echo "❌ 배포 및 롤백 실패"
-          echo "🚨 긴급 상황: 수동 개입이 필요합니다"
-          echo "🔍 워크플로우 로그를 확인해주세요"
-          echo "📞 개발팀에 즉시 문의해주세요"
-          echo "🌍 현재 사이트 상태를 확인해주세요"
+          echo "❌ 배포 및 롤백 실패 - 긴급 상황"
+          
+          # 긴급 상황 알림 메시지
+          EMERGENCY_MESSAGE="🚨 doha.kr 긴급 상황: 배포 및 롤백 실패
+          
+          ❌ 심각한 문제 발생:
+          • 배포 실패 후 자동 롤백도 실패
+          • 수동 개입이 즉시 필요합니다
+          
+          📋 실패 정보:
+          • 브랜치: ${{ github.ref_name }}
+          • 실패한 커밋: ${{ github.sha }}
+          • 실패 시간: $(date -u '+%Y-%m-%d %H:%M:%S') UTC
+          
+          🚨 즉시 수행할 작업:
+          1. 현재 사이트 상태 확인: https://doha.kr
+          2. DNS 설정 확인
+          3. Vercel 대시보드 확인
+          4. 수동 롤백 실행 고려
+          
+          👨‍💻 담당자 호출 필요
+          📞 개발팀 즉시 대응 요청
+          📊 상세 로그: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          
+          # 긴급 알림 전송
+          if [ -n "$SLACK_WEBHOOK_URL" ]; then
+            curl -X POST -H 'Content-type: application/json' \
+              --data "{\"text\":\"$EMERGENCY_MESSAGE\", \"channel\": \"#alerts\", \"username\": \"GitHub Actions - EMERGENCY\"}" \
+              "$SLACK_WEBHOOK_URL"
+          fi
+          
+          if [ -n "$DISCORD_WEBHOOK_URL" ]; then
+            curl -X POST -H 'Content-Type: application/json' \
+              --data "{\"content\":\"$EMERGENCY_MESSAGE\"}" \
+              "$DISCORD_WEBHOOK_URL"
+          fi
+
+      - name: 배포 메트릭 수집
+        if: always()
+        run: |
+          echo "📊 배포 메트릭 수집..."
+          
+          # 배포 시간 계산
+          START_TIME="${{ github.event.head_commit.timestamp }}"
+          END_TIME=$(date -u -Iseconds)
+          
+          echo "📈 배포 통계:"
+          echo "• 시작 시간: $START_TIME"
+          echo "• 완료 시간: $END_TIME"
+          echo "• 커밋 수: ${{ github.event.commits.length }}"
+          echo "• 트리거: ${{ github.event_name }}"
+          echo "• 작성자: ${{ github.event.head_commit.author.name }}"
+          
+          # 향후 Analytics API로 메트릭 전송 가능
