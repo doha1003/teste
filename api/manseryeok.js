@@ -6,7 +6,7 @@ import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { setCorsHeaders, validateRequest } from './cors-config.js';
 import { serverLogger, withLogging } from './logging-middleware.js';
-import { performance } from 'perf_hooks';
+import { performance } from 'node:perf_hooks';
 import { getCache } from './cache-manager.js';
 
 const __filename = fileURLToPath(import.meta.url);

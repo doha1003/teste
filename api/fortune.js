@@ -1,6 +1,6 @@
 // Vercel 서버리스 함수 - 운세 API (최적화 버전)
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import { performance } from 'perf_hooks';
+import { performance } from 'node:perf_hooks';
 import { sanitizeInput, validateFortuneRequest, checkRateLimit } from './validation.js';
 import { setCorsHeaders, validateRequest } from './cors-config.js';
 import { serverLogger, withLogging } from './logging-middleware.js';

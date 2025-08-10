@@ -6,7 +6,7 @@
  * - 보안 로깅
  */
 
-import { performance } from 'perf_hooks';
+import { performance } from 'node:perf_hooks';
 
 // 로그 레벨 정의
 const LOG_LEVELS = {
