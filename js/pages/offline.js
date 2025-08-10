@@ -33,7 +33,7 @@
      */
     init() {
       // DOM이 준비되면 실행
-      if (document.readyState === 'loading') {
+      if (document.readyState === 'dh-u-loading') {
         document.addEventListener('DOMContentLoaded', () => this.onDOMReady());
       } else {
         this.onDOMReady();
@@ -77,7 +77,7 @@
               if (entry.isIntersecting) {
                 // 순차적 애니메이션을 위한 지연
                 setTimeout(() => {
-                  entry.target.classList.add('visible');
+                  entry.target.classList.add('dh-u-visible');
                 }, index * this.config.animation.fadeDelay);
                 observer.unobserve(entry.target);
               }
@@ -92,7 +92,7 @@
         animatedElements.forEach((el) => observer.observe(el));
       } else {
         // 폴백: 모든 요소 즉시 표시
-        animatedElements.forEach((el) => el.classList.add('visible'));
+        animatedElements.forEach((el) => el.classList.add('dh-u-visible'));
       }
     }
 
@@ -107,7 +107,7 @@
         retryBtn.addEventListener('click', () => {
           this.retryConnection();
           this.trackEvent('offline_retry_click', {
-            method: 'button',
+            method: 'dh-c-button',
           });
         });
       }
@@ -116,7 +116,7 @@
         homeBtn.addEventListener('click', () => {
           this.goHome();
           this.trackEvent('offline_home_click', {
-            method: 'button',
+            method: 'dh-c-button',
           });
         });
       }

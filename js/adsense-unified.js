@@ -72,7 +72,7 @@
     });
   }
 
-  // Handle dynamic ad loading (for ads loaded via IntersectionObserver)
+  // Handle dynamic ad dh-u-loading (for ads loaded via IntersectionObserver)
   window.initializeDynamicAd = function (adElement) {
     if (!adElement || adElement.getAttribute('data-adsbygoogle-status') === 'done') {
       return;
@@ -110,7 +110,7 @@
   );
 
   // Initialize when DOM is ready
-  if (document.readyState === 'loading') {
+  if (document.readyState === 'dh-u-loading') {
     document.addEventListener('DOMContentLoaded', () => {
       setTimeout(loadAdSenseScript, 1000);
     });
@@ -118,7 +118,7 @@
     setTimeout(loadAdSenseScript, 1000);
   }
 
-  // Re-initialize ads when new content is loaded
+  // Re-initialize ads when new dh-l-content is loaded
   const observer = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
       if (mutation.addedNodes.length) {

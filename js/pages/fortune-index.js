@@ -70,7 +70,7 @@
      */
     init() {
       // DOM이 준비되면 실행
-      if (document.readyState === 'loading') {
+      if (document.readyState === 'dh-u-loading') {
         document.addEventListener('DOMContentLoaded', () => this.onDOMReady());
       } else {
         this.onDOMReady();
@@ -109,7 +109,7 @@
           (entries) => {
             entries.forEach((entry) => {
               if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
+                entry.target.classList.add('dh-u-visible');
                 observer.unobserve(entry.target);
               }
             });
@@ -123,7 +123,7 @@
         animatedElements.forEach((el) => observer.observe(el));
       } else {
         // 폴백: 모든 요소 즉시 표시
-        animatedElements.forEach((el) => el.classList.add('visible'));
+        animatedElements.forEach((el) => el.classList.add('dh-u-visible'));
       }
     }
 

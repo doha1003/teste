@@ -370,7 +370,7 @@ export const dom = {
         return;
       }
 
-      const headerHeight = document.querySelector('.header')?.offsetHeight || 0;
+      const headerHeight = document.querySelector('.dh-l-header')?.offsetHeight || 0;
       const targetPosition = element.offsetTop - headerHeight - offset;
 
       window.scrollTo({

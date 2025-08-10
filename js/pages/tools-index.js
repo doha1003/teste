@@ -21,7 +21,7 @@
             url: '/tools/salary-calculator.html',
             description: '2025년 최신 세율과 4대보험료 적용',
             features: ['2025년 세율', '4대보험료', '상세 분석'],
-            status: 'active',
+            status: 'dh-state-active',
             usage: 0,
           },
           {
@@ -31,7 +31,7 @@
             url: '/tools/text-counter.html',
             description: '실시간 글자수, 단어수, 문단수 계산',
             features: ['실시간 계산', '텍스트 저장', '빠른 처리'],
-            status: 'active',
+            status: 'dh-state-active',
             usage: 0,
           },
           {
@@ -41,7 +41,7 @@
             url: '/tools/bmi-calculator.html',
             description: 'WHO 아시아-태평양 기준 BMI 계산',
             features: ['BMI 지수', '건강 조언', '모바일 최적화'],
-            status: 'active',
+            status: 'dh-state-active',
             usage: 0,
           },
           {
@@ -79,7 +79,7 @@
      */
     init() {
       // DOM이 준비되면 실행
-      if (document.readyState === 'loading') {
+      if (document.readyState === 'dh-u-loading') {
         document.addEventListener('DOMContentLoaded', () => this.onDOMReady());
       } else {
         this.onDOMReady();
@@ -119,7 +119,7 @@
           (entries) => {
             entries.forEach((entry) => {
               if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
+                entry.target.classList.add('dh-u-visible');
                 observer.unobserve(entry.target);
               }
             });
@@ -133,7 +133,7 @@
         animatedElements.forEach((el) => observer.observe(el));
       } else {
         // 폴백: 모든 요소 즉시 표시
-        animatedElements.forEach((el) => el.classList.add('visible'));
+        animatedElements.forEach((el) => el.classList.add('dh-u-visible'));
       }
     }
 
@@ -180,7 +180,7 @@
      */
     handleCardHover(card, isHovering) {
       const icon = card.querySelector('.tool-icon');
-      const button = card.querySelector('.tool-button');
+      const dh-c-button = card.querySelector('.tool-button');
 
       if (icon) {
         if (isHovering) {
@@ -236,8 +236,8 @@
 
       // 각 도구별 사용 횟수 표시
       this.config.tools.forEach((tool) => {
-        if (tool.status === 'active' && stats[tool.id]) {
-          const card = document.querySelector(`[data-tool="${tool.id}"]`);
+        if (tool.status === 'dh-state-active' && stats[tool.id]) {
+          const dh-c-card = document.querySelector(`[data-tool="${tool.id}"]`);
           if (card) {
             this.updateToolUsageDisplay(card, stats[tool.id]);
           }
@@ -285,7 +285,7 @@
      */
     trackToolClick(toolId) {
       const tool = this.config.tools.find((t) => t.id === toolId);
-      if (!tool || tool.status !== 'active') {
+      if (!tool || tool.status !== 'dh-state-active') {
         return;
       }
 
@@ -321,7 +321,7 @@
       if (title) {
         title.style.cursor = 'pointer';
         title.addEventListener('click', () => {
-          const content = guideSection.querySelector('.tool-guide-content');
+          const dh-l-content = guideSection.querySelector('.tool-guide-content');
           if (content) {
             content.style.display = content.style.display === 'none' ? 'block' : 'none';
           }

@@ -588,7 +588,7 @@ class PWAAnalytics {
 window.PWAAnalytics = PWAAnalytics;
 
 // 자동 초기화
-if (document.readyState === 'loading') {
+if (document.readyState === 'dh-u-loading') {
   document.addEventListener('DOMContentLoaded', () => {
     const analytics = new PWAAnalytics();
     window.pwaAnalytics = analytics;

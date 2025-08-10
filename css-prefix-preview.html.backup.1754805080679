@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Prefix Migration Preview</title>
+    <style>
+        body { 
+            font-family: 'Pretendard Variable', sans-serif; 
+            line-height: 1.6; 
+            margin: 40px; 
+            background: #f8f9fa;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header { background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .preview-item { 
+            background: white; 
+            border-radius: 8px; 
+            padding: 20px; 
+            margin-bottom: 15px; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .old-class { color: #dc3545; font-weight: 500; }
+        .new-class { color: #28a745; font-weight: 500; }
+        .arrow { color: #6c757d; margin: 0 10px; }
+        .file-count { color: #6c757d; font-size: 0.9em; }
+        .category { 
+            display: inline-block; 
+            background: #007bff; 
+            color: white; 
+            padding: 3px 8px; 
+            border-radius: 4px; 
+            font-size: 0.8em; 
+            margin-left: 10px;
+        }
+        .layout { background-color: #e3f2fd; }
+        .component { background-color: #f3e5f5; }
+        .utility { background-color: #e8f5e8; }
+        .state { background-color: #fff3e0; }
+        .test { background-color: #fce4ec; }
+        .fortune { background-color: #e0f2f1; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="dh-l-header">
+            <h1>🎨 CSS Prefix Migration Preview</h1>
+            <p>doha.kr 프로젝트의 CSS 클래스 접두사 마이그레이션 미리보기입니다.</p>
+            <p><strong>생성일:</strong> 2025. 8. 10. 오후 1:37:10</p>
+        </div>
+        <div class="preview-item">
+            <span class="old-class">header</span>
+            <span class="arrow">→</span>
+            <span class="new-class">dh-l-header</span>
+            <span class="category layout">layout</span>
+            <div class="file-count">15개 파일에서 사용</div>
+        </div>
+        <div class="preview-item">
+            <span class="old-class">footer</span>
+            <span class="arrow">→</span>
+            <span class="new-class">dh-l-footer</span>
+            <span class="category layout">layout</span>
+            <div class="file-count">43개 파일에서 사용</div>
+        </div>
+        <div class="preview-item">
+            <span class="old-class">btn</span>
+            <span class="arrow">→</span>
+            <span class="new-class">dh-c-btn</span>
+            <span class="category component">component</span>
+            <div class="file-count">89개 파일에서 사용</div>
+        </div>
+        <div class="preview-item">
+            <span class="old-class">card</span>
+            <span class="arrow">→</span>
+            <span class="new-class">dh-c-card</span>
+            <span class="category component">component</span>
+            <div class="file-count">67개 파일에서 사용</div>
+        </div>
+        <div class="preview-item">
+            <span class="old-class">test-card</span>
+            <span class="arrow">→</span>
+            <span class="new-class">dh-test-card</span>
+            <span class="category test">test</span>
+            <div class="file-count">12개 파일에서 사용</div>
+        </div>
+        <div class="preview-item">
+            <span class="old-class">fortune-result</span>
+            <span class="arrow">→</span>
+            <span class="new-class">dh-fortune-result</span>
+            <span class="category fortune">fortune</span>
+            <div class="file-count">8개 파일에서 사용</div>
+        </div>
+        <div class="preview-item">
+            <span class="old-class">active</span>
+            <span class="arrow">→</span>
+            <span class="new-class">dh-state-active</span>
+            <span class="category state">state</span>
+            <div class="file-count">34개 파일에서 사용</div>
+        </div>
+        <div class="preview-item">
+            <span class="old-class">loading</span>
+            <span class="arrow">→</span>
+            <span class="new-class">dh-u-loading</span>
+            <span class="category utility">utility</span>
+            <div class="file-count">23개 파일에서 사용</div>
+        </div>
+    </div>
+</body>
+</html>

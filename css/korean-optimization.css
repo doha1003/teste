@@ -185,7 +185,7 @@ label {
 }
 
 /* ===== 5. 버튼 한글 최적화 ===== */
-.btn,
+.dh-c-btn,
 button,
 input[type="button"],
 input[type="submit"],
@@ -219,7 +219,7 @@ input[type="reset"] {
 }
 
 /* ===== 6. 카드 컴포넌트 한글 최적화 ===== */
-.card,
+.dh-c-card,
 .service-card {
   background: var(--bg-primary);
   border-radius: var(--border-radius-lg);
@@ -229,20 +229,20 @@ input[type="reset"] {
   border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-.card:hover,
+.dh-c-card:hover,
 .service-card:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-lg);
 }
 
-.card h3,
+.dh-c-card h3,
 .service-card h3 {
   word-break: keep-all;
   color: var(--text-primary);
   margin-bottom: var(--spacing-sm);
 }
 
-.card p,
+.dh-c-card p,
 .service-card p {
   word-break: keep-all;
   color: var(--text-secondary);
@@ -279,7 +279,7 @@ select:focus {
   input:focus,
   textarea:focus,
   select:focus,
-  .btn:focus,
+  .dh-c-btn:focus,
   button:focus,
   a:focus {
     outline: 4px solid var(--color-primary);
@@ -308,8 +308,8 @@ select:focus {
   border-color: rgba(0, 0, 0, 0.2);
 }
 
-.tab-button.active,
-.tabs button.active {
+.tab-button.dh-state-active,
+.tabs button.dh-state-active {
   background: var(--color-primary);
   color: white;
   border-color: var(--color-primary);
@@ -330,7 +330,7 @@ a:hover {
 
 /* ===== 10. 모바일 최적화 ===== */
 @media (max-width: 768px) {
-  .btn,
+  .dh-c-btn,
   button,
   input[type="button"],
   input[type="submit"],
@@ -348,7 +348,7 @@ a:hover {
     font-size: var(--font-size-2xl);
   }
 
-  .card,
+  .dh-c-card,
   .service-card {
     padding: var(--spacing-md);
   }
@@ -450,7 +450,7 @@ section {
 }
 
 /* ===== 7. 카드 컴포넌트 ===== */
-.card {
+.dh-c-card {
   background: var(--bg-primary);
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius);
@@ -459,13 +459,13 @@ section {
   transition: var(--transition-base);
 }
 
-.card:hover {
+.dh-c-card:hover {
   box-shadow: var(--shadow-lg);
   transform: translateY(-2px);
 }
 
 /* ===== 8. 버튼 최적화 ===== */
-.btn {
+.dh-c-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -515,20 +515,20 @@ select:focus {
 }
 
 /* ===== 10. 그리드 시스템 ===== */
-.grid {
+.dh-l-grid {
   display: grid;
   gap: var(--spacing-lg);
 }
 
-.grid-2 {
+.dh-l-grid-2 {
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 
-.grid-3 {
+.dh-l-grid-3 {
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 }
 
-.grid-4 {
+.dh-l-grid-4 {
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }
 
@@ -548,7 +548,7 @@ select:focus {
     transition: var(--transition-base);
   }
 
-  .navbar-menu.active {
+  .navbar-menu.dh-state-active {
     transform: translateY(0);
     opacity: 1;
     visibility: visible;
@@ -562,21 +562,21 @@ select:focus {
     padding: var(--spacing-2xl) 0;
   }
 
-  .grid-2,
-  .grid-3,
-  .grid-4 {
+  .dh-l-grid-2,
+  .dh-l-grid-3,
+  .dh-l-grid-4 {
     grid-template-columns: 1fr;
   }
 }
 
 /* ===== 12. 유틸리티 클래스 ===== */
-.text-center {
+.dh-u-text-center {
   text-align: center;
 }
-.text-left {
+.dh-u-text-left {
   text-align: left;
 }
-.text-right {
+.dh-u-text-right {
   text-align: right;
 }
 
@@ -600,16 +600,16 @@ select:focus {
   margin-bottom: var(--spacing-lg);
 }
 
-.hidden {
+.dh-u-hidden {
   display: none;
 }
 .block {
   display: block;
 }
-.flex {
+.dh-l-flex {
   display: flex;
 }
-.grid {
+.dh-l-grid {
   display: grid;
 }
 
@@ -651,21 +651,21 @@ html .nav-link {
 }
 
 /* 푸터 한글 최적화 - 높은 특이성으로 !important 제거 */
-html .footer,
+html .dh-l-footer,
 html .footer-content,
 html .footer-links {
   word-break: keep-all;
 }
 
 /* 버튼 한글 최적화 - 높은 특이성으로 !important 제거 */
-html .btn,
+html .dh-c-btn,
 html button {
   word-break: keep-all;
   white-space: nowrap;
 }
 
 /* 카드 한글 최적화 - 높은 특이성으로 !important 제거 */
-html .card,
+html .dh-c-card,
 html .card-title,
 html .card-content {
   word-break: keep-all;

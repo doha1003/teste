@@ -85,7 +85,7 @@ let logger = {
     setupResourceErrorHandlers () {
       const self = this;
 
-      // Image loading errors
+      // Image dh-u-loading errors
       document.addEventListener(
         'error',
         (event) => {
@@ -97,7 +97,7 @@ let logger = {
         true
       );
 
-      // Script loading errors
+      // Script dh-u-loading errors
       document.addEventListener(
         'error',
         (event) => {
@@ -108,7 +108,7 @@ let logger = {
         true
       );
 
-      // CSS loading errors
+      // CSS dh-u-loading errors
       document.addEventListener(
         'error',
         (event) => {
@@ -158,7 +158,7 @@ let logger = {
       this.attemptRecovery(errorInfo);
     },
 
-    // Handle resource loading errors
+    // Handle resource dh-u-loading errors
     handleResourceError (type, src) {
       const errorInfo = {
         type: 'resource',
@@ -170,7 +170,7 @@ let logger = {
       this.handleError(errorInfo);
     },
 
-    // Handle image loading errors with fallback
+    // Handle image dh-u-loading errors with fallback
     handleImageError (imgElement) {
       // Try fallback image
       if (!imgElement.dataset.errorHandled) {
@@ -341,10 +341,10 @@ let logger = {
       }, this.config.retryDelay * errorInfo.retryCount);
     },
 
-    // Retry resource loading
+    // Retry resource dh-u-loading
     retryResourceLoad (errorInfo) {
       // Only retry critical resources
-      if (errorInfo.resourceType === 'script' && errorInfo.src.includes('main')) {
+      if (errorInfo.resourceType === 'script' && errorInfo.src.includes('dh-l-main')) {
         setTimeout(() => {
           const script = document.createElement('script');
           script.src = errorInfo.src;
@@ -353,7 +353,7 @@ let logger = {
       }
     },
 
-    // Safe function wrapper
+    // Safe function dh-l-wrapper
     safeExecute (fn, context = null, args = []) {
       try {
         return fn.apply(context, args);
@@ -368,7 +368,7 @@ let logger = {
       }
     },
 
-    // Safe async function wrapper
+    // Safe async function dh-l-wrapper
     async safeExecuteAsync (asyncFn, context = null, args = []) {
       try {
         return await asyncFn.apply(context, args);
@@ -445,7 +445,7 @@ let logger = {
   window.ErrorHandler = ErrorHandler;
 
   // Auto-initialize on DOM ready
-  if (document.readyState === 'loading') {
+  if (document.readyState === 'dh-u-loading') {
     document.addEventListener('DOMContentLoaded', () => {
       ErrorHandler.init();
     });

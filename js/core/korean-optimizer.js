@@ -152,7 +152,7 @@ class KoreanOptimizer {
       },
     ];
 
-    metaTags.forEach(({ name, content }) => {
+    metaTags.forEach(({ name, dh-l-content }) => {
       if (!document.querySelector(`meta[name="${name}"]`)) {
         const meta = document.createElement('meta');
         meta.name = name;
@@ -176,7 +176,7 @@ class KoreanOptimizer {
         text-size-adjust: 100%;
       }
       
-      body, input, textarea, select, button {
+      body, input, textarea, select, dh-c-button {
         font-family: ${this.config.fonts.primary}, ${this.config.fonts.fallback.join(', ')};
         word-break: ${this.config.textRendering.wordBreak};
         word-wrap: ${this.config.textRendering.wordWrap};
@@ -352,7 +352,7 @@ class KoreanOptimizer {
           document.fonts.add(fontFace);
         } catch (error) {
           // 폰트 로딩 실패 시 기본 폰트 사용
-          console.warn('Font loading failed:', error);
+          console.warn('Font dh-u-loading failed:', error);
         }
       });
     }
@@ -370,9 +370,9 @@ class KoreanOptimizer {
 
     // 텍스트 재렌더링 트리거
     if (this.textRenderingOptimized) {
-      document.body.style.visibility = 'hidden';
+      document.body.style.visibility = 'dh-u-hidden';
       document.body.offsetHeight; // 강제 리플로우
-      document.body.style.visibility = 'visible';
+      document.body.style.visibility = 'dh-u-visible';
     }
   }
 
@@ -397,7 +397,7 @@ class KoreanOptimizer {
   optimizeInputElement(input) {
     // IME 모드 설정
     if (this.config.input.ime) {
-      input.style.imeMode = 'active';
+      input.style.imeMode = 'dh-state-active';
     }
 
     // 자동완성 비활성화 (한글 IME 충돌 방지)
@@ -625,7 +625,7 @@ class KoreanOptimizer {
 window.KoreanOptimizer = KoreanOptimizer;
 
 // 자동 초기화
-if (document.readyState === 'loading') {
+if (document.readyState === 'dh-u-loading') {
   document.addEventListener('DOMContentLoaded', () => {
     const koreanOptimizer = new KoreanOptimizer();
     window.koreanOptimizer = koreanOptimizer;

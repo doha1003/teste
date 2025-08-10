@@ -708,7 +708,7 @@ class PerformanceMonitor {
 window.PerformanceMonitor = PerformanceMonitor;
 
 // 자동 초기화
-if (document.readyState === 'loading') {
+if (document.readyState === 'dh-u-loading') {
   document.addEventListener('DOMContentLoaded', () => {
     const monitor = new PerformanceMonitor();
     monitor.start();

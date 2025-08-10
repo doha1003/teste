@@ -265,7 +265,7 @@ export class NamespaceMigration {
 // 자동 실행 (페이지 로드 시)
 if (typeof window !== 'undefined') {
   // DOM이 로드되면 자동으로 마이그레이션 실행
-  if (document.readyState === 'loading') {
+  if (document.readyState === 'dh-u-loading') {
     document.addEventListener('DOMContentLoaded', () => {
       const migration = new NamespaceMigration();
       migration.executeFullMigration();

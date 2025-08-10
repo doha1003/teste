@@ -14,7 +14,7 @@
   }
 
   // 이미지 지연 로딩 설정
-  if ('loading' in HTMLImageElement.prototype) {
+  if ('dh-u-loading' in HTMLImageElement.prototype) {
     const images = document.querySelectorAll('img[data-src]');
     images.forEach((img) => {
       img.loading = 'lazy';

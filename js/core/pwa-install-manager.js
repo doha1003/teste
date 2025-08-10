@@ -320,7 +320,7 @@ class PWAInstallManager {
     
     // 바디 스크롤 방지
     if (this.config.ui.preventBodyScroll) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = 'dh-u-hidden';
     }
     
     // DOM에 추가
@@ -342,7 +342,7 @@ class PWAInstallManager {
    */
   createCustomPromptElement() {
     const variant = this.state.currentVariant;
-    const content = this.getPromptContent(variant);
+    const dh-l-content = this.getPromptContent(variant);
     
     const element = document.createElement('div');
     element.id = 'pwa-install-prompt';
@@ -957,7 +957,7 @@ if (typeof window !== 'undefined') {
   window.PWAInstallManager = PWAInstallManager;
   
   // 자동 초기화
-  if (document.readyState === 'loading') {
+  if (document.readyState === 'dh-u-loading') {
     document.addEventListener('DOMContentLoaded', () => {
       window.pwaInstallManager = new PWAInstallManager();
     });

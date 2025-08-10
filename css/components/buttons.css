@@ -4,7 +4,8 @@
 
 /* ===== BASE BUTTON ===== */
 /* 모든 버튼의 기본 스타일 */
-.legacy-btn {
+.legacy-btn,
+.dh-c-btn {
   /* Layout */
   display: inline-flex;
   align-items: center;
@@ -78,8 +79,8 @@
 }
 
 .legacy-btn:disabled,
-.btn[aria-disabled="true"],
-.legacy-btn.disabled {
+.dh-c-btn[aria-disabled="true"],
+.legacy-btn.dh-state-disabled {
   opacity: var(--disabled-opacity, 0.6);
   cursor: not-allowed;
   pointer-events: none;
@@ -88,7 +89,9 @@
 /* ===== BUTTON VARIANTS ===== */
 /* Primary Button - Linear.app 미니멀 스타일 */
 .legacy-btn-primary,
-.legacy-btn--primary {
+.legacy-btn--primary,
+.dh-c-btn-primary,
+.dh-c-btn--primary {
   color: var(--color-white);
   background-color: #1f2937; /* Linear.app 다크 버튼 */
   border: 1px solid #1f2937;
@@ -106,7 +109,9 @@
 
 /* Secondary Button - Linear.app 미니멀 스타일 */
 .legacy-btn-secondary,
-.legacy-btn--secondary {
+.legacy-btn--secondary,
+.dh-c-btn-secondary,
+.dh-c-btn--secondary {
   color: var(--color-gray-700);
   background-color: var(--color-white);
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -120,7 +125,9 @@
 
 /* Ghost Button - Linear.app 미니멀 스타일 */
 .legacy-btn-ghost,
-.legacy-btn--ghost {
+.legacy-btn--ghost,
+.dh-c-btn-ghost,
+.dh-c-btn--ghost {
   color: var(--color-gray-700);
   background-color: transparent;
   border: 1px solid transparent;
@@ -134,7 +141,9 @@
 
 /* Success Button */
 .legacy-btn-success,
-.legacy-btn--success {
+.legacy-btn--success,
+.dh-c-btn-success,
+.dh-c-btn--success {
   color: var(--color-gray-0, var(--color-white));
   background-color: var(--semantic-success, var(--color-success));
   border-color: var(--semantic-success, var(--color-success));
@@ -148,7 +157,9 @@
 
 /* Danger Button */
 .legacy-btn-danger,
-.legacy-btn--danger {
+.legacy-btn--danger,
+.dh-c-btn-danger,
+.dh-c-btn--danger {
   color: var(--color-gray-0, var(--color-white));
   background-color: var(--semantic-danger, var(--color-danger));
   border-color: var(--semantic-danger, var(--color-danger));
@@ -174,14 +185,18 @@
 
 /* ===== BUTTON SIZES ===== */
 .legacy-btn-sm,
-.legacy-btn--sm {
+.legacy-btn--sm,
+.dh-c-btn-sm,
+.dh-c-btn--sm {
   padding: 6px 12px; /* 8px 배수로 정밀한 패딩 */
   min-height: 32px; /* 더 컴팩트 */
   font-size: var(--font-size-xs, var(--font-size-sm));
 }
 
 .legacy-btn-lg,
-.legacy-btn--lg {
+.legacy-btn--lg,
+.dh-c-btn-lg,
+.dh-c-btn--lg {
   padding: 12px 24px; /* 8px 배수로 정밀한 패딩 */
   min-height: 44px; /* 적당한 크기 */
   font-size: var(--font-size-base, var(--font-size-lg));
@@ -190,7 +205,9 @@
 /* ===== BUTTON MODIFIERS ===== */
 /* Full Width */
 .legacy-btn-block,
-.legacy-btn--full {
+.legacy-btn--full,
+.dh-c-btn-block,
+.dh-c-btn--full {
   width: 100%;
 }
 

@@ -406,7 +406,7 @@
     };
     
     // 페이지 로드 후 검증 실행
-    if (document.readyState === 'loading') {
+    if (document.readyState === 'dh-u-loading') {
       document.addEventListener('DOMContentLoaded', () => {
         setTimeout(checkTestEnvironment, 2000);
       });

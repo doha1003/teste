@@ -31,7 +31,7 @@
      */
     init() {
       // DOM이 준비되면 실행
-      if (document.readyState === 'loading') {
+      if (document.readyState === 'dh-u-loading') {
         document.addEventListener('DOMContentLoaded', () => this.onDOMReady());
       } else {
         this.onDOMReady();
@@ -74,7 +74,7 @@
               if (entry.isIntersecting) {
                 // 순차적 애니메이션을 위한 지연
                 setTimeout(() => {
-                  entry.target.classList.add('visible');
+                  entry.target.classList.add('dh-u-visible');
                 }, index * this.config.animation.fadeDelay);
                 observer.unobserve(entry.target);
               }
@@ -89,7 +89,7 @@
         animatedElements.forEach((el) => observer.observe(el));
       } else {
         // 폴백: 모든 요소 즉시 표시
-        animatedElements.forEach((el) => el.classList.add('visible'));
+        animatedElements.forEach((el) => el.classList.add('dh-u-visible'));
       }
     }
 
@@ -169,8 +169,8 @@
           const { category } = btn.dataset;
 
           // 활성 버튼 업데이트
-          filterBtns.forEach((b) => b.classList.remove('active'));
-          btn.classList.add('active');
+          filterBtns.forEach((b) => b.classList.remove('dh-state-active'));
+          btn.classList.add('dh-state-active');
 
           // 카테고리 필터링
           this.activeCategory = category;
@@ -223,7 +223,7 @@
       // 검색어가 있으면 전체 카테고리로 변경
       if (searchTerm) {
         const allBtn = document.querySelector('.filter-btn[data-category="all"]');
-        if (allBtn && !allBtn.classList.contains('active')) {
+        if (allBtn && !allBtn.classList.contains('dh-state-active')) {
           allBtn.click();
         }
       }

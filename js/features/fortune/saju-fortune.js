@@ -744,7 +744,7 @@ export class SajuFortuneService extends FortuneService {
 }
 
 // 페이지 로드 시 자동 초기화
-if (document.readyState === 'loading') {
+if (document.readyState === 'dh-u-loading') {
   document.addEventListener('DOMContentLoaded', () => {
     new SajuFortuneService();
   });

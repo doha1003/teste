@@ -140,7 +140,7 @@ class FeedbackCollector {
         
         <div class="feedback-body">
           <!-- 1단계: 전반적 만족도 -->
-          <div class="feedback-step active" data-step="1">
+          <div class="feedback-step dh-state-active" data-step="1">
             <h3>doha.kr 사용은 어떠셨나요?</h3>
             <div class="rating-container">
               <div class="emoji-rating">
@@ -192,7 +192,7 @@ class FeedbackCollector {
               </div>
               <div class="rating-item">
                 <label>콘텐츠 품질</label>
-                <div class="star-rating" data-category="content">
+                <div class="star-rating" data-category="dh-l-content">
                   ${this.createStarRating()}
                 </div>
               </div>
@@ -263,7 +263,7 @@ class FeedbackCollector {
 
         <div class="feedback-footer">
           <div class="step-indicator">
-            <div class="step-dot active" data-step="1"></div>
+            <div class="step-dot dh-state-active" data-step="1"></div>
             <div class="step-dot" data-step="2"></div>
             <div class="step-dot" data-step="3"></div>
             <div class="step-dot" data-step="4"></div>
@@ -702,7 +702,7 @@ class FeedbackCollector {
 
         // 별점 표시 업데이트
         container.querySelectorAll('.star').forEach((s, index) => {
-          s.classList.toggle('active', index < rating);
+          s.classList.toggle('dh-state-active', index < rating);
         });
 
         // 데이터 저장
@@ -820,18 +820,18 @@ class FeedbackCollector {
     // 현재 단계 숨김
     const currentStepEl = this.modal.querySelector(`[data-step="${this.currentStep}"]`);
     if (currentStepEl) {
-      currentStepEl.classList.remove('active');
+      currentStepEl.classList.remove('dh-state-active');
     }
 
     // 새 단계 표시
     const newStepEl = this.modal.querySelector(`.feedback-step[data-step="${step}"]`);
     if (newStepEl) {
-      newStepEl.classList.add('active');
+      newStepEl.classList.add('dh-state-active');
     }
 
     // 단계 인디케이터 업데이트
     this.modal.querySelectorAll('.step-dot').forEach((dot, index) => {
-      dot.classList.toggle('active', index < step);
+      dot.classList.toggle('dh-state-active', index < step);
     });
 
     // 버튼 상태 업데이트
@@ -1013,7 +1013,7 @@ class FeedbackCollector {
 window.FeedbackCollector = FeedbackCollector;
 
 // 자동 초기화
-if (document.readyState === 'loading') {
+if (document.readyState === 'dh-u-loading') {
   document.addEventListener('DOMContentLoaded', () => {
     window.feedbackCollector = new FeedbackCollector();
   });

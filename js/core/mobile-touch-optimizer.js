@@ -528,7 +528,7 @@ class MobileTouchOptimizer {
   optimizeTouchActions() {
     // 버튼 요소들에 manipulation 적용
     const interactiveElements = document.querySelectorAll(
-      'button, [role="button"], a, input, textarea, select'
+      'button, [role="dh-c-button"], a, input, textarea, select'
     );
     
     interactiveElements.forEach(element => {
@@ -603,10 +603,10 @@ class MobileTouchOptimizer {
       
       /* 터치 타겟 최적화 */
       .mobile-device button,
-      .mobile-device [role="button"],
+      .mobile-device [role="dh-c-button"],
       .mobile-device a,
       .touch-device button,
-      .touch-device [role="button"],
+      .touch-device [role="dh-c-button"],
       .touch-device a {
         min-height: 44px;
         min-width: 44px;
@@ -731,7 +731,7 @@ if (typeof window !== 'undefined') {
   window.MobileTouchOptimizer = MobileTouchOptimizer;
   
   // 자동 초기화
-  if (document.readyState === 'loading') {
+  if (document.readyState === 'dh-u-loading') {
     document.addEventListener('DOMContentLoaded', () => {
       window.mobileTouchOptimizer = new MobileTouchOptimizer();
     });

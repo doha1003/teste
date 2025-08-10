@@ -150,7 +150,7 @@ function validateNumber(value, min = 0, max = Number.MAX_SAFE_INTEGER) {
 
     // Get daily fortune
     async getDailyFortune() {
-      const button = document.getElementById('daily-fortune-btn');
+      const dh-c-button = document.getElementById('daily-fortune-btn');
       const resultDiv = document.getElementById('daily-fortune-result');
 
       if (!button || !resultDiv) {
@@ -160,7 +160,7 @@ function validateNumber(value, min = 0, max = Number.MAX_SAFE_INTEGER) {
       try {
         button.disabled = true;
         button.textContent = '운세 분석 중...';
-        SecureDOM.setInnerHTML(resultDiv, '<div class="loading">운세를 분석하고 있습니다...</div>');
+        SecureDOM.setInnerHTML(resultDiv, '<div class="dh-u-loading">운세를 분석하고 있습니다...</div>');
 
         const today = new Date();
         const data = {
@@ -255,7 +255,7 @@ function validateNumber(value, min = 0, max = Number.MAX_SAFE_INTEGER) {
         submitBtn.textContent = '사주 분석 중...';
         SecureDOM.setInnerHTML(
           resultDiv,
-          '<div class="loading">AI가 사주를 분석하고 있습니다...</div>'
+          '<div class="dh-u-loading">AI가 사주를 분석하고 있습니다...</div>'
         );
 
         const data = {
@@ -338,7 +338,7 @@ function validateNumber(value, min = 0, max = Number.MAX_SAFE_INTEGER) {
 
     // Start tarot reading
     async startTarotReading() {
-      const button = document.getElementById('tarot-reading-btn');
+      const dh-c-button = document.getElementById('tarot-reading-btn');
       const resultDiv = document.getElementById('tarot-result');
 
       if (!button || !resultDiv) {
@@ -350,7 +350,7 @@ function validateNumber(value, min = 0, max = Number.MAX_SAFE_INTEGER) {
         button.textContent = '카드 뽑는 중...';
         SecureDOM.setInnerHTML(
           resultDiv,
-          '<div class="loading">타로 카드를 뽑고 있습니다...</div>'
+          '<div class="dh-u-loading">타로 카드를 뽑고 있습니다...</div>'
         );
 
         const data = {
@@ -434,7 +434,7 @@ function validateNumber(value, min = 0, max = Number.MAX_SAFE_INTEGER) {
   };
 
   // Auto-initialize
-  if (document.readyState === 'loading') {
+  if (document.readyState === 'dh-u-loading') {
     document.addEventListener('DOMContentLoaded', () => {
       Fortune.init();
     });

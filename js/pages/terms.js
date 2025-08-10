@@ -30,7 +30,7 @@
      */
     init() {
       // DOM이 준비되면 실행
-      if (document.readyState === 'loading') {
+      if (document.readyState === 'dh-u-loading') {
         document.addEventListener('DOMContentLoaded', () => this.onDOMReady());
       } else {
         this.onDOMReady();
@@ -72,7 +72,7 @@
               if (entry.isIntersecting) {
                 // 순차적 애니메이션을 위한 지연
                 setTimeout(() => {
-                  entry.target.classList.add('visible');
+                  entry.target.classList.add('dh-u-visible');
                 }, index * this.config.animation.fadeDelay);
                 observer.unobserve(entry.target);
               }
@@ -87,7 +87,7 @@
         animatedElements.forEach((el) => observer.observe(el));
       } else {
         // 폴백: 모든 요소 즉시 표시
-        animatedElements.forEach((el) => el.classList.add('visible'));
+        animatedElements.forEach((el) => el.classList.add('dh-u-visible'));
       }
     }
 
@@ -165,13 +165,13 @@
               if (entry.isIntersecting) {
                 const sectionId = entry.target.id;
 
-                // 모든 링크에서 active 클래스 제거
-                tocLinks.forEach((link) => link.classList.remove('active'));
+                // 모든 링크에서 dh-state-active 클래스 제거
+                tocLinks.forEach((link) => link.classList.remove('dh-state-active'));
 
-                // 현재 섹션 링크에 active 클래스 추가
+                // 현재 섹션 링크에 dh-state-active 클래스 추가
                 const activeLink = document.querySelector(`.toc-link[href="#${sectionId}"]`);
                 if (activeLink) {
-                  activeLink.classList.add('active');
+                  activeLink.classList.add('dh-state-active');
                 }
               }
             });

@@ -32,7 +32,7 @@
      */
     init() {
       // DOM이 준비되면 실행
-      if (document.readyState === 'loading') {
+      if (document.readyState === 'dh-u-loading') {
         document.addEventListener('DOMContentLoaded', () => this.onDOMReady());
       } else {
         this.onDOMReady();
@@ -75,7 +75,7 @@
               if (entry.isIntersecting) {
                 // 순차적 애니메이션을 위한 지연
                 setTimeout(() => {
-                  entry.target.classList.add('visible');
+                  entry.target.classList.add('dh-u-visible');
                 }, index * this.config.animation.fadeDelay);
                 observer.unobserve(entry.target);
               }
@@ -90,7 +90,7 @@
         animatedElements.forEach((el) => observer.observe(el));
       } else {
         // 폴백: 모든 요소 즉시 표시
-        animatedElements.forEach((el) => el.classList.add('visible'));
+        animatedElements.forEach((el) => el.classList.add('dh-u-visible'));
       }
     }
 
@@ -253,7 +253,7 @@
               process.env.NODE_ENV === 'development' ||
               window.location.hostname === 'localhost'
             ) {
-              console.warn('AdSense loading failed:', e); // eslint-disable-line no-console
+              console.warn('AdSense dh-u-loading failed:', e); // eslint-disable-line no-console
             }
           }
         }

@@ -460,7 +460,7 @@ document.body.appendChild(prompt);
 
 // 애니메이션과 함께 표시
 setTimeout(() => {
-prompt.classList.add('visible');
+prompt.classList.add('dh-u-visible');
 }, 100);
 }
 
@@ -668,7 +668,7 @@ if (typeof window !== 'undefined') {
 window.IOSSafariOptimizer = IOSSafariOptimizer;
 
 // 자동 초기화
-if (document.readyState === 'loading') {
+if (document.readyState === 'dh-u-loading') {
 document.addEventListener('DOMContentLoaded', () => {
 window.iosSafariOptimizer = new IOSSafariOptimizer();
 });

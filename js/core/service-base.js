@@ -151,7 +151,7 @@ export class ServiceBase {
                 <div class="error-container">
                     <div class="error-icon">⚠️</div>
                     <p class="error-message">${this.escapeHtml(message)}</p>
-                    <button class="btn btn-primary" data-action="retry">
+                    <button class="dh-c-btn btn-primary" data-action="retry">
                         다시 시도
                     </button>
                 </div>
@@ -332,7 +332,7 @@ export class ServiceBase {
         (window.adsbygoogle = window.adsbygoogle || []).push({});
       } catch (e) {
         // AdSense 로딩 실패 시 무시
-        console.warn('AdSense loading failed:', e);
+        console.warn('AdSense dh-u-loading failed:', e);
       }
     }
   }

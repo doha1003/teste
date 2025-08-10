@@ -58,10 +58,10 @@ const fileAnalysis = {
     locations: [
       { line: 145, type: 'loadComponents' },
       { line: 178, type: 'navbar' },
-      { line: 212, type: 'footer' },
+      { line: 212, type: 'dh-l-footer' },
       { line: 267, type: 'errorMessage' },
       { line: 334, type: 'notification' },
-      { line: 389, type: 'modal' },
+      { line: 389, type: 'dh-c-modal' },
       { line: 445, type: 'toast' },
       { line: 502, type: 'dynamicContent' },
     ],

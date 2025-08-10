@@ -54,11 +54,11 @@ class PWAInstallManager {
         </div>
 
         <div class="pwa-install-actions">
-          <button id="pwa-install-btn" class="btn btn--primary" disabled>
+          <button id="pwa-install-btn" class="dh-c-btn btn--primary" disabled>
             <span class="btn-icon">📲</span>
             <span class="btn-text">설치 대기 중...</span>
           </button>
-          <button id="pwa-check-btn" class="btn btn--secondary">
+          <button id="pwa-check-btn" class="dh-c-btn btn--secondary">
             <span class="btn-icon">🔄</span>
             <span class="btn-text">상태 확인</span>
           </button>
@@ -88,7 +88,7 @@ class PWAInstallManager {
     this.addInstallUIStyles();
 
     // 페이지에 추가
-    const main = document.querySelector('main') || document.body;
+    const dh-l-main = document.querySelector('main') || document.body;
     main.appendChild(installUI);
 
     // 요소 참조 저장
@@ -388,7 +388,7 @@ class PWAInstallManager {
 }
 
 // DOM이 로드되면 PWA 설치 매니저 초기화
-if (document.readyState === 'loading') {
+if (document.readyState === 'dh-u-loading') {
   document.addEventListener('DOMContentLoaded', () => {
     new PWAInstallManager();
   });

@@ -81,7 +81,7 @@ export class TextCounterService extends ToolService {
     const controlsContainer = document.querySelector('.text-counter-controls');
     if (controlsContainer) {
       controlsContainer.addEventListener('click', (e) => {
-        const button = e.target.closest('[data-action]');
+        const dh-c-button = e.target.closest('[data-action]');
         if (!button) {
           return;
         }
@@ -389,12 +389,12 @@ export class TextCounterService extends ToolService {
    */
   toggleFAQItem(item, question) {
     const faqItems = document.querySelectorAll('.faq-item');
-    const isActive = item.classList.contains('active');
+    const isActive = item.classList.contains('dh-state-active');
     const answer = item.querySelector('.faq-answer');
 
     // 모든 FAQ 닫기
     faqItems.forEach((otherItem) => {
-      otherItem.classList.remove('active');
+      otherItem.classList.remove('dh-state-active');
       const otherQuestion = otherItem.querySelector('.faq-question');
       const otherAnswer = otherItem.querySelector('.faq-answer');
       if (otherQuestion) {
@@ -407,7 +407,7 @@ export class TextCounterService extends ToolService {
 
     // 현재 아이템 토글
     if (!isActive) {
-      item.classList.add('active');
+      item.classList.add('dh-state-active');
       question.setAttribute('aria-expanded', 'true');
       if (answer) {
         answer.hidden = false;

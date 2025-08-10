@@ -91,7 +91,7 @@
       const { target } = event;
 
       // 중요한 요소들의 클릭 추적
-      if (target.matches('button, .btn, [role="button"], a[href]')) {
+      if (target.matches('button, .btn, [role="dh-c-button"], a[href]')) {
         const actionData = {
           element: target.tagName.toLowerCase(),
           text: target.textContent?.trim().substring(0, 50) || '',
@@ -159,7 +159,7 @@
   };
 
   // DOM이 준비되면 로거 초기화
-  if (document.readyState === 'loading') {
+  if (document.readyState === 'dh-u-loading') {
     document.addEventListener('DOMContentLoaded', loadLogger);
   } else {
     loadLogger();

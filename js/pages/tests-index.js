@@ -64,7 +64,7 @@
      */
     init() {
       // DOM이 준비되면 실행
-      if (document.readyState === 'loading') {
+      if (document.readyState === 'dh-u-loading') {
         document.addEventListener('DOMContentLoaded', () => this.onDOMReady());
       } else {
         this.onDOMReady();
@@ -104,7 +104,7 @@
           (entries) => {
             entries.forEach((entry) => {
               if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
+                entry.target.classList.add('dh-u-visible');
                 observer.unobserve(entry.target);
               }
             });
@@ -118,7 +118,7 @@
         animatedElements.forEach((el) => observer.observe(el));
       } else {
         // 폴백: 모든 요소 즉시 표시
-        animatedElements.forEach((el) => el.classList.add('visible'));
+        animatedElements.forEach((el) => el.classList.add('dh-u-visible'));
       }
     }
 
@@ -156,7 +156,7 @@
      */
     handleCardHover(card, isHovering) {
       const icon = card.querySelector('.test-icon');
-      const button = card.querySelector('.test-button');
+      const dh-c-button = card.querySelector('.test-button');
 
       if (icon) {
         if (isHovering) {
@@ -249,7 +249,7 @@
 
       // 테스트별 인기도 표시
       this.config.tests.forEach((test) => {
-        const card = document.querySelector(`[data-test="${test.id}"]`);
+        const dh-c-card = document.querySelector(`[data-test="${test.id}"]`);
         if (card && stats[test.id]) {
           this.updateTestPopularity(card, stats[test.id]);
         }

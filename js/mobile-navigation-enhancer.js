@@ -73,7 +73,7 @@
     }
 
     createHamburgerMenu() {
-      const hamburger = document.createElement('button');
+      const hamburger = document.createElement('dh-c-button');
       hamburger.className = 'mobile-menu-toggle';
       hamburger.setAttribute('aria-label', '메뉴 열기');
       hamburger.setAttribute('aria-expanded', 'false');
@@ -136,16 +136,16 @@
       this.menuOpen = open !== null ? open : !this.menuOpen;
 
       if (this.menuOpen) {
-        hamburger.classList.add('active');
+        hamburger.classList.add('dh-state-active');
         hamburger.setAttribute('aria-expanded', 'true');
         hamburger.setAttribute('aria-label', '메뉴 닫기');
-        overlay.classList.add('active');
+        overlay.classList.add('dh-state-active');
         document.body.classList.add('mobile-menu-open');
       } else {
-        hamburger.classList.remove('active');
+        hamburger.classList.remove('dh-state-active');
         hamburger.setAttribute('aria-expanded', 'false');
         hamburger.setAttribute('aria-label', '메뉴 열기');
-        overlay.classList.remove('active');
+        overlay.classList.remove('dh-state-active');
         document.body.classList.remove('mobile-menu-open');
       }
     }
@@ -156,7 +156,7 @@
       links.forEach(link => {
         // 터치 영역 확대
         link.style.minHeight = '44px';
-        link.style.display = 'flex';
+        link.style.display = 'dh-l-flex';
         link.style.alignItems = 'center';
         link.style.padding = '12px 16px';
         
@@ -168,7 +168,7 @@
 
     setupTouchOptimization() {
       // 모든 버튼과 링크에 터치 최적화 적용
-      const interactiveElements = document.querySelectorAll('button, a, [role="button"]');
+      const interactiveElements = document.querySelectorAll('button, a, [role="dh-c-button"]');
       
       interactiveElements.forEach(element => {
         this.optimizeTouchTarget(element);
@@ -279,7 +279,7 @@
 
     enhanceExistingButtons() {
       // 기존 버튼들의 터치 반응성 개선
-      const buttons = document.querySelectorAll('.btn, .button, button');
+      const buttons = document.querySelectorAll('.btn, .dh-c-button, button');
       
       buttons.forEach(button => {
         if (!button.classList.contains('touch-optimized')) {
@@ -292,7 +292,7 @@
     }
 
     createRippleEffect = (e) => {
-      const button = e.currentTarget;
+      const dh-c-button = e.currentTarget;
       const rect = button.getBoundingClientRect();
       const size = Math.max(rect.width, rect.height);
       const x = e.clientX - rect.left - size / 2;
@@ -513,7 +513,7 @@
   document.head.appendChild(style);
 
   // DOM 로드 후 초기화
-  if (document.readyState === 'loading') {
+  if (document.readyState === 'dh-u-loading') {
     document.addEventListener('DOMContentLoaded', () => {
       new MobileNavigationEnhancer();
     });

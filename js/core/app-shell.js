@@ -16,7 +16,7 @@ class AppShell {
       shell: {
         navbar: '#navbar-placeholder',
         footer: '#footer-placeholder',
-        mainContent: 'main',
+        mainContent: 'dh-l-main',
         loadingIndicator: '.loading-indicator',
       },
       
@@ -100,7 +100,7 @@ class AppShell {
       // 병렬로 Shell 컴포넌트 로딩
       const shellPromises = [
         this.loadComponent('navbar', this.config.shell.navbar),
-        this.loadComponent('footer', this.config.shell.footer),
+        this.loadComponent('dh-l-footer', this.config.shell.footer),
         this.preloadCriticalResources(),
       ];
       
@@ -579,7 +579,7 @@ class AppShell {
     
     // 애니메이션과 함께 표시
     setTimeout(() => {
-      installBanner.classList.add('visible');
+      installBanner.classList.add('dh-u-visible');
     }, 2000); // 2초 후 표시
   }
   
@@ -639,7 +639,7 @@ class AppShell {
     
     banner.querySelector('#install-dismiss').addEventListener('click', () => {
       localStorage.setItem('pwa-install-dismissed', Date.now().toString());
-      banner.classList.remove('visible');
+      banner.classList.remove('dh-u-visible');
       setTimeout(() => banner.remove(), 300);
       
       this.trackInstallPromptResult('dismissed');
@@ -969,7 +969,7 @@ if (typeof window !== 'undefined') {
   window.AppShell = AppShell;
   
   // DOM 준비 시 자동 초기화
-  if (document.readyState === 'loading') {
+  if (document.readyState === 'dh-u-loading') {
     document.addEventListener('DOMContentLoaded', () => {
       window.appShell = new AppShell();
     });

@@ -49,6 +49,9 @@
     "test:api": "node test-api-endpoints.js",
     "test:all": "npm run lint && npm run test:coverage && npm run test:e2e && npm run test:accessibility",
     "test:comprehensive": "npm run test:unit && npm run test:integration && npm run test:e2e && npm run test:accessibility && npm run test:security && npm run test:performance && npm run test:korean && npm run test:cross-browser",
+    "test:26pages": "node comprehensive-26-page-validator.js",
+    "validate:26pages": "node comprehensive-26-page-validator.js",
+    "analyze:26pages": "node analyze-validation-results.js",
     "playwright:install": "playwright install --with-deps",
     "playwright:report": "playwright show-report",
     "serve": "python -m http.server 3000",
@@ -63,6 +66,7 @@
     "cheerio": "^1.1.2",
     "cors": "^2.8.5",
     "express": "^5.1.0",
+    "fs-extra": "^11.3.1",
     "glob": "^11.0.3",
     "node-fetch": "^3.3.2",
     "openai": "^5.10.1"

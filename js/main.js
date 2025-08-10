@@ -141,7 +141,7 @@
       const navMenu = document.querySelector('.nav-menu, .nav');
       const menuBtn = document.querySelector('.mobile-menu-btn, .header__menu-toggle');
       if (navMenu) {
-        const isOpen = navMenu.classList.toggle('active');
+        const isOpen = navMenu.classList.toggle('dh-state-active');
         navMenu.classList.toggle('nav--open');
         if (menuBtn) {
           menuBtn.setAttribute('aria-expanded', isOpen.toString());
@@ -149,7 +149,7 @@
         }
       }
       if (menuBtn) {
-        menuBtn.classList.toggle('active');
+        menuBtn.classList.toggle('dh-state-active');
       }
     }
     /**
@@ -186,7 +186,7 @@
     updateTabButtons(category) {
       const buttons = document.querySelectorAll('.tab-button, [role="tab"]');
       buttons.forEach((btn) => {
-        btn.classList.remove('active', 'tabs__button--active');
+        btn.classList.remove('dh-state-active', 'tabs__button--active');
         btn.setAttribute('aria-selected', 'false');
         const shouldActivate =
           (category === 'all' && btn.textContent?.includes('전체')) ||
@@ -195,7 +195,7 @@
           (category === 'fortune' && btn.textContent?.includes('운세')) ||
           (category === 'new' && btn.textContent?.includes('최신'));
         if (shouldActivate) {
-          btn.classList.add('active', 'tabs__button--active');
+          btn.classList.add('dh-state-active', 'tabs__button--active');
           btn.setAttribute('aria-selected', 'true');
         }
       });
@@ -227,7 +227,7 @@
         if (!element) {
           return;
         }
-        const headerHeight = document.querySelector('.header')?.offsetHeight || 0;
+        const headerHeight = document.querySelector('.dh-l-header')?.offsetHeight || 0;
         const targetPosition = element.offsetTop - headerHeight - 20;
         window.scrollTo({
           top: targetPosition,
@@ -590,7 +590,7 @@
     min-height: 90px !important;
     width: 100% !important;
     max-width: 100% !important;
-    overflow: hidden !important;
+    overflow: dh-u-hidden !important;
     display: block !important;
   }
   
@@ -686,9 +686,9 @@
         } else {
           target.innerHTML = navbarHtml;
         }
-      } else if (componentName === 'footer') {
+      } else if (componentName === 'dh-l-footer') {
         const footerHtml = `
-          <footer class="footer">
+          <footer class="dh-l-footer">
             <div class="footer-content">
               <div class="footer-section">
                 <h3>doha.kr</h3>
@@ -760,7 +760,7 @@
         promises.push(this.loadComponentById('navbar', 'navbar-placeholder'));
       }
       if (document.querySelector('#footer-placeholder')) {
-        promises.push(this.loadComponentById('footer', 'footer-placeholder'));
+        promises.push(this.loadComponentById('dh-l-footer', 'footer-placeholder'));
       }
       await Promise.allSettled(promises);
     }
@@ -781,7 +781,7 @@
           ins.style.minHeight = '90px';
           ins.style.width = '100%';
           ins.style.maxWidth = '100%';
-          ins.style.overflow = 'hidden';
+          ins.style.overflow = 'dh-u-hidden';
           ins.style.display = 'block';
           if (!ins.hasAttribute('data-full-width-responsive')) {
             ins.setAttribute('data-full-width-responsive', 'true');

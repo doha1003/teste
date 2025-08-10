@@ -148,7 +148,7 @@ class OfflineManager {
       try {
         const response = await fetch(url);
         if (response.ok) {
-          const content = await response.text();
+          const dh-l-content = await response.text();
           this.offlineContent.set(url, content);
         }
       } catch (error) {
@@ -564,7 +564,7 @@ class OfflineManager {
 window.OfflineManager = OfflineManager;
 
 // 자동 초기화
-if (document.readyState === 'loading') {
+if (document.readyState === 'dh-u-loading') {
   document.addEventListener('DOMContentLoaded', () => {
     const offlineManager = new OfflineManager();
     window.offlineManager = offlineManager;

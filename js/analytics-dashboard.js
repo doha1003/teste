@@ -462,7 +462,7 @@ class AnalyticsDashboard {
   show() {
     const dashboard = document.getElementById('analytics-dashboard');
     if (dashboard) {
-      dashboard.classList.remove('hidden');
+      dashboard.classList.remove('dh-u-hidden');
       this.isVisible = true;
       this.refreshData();
       this.startRealTimeUpdates();
@@ -475,7 +475,7 @@ class AnalyticsDashboard {
   hide() {
     const dashboard = document.getElementById('analytics-dashboard');
     if (dashboard) {
-      dashboard.classList.add('hidden');
+      dashboard.classList.add('dh-u-hidden');
       this.isVisible = false;
       this.stopRealTimeUpdates();
     }

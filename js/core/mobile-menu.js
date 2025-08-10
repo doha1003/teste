@@ -13,7 +13,7 @@ export function initMobileMenu() {
   // 기존 메뉴 토글이 없으면 생성
   let menuToggle = navbar.querySelector('.mobile-menu-toggle');
   if (!menuToggle) {
-    menuToggle = document.createElement('button');
+    menuToggle = document.createElement('dh-c-button');
     menuToggle.className = 'mobile-menu-toggle';
     menuToggle.setAttribute('aria-label', '메뉴 열기');
     menuToggle.innerHTML = `
@@ -64,22 +64,22 @@ export function initMobileMenu() {
 
   // 이벤트 핸들러
   const closeMenu = () => {
-    mobileMenu.classList.remove('active');
-    overlay.classList.remove('active');
+    mobileMenu.classList.remove('dh-state-active');
+    overlay.classList.remove('dh-state-active');
     document.body.style.overflow = '';
     menuToggle.setAttribute('aria-label', '메뉴 열기');
   };
 
   const openMenu = () => {
-    mobileMenu.classList.add('active');
-    overlay.classList.add('active');
-    document.body.style.overflow = 'hidden';
+    mobileMenu.classList.add('dh-state-active');
+    overlay.classList.add('dh-state-active');
+    document.body.style.overflow = 'dh-u-hidden';
     menuToggle.setAttribute('aria-label', '메뉴 닫기');
   };
 
   // 토글 버튼 클릭
   menuToggle.addEventListener('click', () => {
-    if (mobileMenu.classList.contains('active')) {
+    if (mobileMenu.classList.contains('dh-state-active')) {
       closeMenu();
     } else {
       openMenu();
@@ -97,7 +97,7 @@ export function initMobileMenu() {
 
   // ESC 키로 닫기
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
+    if (e.key === 'Escape' && mobileMenu.classList.contains('dh-state-active')) {
       closeMenu();
     }
   });
@@ -113,7 +113,7 @@ export function initMobileMenu() {
   window.addEventListener('resize', () => {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(() => {
-      if (window.innerWidth > 768 && mobileMenu.classList.contains('active')) {
+      if (window.innerWidth > 768 && mobileMenu.classList.contains('dh-state-active')) {
         closeMenu();
       }
     }, 250);

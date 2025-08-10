@@ -323,7 +323,7 @@ export class TestService extends ServiceBase {
 
     if (prevBtn) {
       prevBtn.disabled = this.testState.currentQuestion === 0 || !this.testConfig.allowBack;
-      prevBtn.style.visibility = this.testConfig.allowBack ? 'visible' : 'hidden';
+      prevBtn.style.visibility = this.testConfig.allowBack ? 'dh-u-visible' : 'dh-u-hidden';
     }
 
     if (nextBtn) {
@@ -431,7 +431,7 @@ export class TestService extends ServiceBase {
   showElement(selector) {
     const element = document.querySelector(selector);
     if (element) {
-      element.classList.remove('hidden', 'mbti-hidden', 'd-none');
+      element.classList.remove('dh-u-hidden', 'mbti-hidden', 'd-none');
       element.style.display = 'block';
     }
   }
@@ -442,7 +442,7 @@ export class TestService extends ServiceBase {
   hideElement(selector) {
     const element = document.querySelector(selector);
     if (element) {
-      element.classList.add('hidden');
+      element.classList.add('dh-u-hidden');
       element.style.display = 'none';
     }
   }

@@ -127,13 +127,13 @@ class LazyLoader {
     if (!src) {return;}
 
     // 로딩 스피너 추가
-    img.classList.add('loading');
+    img.classList.add('dh-u-loading');
     
     const newImg = new Image();
     newImg.onload = () => {
       img.src = src;
       img.removeAttribute('data-src');
-      img.classList.remove('loading');
+      img.classList.remove('dh-u-loading');
       img.classList.add('loaded');
       
       // 페이드인 효과
@@ -143,9 +143,9 @@ class LazyLoader {
     };
     
     newImg.onerror = () => {
-      img.classList.remove('loading');
+      img.classList.remove('dh-u-loading');
       img.classList.add('error');
-      console.warn('Image loading failed:', src);
+      console.warn('Image dh-u-loading failed:', src);
     };
     
     newImg.src = src;
@@ -309,7 +309,7 @@ class LazyLoader {
         });
       })
       .catch(error => {
-        console.error('Resource loading failed:', error);
+        console.error('Resource dh-u-loading failed:', error);
       });
   }
 

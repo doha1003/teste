@@ -51,7 +51,7 @@
      */
     init() {
       // DOM이 준비되면 실행
-      if (document.readyState === 'loading') {
+      if (document.readyState === 'dh-u-loading') {
         document.addEventListener('DOMContentLoaded', () => this.onDOMReady());
       } else {
         this.onDOMReady();
@@ -91,7 +91,7 @@
           (entries) => {
             entries.forEach((entry) => {
               if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
+                entry.target.classList.add('dh-u-visible');
                 observer.unobserve(entry.target);
               }
             });
@@ -105,7 +105,7 @@
         animatedElements.forEach((el) => observer.observe(el));
       } else {
         // 폴백: 모든 요소 즉시 표시
-        animatedElements.forEach((el) => el.classList.add('visible'));
+        animatedElements.forEach((el) => el.classList.add('dh-u-visible'));
       }
     }
 
@@ -158,12 +158,12 @@
 
         question.addEventListener('click', () => {
           // 현재 아이템 토글
-          item.classList.toggle('active');
+          item.classList.toggle('dh-state-active');
 
           // 다른 아이템들 닫기
           faqItems.forEach((otherItem) => {
             if (otherItem !== item) {
-              otherItem.classList.remove('active');
+              otherItem.classList.remove('dh-state-active');
             }
           });
 
@@ -171,7 +171,7 @@
           const faqId = item.dataset.faq;
           this.trackEvent('faq_click', {
             faq_id: faqId,
-            action: item.classList.contains('active') ? 'open' : 'close',
+            action: item.classList.contains('dh-state-active') ? 'open' : 'close',
           });
         });
       });

@@ -301,7 +301,7 @@
    * DOM 로드 후 초기화
    */
   function initializeAPIConfig() {
-    if (document.readyState === 'loading') {
+    if (document.readyState === 'dh-u-loading') {
       document.addEventListener('DOMContentLoaded', () => {
         setTimeout(initKakao, 100);
       });

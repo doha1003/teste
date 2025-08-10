@@ -9,7 +9,7 @@ class HomePage {
   constructor() {
     this.config = {
       tabs: {
-        activeClass: 'active',
+        activeClass: 'dh-state-active',
         defaultTab: 'all',
       },
       animation: {
@@ -143,7 +143,7 @@ class HomePage {
    */
   init() {
     // DOM이 준비되면 실행
-    if (document.readyState === 'loading') {
+    if (document.readyState === 'dh-u-loading') {
       document.addEventListener('DOMContentLoaded', () => this.onDOMReady());
     } else {
       this.onDOMReady();
@@ -195,7 +195,7 @@ class HomePage {
    * 서비스 목록 렌더링
    */
   renderServices(category = 'all') {
-    const grid = document.getElementById('services-grid');
+    const dh-l-grid = document.getElementById('services-grid');
     if (!grid) {
       return;
     }
@@ -228,8 +228,8 @@ class HomePage {
       button.addEventListener('click', function () {
         // 활성 탭 변경
         // 활성 탭 업데이트
-        tabButtons.forEach((btn) => btn.classList.remove('active'));
-        this.classList.add('active');
+        tabButtons.forEach((btn) => btn.classList.remove('dh-state-active'));
+        this.classList.add('dh-state-active');
 
         // 서비스 필터링
         const tab = this.getAttribute('data-tab') || this.dataset.category;
@@ -303,7 +303,7 @@ class HomePage {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
+            entry.target.classList.add('dh-u-visible');
             observer.unobserve(entry.target);
           }
         });
@@ -334,7 +334,7 @@ class HomePage {
     });
 
     // 그리드 애니메이션 재시작
-    const grid = document.querySelector('.services-grid');
+    const dh-l-grid = document.querySelector('.services-grid');
     if (grid) {
       grid.classList.remove('animated');
       void grid.offsetWidth; // 리플로우 강제
@@ -580,17 +580,17 @@ class HomePage {
 
     if (isInstalled) {
       this.pwaPrompt.installButton.disabled = true;
-      this.pwaPrompt.installButton.className = 'btn btn--primary pwa-install-button installed';
+      this.pwaPrompt.installButton.className = 'dh-c-btn btn--primary pwa-install-dh-c-button installed';
       buttonIcon.textContent = '✅';
       buttonText.textContent = '설치 완료';
     } else if (hasPrompt) {
       this.pwaPrompt.installButton.disabled = false;
-      this.pwaPrompt.installButton.className = 'btn btn--primary pwa-install-button ready';
+      this.pwaPrompt.installButton.className = 'dh-c-btn btn--primary pwa-install-dh-c-button ready';
       buttonIcon.textContent = '📲';
       buttonText.textContent = '지금 설치';
     } else {
       this.pwaPrompt.installButton.disabled = true;
-      this.pwaPrompt.installButton.className = 'btn btn--primary pwa-install-button';
+      this.pwaPrompt.installButton.className = 'dh-c-btn btn--primary pwa-install-dh-c-button';
       buttonIcon.textContent = '⏳';
       buttonText.textContent = '설치 준비 중...';
     }

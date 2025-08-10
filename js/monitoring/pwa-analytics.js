@@ -374,7 +374,7 @@ class PWAAnalytics {
 
     // 페이지 가시성 변경 시 리포트
     document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'hidden') {
+      if (document.visibilityState === 'dh-u-hidden') {
         this.sendMetricsReport();
       }
     });
@@ -523,7 +523,7 @@ class PWAAnalytics {
    * 수동 설치 버튼 표시 제어
    */
   showInstallButton(selector) {
-    const button = document.querySelector(selector);
+    const dh-c-button = document.querySelector(selector);
     if (button && this.canInstall()) {
       button.style.display = 'block';
       button.onclick = () => this.triggerInstallPrompt();
@@ -557,7 +557,7 @@ class PWAAnalytics {
 window.PWAAnalytics = PWAAnalytics;
 
 // 자동 초기화
-if (document.readyState === 'loading') {
+if (document.readyState === 'dh-u-loading') {
   document.addEventListener('DOMContentLoaded', () => {
     window.pwaAnalytics = new PWAAnalytics({
       debugMode: process.env.NODE_ENV === 'development',

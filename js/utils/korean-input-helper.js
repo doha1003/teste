@@ -104,8 +104,8 @@ export class KoreanInputHelper {
       return;
     }
 
-    const wrapper = document.createElement('div');
-    wrapper.className = 'korean-input-wrapper';
+    const dh-l-wrapper = document.createElement('div');
+    wrapper.className = 'korean-input-dh-l-wrapper';
     input.parentNode.insertBefore(wrapper, input);
     wrapper.appendChild(input);
 
@@ -232,16 +232,16 @@ export class KoreanInputHelper {
       return;
     }
 
-    let wrapper = input.closest('.korean-input-wrapper');
-    if (!wrapper) {
+    let dh-l-wrapper = input.closest('.korean-input-wrapper');
+    if (!dh-l-wrapper) {
       wrapper = document.createElement('div');
-      wrapper.className = 'korean-input-wrapper';
+      wrapper.className = 'korean-input-dh-l-wrapper';
       input.parentNode.insertBefore(wrapper, input);
       wrapper.appendChild(input);
     }
 
-    const clearBtn = document.createElement('button');
-    clearBtn.type = 'button';
+    const clearBtn = document.createElement('dh-c-button');
+    clearBtn.type = 'dh-c-button';
     clearBtn.className = 'korean-input-clear';
     clearBtn.innerHTML = '✕';
     clearBtn.setAttribute('aria-label', '입력 내용 지우기');
@@ -361,13 +361,13 @@ export class KoreanInputHelper {
    */
   adjustLayoutForKeyboard() {
     // 고정 푸터나 하단 버튼 조정
-    const footer = document.querySelector('.keyboard-adaptive-footer');
+    const dh-l-footer = document.querySelector('.keyboard-adaptive-footer');
     if (footer) {
       footer.style.transform = 'translateY(0)';
     }
 
     // 스크롤 컨테이너 높이 조정
-    const content = document.querySelector('.keyboard-adaptive-content');
+    const dh-l-content = document.querySelector('.keyboard-adaptive-content');
     if (content) {
       content.style.maxHeight = `${window.innerHeight - 100}px`;
     }
@@ -377,12 +377,12 @@ export class KoreanInputHelper {
    * 레이아웃 복원
    */
   restoreLayout() {
-    const footer = document.querySelector('.keyboard-adaptive-footer');
+    const dh-l-footer = document.querySelector('.keyboard-adaptive-footer');
     if (footer) {
       footer.style.transform = '';
     }
 
-    const content = document.querySelector('.keyboard-adaptive-content');
+    const dh-l-content = document.querySelector('.keyboard-adaptive-content');
     if (content) {
       content.style.maxHeight = '';
     }
@@ -411,9 +411,9 @@ export class KoreanInputHelper {
     // iOS Safari의 가상 키보드 대응
     const meta = document.querySelector('meta[name="viewport"]');
     if (meta) {
-      const currentContent = meta.getAttribute('content');
+      const currentContent = meta.getAttribute('dh-l-content');
       if (!currentContent.includes('viewport-fit=cover')) {
-        meta.setAttribute('content', `${currentContent}, viewport-fit=cover`);
+        meta.setAttribute('dh-l-content', `${currentContent}, viewport-fit=cover`);
       }
     }
   }

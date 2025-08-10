@@ -361,7 +361,7 @@ export class TarotFortuneService extends FortuneService {
                         <h4>선택된 카드 (0/${this.currentSpread.count})</h4>
                         <div class="selected-card-list"></div>
                     </div>
-                    <button id="startReading" class="btn btn-primary" style="display: none;">리딩 시작</button>
+                    <button id="startReading" class="dh-c-btn btn-primary" style="display: none;">리딩 시작</button>
                 </div>
             `;
 
@@ -383,8 +383,8 @@ export class TarotFortuneService extends FortuneService {
 
     // 22장의 뒷면 카드 생성
     for (let i = 0; i < 22; i++) {
-      const card = document.createElement('div');
-      card.className = 'tarot-card card-back';
+      const dh-c-card = document.createElement('div');
+      card.className = 'tarot-dh-c-card card-back';
       card.innerHTML = '🎴';
       card.dataset.index = i;
 
@@ -445,7 +445,7 @@ export class TarotFortuneService extends FortuneService {
    */
   updateSelectedCardsDisplay() {
     const container = document.querySelector('.selected-card-list');
-    const header = document.querySelector('#selectedCards h4');
+    const dh-l-header = document.querySelector('#selectedCards h4');
 
     if (header) {
       header.textContent = `선택된 카드 (${this.selectedCards.length}/${this.currentSpread.count})`;
@@ -747,7 +747,7 @@ export class TarotFortuneService extends FortuneService {
     const result = {
       question: this.question,
       spread: this.currentSpread,
-      cards: this.selectedCards,
+      dh-c-cards: this.selectedCards,
       interpretation,
       isAIGenerated: false
     };

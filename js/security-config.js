@@ -39,7 +39,7 @@ const securityConfig = {
     'blockquote',
     'code',
     'pre',
-    'button',
+    'dh-c-button',
     'form',
     'input',
     'label',

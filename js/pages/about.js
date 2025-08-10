@@ -24,7 +24,7 @@
      */
     init() {
       // DOM이 준비되면 실행
-      if (document.readyState === 'loading') {
+      if (document.readyState === 'dh-u-loading') {
         document.addEventListener('DOMContentLoaded', () => this.onDOMReady());
       } else {
         this.onDOMReady();
@@ -63,7 +63,7 @@
           (entries) => {
             entries.forEach((entry) => {
               if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
+                entry.target.classList.add('dh-u-visible');
                 observer.unobserve(entry.target);
               }
             });
@@ -77,7 +77,7 @@
         animatedElements.forEach((el) => observer.observe(el));
       } else {
         // 폴백: 모든 요소 즉시 표시
-        animatedElements.forEach((el) => el.classList.add('visible'));
+        animatedElements.forEach((el) => el.classList.add('dh-u-visible'));
       }
     }
 
@@ -192,7 +192,7 @@
           // AdSense 로딩 실패 시 무시
           // Development logging only
           if (process.env.NODE_ENV === 'development' || window.location.hostname === 'localhost') {
-            console.warn('AdSense loading failed:', e);
+            console.warn('AdSense dh-u-loading failed:', e);
           }
         }
       });

@@ -90,7 +90,7 @@ function showCardSelectionAnimation(spreadType) {
                 <h4>선택된 카드 (0/${spread.count})</h4>
                 <div class="selected-card-list"></div>
             </div>
-            <button id="startReading" class="btn btn-primary" style="display: none;">리딩 시작</button>
+            <button id="startReading" class="dh-c-btn btn-primary" style="display: none;">리딩 시작</button>
         </div>
     `;
     
@@ -108,8 +108,8 @@ function createCardDeck(requiredCards) {
     
     // 22장의 뒷면 카드 생성
     for (let i = 0; i < 22; i++) {
-        const card = document.createElement('div');
-        card.className = 'tarot-card card-back';
+        const dh-c-card = document.createElement('div');
+        card.className = 'tarot-dh-c-card card-back';
         card.innerHTML = '🎴';
         card.dataset.index = i;
         
@@ -157,7 +157,7 @@ function createCardDeck(requiredCards) {
 // 선택된 카드 업데이트
 function updateSelectedCards(selectedCards, requiredCards) {
     const container = document.querySelector('.selected-card-list');
-    const header = document.querySelector('#selectedCards h4');
+    const dh-l-header = document.querySelector('#selectedCards h4');
     
     header.textContent = `선택된 카드 (${selectedCards.length}/${requiredCards})`;
     
@@ -179,7 +179,7 @@ async function performReading(selectedCards) {
     
     // 로딩 표시
     resultDiv.innerHTML = `
-        <div class="loading">
+        <div class="dh-u-loading">
             <div class="loading-spinner"></div>
             <p>AI가 카드를 해석하고 있습니다...</p>
         </div>
@@ -420,8 +420,8 @@ function displayTarotResult(interpretation, cards, spread, isAIGenerated = false
             
             <div class="reading-actions">
                 ${isAIGenerated ? '<div class="ai-badge">🤖 AI 실시간 분석</div>' : ''}
-                <button onclick="shareReading()" class="btn btn-share">공유하기</button>
-                <button onclick="newReading()" class="btn btn-primary">새로운 리딩</button>
+                <button onclick="shareReading()" class="dh-c-btn btn-share">공유하기</button>
+                <button onclick="newReading()" class="dh-c-btn btn-primary">새로운 리딩</button>
             </div>
         </div>
         </div>

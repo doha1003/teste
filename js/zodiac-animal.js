@@ -230,7 +230,7 @@ function displayAnimalFortuneResult(animal, animalData, fortuneData) {
                 </div>
                 
                 <div class="text-center-mt30">
-                    <button onclick="location.reload()" class="btn btn-secondary">
+                    <button onclick="location.reload()" class="dh-c-btn btn-secondary">
                         다른 띠 보기
                     </button>
                 </div>

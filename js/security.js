@@ -153,7 +153,7 @@
       return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     },
 
-    // Check for potentially dangerous content
+    // Check for potentially dangerous dh-l-content
     containsDangerousContent(str) {
       if (!str) {
         return false;
@@ -196,7 +196,7 @@
       return pattern.test(str);
     },
 
-    // Create safe element with text content
+    // Create safe element with text dh-l-content
     createSafeElement(tagName, textContent, attributes = {}) {
       const element = document.createElement(tagName);
 
@@ -260,7 +260,7 @@
           e.target.value = e.target.value.substring(0, maxLength);
         }
 
-        // Check for dangerous content
+        // Check for dangerous dh-l-content
         if (Security.containsDangerousContent(e.target.value)) {
           e.target.value = Security.sanitizeHTML(e.target.value);
         }
@@ -275,7 +275,7 @@
       for (const input of inputs) {
         if (Security.containsDangerousContent(input.value)) {
           e.preventDefault();
-          // console.error removed('Form submission blocked: dangerous content detected');
+          // console.error removed('Form submission blocked: dangerous dh-l-content detected');
 
           // Show user-friendly error
           if (typeof showNotification === 'function') {

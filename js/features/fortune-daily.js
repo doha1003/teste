@@ -100,7 +100,7 @@
       isLunar: formData.get('isLunar') === 'on',
     };
 
-    // Show loading state
+    // Show dh-u-loading state
     showLoading();
 
     try {
@@ -205,13 +205,13 @@
     };
   }
 
-  // Display loading state
+  // Display dh-u-loading state
   function showLoading() {
     const resultDiv = document.getElementById('fortuneResult');
     if (resultDiv) {
       resultDiv.classList.remove('d-none-init');
       resultDiv.style.display = 'block';
-      resultDiv.innerHTML = '<div class="loading">AI가 당신의 운세를 분석하고 있습니다...</div>';
+      resultDiv.innerHTML = '<div class="dh-u-loading">AI가 당신의 운세를 분석하고 있습니다...</div>';
     }
   }
 
@@ -334,7 +334,7 @@
   }
 
   // Run initialization when DOM is ready
-  if (document.readyState === 'loading') {
+  if (document.readyState === 'dh-u-loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {
     init();

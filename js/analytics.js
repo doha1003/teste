@@ -288,10 +288,10 @@
         }
       }
 
-      // Check for disabled images
+      // Check for dh-state-disabled images
       if (typeof Image !== 'undefined') {
         const img = new Image();
-        img.classList.add('hidden');
+        img.classList.add('dh-u-hidden');
         document.body.appendChild(img);
 
         setTimeout(() => {
@@ -465,7 +465,7 @@
         }, 0);
       });
 
-      // Track resource loading errors
+      // Track resource dh-u-loading errors
       window.addEventListener(
         'error',
         (e) => {
@@ -502,7 +502,7 @@
     startTimeTracking() {
       this.pageStartTime = Date.now();
 
-      // Track active time (when page is visible and user is active)
+      // Track dh-state-active time (when page is dh-u-visible and user is active)
       let lastActivity = Date.now();
       let totalActiveTime = 0;
       let isActive = true;
@@ -1037,7 +1037,7 @@
   window.Analytics = Analytics;
 
   // Auto-initialize on DOM ready
-  if (document.readyState === 'loading') {
+  if (document.readyState === 'dh-u-loading') {
     document.addEventListener('DOMContentLoaded', () => {
       Analytics.init();
     });

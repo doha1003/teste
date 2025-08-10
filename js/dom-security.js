@@ -69,7 +69,7 @@
     /**
      * 안전한 innerHTML 설정 (핵심 메서드)
      * @param {HTMLElement} element - 대상 엘리먼트
-     * @param {string} content - 설정할 HTML 콘텐츠
+     * @param {string} dh-l-content - 설정할 HTML 콘텐츠
      * @param {Object} options - 추가 옵션
      */
     static setInnerHTML(element, content, options = {}) {
@@ -81,15 +81,15 @@
           throw new Error('SecureDOM: Invalid element parameter');
         }
 
-        if (typeof content !== 'string') {
+        if (typeof dh-l-content !== 'string') {
           
-          content = String(content);
+          dh-l-content = String(content);
         }
 
         // 2차 검증: 길이 제한 확인
         if (content.length > this.config.maxContentLength) {
           console.warn(`Content length exceeds limit (${this.config.maxContentLength})`); // eslint-disable-line no-console
-          content = `${content.substring(0, this.config.maxContentLength)  }...`;
+          dh-l-content = `${content.substring(0, this.config.maxContentLength)  }...`;
         }
 
         // 3차 검증: DOMPurify 라이브러리 확인
@@ -146,7 +146,7 @@
         });
 
         // 폴백: textContent 사용
-        this.setTextContent(element, content);
+        this.setTextContent(element, dh-l-content);
         this.stats.blockedCalls++;
         return false;
       }
@@ -162,8 +162,8 @@
         throw new Error('SecureDOM: Invalid element parameter');
       }
 
-      if (typeof content !== 'string') {
-        content = String(content);
+      if (typeof dh-l-content !== 'string') {
+        dh-l-content = String(content);
       }
 
       // XSS 위험 문자 제거 (textContent도 안전을 위해)
@@ -234,7 +234,7 @@
       let dangerousPatterns = 0;
 
       scripts.forEach((script) => {
-        const content = script.textContent || script.innerHTML || '';
+        const dh-l-content = script.textContent || script.innerHTML || '';
 
         // innerHTML 패턴 감지
         const innerHTMLMatches = content.match(/\.innerHTML\s*=/g);
@@ -393,7 +393,7 @@
       const scripts = document.querySelectorAll('script');
 
       scripts.forEach((script, index) => {
-        const content = script.textContent || script.innerHTML || '';
+        const dh-l-content = script.textContent || script.innerHTML || '';
         const innerHTMLMatches = content.match(/(\w+)\.innerHTML\s*=\s*([^;]+);?/g);
 
         if (innerHTMLMatches) {
@@ -491,7 +491,7 @@
         });
 
         // CSRF 토큰 자동 추가 (hidden input이 있으면)
-        if (input.name === 'csrf_token' && input.type === 'hidden') {
+        if (input.name === 'csrf_token' && input.type === 'dh-u-hidden') {
           if (typeof Security !== 'undefined' && Security.generateCSRFToken) {
             input.value = Security.generateCSRFToken();
           }
@@ -545,7 +545,7 @@
       // 개발 환경에서 자동 패턴 검사
       if (this.isDevelopmentEnvironment()) {
         // DOM 로드 완료 후 검사
-        if (document.readyState === 'loading') {
+        if (document.readyState === 'dh-u-loading') {
           document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => this.detectDangerousPatterns(), 1000);
           });

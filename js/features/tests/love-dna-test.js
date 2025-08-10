@@ -96,7 +96,7 @@ export class LoveDNATestService extends TestService {
         throw new Error('Love DNA 질문 데이터를 찾을 수 없습니다');
       }
     } catch (error) {
-      console.error('❌ Love DNA questions loading failed:', error);
+      console.error('❌ Love DNA questions dh-u-loading failed:', error);
       throw new Error('Love DNA 질문 데이터 로딩 실패');
     }
   }

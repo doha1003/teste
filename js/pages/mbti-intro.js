@@ -29,7 +29,7 @@
      */
     init() {
       // DOM이 준비되면 실행
-      if (document.readyState === 'loading') {
+      if (document.readyState === 'dh-u-loading') {
         document.addEventListener('DOMContentLoaded', () => this.onDOMReady());
       } else {
         this.onDOMReady();
@@ -73,7 +73,7 @@
               if (entry.isIntersecting) {
                 // 순차적 애니메이션을 위한 지연
                 setTimeout(() => {
-                  entry.target.classList.add('visible');
+                  entry.target.classList.add('dh-u-visible');
                 }, index * this.config.animation.fadeDelay);
                 observer.unobserve(entry.target);
               }
@@ -88,7 +88,7 @@
         animatedElements.forEach((el) => observer.observe(el));
       } else {
         // 폴백: 모든 요소 즉시 표시
-        animatedElements.forEach((el) => el.classList.add('visible'));
+        animatedElements.forEach((el) => el.classList.add('dh-u-visible'));
       }
     }
 
@@ -101,20 +101,20 @@
       faqQuestions.forEach((question) => {
         question.addEventListener('click', () => {
           const faqItem = question.parentElement;
-          const wasActive = faqItem.classList.contains('active');
+          const wasActive = faqItem.classList.contains('dh-state-active');
 
           // 다른 FAQ 항목들 닫기
           document.querySelectorAll('.faq-item.active').forEach((item) => {
             if (item !== faqItem) {
-              item.classList.remove('active');
+              item.classList.remove('dh-state-active');
             }
           });
 
           // 현재 항목 토글
           if (wasActive) {
-            faqItem.classList.remove('active');
+            faqItem.classList.remove('dh-state-active');
           } else {
-            faqItem.classList.add('active');
+            faqItem.classList.add('dh-state-active');
           }
 
           // FAQ 클릭 추적
@@ -205,7 +205,7 @@
      * 버튼이 속한 섹션 확인
      */
     getButtonSection(button) {
-      const section = button.closest('section');
+      const dh-l-section = button.closest('section');
       if (section) {
         if (section.classList.contains('hero')) {
           return 'hero';

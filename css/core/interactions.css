@@ -60,8 +60,8 @@
 /* ========== BUTTON INTERACTIONS ========== */
 
 /* Primary button interactions */
-.btn, 
-.button,
+.dh-c-btn, 
+.dh-c-button,
 button:not(.btn-minimal) {
   @extend .interactive-base;
   transition: 
@@ -73,8 +73,8 @@ button:not(.btn-minimal) {
 }
 
 /* Button hover states */
-.btn:hover,
-.button:hover,
+.dh-c-btn:hover,
+.dh-c-button:hover,
 button:not(.btn-minimal):hover {
   transform: translateY(var(--hover-lift-distance));
   box-shadow: var(--shadow-hover-lift);
@@ -105,16 +105,16 @@ button:not(.btn-minimal):hover {
 }
 
 /* Button active states */
-.btn:active,
-.button:active,
+.dh-c-btn:active,
+.dh-c-button:active,
 button:not(.btn-minimal):active {
   transform: scale(var(--active-scale-factor));
   transition-duration: var(--instant-feedback);
 }
 
 /* Button focus states */
-.btn:focus,
-.button:focus,
+.dh-c-btn:focus,
+.dh-c-button:focus,
 button:focus {
   outline: var(--focus-ring-width) solid var(--color-primary);
   outline-offset: var(--focus-ring-offset);
@@ -124,8 +124,8 @@ button:focus {
 }
 
 /* Disabled button states */
-.btn:disabled,
-.button:disabled,
+.dh-c-btn:disabled,
+.dh-c-button:disabled,
 button:disabled {
   cursor: not-allowed;
   opacity: 0.6;
@@ -136,7 +136,7 @@ button:disabled {
 
 /* ========== CARD INTERACTIONS ========== */
 
-.card,
+.dh-c-card,
 .service-card,
 .result-card {
   @extend .interactive-base;
@@ -147,7 +147,7 @@ button:disabled {
 }
 
 /* Card hover states */
-.card:hover,
+.dh-c-card:hover,
 .service-card:hover,
 .result-card:hover {
   transform: translateY(-1px);
@@ -163,7 +163,7 @@ button:disabled {
 }
 
 /* Card focus states */
-.card:focus,
+.dh-c-card:focus,
 .service-card:focus {
   outline: var(--focus-ring-width) solid var(--color-primary);
   outline-offset: var(--focus-ring-offset);
@@ -280,7 +280,7 @@ select:disabled {
 }
 
 /* Active navigation link */
-.nav-link.active {
+.nav-link.dh-state-active {
   background-color: var(--color-primary-alpha-10);
   color: var(--color-primary);
   font-weight: 500;
@@ -295,16 +295,16 @@ select:disabled {
 /* ========== LOADING STATES ========== */
 
 /* Loading button state */
-.btn.loading,
-.button.loading {
+.btn.dh-u-loading,
+.button.dh-u-loading {
   cursor: wait;
   color: transparent;
   pointer-events: none;
   position: relative;
 }
 
-.btn.loading::after,
-.button.loading::after {
+.btn.dh-u-loading::after,
+.button.dh-u-loading::after {
   content: '';
   position: absolute;
   top: 50%;
@@ -319,7 +319,7 @@ select:disabled {
 }
 
 /* Loading card state */
-.card.loading {
+.card.dh-u-loading {
   pointer-events: none;
   animation: var(--animation-pulse);
 }
@@ -350,8 +350,8 @@ select:disabled {
 
 /* Larger touch targets for mobile */
 @media (pointer: coarse) {
-  .btn,
-  .button,
+  .dh-c-btn,
+  .dh-c-button,
   button,
   .card.interactive,
   .service-card,
@@ -361,17 +361,17 @@ select:disabled {
   }
   
   /* Reduce hover effects on touch devices */
-  .btn:hover,
-  .button:hover,
-  .card:hover,
+  .dh-c-btn:hover,
+  .dh-c-button:hover,
+  .dh-c-card:hover,
   .service-card:hover,
   .nav-link:hover {
     transform: none;
   }
   
   /* Enhance active states for touch */
-  .btn:active,
-  .button:active,
+  .dh-c-btn:active,
+  .dh-c-button:active,
   .card.interactive:active,
   .service-card:active {
     transform: scale(0.96);
@@ -396,8 +396,8 @@ select:disabled {
   --color-neutral-active: var(--color-neutral-700);
   
   /* Enhanced glow effects in dark mode */
-  .btn:focus,
-  .button:focus,
+  .dh-c-btn:focus,
+  .dh-c-button:focus,
   input:focus,
   textarea:focus {
     box-shadow: 
@@ -420,10 +420,10 @@ select:disabled {
 
 @media (prefers-reduced-motion: reduce) {
   .interactive-base,
-  .btn,
-  .button,
+  .dh-c-btn,
+  .dh-c-button,
   button,
-  .card,
+  .dh-c-card,
   .service-card,
   a,
   .link,
@@ -435,18 +435,18 @@ select:disabled {
   }
   
   /* Remove transform animations */
-  .btn:hover,
-  .button:hover,
-  .card:hover,
+  .dh-c-btn:hover,
+  .dh-c-button:hover,
+  .dh-c-card:hover,
   .service-card:hover,
-  .btn:active,
-  .button:active {
+  .dh-c-btn:active,
+  .dh-c-button:active {
     transform: none !important;
   }
   
   /* Keep essential focus outlines */
-  .btn:focus,
-  .button:focus,
+  .dh-c-btn:focus,
+  .dh-c-button:focus,
   input:focus,
   textarea:focus,
   a:focus,

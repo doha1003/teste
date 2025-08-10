@@ -216,7 +216,7 @@ DohaKR.loadIncludes = function () {
           const isInSubdirectory = pathDepth >= 2 || pathname.includes('/about/') || pathname.includes('/contact/') || 
             pathname.includes('/faq/') || pathname.includes('/privacy/') || pathname.includes('/terms/') || pathname.includes('/tools/');
           const baseHref = isInSubdirectory ? '../' : '';
-          footerPlaceholder.innerHTML = `<footer class="footer"> <div class="footer-content"> <div class="footer-section"> <h3>doha.kr</h3> <p class="text-gray-400 mt-8"> 일상을 더 재미있게 만드는 공간<br> 심리테스트, 운세, 실용도구의 만남 </p> <div class="footer-social"> <a href="mailto:youtubdoha@gmail.com" class="social-link">📧</a> </div> </div> <div class="footer-section"> <h3>서비스</h3> <ul class="footer-links"> <li><a href="${baseHref}">홈</a></li> <li><a href="${baseHref}tests/">심리테스트</a></li> <li><a href="${baseHref}fortune/">운세</a></li> <li><a href="${baseHref}tools/">실용도구</a></li> <li><a href="${baseHref}about/">사이트 소개</a></li> </ul> </div> <div class="footer-section"> <h3>인기 콘텐츠</h3> <ul class="footer-links"> <li><a href="${baseHref}tests/teto-egen/">테토-에겐 테스트</a></li> <li><a href="${baseHref}tests/mbti/">MBTI 테스트</a></li> <li><a href="${baseHref}fortune/daily/">오늘의 운세</a></li> <li><a href="${baseHref}tools/text-counter.html">글자수 세기</a></li> </ul> </div> <div class="footer-section"> <h3>운세 서비스</h3> <ul class="footer-links"> <li><a href="${baseHref}fortune/daily/">오늘의 운세</a></li> <li><a href="${baseHref}fortune/zodiac/">별자리 운세</a></li> <li><a href="${baseHref}fortune/zodiac-animal/">띠별 운세</a></li> <li><a href="${baseHref}fortune/tarot/">AI 타로</a></li> </ul> </div> <div class="footer-section"> <h3>고객지원</h3> <ul class="footer-links"> <li><a href="${baseHref}contact/">문의하기</a></li> <li><a href="${baseHref}faq/">자주 묻는 질문</a></li> </ul> </div> </div> <div class="footer-bottom"> <div class="footer-legal"> <a href="${baseHref}privacy/">개인정보처리방침</a> <a href="${baseHref}terms/">이용약관</a> </div> <p>&copy; 2025 doha.kr. All rights reserved.</p> </div> </footer>`;
+          footerPlaceholder.innerHTML = `<footer class="dh-l-footer"> <div class="footer-content"> <div class="footer-section"> <h3>doha.kr</h3> <p class="text-gray-400 mt-8"> 일상을 더 재미있게 만드는 공간<br> 심리테스트, 운세, 실용도구의 만남 </p> <div class="footer-social"> <a href="mailto:youtubdoha@gmail.com" class="social-link">📧</a> </div> </div> <div class="footer-section"> <h3>서비스</h3> <ul class="footer-links"> <li><a href="${baseHref}">홈</a></li> <li><a href="${baseHref}tests/">심리테스트</a></li> <li><a href="${baseHref}fortune/">운세</a></li> <li><a href="${baseHref}tools/">실용도구</a></li> <li><a href="${baseHref}about/">사이트 소개</a></li> </ul> </div> <div class="footer-section"> <h3>인기 콘텐츠</h3> <ul class="footer-links"> <li><a href="${baseHref}tests/teto-egen/">테토-에겐 테스트</a></li> <li><a href="${baseHref}tests/mbti/">MBTI 테스트</a></li> <li><a href="${baseHref}fortune/daily/">오늘의 운세</a></li> <li><a href="${baseHref}tools/text-counter.html">글자수 세기</a></li> </ul> </div> <div class="footer-section"> <h3>운세 서비스</h3> <ul class="footer-links"> <li><a href="${baseHref}fortune/daily/">오늘의 운세</a></li> <li><a href="${baseHref}fortune/zodiac/">별자리 운세</a></li> <li><a href="${baseHref}fortune/zodiac-animal/">띠별 운세</a></li> <li><a href="${baseHref}fortune/tarot/">AI 타로</a></li> </ul> </div> <div class="footer-section"> <h3>고객지원</h3> <ul class="footer-links"> <li><a href="${baseHref}contact/">문의하기</a></li> <li><a href="${baseHref}faq/">자주 묻는 질문</a></li> </ul> </div> </div> <div class="footer-bottom"> <div class="footer-legal"> <a href="${baseHref}privacy/">개인정보처리방침</a> <a href="${baseHref}terms/">이용약관</a> </div> <p>&copy; 2025 doha.kr. All rights reserved.</p> </div> </footer>`;
         }
       }
     };
@@ -279,18 +279,18 @@ DohaKR.initBasicMobileMenu = function () {
     
     // 클릭 핸들러 정의
     DohaKR._mobileMenuClickHandler = () => {
-      const isActive = navMenu.classList.contains('active');
+      const isActive = navMenu.classList.contains('dh-state-active');
       
       if (isActive) {
-        navMenu.classList.remove('active');
-        mobileMenuBtn.classList.remove('active');
+        navMenu.classList.remove('dh-state-active');
+        mobileMenuBtn.classList.remove('dh-state-active');
         mobileMenuBtn.setAttribute('aria-expanded', 'false');
         document.body.style.overflow = '';
       } else {
-        navMenu.classList.add('active');
-        mobileMenuBtn.classList.add('active');
+        navMenu.classList.add('dh-state-active');
+        mobileMenuBtn.classList.add('dh-state-active');
         mobileMenuBtn.setAttribute('aria-expanded', 'true');
-        document.body.style.overflow = 'hidden';
+        document.body.style.overflow = 'dh-u-hidden';
       }
     };
 
@@ -299,9 +299,9 @@ DohaKR.initBasicMobileMenu = function () {
 
     // 메뉴 외부 클릭 시 닫기
     document.addEventListener('click', function (_event) {
-      if (!event.target.closest('.navbar') && navMenu.classList.contains('active')) {
-        navMenu.classList.remove('active');
-        mobileMenuBtn.classList.remove('active');
+      if (!event.target.closest('.navbar') && navMenu.classList.contains('dh-state-active')) {
+        navMenu.classList.remove('dh-state-active');
+        mobileMenuBtn.classList.remove('dh-state-active');
         mobileMenuBtn.setAttribute('aria-expanded', 'false');
         document.body.style.overflow = '';
       }
@@ -309,9 +309,9 @@ DohaKR.initBasicMobileMenu = function () {
 
     // ESC 키로 메뉴 닫기
     document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape' && navMenu.classList.contains('active')) {
-        navMenu.classList.remove('active');
-        mobileMenuBtn.classList.remove('active');
+      if (event.key === 'Escape' && navMenu.classList.contains('dh-state-active')) {
+        navMenu.classList.remove('dh-state-active');
+        mobileMenuBtn.classList.remove('dh-state-active');
         mobileMenuBtn.setAttribute('aria-expanded', 'false');
         document.body.style.overflow = '';
       }
@@ -401,7 +401,7 @@ DohaKR.utils = {
     element.innerHTML = `
                 <div class="error-message">
                     <p>${message}</p>
-                    <button class="btn btn-primary" onclick="location.reload()">다시 시도</button>
+                    <button class="dh-c-btn btn-primary" onclick="location.reload()">다시 시도</button>
                 </div>
             `;
   },
@@ -545,7 +545,7 @@ DohaKR.showUpdateNotification = function () {
   notification.innerHTML = `
             <div class="update-content">
                 <p>새로운 버전이 준비되었습니다!</p>
-                <button class="btn btn-primary btn-sm" onclick="window.location.reload()">새로고침</button>
+                <button class="dh-c-btn btn-primary btn-sm" onclick="window.location.reload()">새로고침</button>
             </div>
         `;
   document.body.appendChild(notification);
@@ -603,8 +603,8 @@ DohaKR.showInstallButton = function (deferredPrompt) {
                     <p>홈 화면에 추가하여 더 빠르게 접속하세요!</p>
                 </div>
                 <div class="install-actions">
-                    <button class="btn btn-primary btn-sm" id="install-accept">설치</button>
-                    <button class="btn btn-secondary btn-sm" id="install-dismiss">나중에</button>
+                    <button class="dh-c-btn btn-primary btn-sm" id="install-accept">설치</button>
+                    <button class="dh-c-btn btn-secondary btn-sm" id="install-dismiss">나중에</button>
                 </div>
             </div>
         `;
@@ -703,7 +703,7 @@ DohaKR.showInstallSuccess = function () {
 // 초기화 함수 export
 export function init() {
   // DOM 로드 완료 시 초기화
-  if (document.readyState === 'loading') {
+  if (document.readyState === 'dh-u-loading') {
     document.addEventListener('DOMContentLoaded', initializeAll);
   } else {
     initializeAll();
@@ -741,14 +741,14 @@ function initializeAll() {
   // 모바일 메뉴는 네비게이션 로드 후 자동 초기화됨
 
   // 이미지 지연 로딩 polyfill
-  if ('loading' in HTMLImageElement.prototype) {
+  if ('dh-u-loading' in HTMLImageElement.prototype) {
     const images = document.querySelectorAll('img[loading="lazy"]');
     images.forEach((img) => {
       // Force reload by changing URL
       img.src = `${img.src + (img.src.includes('?') ? '&' : '?')}t=${Date.now()}`;
     });
   } else {
-    // Fallback for browsers that don't support lazy loading
+    // Fallback for browsers that don't support lazy dh-u-loading
     const script = document.createElement('script');
     script.src = 'https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js';
     document.body.appendChild(script);

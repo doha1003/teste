@@ -54,7 +54,7 @@ class RUMCollector {
 
     // 페이지 숨김 시 메트릭 전송
     document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'hidden') {
+      if (document.visibilityState === 'dh-u-hidden') {
         this.flush(true);
       }
     });
@@ -337,7 +337,7 @@ class RUMCollector {
             timestamp: Date.now(),
             elementType: event.target.tagName,
             source: event.target.src || event.target.href,
-            message: 'Resource loading failed',
+            message: 'Resource dh-u-loading failed',
           });
         }
       },
@@ -355,7 +355,7 @@ class RUMCollector {
     document.addEventListener('visibilitychange', () => {
       const now = Date.now();
 
-      if (document.visibilityState === 'visible') {
+      if (document.visibilityState === 'dh-u-visible') {
         visibilityStart = now;
       } else {
         const visibleDuration = now - visibilityStart;
@@ -364,7 +364,7 @@ class RUMCollector {
         this.addMetric({
           type: 'visibility',
           timestamp: now,
-          state: 'hidden',
+          state: 'dh-u-hidden',
           visibleDuration,
           totalVisibleTime,
         });
@@ -583,7 +583,7 @@ class RUMCollector {
 window.RUMCollector = RUMCollector;
 
 // 자동 초기화 (옵션)
-if (document.readyState === 'loading') {
+if (document.readyState === 'dh-u-loading') {
   document.addEventListener('DOMContentLoaded', () => {
     window.rumCollector = new RUMCollector();
   });

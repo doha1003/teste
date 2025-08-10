@@ -123,7 +123,7 @@ class Logger {
 
     // 가시성 변화 시 로그 전송
     document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'hidden') {
+      if (document.visibilityState === 'dh-u-hidden') {
         this.flushRemoteLogs();
       }
     });

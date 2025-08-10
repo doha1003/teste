@@ -1,0 +1,2700 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>doha.kr 26개 페이지 완전 검증 리포트</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8fafc;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 2rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        
+        .summary-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            text-align: center;
+            border-top: 4px solid;
+        }
+        
+        .summary-card.success { border-top-color: #10b981; }
+        .summary-card.error { border-top-color: #ef4444; }
+        .summary-card.warning { border-top-color: #f59e0b; }
+        .summary-card.total { border-top-color: #6366f1; }
+        
+        .summary-number {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .success .summary-number { color: #10b981; }
+        .error .summary-number { color: #ef4444; }
+        .warning .summary-number { color: #f59e0b; }
+        .total .summary-number { color: #6366f1; }
+        
+        .results-grid {
+            display: grid;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        
+        .result-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border-left: 6px solid;
+        }
+        
+        .result-card.success { border-left-color: #10b981; }
+        .result-card.error { border-left-color: #ef4444; }
+        .result-card.warning { border-left-color: #f59e0b; }
+        
+        .result-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .result-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+        
+        .result-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+        
+        .success .result-badge {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        
+        .error .result-badge {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        
+        .warning .result-badge {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        
+        .result-content {
+            padding: 1.5rem;
+        }
+        
+        .result-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .info-item {
+            padding: 1rem;
+            background: #f9fafb;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .info-label {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-bottom: 0.25rem;
+        }
+        
+        .info-value {
+            font-weight: 500;
+        }
+        
+        .screenshots {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .screenshot-item {
+            text-align: center;
+        }
+        
+        .screenshot-item img {
+            max-width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .screenshot-label {
+            margin-top: 0.5rem;
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+        
+        .errors-list, .warnings-list {
+            margin-top: 1rem;
+        }
+        
+        .errors-list ul, .warnings-list ul {
+            list-style-position: inside;
+            padding-left: 1rem;
+        }
+        
+        .errors-list li {
+            color: #dc2626;
+            margin-bottom: 0.5rem;
+        }
+        
+        .warnings-list li {
+            color: #d97706;
+            margin-bottom: 0.5rem;
+        }
+        
+        .validation-details {
+            background: #f8fafc;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+        
+        .validation-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .validation-item:last-child {
+            border-bottom: none;
+        }
+        
+        .validation-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .validation-status.pass {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        
+        .validation-status.fail {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        
+        .critical-badge {
+            background: #fef3c7;
+            color: #92400e;
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            margin-left: 0.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            .header { padding: 2rem 1rem; }
+            .header h1 { font-size: 2rem; }
+            .screenshots { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🔍 doha.kr 완전 검증 리포트</h1>
+            <p>26개 주요 페이지 자동화 검증 결과</p>
+            <p>검증 시간: 2025. 8. 10. 오후 3:41:05</p>
+        </header>
+
+        <section class="summary">
+            <div class="summary-card total">
+                <div class="summary-number">28</div>
+                <div>전체 페이지</div>
+            </div>
+            <div class="summary-card success">
+                <div class="summary-number">0</div>
+                <div>정상 페이지</div>
+            </div>
+            <div class="summary-card warning">
+                <div class="summary-number">0</div>
+                <div>경고 페이지</div>
+            </div>
+            <div class="summary-card error">
+                <div class="summary-number">28</div>
+                <div>오류 페이지</div>
+            </div>
+        </section>
+
+        <div class="results-grid">
+            
+            <div class="result-card error">
+                <div class="result-header">
+                    <div>
+                        <div class="result-title">홈페이지<span class="critical-badge">핵심 페이지</span></div>
+                        <div style="font-size: 0.875rem; color: #6b7280;">/</div>
+                    </div>
+                    <div class="result-badge">error</div>
+                </div>
+                <div class="result-content">
+                    <div class="result-info">
+                        <div class="info-item">
+                            <div class="info-label">로드 시간</div>
+                            <div class="info-value">2004ms</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">HTTP 상태</div>
+                            <div class="info-value">200</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">네트워크 오류</div>
+                            <div class="info-value">2개</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">콘솔 오류</div>
+                            <div class="info-value">7개</div>
+                        </div>
+                    </div>
+
+                    <div class="validation-details">
+                        <div class="validation-item">
+                            <span>CSS 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>JavaScript 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>핵심 요소 존재</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>깨진 이미지</span>
+                            <span class="validation-status pass">
+                                0개
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="errors-list">
+                        <h4 style="color: #dc2626; margin-bottom: 0.5rem;">❌ 오류</h4>
+                        <ul>
+                            <li>네트워크 오류 2개</li>
+                        </ul>
+                    </div>
+                    
+
+                    
+                    <div class="warnings-list">
+                        <h4 style="color: #d97706; margin-bottom: 0.5rem;">⚠️ 경고</h4>
+                        <ul>
+                            <li>콘솔 오류 7개</li>
+                        </ul>
+                    </div>
+                    
+
+                    <div class="screenshots">
+                        <div class="screenshot-item">
+                            <img src="screenshots/홈페이지-desktop.png" alt="데스크톱 스크린샷">
+                            <div class="screenshot-label">데스크톱 (1920x1080)</div>
+                        </div>
+                        <div class="screenshot-item">
+                            <img src="screenshots/홈페이지-mobile.png" alt="모바일 스크린샷">
+                            <div class="screenshot-label">모바일 (375x667)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="result-card error">
+                <div class="result-header">
+                    <div>
+                        <div class="result-title">404 페이지</div>
+                        <div style="font-size: 0.875rem; color: #6b7280;">/404.html</div>
+                    </div>
+                    <div class="result-badge">error</div>
+                </div>
+                <div class="result-content">
+                    <div class="result-info">
+                        <div class="info-item">
+                            <div class="info-label">로드 시간</div>
+                            <div class="info-value">1124ms</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">HTTP 상태</div>
+                            <div class="info-value">200</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">네트워크 오류</div>
+                            <div class="info-value">3개</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">콘솔 오류</div>
+                            <div class="info-value">3개</div>
+                        </div>
+                    </div>
+
+                    <div class="validation-details">
+                        <div class="validation-item">
+                            <span>CSS 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>JavaScript 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>핵심 요소 존재</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>깨진 이미지</span>
+                            <span class="validation-status pass">
+                                0개
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="errors-list">
+                        <h4 style="color: #dc2626; margin-bottom: 0.5rem;">❌ 오류</h4>
+                        <ul>
+                            <li>네트워크 오류 2개</li>
+                        </ul>
+                    </div>
+                    
+
+                    
+                    <div class="warnings-list">
+                        <h4 style="color: #d97706; margin-bottom: 0.5rem;">⚠️ 경고</h4>
+                        <ul>
+                            <li>콘솔 오류 3개</li>
+                        </ul>
+                    </div>
+                    
+
+                    <div class="screenshots">
+                        <div class="screenshot-item">
+                            <img src="screenshots/404 페이지-desktop.png" alt="데스크톱 스크린샷">
+                            <div class="screenshot-label">데스크톱 (1920x1080)</div>
+                        </div>
+                        <div class="screenshot-item">
+                            <img src="screenshots/404 페이지-mobile.png" alt="모바일 스크린샷">
+                            <div class="screenshot-label">모바일 (375x667)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="result-card error">
+                <div class="result-header">
+                    <div>
+                        <div class="result-title">오프라인 페이지</div>
+                        <div style="font-size: 0.875rem; color: #6b7280;">/offline.html</div>
+                    </div>
+                    <div class="result-badge">error</div>
+                </div>
+                <div class="result-content">
+                    <div class="result-info">
+                        <div class="info-item">
+                            <div class="info-label">로드 시간</div>
+                            <div class="info-value">689ms</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">HTTP 상태</div>
+                            <div class="info-value">200</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">네트워크 오류</div>
+                            <div class="info-value">1개</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">콘솔 오류</div>
+                            <div class="info-value">3개</div>
+                        </div>
+                    </div>
+
+                    <div class="validation-details">
+                        <div class="validation-item">
+                            <span>CSS 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>JavaScript 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>핵심 요소 존재</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>깨진 이미지</span>
+                            <span class="validation-status pass">
+                                0개
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="errors-list">
+                        <h4 style="color: #dc2626; margin-bottom: 0.5rem;">❌ 오류</h4>
+                        <ul>
+                            <li>네트워크 오류 1개</li>
+                        </ul>
+                    </div>
+                    
+
+                    
+                    <div class="warnings-list">
+                        <h4 style="color: #d97706; margin-bottom: 0.5rem;">⚠️ 경고</h4>
+                        <ul>
+                            <li>콘솔 오류 3개</li>
+                        </ul>
+                    </div>
+                    
+
+                    <div class="screenshots">
+                        <div class="screenshot-item">
+                            <img src="screenshots/오프라인 페이지-desktop.png" alt="데스크톱 스크린샷">
+                            <div class="screenshot-label">데스크톱 (1920x1080)</div>
+                        </div>
+                        <div class="screenshot-item">
+                            <img src="screenshots/오프라인 페이지-mobile.png" alt="모바일 스크린샷">
+                            <div class="screenshot-label">모바일 (375x667)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="result-card error">
+                <div class="result-header">
+                    <div>
+                        <div class="result-title">심리테스트 메인<span class="critical-badge">핵심 페이지</span></div>
+                        <div style="font-size: 0.875rem; color: #6b7280;">/tests/</div>
+                    </div>
+                    <div class="result-badge">error</div>
+                </div>
+                <div class="result-content">
+                    <div class="result-info">
+                        <div class="info-item">
+                            <div class="info-label">로드 시간</div>
+                            <div class="info-value">1000ms</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">HTTP 상태</div>
+                            <div class="info-value">200</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">네트워크 오류</div>
+                            <div class="info-value">2개</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">콘솔 오류</div>
+                            <div class="info-value">4개</div>
+                        </div>
+                    </div>
+
+                    <div class="validation-details">
+                        <div class="validation-item">
+                            <span>CSS 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>JavaScript 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>핵심 요소 존재</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>깨진 이미지</span>
+                            <span class="validation-status pass">
+                                0개
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="errors-list">
+                        <h4 style="color: #dc2626; margin-bottom: 0.5rem;">❌ 오류</h4>
+                        <ul>
+                            <li>네트워크 오류 2개</li>
+                        </ul>
+                    </div>
+                    
+
+                    
+                    <div class="warnings-list">
+                        <h4 style="color: #d97706; margin-bottom: 0.5rem;">⚠️ 경고</h4>
+                        <ul>
+                            <li>콘솔 오류 4개</li>
+                        </ul>
+                    </div>
+                    
+
+                    <div class="screenshots">
+                        <div class="screenshot-item">
+                            <img src="screenshots/심리테스트 메인-desktop.png" alt="데스크톱 스크린샷">
+                            <div class="screenshot-label">데스크톱 (1920x1080)</div>
+                        </div>
+                        <div class="screenshot-item">
+                            <img src="screenshots/심리테스트 메인-mobile.png" alt="모바일 스크린샷">
+                            <div class="screenshot-label">모바일 (375x667)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="result-card error">
+                <div class="result-header">
+                    <div>
+                        <div class="result-title">MBTI 소개<span class="critical-badge">핵심 페이지</span></div>
+                        <div style="font-size: 0.875rem; color: #6b7280;">/tests/mbti/</div>
+                    </div>
+                    <div class="result-badge">error</div>
+                </div>
+                <div class="result-content">
+                    <div class="result-info">
+                        <div class="info-item">
+                            <div class="info-label">로드 시간</div>
+                            <div class="info-value">1031ms</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">HTTP 상태</div>
+                            <div class="info-value">200</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">네트워크 오류</div>
+                            <div class="info-value">2개</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">콘솔 오류</div>
+                            <div class="info-value">4개</div>
+                        </div>
+                    </div>
+
+                    <div class="validation-details">
+                        <div class="validation-item">
+                            <span>CSS 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>JavaScript 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>핵심 요소 존재</span>
+                            <span class="validation-status fail">
+                                ❌ 실패
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>깨진 이미지</span>
+                            <span class="validation-status pass">
+                                0개
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="errors-list">
+                        <h4 style="color: #dc2626; margin-bottom: 0.5rem;">❌ 오류</h4>
+                        <ul>
+                            <li>네트워크 오류 2개</li>
+                        </ul>
+                    </div>
+                    
+
+                    
+                    <div class="warnings-list">
+                        <h4 style="color: #d97706; margin-bottom: 0.5rem;">⚠️ 경고</h4>
+                        <ul>
+                            <li>핵심 요소 누락: .test-intro</li><li>콘솔 오류 4개</li>
+                        </ul>
+                    </div>
+                    
+
+                    <div class="screenshots">
+                        <div class="screenshot-item">
+                            <img src="screenshots/MBTI 소개-desktop.png" alt="데스크톱 스크린샷">
+                            <div class="screenshot-label">데스크톱 (1920x1080)</div>
+                        </div>
+                        <div class="screenshot-item">
+                            <img src="screenshots/MBTI 소개-mobile.png" alt="모바일 스크린샷">
+                            <div class="screenshot-label">모바일 (375x667)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="result-card error">
+                <div class="result-header">
+                    <div>
+                        <div class="result-title">MBTI 테스트<span class="critical-badge">핵심 페이지</span></div>
+                        <div style="font-size: 0.875rem; color: #6b7280;">/tests/mbti/test.html</div>
+                    </div>
+                    <div class="result-badge">error</div>
+                </div>
+                <div class="result-content">
+                    <div class="result-info">
+                        <div class="info-item">
+                            <div class="info-label">로드 시간</div>
+                            <div class="info-value">980ms</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">HTTP 상태</div>
+                            <div class="info-value">200</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">네트워크 오류</div>
+                            <div class="info-value">2개</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">콘솔 오류</div>
+                            <div class="info-value">2개</div>
+                        </div>
+                    </div>
+
+                    <div class="validation-details">
+                        <div class="validation-item">
+                            <span>CSS 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>JavaScript 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>핵심 요소 존재</span>
+                            <span class="validation-status fail">
+                                ❌ 실패
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>깨진 이미지</span>
+                            <span class="validation-status pass">
+                                0개
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="errors-list">
+                        <h4 style="color: #dc2626; margin-bottom: 0.5rem;">❌ 오류</h4>
+                        <ul>
+                            <li>네트워크 오류 2개</li>
+                        </ul>
+                    </div>
+                    
+
+                    
+                    <div class="warnings-list">
+                        <h4 style="color: #d97706; margin-bottom: 0.5rem;">⚠️ 경고</h4>
+                        <ul>
+                            <li>핵심 요소 누락: .question-container</li><li>콘솔 오류 2개</li>
+                        </ul>
+                    </div>
+                    
+
+                    <div class="screenshots">
+                        <div class="screenshot-item">
+                            <img src="screenshots/MBTI 테스트-desktop.png" alt="데스크톱 스크린샷">
+                            <div class="screenshot-label">데스크톱 (1920x1080)</div>
+                        </div>
+                        <div class="screenshot-item">
+                            <img src="screenshots/MBTI 테스트-mobile.png" alt="모바일 스크린샷">
+                            <div class="screenshot-label">모바일 (375x667)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="result-card error">
+                <div class="result-header">
+                    <div>
+                        <div class="result-title">MBTI 결과<span class="critical-badge">핵심 페이지</span></div>
+                        <div style="font-size: 0.875rem; color: #6b7280;">/tests/mbti/result.html</div>
+                    </div>
+                    <div class="result-badge">error</div>
+                </div>
+                <div class="result-content">
+                    <div class="result-info">
+                        <div class="info-item">
+                            <div class="info-label">로드 시간</div>
+                            <div class="info-value">1013ms</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">HTTP 상태</div>
+                            <div class="info-value">200</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">네트워크 오류</div>
+                            <div class="info-value">2개</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">콘솔 오류</div>
+                            <div class="info-value">2개</div>
+                        </div>
+                    </div>
+
+                    <div class="validation-details">
+                        <div class="validation-item">
+                            <span>CSS 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>JavaScript 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>핵심 요소 존재</span>
+                            <span class="validation-status fail">
+                                ❌ 실패
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>깨진 이미지</span>
+                            <span class="validation-status pass">
+                                0개
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="errors-list">
+                        <h4 style="color: #dc2626; margin-bottom: 0.5rem;">❌ 오류</h4>
+                        <ul>
+                            <li>네트워크 오류 2개</li>
+                        </ul>
+                    </div>
+                    
+
+                    
+                    <div class="warnings-list">
+                        <h4 style="color: #d97706; margin-bottom: 0.5rem;">⚠️ 경고</h4>
+                        <ul>
+                            <li>핵심 요소 누락: .result-content</li><li>콘솔 오류 2개</li>
+                        </ul>
+                    </div>
+                    
+
+                    <div class="screenshots">
+                        <div class="screenshot-item">
+                            <img src="screenshots/MBTI 결과-desktop.png" alt="데스크톱 스크린샷">
+                            <div class="screenshot-label">데스크톱 (1920x1080)</div>
+                        </div>
+                        <div class="screenshot-item">
+                            <img src="screenshots/MBTI 결과-mobile.png" alt="모바일 스크린샷">
+                            <div class="screenshot-label">모바일 (375x667)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="result-card error">
+                <div class="result-header">
+                    <div>
+                        <div class="result-title">Teto-Egen 소개<span class="critical-badge">핵심 페이지</span></div>
+                        <div style="font-size: 0.875rem; color: #6b7280;">/tests/teto-egen/</div>
+                    </div>
+                    <div class="result-badge">error</div>
+                </div>
+                <div class="result-content">
+                    <div class="result-info">
+                        <div class="info-item">
+                            <div class="info-label">로드 시간</div>
+                            <div class="info-value">1030ms</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">HTTP 상태</div>
+                            <div class="info-value">200</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">네트워크 오류</div>
+                            <div class="info-value">2개</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">콘솔 오류</div>
+                            <div class="info-value">4개</div>
+                        </div>
+                    </div>
+
+                    <div class="validation-details">
+                        <div class="validation-item">
+                            <span>CSS 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>JavaScript 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>핵심 요소 존재</span>
+                            <span class="validation-status fail">
+                                ❌ 실패
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>깨진 이미지</span>
+                            <span class="validation-status pass">
+                                0개
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="errors-list">
+                        <h4 style="color: #dc2626; margin-bottom: 0.5rem;">❌ 오류</h4>
+                        <ul>
+                            <li>네트워크 오류 2개</li>
+                        </ul>
+                    </div>
+                    
+
+                    
+                    <div class="warnings-list">
+                        <h4 style="color: #d97706; margin-bottom: 0.5rem;">⚠️ 경고</h4>
+                        <ul>
+                            <li>핵심 요소 누락: .test-intro</li><li>콘솔 오류 4개</li>
+                        </ul>
+                    </div>
+                    
+
+                    <div class="screenshots">
+                        <div class="screenshot-item">
+                            <img src="screenshots/Teto-Egen 소개-desktop.png" alt="데스크톱 스크린샷">
+                            <div class="screenshot-label">데스크톱 (1920x1080)</div>
+                        </div>
+                        <div class="screenshot-item">
+                            <img src="screenshots/Teto-Egen 소개-mobile.png" alt="모바일 스크린샷">
+                            <div class="screenshot-label">모바일 (375x667)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="result-card error">
+                <div class="result-header">
+                    <div>
+                        <div class="result-title">Teto-Egen 테스트<span class="critical-badge">핵심 페이지</span></div>
+                        <div style="font-size: 0.875rem; color: #6b7280;">/tests/teto-egen/test.html</div>
+                    </div>
+                    <div class="result-badge">error</div>
+                </div>
+                <div class="result-content">
+                    <div class="result-info">
+                        <div class="info-item">
+                            <div class="info-label">로드 시간</div>
+                            <div class="info-value">1035ms</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">HTTP 상태</div>
+                            <div class="info-value">200</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">네트워크 오류</div>
+                            <div class="info-value">2개</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">콘솔 오류</div>
+                            <div class="info-value">2개</div>
+                        </div>
+                    </div>
+
+                    <div class="validation-details">
+                        <div class="validation-item">
+                            <span>CSS 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>JavaScript 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>핵심 요소 존재</span>
+                            <span class="validation-status fail">
+                                ❌ 실패
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>깨진 이미지</span>
+                            <span class="validation-status pass">
+                                0개
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="errors-list">
+                        <h4 style="color: #dc2626; margin-bottom: 0.5rem;">❌ 오류</h4>
+                        <ul>
+                            <li>네트워크 오류 2개</li>
+                        </ul>
+                    </div>
+                    
+
+                    
+                    <div class="warnings-list">
+                        <h4 style="color: #d97706; margin-bottom: 0.5rem;">⚠️ 경고</h4>
+                        <ul>
+                            <li>핵심 요소 누락: .question-container</li><li>콘솔 오류 2개</li>
+                        </ul>
+                    </div>
+                    
+
+                    <div class="screenshots">
+                        <div class="screenshot-item">
+                            <img src="screenshots/Teto-Egen 테스트-desktop.png" alt="데스크톱 스크린샷">
+                            <div class="screenshot-label">데스크톱 (1920x1080)</div>
+                        </div>
+                        <div class="screenshot-item">
+                            <img src="screenshots/Teto-Egen 테스트-mobile.png" alt="모바일 스크린샷">
+                            <div class="screenshot-label">모바일 (375x667)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="result-card error">
+                <div class="result-header">
+                    <div>
+                        <div class="result-title">Teto-Egen 결과<span class="critical-badge">핵심 페이지</span></div>
+                        <div style="font-size: 0.875rem; color: #6b7280;">/tests/teto-egen/result.html</div>
+                    </div>
+                    <div class="result-badge">error</div>
+                </div>
+                <div class="result-content">
+                    <div class="result-info">
+                        <div class="info-item">
+                            <div class="info-label">로드 시간</div>
+                            <div class="info-value">983ms</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">HTTP 상태</div>
+                            <div class="info-value">200</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">네트워크 오류</div>
+                            <div class="info-value">2개</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">콘솔 오류</div>
+                            <div class="info-value">2개</div>
+                        </div>
+                    </div>
+
+                    <div class="validation-details">
+                        <div class="validation-item">
+                            <span>CSS 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>JavaScript 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>핵심 요소 존재</span>
+                            <span class="validation-status fail">
+                                ❌ 실패
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>깨진 이미지</span>
+                            <span class="validation-status pass">
+                                0개
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="errors-list">
+                        <h4 style="color: #dc2626; margin-bottom: 0.5rem;">❌ 오류</h4>
+                        <ul>
+                            <li>네트워크 오류 2개</li>
+                        </ul>
+                    </div>
+                    
+
+                    
+                    <div class="warnings-list">
+                        <h4 style="color: #d97706; margin-bottom: 0.5rem;">⚠️ 경고</h4>
+                        <ul>
+                            <li>핵심 요소 누락: .result-content</li><li>콘솔 오류 2개</li>
+                        </ul>
+                    </div>
+                    
+
+                    <div class="screenshots">
+                        <div class="screenshot-item">
+                            <img src="screenshots/Teto-Egen 결과-desktop.png" alt="데스크톱 스크린샷">
+                            <div class="screenshot-label">데스크톱 (1920x1080)</div>
+                        </div>
+                        <div class="screenshot-item">
+                            <img src="screenshots/Teto-Egen 결과-mobile.png" alt="모바일 스크린샷">
+                            <div class="screenshot-label">모바일 (375x667)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="result-card error">
+                <div class="result-header">
+                    <div>
+                        <div class="result-title">Love DNA 소개<span class="critical-badge">핵심 페이지</span></div>
+                        <div style="font-size: 0.875rem; color: #6b7280;">/tests/love-dna/</div>
+                    </div>
+                    <div class="result-badge">error</div>
+                </div>
+                <div class="result-content">
+                    <div class="result-info">
+                        <div class="info-item">
+                            <div class="info-label">로드 시간</div>
+                            <div class="info-value">1025ms</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">HTTP 상태</div>
+                            <div class="info-value">200</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">네트워크 오류</div>
+                            <div class="info-value">2개</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">콘솔 오류</div>
+                            <div class="info-value">4개</div>
+                        </div>
+                    </div>
+
+                    <div class="validation-details">
+                        <div class="validation-item">
+                            <span>CSS 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>JavaScript 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>핵심 요소 존재</span>
+                            <span class="validation-status fail">
+                                ❌ 실패
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>깨진 이미지</span>
+                            <span class="validation-status pass">
+                                0개
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="errors-list">
+                        <h4 style="color: #dc2626; margin-bottom: 0.5rem;">❌ 오류</h4>
+                        <ul>
+                            <li>네트워크 오류 2개</li>
+                        </ul>
+                    </div>
+                    
+
+                    
+                    <div class="warnings-list">
+                        <h4 style="color: #d97706; margin-bottom: 0.5rem;">⚠️ 경고</h4>
+                        <ul>
+                            <li>핵심 요소 누락: .test-intro</li><li>콘솔 오류 4개</li>
+                        </ul>
+                    </div>
+                    
+
+                    <div class="screenshots">
+                        <div class="screenshot-item">
+                            <img src="screenshots/Love DNA 소개-desktop.png" alt="데스크톱 스크린샷">
+                            <div class="screenshot-label">데스크톱 (1920x1080)</div>
+                        </div>
+                        <div class="screenshot-item">
+                            <img src="screenshots/Love DNA 소개-mobile.png" alt="모바일 스크린샷">
+                            <div class="screenshot-label">모바일 (375x667)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="result-card error">
+                <div class="result-header">
+                    <div>
+                        <div class="result-title">Love DNA 테스트<span class="critical-badge">핵심 페이지</span></div>
+                        <div style="font-size: 0.875rem; color: #6b7280;">/tests/love-dna/test.html</div>
+                    </div>
+                    <div class="result-badge">error</div>
+                </div>
+                <div class="result-content">
+                    <div class="result-info">
+                        <div class="info-item">
+                            <div class="info-label">로드 시간</div>
+                            <div class="info-value">1028ms</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">HTTP 상태</div>
+                            <div class="info-value">200</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">네트워크 오류</div>
+                            <div class="info-value">2개</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">콘솔 오류</div>
+                            <div class="info-value">2개</div>
+                        </div>
+                    </div>
+
+                    <div class="validation-details">
+                        <div class="validation-item">
+                            <span>CSS 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>JavaScript 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>핵심 요소 존재</span>
+                            <span class="validation-status fail">
+                                ❌ 실패
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>깨진 이미지</span>
+                            <span class="validation-status pass">
+                                0개
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="errors-list">
+                        <h4 style="color: #dc2626; margin-bottom: 0.5rem;">❌ 오류</h4>
+                        <ul>
+                            <li>네트워크 오류 2개</li>
+                        </ul>
+                    </div>
+                    
+
+                    
+                    <div class="warnings-list">
+                        <h4 style="color: #d97706; margin-bottom: 0.5rem;">⚠️ 경고</h4>
+                        <ul>
+                            <li>핵심 요소 누락: .question-container</li><li>콘솔 오류 2개</li>
+                        </ul>
+                    </div>
+                    
+
+                    <div class="screenshots">
+                        <div class="screenshot-item">
+                            <img src="screenshots/Love DNA 테스트-desktop.png" alt="데스크톱 스크린샷">
+                            <div class="screenshot-label">데스크톱 (1920x1080)</div>
+                        </div>
+                        <div class="screenshot-item">
+                            <img src="screenshots/Love DNA 테스트-mobile.png" alt="모바일 스크린샷">
+                            <div class="screenshot-label">모바일 (375x667)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="result-card error">
+                <div class="result-header">
+                    <div>
+                        <div class="result-title">Love DNA 결과<span class="critical-badge">핵심 페이지</span></div>
+                        <div style="font-size: 0.875rem; color: #6b7280;">/tests/love-dna/result.html</div>
+                    </div>
+                    <div class="result-badge">error</div>
+                </div>
+                <div class="result-content">
+                    <div class="result-info">
+                        <div class="info-item">
+                            <div class="info-label">로드 시간</div>
+                            <div class="info-value">696ms</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">HTTP 상태</div>
+                            <div class="info-value">200</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">네트워크 오류</div>
+                            <div class="info-value">2개</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">콘솔 오류</div>
+                            <div class="info-value">2개</div>
+                        </div>
+                    </div>
+
+                    <div class="validation-details">
+                        <div class="validation-item">
+                            <span>CSS 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>JavaScript 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>핵심 요소 존재</span>
+                            <span class="validation-status fail">
+                                ❌ 실패
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>깨진 이미지</span>
+                            <span class="validation-status pass">
+                                0개
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="errors-list">
+                        <h4 style="color: #dc2626; margin-bottom: 0.5rem;">❌ 오류</h4>
+                        <ul>
+                            <li>네트워크 오류 2개</li>
+                        </ul>
+                    </div>
+                    
+
+                    
+                    <div class="warnings-list">
+                        <h4 style="color: #d97706; margin-bottom: 0.5rem;">⚠️ 경고</h4>
+                        <ul>
+                            <li>핵심 요소 누락: .result-content</li><li>콘솔 오류 2개</li>
+                        </ul>
+                    </div>
+                    
+
+                    <div class="screenshots">
+                        <div class="screenshot-item">
+                            <img src="screenshots/Love DNA 결과-desktop.png" alt="데스크톱 스크린샷">
+                            <div class="screenshot-label">데스크톱 (1920x1080)</div>
+                        </div>
+                        <div class="screenshot-item">
+                            <img src="screenshots/Love DNA 결과-mobile.png" alt="모바일 스크린샷">
+                            <div class="screenshot-label">모바일 (375x667)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="result-card error">
+                <div class="result-header">
+                    <div>
+                        <div class="result-title">운세 메인<span class="critical-badge">핵심 페이지</span></div>
+                        <div style="font-size: 0.875rem; color: #6b7280;">/fortune/</div>
+                    </div>
+                    <div class="result-badge">error</div>
+                </div>
+                <div class="result-content">
+                    <div class="result-info">
+                        <div class="info-item">
+                            <div class="info-label">로드 시간</div>
+                            <div class="info-value">1020ms</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">HTTP 상태</div>
+                            <div class="info-value">200</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">네트워크 오류</div>
+                            <div class="info-value">3개</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">콘솔 오류</div>
+                            <div class="info-value">3개</div>
+                        </div>
+                    </div>
+
+                    <div class="validation-details">
+                        <div class="validation-item">
+                            <span>CSS 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>JavaScript 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>핵심 요소 존재</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>깨진 이미지</span>
+                            <span class="validation-status pass">
+                                0개
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="errors-list">
+                        <h4 style="color: #dc2626; margin-bottom: 0.5rem;">❌ 오류</h4>
+                        <ul>
+                            <li>네트워크 오류 3개</li>
+                        </ul>
+                    </div>
+                    
+
+                    
+                    <div class="warnings-list">
+                        <h4 style="color: #d97706; margin-bottom: 0.5rem;">⚠️ 경고</h4>
+                        <ul>
+                            <li>콘솔 오류 3개</li>
+                        </ul>
+                    </div>
+                    
+
+                    <div class="screenshots">
+                        <div class="screenshot-item">
+                            <img src="screenshots/운세 메인-desktop.png" alt="데스크톱 스크린샷">
+                            <div class="screenshot-label">데스크톱 (1920x1080)</div>
+                        </div>
+                        <div class="screenshot-item">
+                            <img src="screenshots/운세 메인-mobile.png" alt="모바일 스크린샷">
+                            <div class="screenshot-label">모바일 (375x667)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="result-card error">
+                <div class="result-header">
+                    <div>
+                        <div class="result-title">오늘의 운세<span class="critical-badge">핵심 페이지</span></div>
+                        <div style="font-size: 0.875rem; color: #6b7280;">/fortune/daily/</div>
+                    </div>
+                    <div class="result-badge">error</div>
+                </div>
+                <div class="result-content">
+                    <div class="result-info">
+                        <div class="info-item">
+                            <div class="info-label">로드 시간</div>
+                            <div class="info-value">1681ms</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">HTTP 상태</div>
+                            <div class="info-value">200</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">네트워크 오류</div>
+                            <div class="info-value">2개</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">콘솔 오류</div>
+                            <div class="info-value">7개</div>
+                        </div>
+                    </div>
+
+                    <div class="validation-details">
+                        <div class="validation-item">
+                            <span>CSS 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>JavaScript 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>핵심 요소 존재</span>
+                            <span class="validation-status fail">
+                                ❌ 실패
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>깨진 이미지</span>
+                            <span class="validation-status pass">
+                                0개
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="errors-list">
+                        <h4 style="color: #dc2626; margin-bottom: 0.5rem;">❌ 오류</h4>
+                        <ul>
+                            <li>네트워크 오류 2개</li>
+                        </ul>
+                    </div>
+                    
+
+                    
+                    <div class="warnings-list">
+                        <h4 style="color: #d97706; margin-bottom: 0.5rem;">⚠️ 경고</h4>
+                        <ul>
+                            <li>핵심 요소 누락: .daily-fortune-form</li><li>콘솔 오류 7개</li>
+                        </ul>
+                    </div>
+                    
+
+                    <div class="screenshots">
+                        <div class="screenshot-item">
+                            <img src="screenshots/오늘의 운세-desktop.png" alt="데스크톱 스크린샷">
+                            <div class="screenshot-label">데스크톱 (1920x1080)</div>
+                        </div>
+                        <div class="screenshot-item">
+                            <img src="screenshots/오늘의 운세-mobile.png" alt="모바일 스크린샷">
+                            <div class="screenshot-label">모바일 (375x667)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="result-card error">
+                <div class="result-header">
+                    <div>
+                        <div class="result-title">AI 사주팔자<span class="critical-badge">핵심 페이지</span></div>
+                        <div style="font-size: 0.875rem; color: #6b7280;">/fortune/saju/</div>
+                    </div>
+                    <div class="result-badge">error</div>
+                </div>
+                <div class="result-content">
+                    <div class="result-info">
+                        <div class="info-item">
+                            <div class="info-label">로드 시간</div>
+                            <div class="info-value">1037ms</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">HTTP 상태</div>
+                            <div class="info-value">200</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">네트워크 오류</div>
+                            <div class="info-value">3개</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">콘솔 오류</div>
+                            <div class="info-value">5개</div>
+                        </div>
+                    </div>
+
+                    <div class="validation-details">
+                        <div class="validation-item">
+                            <span>CSS 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>JavaScript 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>핵심 요소 존재</span>
+                            <span class="validation-status fail">
+                                ❌ 실패
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>깨진 이미지</span>
+                            <span class="validation-status pass">
+                                0개
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="errors-list">
+                        <h4 style="color: #dc2626; margin-bottom: 0.5rem;">❌ 오류</h4>
+                        <ul>
+                            <li>네트워크 오류 3개</li>
+                        </ul>
+                    </div>
+                    
+
+                    
+                    <div class="warnings-list">
+                        <h4 style="color: #d97706; margin-bottom: 0.5rem;">⚠️ 경고</h4>
+                        <ul>
+                            <li>핵심 요소 누락: .saju-form</li><li>콘솔 오류 5개</li>
+                        </ul>
+                    </div>
+                    
+
+                    <div class="screenshots">
+                        <div class="screenshot-item">
+                            <img src="screenshots/AI 사주팔자-desktop.png" alt="데스크톱 스크린샷">
+                            <div class="screenshot-label">데스크톱 (1920x1080)</div>
+                        </div>
+                        <div class="screenshot-item">
+                            <img src="screenshots/AI 사주팔자-mobile.png" alt="모바일 스크린샷">
+                            <div class="screenshot-label">모바일 (375x667)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="result-card error">
+                <div class="result-header">
+                    <div>
+                        <div class="result-title">AI 타로 리딩<span class="critical-badge">핵심 페이지</span></div>
+                        <div style="font-size: 0.875rem; color: #6b7280;">/fortune/tarot/</div>
+                    </div>
+                    <div class="result-badge">error</div>
+                </div>
+                <div class="result-content">
+                    <div class="result-info">
+                        <div class="info-item">
+                            <div class="info-label">로드 시간</div>
+                            <div class="info-value">814ms</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">HTTP 상태</div>
+                            <div class="info-value">200</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">네트워크 오류</div>
+                            <div class="info-value">2개</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">콘솔 오류</div>
+                            <div class="info-value">7개</div>
+                        </div>
+                    </div>
+
+                    <div class="validation-details">
+                        <div class="validation-item">
+                            <span>CSS 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>JavaScript 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>핵심 요소 존재</span>
+                            <span class="validation-status fail">
+                                ❌ 실패
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>깨진 이미지</span>
+                            <span class="validation-status pass">
+                                0개
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="errors-list">
+                        <h4 style="color: #dc2626; margin-bottom: 0.5rem;">❌ 오류</h4>
+                        <ul>
+                            <li>네트워크 오류 2개</li>
+                        </ul>
+                    </div>
+                    
+
+                    
+                    <div class="warnings-list">
+                        <h4 style="color: #d97706; margin-bottom: 0.5rem;">⚠️ 경고</h4>
+                        <ul>
+                            <li>핵심 요소 누락: .tarot-deck</li><li>콘솔 오류 7개</li>
+                        </ul>
+                    </div>
+                    
+
+                    <div class="screenshots">
+                        <div class="screenshot-item">
+                            <img src="screenshots/AI 타로 리딩-desktop.png" alt="데스크톱 스크린샷">
+                            <div class="screenshot-label">데스크톱 (1920x1080)</div>
+                        </div>
+                        <div class="screenshot-item">
+                            <img src="screenshots/AI 타로 리딩-mobile.png" alt="모바일 스크린샷">
+                            <div class="screenshot-label">모바일 (375x667)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="result-card error">
+                <div class="result-header">
+                    <div>
+                        <div class="result-title">별자리 운세<span class="critical-badge">핵심 페이지</span></div>
+                        <div style="font-size: 0.875rem; color: #6b7280;">/fortune/zodiac/</div>
+                    </div>
+                    <div class="result-badge">error</div>
+                </div>
+                <div class="result-content">
+                    <div class="result-info">
+                        <div class="info-item">
+                            <div class="info-label">로드 시간</div>
+                            <div class="info-value">1018ms</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">HTTP 상태</div>
+                            <div class="info-value">200</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">네트워크 오류</div>
+                            <div class="info-value">3개</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">콘솔 오류</div>
+                            <div class="info-value">2개</div>
+                        </div>
+                    </div>
+
+                    <div class="validation-details">
+                        <div class="validation-item">
+                            <span>CSS 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>JavaScript 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>핵심 요소 존재</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>깨진 이미지</span>
+                            <span class="validation-status pass">
+                                0개
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="errors-list">
+                        <h4 style="color: #dc2626; margin-bottom: 0.5rem;">❌ 오류</h4>
+                        <ul>
+                            <li>네트워크 오류 3개</li>
+                        </ul>
+                    </div>
+                    
+
+                    
+                    <div class="warnings-list">
+                        <h4 style="color: #d97706; margin-bottom: 0.5rem;">⚠️ 경고</h4>
+                        <ul>
+                            <li>콘솔 오류 2개</li>
+                        </ul>
+                    </div>
+                    
+
+                    <div class="screenshots">
+                        <div class="screenshot-item">
+                            <img src="screenshots/별자리 운세-desktop.png" alt="데스크톱 스크린샷">
+                            <div class="screenshot-label">데스크톱 (1920x1080)</div>
+                        </div>
+                        <div class="screenshot-item">
+                            <img src="screenshots/별자리 운세-mobile.png" alt="모바일 스크린샷">
+                            <div class="screenshot-label">모바일 (375x667)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="result-card error">
+                <div class="result-header">
+                    <div>
+                        <div class="result-title">띠별 운세<span class="critical-badge">핵심 페이지</span></div>
+                        <div style="font-size: 0.875rem; color: #6b7280;">/fortune/zodiac-animal/</div>
+                    </div>
+                    <div class="result-badge">error</div>
+                </div>
+                <div class="result-content">
+                    <div class="result-info">
+                        <div class="info-item">
+                            <div class="info-label">로드 시간</div>
+                            <div class="info-value">1028ms</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">HTTP 상태</div>
+                            <div class="info-value">200</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">네트워크 오류</div>
+                            <div class="info-value">3개</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">콘솔 오류</div>
+                            <div class="info-value">2개</div>
+                        </div>
+                    </div>
+
+                    <div class="validation-details">
+                        <div class="validation-item">
+                            <span>CSS 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>JavaScript 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>핵심 요소 존재</span>
+                            <span class="validation-status fail">
+                                ❌ 실패
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>깨진 이미지</span>
+                            <span class="validation-status pass">
+                                0개
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="errors-list">
+                        <h4 style="color: #dc2626; margin-bottom: 0.5rem;">❌ 오류</h4>
+                        <ul>
+                            <li>네트워크 오류 3개</li>
+                        </ul>
+                    </div>
+                    
+
+                    
+                    <div class="warnings-list">
+                        <h4 style="color: #d97706; margin-bottom: 0.5rem;">⚠️ 경고</h4>
+                        <ul>
+                            <li>핵심 요소 누락: .animal-grid</li><li>콘솔 오류 2개</li>
+                        </ul>
+                    </div>
+                    
+
+                    <div class="screenshots">
+                        <div class="screenshot-item">
+                            <img src="screenshots/띠별 운세-desktop.png" alt="데스크톱 스크린샷">
+                            <div class="screenshot-label">데스크톱 (1920x1080)</div>
+                        </div>
+                        <div class="screenshot-item">
+                            <img src="screenshots/띠별 운세-mobile.png" alt="모바일 스크린샷">
+                            <div class="screenshot-label">모바일 (375x667)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="result-card error">
+                <div class="result-header">
+                    <div>
+                        <div class="result-title">실용도구 메인<span class="critical-badge">핵심 페이지</span></div>
+                        <div style="font-size: 0.875rem; color: #6b7280;">/tools/</div>
+                    </div>
+                    <div class="result-badge">error</div>
+                </div>
+                <div class="result-content">
+                    <div class="result-info">
+                        <div class="info-item">
+                            <div class="info-label">로드 시간</div>
+                            <div class="info-value">1070ms</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">HTTP 상태</div>
+                            <div class="info-value">200</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">네트워크 오류</div>
+                            <div class="info-value">2개</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">콘솔 오류</div>
+                            <div class="info-value">4개</div>
+                        </div>
+                    </div>
+
+                    <div class="validation-details">
+                        <div class="validation-item">
+                            <span>CSS 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>JavaScript 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>핵심 요소 존재</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>깨진 이미지</span>
+                            <span class="validation-status pass">
+                                0개
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="errors-list">
+                        <h4 style="color: #dc2626; margin-bottom: 0.5rem;">❌ 오류</h4>
+                        <ul>
+                            <li>네트워크 오류 2개</li>
+                        </ul>
+                    </div>
+                    
+
+                    
+                    <div class="warnings-list">
+                        <h4 style="color: #d97706; margin-bottom: 0.5rem;">⚠️ 경고</h4>
+                        <ul>
+                            <li>콘솔 오류 4개</li>
+                        </ul>
+                    </div>
+                    
+
+                    <div class="screenshots">
+                        <div class="screenshot-item">
+                            <img src="screenshots/실용도구 메인-desktop.png" alt="데스크톱 스크린샷">
+                            <div class="screenshot-label">데스크톱 (1920x1080)</div>
+                        </div>
+                        <div class="screenshot-item">
+                            <img src="screenshots/실용도구 메인-mobile.png" alt="모바일 스크린샷">
+                            <div class="screenshot-label">모바일 (375x667)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="result-card error">
+                <div class="result-header">
+                    <div>
+                        <div class="result-title">BMI 계산기<span class="critical-badge">핵심 페이지</span></div>
+                        <div style="font-size: 0.875rem; color: #6b7280;">/tools/bmi-calculator.html</div>
+                    </div>
+                    <div class="result-badge">error</div>
+                </div>
+                <div class="result-content">
+                    <div class="result-info">
+                        <div class="info-item">
+                            <div class="info-label">로드 시간</div>
+                            <div class="info-value">992ms</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">HTTP 상태</div>
+                            <div class="info-value">200</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">네트워크 오류</div>
+                            <div class="info-value">2개</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">콘솔 오류</div>
+                            <div class="info-value">3개</div>
+                        </div>
+                    </div>
+
+                    <div class="validation-details">
+                        <div class="validation-item">
+                            <span>CSS 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>JavaScript 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>핵심 요소 존재</span>
+                            <span class="validation-status fail">
+                                ❌ 실패
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>깨진 이미지</span>
+                            <span class="validation-status pass">
+                                0개
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="errors-list">
+                        <h4 style="color: #dc2626; margin-bottom: 0.5rem;">❌ 오류</h4>
+                        <ul>
+                            <li>네트워크 오류 2개</li>
+                        </ul>
+                    </div>
+                    
+
+                    
+                    <div class="warnings-list">
+                        <h4 style="color: #d97706; margin-bottom: 0.5rem;">⚠️ 경고</h4>
+                        <ul>
+                            <li>핵심 요소 누락: .calculator-form</li><li>콘솔 오류 3개</li>
+                        </ul>
+                    </div>
+                    
+
+                    <div class="screenshots">
+                        <div class="screenshot-item">
+                            <img src="screenshots/BMI 계산기-desktop.png" alt="데스크톱 스크린샷">
+                            <div class="screenshot-label">데스크톱 (1920x1080)</div>
+                        </div>
+                        <div class="screenshot-item">
+                            <img src="screenshots/BMI 계산기-mobile.png" alt="모바일 스크린샷">
+                            <div class="screenshot-label">모바일 (375x667)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="result-card error">
+                <div class="result-header">
+                    <div>
+                        <div class="result-title">연봉 계산기<span class="critical-badge">핵심 페이지</span></div>
+                        <div style="font-size: 0.875rem; color: #6b7280;">/tools/salary-calculator.html</div>
+                    </div>
+                    <div class="result-badge">error</div>
+                </div>
+                <div class="result-content">
+                    <div class="result-info">
+                        <div class="info-item">
+                            <div class="info-label">로드 시간</div>
+                            <div class="info-value">1188ms</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">HTTP 상태</div>
+                            <div class="info-value">200</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">네트워크 오류</div>
+                            <div class="info-value">2개</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">콘솔 오류</div>
+                            <div class="info-value">2개</div>
+                        </div>
+                    </div>
+
+                    <div class="validation-details">
+                        <div class="validation-item">
+                            <span>CSS 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>JavaScript 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>핵심 요소 존재</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>깨진 이미지</span>
+                            <span class="validation-status pass">
+                                0개
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="errors-list">
+                        <h4 style="color: #dc2626; margin-bottom: 0.5rem;">❌ 오류</h4>
+                        <ul>
+                            <li>네트워크 오류 2개</li>
+                        </ul>
+                    </div>
+                    
+
+                    
+                    <div class="warnings-list">
+                        <h4 style="color: #d97706; margin-bottom: 0.5rem;">⚠️ 경고</h4>
+                        <ul>
+                            <li>콘솔 오류 2개</li>
+                        </ul>
+                    </div>
+                    
+
+                    <div class="screenshots">
+                        <div class="screenshot-item">
+                            <img src="screenshots/연봉 계산기-desktop.png" alt="데스크톱 스크린샷">
+                            <div class="screenshot-label">데스크톱 (1920x1080)</div>
+                        </div>
+                        <div class="screenshot-item">
+                            <img src="screenshots/연봉 계산기-mobile.png" alt="모바일 스크린샷">
+                            <div class="screenshot-label">모바일 (375x667)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="result-card error">
+                <div class="result-header">
+                    <div>
+                        <div class="result-title">글자수 세기<span class="critical-badge">핵심 페이지</span></div>
+                        <div style="font-size: 0.875rem; color: #6b7280;">/tools/text-counter.html</div>
+                    </div>
+                    <div class="result-badge">error</div>
+                </div>
+                <div class="result-content">
+                    <div class="result-info">
+                        <div class="info-item">
+                            <div class="info-label">로드 시간</div>
+                            <div class="info-value">1026ms</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">HTTP 상태</div>
+                            <div class="info-value">200</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">네트워크 오류</div>
+                            <div class="info-value">2개</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">콘솔 오류</div>
+                            <div class="info-value">3개</div>
+                        </div>
+                    </div>
+
+                    <div class="validation-details">
+                        <div class="validation-item">
+                            <span>CSS 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>JavaScript 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>핵심 요소 존재</span>
+                            <span class="validation-status fail">
+                                ❌ 실패
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>깨진 이미지</span>
+                            <span class="validation-status pass">
+                                0개
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="errors-list">
+                        <h4 style="color: #dc2626; margin-bottom: 0.5rem;">❌ 오류</h4>
+                        <ul>
+                            <li>네트워크 오류 2개</li>
+                        </ul>
+                    </div>
+                    
+
+                    
+                    <div class="warnings-list">
+                        <h4 style="color: #d97706; margin-bottom: 0.5rem;">⚠️ 경고</h4>
+                        <ul>
+                            <li>핵심 요소 누락: .text-counter-form</li><li>콘솔 오류 3개</li>
+                        </ul>
+                    </div>
+                    
+
+                    <div class="screenshots">
+                        <div class="screenshot-item">
+                            <img src="screenshots/글자수 세기-desktop.png" alt="데스크톱 스크린샷">
+                            <div class="screenshot-label">데스크톱 (1920x1080)</div>
+                        </div>
+                        <div class="screenshot-item">
+                            <img src="screenshots/글자수 세기-mobile.png" alt="모바일 스크린샷">
+                            <div class="screenshot-label">모바일 (375x667)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="result-card error">
+                <div class="result-header">
+                    <div>
+                        <div class="result-title">소개 페이지</div>
+                        <div style="font-size: 0.875rem; color: #6b7280;">/about/</div>
+                    </div>
+                    <div class="result-badge">error</div>
+                </div>
+                <div class="result-content">
+                    <div class="result-info">
+                        <div class="info-item">
+                            <div class="info-label">로드 시간</div>
+                            <div class="info-value">1013ms</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">HTTP 상태</div>
+                            <div class="info-value">200</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">네트워크 오류</div>
+                            <div class="info-value">3개</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">콘솔 오류</div>
+                            <div class="info-value">3개</div>
+                        </div>
+                    </div>
+
+                    <div class="validation-details">
+                        <div class="validation-item">
+                            <span>CSS 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>JavaScript 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>핵심 요소 존재</span>
+                            <span class="validation-status fail">
+                                ❌ 실패
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>깨진 이미지</span>
+                            <span class="validation-status pass">
+                                0개
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="errors-list">
+                        <h4 style="color: #dc2626; margin-bottom: 0.5rem;">❌ 오류</h4>
+                        <ul>
+                            <li>네트워크 오류 3개</li>
+                        </ul>
+                    </div>
+                    
+
+                    
+                    <div class="warnings-list">
+                        <h4 style="color: #d97706; margin-bottom: 0.5rem;">⚠️ 경고</h4>
+                        <ul>
+                            <li>핵심 요소 누락: .about-content</li><li>콘솔 오류 3개</li>
+                        </ul>
+                    </div>
+                    
+
+                    <div class="screenshots">
+                        <div class="screenshot-item">
+                            <img src="screenshots/소개 페이지-desktop.png" alt="데스크톱 스크린샷">
+                            <div class="screenshot-label">데스크톱 (1920x1080)</div>
+                        </div>
+                        <div class="screenshot-item">
+                            <img src="screenshots/소개 페이지-mobile.png" alt="모바일 스크린샷">
+                            <div class="screenshot-label">모바일 (375x667)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="result-card error">
+                <div class="result-header">
+                    <div>
+                        <div class="result-title">문의하기</div>
+                        <div style="font-size: 0.875rem; color: #6b7280;">/contact/</div>
+                    </div>
+                    <div class="result-badge">error</div>
+                </div>
+                <div class="result-content">
+                    <div class="result-info">
+                        <div class="info-item">
+                            <div class="info-label">로드 시간</div>
+                            <div class="info-value">1043ms</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">HTTP 상태</div>
+                            <div class="info-value">200</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">네트워크 오류</div>
+                            <div class="info-value">3개</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">콘솔 오류</div>
+                            <div class="info-value">3개</div>
+                        </div>
+                    </div>
+
+                    <div class="validation-details">
+                        <div class="validation-item">
+                            <span>CSS 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>JavaScript 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>핵심 요소 존재</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>깨진 이미지</span>
+                            <span class="validation-status pass">
+                                0개
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="errors-list">
+                        <h4 style="color: #dc2626; margin-bottom: 0.5rem;">❌ 오류</h4>
+                        <ul>
+                            <li>네트워크 오류 2개</li>
+                        </ul>
+                    </div>
+                    
+
+                    
+                    <div class="warnings-list">
+                        <h4 style="color: #d97706; margin-bottom: 0.5rem;">⚠️ 경고</h4>
+                        <ul>
+                            <li>콘솔 오류 3개</li>
+                        </ul>
+                    </div>
+                    
+
+                    <div class="screenshots">
+                        <div class="screenshot-item">
+                            <img src="screenshots/문의하기-desktop.png" alt="데스크톱 스크린샷">
+                            <div class="screenshot-label">데스크톱 (1920x1080)</div>
+                        </div>
+                        <div class="screenshot-item">
+                            <img src="screenshots/문의하기-mobile.png" alt="모바일 스크린샷">
+                            <div class="screenshot-label">모바일 (375x667)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="result-card error">
+                <div class="result-header">
+                    <div>
+                        <div class="result-title">FAQ</div>
+                        <div style="font-size: 0.875rem; color: #6b7280;">/faq/</div>
+                    </div>
+                    <div class="result-badge">error</div>
+                </div>
+                <div class="result-content">
+                    <div class="result-info">
+                        <div class="info-item">
+                            <div class="info-label">로드 시간</div>
+                            <div class="info-value">985ms</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">HTTP 상태</div>
+                            <div class="info-value">200</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">네트워크 오류</div>
+                            <div class="info-value">3개</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">콘솔 오류</div>
+                            <div class="info-value">3개</div>
+                        </div>
+                    </div>
+
+                    <div class="validation-details">
+                        <div class="validation-item">
+                            <span>CSS 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>JavaScript 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>핵심 요소 존재</span>
+                            <span class="validation-status fail">
+                                ❌ 실패
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>깨진 이미지</span>
+                            <span class="validation-status pass">
+                                0개
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="errors-list">
+                        <h4 style="color: #dc2626; margin-bottom: 0.5rem;">❌ 오류</h4>
+                        <ul>
+                            <li>네트워크 오류 3개</li>
+                        </ul>
+                    </div>
+                    
+
+                    
+                    <div class="warnings-list">
+                        <h4 style="color: #d97706; margin-bottom: 0.5rem;">⚠️ 경고</h4>
+                        <ul>
+                            <li>핵심 요소 누락: .faq-content</li><li>콘솔 오류 3개</li>
+                        </ul>
+                    </div>
+                    
+
+                    <div class="screenshots">
+                        <div class="screenshot-item">
+                            <img src="screenshots/FAQ-desktop.png" alt="데스크톱 스크린샷">
+                            <div class="screenshot-label">데스크톱 (1920x1080)</div>
+                        </div>
+                        <div class="screenshot-item">
+                            <img src="screenshots/FAQ-mobile.png" alt="모바일 스크린샷">
+                            <div class="screenshot-label">모바일 (375x667)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="result-card error">
+                <div class="result-header">
+                    <div>
+                        <div class="result-title">개인정보처리방침</div>
+                        <div style="font-size: 0.875rem; color: #6b7280;">/privacy/</div>
+                    </div>
+                    <div class="result-badge">error</div>
+                </div>
+                <div class="result-content">
+                    <div class="result-info">
+                        <div class="info-item">
+                            <div class="info-label">로드 시간</div>
+                            <div class="info-value">1033ms</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">HTTP 상태</div>
+                            <div class="info-value">200</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">네트워크 오류</div>
+                            <div class="info-value">3개</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">콘솔 오류</div>
+                            <div class="info-value">3개</div>
+                        </div>
+                    </div>
+
+                    <div class="validation-details">
+                        <div class="validation-item">
+                            <span>CSS 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>JavaScript 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>핵심 요소 존재</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>깨진 이미지</span>
+                            <span class="validation-status pass">
+                                0개
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="errors-list">
+                        <h4 style="color: #dc2626; margin-bottom: 0.5rem;">❌ 오류</h4>
+                        <ul>
+                            <li>네트워크 오류 2개</li>
+                        </ul>
+                    </div>
+                    
+
+                    
+                    <div class="warnings-list">
+                        <h4 style="color: #d97706; margin-bottom: 0.5rem;">⚠️ 경고</h4>
+                        <ul>
+                            <li>콘솔 오류 3개</li>
+                        </ul>
+                    </div>
+                    
+
+                    <div class="screenshots">
+                        <div class="screenshot-item">
+                            <img src="screenshots/개인정보처리방침-desktop.png" alt="데스크톱 스크린샷">
+                            <div class="screenshot-label">데스크톱 (1920x1080)</div>
+                        </div>
+                        <div class="screenshot-item">
+                            <img src="screenshots/개인정보처리방침-mobile.png" alt="모바일 스크린샷">
+                            <div class="screenshot-label">모바일 (375x667)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="result-card error">
+                <div class="result-header">
+                    <div>
+                        <div class="result-title">이용약관</div>
+                        <div style="font-size: 0.875rem; color: #6b7280;">/terms/</div>
+                    </div>
+                    <div class="result-badge">error</div>
+                </div>
+                <div class="result-content">
+                    <div class="result-info">
+                        <div class="info-item">
+                            <div class="info-label">로드 시간</div>
+                            <div class="info-value">1017ms</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">HTTP 상태</div>
+                            <div class="info-value">200</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">네트워크 오류</div>
+                            <div class="info-value">2개</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">콘솔 오류</div>
+                            <div class="info-value">3개</div>
+                        </div>
+                    </div>
+
+                    <div class="validation-details">
+                        <div class="validation-item">
+                            <span>CSS 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>JavaScript 로드</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>핵심 요소 존재</span>
+                            <span class="validation-status pass">
+                                ✅ 정상
+                            </span>
+                        </div>
+                        <div class="validation-item">
+                            <span>깨진 이미지</span>
+                            <span class="validation-status pass">
+                                0개
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="errors-list">
+                        <h4 style="color: #dc2626; margin-bottom: 0.5rem;">❌ 오류</h4>
+                        <ul>
+                            <li>네트워크 오류 2개</li>
+                        </ul>
+                    </div>
+                    
+
+                    
+                    <div class="warnings-list">
+                        <h4 style="color: #d97706; margin-bottom: 0.5rem;">⚠️ 경고</h4>
+                        <ul>
+                            <li>콘솔 오류 3개</li>
+                        </ul>
+                    </div>
+                    
+
+                    <div class="screenshots">
+                        <div class="screenshot-item">
+                            <img src="screenshots/이용약관-desktop.png" alt="데스크톱 스크린샷">
+                            <div class="screenshot-label">데스크톱 (1920x1080)</div>
+                        </div>
+                        <div class="screenshot-item">
+                            <img src="screenshots/이용약관-mobile.png" alt="모바일 스크린샷">
+                            <div class="screenshot-label">모바일 (375x667)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+        <footer style="text-align: center; padding: 2rem; color: #6b7280;">
+            <p>🚀 doha.kr 자동화 검증 시스템 v1.0</p>
+            <p>핵심 페이지 성공률: 0% (0/21)</p>
+        </footer>
+    </div>
+</body>
+</html>
+    
