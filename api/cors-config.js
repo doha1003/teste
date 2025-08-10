@@ -127,12 +127,16 @@ export const validateRequest = (req, res, allowedMethods = ['GET', 'POST']) => {
     return true;
   }
 
-  // Content-Type 검증 (POST 요청인 경우)
+  // Content-Type 검증 (POST 요청인 경우) - 더 유연한 처리
   if (req.method === 'POST') {
     const contentType = req.headers['content-type'];
-    if (!contentType || !contentType.includes('application/json')) {
+    // JSON 또는 form-urlencoded 허용, Content-Type이 없는 경우도 허용
+    if (contentType && 
+        !contentType.includes('application/json') && 
+        !contentType.includes('application/x-www-form-urlencoded') &&
+        !contentType.includes('text/plain')) {
       res.status(400).json({
-        error: 'Content-Type must be application/json',
+        error: 'Content-Type must be application/json, application/x-www-form-urlencoded, or text/plain',
       });
       return true;
     }

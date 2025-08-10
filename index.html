@@ -1,22 +1,862 @@
 <!doctype html>
-<html lang="ko"> <head> <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src 'self' https:; script-src 'unsafe-inline' 'self' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; style-src 'unsafe-inline' 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net data:; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;" /> <meta charset="UTF-8" /> <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=yes" /> <title>doha.kr - 일상을 더 재미있게 만드는 공간</title> <!-- 폰트 최적화: 로컬 + CDN 다중 폴백 시스템 --> <link rel="preconnect" href="https://cdn.jsdelivr.net" /> <link rel="preconnect" href="https://fonts.googleapis.com" /> <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /> <!-- 로컬 폰트 우선 로딩 --> <link rel="preload" href="./fonts/PretendardVariable.woff2" as="font" type="font/woff2" crossorigin /> <link rel="preload" href="./fonts/Pretendard-Regular.woff2" as="font" type="font/woff2" crossorigin /> <!-- CDN 폴백 --> <link rel="preload" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" /> <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css" /></noscript> <!-- 구글 폰트 최종 폴백 --> <link rel="preload" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" /> <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" /></noscript> <meta name="description" content="심리테스트, 실용도구, 커뮤니티가 한곳에! 테토-에겐 테스트, MBTI 검사, 연봉계산기, 글자수세기 등 다양한 무료 서비스를 제공합니다." /> <meta name="keywords" content="심리테스트, MBTI, 테토에겐, 성격테스트, 연봉계산기, 글자수세기, 무료테스트" /> <meta name="robots" content="index, follow" /> <meta name="author" content="doha.kr" /> <!-- Security Headers --> <meta http-equiv="X-Content-Type-Options" content="nosniff" /> <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" /> <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), accelerometer=(), gyroscope=()" /> <!-- Canonical URL --> <link rel="canonical" href="https://doha.kr/" /> <!-- Open Graph --> <meta property="og:title" content="doha.kr - 일상을 더 재미있게" /> <meta property="og:description" content="재미있는 심리테스트와 실용적인 도구들을 무료로 이용하세요!" /> <meta property="og:image" content="https://doha.kr/images/og-default.png" /> <meta property="og:url" content="https://doha.kr" /> <meta property="og:type" content="website" /> <meta property="og:locale" content="ko_KR" /> <meta property="og:site_name" content="doha.kr" /> <!-- 파비콘 --> <link rel="icon" type="image/svg+xml" href="images/logo.svg" /> <link rel="apple-touch-icon" href="images/android-chrome-192x192.png" /> <link rel="manifest" href="manifest.json" /> <!-- Critical CSS (인라인) - Above-the-fold 렌더링 최적화 --> <style>
-/* Critical CSS - Design System Variables with Korean Optimization */
-:root{--color-primary:#5c5ce0;--color-white:#fff;--color-gray-900:#111827;--bg-primary:#fff;--text-primary:#1a1a1a;--text-secondary:#6b7280;--text-tertiary:#9ca3af;--font-family:"Pretendard Variable","Pretendard",-apple-system,BlinkMacSystemFont,sans-serif;--font-size-base:1rem;--line-height-normal:1.7;--spacing-xs:0.5rem;--spacing-sm:0.75rem;--spacing-md:1rem;--spacing-lg:1.5rem;--spacing-xl:2rem;--radius-sm:4px;--radius-md:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,0.05);--shadow-md:0 2px 4px rgba(0,0,0,0.06);--shadow-lg:0 4px 6px rgba(0,0,0,0.07);--transition-base:0.25s cubic-bezier(0.4,0,0.2,1)}*,*:before,*:after{box-sizing:border-box;margin:0;padding:0}*{word-break:keep-all;overflow-wrap:break-word}html{font-size:16px;-webkit-text-size-adjust:100%}body{font-family:var(--font-family);font-size:var(--font-size-base);line-height:var(--line-height-normal);color:var(--text-primary);background:var(--bg-primary);word-break:keep-all;margin:0;padding:0;min-height:100vh}.navbar{background:var(--bg-primary);position:sticky;top:0;z-index:1000}.header,.hero{text-align:center;padding:60px 20px}.header h1,.hero-title{font-size:2.5rem;font-weight:600;color:var(--text-primary);margin-bottom:16px;word-break:keep-all;line-height:1.2}.header p,.hero-subtitle{font-size:1.125rem;color:var(--text-secondary);margin-bottom:32px;word-break:keep-all;line-height:1.5;max-width:600px;margin-left:auto;margin-right:auto}.container{max-width:1200px;margin:0 auto;padding:0 20px}.btn,.btn-primary{display:inline-flex;align-items:center;justify-content:center;padding:12px 16px;border-radius:var(--radius-md);font-family:inherit;font-size:var(--font-size-base);text-decoration:none;transition:var(--transition-base);cursor:pointer;border:1px solid transparent;font-weight:500;word-break:keep-all;min-height:40px}.btn-primary{background:#1f2937;color:#fff;border-color:#1f2937;box-shadow:0 1px 2px rgba(0,0,0,0.05)}.btn-primary:hover{background:#374151;border-color:#374151;transform:translateY(-1px);box-shadow:0 2px 4px rgba(0,0,0,0.1);color:#fff;text-decoration:none}.card{background:var(--bg-primary);border-radius:var(--radius-md);padding:var(--spacing-md);box-shadow:var(--shadow-md);transition:var(--transition-base)}.grid{display:grid;gap:var(--spacing-md)}h1,h2,h3,h4,h5,h6,p,span,div,a{word-break:keep-all;overflow-wrap:break-word}@media (max-width:768px){.header h1,.hero-title{font-size:2rem}.header p,.hero-subtitle{font-size:1rem}.container{padding:0 16px}.btn,.btn-primary{min-height:52px;font-size:1.1rem}} /* 성능 최적화: 추가 Critical CSS */
-.hero-buttons{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:2rem}
-.service-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;padding:2rem 0}
-.service-card{display:flex;flex-direction:column;align-items:center;text-align:center;padding:1.5rem;border-radius:8px;background:var(--bg-primary);box-shadow:0 1px 3px rgba(0,0,0,0.06);transition:all 0.25s cubic-bezier(0.4,0,0.2,1);text-decoration:none;color:inherit;border:1px solid rgba(0,0,0,0.05)}
-.service-card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.1);text-decoration:none;color:inherit}
-.service-emoji{font-size:2.5rem;margin-bottom:1rem;flex-shrink:0}
-.service-name{font-size:1.25rem;font-weight:600;margin-bottom:0.5rem;word-break:keep-all;color:var(--text-primary)}
-.service-desc{color:var(--text-secondary);line-height:1.6;margin-bottom:1rem;word-break:keep-all}
-.hero{background:var(--bg-primary);color:var(--text-primary);min-height:45vh;display:flex;align-items:center;padding:3rem 1rem 4rem;border-bottom:1px solid rgba(0,0,0,0.08)}
-.tab-button{background:transparent;border:2px solid rgba(0,0,0,0.1);color:var(--text-secondary);padding:8px 16px;border-radius:8px;font-weight:500;cursor:pointer;transition:all 0.2s ease;word-break:keep-all;min-height:40px}
-.tab-button:hover{background:rgba(0,0,0,0.05);border-color:rgba(0,0,0,0.2)}
-.tab-button.active{background:var(--color-primary);color:white;border-color:var(--color-primary)}
-.feature-link{color:var(--color-primary);font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem;transition:all 0.2s ease;word-break:keep-all}
-.feature-link:hover{color:#4f46e5;text-decoration:none}
-.service-badge{background:linear-gradient(135deg,#ff6b6b,#ee5a24);color:white;font-size:0.75rem;font-weight:600;padding:4px 8px;border-radius:12px;position:absolute;top:8px;right:8px}
-.service-card{position:relative}
-.cta-title,.section-title{word-break:keep-all;color:var(--text-primary)}
-.cta-description,.section-subtitle{word-break:keep-all;color:var(--text-secondary);line-height:1.6} </style> <!-- 비동기 CSS 로딩 (성능 최적화) --> <link rel="preload" href="dist/styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'" id="main-styles"> <noscript><link rel="stylesheet" href="dist/styles.css"></noscript> <!-- Page Data Attributes --> <script> document.documentElement.dataset.page = 'home'; </script> </head> <body data-page="home"> <!-- Skip to main content for screen readers --> <a href="#main-content" class="skip-link">본문으로 바로가기</a> <!-- 네비게이션 --> <nav id="navbar-placeholder" role="navigation" aria-label="주 메뉴"> <!-- 기본 네비게이션 (JS 로딩 실패시 백업) --> <div class="navbar navbar-fixed"> <div class="navbar-container navbar-flex"> <a href="/" class="logo navbar-logo">doha.kr</a> <ul class="nav-menu navbar-menu nav-flex" id="nav-menu"> <li class="nav-item"><a href="/" class="nav-link nav-link-padded">홈</a></li> <li class="nav-item"><a href="tests/" class="nav-link nav-link-padded">심리테스트</a></li> <li class="nav-item"><a href="fortune/" class="nav-link nav-link-padded">운세</a></li> <li class="nav-item"><a href="tools/" class="nav-link nav-link-padded">실용도구</a></li> <li class="nav-item"><a href="contact/" class="nav-link nav-link-padded">문의</a></li> <li class="nav-item"><a href="about/" class="nav-link nav-link-padded">소개</a></li> </ul> <button class="mobile-menu-linear-button navbar-toggle text-korean" aria-expanded="false" aria-controls="nav-menu" aria-label="메뉴 열기"> <span class="menu-bar"></span> <span class="menu-bar"></span> <span class="menu-bar"></span> </button> </div> </div> </nav> <main id="main-content" class="page-main" role="main"> <!-- 히어로 섹션 --> <section class="hero" aria-labelledby="hero-title"> <div class="hero-content"> <h1 id="hero-title" class="hero-title fade-in"> 일상을 더 재미있게 만드는 <br /> <span class="hero-title-highlight highlight-diagonal highlight-korean animated">doha.kr</span> </h1> <p class="hero-subtitle fade-in stagger-1"> 심리테스트로 나를 발견하고, 실용도구로 일상을 편리하게! <br /> 무료로 제공되는 다양한 서비스를 지금 바로 경험해보세요. </p> <div class="hero-buttons fade-in stagger-2"> <a href="tests/" class="linear-button--primary text-korean" data-category="tests" aria-label="심리테스트 페이지로 이동"> <span class="icon" aria-hidden="true">🧠</span> 심리테스트 </a> <a href="tools/" class="linear-button--primary text-korean" data-category="tools" aria-label="실용도구 페이지로 이동" > <span class="icon" aria-hidden="true">🛠️</span> 실용도구 </a> <a href="fortune/" class="linear-button--primary text-korean" data-category="fortune" aria-label="AI 운세 페이지로 이동" > <span class="icon" aria-hidden="true">🔮</span> AI 운세 </a> </div> </div> </section> <!-- 특징 섹션 --> <section class="features" aria-labelledby="features-title"> <div class="container"> <h2 id="features-title" class="section-title fade-in">왜 doha.kr인가요?</h2> <p class="section-subtitle fade-in stagger-1"> 단순한 테스트 사이트가 아닙니다. 여러분의 일상에 가치를 더하는 종합 플랫폼입니다. </p> <div class="features-grid"> <article class="linear-card feature-card fade-in stagger-1"> <div class="feature-icon icon" role="img" aria-label="뇌 아이콘">🧠</div> <h3 class="feature-title text-heading-3 text-korean highlight-dots highlight-korean subtle">과학적인 심리테스트</h3> <p class="feature-description text-body text-korean"> 심리학 이론에 기반한 정확한 분석으로 자신을 더 깊이 이해할 수 있습니다. 테토-에겐, MBTI 등 다양한 성격 유형 검사를 제공합니다. </p> <a href="tests/" class="linear-button--secondary text-korean" aria-label="심리테스트 페이지로 이동"> 테스트 보러가기 <span class="icon" aria-hidden="true">→</span> </a> </article> <article class="linear-card feature-card fade-in stagger-2"> <div class="feature-icon icon" role="img" aria-label="도구 아이콘">🛠️</div> <h3 class="feature-title text-heading-3 text-korean highlight-grid highlight-korean subtle">실용적인 도구모음</h3> <p class="feature-description text-body text-korean"> 글자수 세기, 연봉 계산기, BMI 계산기 등 일상에서 필요한 다양한 도구를 한 곳에서 무료로 이용할 수 있습니다. </p> <a href="tools/" class="linear-button--secondary text-korean" aria-label="실용도구 페이지로 이동"> 도구 사용하기 <span class="icon" aria-hidden="true">→</span> </a> </article> <article class="linear-card feature-card fade-in stagger-3"> <div class="feature-icon icon" role="img" aria-label="수정구 아이콘">🔮</div> <h3 class="feature-title text-heading-3 text-korean highlight-noise highlight-korean subtle">AI 운세 & 타로</h3> <p class="feature-description text-body text-korean"> AI가 분석하는 오늘의 운세와 타로 카드로 미래를 예측해보세요. 개인 맞춤형 인사이트를 제공합니다. </p> <a href="fortune/" class="linear-button--secondary text-korean" aria-label="AI 운세 페이지로 이동"> 운세 보러가기 <span class="icon" aria-hidden="true">→</span> </a> </article> </div> </div> </section> <!-- PWA 설치 프롬프트 섹션 --> <section id="pwa-install-prompt" class="pwa-install-section" aria-labelledby="pwa-install-title" style="display: none;"> <div class="container"> <div class="pwa-install-linear-card"> <div class="pwa-install-content"> <div class="pwa-install-icon">📱</div> <div class="pwa-install-text"> <h3 id="pwa-install-title">앱으로 설치하기</h3> <p>doha.kr을 홈 화면에 추가하고 앱처럼 사용하세요!</p> <ul class="pwa-benefits"> <li>⚡ 빠른 속도</li> <li>📱 앱처럼 사용</li> <li>🔄 오프라인 지원</li> </ul> </div> </div> <div class="pwa-install-actions"> <button id="pwa-install-btn" class="linear-button--primary text-korean pwa-install-button" disabled> <span class="icon">📲</span> <span class="linear-button-text text-korean">설치 준비 중...</span> </button> <button id="pwa-close-btn" class="linear-button--ghost text-korean pwa-close-button" aria-label="설치 프롬프트 닫기"> <span class="icon">✕</span> </button> </div> </div> </div> </section> <!-- 인기 서비스 섹션 --> <section id="services" class="popular-services" aria-labelledby="services-title"> <div class="container"> <h2 id="services-title" class="section-title fade-in">인기 서비스</h2> <p class="section-subtitle fade-in stagger-1">가장 많이 이용하는 서비스들을 만나보세요</p> <!-- 서비스 탭 --> <div class="services-tabs fade-in stagger-2" data-tabs="services" role="tablist" aria-label="서비스 카테고리"> <button class="linear-button--tab active text-korean" data-tab="all" role="tab" aria-selected="true" aria-controls="services-grid" tabindex="0" > 전체 </button> <button class="linear-button--tab text-korean" data-tab="tests" role="tab" aria-selected="false" aria-controls="services-grid" tabindex="-1" > 심리테스트 </button> <button class="linear-button--tab text-korean" data-tab="tools" role="tab" aria-selected="false" aria-controls="services-grid" tabindex="-1" > 실용도구 </button> <button class="linear-button--tab text-korean" data-tab="fortune" role="tab" aria-selected="false" aria-controls="services-grid" tabindex="-1" > AI 운세 </button> <button class="linear-button--tab text-korean" data-tab="new" role="tab" aria-selected="false" aria-controls="services-grid" tabindex="-1" > 최신 </button> </div> <!-- 서비스 그리드 --> <div class="services-grid fade-in stagger-3 animated" id="services-grid" role="tabpanel" aria-labelledby="services-title" > <!-- 심리테스트 --> <a href="tests/teto-egen/" class="linear-card service-card" data-category="tests" aria-label="테토-에겐 테스트 - 당신의 성격이 테토형인지 에겐형인지 알아보세요" > <span class="service-emoji icon" aria-hidden="true">🦋</span> <h3 class="service-name text-subheading text-korean highlight-grid highlight-korean subtle">테토-에겐 테스트</h3> <p class="service-desc text-body text-korean">당신의 성격이 테토형인지 에겐형인지 알아보세요</p> <span class="linear-badge--hot" aria-label="인기 서비스">HOT</span> </a> <a href="tests/mbti/" class="linear-card service-card" data-category="tests" aria-label="MBTI 성격유형 검사 - 16가지 성격 유형 중 나는 어떤 유형일까?" > <span class="service-emoji icon" aria-hidden="true">🎭</span> <h3 class="service-name text-subheading text-korean highlight-grid highlight-korean subtle">MBTI 성격유형 검사</h3> <p class="service-desc text-body text-korean">16가지 성격 유형 중 나는 어떤 유형일까?</p> <span class="linear-badge--popular">인기</span> </a> <a href="tests/love-dna/" class="linear-card service-card" data-category="tests new" aria-label="러브 DNA 테스트 - 당신만의 연애 스타일을 5축 DNA로 분석해보세요" > <span class="service-emoji icon" aria-hidden="true">💕</span> <h3 class="service-name text-subheading text-korean highlight-grid highlight-korean subtle">러브 DNA 테스트</h3> <p class="service-desc text-body text-korean">당신만의 연애 스타일을 5축 DNA로 분석해보세요</p> <span class="linear-badge--new" aria-label="신규 서비스">NEW</span> </a> <!-- 실용도구 --> <a href="tools/text-counter.html" class="linear-card service-card" data-category="tools" aria-label="글자수 세기 - 자소서, 리포트 작성 시 필수! 글자수를 확인하세요" > <span class="service-emoji icon" aria-hidden="true">📝</span> <h3 class="service-name text-subheading text-korean highlight-grid highlight-korean subtle">글자수 세기</h3> <p class="service-desc text-body text-korean">자소서, 리포트 작성 시 필수! 글자수를 확인하세요</p> </a> <a href="tools/salary-calculator.html" class="linear-card service-card" data-category="tools" aria-label="연봉 실수령액 계산기 - 세금 공제 후 실제 받는 금액을 계산해보세요" > <span class="service-emoji icon" aria-hidden="true">💰</span> <h3 class="service-name text-subheading text-korean highlight-grid highlight-korean subtle">연봉 실수령액 계산기</h3> <p class="service-desc text-body text-korean">세금 공제 후 실제 받는 금액을 계산해보세요</p> <span class="linear-badge--new" aria-label="신규 서비스">NEW</span> </a> <a href="tools/bmi-calculator.html" class="linear-card service-card" data-category="tools" aria-label="BMI 계산기 - 키와 몸무게로 체질량지수를 확인하세요" > <span class="service-emoji icon" aria-hidden="true">🏃</span> <h3 class="service-name text-subheading text-korean highlight-grid highlight-korean subtle">BMI 계산기</h3> <p class="service-desc text-body text-korean">키와 몸무게로 체질량지수를 확인하세요</p> <span class="linear-badge--new" aria-label="신규 서비스">NEW</span> </a> <!-- AI 운세 --> <a href="fortune/daily/" class="linear-card service-card" data-category="fortune" aria-label="오늘의 운세 - AI가 분석하는 개인 맞춤형 상세 운세를 확인하세요" > <span class="service-emoji icon" aria-hidden="true">🔮</span> <h3 class="service-name text-subheading text-korean highlight-grid highlight-korean subtle">오늘의 운세</h3> <p class="service-desc text-body text-korean">AI가 분석하는 개인 맞춤형 상세 운세를 확인하세요</p> <span class="linear-badge--hot" aria-label="인기 서비스">HOT</span> </a> <a href="fortune/saju/" class="linear-card service-card" data-category="fortune" aria-label="AI 사주팔자 - 생년월일시로 AI가 분석하는 상세한 사주팔자 풀이" > <span class="service-emoji icon" aria-hidden="true">🎴</span> <h3 class="service-name text-subheading text-korean highlight-grid highlight-korean subtle">AI 사주팔자</h3> <p class="service-desc text-body text-korean">생년월일시로 AI가 분석하는 상세한 사주팔자 풀이</p> <span class="linear-badge--popular">인기</span> </a> <a href="fortune/zodiac/" class="linear-card service-card" data-category="fortune" aria-label="별자리 운세 - 12궁도 별자리별 오늘의 상세 운세를 확인하세요" > <span class="service-emoji icon" aria-hidden="true">♈</span> <h3 class="service-name text-subheading text-korean highlight-grid highlight-korean subtle">별자리 운세</h3> <p class="service-desc text-body text-korean">12궁도 별자리별 오늘의 상세 운세를 확인하세요</p> <span class="linear-badge--popular">인기</span> </a> <a href="fortune/tarot/" class="linear-card service-card" data-category="fortune" aria-label="AI 타로 리딩 - 질문을 입력하면 AI가 타로카드로 답을 찾아드려요" > <span class="service-emoji icon" aria-hidden="true">🃏</span> <h3 class="service-name text-subheading text-korean highlight-grid highlight-korean subtle">AI 타로 리딩</h3> <p class="service-desc text-body text-korean">질문을 입력하면 AI가 타로카드로 답을 찾아드려요</p> <span class="linear-badge--new" aria-label="신규 서비스">NEW</span> </a> <a href="fortune/zodiac-animal/" class="linear-card service-card" data-category="fortune new" aria-label="띠별 운세 - 12간지 띠별 상세한 오늘의 운세를 확인하세요" > <span class="service-emoji icon" aria-hidden="true">🐲</span> <h3 class="service-name text-subheading text-korean highlight-grid highlight-korean subtle">띠별 운세</h3> <p class="service-desc text-body text-korean">12간지 띠별 상세한 오늘의 운세를 확인하세요</p> <span class="linear-badge--new" aria-label="신규 서비스">NEW</span> </a> </div> </div> </section> <!-- 통계 섹션 --> <section class="stats" aria-labelledby="stats-title"> <h2 id="stats-title" class="visually-hidden">서비스 통계</h2> <div class="container"> <div class="stats-grid"> <div class="stat-item fade-in stagger-1 animated"> <div class="stat-number" aria-describedby="stat-label-1">무료</div> <div id="stat-label-1" class="stat-label">모든 서비스 이용</div> </div> <div class="stat-item fade-in stagger-2 animated"> <div class="stat-number" id="service-count" aria-describedby="stat-label-2" aria-live="polite">0개</div> <div id="stat-label-2" class="stat-label">다양한 서비스</div> </div> <div class="stat-item fade-in stagger-3 animated"> <div class="stat-number" aria-describedby="stat-label-3">간편</div> <div id="stat-label-3" class="stat-label">가입 없이 이용</div> </div> <div class="stat-item fade-in stagger-4 animated"> <div class="stat-number" aria-describedby="stat-label-4">24/7</div> <div id="stat-label-4" class="stat-label">언제나 이용가능</div> </div> </div> </div> </section> <!-- 광고 영역 --> <aside class="ad-container" aria-label="광고 영역"> <div class="ad-label">광고</div> <div id="ad-container-home-1" class="ad-container-min" data-ad-slot="3911401606"> <div class="ad-placeholder ad-container-styled">광고 로딩 중...</div> </div> </aside> <!-- CTA 섹션 --> <section class="cta" aria-labelledby="cta-title"> <div class="container"> <div class="cta-box"> <h2 id="cta-title" class="cta-title highlight-geometric highlight-korean animated">지금 바로 시작하세요!</h2> <p class="cta-description"> 가입 없이 무료로 모든 서비스를 이용할 수 있습니다. <br /> 당신을 기다리는 흥미로운 발견이 있을 거예요. </p> <a href="tests/" class="linear-button--primary linear-button--large text-korean" aria-label="심리테스트 페이지로 이동하여 테스트 시작하기"> 테스트 시작하기 </a> </div> </div> </section> <!-- 푸터 --> <footer class="footer" role="contentinfo" aria-label="사이트 정보"> <div class="footer-content"> <div class="footer-section footer-brand"> <h3>doha.kr</h3> <p class="footer-description"> 일상을 더 재미있게 만드는 공간 <br /> 심리테스트, 운세, 실용도구의 만남 </p> <div class="footer-social"> <a href="mailto:youtubdoha@gmail.com" class="social-link" aria-label="이메일 문의">📧</a> </div> </div> <div class="footer-section footer-services"> <h3>주요 서비스</h3> <ul class="footer-links"> <li><a href="tests/">🧠 심리테스트</a></li> <li><a href="fortune/">🔮 AI 운세</a></li> <li><a href="tools/">🛠️ 실용도구</a></li> <li><a href="about/">ℹ️ 사이트 소개</a></li> </ul> </div> <div class="footer-section footer-popular"> <h3>인기 콘텐츠</h3> <ul class="footer-links"> <li><a href="tests/teto-egen/">테토-에겐 테스트</a></li> <li><a href="tests/mbti/">MBTI 테스트</a></li> <li><a href="fortune/daily/">오늘의 운세</a></li> <li><a href="tools/text-counter.html">글자수 세기</a></li> <li><a href="fortune/tarot/">AI 타로</a></li> </ul> </div> <div class="footer-section footer-support"> <h3>고객지원</h3> <ul class="footer-links"> <li><a href="contact/">📞 문의하기</a></li> <li><a href="faq/">❓ 자주 묻는 질문</a></li> <li><a href="privacy/">🔒 개인정보처리방침</a></li> <li><a href="terms/">📄 이용약관</a></li> </ul> </div> </div> <div class="footer-bottom"> <p>&copy; 2025 doha.kr. All rights reserved.</p> </div> </footer> </main> <!-- Critical JavaScript (즉시 필요) --> <script> // 기본 모바일 메뉴 기능 (ES6 모듈 로딩 실패시 백업) document.addEventListener('DOMContentLoaded', function() { const mobileMenuBtn = document.querySelector('.mobile-menu-btn'); const navMenu = document.querySelector('.nav-menu'); if (mobileMenuBtn && navMenu) { mobileMenuBtn.addEventListener('click', function() { const isActive = navMenu.classList.contains('active'); if (isActive) { navMenu.classList.remove('active'); mobileMenuBtn.classList.remove('active'); mobileMenuBtn.setAttribute('aria-expanded', 'false'); document.body.style.overflow = ''; } else { navMenu.classList.add('active'); mobileMenuBtn.classList.add('active'); mobileMenuBtn.setAttribute('aria-expanded', 'true'); document.body.style.overflow = 'hidden'; } }); // 메뉴 외부 클릭시 닫기 document.addEventListener('click', function(event) { if (!event.target.closest('.navbar') && navMenu.classList.contains('active')) { navMenu.classList.remove('active'); mobileMenuBtn.classList.remove('active'); mobileMenuBtn.setAttribute('aria-expanded', 'false'); document.body.style.overflow = ''; } }); // ESC 키로 닫기 document.addEventListener('keydown', function(event) { if (event.key === 'Escape' && navMenu.classList.contains('active')) { navMenu.classList.remove('active'); mobileMenuBtn.classList.remove('active'); mobileMenuBtn.setAttribute('aria-expanded', 'false'); document.body.style.overflow = ''; } }); console.log('✅ 기본 모바일 메뉴 초기화 완료'); } // 서비스 카운터 업데이트 const serviceCards = document.querySelectorAll('.service-card'); const serviceCountElement = document.getElementById('service-count'); if (serviceCountElement) { serviceCountElement.textContent = serviceCards.length + '개'; } // 탭 기능 초기화 const tabButtons = document.querySelectorAll('[data-tab]'); const serviceCardsAll = document.querySelectorAll('.service-card'); tabButtons.forEach(function(button) { button.addEventListener('click', function() { // 모든 탭 비활성화 tabButtons.forEach(function(btn) { btn.classList.remove('active'); btn.setAttribute('aria-selected', 'false'); }); // 클릭된 탭 활성화 button.classList.add('active'); button.setAttribute('aria-selected', 'true'); const category = button.dataset.tab; // 서비스 카드 필터링 serviceCardsAll.forEach(function(card) { if (category === 'all' || card.dataset.category.includes(category)) { card.style.display = 'flex'; } else { card.style.display = 'none'; } }); }); }); }); // 성능 최적화: Service Worker 즉시 등록 (무시해도 됨) if ('serviceWorker' in navigator) { window.addEventListener('load', function() { navigator.serviceWorker.register('sw.js') .then(function(registration) { console.log('SW registered: ', registration); }) .catch(function(registrationError) { console.log('SW registration failed: ', registrationError); }); }); } </script> <script src="js/logger-init.js"></script> <script src="js/emergency-api-mitigation.js" defer></script> <script src="js/mobile-navigation-enhancer.js" defer></script> <script type="module" src="js/app.js" defer></script> <!-- Non-Critical JavaScript (지연 로딩으로 성능 최적화) --> <script> // 페이지 로드 완료 후 비중요 스크립트 로딩 window.addEventListener('load', function() { // 홈 페이지 스크립트 지연 로딩 const homeScript = document.createElement('script'); homeScript.type = 'module'; homeScript.src = 'js/pages/home.js'; document.head.appendChild(homeScript); }); // 카카오 SDK 조건부 로딩 함수 window.loadKakaoSDK = function() { if (!window.Kakao) { const script = document.createElement('script'); script.async = true; script.src = 'https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js'; document.head.appendChild(script); } }; </script> <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous" ></script> <script async src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js" integrity="sha512-H+rglffZ6f5gF7UJgvH4Naa+fGCgjrHKMgoFOGmcPTRwR6oILo5R+gtzNrpDp7iMV3udbymBVjkeZGNz1Em4rQ==" crossorigin="anonymous" referrerpolicy="no-referrer" ></script> <!-- Structured Data --> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"WebSite","name":"doha.kr","alternateName":"도하","url":"https://doha.kr","description":"심리테스트, 실용도구, AI 운세가 한곳에! 재미있고 유용한 서비스를 무료로 제공합니다.","potentialAction": {"@type":"SearchAction","target": {"@type":"EntryPoint","urlTemplate":"https://doha.kr/search?q={search_term_string}" },"query-input":"required name=search_term_string" } } </script> <!-- Organization Schema --> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"Organization","name":"doha.kr","url":"https://doha.kr","logo":"https://doha.kr/images/logo.svg","description":"심리테스트, 실용도구, AI 운세를 무료로 제공하는 종합 엔터테인먼트 플랫폼","foundingDate":"2024","contactPoint": {"@type":"ContactPoint","email":"contact@doha.kr","contactType":"customer service","availableLanguage":"Korean" } } </script> <!-- 폰트 로딩 최적화 시스템 --> <script src="./fonts/font-loader.js" async></script> </body>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src 'self' https:; script-src 'unsafe-inline' 'self' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; style-src 'unsafe-inline' 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net data:; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+    <title>doha.kr - 일상을 더 재미있게 만드는 공간</title>
+
+    <!-- 폰트 최적화: 로컬 + CDN 다중 폴백 시스템 -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- 로컬 폰트 우선 로딩 -->
+    <link rel="preload" href="./fonts/PretendardVariable.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="./fonts/Pretendard-Regular.woff2" as="font" type="font/woff2" crossorigin />
+    
+    <!-- CDN 폴백 -->
+    <link rel="preload" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css" /></noscript>
+    
+    <!-- 구글 폰트 최종 폴백 -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" /></noscript>
+
+    <meta name="description" content="심리테스트, 실용도구, 커뮤니티가 한곳에! 테토-에겐 테스트, MBTI 검사, 연봉계산기, 글자수세기 등 다양한 무료 서비스를 제공합니다." />
+    <meta name="keywords" content="심리테스트, MBTI, 테토에겐, 성격테스트, 연봉계산기, 글자수세기, 무료테스트" />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="doha.kr" />
+
+    <!-- Security Headers -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), accelerometer=(), gyroscope=()" />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://doha.kr/" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="doha.kr - 일상을 더 재미있게" />
+    <meta property="og:description" content="재미있는 심리테스트와 실용적인 도구들을 무료로 이용하세요!" />
+    <meta property="og:image" content="https://doha.kr/images/og-default.png" />
+    <meta property="og:url" content="https://doha.kr" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ko_KR" />
+    <meta property="og:site_name" content="doha.kr" />
+
+    <!-- 파비콘 -->
+    <link rel="icon" type="image/svg+xml" href="images/logo.svg" />
+    <link rel="apple-touch-icon" href="images/android-chrome-192x192.png" />
+    <link rel="manifest" href="manifest.json" />
+
+    <!-- Critical CSS (인라인) - Above-the-fold 렌더링 최적화 -->
+    <style>
+        /* Critical CSS - Design System Variables with Korean Optimization */
+        :root {
+            --color-primary: #5c5ce0;
+            --color-white: #fff;
+            --color-gray-900: #111827;
+            --bg-primary: #fff;
+            --text-primary: #1a1a1a;
+            --text-secondary: #6b7280;
+            --text-tertiary: #9ca3af;
+            --font-family: "Pretendard Variable", "Pretendard", -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-size-base: 1rem;
+            --line-height-normal: 1.7;
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 0.75rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+            --shadow-md: 0 2px 4px rgba(0,0,0,0.06);
+            --shadow-lg: 0 4px 6px rgba(0,0,0,0.07);
+            --transition-base: 0.25s cubic-bezier(0.4,0,0.2,1);
+        }
+
+        *, *:before, *:after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        * {
+            word-break: keep-all;
+            overflow-wrap: break-word;
+        }
+
+        html {
+            font-size: 16px;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        body {
+            font-family: var(--font-family);
+            font-size: var(--font-size-base);
+            line-height: var(--line-height-normal);
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            word-break: keep-all;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: var(--bg-primary);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header, .hero {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .header h1, .hero-title {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            word-break: keep-all;
+            line-height: 1.2;
+        }
+
+        .header p, .hero-subtitle {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            word-break: keep-all;
+            line-height: 1.5;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .btn, .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 16px;
+            border-radius: var(--radius-md);
+            font-family: inherit;
+            font-size: var(--font-size-base);
+            text-decoration: none;
+            transition: var(--transition-base);
+            cursor: pointer;
+            border: 1px solid transparent;
+            font-weight: 500;
+            word-break: keep-all;
+            min-height: 40px;
+        }
+
+        .btn-primary {
+            background: #1f2937;
+            color: #fff;
+            border-color: #1f2937;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .btn-primary:hover {
+            background: #374151;
+            border-color: #374151;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .card {
+            background: var(--bg-primary);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+            box-shadow: var(--shadow-md);
+            transition: var(--transition-base);
+        }
+
+        .grid {
+            display: grid;
+            gap: var(--spacing-md);
+        }
+
+        h1, h2, h3, h4, h5, h6, p, span, div, a {
+            word-break: keep-all;
+            overflow-wrap: break-word;
+        }
+
+        @media (max-width: 768px) {
+            .header h1, .hero-title {
+                font-size: 2rem;
+            }
+
+            .header p, .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .container {
+                padding: 0 16px;
+            }
+
+            .btn, .btn-primary {
+                min-height: 52px;
+                font-size: 1.1rem;
+            }
+        }
+
+        /* 성능 최적화: 추가 Critical CSS */
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            padding: 2rem 0;
+        }
+
+        .service-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 1.5rem;
+            border-radius: 8px;
+            background: var(--bg-primary);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+            transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+            text-decoration: none;
+            color: inherit;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .service-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .service-emoji {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            flex-shrink: 0;
+        }
+
+        .service-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            word-break: keep-all;
+            color: var(--text-primary);
+        }
+
+        .service-desc {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            word-break: keep-all;
+        }
+
+        .hero {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 45vh;
+            display: flex;
+            align-items: center;
+            padding: 3rem 1rem 4rem;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+        }
+
+        .tab-button {
+            background: transparent;
+            border: 2px solid rgba(0,0,0,0.1);
+            color: var(--text-secondary);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            word-break: keep-all;
+            min-height: 40px;
+        }
+
+        .tab-button:hover {
+            background: rgba(0,0,0,0.05);
+            border-color: rgba(0,0,0,0.2);
+        }
+
+        .tab-button.active {
+            background: var(--color-primary);
+            color: white;
+            border-color: var(--color-primary);
+        }
+
+        .feature-link {
+            color: var(--color-primary);
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s ease;
+            word-break: keep-all;
+        }
+
+        .feature-link:hover {
+            color: #4f46e5;
+            text-decoration: none;
+        }
+
+        .service-badge {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 12px;
+            position: absolute;
+            top: 8px;
+            right: 8px;
+        }
+
+        .service-card {
+            position: relative;
+        }
+
+        .cta-title, .section-title {
+            word-break: keep-all;
+            color: var(--text-primary);
+        }
+
+        .cta-description, .section-subtitle {
+            word-break: keep-all;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+    </style>
+
+    <!-- 비동기 CSS 로딩 (성능 최적화) -->
+    <link rel="preload" href="dist/styles.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" id="main-styles">
+    <noscript><link rel="stylesheet" href="dist/styles.min.css"></noscript>
+
+    <!-- Page Data Attributes -->
+    <script>
+        document.documentElement.dataset.page = 'home';
+    </script>
+</head>
+
+<body data-page="home">
+    <!-- Skip to main content for screen readers -->
+    <a href="#main-content" class="skip-link">본문으로 바로가기</a>
+
+    <!-- 네비게이션 -->
+    <nav id="navbar-placeholder" role="navigation" aria-label="주 메뉴">
+        <!-- 기본 네비게이션 (JS 로딩 실패시 백업) -->
+        <div class="navbar navbar-fixed">
+            <div class="navbar-container navbar-flex">
+                <a href="/" class="logo navbar-logo">doha.kr</a>
+                <ul class="nav-menu navbar-menu nav-flex" id="nav-menu">
+                    <li class="nav-item"><a href="/" class="nav-link nav-link-padded">홈</a></li>
+                    <li class="nav-item"><a href="tests/" class="nav-link nav-link-padded">심리테스트</a></li>
+                    <li class="nav-item"><a href="fortune/" class="nav-link nav-link-padded">운세</a></li>
+                    <li class="nav-item"><a href="tools/" class="nav-link nav-link-padded">실용도구</a></li>
+                    <li class="nav-item"><a href="contact/" class="nav-link nav-link-padded">문의</a></li>
+                    <li class="nav-item"><a href="about/" class="nav-link nav-link-padded">소개</a></li>
+                </ul>
+                <button class="mobile-menu-linear-button navbar-toggle text-korean" aria-expanded="false" aria-controls="nav-menu" aria-label="메뉴 열기">
+                    <span class="menu-bar"></span>
+                    <span class="menu-bar"></span>
+                    <span class="menu-bar"></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main id="main-content" class="page-main" role="main">
+        <!-- 히어로 섹션 -->
+        <section class="hero" aria-labelledby="hero-title">
+            <div class="hero-content">
+                <h1 id="hero-title" class="hero-title fade-in">
+                    일상을 더 재미있게 만드는 <br />
+                    <span class="hero-title-highlight highlight-diagonal highlight-korean animated">doha.kr</span>
+                </h1>
+                <p class="hero-subtitle fade-in stagger-1">
+                    심리테스트로 나를 발견하고, 실용도구로 일상을 편리하게! <br />
+                    무료로 제공되는 다양한 서비스를 지금 바로 경험해보세요.
+                </p>
+                <div class="hero-buttons fade-in stagger-2">
+                    <a href="tests/" class="linear-button--primary text-korean" data-category="tests" aria-label="심리테스트 페이지로 이동">
+                        <span class="icon" aria-hidden="true">🧠</span>
+                        심리테스트
+                    </a>
+                    <a href="tools/" class="linear-button--primary text-korean" data-category="tools" aria-label="실용도구 페이지로 이동">
+                        <span class="icon" aria-hidden="true">🛠️</span>
+                        실용도구
+                    </a>
+                    <a href="fortune/" class="linear-button--primary text-korean" data-category="fortune" aria-label="AI 운세 페이지로 이동">
+                        <span class="icon" aria-hidden="true">🔮</span>
+                        AI 운세
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 특징 섹션 -->
+        <section class="features" aria-labelledby="features-title">
+            <div class="container">
+                <h2 id="features-title" class="section-title fade-in">왜 doha.kr인가요?</h2>
+                <p class="section-subtitle fade-in stagger-1">
+                    단순한 테스트 사이트가 아닙니다. 여러분의 일상에 가치를 더하는 종합 플랫폼입니다.
+                </p>
+                <div class="features-grid">
+                    <article class="linear-card feature-card fade-in stagger-1">
+                        <div class="feature-icon icon" role="img" aria-label="뇌 아이콘">🧠</div>
+                        <h3 class="feature-title text-heading-3 text-korean highlight-dots highlight-korean subtle">과학적인 심리테스트</h3>
+                        <p class="feature-description text-body text-korean">
+                            심리학 이론에 기반한 정확한 분석으로 자신을 더 깊이 이해할 수 있습니다. 테토-에겐, MBTI 등 다양한 성격 유형 검사를 제공합니다.
+                        </p>
+                        <a href="tests/" class="linear-button--secondary text-korean" aria-label="심리테스트 페이지로 이동">
+                            테스트 보러가기
+                            <span class="icon" aria-hidden="true">→</span>
+                        </a>
+                    </article>
+                    <article class="linear-card feature-card fade-in stagger-2">
+                        <div class="feature-icon icon" role="img" aria-label="도구 아이콘">🛠️</div>
+                        <h3 class="feature-title text-heading-3 text-korean highlight-grid highlight-korean subtle">실용적인 도구모음</h3>
+                        <p class="feature-description text-body text-korean">
+                            글자수 세기, 연봉 계산기, BMI 계산기 등 일상에서 필요한 다양한 도구를 한 곳에서 무료로 이용할 수 있습니다.
+                        </p>
+                        <a href="tools/" class="linear-button--secondary text-korean" aria-label="실용도구 페이지로 이동">
+                            도구 사용하기
+                            <span class="icon" aria-hidden="true">→</span>
+                        </a>
+                    </article>
+                    <article class="linear-card feature-card fade-in stagger-3">
+                        <div class="feature-icon icon" role="img" aria-label="수정구 아이콘">🔮</div>
+                        <h3 class="feature-title text-heading-3 text-korean highlight-noise highlight-korean subtle">AI 운세 & 타로</h3>
+                        <p class="feature-description text-body text-korean">
+                            AI가 분석하는 오늘의 운세와 타로 카드로 미래를 예측해보세요. 개인 맞춤형 인사이트를 제공합니다.
+                        </p>
+                        <a href="fortune/" class="linear-button--secondary text-korean" aria-label="AI 운세 페이지로 이동">
+                            운세 보러가기
+                            <span class="icon" aria-hidden="true">→</span>
+                        </a>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- PWA 설치 프롬프트 섹션 -->
+        <section id="pwa-install-prompt" class="pwa-install-section" aria-labelledby="pwa-install-title" style="display: none;">
+            <div class="container">
+                <div class="pwa-install-linear-card">
+                    <div class="pwa-install-content">
+                        <div class="pwa-install-icon">📱</div>
+                        <div class="pwa-install-text">
+                            <h3 id="pwa-install-title">앱으로 설치하기</h3>
+                            <p>doha.kr을 홈 화면에 추가하고 앱처럼 사용하세요!</p>
+                            <ul class="pwa-benefits">
+                                <li>⚡ 빠른 속도</li>
+                                <li>📱 앱처럼 사용</li>
+                                <li>🔄 오프라인 지원</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="pwa-install-actions">
+                        <button id="pwa-install-btn" class="linear-button--primary text-korean pwa-install-button" disabled>
+                            <span class="icon">📲</span>
+                            <span class="linear-button-text text-korean">설치 준비 중...</span>
+                        </button>
+                        <button id="pwa-close-btn" class="linear-button--ghost text-korean pwa-close-button" aria-label="설치 프롬프트 닫기">
+                            <span class="icon">✕</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 인기 서비스 섹션 -->
+        <section id="services" class="popular-services" aria-labelledby="services-title">
+            <div class="container">
+                <h2 id="services-title" class="section-title fade-in">인기 서비스</h2>
+                <p class="section-subtitle fade-in stagger-1">가장 많이 이용하는 서비스들을 만나보세요</p>
+
+                <!-- 서비스 탭 -->
+                <div class="services-tabs fade-in stagger-2" data-tabs="services" role="tablist" aria-label="서비스 카테고리">
+                    <button class="linear-button--tab active text-korean" data-tab="all" role="tab" aria-selected="true" aria-controls="services-grid" tabindex="0">
+                        전체
+                    </button>
+                    <button class="linear-button--tab text-korean" data-tab="tests" role="tab" aria-selected="false" aria-controls="services-grid" tabindex="-1">
+                        심리테스트
+                    </button>
+                    <button class="linear-button--tab text-korean" data-tab="tools" role="tab" aria-selected="false" aria-controls="services-grid" tabindex="-1">
+                        실용도구
+                    </button>
+                    <button class="linear-button--tab text-korean" data-tab="fortune" role="tab" aria-selected="false" aria-controls="services-grid" tabindex="-1">
+                        AI 운세
+                    </button>
+                    <button class="linear-button--tab text-korean" data-tab="new" role="tab" aria-selected="false" aria-controls="services-grid" tabindex="-1">
+                        최신
+                    </button>
+                </div>
+
+                <!-- 서비스 그리드 -->
+                <div class="services-grid fade-in stagger-3 animated" id="services-grid" role="tabpanel" aria-labelledby="services-title">
+                    <!-- 심리테스트 -->
+                    <a href="tests/teto-egen/" class="linear-card service-card" data-category="tests" aria-label="테토-에겐 테스트 - 당신의 성격이 테토형인지 에겐형인지 알아보세요">
+                        <span class="service-emoji icon" aria-hidden="true">🦋</span>
+                        <h3 class="service-name text-subheading text-korean highlight-grid highlight-korean subtle">테토-에겐 테스트</h3>
+                        <p class="service-desc text-body text-korean">당신의 성격이 테토형인지 에겐형인지 알아보세요</p>
+                        <span class="linear-badge--hot" aria-label="인기 서비스">HOT</span>
+                    </a>
+                    <a href="tests/mbti/" class="linear-card service-card" data-category="tests" aria-label="MBTI 성격유형 검사 - 16가지 성격 유형 중 나는 어떤 유형일까?">
+                        <span class="service-emoji icon" aria-hidden="true">🎭</span>
+                        <h3 class="service-name text-subheading text-korean highlight-grid highlight-korean subtle">MBTI 성격유형 검사</h3>
+                        <p class="service-desc text-body text-korean">16가지 성격 유형 중 나는 어떤 유형일까?</p>
+                        <span class="linear-badge--popular">인기</span>
+                    </a>
+                    <a href="tests/love-dna/" class="linear-card service-card" data-category="tests new" aria-label="러브 DNA 테스트 - 당신만의 연애 스타일을 5축 DNA로 분석해보세요">
+                        <span class="service-emoji icon" aria-hidden="true">💕</span>
+                        <h3 class="service-name text-subheading text-korean highlight-grid highlight-korean subtle">러브 DNA 테스트</h3>
+                        <p class="service-desc text-body text-korean">당신만의 연애 스타일을 5축 DNA로 분석해보세요</p>
+                        <span class="linear-badge--new" aria-label="신규 서비스">NEW</span>
+                    </a>
+
+                    <!-- 실용도구 -->
+                    <a href="tools/text-counter.html" class="linear-card service-card" data-category="tools" aria-label="글자수 세기 - 자소서, 리포트 작성 시 필수! 글자수를 확인하세요">
+                        <span class="service-emoji icon" aria-hidden="true">📝</span>
+                        <h3 class="service-name text-subheading text-korean highlight-grid highlight-korean subtle">글자수 세기</h3>
+                        <p class="service-desc text-body text-korean">자소서, 리포트 작성 시 필수! 글자수를 확인하세요</p>
+                    </a>
+                    <a href="tools/salary-calculator.html" class="linear-card service-card" data-category="tools" aria-label="연봉 실수령액 계산기 - 세금 공제 후 실제 받는 금액을 계산해보세요">
+                        <span class="service-emoji icon" aria-hidden="true">💰</span>
+                        <h3 class="service-name text-subheading text-korean highlight-grid highlight-korean subtle">연봉 실수령액 계산기</h3>
+                        <p class="service-desc text-body text-korean">세금 공제 후 실제 받는 금액을 계산해보세요</p>
+                        <span class="linear-badge--new" aria-label="신규 서비스">NEW</span>
+                    </a>
+                    <a href="tools/bmi-calculator.html" class="linear-card service-card" data-category="tools" aria-label="BMI 계산기 - 키와 몸무게로 체질량지수를 확인하세요">
+                        <span class="service-emoji icon" aria-hidden="true">🏃</span>
+                        <h3 class="service-name text-subheading text-korean highlight-grid highlight-korean subtle">BMI 계산기</h3>
+                        <p class="service-desc text-body text-korean">키와 몸무게로 체질량지수를 확인하세요</p>
+                        <span class="linear-badge--new" aria-label="신규 서비스">NEW</span>
+                    </a>
+
+                    <!-- AI 운세 -->
+                    <a href="fortune/daily/" class="linear-card service-card" data-category="fortune" aria-label="오늘의 운세 - AI가 분석하는 개인 맞춤형 상세 운세를 확인하세요">
+                        <span class="service-emoji icon" aria-hidden="true">🔮</span>
+                        <h3 class="service-name text-subheading text-korean highlight-grid highlight-korean subtle">오늘의 운세</h3>
+                        <p class="service-desc text-body text-korean">AI가 분석하는 개인 맞춤형 상세 운세를 확인하세요</p>
+                        <span class="linear-badge--hot" aria-label="인기 서비스">HOT</span>
+                    </a>
+                    <a href="fortune/saju/" class="linear-card service-card" data-category="fortune" aria-label="AI 사주팔자 - 생년월일시로 AI가 분석하는 상세한 사주팔자 풀이">
+                        <span class="service-emoji icon" aria-hidden="true">🎴</span>
+                        <h3 class="service-name text-subheading text-korean highlight-grid highlight-korean subtle">AI 사주팔자</h3>
+                        <p class="service-desc text-body text-korean">생년월일시로 AI가 분석하는 상세한 사주팔자 풀이</p>
+                        <span class="linear-badge--popular">인기</span>
+                    </a>
+                    <a href="fortune/zodiac/" class="linear-card service-card" data-category="fortune" aria-label="별자리 운세 - 12궁도 별자리별 오늘의 상세 운세를 확인하세요">
+                        <span class="service-emoji icon" aria-hidden="true">♈</span>
+                        <h3 class="service-name text-subheading text-korean highlight-grid highlight-korean subtle">별자리 운세</h3>
+                        <p class="service-desc text-body text-korean">12궁도 별자리별 오늘의 상세 운세를 확인하세요</p>
+                        <span class="linear-badge--popular">인기</span>
+                    </a>
+                    <a href="fortune/tarot/" class="linear-card service-card" data-category="fortune" aria-label="AI 타로 리딩 - 질문을 입력하면 AI가 타로카드로 답을 찾아드려요">
+                        <span class="service-emoji icon" aria-hidden="true">🃏</span>
+                        <h3 class="service-name text-subheading text-korean highlight-grid highlight-korean subtle">AI 타로 리딩</h3>
+                        <p class="service-desc text-body text-korean">질문을 입력하면 AI가 타로카드로 답을 찾아드려요</p>
+                        <span class="linear-badge--new" aria-label="신규 서비스">NEW</span>
+                    </a>
+                    <a href="fortune/zodiac-animal/" class="linear-card service-card" data-category="fortune new" aria-label="띠별 운세 - 12간지 띠별 상세한 오늘의 운세를 확인하세요">
+                        <span class="service-emoji icon" aria-hidden="true">🐲</span>
+                        <h3 class="service-name text-subheading text-korean highlight-grid highlight-korean subtle">띠별 운세</h3>
+                        <p class="service-desc text-body text-korean">12간지 띠별 상세한 오늘의 운세를 확인하세요</p>
+                        <span class="linear-badge--new" aria-label="신규 서비스">NEW</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 통계 섹션 -->
+        <section class="stats" aria-labelledby="stats-title">
+            <h2 id="stats-title" class="visually-hidden">서비스 통계</h2>
+            <div class="container">
+                <div class="stats-grid">
+                    <div class="stat-item fade-in stagger-1 animated">
+                        <div class="stat-number" aria-describedby="stat-label-1">무료</div>
+                        <div id="stat-label-1" class="stat-label">모든 서비스 이용</div>
+                    </div>
+                    <div class="stat-item fade-in stagger-2 animated">
+                        <div class="stat-number" id="service-count" aria-describedby="stat-label-2" aria-live="polite">0개</div>
+                        <div id="stat-label-2" class="stat-label">다양한 서비스</div>
+                    </div>
+                    <div class="stat-item fade-in stagger-3 animated">
+                        <div class="stat-number" aria-describedby="stat-label-3">간편</div>
+                        <div id="stat-label-3" class="stat-label">가입 없이 이용</div>
+                    </div>
+                    <div class="stat-item fade-in stagger-4 animated">
+                        <div class="stat-number" aria-describedby="stat-label-4">24/7</div>
+                        <div id="stat-label-4" class="stat-label">언제나 이용가능</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 광고 영역 -->
+        <aside class="ad-container" aria-label="광고 영역">
+            <div class="ad-label">광고</div>
+            <div id="ad-container-home-1" class="ad-container-min" data-ad-slot="3911401606">
+                <div class="ad-placeholder ad-container-styled">광고 로딩 중...</div>
+            </div>
+        </aside>
+
+        <!-- CTA 섹션 -->
+        <section class="cta" aria-labelledby="cta-title">
+            <div class="container">
+                <div class="cta-box">
+                    <h2 id="cta-title" class="cta-title highlight-geometric highlight-korean animated">지금 바로 시작하세요!</h2>
+                    <p class="cta-description">
+                        가입 없이 무료로 모든 서비스를 이용할 수 있습니다. <br />
+                        당신을 기다리는 흥미로운 발견이 있을 거예요.
+                    </p>
+                    <a href="tests/" class="linear-button--primary linear-button--large text-korean" aria-label="심리테스트 페이지로 이동하여 테스트 시작하기">
+                        테스트 시작하기
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 푸터 -->
+        <footer class="footer" role="contentinfo" aria-label="사이트 정보">
+            <div class="footer-content">
+                <div class="footer-section footer-brand">
+                    <h3>doha.kr</h3>
+                    <p class="footer-description">
+                        일상을 더 재미있게 만드는 공간 <br />
+                        심리테스트, 운세, 실용도구의 만남
+                    </p>
+                    <div class="footer-social">
+                        <a href="mailto:youtubdoha@gmail.com" class="social-link" aria-label="이메일 문의">📧</a>
+                    </div>
+                </div>
+                <div class="footer-section footer-services">
+                    <h3>주요 서비스</h3>
+                    <ul class="footer-links">
+                        <li><a href="tests/">🧠 심리테스트</a></li>
+                        <li><a href="fortune/">🔮 AI 운세</a></li>
+                        <li><a href="tools/">🛠️ 실용도구</a></li>
+                        <li><a href="about/">ℹ️ 사이트 소개</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section footer-popular">
+                    <h3>인기 콘텐츠</h3>
+                    <ul class="footer-links">
+                        <li><a href="tests/teto-egen/">테토-에겐 테스트</a></li>
+                        <li><a href="tests/mbti/">MBTI 테스트</a></li>
+                        <li><a href="fortune/daily/">오늘의 운세</a></li>
+                        <li><a href="tools/text-counter.html">글자수 세기</a></li>
+                        <li><a href="fortune/tarot/">AI 타로</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section footer-support">
+                    <h3>고객지원</h3>
+                    <ul class="footer-links">
+                        <li><a href="contact/">📞 문의하기</a></li>
+                        <li><a href="faq/">❓ 자주 묻는 질문</a></li>
+                        <li><a href="privacy/">🔒 개인정보처리방침</a></li>
+                        <li><a href="terms/">📄 이용약관</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 doha.kr. All rights reserved.</p>
+            </div>
+        </footer>
+    </main>
+
+    <!-- Critical JavaScript (즉시 필요) -->
+    <script>
+        // 기본 모바일 메뉴 기능 (ES6 모듈 로딩 실패시 백업)
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const navMenu = document.querySelector('.nav-menu');
+            
+            if (mobileMenuBtn && navMenu) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    const isActive = navMenu.classList.contains('active');
+                    
+                    if (isActive) {
+                        navMenu.classList.remove('active');
+                        mobileMenuBtn.classList.remove('active');
+                        mobileMenuBtn.setAttribute('aria-expanded', 'false');
+                        document.body.style.overflow = '';
+                    } else {
+                        navMenu.classList.add('active');
+                        mobileMenuBtn.classList.add('active');
+                        mobileMenuBtn.setAttribute('aria-expanded', 'true');
+                        document.body.style.overflow = 'hidden';
+                    }
+                });
+
+                // 메뉴 외부 클릭시 닫기
+                document.addEventListener('click', function(event) {
+                    if (!event.target.closest('.navbar') && navMenu.classList.contains('active')) {
+                        navMenu.classList.remove('active');
+                        mobileMenuBtn.classList.remove('active');
+                        mobileMenuBtn.setAttribute('aria-expanded', 'false');
+                        document.body.style.overflow = '';
+                    }
+                });
+
+                // ESC 키로 닫기
+                document.addEventListener('keydown', function(event) {
+                    if (event.key === 'Escape' && navMenu.classList.contains('active')) {
+                        navMenu.classList.remove('active');
+                        mobileMenuBtn.classList.remove('active');
+                        mobileMenuBtn.setAttribute('aria-expanded', 'false');
+                        document.body.style.overflow = '';
+                    }
+                });
+
+                console.log('✅ 기본 모바일 메뉴 초기화 완료');
+            }
+
+            // 서비스 카운터 업데이트
+            const serviceCards = document.querySelectorAll('.service-card');
+            const serviceCountElement = document.getElementById('service-count');
+            if (serviceCountElement) {
+                serviceCountElement.textContent = serviceCards.length + '개';
+            }
+
+            // 탭 기능 초기화
+            const tabButtons = document.querySelectorAll('[data-tab]');
+            const serviceCardsAll = document.querySelectorAll('.service-card');
+
+            tabButtons.forEach(function(button) {
+                button.addEventListener('click', function() {
+                    // 모든 탭 비활성화
+                    tabButtons.forEach(function(btn) {
+                        btn.classList.remove('active');
+                        btn.setAttribute('aria-selected', 'false');
+                    });
+
+                    // 클릭된 탭 활성화
+                    button.classList.add('active');
+                    button.setAttribute('aria-selected', 'true');
+
+                    const category = button.dataset.tab;
+
+                    // 서비스 카드 필터링
+                    serviceCardsAll.forEach(function(card) {
+                        if (category === 'all' || card.dataset.category.includes(category)) {
+                            card.style.display = 'flex';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        });
+
+        // 성능 최적화: Service Worker 즉시 등록 (무시해도 됨)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('sw.js')
+                    .then(function(registration) {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch(function(registrationError) {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
+    </script>
+
+    <script src="js/logger-init.js"></script>
+    <script src="js/emergency-api-mitigation.js" defer></script>
+    <script src="js/mobile-navigation-enhancer.js" defer></script>
+    <script type="module" src="js/app.js" defer></script>
+
+    <!-- Non-Critical JavaScript (지연 로딩으로 성능 최적화) -->
+    <script>
+        // 페이지 로드 완료 후 비중요 스크립트 로딩
+        window.addEventListener('load', function() {
+            // 홈 페이지 스크립트 지연 로딩
+            const homeScript = document.createElement('script');
+            homeScript.type = 'module';
+            homeScript.src = 'js/pages/home.js';
+            document.head.appendChild(homeScript);
+        });
+
+        // 카카오 SDK 조건부 로딩 함수
+        window.loadKakaoSDK = function() {
+            if (!window.Kakao) {
+                const script = document.createElement('script');
+                script.async = true;
+                script.src = 'https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js';
+                document.head.appendChild(script);
+            }
+        };
+    </script>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222" crossorigin="anonymous"></script>
+    <script async src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js" integrity="sha512-H+rglffZ6f5gF7UJgvH4Naa+fGCgjrHKMgoFOGmcPTRwR6oILo5R+gtzNrpDp7iMV3udbymBVjkeZGNz1Em4rQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "doha.kr",
+            "alternateName": "도하",
+            "url": "https://doha.kr",
+            "description": "심리테스트, 실용도구, AI 운세가 한곳에! 재미있고 유용한 서비스를 무료로 제공합니다.",
+            "potentialAction": {
+                "@type": "SearchAction",
+                "target": {
+                    "@type": "EntryPoint",
+                    "urlTemplate": "https://doha.kr/search?q={search_term_string}"
+                },
+                "query-input": "required name=search_term_string"
+            }
+        }
+    </script>
+
+    <!-- Organization Schema -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "doha.kr",
+            "url": "https://doha.kr",
+            "logo": "https://doha.kr/images/logo.svg",
+            "description": "심리테스트, 실용도구, AI 운세를 무료로 제공하는 종합 엔터테인먼트 플랫폼",
+            "foundingDate": "2024",
+            "contactPoint": {
+                "@type": "ContactPoint",
+                "email": "contact@doha.kr",
+                "contactType": "customer service",
+                "availableLanguage": "Korean"
+            }
+        }
+    </script>
+
+    <!-- 폰트 로딩 최적화 시스템 -->
+    <script src="./fonts/font-loader.js" async></script>
+</body>
 </html>
