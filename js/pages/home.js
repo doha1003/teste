@@ -195,7 +195,7 @@ class HomePage {
    * 서비스 목록 렌더링
    */
   renderServices(category = 'all') {
-    const dh-l-grid = document.getElementById('services-grid');
+    const grid = document.getElementById('services-grid');
     if (!grid) {
       return;
     }

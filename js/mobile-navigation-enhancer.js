@@ -291,8 +291,8 @@
       });
     }
 
-    createRippleEffect = (e) => {
-      const dh-c-button = e.currentTarget;
+    createRippleEffect(e) {
+      const button = e.currentTarget;
       const rect = button.getBoundingClientRect();
       const size = Math.max(rect.width, rect.height);
       const x = e.clientX - rect.left - size / 2;
