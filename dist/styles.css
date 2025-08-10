@@ -2852,17 +2852,29 @@ select:disabled {
 :root {
   /* ===== COLOR TOKENS ===== */
   
-  /* Brand Colors - Improved for Better Contrast */
-  --color-brand-50: #f0f4ff;
-  --color-brand-100: #e0e7ff;
-  --color-brand-200: #c7d2fe;
-  --color-brand-300: #a5b4fc;
-  --color-brand-400: #818cf8;
-  --color-brand-500: #6366f1;
-  --color-brand-600: #4f46e5;
-  --color-brand-700: #4338ca;
-  --color-brand-800: #3730a3;
-  --color-brand-900: #312e81;
+  /* Primary Colors (Linear 컴포넌트 호환) */
+  --color-primary-50: #f0f4ff;
+  --color-primary-100: #e0e7ff;
+  --color-primary-200: #c7d2fe;
+  --color-primary-300: #a5b4fc;
+  --color-primary-400: #818cf8;
+  --color-primary-500: #6366f1;
+  --color-primary-600: #4f46e5;
+  --color-primary-700: #4338ca;
+  --color-primary-800: #3730a3;
+  --color-primary-900: #312e81;
+  
+  /* Brand Colors (기존 호환성 유지) */
+  --color-brand-50: var(--color-primary-50);
+  --color-brand-100: var(--color-primary-100);
+  --color-brand-200: var(--color-primary-200);
+  --color-brand-300: var(--color-primary-300);
+  --color-brand-400: var(--color-primary-400);
+  --color-brand-500: var(--color-primary-500);
+  --color-brand-600: var(--color-primary-600);
+  --color-brand-700: var(--color-primary-700);
+  --color-brand-800: var(--color-primary-800);
+  --color-brand-900: var(--color-primary-900);
   
   /* Semantic Colors */
   --color-success: #10b981;
@@ -3926,6 +3938,7 @@ body {
   border-radius: 3px;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform;
+  z-index: 10; /* 광고 컨테이너보다 위에 표시 */
   
   /* Subtle background for better contrast */
   background-color: var(--highlight-color-secondary);
@@ -3945,6 +3958,7 @@ body {
   border-radius: 3px;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform;
+  z-index: 10; /* 광고 컨테이너보다 위에 표시 */
   background-color: var(--highlight-color-secondary);
   
   background-image: 
@@ -3992,6 +4006,7 @@ body {
   border-radius: 3px;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform;
+  z-index: 10; /* 광고 컨테이너보다 위에 표시 */
   background-color: var(--highlight-color-secondary);
   
   background-image: 
@@ -4047,6 +4062,7 @@ body {
   border-radius: 3px;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform;
+  z-index: 10; /* 광고 컨테이너보다 위에 표시 */
   
   background-image: 
     linear-gradient(
@@ -4108,6 +4124,7 @@ body {
   border-radius: 3px;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform;
+  z-index: 10; /* 광고 컨테이너보다 위에 표시 */
   background-color: var(--highlight-color-secondary);
   
   /* Multiple small radial gradients to create noise effect */
@@ -4169,6 +4186,7 @@ body {
   border-radius: 3px;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform;
+  z-index: 10; /* 광고 컨테이너보다 위에 표시 */
   background-color: var(--highlight-color-secondary);
   
   /* Triangular pattern using conic gradients */
@@ -4375,6 +4393,40 @@ body {
 }
 [class*="highlight-"]:hover {
   will-change: transform, background-position;
+}
+/* ==========================================================================
+   Ad Container Safe Zone (광고 컨테이너와의 충돌 방지)
+   ========================================================================== */
+/* 광고 컨테이너가 다른 요소들을 침범하지 않도록 보호 */
+.highlight-safe-zone {
+  position: relative;
+  z-index: 15; /* 하이라이트보다도 더 위에 */
+}
+/* 광고 컨테이너 스타일링 */
+.adsbygoogle,
+[id*="google_ads"],
+[class*="ad-container"] {
+  z-index: 1 !important; /* 하이라이트보다 아래에 배치 */
+  overflow: hidden; /* 컨테이너 영역을 벗어나지 않도록 */
+  position: relative;
+}
+/* 하이라이트가 광고와 겹칠 때의 추가 보호 */
+[class*="highlight-"]:not(.highlight-safe-zone) {
+  position: relative;
+  z-index: 10;
+}
+/* 중요한 텍스트 컨텐츠 보호 */
+.text-content-protected,
+.highlight-protected {
+  position: relative;
+  z-index: 12;
+  background-color: rgba(255, 255, 255, 0.95); /* 배경 보호 */
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+[data-theme="dark"] .text-content-protected,
+[data-theme="dark"] .highlight-protected {
+  background-color: rgba(15, 23, 42, 0.95);
 }
 /* 하이라이터 패턴 시스템 */
 /* ==========================================================================

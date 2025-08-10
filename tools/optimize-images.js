@@ -306,12 +306,10 @@ async function main() {
   }
 }
 
-// Run if called directly
-if (import.meta.url === `file://${process.argv[1]}`) {
-  main().catch((error) => {
-    console.error('Script failed:', error);
-    process.exit(1);
-  });
-}
+// Run if called directly - Force execution for testing
+main().catch((error) => {
+  console.error('Script failed:', error);
+  process.exit(1);
+});
 
 export { optimizeImage, generatePictureHTML };

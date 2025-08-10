@@ -1,0 +1,302 @@
+/**
+ * doha.kr Z-Index 관리 시스템
+ * 모든 z-index 값을 CSS 변수로 중앙집중식 관리
+ * 
+ * 계층 구조:
+ * 0-99: 기본 레이어 (일반 콘텐츠)
+ * 100-199: 상호작용 요소 (드롭다운, 툴팁 등)
+ * 200-299: 고정/sticky 요소
+ * 400-499: 오버레이 (모달 배경 등)
+ * 500-599: 모달 및 다이얼로그
+ * 700-799: 중요 알림 (툴팁, 토스트 등)
+ * 1000+: 최상위 요소 (네비게이션, PWA 알림 등)
+ */
+
+:root {
+  /* === 기본 레이어 (0-99) === */
+  --z-base: 1;
+  --z-content: 10;
+  --z-elevated: 20;
+  --z-floating: 30;
+
+  /* === 상호작용 요소 (100-199) === */
+  --z-dropdown: 100;
+  --z-popover: 110;
+  --z-tooltip: 120;
+  --z-menu: 130;
+  --z-autocomplete: 140;
+
+  /* === 고정/Sticky 요소 (200-299) === */
+  --z-sticky: 200;
+  --z-fixed: 210;
+  --z-header: 220;
+  --z-sidebar: 230;
+
+  /* === 오버레이 (400-499) === */
+  --z-overlay: 400;
+  --z-modal-backdrop: 410;
+  --z-drawer-backdrop: 420;
+
+  /* === 모달 및 다이얼로그 (500-599) === */
+  --z-modal: 500;
+  --z-dialog: 510;
+  --z-drawer: 520;
+  --z-offcanvas: 530;
+  --z-fullscreen: 540;
+
+  /* === 중요 알림 (700-799) === */
+  --z-toast: 700;
+  --z-snackbar: 710;
+  --z-alert: 720;
+  --z-notification: 730;
+
+  /* === 최상위 요소 (1000+) === */
+  --z-navbar: 1000;
+  --z-topbar: 1010;
+  --z-loading: 1020;
+  --z-pwa-install: 1030;
+  --z-pwa-update: 1040;
+  --z-debug: 9999;
+
+  /* === 컨텍스트별 z-index === */
+  
+  /* Fortune 관련 */
+  --z-fortune-card: var(--z-elevated);
+  --z-fortune-modal: var(--z-modal);
+  --z-fortune-loading: var(--z-overlay);
+  
+  /* Test 관련 */
+  --z-test-progress: var(--z-sticky);
+  --z-test-modal: var(--z-modal);
+  --z-test-tooltip: var(--z-tooltip);
+  
+  /* Tool 관련 */
+  --z-calculator-popup: var(--z-dropdown);
+  --z-result-modal: var(--z-modal);
+  
+  /* Mobile 관련 */
+  --z-mobile-menu: var(--z-drawer);
+  --z-mobile-overlay: var(--z-overlay);
+  --z-mobile-header: var(--z-navbar);
+}
+
+/**
+ * 다크모드에서의 z-index 조정
+ * 일부 요소는 다크모드에서 더 높은 우선순위가 필요할 수 있음
+ */
+[data-theme="dark"] {
+  /* 다크모드에서는 모달이 더 눈에 띄어야 함 */
+  --z-modal-backdrop: 415;
+  --z-modal: 505;
+}
+
+/**
+ * 반응형에 따른 z-index 조정
+ */
+@media (max-width: 768px) {
+  :root {
+    /* 모바일에서는 네비게이션이 최우선 */
+    --z-mobile-menu: 1100;
+    --z-mobile-overlay: 1090;
+    
+    /* 모바일에서 PWA 설치 프롬프트는 더 높은 우선순위 */
+    --z-pwa-install: 1110;
+  }
+}
+
+/**
+ * 프린트 모드에서의 z-index
+ */
+@media print {
+  :root {
+    /* 프린트에서는 모든 오버레이/모달 숨김 */
+    --z-overlay: -1;
+    --z-modal: -1;
+    --z-toast: -1;
+    --z-pwa-install: -1;
+  }
+}
+
+/**
+ * 접근성: 사용자가 애니메이션 줄임을 선호하는 경우
+ */
+@media (prefers-reduced-motion: reduce) {
+  /* z-index는 유지하되, 관련 트랜지션 효과는 다른 파일에서 처리 */
+}
+
+/**
+ * 유틸리티 클래스: z-index를 직접 적용하는 경우
+ */
+.z-base { z-index: var(--z-base); }
+.z-content { z-index: var(--z-content); }
+.z-elevated { z-index: var(--z-elevated); }
+.z-floating { z-index: var(--z-floating); }
+
+.z-dropdown { z-index: var(--z-dropdown); }
+.z-popover { z-index: var(--z-popover); }
+.z-tooltip { z-index: var(--z-tooltip); }
+
+.z-sticky { z-index: var(--z-sticky); }
+.z-fixed { z-index: var(--z-fixed); }
+.z-header { z-index: var(--z-header); }
+
+.z-overlay { z-index: var(--z-overlay); }
+.z-modal { z-index: var(--z-modal); }
+.z-dialog { z-index: var(--z-dialog); }
+
+.z-toast { z-index: var(--z-toast); }
+.z-alert { z-index: var(--z-alert); }
+
+.z-navbar { z-index: var(--z-navbar); }
+.z-loading { z-index: var(--z-loading); }
+
+/**
+ * 디버깅용: z-index 시각화
+ * data-debug-z="true" 속성을 body에 추가하면 모든 z-index가 표시됨
+ */
+[data-debug-z="true"] * {
+  position: relative;
+}
+
+[data-debug-z="true"] *::after {
+  content: "z:" attr(data-z-index);
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: rgba(255, 0, 0, 0.8);
+  color: white;
+  font-size: 10px;
+  padding: 2px 4px;
+  border-radius: 2px;
+  z-index: var(--z-debug);
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+/**
+ * 스택 컨텍스트 관리
+ * 새로운 스택 컨텍스트를 생성하는 유틸리티 클래스들
+ */
+.stack-context {
+  /* 새로운 스택 컨텍스트 생성 */
+  isolation: isolate;
+}
+
+.stack-context-transform {
+  /* transform을 사용한 스택 컨텍스트 */
+  transform: translateZ(0);
+}
+
+.stack-context-opacity {
+  /* opacity를 사용한 스택 컨텍스트 */
+  opacity: 0.99;
+}
+
+/**
+ * Z-Index 상속 방지
+ */
+.z-reset {
+  z-index: auto;
+}
+
+/**
+ * 컴포넌트별 z-index 매핑
+ * 각 컴포넌트는 이 변수들을 사용해야 함
+ */
+
+/* 네비게이션 */
+.navbar,
+.nav-header,
+.mobile-nav {
+  z-index: var(--z-navbar);
+}
+
+/* 모바일 메뉴 */
+.mobile-menu {
+  z-index: var(--z-mobile-menu);
+}
+
+.mobile-menu-overlay {
+  z-index: var(--z-mobile-overlay);
+}
+
+/* PWA 관련 */
+.pwa-install-banner {
+  z-index: var(--z-pwa-install);
+}
+
+.pwa-update-notification {
+  z-index: var(--z-pwa-update);
+}
+
+.pwa-install-success {
+  z-index: calc(var(--z-pwa-install) + 1);
+}
+
+/* 드롭다운 및 메뉴 */
+.dropdown-menu,
+.select-dropdown,
+.autocomplete-dropdown {
+  z-index: var(--z-dropdown);
+}
+
+/* 툴팁 */
+.tooltip,
+.help-tooltip {
+  z-index: var(--z-tooltip);
+}
+
+/* 모달 */
+.modal {
+  z-index: var(--z-modal);
+}
+
+.modal-backdrop {
+  z-index: var(--z-modal-backdrop);
+}
+
+/* 토스트/알림 */
+.toast,
+.notification,
+.alert-popup {
+  z-index: var(--z-toast);
+}
+
+/* 로딩 */
+.loading-overlay,
+.spinner-overlay {
+  z-index: var(--z-loading);
+}
+
+/* Sticky 요소 */
+.sticky-header,
+.floating-button,
+.scroll-to-top {
+  z-index: var(--z-sticky);
+}
+
+/**
+ * 특수 케이스: 겹치는 요소들의 미세 조정
+ */
+
+/* Fortune 카드가 다른 카드보다 살짝 위에 */
+.fortune-card:hover {
+  z-index: calc(var(--z-fortune-card) + 1);
+}
+
+/* Test 진행률 바는 sticky보다 위에 */
+.test-progress-bar {
+  z-index: calc(var(--z-test-progress) + 1);
+}
+
+/* 활성화된 드롭다운은 다른 드롭다운보다 위에 */
+.dropdown.active {
+  z-index: calc(var(--z-dropdown) + 1);
+}
+
+/**
+ * 개발자 도구: z-index 검증
+ * 콘솔에서 DohaKR.utils.validateZIndex() 호출하여 사용
+ */
+
+/* 이 부분은 JavaScript로 구현됨 (namespace-migration.js 참조) */
