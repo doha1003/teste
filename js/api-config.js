@@ -57,7 +57,17 @@
       }
 
       try {
-        const response = await fetch(url, { ...defaultOptions, ...options });
+        // 타임아웃 설정 (30초)
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 30000);
+        
+        const response = await fetch(url, { 
+          ...defaultOptions, 
+          ...options,
+          signal: options.signal || controller.signal
+        });
+        
+        clearTimeout(timeoutId);
         const duration = performance.now() - startTime;
 
         if (!response.ok) {

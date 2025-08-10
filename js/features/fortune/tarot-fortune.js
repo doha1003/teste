@@ -7,6 +7,7 @@ import { FortuneService } from "./fortune-service.js";
 
 export class TarotFortuneService extends FortuneService {
   constructor() {
+        this.initCardSelection();
     super({
       serviceName: 'tarot-fortune',
       fortuneType: 'tarot',

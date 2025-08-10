@@ -253,9 +253,52 @@ export class TextCounterService extends ToolService {
    * 요소 업데이트 헬퍼
    */
   updateElement(selector, value) {
-    const element = document.querySelector(selector);
-    if (element) {
-      element.textContent = value;
+    // 다양한 셀렉터로 요소 찾기
+    const selectors = [
+      selector,
+      selector.replace('#', '.'), // id를 class로도 시도
+      `[data-count="${selector.replace('#', '')}"]`,
+      `.count-value.${selector.replace('#', '')}`,
+      `.result-value.${selector.replace('#', '')}`
+    ];
+    
+    let updated = false;
+    for (const sel of selectors) {
+      const elements = document.querySelectorAll(sel);
+      elements.forEach(element => {
+        if (element) {
+          if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+            element.value = value;
+          } else {
+            element.textContent = value;
+          }
+          updated = true;
+        }
+      });
+      if (updated) break;
+    }
+    
+    // 추가적으로 일반적인 카운트 ID 업데이트
+    if (!updated) {
+      const id = selector.replace('#', '');
+      // charCount, wordCount 등의 일반적인 ID로도 시도
+      const commonIds = {
+        'totalChars': 'charCount',
+        'words': 'wordCount', 
+        'sentences': 'lineCount',
+        'bytes': 'byteCount'
+      };
+      
+      if (commonIds[id]) {
+        const commonElement = document.querySelector(`#${commonIds[id]}, .${commonIds[id]}`);
+        if (commonElement) {
+          if (commonElement.tagName === 'INPUT') {
+            commonElement.value = value;
+          } else {
+            commonElement.textContent = value;
+          }
+        }
+      }
     }
   }
 
