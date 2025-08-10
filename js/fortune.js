@@ -41,7 +41,7 @@ function validateNumber(value, min = 0, max = Number.MAX_SAFE_INTEGER) {
   const Fortune = {
     // Configuration
     config: {
-      apiEndpoint: 'https://doha-kr-ap.vercel.app/api/fortune',
+      apiEndpoint: '/api/fortune',
       maxRetries: 3,
       timeout: 30000,
       rateLimitWindow: 60000, // 1 minute

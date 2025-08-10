@@ -160,7 +160,7 @@
 
       this.checkRateLimit('fortune-api');
 
-      const apiUrl = this.config.endpoints.fortune || 'https://doha-kr-api.vercel.app/api/fortune';
+      const apiUrl = this.config.endpoints.fortune || '/api/fortune';
 
       return this.secureRequest(apiUrl, {
         method: 'POST',
@@ -255,13 +255,13 @@
 
     // Gemini API
     gemini: {
-      endpoint: 'https://doha-kr-api.vercel.app/api/fortune',
+      endpoint: '/api/fortune',
       timeout: 30000,
     },
 
     // Fortune API 엔드포인트 (레거시 호환성)
     endpoints: {
-      fortune: 'https://doha-kr-api.vercel.app/api/fortune',
+      fortune: '/api/fortune',
     },
     // 카카오 SDK - 환경변수나 빌드 시 주입되어야 함
     kakao: {
