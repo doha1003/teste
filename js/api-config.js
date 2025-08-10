@@ -245,26 +245,24 @@
 
     // Gemini API
     gemini: {
-      endpoint: 'https://doha-kr-ap.vercel.app/api/fortune',
+      endpoint: 'https://doha-kr-api.vercel.app/api/fortune',
       timeout: 30000,
     },
 
     // Fortune API 엔드포인트 (레거시 호환성)
     endpoints: {
-      fortune: 'https://doha-kr-ap.vercel.app/api/fortune',
+      fortune: 'https://doha-kr-api.vercel.app/api/fortune',
     },
     // 카카오 SDK - 환경변수나 빌드 시 주입되어야 함
     kakao: {
       appKey: window.KAKAO_APP_KEY || getEnvValue('KAKAO_APP_KEY', null),
     },
-    // 카카오 JS 키 (호환성을 위해 추가)
-    KAKAO_JS_KEY: window.KAKAO_APP_KEY || getEnvValue('KAKAO_APP_KEY', null),
     // Google AdSense - 공개되어도 상대적으로 안전
     adsense: {
       client: 'ca-pub-7905640648499222',
     },
     // Vercel API 베이스 URL
-    VERCEL_API_BASE: 'https://doha-kr-ap.vercel.app/api',
+    VERCEL_API_BASE: 'https://doha-kr-api.vercel.app/api',
   };
   /**
    * API 보안 설정

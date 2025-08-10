@@ -58,6 +58,7 @@
   border-radius: 3px;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform;
+  z-index: 10; /* 광고 컨테이너보다 위에 표시 */
   
   /* Subtle background for better contrast */
   background-color: var(--highlight-color-secondary);
@@ -80,6 +81,7 @@
   border-radius: 3px;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform;
+  z-index: 10; /* 광고 컨테이너보다 위에 표시 */
   background-color: var(--highlight-color-secondary);
   
   background-image: 
@@ -132,6 +134,7 @@
   border-radius: 3px;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform;
+  z-index: 10; /* 광고 컨테이너보다 위에 표시 */
   background-color: var(--highlight-color-secondary);
   
   background-image: 
@@ -193,6 +196,7 @@
   border-radius: 3px;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform;
+  z-index: 10; /* 광고 컨테이너보다 위에 표시 */
   
   background-image: 
     linear-gradient(
@@ -260,6 +264,7 @@
   border-radius: 3px;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform;
+  z-index: 10; /* 광고 컨테이너보다 위에 표시 */
   background-color: var(--highlight-color-secondary);
   
   /* Multiple small radial gradients to create noise effect */
@@ -326,6 +331,7 @@
   border-radius: 3px;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform;
+  z-index: 10; /* 광고 컨테이너보다 위에 표시 */
   background-color: var(--highlight-color-secondary);
   
   /* Triangular pattern using conic gradients */
@@ -561,4 +567,44 @@
 
 [class*="highlight-"]:hover {
   will-change: transform, background-position;
+}
+
+/* ==========================================================================
+   Ad Container Safe Zone (광고 컨테이너와의 충돌 방지)
+   ========================================================================== */
+
+/* 광고 컨테이너가 다른 요소들을 침범하지 않도록 보호 */
+.highlight-safe-zone {
+  position: relative;
+  z-index: 15; /* 하이라이트보다도 더 위에 */
+}
+
+/* 광고 컨테이너 스타일링 */
+.adsbygoogle,
+[id*="google_ads"],
+[class*="ad-container"] {
+  z-index: 1 !important; /* 하이라이트보다 아래에 배치 */
+  overflow: hidden; /* 컨테이너 영역을 벗어나지 않도록 */
+  position: relative;
+}
+
+/* 하이라이트가 광고와 겹칠 때의 추가 보호 */
+[class*="highlight-"]:not(.highlight-safe-zone) {
+  position: relative;
+  z-index: 10;
+}
+
+/* 중요한 텍스트 컨텐츠 보호 */
+.text-content-protected,
+.highlight-protected {
+  position: relative;
+  z-index: 12;
+  background-color: rgba(255, 255, 255, 0.95); /* 배경 보호 */
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
+[data-theme="dark"] .text-content-protected,
+[data-theme="dark"] .highlight-protected {
+  background-color: rgba(15, 23, 42, 0.95);
 }
