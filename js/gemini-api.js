@@ -1,5 +1,6 @@
 // 통합 운세 API 클라이언트
-const API_ENDPOINT = '/api/fortune';
+// GitHub Pages는 정적 호스팅만 지원하므로 Vercel API 서버 사용
+const API_ENDPOINT = 'https://doha-kr-ap.vercel.app/api/fortune';
 
 // 통일된 API 호출 함수
 async function callFortuneAPI(type, data) {
