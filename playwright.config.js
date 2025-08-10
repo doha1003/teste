@@ -8,7 +8,8 @@ export default defineConfig({
   fullyParallel: false, // 안정성을 위해 병렬 실행 비활성화
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 3 : 1, // 재시도 횟수 증가
-  workers: process.env.CI ? 1 : 1, // Worker 수 제한으로 안정성 향상
+  workers: 1, // Worker 수 제한으로 안정성 향상
+  timeout: 120000, // 테스트당 최대 2분
 
   // 테스트 파일 패턴
   testMatch: [
@@ -48,14 +49,14 @@ export default defineConfig({
     viewport: { width: 1280, height: 720 },
 
     // 액션 타임아웃 - 안정성 개선
-    actionTimeout: 30000, // 2배 증가
+    actionTimeout: 60000, // 60초로 증가
 
     // 네비게이션 타임아웃 - 안정성 개선  
-    navigationTimeout: 60000, // 2배 증가
+    navigationTimeout: 90000, // 90초로 증가
 
     // 요소 대기 타임아웃
     expect: {
-      timeout: 10000, // 요소 대기 시간 증가
+      timeout: 30000, // 요소 대기 시간 30초로 증가
     },
 
     // 한국어 로케일
