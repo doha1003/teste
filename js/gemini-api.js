@@ -1,9 +1,11 @@
-// Gemini API 클라이언트 - 서버리스 함수 호출
+// 통합 운세 API 클라이언트
 const API_ENDPOINT = '/api/fortune';
 
-// 서버리스 API 호출 함수
+// 통일된 API 호출 함수
 async function callFortuneAPI(type, data) {
   try {
+    console.log(`🔮 Fortune API 호출:`, { type, data });
+
     const response = await fetch(API_ENDPOINT, {
       method: 'POST',
       headers: {
@@ -12,7 +14,12 @@ async function callFortuneAPI(type, data) {
       body: JSON.stringify({ type, data }),
     });
 
+    console.log(`📡 API 응답 상태:`, response.status);
+
     if (!response.ok) {
+      const errorText = await response.text();
+      console.error(`❌ API 호출 실패:`, { status: response.status, errorText });
+      
       if (response.status === 503) {
         throw new Error('운세 서비스가 일시적으로 이용할 수 없습니다. 잠시 후 다시 시도해주세요.');
       } else if (response.status === 429) {
@@ -22,107 +29,55 @@ async function callFortuneAPI(type, data) {
     }
 
     const result = await response.json();
+    console.log(`✅ API 응답 결과:`, result);
 
     if (result.success) {
       return result.data;
     } else {
-      // API Error
       const errorMessage = result.error || '운세 생성 중 오류가 발생했습니다.';
       throw new Error(errorMessage);
     }
   } catch (error) {
-    // Fortune API 호출 오류
-
+    console.error(`💥 Fortune API 호출 오류:`, error);
     throw error;
   }
 }
 
 // 띠별 운세를 위한 callGeminiAPI 함수 (zodiac-animal.js에서 사용)
 async function callGeminiAPI(prompt) {
-  try {
-    const response = await fetch(API_ENDPOINT, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        type: 'general',
-        prompt,
-      }),
-    });
-
-    if (!response.ok) {
-      if (response.status === 503) {
-        throw new Error('운세 서비스가 일시적으로 이용할 수 없습니다. 잠시 후 다시 시도해주세요.');
-      } else if (response.status === 429) {
-        throw new Error('요청이 너무 많습니다. 잠시 후 다시 시도해주세요.');
-      }
-      throw new Error(`서버 오류가 발생했습니다. (${response.status})`);
-    }
-
-    const result = await response.json();
-
-    if (result.success) {
-      return result.data;
-    } else {
-      // Gemini API Error
-      const errorMessage = result.error || '운세 생성 중 오류가 발생했습니다.';
-      throw new Error(errorMessage);
-    }
-  } catch (error) {
-    // Gemini API 호출 오류
-
-    throw error;
-  }
+  return callFortuneAPI('general', { prompt });
 }
 
 // 일일 운세 AI 생성
 async function generateDailyFortuneWithAI(name, birthDate, gender, birthTime = null) {
-  try {
-    const result = await callFortuneAPI('daily', {
-      name,
-      birthDate,
-      gender,
-      birthTime,
-    });
+  const result = await callFortuneAPI('daily', {
+    name,
+    birthDate,
+    gender,
+    birthTime,
+  });
 
-    if (result) {
-      return {
-        name,
-        aiGenerated: true,
-        ...result,
-      };
-    }
-  } catch (error) {
-    // 사용자에게 친화적인 에러 메시지를 전달하기 위해 에러를 다시 던짐
-    throw error;
-  }
+  return result ? { name, aiGenerated: true, ...result } : null;
 }
 
 // 별자리 운세 AI 생성
 async function generateZodiacFortuneWithAI(zodiac) {
-  try {
-    const result = await callFortuneAPI('zodiac', { zodiac });
-
-    if (result) {
-      return result;
-    }
-  } catch (error) {
-    throw error;
-  }
+  return await callFortuneAPI('zodiac', { zodiac });
 }
 
 // 사주팔자 AI 생성
 async function generateSajuWithAI(sajuData) {
-  try {
-    const result = await callFortuneAPI('saju', sajuData);
+  return await callFortuneAPI('saju', sajuData);
+}
 
-    if (result) {
-      return result;
-    }
-  } catch (error) {
-    throw error;
-  }
+// 띠별 운세 AI 생성
+async function generateZodiacAnimalFortuneWithAI(animalData) {
+  return await callFortuneAPI('zodiac-animal', animalData);
+}
+
+// 타로 운세 AI 생성
+async function generateTarotFortuneWithAI(cardData) {
+  return await callFortuneAPI('tarot', cardData);
 }
 
 // 백업 운세 생성 (AI 실패시 사용)
@@ -227,8 +182,22 @@ function generateBackupFortune(name, birthDate) {
 
 // 전역 노출
 if (typeof window !== 'undefined') {
+  window.callFortuneAPI = callFortuneAPI;
   window.callGeminiAPI = callGeminiAPI;
   window.generateDailyFortuneWithAI = generateDailyFortuneWithAI;
   window.generateZodiacFortuneWithAI = generateZodiacFortuneWithAI;
   window.generateSajuWithAI = generateSajuWithAI;
+  window.generateZodiacAnimalFortuneWithAI = generateZodiacAnimalFortuneWithAI;
+  window.generateTarotFortuneWithAI = generateTarotFortuneWithAI;
+  
+  // 통합된 API 호출 함수 (모든 운세에서 사용)
+  window.FortuneAPI = {
+    call: callFortuneAPI,
+    daily: generateDailyFortuneWithAI,
+    zodiac: generateZodiacFortuneWithAI,
+    saju: generateSajuWithAI,
+    zodiacAnimal: generateZodiacAnimalFortuneWithAI,
+    tarot: generateTarotFortuneWithAI,
+    general: callGeminiAPI
+  };
 }

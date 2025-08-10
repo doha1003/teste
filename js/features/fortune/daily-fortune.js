@@ -53,7 +53,7 @@ export class DailyFortuneService extends FortuneService {
   }
 
   /**
-   * 일일 운세 생성 (완전 클라이언트 사이드)
+   * 일일 운세 생성 (통합 API 사용)
    */
   async fetchDailyFortune() {
     const { birthData } = this.fortuneState;
@@ -62,31 +62,37 @@ export class DailyFortuneService extends FortuneService {
       // 만세력 데이터 계산 (클라이언트 사이드)
       const manseryeokData = this.calculateManseryeok(birthData);
 
-      // 기본 운세 데이터 생성
+      // 기본 운세 데이터 생성 (Fallback)
       const fortuneData = this.generateDailyFortune(birthData, manseryeokData);
 
-      // API 호출은 선택사항으로 유지하되, 실패 시 기본 데이터 반환
-      if (window.generateDailyFortuneWithAI) {
+      // 통합 API 호출
+      if (window.FortuneAPI) {
         try {
-          const apiData = await window.generateDailyFortuneWithAI(
+          console.log('🔮 통합 API로 일일 운세 생성 중...');
+          
+          const apiData = await window.FortuneAPI.daily(
             birthData.name,
             `${birthData.year}-${String(birthData.month).padStart(2, '0')}-${String(birthData.day).padStart(2, '0')}`,
-            birthData.gender || 'unknown',
+            birthData.gender || 'male',
             birthData.hour
           );
 
           if (apiData) {
-            return { ...fortuneData, ...apiData, manseryeokData };
+            console.log('✅ API 운세 데이터 수신:', apiData);
+            return { ...fortuneData, ...apiData, manseryeokData, source: 'api' };
           }
         } catch (error) {
-          console.log('AI API 사용 불가, 기본 운세 제공');
+          console.warn('⚠️ API 운세 실패, 기본 운세 사용:', error.message);
         }
       }
 
-      return fortuneData;
+      console.log('📱 클라이언트 사이드 운세 사용');
+      return { ...fortuneData, manseryeokData, source: 'client' };
+      
     } catch (error) {
+      console.error('❌ 운세 생성 실패:', error);
       // 모든 계산 실패 시에도 최소한의 운세 제공
-      return this.generateDailyFortune(birthData, null);
+      return { ...this.generateDailyFortune(birthData, null), source: 'fallback' };
     }
   }
 
