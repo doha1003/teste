@@ -56,15 +56,11 @@
           type: 'vercel-generic',
         },
         {
-          name: 'GitHub Pages',
-          url: 'https://doha.kr/api/health',
-          type: 'github',
-        },
-        {
           name: 'Local Development',
           url: 'http://localhost:3000/api/health',
           type: 'local',
         }
+        // GitHub Pages는 정적 호스팅이므로 API 지원 안함 - 제거
       ];
 
       this.workingEndpoints = [];
