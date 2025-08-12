@@ -3,7 +3,7 @@
   <head>
     <meta
       http-equiv="Content-Security-Policy"
-      content="upgrade-insecure-requests; default-src 'self' https:; script-src 'unsafe-inline' 'self' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'unsafe-inline' 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net data:; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;"
+      content="upgrade-insecure-requests; default-src 'self' https:; script-src 'unsafe-inline' 'self' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://developers.kakao.com https://t1.kakaocdn.net https://ep2.adtrafficquality.google https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net https://vitals.vercel-insights.com; style-src 'unsafe-inline' 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net data:; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https://www.google.com https://fundingchoicesmessages.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://tpc.googlesyndication.com;"
     />
     <meta charset="UTF-8" />
     <meta
@@ -12,42 +12,35 @@
     />
     <title>doha.kr - 일상을 더 재미있게 만드는 공간</title>
 
-    <!-- 폰트 최적화: 로컬 + CDN 다중 폴백 시스템 -->
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Resource Hints 최적화 -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="dns-prefetch" href="//www.googletagmanager.com">
+    <link rel="dns-prefetch" href="//t1.kakaocdn.net">
+    
+    <!-- 중요 리소스 우선 로딩 -->
+    <link rel="prefetch" href="/js/pages/home.js" as="script">
 
-    <!-- 로컬 폰트 우선 로딩 -->
-    <link rel="preload" href="./fonts/PretendardVariable.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="./fonts/Pretendard-Regular.woff2" as="font" type="font/woff2" crossorigin />
-
-    <!-- CDN 폴백 -->
-    <link
-      rel="preload"
-      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css"
-      as="style"
-      onload="this.onload=null;this.rel='stylesheet'"
-    />
-    <noscript>
-      <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css"
-      />
-    </noscript>
-
-    <!-- 구글 폰트 최종 폴백 -->
-    <link
-      rel="preload"
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap"
-      as="style"
-      onload="this.onload=null;this.rel='stylesheet'"
-    />
-    <noscript>
-      <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap"
-      />
-    </noscript>
+    <!-- Critical 리소스 preload -->
+    <link rel="preload" href="/fonts/PretendardVariable.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/images/logo.svg" as="image">
+    <link rel="preload" href="/dist/styles.min.css" as="style">
+    
+    <!-- 폰트 CSS 최적화 로딩 -->
+    <style>
+      @font-face {
+        font-family: 'Pretendard Variable';
+        font-weight: 45 920;
+        font-style: normal;
+        font-display: swap;
+        src: url('/fonts/PretendardVariable.woff2') format('woff2');
+      }
+    </style>
+    
+    <!-- 폴백 폰트 지연 로딩 -->
+    <link rel="preload" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" media="print">
+    <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css"></noscript>
 
     <meta
       name="description"
@@ -86,61 +79,31 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="doha.kr" />
 
-    <!-- Critical CSS (인라인) - Above-the-fold 렌더링 최적화 -->
+    <!-- Critical CSS 최적화 - 핵심 Above-the-fold만 -->
     <style>
-      /* Critical CSS - Design System Variables with Korean Optimization */
+      /* Critical Variables - 필수만 */
       :root {
         --color-primary: #5c5ce0;
-        --color-white: #fff;
-        --color-gray-900: #111827;
         --bg-primary: #fff;
         --text-primary: #1a1a1a;
         --text-secondary: #6b7280;
-        --text-tertiary: #9ca3af;
         --font-family: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
-        --font-size-base: 1rem;
-        --line-height-normal: 1.7;
-        --spacing-xs: 0.5rem;
-        --spacing-sm: 0.75rem;
-        --spacing-md: 1rem;
-        --spacing-lg: 1.5rem;
-        --spacing-xl: 2rem;
-        --radius-sm: 4px;
-        --radius-md: 8px;
-        --radius-lg: 12px;
-        --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-        --shadow-md: 0 2px 4px rgba(0, 0, 0, 0.06);
-        --shadow-lg: 0 4px 6px rgba(0, 0, 0, 0.07);
         --transition-base: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
       }
 
-      *,
-      *:before,
-      *:after {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-
-      * {
-        word-break: keep-all;
-        overflow-wrap: break-word;
-      }
-
-      html {
-        font-size: 16px;
-        -webkit-text-size-adjust: 100%;
-      }
-
+      /* Critical Reset */
+      *, *:before, *:after { box-sizing: border-box; margin: 0; padding: 0; }
+      * { word-break: keep-all; overflow-wrap: break-word; }
+      html { font-size: 16px; -webkit-text-size-adjust: 100%; }
+      
+      /* Critical Layout */
       body {
         font-family: var(--font-family);
-        font-size: var(--font-size-base);
-        line-height: var(--line-height-normal);
+        font-size: 1rem;
+        line-height: 1.7;
         color: var(--text-primary);
         background: var(--bg-primary);
-        word-break: keep-all;
         margin: 0;
-        padding: 0;
         min-height: 100vh;
       }
 
@@ -151,28 +114,28 @@
         z-index: 1000;
       }
 
-      .header,
       .hero {
         text-align: center;
         padding: 60px 20px;
+        min-height: 45vh;
+        display: flex;
+        align-items: center;
+        background: var(--bg-primary);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
       }
 
-      .header h1,
       .hero-title {
         font-size: 2.5rem;
         font-weight: 600;
         color: var(--text-primary);
         margin-bottom: 16px;
-        word-break: keep-all;
         line-height: 1.2;
       }
 
-      .header p,
       .hero-subtitle {
         font-size: 1.125rem;
         color: var(--text-secondary);
         margin-bottom: 32px;
-        word-break: keep-all;
         line-height: 1.5;
         max-width: 600px;
         margin-left: auto;
@@ -185,90 +148,26 @@
         padding: 0 20px;
       }
 
-      .btn,
-      .btn-primary {
+      .linear-button--primary {
         display: inline-flex;
         align-items: center;
         justify-content: center;
         padding: 12px 16px;
-        border-radius: var(--radius-md);
+        border-radius: 8px;
         font-family: inherit;
-        font-size: var(--font-size-base);
+        font-size: 1rem;
         text-decoration: none;
         transition: var(--transition-base);
         cursor: pointer;
         border: 1px solid transparent;
         font-weight: 500;
-        word-break: keep-all;
-        min-height: 40px;
-      }
-
-      .btn-primary {
         background: #1f2937;
         color: #fff;
         border-color: #1f2937;
         box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        min-height: 40px;
       }
 
-      .btn-primary:hover {
-        background: #374151;
-        border-color: #374151;
-        transform: translateY(-1px);
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        color: #fff;
-        text-decoration: none;
-      }
-
-      .card {
-        background: var(--bg-primary);
-        border-radius: var(--radius-md);
-        padding: var(--spacing-md);
-        box-shadow: var(--shadow-md);
-        transition: var(--transition-base);
-      }
-
-      .grid {
-        display: grid;
-        gap: var(--spacing-md);
-      }
-
-      h1,
-      h2,
-      h3,
-      h4,
-      h5,
-      h6,
-      p,
-      span,
-      div,
-      a {
-        word-break: keep-all;
-        overflow-wrap: break-word;
-      }
-
-      @media (max-width: 768px) {
-        .header h1,
-        .hero-title {
-          font-size: 2rem;
-        }
-
-        .header p,
-        .hero-subtitle {
-          font-size: 1rem;
-        }
-
-        .container {
-          padding: 0 16px;
-        }
-
-        .btn,
-        .btn-primary {
-          min-height: 52px;
-          font-size: 1.1rem;
-        }
-      }
-
-      /* 성능 최적화: 추가 Critical CSS */
       .hero-buttons {
         display: flex;
         gap: 1rem;
@@ -277,145 +176,29 @@
         margin-top: 2rem;
       }
 
-      .service-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 1.5rem;
-        padding: 2rem 0;
-      }
-
-      .service-card {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        padding: 1.5rem;
-        border-radius: 8px;
-        background: var(--bg-primary);
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
-        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-        text-decoration: none;
-        color: inherit;
-        border: 1px solid rgba(0, 0, 0, 0.05);
-      }
-
-      .service-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        text-decoration: none;
-        color: inherit;
-      }
-
-      .service-emoji {
-        font-size: 2.5rem;
-        margin-bottom: 1rem;
-        flex-shrink: 0;
-      }
-
-      .service-name {
-        font-size: 1.25rem;
-        font-weight: 600;
-        margin-bottom: 0.5rem;
-        word-break: keep-all;
-        color: var(--text-primary);
-      }
-
-      .service-desc {
-        color: var(--text-secondary);
-        line-height: 1.6;
-        margin-bottom: 1rem;
-        word-break: keep-all;
-      }
-
-      .hero {
-        background: var(--bg-primary);
-        color: var(--text-primary);
-        min-height: 45vh;
-        display: flex;
-        align-items: center;
-        padding: 3rem 1rem 4rem;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-      }
-
-      .tab-button {
-        background: transparent;
-        border: 2px solid rgba(0, 0, 0, 0.1);
-        color: var(--text-secondary);
-        padding: 8px 16px;
-        border-radius: 8px;
-        font-weight: 500;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        word-break: keep-all;
-        min-height: 40px;
-      }
-
-      .tab-button:hover {
-        background: rgba(0, 0, 0, 0.05);
-        border-color: rgba(0, 0, 0, 0.2);
-      }
-
-      .tab-button.active {
-        background: var(--color-primary);
-        color: white;
-        border-color: var(--color-primary);
-      }
-
-      .feature-link {
-        color: var(--color-primary);
-        font-weight: 600;
-        text-decoration: none;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        transition: all 0.2s ease;
-        word-break: keep-all;
-      }
-
-      .feature-link:hover {
-        color: #4f46e5;
-        text-decoration: none;
-      }
-
-      .service-badge {
-        background: linear-gradient(135deg, #ff6b6b, #ee5a24);
-        color: white;
-        font-size: 0.75rem;
-        font-weight: 600;
-        padding: 4px 8px;
-        border-radius: 12px;
-        position: absolute;
-        top: 8px;
-        right: 8px;
-      }
-
-      .service-card {
-        position: relative;
-      }
-
-      .cta-title,
-      .section-title {
-        word-break: keep-all;
-        color: var(--text-primary);
-      }
-
-      .cta-description,
-      .section-subtitle {
-        word-break: keep-all;
-        color: var(--text-secondary);
-        line-height: 1.6;
+      @media (max-width: 768px) {
+        .hero-title { font-size: 2rem; }
+        .hero-subtitle { font-size: 1rem; }
+        .container { padding: 0 16px; }
+        .linear-button--primary { min-height: 52px; font-size: 1.1rem; }
       }
     </style>
 
-    <!-- 비동기 CSS 로딩 (성능 최적화) -->
-    <link
-      rel="preload"
-      href="dist/styles.min.css"
-      as="style"
-      onload="this.onload=null;this.rel='stylesheet'"
-      id="main-styles"
-    />
-    <noscript><link rel="stylesheet" href="dist/styles.min.css" /></noscript>
+    <!-- CSS 로딩 최적화 -->
+    <link rel="preload" href="dist/styles.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" media="print" id="main-styles">
+    <noscript><link rel="stylesheet" href="dist/styles.min.css"></noscript>
+    
+    <!-- Critical CSS 후속 로딩 최적화 -->
+    <script>
+      // Critical CSS 이후 나머지 스타일 즉시 적용
+      (function(){
+        var link = document.getElementById('main-styles');
+        if(link) {
+          link.media = 'all';
+          link.rel = 'stylesheet';
+        }
+      })();
+    </script>
 
     <!-- Page Data Attributes -->
     <script>
@@ -997,38 +780,99 @@
         });
       });
 
-      // 성능 최적화: Service Worker 즉시 등록 (무시해도 됨)
+      // 성능 최적화: Service Worker 즉시 등록
       if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function () {
-          navigator.serviceWorker
-            .register('sw.js')
-            .then(function (registration) {
-              console.log('SW registered: ', registration);
-            })
-            .catch(function (registrationError) {
-              console.log('SW registration failed: ', registrationError);
-            });
+        navigator.serviceWorker
+          .register('sw.js')
+          .then(function (registration) {
+            console.log('SW registered: ', registration);
+          })
+          .catch(function (registrationError) {
+            console.log('SW registration failed: ', registrationError);
+          });
+      }
+      
+      // 이미지 Lazy Loading 초기화
+      if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const img = entry.target;
+              if (img.dataset.src) {
+                img.src = img.dataset.src;
+                img.removeAttribute('data-src');
+                imageObserver.unobserve(img);
+              }
+            }
+          });
+        }, { rootMargin: '50px' });
+        
+        document.addEventListener('DOMContentLoaded', () => {
+          document.querySelectorAll('img[data-src]').forEach(img => {
+            imageObserver.observe(img);
+          });
         });
       }
     </script>
 
-    <script src="js/logger-init.js"></script>
-    <script src="js/emergency-api-mitigation.js" defer></script>
-    <script src="js/mobile-navigation-enhancer.js" defer></script>
-    <script type="module" src="js/app.js" defer></script>
-
-    <!-- Non-Critical JavaScript (지연 로딩으로 성능 최적화) -->
+    <!-- Critical JS 즉시 로딩 -->
+    <script src="js/logger-init.js" async></script>
+    
+    <!-- 비중요 JS 지연 로딩 -->
     <script>
-      // 페이지 로드 완료 후 비중요 스크립트 로딩
-      window.addEventListener('load', function () {
-        // 홈 페이지 스크립트 지연 로딩
+      // 비중요 스크립트 지연 로딩
+      function loadScript(src, async = true) {
+        const script = document.createElement('script');
+        script.src = src;
+        if (async) script.async = true;
+        document.head.appendChild(script);
+      }
+      
+      // DOMContentLoaded 후 비중요 스크립트 로딩
+      document.addEventListener('DOMContentLoaded', function() {
+        loadScript('js/emergency-api-mitigation.js');
+        loadScript('js/mobile-navigation-enhancer.js');
+      });
+      
+      // load 이벤트 후 메인 모듈 로딩
+      window.addEventListener('load', function() {
+        loadScript('js/app.js');
+      });
+    </script>
+
+    <!-- 지연 로딩 최적화 -->
+    <script>
+      // 인터렉션 기반 로딩
+      let userInteracted = false;
+      const interactionEvents = ['scroll', 'mousedown', 'touchstart', 'keydown'];
+      
+      function onFirstInteraction() {
+        if (userInteracted) return;
+        userInteracted = true;
+        
+        // 비중요 스크립트 로딩
         const homeScript = document.createElement('script');
         homeScript.type = 'module';
         homeScript.src = 'js/pages/home.js';
         document.head.appendChild(homeScript);
+        
+        // 이벤트 리스너 제거
+        interactionEvents.forEach(event => {
+          document.removeEventListener(event, onFirstInteraction, { passive: true });
+        });
+      }
+      
+      // 인터렉션 이벤트 리스너 등록
+      interactionEvents.forEach(event => {
+        document.addEventListener(event, onFirstInteraction, { passive: true });
       });
-
-      // 카카오 SDK 조건부 로딩 함수
+      
+      // 3초 후 자동 로딩 (폴백)
+      setTimeout(() => {
+        if (!userInteracted) onFirstInteraction();
+      }, 3000);
+      
+      // 카카오 SDK 지연 로딩
       window.loadKakaoSDK = function () {
         if (!window.Kakao) {
           const script = document.createElement('script');
@@ -1039,18 +883,41 @@
       };
     </script>
 
-    <script
-      async
-      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      async
-      src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"
-      integrity="sha512-H+rglffZ6f5gF7UJgvH4Naa+fGCgjrHKMgoFOGmcPTRwR6oILo5R+gtzNrpDp7iMV3udbymBVjkeZGNz1Em4rQ=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
+    <!-- 서드파티 스크립트 지연 로딩 -->
+    <script>
+      // 인터랙션 이후 서드파티 로딩
+      function loadThirdPartyScripts() {
+        // AdSense 로딩
+        const adsScript = document.createElement('script');
+        adsScript.async = true;
+        adsScript.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7905640648499222';
+        adsScript.crossOrigin = 'anonymous';
+        document.head.appendChild(adsScript);
+        
+        // DOMPurify 로딩
+        const purifyScript = document.createElement('script');
+        purifyScript.async = true;
+        purifyScript.src = 'https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js';
+        purifyScript.integrity = 'sha512-H+rglffZ6f5gF7UJgvH4Naa+fGCgjrHKMgoFOGmcPTRwR6oILo5R+gtzNrpDp7iMV3udbymBVjkeZGNz1Em4rQ==';
+        purifyScript.crossOrigin = 'anonymous';
+        purifyScript.referrerPolicy = 'no-referrer';
+        document.head.appendChild(purifyScript);
+      }
+      
+      // 인터랙션 또는 5초 후 로딩
+      let thirdPartyLoaded = false;
+      function maybeLoadThirdParty() {
+        if (thirdPartyLoaded) return;
+        thirdPartyLoaded = true;
+        loadThirdPartyScripts();
+      }
+      
+      ['scroll', 'click', 'touchstart'].forEach(event => {
+        document.addEventListener(event, maybeLoadThirdParty, { once: true, passive: true });
+      });
+      
+      setTimeout(maybeLoadThirdParty, 5000);
+    </script>
 
     <!-- Structured Data -->
     <script type="application/ld+json">

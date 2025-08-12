@@ -573,7 +573,7 @@ class HomePage {
    * PWA 설치 버튼 상태 업데이트
    */
   updatePWAInstallButton() {
-    if (!this.pwaPrompt.installButton) {
+    if (!this.pwaPrompt || !this.pwaPrompt.installButton) {
       return;
     }
 

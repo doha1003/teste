@@ -150,7 +150,7 @@ function validateNumber(value, min = 0, max = Number.MAX_SAFE_INTEGER) {
 
     // Get daily fortune
     async getDailyFortune() {
-      const dh-c-button = document.getElementById('daily-fortune-btn');
+      const button = document.getElementById('daily-fortune-btn');
       const resultDiv = document.getElementById('daily-fortune-result');
 
       if (!button || !resultDiv) {

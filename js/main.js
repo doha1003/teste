@@ -654,6 +654,7 @@
             }
             this.components.set(componentName, target);
           } else {
+            console.warn(`Component target not found: ${targetId}`);
           }
         } else {
           throw new Error(`HTTP ${response.status}`);

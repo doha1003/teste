@@ -50,7 +50,7 @@ export default function handler(req, res) {
           'user-agent': req.headers['user-agent'] || null,
           host: req.headers.host || null
         },
-        ip: req.headers['x-forwarded-for'] || req.connection?.remoteAddress || req.socket?.remoteAddress || 'unknown'
+        ip: req.headers['x-forwarded-for'] || req.headers['x-real-ip'] || 'unknown'
       },
       uptime_check: true,
       api_endpoints: [

@@ -164,12 +164,12 @@ const inputValidation = {
   // 날짜 검증
   validateDate(year, month, day) {
     const date = new Date(year, month - 1, day);
-    return date.getFullYear() == year && date.getMonth() == month - 1 && date.getDate() == day;
+    return date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day;
   },
 
   // XSS 위험 문자 제거
   sanitizeInput(input) {
-    return input.replace(/[<>\"'&]/g, (match) => {
+    return input.replace(/[<>"'&]/g, (match) => {
       const escapes = {
         '<': '&lt;',
         '>': '&gt;',

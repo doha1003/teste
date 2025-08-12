@@ -764,8 +764,8 @@ self.addEventListener('sync', (event) => {
     case 'cache-cleanup':
       event.waitUntil(manageCacheSize());
       break;
-    case 'mobile-menu-sync':
-      event.waitUntil(precacheMobileComponents());
+    case 'additional-assets-sync':
+      event.waitUntil(precacheAdditionalAssets());
       break;
     default:
       console.log(`[SW] Unknown sync tag: ${event.tag}`);
@@ -773,25 +773,25 @@ self.addEventListener('sync', (event) => {
 });
 
 /**
- * 모바일 컴포넌트 사전 캐싱
+ * 추가 자산 사전 캐싱
  */
-async function precacheMobileComponents() {
+async function precacheAdditionalAssets() {
   try {
     const cache = await caches.open(STATIC_CACHE);
-    const mobileAssets = [
-      '/css/components/mobile-menu.css',
-      '/js/core/mobile-menu.js',
-    ];
     
-    for (const asset of mobileAssets) {
-      const response = await fetch(asset);
-      if (response.ok) {
-        await cache.put(asset, response);
-        console.log(`[SW] Pre-cached mobile asset: ${asset}`);
+    for (const asset of ADDITIONAL_ASSETS) {
+      try {
+        const response = await fetch(asset);
+        if (response.ok) {
+          await cache.put(asset, response);
+          console.log(`[SW] Pre-cached asset: ${asset}`);
+        }
+      } catch (error) {
+        console.warn(`[SW] Failed to pre-cache ${asset}:`, error.message);
       }
     }
   } catch (error) {
-    console.error('[SW] Mobile component pre-caching failed:', error);
+    console.error('[SW] Additional asset pre-caching failed:', error);
   }
 }
 

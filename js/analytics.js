@@ -236,7 +236,14 @@
 
       // Return bot score after 5 seconds
       setTimeout(() => {
-        const botScore = mouseEvents === 0 ? 1 : perfectLines / mouseEvents > 0.8 ? 1 : 0;
+        let botScore;
+        if (mouseEvents === 0) {
+          botScore = 1;
+        } else if (perfectLines / mouseEvents > 0.8) {
+          botScore = 1;
+        } else {
+          botScore = 0;
+        }
         Analytics.updateBotScore('mouse', botScore);
       }, 5000);
 
@@ -605,7 +612,9 @@
             user_id: this.userId,
           });
         }
-      } catch (error) {}
+      } catch (error) {
+        // Silent fail for GA4 - analytics should not break app
+      }
     },
 
     // Send to custom analytics
@@ -616,7 +625,9 @@
           // Queue for batch sending to avoid too many requests
           this.queueForBatchSend(event);
         }
-      } catch (error) {}
+      } catch (error) {
+        // Silent fail for custom analytics - should not break app
+      }
     },
 
     // Queue events for batch sending
@@ -657,7 +668,9 @@
           sessionId: this.sessionId,
           timestamp: Date.now(),
         }),
-      }).catch((_error) => {});
+      }).catch((_error) => {
+        // Silent fail for analytics batch send - should not break app
+      });
     },
 
     // Send session data on page unload

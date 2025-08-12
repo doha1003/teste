@@ -82,9 +82,9 @@ async function generateTarotFortuneWithAI(cardData) {
 }
 
 // 백업 운세 생성 (AI 실패시 사용)
+// Backup fortune generation function - used as fallback
 function generateBackupFortune(name, birthDate) {
   const today = new Date();
-  const todayStr = today.toLocaleDateString('ko-KR');
 
   // 간지 계산
   const heavenlyStems = ['갑', '을', '병', '정', '무', '기', '경', '신', '임', '계'];

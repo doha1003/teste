@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>성능 테스트 - doha.kr</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Pretendard Variable', sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      line-height: 1.6;
+      background: #f9fafb;
+    }
+    
+    .container {
+      background: white;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+    
+    .metric {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    
+    .metric:last-child {
+      border-bottom: none;
+    }
+    
+    .metric-name {
+      font-weight: 600;
+      color: #374151;
+    }
+    
+    .metric-value {
+      font-weight: 700;
+      font-size: 1.1em;
+    }
+    
+    .good { color: #10b981; }
+    .needs-improvement { color: #f59e0b; }
+    .poor { color: #ef4444; }
+    
+    .test-button {
+      background: #6366f1;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      margin: 10px 5px;
+      transition: background 0.2s;
+    }
+    
+    .test-button:hover {
+      background: #5856eb;
+    }
+    
+    .test-button:disabled {
+      background: #9ca3af;
+      cursor: not-allowed;
+    }
+    
+    .loading {
+      opacity: 0.6;
+    }
+    
+    h1 {
+      color: #1f2937;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+    
+    .summary {
+      background: #f3f4f6;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 30px;
+    }
+    
+    .summary h3 {
+      margin-top: 0;
+      color: #374151;
+    }
+    
+    .recommendations {
+      margin-top: 20px;
+    }
+    
+    .recommendations ul {
+      margin: 10px 0;
+      padding-left: 20px;
+    }
+    
+    .recommendations li {
+      margin: 8px 0;
+      color: #6b7280;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>doha.kr 성능 분석</h1>
+    
+    <div class="controls">
+      <button class="test-button" id="run-test">성능 측정 시작</button>
+      <button class="test-button" id="lighthouse-test">Lighthouse 분석</button>
+      <button class="test-button" id="clear-cache">캐시 클리어</button>
+    </div>
+    
+    <div id="metrics">
+      <div class="metric">
+        <span class="metric-name">First Contentful Paint (FCP)</span>
+        <span class="metric-value" id="fcp">측정 중...</span>
+      </div>
+      <div class="metric">
+        <span class="metric-name">Largest Contentful Paint (LCP)</span>
+        <span class="metric-value" id="lcp">측정 중...</span>
+      </div>
+      <div class="metric">
+        <span class="metric-name">First Input Delay (FID)</span>
+        <span class="metric-value" id="fid">측정 중...</span>
+      </div>
+      <div class="metric">
+        <span class="metric-name">Cumulative Layout Shift (CLS)</span>
+        <span class="metric-value" id="cls">측정 중...</span>
+      </div>
+      <div class="metric">
+        <span class="metric-name">Time to Interactive (TTI)</span>
+        <span class="metric-value" id="tti">측정 중...</span>
+      </div>
+      <div class="metric">
+        <span class="metric-name">Speed Index</span>
+        <span class="metric-value" id="speed-index">측정 중...</span>
+      </div>
+      <div class="metric">
+        <span class="metric-name">Total Blocking Time (TBT)</span>
+        <span class="metric-value" id="tbt">측정 중...</span>
+      </div>
+    </div>
+    
+    <div class="summary">
+      <h3>성능 분석 결과</h3>
+      <div id="performance-score">
+        <p>성능 점수: <strong id="overall-score">계산 중...</strong></p>
+      </div>
+      
+      <div class="recommendations">
+        <h4>최적화 권장사항</h4>
+        <ul id="recommendations-list">
+          <li>성능 측정을 먼저 실행해주세요.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    class PerformanceAnalyzer {
+      constructor() {
+        this.metrics = {};
+        this.init();
+      }
+
+      init() {
+        document.getElementById('run-test').addEventListener('click', () => this.runPerformanceTest());
+        document.getElementById('lighthouse-test').addEventListener('click', () => this.runLighthouseTest());
+        document.getElementById('clear-cache').addEventListener('click', () => this.clearCache());
+        
+        // 페이지 로드시 자동 측정
+        this.measureWebVitals();
+      }
+
+      async runPerformanceTest() {
+        const button = document.getElementById('run-test');
+        button.disabled = true;
+        button.textContent = '측정 중...';
+        
+        try {
+          await this.measurePerformance();
+          this.updateUI();
+          this.generateRecommendations();
+        } catch (error) {
+          console.error('성능 측정 오류:', error);
+        } finally {
+          button.disabled = false;
+          button.textContent = '성능 측정 시작';
+        }
+      }
+
+      async measurePerformance() {
+        // Navigation Timing API 사용
+        const navigation = performance.getEntriesByType('navigation')[0];
+        const paint = performance.getEntriesByType('paint');
+        
+        if (navigation) {
+          this.metrics.domContentLoaded = navigation.domContentLoadedEventEnd - navigation.navigationStart;
+          this.metrics.loadComplete = navigation.loadEventEnd - navigation.navigationStart;
+        }
+        
+        // Paint Timing
+        paint.forEach(entry => {
+          if (entry.name === 'first-contentful-paint') {
+            this.metrics.fcp = entry.startTime;
+          }
+        });
+
+        // LCP 측정
+        if ('PerformanceObserver' in window) {
+          this.measureLCP();
+          this.measureFID();
+          this.measureCLS();
+        }
+
+        // 추가 메트릭
+        this.measureResourceTiming();
+      }
+
+      measureLCP() {
+        const observer = new PerformanceObserver((list) => {
+          const entries = list.getEntries();
+          const lastEntry = entries[entries.length - 1];
+          this.metrics.lcp = lastEntry.startTime;
+          this.updateElement('lcp', `${Math.round(this.metrics.lcp)}ms`);
+        });
+        observer.observe({ entryTypes: ['largest-contentful-paint'] });
+      }
+
+      measureFID() {
+        const observer = new PerformanceObserver((list) => {
+          const entries = list.getEntries();
+          entries.forEach(entry => {
+            this.metrics.fid = entry.processingStart - entry.startTime;
+            this.updateElement('fid', `${Math.round(this.metrics.fid)}ms`);
+          });
+        });
+        observer.observe({ entryTypes: ['first-input'] });
+      }
+
+      measureCLS() {
+        let clsValue = 0;
+        const observer = new PerformanceObserver((list) => {
+          for (const entry of list.getEntries()) {
+            if (!entry.hadRecentInput) {
+              clsValue += entry.value;
+            }
+          }
+          this.metrics.cls = clsValue;
+          this.updateElement('cls', this.metrics.cls.toFixed(3));
+        });
+        observer.observe({ entryTypes: ['layout-shift'] });
+      }
+
+      measureResourceTiming() {
+        const resources = performance.getEntriesByType('resource');
+        let cssSize = 0;
+        let jsSize = 0;
+        let imageSize = 0;
+
+        resources.forEach(resource => {
+          if (resource.name.includes('.css')) {
+            cssSize += resource.transferSize || 0;
+          } else if (resource.name.includes('.js')) {
+            jsSize += resource.transferSize || 0;
+          } else if (resource.name.match(/\.(png|jpg|jpeg|gif|webp|svg)$/)) {
+            imageSize += resource.transferSize || 0;
+          }
+        });
+
+        this.metrics.cssSize = cssSize;
+        this.metrics.jsSize = jsSize;
+        this.metrics.imageSize = imageSize;
+      }
+
+      measureWebVitals() {
+        // Core Web Vitals 실시간 측정
+        setTimeout(() => {
+          this.measurePerformance();
+          this.updateUI();
+        }, 1000);
+      }
+
+      updateUI() {
+        // FCP
+        if (this.metrics.fcp) {
+          const fcpClass = this.metrics.fcp < 1800 ? 'good' : this.metrics.fcp < 3000 ? 'needs-improvement' : 'poor';
+          this.updateElement('fcp', `${Math.round(this.metrics.fcp)}ms`, fcpClass);
+        }
+
+        // LCP
+        if (this.metrics.lcp) {
+          const lcpClass = this.metrics.lcp < 2500 ? 'good' : this.metrics.lcp < 4000 ? 'needs-improvement' : 'poor';
+          this.updateElement('lcp', `${Math.round(this.metrics.lcp)}ms`, lcpClass);
+        }
+
+        // FID
+        if (this.metrics.fid !== undefined) {
+          const fidClass = this.metrics.fid < 100 ? 'good' : this.metrics.fid < 300 ? 'needs-improvement' : 'poor';
+          this.updateElement('fid', `${Math.round(this.metrics.fid)}ms`, fidClass);
+        }
+
+        // CLS
+        if (this.metrics.cls !== undefined) {
+          const clsClass = this.metrics.cls < 0.1 ? 'good' : this.metrics.cls < 0.25 ? 'needs-improvement' : 'poor';
+          this.updateElement('cls', this.metrics.cls.toFixed(3), clsClass);
+        }
+
+        // 전체 점수 계산
+        this.calculateOverallScore();
+      }
+
+      updateElement(id, value, className = '') {
+        const element = document.getElementById(id);
+        if (element) {
+          element.textContent = value;
+          element.className = `metric-value ${className}`;
+        }
+      }
+
+      calculateOverallScore() {
+        const scores = [];
+        
+        if (this.metrics.fcp) {
+          scores.push(this.metrics.fcp < 1800 ? 100 : this.metrics.fcp < 3000 ? 75 : 50);
+        }
+        
+        if (this.metrics.lcp) {
+          scores.push(this.metrics.lcp < 2500 ? 100 : this.metrics.lcp < 4000 ? 75 : 50);
+        }
+        
+        if (this.metrics.cls !== undefined) {
+          scores.push(this.metrics.cls < 0.1 ? 100 : this.metrics.cls < 0.25 ? 75 : 50);
+        }
+
+        if (scores.length > 0) {
+          const avgScore = Math.round(scores.reduce((a, b) => a + b, 0) / scores.length);
+          const scoreClass = avgScore >= 90 ? 'good' : avgScore >= 70 ? 'needs-improvement' : 'poor';
+          
+          const scoreElement = document.getElementById('overall-score');
+          scoreElement.textContent = `${avgScore}/100`;
+          scoreElement.className = scoreClass;
+        }
+      }
+
+      generateRecommendations() {
+        const recommendations = [];
+        
+        if (this.metrics.fcp > 1800) {
+          recommendations.push('Critical CSS 인라인화로 FCP 개선 필요');
+          recommendations.push('불필요한 JavaScript 제거 또는 지연 로딩 적용');
+        }
+        
+        if (this.metrics.lcp > 2500) {
+          recommendations.push('주요 이미지에 preload 적용');
+          recommendations.push('서버 응답 시간 개선 필요');
+        }
+        
+        if (this.metrics.cls > 0.1) {
+          recommendations.push('이미지와 광고에 명시적 크기 지정');
+          recommendations.push('웹폰트 로딩 최적화 필요');
+        }
+        
+        if (this.metrics.jsSize > 500000) {
+          recommendations.push('JavaScript 번들 크기 최적화 필요');
+          recommendations.push('코드 분할(Code Splitting) 적용 권장');
+        }
+        
+        if (this.metrics.cssSize > 200000) {
+          recommendations.push('CSS 파일 크기 최적화 필요');
+          recommendations.push('사용하지 않는 CSS 제거');
+        }
+
+        if (recommendations.length === 0) {
+          recommendations.push('모든 성능 지표가 양호합니다! 🎉');
+          recommendations.push('정기적인 성능 모니터링을 권장합니다.');
+        }
+
+        const list = document.getElementById('recommendations-list');
+        list.innerHTML = recommendations.map(rec => `<li>${rec}</li>`).join('');
+      }
+
+      async runLighthouseTest() {
+        alert('Lighthouse 테스트는 Chrome DevTools > Audits 탭에서 실행할 수 있습니다.\n\n단축키: F12 → Lighthouse 탭');
+      }
+
+      async clearCache() {
+        if ('caches' in window) {
+          const cacheNames = await caches.keys();
+          await Promise.all(
+            cacheNames.map(cacheName => caches.delete(cacheName))
+          );
+          alert('캐시가 모두 삭제되었습니다. 페이지를 새로고침하세요.');
+        } else {
+          alert('브라우저 설정에서 캐시를 수동으로 삭제해주세요.');
+        }
+      }
+    }
+
+    // 성능 분석기 초기화
+    new PerformanceAnalyzer();
+  </script>
+</body>
+</html>
