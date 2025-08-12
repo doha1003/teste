@@ -384,7 +384,7 @@ export class TarotFortuneService extends FortuneService {
 
     // 22장의 뒷면 카드 생성
     for (let i = 0; i < 22; i++) {
-      const dh-c-card = document.createElement('div');
+      const card = document.createElement('div');
       card.className = 'tarot-dh-c-card card-back';
       card.innerHTML = '🎴';
       card.dataset.index = i;

@@ -338,7 +338,7 @@ function validateNumber(value, min = 0, max = Number.MAX_SAFE_INTEGER) {
 
     // Start tarot reading
     async startTarotReading() {
-      const dh-c-button = document.getElementById('tarot-reading-btn');
+      const button = document.getElementById('tarot-reading-btn');
       const resultDiv = document.getElementById('tarot-result');
 
       if (!button || !resultDiv) {

@@ -81,7 +81,7 @@ export class TextCounterService extends ToolService {
     const controlsContainer = document.querySelector('.text-counter-controls');
     if (controlsContainer) {
       controlsContainer.addEventListener('click', (e) => {
-        const dh-c-button = e.target.closest('[data-action]');
+        const button = e.target.closest('[data-action]');
         if (!button) {
           return;
         }
