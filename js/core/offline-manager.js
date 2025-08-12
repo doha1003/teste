@@ -148,7 +148,7 @@ class OfflineManager {
       try {
         const response = await fetch(url);
         if (response.ok) {
-          const dh-l-content = await response.text();
+          const content = await response.text();
           this.offlineContent.set(url, content);
         }
       } catch (error) {

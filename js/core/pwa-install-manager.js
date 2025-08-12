@@ -342,7 +342,7 @@ class PWAInstallManager {
    */
   createCustomPromptElement() {
     const variant = this.state.currentVariant;
-    const dh-l-content = this.getPromptContent(variant);
+    const content = this.getPromptContent(variant);
     
     const element = document.createElement('div');
     element.id = 'pwa-install-prompt';

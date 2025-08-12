@@ -446,7 +446,7 @@ export class TarotFortuneService extends FortuneService {
    */
   updateSelectedCardsDisplay() {
     const container = document.querySelector('.selected-card-list');
-    const dh-l-header = document.querySelector('#selectedCards h4');
+    const header = document.querySelector('#selectedCards h4');
 
     if (header) {
       header.textContent = `선택된 카드 (${this.selectedCards.length}/${this.currentSpread.count})`;

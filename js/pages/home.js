@@ -402,7 +402,7 @@ class HomePage {
       } catch (e) {
         // Error handled - see console for details
         // Error handled - development logging only
-        if (process.env.NODE_ENV === 'development' || window.location.hostname === 'localhost') {
+        if (window.location.hostname === 'localhost') {
           console.warn('Caught error:', e);
         }
       }
@@ -429,7 +429,7 @@ class HomePage {
       } catch (e) {
         // Error handled - see console for details
         // Error handled - development logging only
-        if (process.env.NODE_ENV === 'development' || window.location.hostname === 'localhost') {
+        if (window.location.hostname === 'localhost') {
           console.warn('Caught error:', e);
         }
       }
@@ -450,7 +450,7 @@ class HomePage {
     if (loadTime > 5000) {
       // 로딩 시간이 5초 이상인 경우 성능 경고
       // Performance warning - development only
-      if (process.env.NODE_ENV === 'development' || window.location.hostname === 'localhost') {
+      if (window.location.hostname === 'localhost') {
         console.warn('Page load time exceeded 5 seconds:', loadTime);
       }
     }
@@ -590,18 +590,18 @@ class HomePage {
     if (isInstalled) {
       this.pwaPrompt.installButton.disabled = true;
       this.pwaPrompt.installButton.className =
-        'dh-c-btn btn--primary pwa-install-dh-c-button installed';
+        'dh-c-btn btn--primary pwa-install-button installed';
       buttonIcon.textContent = '✅';
       buttonText.textContent = '설치 완료';
     } else if (hasPrompt) {
       this.pwaPrompt.installButton.disabled = false;
       this.pwaPrompt.installButton.className =
-        'dh-c-btn btn--primary pwa-install-dh-c-button ready';
+        'dh-c-btn btn--primary pwa-install-button ready';
       buttonIcon.textContent = '📲';
       buttonText.textContent = '지금 설치';
     } else {
       this.pwaPrompt.installButton.disabled = true;
-      this.pwaPrompt.installButton.className = 'dh-c-btn btn--primary pwa-install-dh-c-button';
+      this.pwaPrompt.installButton.className = 'dh-c-btn btn--primary pwa-install-button';
       buttonIcon.textContent = '⏳';
       buttonText.textContent = '설치 준비 중...';
     }

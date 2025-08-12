@@ -234,7 +234,7 @@
       let dangerousPatterns = 0;
 
       scripts.forEach((script) => {
-        const dh-l-content = script.textContent || script.innerHTML || '';
+        const content = script.textContent || script.innerHTML || '';
 
         // innerHTML 패턴 감지
         const innerHTMLMatches = content.match(/\.innerHTML\s*=/g);
@@ -393,7 +393,7 @@
       const scripts = document.querySelectorAll('script');
 
       scripts.forEach((script, index) => {
-        const dh-l-content = script.textContent || script.innerHTML || '';
+        const content = script.textContent || script.innerHTML || '';
         const innerHTMLMatches = content.match(/(\w+)\.innerHTML\s*=\s*([^;]+);?/g);
 
         if (innerHTMLMatches) {
