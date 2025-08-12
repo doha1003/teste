@@ -6,7 +6,7 @@
 import { ServiceBase } from '../../core/service-base.js';
 
 export class ToolService extends ServiceBase {
-  constructor(config) {
+  constructor(config = {}) {
     super({
       serviceType: 'tool',
       loadingText: '계산 중...',
@@ -15,8 +15,8 @@ export class ToolService extends ServiceBase {
 
     // 도구 서비스 공통 상태
     this.toolState = {
-      toolType: config.toolType || 'text-counter', // text-counter, salary-calculator, bmi-calculator
-      isRealtime: config.isRealtime || false, // 실시간 계산 여부
+      toolType: config?.toolType || 'text-counter', // text-counter, salary-calculator, bmi-calculator
+      isRealtime: config?.isRealtime || false, // 실시간 계산 여부
       currentValues: {},
       result: null,
     };
@@ -50,7 +50,7 @@ export class ToolService extends ServiceBase {
     }
 
     // 실시간 계산이면 input 이벤트
-    if (this.toolState.isRealtime) {
+    if (this.toolState && this.toolState.isRealtime) {
       const inputs = form.querySelectorAll('input, textarea, select');
       inputs.forEach((input) => {
         input.addEventListener('input', () => this.handleInputChange());
@@ -81,7 +81,7 @@ export class ToolService extends ServiceBase {
     }
 
     // 초기 상태 설정
-    if (this.toolState.isRealtime) {
+    if (this.toolState && this.toolState.isRealtime) {
       // 실시간 도구는 기본 결과 표시
       this.showDefaultResult();
     } else {

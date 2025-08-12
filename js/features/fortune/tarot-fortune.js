@@ -7,7 +7,6 @@ import { FortuneService } from "./fortune-service.js";
 
 export class TarotFortuneService extends FortuneService {
   constructor() {
-        this.initCardSelection();
     super({
       serviceName: 'tarot-fortune',
       fortuneType: 'tarot',
@@ -280,8 +279,10 @@ export class TarotFortuneService extends FortuneService {
    * 타로 폼 초기화 (오버라이드)
    */
   initTarotForm() {
+    console.log('🃏 initTarotForm 호출됨');
     const form = document.querySelector('[data-form="tarot"]');
     if (!form) {
+      console.warn('🚫 타로 폼을 찾을 수 없습니다');
       return;
     }
 
@@ -296,11 +297,8 @@ export class TarotFortuneService extends FortuneService {
       this.updateSpreadDescription({ target: spreadRadios[0] });
     }
 
-    // 폼 제출
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      this.handleTarotSubmit(e);
-    });
+    // 폼 제출 - 여기서는 이벤트 리스너를 추가하지 않음 (HTML에서 처리)
+    console.log('✅ 타로 폼 초기화 완료');
   }
 
   /**
@@ -734,69 +732,6 @@ export class TarotFortuneService extends FortuneService {
             `;
   }
 
-  /**
-   * 타로 리딩 수행
-   */
-  async performReading() {
-    // 카드 무작위 선택
-    this.selectRandomCards();
-    
-    // 리딩 해석 생성
-    const interpretation = this.generateInterpretation();
-    
-    // 결과 표시
-    const result = {
-      question: this.question,
-      spread: this.currentSpread,
-      dh-c-cards: this.selectedCards,
-      interpretation,
-      isAIGenerated: false
-    };
-    
-    this.showResult(result);
-    return result;
-  }
-
-  /**
-   * 무작위 카드 선택
-   */
-  selectRandomCards() {
-    const cardCount = this.currentSpread.count;
-    const selectedIndices = new Set();
-    
-    while (selectedIndices.size < cardCount) {
-      const randomIndex = Math.floor(Math.random() * this.majorArcana.length);
-      selectedIndices.add(randomIndex);
-    }
-    
-    this.selectedCards = Array.from(selectedIndices).map(index => {
-      const card = { ...this.majorArcana[index] };
-      // 50% 확률로 역방향
-      card.isReversed = Math.random() < 0.5;
-      return card;
-    });
-  }
-
-  /**
-   * 해석 생성
-   */
-  generateInterpretation() {
-    const interpretations = this.selectedCards.map((card, index) => ({
-      position: this.currentSpread.positions[index],
-      card,
-      interpretation: this.generateCardInterpretation(
-        card,
-        this.currentSpread.positions[index],
-        card.isReversed ? card.meaning.reversed : card.meaning.upright
-      )
-    }));
-    
-    return {
-      interpretations,
-      overall: this.generateOverallMessage(),
-      advice: this.generateFinalAdvice()
-    };
-  }
 
   /**
    * 공유 데이터 가져오기 (오버라이드)

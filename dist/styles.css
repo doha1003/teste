@@ -1,12 +1,10 @@
-
-@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css");
 /* Korean Optimization - 최우선 적용 */
 /* ==========================================================================
    Korean Optimization Master CSS
    한글 웹사이트 통합 최적화 - 26개 페이지 전체 적용
    ========================================================================== */
-/* ===== 1. 한글 폰트 최적화 - 시스템 폰트 우선 ===== */
-/* Google Fonts로 대체 */
+/* ===== 1. 한글 폰트 최적화 - 로컬 폰트 우선 ===== */
+/* 로컬 Pretendard 폰트 사용 - Google Fonts 제거 */
 /* 시스템 폰트 우선 전략 */
 @font-face {
   font-family: "Korean System";
@@ -14062,6 +14060,60 @@ input:checked + .toggle-slider:before {
  * Tarot Fortune Specific Styles
  * 타로 운세 전용 스타일
  */
+/* 타로 카드 선택 그리드 */
+.tarot-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 10px;
+  margin: 30px 0;
+}
+.tarot-cards-grid h3 {
+  grid-column: 1 / -1;
+  text-align: center;
+}
+.tarot-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 8px;
+  padding: 30px 10px;
+  text-align: center;
+  cursor: pointer;
+  color: white;
+  font-size: 24px;
+  transition: transform 0.3s, box-shadow 0.3s;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+.tarot-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+.tarot-card.selected {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+}
+/* 타로 결과 플레이스홀더 */
+.tarot-result-placeholder {
+  padding: 30px;
+  background: #f8f9fa;
+  border-radius: 10px;
+  text-align: center;
+}
+.tarot-result-placeholder .result-cards {
+  margin-top: 20px;
+}
+.tarot-result-placeholder .result-note {
+  margin-top: 20px;
+  color: #666;
+}
+/* 선택된 카드 정보 */
+.selected-cards-info {
+  text-align: center;
+  margin: 20px 0;
+}
+.read-tarot-btn {
+  margin-top: 10px;
+}
 /* 타로 운세 컨테이너 */
 .tarot-fortune-container {
   max-width: 1000px;
