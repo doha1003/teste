@@ -19841,7 +19841,7 @@ label {
   max-width: 800px;
   text-align: center;
   position: relative;
-  z-index: 2;
+  z-index: var(--z-content);
 }
 .love-badge {
   display: inline-flex;
@@ -20130,7 +20130,7 @@ label {
 }
 .love-header-content {
   position: relative;
-  z-index: 1;
+  z-index: var(--z-base);
 }
 .love-header-title {
   font-size: 42px;
@@ -21506,7 +21506,7 @@ label {
   width: 100%;
   height: 100%;
   pointer-events: none;
-  z-index: 1;
+  z-index: var(--z-base);
 }
 .mbti-brain-particle {
   position: absolute;
@@ -21571,7 +21571,7 @@ label {
 /* 테스트 래퍼 */
 .mbti-test-wrapper {
   position: relative;
-  z-index: 2;
+  z-index: var(--z-content);
   padding: 40px 20px;
 }
 /* 헤더 섹션 */
@@ -21607,7 +21607,7 @@ label {
 }
 .mbti-header-content {
   position: relative;
-  z-index: 3;
+  z-index: var(--z-elevated);
 }
 .mbti-header-title {
   font-size: 3rem;
@@ -21829,21 +21829,21 @@ label {
   margin-bottom: 16px;
   text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   position: relative;
-  z-index: 2;
+  z-index: var(--z-content);
 }
 .mbti-result-title {
   font-size: 1.8rem;
   font-weight: 700;
   margin-bottom: 8px;
   position: relative;
-  z-index: 2;
+  z-index: var(--z-content);
 }
 .mbti-result-subtitle {
   font-size: 1.1rem;
   opacity: 0.9;
   margin-bottom: 16px;
   position: relative;
-  z-index: 2;
+  z-index: var(--z-content);
 }
 .mbti-result-rarity {
   background: rgba(255, 255, 255, 0.2);
@@ -21853,7 +21853,7 @@ label {
   font-weight: 600;
   display: inline-block;
   position: relative;
-  z-index: 2;
+  z-index: var(--z-content);
 }
 /* 상세 분석 섹션 */
 .mbti-type-analysis {
@@ -22128,33 +22128,33 @@ label {
 /* Fix ad interference with interactive elements - 특이성을 높여 !important 제거 */
 .mbti-test-page .mbti-test-container {
   position: relative;
-  z-index: 100;
+  z-index: var(--z-dropdown);
 }
 .mbti-test-page .mbti-intro-section,
 .mbti-test-page #test-screen,
 .mbti-test-page #result-screen {
   position: relative;
-  z-index: 101;
+  z-index: calc(var(--z-dropdown) + 1);
 }
 .mbti-test-container .mbti-option {
   position: relative;
-  z-index: 102;
+  z-index: calc(var(--z-dropdown) + 2);
   cursor: pointer;
 }
 .mbti-test-container .mbti-option:hover {
-  z-index: 103;
+  z-index: calc(var(--z-dropdown) + 3);
 }
 .mbti-test-page .mbti-start-button,
 .mbti-test-page .mbti-btn {
   position: relative;
-  z-index: 102;
+  z-index: calc(var(--z-dropdown) + 2);
 }
 /* Ensure ads stay below interactive content - 특이성을 높여 !important 제거 */
 .mbti-test-page .ad-container,
 .mbti-test-page ins.adsbygoogle,
 .mbti-test-page iframe[id^="google_ads"] {
   position: relative;
-  z-index: 1;
+  z-index: var(--z-base);
   pointer-events: none;
 }
 .mbti-test-page .ad-container * {
@@ -22166,7 +22166,7 @@ body.mbti-test-page {
 }
 .mbti-test-page .mbti-test-wrapper {
   position: relative;
-  z-index: 10;
+  z-index: var(--z-content);
   min-height: 100vh;
 }
 /* 성격 유형 상세 분석 페이지 전용 CSS */
@@ -24122,7 +24122,7 @@ body {
   width: 100%;
   height: 100%;
   pointer-events: none;
-  z-index: 1;
+  z-index: var(--z-base);
 }
 .teto-particle {
   position: absolute;
@@ -24150,7 +24150,7 @@ body {
 /* 테스트 래퍼 */
 .teto-test-wrapper {
   position: relative;
-  z-index: 2;
+  z-index: var(--z-content);
   padding: 40px 20px;
 }
 /* 헤더 섹션 */
@@ -24186,7 +24186,7 @@ body {
 }
 .teto-header-content {
   position: relative;
-  z-index: 3;
+  z-index: var(--z-elevated);
 }
 .teto-header-title {
   font-size: 3rem;
@@ -24458,7 +24458,7 @@ body {
   font-size: 4rem;
   margin-bottom: 16px;
   position: relative;
-  z-index: 2;
+  z-index: var(--z-content);
 }
 .teto-result-type {
   font-size: 2.5rem;
@@ -24466,21 +24466,21 @@ body {
   margin-bottom: 16px;
   text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   position: relative;
-  z-index: 2;
+  z-index: var(--z-content);
 }
 .teto-result-title {
   font-size: 1.8rem;
   font-weight: 700;
   margin-bottom: 8px;
   position: relative;
-  z-index: 2;
+  z-index: var(--z-content);
 }
 .teto-result-subtitle {
   font-size: 1.1rem;
   opacity: 0.9;
   margin-bottom: 16px;
   position: relative;
-  z-index: 2;
+  z-index: var(--z-content);
 }
 .teto-result-rarity {
   background: rgba(255, 255, 255, 0.2);
@@ -24490,7 +24490,7 @@ body {
   font-weight: 600;
   display: inline-block;
   position: relative;
-  z-index: 2;
+  z-index: var(--z-content);
 }
 /* 결과 상세 박스 */
 .teto-result-detail-box {
@@ -24769,7 +24769,7 @@ body {
   width: 100%;
   height: 100%;
   pointer-events: none;
-  z-index: 999;
+  z-index: var(--z-modal);
 }
 .teto-test-page .particle,
 .particle-container .particle {

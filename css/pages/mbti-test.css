@@ -24,7 +24,7 @@
   width: 100%;
   height: 100%;
   pointer-events: none;
-  z-index: 1;
+  z-index: var(--z-base);
 }
 
 .mbti-brain-particle {
@@ -93,7 +93,7 @@
 /* 테스트 래퍼 */
 .mbti-test-wrapper {
   position: relative;
-  z-index: 2;
+  z-index: var(--z-content);
   padding: 40px 20px;
 }
 
@@ -135,7 +135,7 @@
 
 .mbti-header-content {
   position: relative;
-  z-index: 3;
+  z-index: var(--z-elevated);
 }
 
 .mbti-header-title {
@@ -391,7 +391,7 @@
   margin-bottom: 16px;
   text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   position: relative;
-  z-index: 2;
+  z-index: var(--z-content);
 }
 
 .mbti-result-title {
@@ -399,7 +399,7 @@
   font-weight: 700;
   margin-bottom: 8px;
   position: relative;
-  z-index: 2;
+  z-index: var(--z-content);
 }
 
 .mbti-result-subtitle {
@@ -407,7 +407,7 @@
   opacity: 0.9;
   margin-bottom: 16px;
   position: relative;
-  z-index: 2;
+  z-index: var(--z-content);
 }
 
 .mbti-result-rarity {
@@ -418,7 +418,7 @@
   font-weight: 600;
   display: inline-block;
   position: relative;
-  z-index: 2;
+  z-index: var(--z-content);
 }
 
 /* 상세 분석 섹션 */
@@ -733,30 +733,30 @@
 /* Fix ad interference with interactive elements - 특이성을 높여 !important 제거 */
 .mbti-test-page .mbti-test-container {
   position: relative;
-  z-index: 100;
+  z-index: var(--z-dropdown);
 }
 
 .mbti-test-page .mbti-intro-section,
 .mbti-test-page #test-screen,
 .mbti-test-page #result-screen {
   position: relative;
-  z-index: 101;
+  z-index: calc(var(--z-dropdown) + 1);
 }
 
 .mbti-test-container .mbti-option {
   position: relative;
-  z-index: 102;
+  z-index: calc(var(--z-dropdown) + 2);
   cursor: pointer;
 }
 
 .mbti-test-container .mbti-option:hover {
-  z-index: 103;
+  z-index: calc(var(--z-dropdown) + 3);
 }
 
 .mbti-test-page .mbti-start-button,
 .mbti-test-page .mbti-btn {
   position: relative;
-  z-index: 102;
+  z-index: calc(var(--z-dropdown) + 2);
 }
 
 /* Ensure ads stay below interactive content - 특이성을 높여 !important 제거 */
@@ -764,7 +764,7 @@
 .mbti-test-page ins.adsbygoogle,
 .mbti-test-page iframe[id^="google_ads"] {
   position: relative;
-  z-index: 1;
+  z-index: var(--z-base);
   pointer-events: none;
 }
 
@@ -779,6 +779,6 @@ body.mbti-test-page {
 
 .mbti-test-page .mbti-test-wrapper {
   position: relative;
-  z-index: 10;
+  z-index: var(--z-content);
   min-height: 100vh;
 }

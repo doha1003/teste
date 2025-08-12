@@ -1,0 +1,2684 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>doha.kr 26개 페이지 완전 검사 결과</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6; 
+            color: #333;
+            background: #f5f5f5;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .header { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white; 
+            padding: 30px 20px; 
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .summary { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .summary-card { 
+            background: white; 
+            padding: 20px; 
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .summary-card h3 { font-size: 2em; margin-bottom: 5px; }
+        .passed { color: #28a745; }
+        .failed { color: #dc3545; }
+        .warning { color: #ffc107; }
+        .page-grid { 
+            display: grid; 
+            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        }
+        .page-card { 
+            background: white; 
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .page-header { 
+            padding: 20px; 
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+        }
+        .page-title { font-size: 1.3em; font-weight: bold; margin-bottom: 5px; }
+        .page-status { 
+            padding: 4px 12px; 
+            border-radius: 20px; 
+            color: white; 
+            font-size: 0.9em;
+            display: inline-block;
+        }
+        .status-passed { background: #28a745; }
+        .status-failed { background: #dc3545; }
+        .status-warning { background: #ffc107; }
+        .page-content { padding: 20px; }
+        .screenshots { 
+            display: flex; 
+            gap: 10px; 
+            margin: 15px 0;
+        }
+        .screenshots img { 
+            width: 100px; 
+            height: 60px; 
+            object-fit: cover; 
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        .issues { margin: 15px 0; }
+        .issue { 
+            padding: 5px 0; 
+            font-size: 0.9em;
+            color: #666;
+        }
+        .metrics { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 10px;
+            margin-top: 15px;
+            font-size: 0.9em;
+        }
+        .metric { 
+            background: #f8f9fa; 
+            padding: 8px; 
+            border-radius: 5px;
+        }
+        .details { margin-top: 10px; }
+        .details summary { 
+            cursor: pointer; 
+            font-weight: bold;
+            padding: 10px;
+            background: #e9ecef;
+            border-radius: 5px;
+        }
+        .details-content { 
+            padding: 15px; 
+            background: #f8f9fa;
+            margin-top: 5px;
+            border-radius: 5px;
+        }
+        .check-list { list-style: none; }
+        .check-list li { 
+            padding: 5px 0;
+            display: flex;
+            align-items: center;
+        }
+        .check-list li::before { 
+            content: '✓'; 
+            color: #28a745; 
+            margin-right: 8px;
+            font-weight: bold;
+        }
+        .check-list li.failed::before { 
+            content: '✗'; 
+            color: #dc3545;
+        }
+        .timestamp { 
+            text-align: center; 
+            color: #666; 
+            margin-top: 40px;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔍 doha.kr 26개 페이지 완전 검사 결과</h1>
+            <p>GUI 기반 시각적 검사 및 코드 품질 분석 보고서</p>
+            <p>검사 시각: 2025. 8. 13. 오전 12:27:11</p>
+        </div>
+        
+        <div class="summary">
+            <div class="summary-card">
+                <h3 class="passed">9</h3>
+                <p>통과</p>
+            </div>
+            <div class="summary-card">
+                <h3 class="warning">20</h3>
+                <p>경고</p>
+            </div>
+            <div class="summary-card">
+                <h3 class="failed">0</h3>
+                <p>실패</p>
+            </div>
+            <div class="summary-card">
+                <h3>29</h3>
+                <p>전체 페이지</p>
+            </div>
+        </div>
+        
+        <div class="page-grid">
+            
+                <div class="page-card">
+                    <div class="page-header">
+                        <div class="page-title">1. 홈페이지</div>
+                        <span class="page-status status-warning">WARNING</span>
+                        <div style="margin-top: 5px; font-size: 0.9em; color: #666;">
+                            index.html
+                        </div>
+                    </div>
+                    
+                    <div class="page-content">
+                        
+                            <div class="screenshots">
+                                <div>
+                                    <strong>데스크탑</strong><br>
+                                    <img src="screenshots\홈페이지-desktop.png" alt="Desktop Screenshot">
+                                </div>
+                                <div>
+                                    <strong>모바일</strong><br>
+                                    <img src="screenshots\홈페이지-mobile.png" alt="Mobile Screenshot">
+                                </div>
+                            </div>
+                        
+                        
+                        
+                            <div class="issues">
+                                <strong>발견된 문제점:</strong>
+                                <div class="issue">⚠️ 요소 겹침 발견: 7개</div>
+                            </div>
+                        
+                        
+                        
+                            <div class="metrics">
+                                <div class="metric">
+                                    <strong>DOM 로딩:</strong> 11ms
+                                </div>
+                                <div class="metric">
+                                    <strong>전체 로딩:</strong> 114ms
+                                </div>
+                                <div class="metric">
+                                    <strong>DOM 요소:</strong> 287개
+                                </div>
+                            </div>
+                        
+                        
+                        <details class="details">
+                            <summary>상세 검사 결과 보기</summary>
+                            <div class="details-content">
+                                <h4>검사 항목별 결과:</h4>
+                                <ul class="check-list">
+                                    <li class="">
+                                        파일 존재: ✓
+                                    </li>
+                                    <li class="">
+                                        페이지 로딩: ✓
+                                    </li>
+                                    
+                                        <li class="">
+                                            Pretendard 폰트: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            한글 텍스트 처리: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            CSS 변수 시스템: ✓
+                                        </li>
+                                    
+                                    
+                                        <li>
+                                            JavaScript 로딩: 12개 스크립트
+                                        </li>
+                                        <li>
+                                            인터랙티브 요소: 55개
+                                        </li>
+                                    
+                                </ul>
+                                
+                                
+                                
+                                
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            
+                <div class="page-card">
+                    <div class="page-header">
+                        <div class="page-title">2. 심리테스트 메인</div>
+                        <span class="page-status status-warning">WARNING</span>
+                        <div style="margin-top: 5px; font-size: 0.9em; color: #666;">
+                            tests/index.html
+                        </div>
+                    </div>
+                    
+                    <div class="page-content">
+                        
+                            <div class="screenshots">
+                                <div>
+                                    <strong>데스크탑</strong><br>
+                                    <img src="screenshots\심리테스트 메인-desktop.png" alt="Desktop Screenshot">
+                                </div>
+                                <div>
+                                    <strong>모바일</strong><br>
+                                    <img src="screenshots\심리테스트 메인-mobile.png" alt="Mobile Screenshot">
+                                </div>
+                            </div>
+                        
+                        
+                        
+                            <div class="issues">
+                                <strong>발견된 문제점:</strong>
+                                <div class="issue">⚠️ 요소 겹침 발견: 2개</div>
+                            </div>
+                        
+                        
+                        
+                            <div class="metrics">
+                                <div class="metric">
+                                    <strong>DOM 로딩:</strong> 111ms
+                                </div>
+                                <div class="metric">
+                                    <strong>전체 로딩:</strong> 602ms
+                                </div>
+                                <div class="metric">
+                                    <strong>DOM 요소:</strong> 167개
+                                </div>
+                            </div>
+                        
+                        
+                        <details class="details">
+                            <summary>상세 검사 결과 보기</summary>
+                            <div class="details-content">
+                                <h4>검사 항목별 결과:</h4>
+                                <ul class="check-list">
+                                    <li class="">
+                                        파일 존재: ✓
+                                    </li>
+                                    <li class="">
+                                        페이지 로딩: ✓
+                                    </li>
+                                    
+                                        <li class="">
+                                            Pretendard 폰트: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            한글 텍스트 처리: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            CSS 변수 시스템: ✓
+                                        </li>
+                                    
+                                    
+                                        <li>
+                                            JavaScript 로딩: 9개 스크립트
+                                        </li>
+                                        <li>
+                                            인터랙티브 요소: 21개
+                                        </li>
+                                    
+                                </ul>
+                                
+                                
+                                
+                                
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            
+                <div class="page-card">
+                    <div class="page-header">
+                        <div class="page-title">3. MBTI 소개</div>
+                        <span class="page-status status-warning">WARNING</span>
+                        <div style="margin-top: 5px; font-size: 0.9em; color: #666;">
+                            tests/mbti/index.html
+                        </div>
+                    </div>
+                    
+                    <div class="page-content">
+                        
+                            <div class="screenshots">
+                                <div>
+                                    <strong>데스크탑</strong><br>
+                                    <img src="screenshots\MBTI 소개-desktop.png" alt="Desktop Screenshot">
+                                </div>
+                                <div>
+                                    <strong>모바일</strong><br>
+                                    <img src="screenshots\MBTI 소개-mobile.png" alt="Mobile Screenshot">
+                                </div>
+                            </div>
+                        
+                        
+                        
+                            <div class="issues">
+                                <strong>발견된 문제점:</strong>
+                                <div class="issue">⚠️ 요소 겹침 발견: 14개</div>
+                            </div>
+                        
+                        
+                        
+                            <div class="metrics">
+                                <div class="metric">
+                                    <strong>DOM 로딩:</strong> 101ms
+                                </div>
+                                <div class="metric">
+                                    <strong>전체 로딩:</strong> 265ms
+                                </div>
+                                <div class="metric">
+                                    <strong>DOM 요소:</strong> 384개
+                                </div>
+                            </div>
+                        
+                        
+                        <details class="details">
+                            <summary>상세 검사 결과 보기</summary>
+                            <div class="details-content">
+                                <h4>검사 항목별 결과:</h4>
+                                <ul class="check-list">
+                                    <li class="">
+                                        파일 존재: ✓
+                                    </li>
+                                    <li class="">
+                                        페이지 로딩: ✓
+                                    </li>
+                                    
+                                        <li class="">
+                                            Pretendard 폰트: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            한글 텍스트 처리: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            CSS 변수 시스템: ✓
+                                        </li>
+                                    
+                                    
+                                        <li>
+                                            JavaScript 로딩: 8개 스크립트
+                                        </li>
+                                        <li>
+                                            인터랙티브 요소: 37개
+                                        </li>
+                                    
+                                </ul>
+                                
+                                
+                                
+                                
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            
+                <div class="page-card">
+                    <div class="page-header">
+                        <div class="page-title">4. MBTI 테스트</div>
+                        <span class="page-status status-warning">WARNING</span>
+                        <div style="margin-top: 5px; font-size: 0.9em; color: #666;">
+                            tests/mbti/test.html
+                        </div>
+                    </div>
+                    
+                    <div class="page-content">
+                        
+                            <div class="screenshots">
+                                <div>
+                                    <strong>데스크탑</strong><br>
+                                    <img src="screenshots\MBTI 테스트-desktop.png" alt="Desktop Screenshot">
+                                </div>
+                                <div>
+                                    <strong>모바일</strong><br>
+                                    <img src="screenshots\MBTI 테스트-mobile.png" alt="Mobile Screenshot">
+                                </div>
+                            </div>
+                        
+                        
+                        
+                            <div class="issues">
+                                <strong>발견된 문제점:</strong>
+                                <div class="issue">⚠️ 요소 겹침 발견: 27개</div>
+                            </div>
+                        
+                        
+                        
+                            <div class="metrics">
+                                <div class="metric">
+                                    <strong>DOM 로딩:</strong> 71ms
+                                </div>
+                                <div class="metric">
+                                    <strong>전체 로딩:</strong> 77ms
+                                </div>
+                                <div class="metric">
+                                    <strong>DOM 요소:</strong> 166개
+                                </div>
+                            </div>
+                        
+                        
+                        <details class="details">
+                            <summary>상세 검사 결과 보기</summary>
+                            <div class="details-content">
+                                <h4>검사 항목별 결과:</h4>
+                                <ul class="check-list">
+                                    <li class="">
+                                        파일 존재: ✓
+                                    </li>
+                                    <li class="">
+                                        페이지 로딩: ✓
+                                    </li>
+                                    
+                                        <li class="">
+                                            Pretendard 폰트: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            한글 텍스트 처리: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            CSS 변수 시스템: ✓
+                                        </li>
+                                    
+                                    
+                                        <li>
+                                            JavaScript 로딩: 7개 스크립트
+                                        </li>
+                                        <li>
+                                            인터랙티브 요소: 36개
+                                        </li>
+                                    
+                                </ul>
+                                
+                                
+                                
+                                
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            
+                <div class="page-card">
+                    <div class="page-header">
+                        <div class="page-title">5. MBTI 결과</div>
+                        <span class="page-status status-warning">WARNING</span>
+                        <div style="margin-top: 5px; font-size: 0.9em; color: #666;">
+                            tests/mbti/result.html
+                        </div>
+                    </div>
+                    
+                    <div class="page-content">
+                        
+                            <div class="screenshots">
+                                <div>
+                                    <strong>데스크탑</strong><br>
+                                    <img src="screenshots\MBTI 결과-desktop.png" alt="Desktop Screenshot">
+                                </div>
+                                <div>
+                                    <strong>모바일</strong><br>
+                                    <img src="screenshots\MBTI 결과-mobile.png" alt="Mobile Screenshot">
+                                </div>
+                            </div>
+                        
+                        
+                        
+                            <div class="issues">
+                                <strong>발견된 문제점:</strong>
+                                <div class="issue">⚠️ 요소 겹침 발견: 7개</div>
+                            </div>
+                        
+                        
+                        
+                            <div class="metrics">
+                                <div class="metric">
+                                    <strong>DOM 로딩:</strong> 46ms
+                                </div>
+                                <div class="metric">
+                                    <strong>전체 로딩:</strong> 206ms
+                                </div>
+                                <div class="metric">
+                                    <strong>DOM 요소:</strong> 92개
+                                </div>
+                            </div>
+                        
+                        
+                        <details class="details">
+                            <summary>상세 검사 결과 보기</summary>
+                            <div class="details-content">
+                                <h4>검사 항목별 결과:</h4>
+                                <ul class="check-list">
+                                    <li class="">
+                                        파일 존재: ✓
+                                    </li>
+                                    <li class="">
+                                        페이지 로딩: ✓
+                                    </li>
+                                    
+                                        <li class="">
+                                            Pretendard 폰트: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            한글 텍스트 처리: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            CSS 변수 시스템: ✓
+                                        </li>
+                                    
+                                    
+                                        <li>
+                                            JavaScript 로딩: 6개 스크립트
+                                        </li>
+                                        <li>
+                                            인터랙티브 요소: 15개
+                                        </li>
+                                    
+                                </ul>
+                                
+                                
+                                
+                                
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            
+                <div class="page-card">
+                    <div class="page-header">
+                        <div class="page-title">6. Teto-Egen 소개</div>
+                        <span class="page-status status-warning">WARNING</span>
+                        <div style="margin-top: 5px; font-size: 0.9em; color: #666;">
+                            tests/teto-egen/index.html
+                        </div>
+                    </div>
+                    
+                    <div class="page-content">
+                        
+                            <div class="screenshots">
+                                <div>
+                                    <strong>데스크탑</strong><br>
+                                    <img src="screenshots\Teto-Egen 소개-desktop.png" alt="Desktop Screenshot">
+                                </div>
+                                <div>
+                                    <strong>모바일</strong><br>
+                                    <img src="screenshots\Teto-Egen 소개-mobile.png" alt="Mobile Screenshot">
+                                </div>
+                            </div>
+                        
+                        
+                        
+                            <div class="issues">
+                                <strong>발견된 문제점:</strong>
+                                <div class="issue">⚠️ 요소 겹침 발견: 9개</div>
+                            </div>
+                        
+                        
+                        
+                            <div class="metrics">
+                                <div class="metric">
+                                    <strong>DOM 로딩:</strong> 26ms
+                                </div>
+                                <div class="metric">
+                                    <strong>전체 로딩:</strong> 278ms
+                                </div>
+                                <div class="metric">
+                                    <strong>DOM 요소:</strong> 271개
+                                </div>
+                            </div>
+                        
+                        
+                        <details class="details">
+                            <summary>상세 검사 결과 보기</summary>
+                            <div class="details-content">
+                                <h4>검사 항목별 결과:</h4>
+                                <ul class="check-list">
+                                    <li class="">
+                                        파일 존재: ✓
+                                    </li>
+                                    <li class="">
+                                        페이지 로딩: ✓
+                                    </li>
+                                    
+                                        <li class="">
+                                            Pretendard 폰트: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            한글 텍스트 처리: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            CSS 변수 시스템: ✓
+                                        </li>
+                                    
+                                    
+                                        <li>
+                                            JavaScript 로딩: 8개 스크립트
+                                        </li>
+                                        <li>
+                                            인터랙티브 요소: 36개
+                                        </li>
+                                    
+                                </ul>
+                                
+                                
+                                
+                                
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            
+                <div class="page-card">
+                    <div class="page-header">
+                        <div class="page-title">7. Teto-Egen 테스트</div>
+                        <span class="page-status status-warning">WARNING</span>
+                        <div style="margin-top: 5px; font-size: 0.9em; color: #666;">
+                            tests/teto-egen/test.html
+                        </div>
+                    </div>
+                    
+                    <div class="page-content">
+                        
+                            <div class="screenshots">
+                                <div>
+                                    <strong>데스크탑</strong><br>
+                                    <img src="screenshots\Teto-Egen 테스트-desktop.png" alt="Desktop Screenshot">
+                                </div>
+                                <div>
+                                    <strong>모바일</strong><br>
+                                    <img src="screenshots\Teto-Egen 테스트-mobile.png" alt="Mobile Screenshot">
+                                </div>
+                            </div>
+                        
+                        
+                        
+                            <div class="issues">
+                                <strong>발견된 문제점:</strong>
+                                <div class="issue">⚠️ 요소 겹침 발견: 27개</div>
+                            </div>
+                        
+                        
+                        
+                            <div class="metrics">
+                                <div class="metric">
+                                    <strong>DOM 로딩:</strong> 88ms
+                                </div>
+                                <div class="metric">
+                                    <strong>전체 로딩:</strong> 243ms
+                                </div>
+                                <div class="metric">
+                                    <strong>DOM 요소:</strong> 201개
+                                </div>
+                            </div>
+                        
+                        
+                        <details class="details">
+                            <summary>상세 검사 결과 보기</summary>
+                            <div class="details-content">
+                                <h4>검사 항목별 결과:</h4>
+                                <ul class="check-list">
+                                    <li class="">
+                                        파일 존재: ✓
+                                    </li>
+                                    <li class="">
+                                        페이지 로딩: ✓
+                                    </li>
+                                    
+                                        <li class="">
+                                            Pretendard 폰트: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            한글 텍스트 처리: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            CSS 변수 시스템: ✓
+                                        </li>
+                                    
+                                    
+                                        <li>
+                                            JavaScript 로딩: 12개 스크립트
+                                        </li>
+                                        <li>
+                                            인터랙티브 요소: 38개
+                                        </li>
+                                    
+                                </ul>
+                                
+                                
+                                
+                                
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            
+                <div class="page-card">
+                    <div class="page-header">
+                        <div class="page-title">8. Teto-Egen 결과</div>
+                        <span class="page-status status-passed">PASSED</span>
+                        <div style="margin-top: 5px; font-size: 0.9em; color: #666;">
+                            tests/teto-egen/result.html
+                        </div>
+                    </div>
+                    
+                    <div class="page-content">
+                        
+                            <div class="screenshots">
+                                <div>
+                                    <strong>데스크탑</strong><br>
+                                    <img src="screenshots\Teto-Egen 결과-desktop.png" alt="Desktop Screenshot">
+                                </div>
+                                <div>
+                                    <strong>모바일</strong><br>
+                                    <img src="screenshots\Teto-Egen 결과-mobile.png" alt="Mobile Screenshot">
+                                </div>
+                            </div>
+                        
+                        
+                        <div class="issues" style="color: #28a745;">✅ 문제점 없음</div>
+                        
+                        
+                            <div class="metrics">
+                                <div class="metric">
+                                    <strong>DOM 로딩:</strong> 256ms
+                                </div>
+                                <div class="metric">
+                                    <strong>전체 로딩:</strong> 263ms
+                                </div>
+                                <div class="metric">
+                                    <strong>DOM 요소:</strong> 26개
+                                </div>
+                            </div>
+                        
+                        
+                        <details class="details">
+                            <summary>상세 검사 결과 보기</summary>
+                            <div class="details-content">
+                                <h4>검사 항목별 결과:</h4>
+                                <ul class="check-list">
+                                    <li class="">
+                                        파일 존재: ✓
+                                    </li>
+                                    <li class="">
+                                        페이지 로딩: ✓
+                                    </li>
+                                    
+                                        <li class="">
+                                            Pretendard 폰트: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            한글 텍스트 처리: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            CSS 변수 시스템: ✓
+                                        </li>
+                                    
+                                    
+                                        <li>
+                                            JavaScript 로딩: 2개 스크립트
+                                        </li>
+                                        <li>
+                                            인터랙티브 요소: 4개
+                                        </li>
+                                    
+                                </ul>
+                                
+                                
+                                
+                                
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            
+                <div class="page-card">
+                    <div class="page-header">
+                        <div class="page-title">9. Love DNA 소개</div>
+                        <span class="page-status status-warning">WARNING</span>
+                        <div style="margin-top: 5px; font-size: 0.9em; color: #666;">
+                            tests/love-dna/index.html
+                        </div>
+                    </div>
+                    
+                    <div class="page-content">
+                        
+                            <div class="screenshots">
+                                <div>
+                                    <strong>데스크탑</strong><br>
+                                    <img src="screenshots\Love DNA 소개-desktop.png" alt="Desktop Screenshot">
+                                </div>
+                                <div>
+                                    <strong>모바일</strong><br>
+                                    <img src="screenshots\Love DNA 소개-mobile.png" alt="Mobile Screenshot">
+                                </div>
+                            </div>
+                        
+                        
+                        
+                            <div class="issues">
+                                <strong>발견된 문제점:</strong>
+                                <div class="issue">⚠️ 요소 겹침 발견: 21개</div>
+                            </div>
+                        
+                        
+                        
+                            <div class="metrics">
+                                <div class="metric">
+                                    <strong>DOM 로딩:</strong> 97ms
+                                </div>
+                                <div class="metric">
+                                    <strong>전체 로딩:</strong> 267ms
+                                </div>
+                                <div class="metric">
+                                    <strong>DOM 요소:</strong> 278개
+                                </div>
+                            </div>
+                        
+                        
+                        <details class="details">
+                            <summary>상세 검사 결과 보기</summary>
+                            <div class="details-content">
+                                <h4>검사 항목별 결과:</h4>
+                                <ul class="check-list">
+                                    <li class="">
+                                        파일 존재: ✓
+                                    </li>
+                                    <li class="">
+                                        페이지 로딩: ✓
+                                    </li>
+                                    
+                                        <li class="">
+                                            Pretendard 폰트: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            한글 텍스트 처리: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            CSS 변수 시스템: ✓
+                                        </li>
+                                    
+                                    
+                                        <li>
+                                            JavaScript 로딩: 8개 스크립트
+                                        </li>
+                                        <li>
+                                            인터랙티브 요소: 36개
+                                        </li>
+                                    
+                                </ul>
+                                
+                                
+                                
+                                
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            
+                <div class="page-card">
+                    <div class="page-header">
+                        <div class="page-title">10. Love DNA 테스트</div>
+                        <span class="page-status status-warning">WARNING</span>
+                        <div style="margin-top: 5px; font-size: 0.9em; color: #666;">
+                            tests/love-dna/test.html
+                        </div>
+                    </div>
+                    
+                    <div class="page-content">
+                        
+                            <div class="screenshots">
+                                <div>
+                                    <strong>데스크탑</strong><br>
+                                    <img src="screenshots\Love DNA 테스트-desktop.png" alt="Desktop Screenshot">
+                                </div>
+                                <div>
+                                    <strong>모바일</strong><br>
+                                    <img src="screenshots\Love DNA 테스트-mobile.png" alt="Mobile Screenshot">
+                                </div>
+                            </div>
+                        
+                        
+                        
+                            <div class="issues">
+                                <strong>발견된 문제점:</strong>
+                                <div class="issue">⚠️ 요소 겹침 발견: 13개</div>
+                            </div>
+                        
+                        
+                        
+                            <div class="metrics">
+                                <div class="metric">
+                                    <strong>DOM 로딩:</strong> 79ms
+                                </div>
+                                <div class="metric">
+                                    <strong>전체 로딩:</strong> 235ms
+                                </div>
+                                <div class="metric">
+                                    <strong>DOM 요소:</strong> 199개
+                                </div>
+                            </div>
+                        
+                        
+                        <details class="details">
+                            <summary>상세 검사 결과 보기</summary>
+                            <div class="details-content">
+                                <h4>검사 항목별 결과:</h4>
+                                <ul class="check-list">
+                                    <li class="">
+                                        파일 존재: ✓
+                                    </li>
+                                    <li class="">
+                                        페이지 로딩: ✓
+                                    </li>
+                                    
+                                        <li class="">
+                                            Pretendard 폰트: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            한글 텍스트 처리: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            CSS 변수 시스템: ✓
+                                        </li>
+                                    
+                                    
+                                        <li>
+                                            JavaScript 로딩: 11개 스크립트
+                                        </li>
+                                        <li>
+                                            인터랙티브 요소: 40개
+                                        </li>
+                                    
+                                </ul>
+                                
+                                
+                                
+                                
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            
+                <div class="page-card">
+                    <div class="page-header">
+                        <div class="page-title">11. Love DNA 결과</div>
+                        <span class="page-status status-warning">WARNING</span>
+                        <div style="margin-top: 5px; font-size: 0.9em; color: #666;">
+                            tests/love-dna/result.html
+                        </div>
+                    </div>
+                    
+                    <div class="page-content">
+                        
+                            <div class="screenshots">
+                                <div>
+                                    <strong>데스크탑</strong><br>
+                                    <img src="screenshots\Love DNA 결과-desktop.png" alt="Desktop Screenshot">
+                                </div>
+                                <div>
+                                    <strong>모바일</strong><br>
+                                    <img src="screenshots\Love DNA 결과-mobile.png" alt="Mobile Screenshot">
+                                </div>
+                            </div>
+                        
+                        
+                        
+                            <div class="issues">
+                                <strong>발견된 문제점:</strong>
+                                <div class="issue">⚠️ 요소 겹침 발견: 2개</div>
+                            </div>
+                        
+                        
+                        
+                            <div class="metrics">
+                                <div class="metric">
+                                    <strong>DOM 로딩:</strong> 147ms
+                                </div>
+                                <div class="metric">
+                                    <strong>전체 로딩:</strong> 163ms
+                                </div>
+                                <div class="metric">
+                                    <strong>DOM 요소:</strong> 36개
+                                </div>
+                            </div>
+                        
+                        
+                        <details class="details">
+                            <summary>상세 검사 결과 보기</summary>
+                            <div class="details-content">
+                                <h4>검사 항목별 결과:</h4>
+                                <ul class="check-list">
+                                    <li class="">
+                                        파일 존재: ✓
+                                    </li>
+                                    <li class="">
+                                        페이지 로딩: ✓
+                                    </li>
+                                    
+                                        <li class="">
+                                            Pretendard 폰트: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            한글 텍스트 처리: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            CSS 변수 시스템: ✓
+                                        </li>
+                                    
+                                    
+                                        <li>
+                                            JavaScript 로딩: 2개 스크립트
+                                        </li>
+                                        <li>
+                                            인터랙티브 요소: 4개
+                                        </li>
+                                    
+                                </ul>
+                                
+                                
+                                
+                                
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            
+                <div class="page-card">
+                    <div class="page-header">
+                        <div class="page-title">12. 운세 메인</div>
+                        <span class="page-status status-passed">PASSED</span>
+                        <div style="margin-top: 5px; font-size: 0.9em; color: #666;">
+                            fortune/index.html
+                        </div>
+                    </div>
+                    
+                    <div class="page-content">
+                        
+                            <div class="screenshots">
+                                <div>
+                                    <strong>데스크탑</strong><br>
+                                    <img src="screenshots\운세 메인-desktop.png" alt="Desktop Screenshot">
+                                </div>
+                                <div>
+                                    <strong>모바일</strong><br>
+                                    <img src="screenshots\운세 메인-mobile.png" alt="Mobile Screenshot">
+                                </div>
+                            </div>
+                        
+                        
+                        <div class="issues" style="color: #28a745;">✅ 문제점 없음</div>
+                        
+                        
+                            <div class="metrics">
+                                <div class="metric">
+                                    <strong>DOM 로딩:</strong> 97ms
+                                </div>
+                                <div class="metric">
+                                    <strong>전체 로딩:</strong> 257ms
+                                </div>
+                                <div class="metric">
+                                    <strong>DOM 요소:</strong> 176개
+                                </div>
+                            </div>
+                        
+                        
+                        <details class="details">
+                            <summary>상세 검사 결과 보기</summary>
+                            <div class="details-content">
+                                <h4>검사 항목별 결과:</h4>
+                                <ul class="check-list">
+                                    <li class="">
+                                        파일 존재: ✓
+                                    </li>
+                                    <li class="">
+                                        페이지 로딩: ✓
+                                    </li>
+                                    
+                                        <li class="">
+                                            Pretendard 폰트: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            한글 텍스트 처리: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            CSS 변수 시스템: ✓
+                                        </li>
+                                    
+                                    
+                                        <li>
+                                            JavaScript 로딩: 8개 스크립트
+                                        </li>
+                                        <li>
+                                            인터랙티브 요소: 25개
+                                        </li>
+                                    
+                                </ul>
+                                
+                                
+                                
+                                
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            
+                <div class="page-card">
+                    <div class="page-header">
+                        <div class="page-title">13. 띠별 운세</div>
+                        <span class="page-status status-warning">WARNING</span>
+                        <div style="margin-top: 5px; font-size: 0.9em; color: #666;">
+                            fortune/zodiac-animal/index.html
+                        </div>
+                    </div>
+                    
+                    <div class="page-content">
+                        
+                            <div class="screenshots">
+                                <div>
+                                    <strong>데스크탑</strong><br>
+                                    <img src="screenshots\띠별 운세-desktop.png" alt="Desktop Screenshot">
+                                </div>
+                                <div>
+                                    <strong>모바일</strong><br>
+                                    <img src="screenshots\띠별 운세-mobile.png" alt="Mobile Screenshot">
+                                </div>
+                            </div>
+                        
+                        
+                        
+                            <div class="issues">
+                                <strong>발견된 문제점:</strong>
+                                <div class="issue">⚠️ 요소 겹침 발견: 11개</div>
+                            </div>
+                        
+                        
+                        
+                            <div class="metrics">
+                                <div class="metric">
+                                    <strong>DOM 로딩:</strong> 173ms
+                                </div>
+                                <div class="metric">
+                                    <strong>전체 로딩:</strong> 352ms
+                                </div>
+                                <div class="metric">
+                                    <strong>DOM 요소:</strong> 233개
+                                </div>
+                            </div>
+                        
+                        
+                        <details class="details">
+                            <summary>상세 검사 결과 보기</summary>
+                            <div class="details-content">
+                                <h4>검사 항목별 결과:</h4>
+                                <ul class="check-list">
+                                    <li class="">
+                                        파일 존재: ✓
+                                    </li>
+                                    <li class="">
+                                        페이지 로딩: ✓
+                                    </li>
+                                    
+                                        <li class="">
+                                            Pretendard 폰트: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            한글 텍스트 처리: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            CSS 변수 시스템: ✓
+                                        </li>
+                                    
+                                    
+                                        <li>
+                                            JavaScript 로딩: 16개 스크립트
+                                        </li>
+                                        <li>
+                                            인터랙티브 요소: 35개
+                                        </li>
+                                    
+                                </ul>
+                                
+                                
+                                
+                                
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            
+                <div class="page-card">
+                    <div class="page-header">
+                        <div class="page-title">14. 별자리 운세</div>
+                        <span class="page-status status-warning">WARNING</span>
+                        <div style="margin-top: 5px; font-size: 0.9em; color: #666;">
+                            fortune/zodiac/index.html
+                        </div>
+                    </div>
+                    
+                    <div class="page-content">
+                        
+                            <div class="screenshots">
+                                <div>
+                                    <strong>데스크탑</strong><br>
+                                    <img src="screenshots\별자리 운세-desktop.png" alt="Desktop Screenshot">
+                                </div>
+                                <div>
+                                    <strong>모바일</strong><br>
+                                    <img src="screenshots\별자리 운세-mobile.png" alt="Mobile Screenshot">
+                                </div>
+                            </div>
+                        
+                        
+                        
+                            <div class="issues">
+                                <strong>발견된 문제점:</strong>
+                                <div class="issue">⚠️ 요소 겹침 발견: 11개</div>
+                            </div>
+                        
+                        
+                        
+                            <div class="metrics">
+                                <div class="metric">
+                                    <strong>DOM 로딩:</strong> 192ms
+                                </div>
+                                <div class="metric">
+                                    <strong>전체 로딩:</strong> 344ms
+                                </div>
+                                <div class="metric">
+                                    <strong>DOM 요소:</strong> 247개
+                                </div>
+                            </div>
+                        
+                        
+                        <details class="details">
+                            <summary>상세 검사 결과 보기</summary>
+                            <div class="details-content">
+                                <h4>검사 항목별 결과:</h4>
+                                <ul class="check-list">
+                                    <li class="">
+                                        파일 존재: ✓
+                                    </li>
+                                    <li class="">
+                                        페이지 로딩: ✓
+                                    </li>
+                                    
+                                        <li class="">
+                                            Pretendard 폰트: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            한글 텍스트 처리: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            CSS 변수 시스템: ✓
+                                        </li>
+                                    
+                                    
+                                        <li>
+                                            JavaScript 로딩: 16개 스크립트
+                                        </li>
+                                        <li>
+                                            인터랙티브 요소: 47개
+                                        </li>
+                                    
+                                </ul>
+                                
+                                
+                                
+                                
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            
+                <div class="page-card">
+                    <div class="page-header">
+                        <div class="page-title">15. 오늘의 운세</div>
+                        <span class="page-status status-warning">WARNING</span>
+                        <div style="margin-top: 5px; font-size: 0.9em; color: #666;">
+                            fortune/daily/index.html
+                        </div>
+                    </div>
+                    
+                    <div class="page-content">
+                        
+                            <div class="screenshots">
+                                <div>
+                                    <strong>데스크탑</strong><br>
+                                    <img src="screenshots\오늘의 운세-desktop.png" alt="Desktop Screenshot">
+                                </div>
+                                <div>
+                                    <strong>모바일</strong><br>
+                                    <img src="screenshots\오늘의 운세-mobile.png" alt="Mobile Screenshot">
+                                </div>
+                            </div>
+                        
+                        
+                        
+                            <div class="issues">
+                                <strong>발견된 문제점:</strong>
+                                <div class="issue">⚠️ 요소 겹침 발견: 12개</div>
+                            </div>
+                        
+                        
+                        
+                            <div class="metrics">
+                                <div class="metric">
+                                    <strong>DOM 로딩:</strong> 163ms
+                                </div>
+                                <div class="metric">
+                                    <strong>전체 로딩:</strong> 325ms
+                                </div>
+                                <div class="metric">
+                                    <strong>DOM 요소:</strong> 333개
+                                </div>
+                            </div>
+                        
+                        
+                        <details class="details">
+                            <summary>상세 검사 결과 보기</summary>
+                            <div class="details-content">
+                                <h4>검사 항목별 결과:</h4>
+                                <ul class="check-list">
+                                    <li class="">
+                                        파일 존재: ✓
+                                    </li>
+                                    <li class="">
+                                        페이지 로딩: ✓
+                                    </li>
+                                    
+                                        <li class="">
+                                            Pretendard 폰트: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            한글 텍스트 처리: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            CSS 변수 시스템: ✓
+                                        </li>
+                                    
+                                    
+                                        <li>
+                                            JavaScript 로딩: 19개 스크립트
+                                        </li>
+                                        <li>
+                                            인터랙티브 요소: 41개
+                                        </li>
+                                    
+                                </ul>
+                                
+                                
+                                
+                                
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            
+                <div class="page-card">
+                    <div class="page-header">
+                        <div class="page-title">16. AI 사주팔자</div>
+                        <span class="page-status status-warning">WARNING</span>
+                        <div style="margin-top: 5px; font-size: 0.9em; color: #666;">
+                            fortune/saju/index.html
+                        </div>
+                    </div>
+                    
+                    <div class="page-content">
+                        
+                            <div class="screenshots">
+                                <div>
+                                    <strong>데스크탑</strong><br>
+                                    <img src="screenshots\AI 사주팔자-desktop.png" alt="Desktop Screenshot">
+                                </div>
+                                <div>
+                                    <strong>모바일</strong><br>
+                                    <img src="screenshots\AI 사주팔자-mobile.png" alt="Mobile Screenshot">
+                                </div>
+                            </div>
+                        
+                        
+                        
+                            <div class="issues">
+                                <strong>발견된 문제점:</strong>
+                                <div class="issue">⚠️ 요소 겹침 발견: 11개</div>
+                            </div>
+                        
+                        
+                        
+                            <div class="metrics">
+                                <div class="metric">
+                                    <strong>DOM 로딩:</strong> 168ms
+                                </div>
+                                <div class="metric">
+                                    <strong>전체 로딩:</strong> 332ms
+                                </div>
+                                <div class="metric">
+                                    <strong>DOM 요소:</strong> 350개
+                                </div>
+                            </div>
+                        
+                        
+                        <details class="details">
+                            <summary>상세 검사 결과 보기</summary>
+                            <div class="details-content">
+                                <h4>검사 항목별 결과:</h4>
+                                <ul class="check-list">
+                                    <li class="">
+                                        파일 존재: ✓
+                                    </li>
+                                    <li class="">
+                                        페이지 로딩: ✓
+                                    </li>
+                                    
+                                        <li class="">
+                                            Pretendard 폰트: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            한글 텍스트 처리: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            CSS 변수 시스템: ✓
+                                        </li>
+                                    
+                                    
+                                        <li>
+                                            JavaScript 로딩: 18개 스크립트
+                                        </li>
+                                        <li>
+                                            인터랙티브 요소: 41개
+                                        </li>
+                                    
+                                </ul>
+                                
+                                
+                                
+                                
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            
+                <div class="page-card">
+                    <div class="page-header">
+                        <div class="page-title">17. AI 타로 리딩</div>
+                        <span class="page-status status-warning">WARNING</span>
+                        <div style="margin-top: 5px; font-size: 0.9em; color: #666;">
+                            fortune/tarot/index.html
+                        </div>
+                    </div>
+                    
+                    <div class="page-content">
+                        
+                            <div class="screenshots">
+                                <div>
+                                    <strong>데스크탑</strong><br>
+                                    <img src="screenshots\AI 타로 리딩-desktop.png" alt="Desktop Screenshot">
+                                </div>
+                                <div>
+                                    <strong>모바일</strong><br>
+                                    <img src="screenshots\AI 타로 리딩-mobile.png" alt="Mobile Screenshot">
+                                </div>
+                            </div>
+                        
+                        
+                        
+                            <div class="issues">
+                                <strong>발견된 문제점:</strong>
+                                <div class="issue">⚠️ 요소 겹침 발견: 11개</div>
+                            </div>
+                        
+                        
+                        
+                            <div class="metrics">
+                                <div class="metric">
+                                    <strong>DOM 로딩:</strong> 162ms
+                                </div>
+                                <div class="metric">
+                                    <strong>전체 로딩:</strong> 318ms
+                                </div>
+                                <div class="metric">
+                                    <strong>DOM 요소:</strong> 217개
+                                </div>
+                            </div>
+                        
+                        
+                        <details class="details">
+                            <summary>상세 검사 결과 보기</summary>
+                            <div class="details-content">
+                                <h4>검사 항목별 결과:</h4>
+                                <ul class="check-list">
+                                    <li class="">
+                                        파일 존재: ✓
+                                    </li>
+                                    <li class="">
+                                        페이지 로딩: ✓
+                                    </li>
+                                    
+                                        <li class="">
+                                            Pretendard 폰트: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            한글 텍스트 처리: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            CSS 변수 시스템: ✓
+                                        </li>
+                                    
+                                    
+                                        <li>
+                                            JavaScript 로딩: 16개 스크립트
+                                        </li>
+                                        <li>
+                                            인터랙티브 요소: 62개
+                                        </li>
+                                    
+                                </ul>
+                                
+                                
+                                
+                                
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            
+                <div class="page-card">
+                    <div class="page-header">
+                        <div class="page-title">18. 실용도구 메인</div>
+                        <span class="page-status status-warning">WARNING</span>
+                        <div style="margin-top: 5px; font-size: 0.9em; color: #666;">
+                            tools/index.html
+                        </div>
+                    </div>
+                    
+                    <div class="page-content">
+                        
+                            <div class="screenshots">
+                                <div>
+                                    <strong>데스크탑</strong><br>
+                                    <img src="screenshots\실용도구 메인-desktop.png" alt="Desktop Screenshot">
+                                </div>
+                                <div>
+                                    <strong>모바일</strong><br>
+                                    <img src="screenshots\실용도구 메인-mobile.png" alt="Mobile Screenshot">
+                                </div>
+                            </div>
+                        
+                        
+                        
+                            <div class="issues">
+                                <strong>발견된 문제점:</strong>
+                                <div class="issue">⚠️ 요소 겹침 발견: 4개</div>
+                            </div>
+                        
+                        
+                        
+                            <div class="metrics">
+                                <div class="metric">
+                                    <strong>DOM 로딩:</strong> 185ms
+                                </div>
+                                <div class="metric">
+                                    <strong>전체 로딩:</strong> 344ms
+                                </div>
+                                <div class="metric">
+                                    <strong>DOM 요소:</strong> 188개
+                                </div>
+                            </div>
+                        
+                        
+                        <details class="details">
+                            <summary>상세 검사 결과 보기</summary>
+                            <div class="details-content">
+                                <h4>검사 항목별 결과:</h4>
+                                <ul class="check-list">
+                                    <li class="">
+                                        파일 존재: ✓
+                                    </li>
+                                    <li class="">
+                                        페이지 로딩: ✓
+                                    </li>
+                                    
+                                        <li class="">
+                                            Pretendard 폰트: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            한글 텍스트 처리: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            CSS 변수 시스템: ✓
+                                        </li>
+                                    
+                                    
+                                        <li>
+                                            JavaScript 로딩: 8개 스크립트
+                                        </li>
+                                        <li>
+                                            인터랙티브 요소: 21개
+                                        </li>
+                                    
+                                </ul>
+                                
+                                
+                                
+                                
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            
+                <div class="page-card">
+                    <div class="page-header">
+                        <div class="page-title">19. BMI 계산기</div>
+                        <span class="page-status status-warning">WARNING</span>
+                        <div style="margin-top: 5px; font-size: 0.9em; color: #666;">
+                            tools/bmi/index.html
+                        </div>
+                    </div>
+                    
+                    <div class="page-content">
+                        
+                            <div class="screenshots">
+                                <div>
+                                    <strong>데스크탑</strong><br>
+                                    <img src="screenshots\BMI 계산기-desktop.png" alt="Desktop Screenshot">
+                                </div>
+                                <div>
+                                    <strong>모바일</strong><br>
+                                    <img src="screenshots\BMI 계산기-mobile.png" alt="Mobile Screenshot">
+                                </div>
+                            </div>
+                        
+                        
+                        
+                            <div class="issues">
+                                <strong>발견된 문제점:</strong>
+                                <div class="issue">⚠️ 요소 겹침 발견: 7개</div>
+                            </div>
+                        
+                        
+                        
+                            <div class="metrics">
+                                <div class="metric">
+                                    <strong>DOM 로딩:</strong> 111ms
+                                </div>
+                                <div class="metric">
+                                    <strong>전체 로딩:</strong> 271ms
+                                </div>
+                                <div class="metric">
+                                    <strong>DOM 요소:</strong> 239개
+                                </div>
+                            </div>
+                        
+                        
+                        <details class="details">
+                            <summary>상세 검사 결과 보기</summary>
+                            <div class="details-content">
+                                <h4>검사 항목별 결과:</h4>
+                                <ul class="check-list">
+                                    <li class="">
+                                        파일 존재: ✓
+                                    </li>
+                                    <li class="">
+                                        페이지 로딩: ✓
+                                    </li>
+                                    
+                                        <li class="">
+                                            Pretendard 폰트: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            한글 텍스트 처리: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            CSS 변수 시스템: ✓
+                                        </li>
+                                    
+                                    
+                                        <li>
+                                            JavaScript 로딩: 12개 스크립트
+                                        </li>
+                                        <li>
+                                            인터랙티브 요소: 39개
+                                        </li>
+                                    
+                                </ul>
+                                
+                                
+                                
+                                
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            
+                <div class="page-card">
+                    <div class="page-header">
+                        <div class="page-title">20. 글자수 세기</div>
+                        <span class="page-status status-warning">WARNING</span>
+                        <div style="margin-top: 5px; font-size: 0.9em; color: #666;">
+                            tools/text-counter.html
+                        </div>
+                    </div>
+                    
+                    <div class="page-content">
+                        
+                            <div class="screenshots">
+                                <div>
+                                    <strong>데스크탑</strong><br>
+                                    <img src="screenshots\글자수 세기-desktop.png" alt="Desktop Screenshot">
+                                </div>
+                                <div>
+                                    <strong>모바일</strong><br>
+                                    <img src="screenshots\글자수 세기-mobile.png" alt="Mobile Screenshot">
+                                </div>
+                            </div>
+                        
+                        
+                        
+                            <div class="issues">
+                                <strong>발견된 문제점:</strong>
+                                <div class="issue">⚠️ 요소 겹침 발견: 5개</div>
+                            </div>
+                        
+                        
+                        
+                            <div class="metrics">
+                                <div class="metric">
+                                    <strong>DOM 로딩:</strong> 96ms
+                                </div>
+                                <div class="metric">
+                                    <strong>전체 로딩:</strong> 261ms
+                                </div>
+                                <div class="metric">
+                                    <strong>DOM 요소:</strong> 270개
+                                </div>
+                            </div>
+                        
+                        
+                        <details class="details">
+                            <summary>상세 검사 결과 보기</summary>
+                            <div class="details-content">
+                                <h4>검사 항목별 결과:</h4>
+                                <ul class="check-list">
+                                    <li class="">
+                                        파일 존재: ✓
+                                    </li>
+                                    <li class="">
+                                        페이지 로딩: ✓
+                                    </li>
+                                    
+                                        <li class="">
+                                            Pretendard 폰트: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            한글 텍스트 처리: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            CSS 변수 시스템: ✓
+                                        </li>
+                                    
+                                    
+                                        <li>
+                                            JavaScript 로딩: 13개 스크립트
+                                        </li>
+                                        <li>
+                                            인터랙티브 요소: 32개
+                                        </li>
+                                    
+                                </ul>
+                                
+                                
+                                
+                                
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            
+                <div class="page-card">
+                    <div class="page-header">
+                        <div class="page-title">21. 연봉계산기</div>
+                        <span class="page-status status-warning">WARNING</span>
+                        <div style="margin-top: 5px; font-size: 0.9em; color: #666;">
+                            tools/salary-calculator.html
+                        </div>
+                    </div>
+                    
+                    <div class="page-content">
+                        
+                            <div class="screenshots">
+                                <div>
+                                    <strong>데스크탑</strong><br>
+                                    <img src="screenshots\연봉계산기-desktop.png" alt="Desktop Screenshot">
+                                </div>
+                                <div>
+                                    <strong>모바일</strong><br>
+                                    <img src="screenshots\연봉계산기-mobile.png" alt="Mobile Screenshot">
+                                </div>
+                            </div>
+                        
+                        
+                        
+                            <div class="issues">
+                                <strong>발견된 문제점:</strong>
+                                <div class="issue">⚠️ 요소 겹침 발견: 2개</div>
+                            </div>
+                        
+                        
+                        
+                            <div class="metrics">
+                                <div class="metric">
+                                    <strong>DOM 로딩:</strong> 81ms
+                                </div>
+                                <div class="metric">
+                                    <strong>전체 로딩:</strong> 243ms
+                                </div>
+                                <div class="metric">
+                                    <strong>DOM 요소:</strong> 197개
+                                </div>
+                            </div>
+                        
+                        
+                        <details class="details">
+                            <summary>상세 검사 결과 보기</summary>
+                            <div class="details-content">
+                                <h4>검사 항목별 결과:</h4>
+                                <ul class="check-list">
+                                    <li class="">
+                                        파일 존재: ✓
+                                    </li>
+                                    <li class="">
+                                        페이지 로딩: ✓
+                                    </li>
+                                    
+                                        <li class="">
+                                            Pretendard 폰트: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            한글 텍스트 처리: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            CSS 변수 시스템: ✓
+                                        </li>
+                                    
+                                    
+                                        <li>
+                                            JavaScript 로딩: 12개 스크립트
+                                        </li>
+                                        <li>
+                                            인터랙티브 요소: 24개
+                                        </li>
+                                    
+                                </ul>
+                                
+                                
+                                
+                                
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            
+                <div class="page-card">
+                    <div class="page-header">
+                        <div class="page-title">22. BMI 계산기 (대체)</div>
+                        <span class="page-status status-passed">PASSED</span>
+                        <div style="margin-top: 5px; font-size: 0.9em; color: #666;">
+                            tools/bmi-calculator.html
+                        </div>
+                    </div>
+                    
+                    <div class="page-content">
+                        
+                            <div class="screenshots">
+                                <div>
+                                    <strong>데스크탑</strong><br>
+                                    <img src="screenshots\BMI 계산기 (대체)-desktop.png" alt="Desktop Screenshot">
+                                </div>
+                                <div>
+                                    <strong>모바일</strong><br>
+                                    <img src="screenshots\BMI 계산기 (대체)-mobile.png" alt="Mobile Screenshot">
+                                </div>
+                            </div>
+                        
+                        
+                        <div class="issues" style="color: #28a745;">✅ 문제점 없음</div>
+                        
+                        
+                            <div class="metrics">
+                                <div class="metric">
+                                    <strong>DOM 로딩:</strong> 80ms
+                                </div>
+                                <div class="metric">
+                                    <strong>전체 로딩:</strong> 240ms
+                                </div>
+                                <div class="metric">
+                                    <strong>DOM 요소:</strong> 193개
+                                </div>
+                            </div>
+                        
+                        
+                        <details class="details">
+                            <summary>상세 검사 결과 보기</summary>
+                            <div class="details-content">
+                                <h4>검사 항목별 결과:</h4>
+                                <ul class="check-list">
+                                    <li class="">
+                                        파일 존재: ✓
+                                    </li>
+                                    <li class="">
+                                        페이지 로딩: ✓
+                                    </li>
+                                    
+                                        <li class="">
+                                            Pretendard 폰트: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            한글 텍스트 처리: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            CSS 변수 시스템: ✓
+                                        </li>
+                                    
+                                    
+                                        <li>
+                                            JavaScript 로딩: 12개 스크립트
+                                        </li>
+                                        <li>
+                                            인터랙티브 요소: 24개
+                                        </li>
+                                    
+                                </ul>
+                                
+                                
+                                
+                                
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            
+                <div class="page-card">
+                    <div class="page-header">
+                        <div class="page-title">23. 소개 페이지</div>
+                        <span class="page-status status-passed">PASSED</span>
+                        <div style="margin-top: 5px; font-size: 0.9em; color: #666;">
+                            about/index.html
+                        </div>
+                    </div>
+                    
+                    <div class="page-content">
+                        
+                            <div class="screenshots">
+                                <div>
+                                    <strong>데스크탑</strong><br>
+                                    <img src="screenshots\소개 페이지-desktop.png" alt="Desktop Screenshot">
+                                </div>
+                                <div>
+                                    <strong>모바일</strong><br>
+                                    <img src="screenshots\소개 페이지-mobile.png" alt="Mobile Screenshot">
+                                </div>
+                            </div>
+                        
+                        
+                        <div class="issues" style="color: #28a745;">✅ 문제점 없음</div>
+                        
+                        
+                            <div class="metrics">
+                                <div class="metric">
+                                    <strong>DOM 로딩:</strong> 90ms
+                                </div>
+                                <div class="metric">
+                                    <strong>전체 로딩:</strong> 237ms
+                                </div>
+                                <div class="metric">
+                                    <strong>DOM 요소:</strong> 181개
+                                </div>
+                            </div>
+                        
+                        
+                        <details class="details">
+                            <summary>상세 검사 결과 보기</summary>
+                            <div class="details-content">
+                                <h4>검사 항목별 결과:</h4>
+                                <ul class="check-list">
+                                    <li class="">
+                                        파일 존재: ✓
+                                    </li>
+                                    <li class="">
+                                        페이지 로딩: ✓
+                                    </li>
+                                    
+                                        <li class="">
+                                            Pretendard 폰트: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            한글 텍스트 처리: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            CSS 변수 시스템: ✓
+                                        </li>
+                                    
+                                    
+                                        <li>
+                                            JavaScript 로딩: 8개 스크립트
+                                        </li>
+                                        <li>
+                                            인터랙티브 요소: 19개
+                                        </li>
+                                    
+                                </ul>
+                                
+                                
+                                
+                                
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            
+                <div class="page-card">
+                    <div class="page-header">
+                        <div class="page-title">24. 문의하기</div>
+                        <span class="page-status status-passed">PASSED</span>
+                        <div style="margin-top: 5px; font-size: 0.9em; color: #666;">
+                            contact/index.html
+                        </div>
+                    </div>
+                    
+                    <div class="page-content">
+                        
+                            <div class="screenshots">
+                                <div>
+                                    <strong>데스크탑</strong><br>
+                                    <img src="screenshots\문의하기-desktop.png" alt="Desktop Screenshot">
+                                </div>
+                                <div>
+                                    <strong>모바일</strong><br>
+                                    <img src="screenshots\문의하기-mobile.png" alt="Mobile Screenshot">
+                                </div>
+                            </div>
+                        
+                        
+                        <div class="issues" style="color: #28a745;">✅ 문제점 없음</div>
+                        
+                        
+                            <div class="metrics">
+                                <div class="metric">
+                                    <strong>DOM 로딩:</strong> 81ms
+                                </div>
+                                <div class="metric">
+                                    <strong>전체 로딩:</strong> 235ms
+                                </div>
+                                <div class="metric">
+                                    <strong>DOM 요소:</strong> 180개
+                                </div>
+                            </div>
+                        
+                        
+                        <details class="details">
+                            <summary>상세 검사 결과 보기</summary>
+                            <div class="details-content">
+                                <h4>검사 항목별 결과:</h4>
+                                <ul class="check-list">
+                                    <li class="">
+                                        파일 존재: ✓
+                                    </li>
+                                    <li class="">
+                                        페이지 로딩: ✓
+                                    </li>
+                                    
+                                        <li class="">
+                                            Pretendard 폰트: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            한글 텍스트 처리: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            CSS 변수 시스템: ✓
+                                        </li>
+                                    
+                                    
+                                        <li>
+                                            JavaScript 로딩: 7개 스크립트
+                                        </li>
+                                        <li>
+                                            인터랙티브 요소: 25개
+                                        </li>
+                                    
+                                </ul>
+                                
+                                
+                                
+                                
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            
+                <div class="page-card">
+                    <div class="page-header">
+                        <div class="page-title">25. 개인정보처리방침</div>
+                        <span class="page-status status-passed">PASSED</span>
+                        <div style="margin-top: 5px; font-size: 0.9em; color: #666;">
+                            privacy/index.html
+                        </div>
+                    </div>
+                    
+                    <div class="page-content">
+                        
+                            <div class="screenshots">
+                                <div>
+                                    <strong>데스크탑</strong><br>
+                                    <img src="screenshots\개인정보처리방침-desktop.png" alt="Desktop Screenshot">
+                                </div>
+                                <div>
+                                    <strong>모바일</strong><br>
+                                    <img src="screenshots\개인정보처리방침-mobile.png" alt="Mobile Screenshot">
+                                </div>
+                            </div>
+                        
+                        
+                        <div class="issues" style="color: #28a745;">✅ 문제점 없음</div>
+                        
+                        
+                            <div class="metrics">
+                                <div class="metric">
+                                    <strong>DOM 로딩:</strong> 88ms
+                                </div>
+                                <div class="metric">
+                                    <strong>전체 로딩:</strong> 245ms
+                                </div>
+                                <div class="metric">
+                                    <strong>DOM 요소:</strong> 205개
+                                </div>
+                            </div>
+                        
+                        
+                        <details class="details">
+                            <summary>상세 검사 결과 보기</summary>
+                            <div class="details-content">
+                                <h4>검사 항목별 결과:</h4>
+                                <ul class="check-list">
+                                    <li class="">
+                                        파일 존재: ✓
+                                    </li>
+                                    <li class="">
+                                        페이지 로딩: ✓
+                                    </li>
+                                    
+                                        <li class="">
+                                            Pretendard 폰트: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            한글 텍스트 처리: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            CSS 변수 시스템: ✓
+                                        </li>
+                                    
+                                    
+                                        <li>
+                                            JavaScript 로딩: 8개 스크립트
+                                        </li>
+                                        <li>
+                                            인터랙티브 요소: 27개
+                                        </li>
+                                    
+                                </ul>
+                                
+                                
+                                
+                                
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            
+                <div class="page-card">
+                    <div class="page-header">
+                        <div class="page-title">26. 이용약관</div>
+                        <span class="page-status status-passed">PASSED</span>
+                        <div style="margin-top: 5px; font-size: 0.9em; color: #666;">
+                            terms/index.html
+                        </div>
+                    </div>
+                    
+                    <div class="page-content">
+                        
+                            <div class="screenshots">
+                                <div>
+                                    <strong>데스크탑</strong><br>
+                                    <img src="screenshots\이용약관-desktop.png" alt="Desktop Screenshot">
+                                </div>
+                                <div>
+                                    <strong>모바일</strong><br>
+                                    <img src="screenshots\이용약관-mobile.png" alt="Mobile Screenshot">
+                                </div>
+                            </div>
+                        
+                        
+                        <div class="issues" style="color: #28a745;">✅ 문제점 없음</div>
+                        
+                        
+                            <div class="metrics">
+                                <div class="metric">
+                                    <strong>DOM 로딩:</strong> 81ms
+                                </div>
+                                <div class="metric">
+                                    <strong>전체 로딩:</strong> 240ms
+                                </div>
+                                <div class="metric">
+                                    <strong>DOM 요소:</strong> 205개
+                                </div>
+                            </div>
+                        
+                        
+                        <details class="details">
+                            <summary>상세 검사 결과 보기</summary>
+                            <div class="details-content">
+                                <h4>검사 항목별 결과:</h4>
+                                <ul class="check-list">
+                                    <li class="">
+                                        파일 존재: ✓
+                                    </li>
+                                    <li class="">
+                                        페이지 로딩: ✓
+                                    </li>
+                                    
+                                        <li class="">
+                                            Pretendard 폰트: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            한글 텍스트 처리: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            CSS 변수 시스템: ✓
+                                        </li>
+                                    
+                                    
+                                        <li>
+                                            JavaScript 로딩: 8개 스크립트
+                                        </li>
+                                        <li>
+                                            인터랙티브 요소: 27개
+                                        </li>
+                                    
+                                </ul>
+                                
+                                
+                                
+                                
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            
+                <div class="page-card">
+                    <div class="page-header">
+                        <div class="page-title">27. FAQ</div>
+                        <span class="page-status status-passed">PASSED</span>
+                        <div style="margin-top: 5px; font-size: 0.9em; color: #666;">
+                            faq/index.html
+                        </div>
+                    </div>
+                    
+                    <div class="page-content">
+                        
+                            <div class="screenshots">
+                                <div>
+                                    <strong>데스크탑</strong><br>
+                                    <img src="screenshots\FAQ-desktop.png" alt="Desktop Screenshot">
+                                </div>
+                                <div>
+                                    <strong>모바일</strong><br>
+                                    <img src="screenshots\FAQ-mobile.png" alt="Mobile Screenshot">
+                                </div>
+                            </div>
+                        
+                        
+                        <div class="issues" style="color: #28a745;">✅ 문제점 없음</div>
+                        
+                        
+                            <div class="metrics">
+                                <div class="metric">
+                                    <strong>DOM 로딩:</strong> 93ms
+                                </div>
+                                <div class="metric">
+                                    <strong>전체 로딩:</strong> 244ms
+                                </div>
+                                <div class="metric">
+                                    <strong>DOM 요소:</strong> 310개
+                                </div>
+                            </div>
+                        
+                        
+                        <details class="details">
+                            <summary>상세 검사 결과 보기</summary>
+                            <div class="details-content">
+                                <h4>검사 항목별 결과:</h4>
+                                <ul class="check-list">
+                                    <li class="">
+                                        파일 존재: ✓
+                                    </li>
+                                    <li class="">
+                                        페이지 로딩: ✓
+                                    </li>
+                                    
+                                        <li class="">
+                                            Pretendard 폰트: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            한글 텍스트 처리: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            CSS 변수 시스템: ✓
+                                        </li>
+                                    
+                                    
+                                        <li>
+                                            JavaScript 로딩: 8개 스크립트
+                                        </li>
+                                        <li>
+                                            인터랙티브 요소: 65개
+                                        </li>
+                                    
+                                </ul>
+                                
+                                
+                                
+                                
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            
+                <div class="page-card">
+                    <div class="page-header">
+                        <div class="page-title">28. 404 페이지</div>
+                        <span class="page-status status-warning">WARNING</span>
+                        <div style="margin-top: 5px; font-size: 0.9em; color: #666;">
+                            404.html
+                        </div>
+                    </div>
+                    
+                    <div class="page-content">
+                        
+                            <div class="screenshots">
+                                <div>
+                                    <strong>데스크탑</strong><br>
+                                    <img src="screenshots\404 페이지-desktop.png" alt="Desktop Screenshot">
+                                </div>
+                                <div>
+                                    <strong>모바일</strong><br>
+                                    <img src="screenshots\404 페이지-mobile.png" alt="Mobile Screenshot">
+                                </div>
+                            </div>
+                        
+                        
+                        
+                            <div class="issues">
+                                <strong>발견된 문제점:</strong>
+                                <div class="issue">⚠️ 요소 겹침 발견: 8개</div>
+                            </div>
+                        
+                        
+                        
+                            <div class="metrics">
+                                <div class="metric">
+                                    <strong>DOM 로딩:</strong> 69ms
+                                </div>
+                                <div class="metric">
+                                    <strong>전체 로딩:</strong> 230ms
+                                </div>
+                                <div class="metric">
+                                    <strong>DOM 요소:</strong> 142개
+                                </div>
+                            </div>
+                        
+                        
+                        <details class="details">
+                            <summary>상세 검사 결과 보기</summary>
+                            <div class="details-content">
+                                <h4>검사 항목별 결과:</h4>
+                                <ul class="check-list">
+                                    <li class="">
+                                        파일 존재: ✓
+                                    </li>
+                                    <li class="">
+                                        페이지 로딩: ✓
+                                    </li>
+                                    
+                                        <li class="">
+                                            Pretendard 폰트: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            한글 텍스트 처리: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            CSS 변수 시스템: ✓
+                                        </li>
+                                    
+                                    
+                                        <li>
+                                            JavaScript 로딩: 8개 스크립트
+                                        </li>
+                                        <li>
+                                            인터랙티브 요소: 25개
+                                        </li>
+                                    
+                                </ul>
+                                
+                                
+                                
+                                
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            
+                <div class="page-card">
+                    <div class="page-header">
+                        <div class="page-title">29. 오프라인 페이지</div>
+                        <span class="page-status status-passed">PASSED</span>
+                        <div style="margin-top: 5px; font-size: 0.9em; color: #666;">
+                            offline.html
+                        </div>
+                    </div>
+                    
+                    <div class="page-content">
+                        
+                            <div class="screenshots">
+                                <div>
+                                    <strong>데스크탑</strong><br>
+                                    <img src="screenshots\오프라인 페이지-desktop.png" alt="Desktop Screenshot">
+                                </div>
+                                <div>
+                                    <strong>모바일</strong><br>
+                                    <img src="screenshots\오프라인 페이지-mobile.png" alt="Mobile Screenshot">
+                                </div>
+                            </div>
+                        
+                        
+                        <div class="issues" style="color: #28a745;">✅ 문제점 없음</div>
+                        
+                        
+                            <div class="metrics">
+                                <div class="metric">
+                                    <strong>DOM 로딩:</strong> 20ms
+                                </div>
+                                <div class="metric">
+                                    <strong>전체 로딩:</strong> 104ms
+                                </div>
+                                <div class="metric">
+                                    <strong>DOM 요소:</strong> 133개
+                                </div>
+                            </div>
+                        
+                        
+                        <details class="details">
+                            <summary>상세 검사 결과 보기</summary>
+                            <div class="details-content">
+                                <h4>검사 항목별 결과:</h4>
+                                <ul class="check-list">
+                                    <li class="">
+                                        파일 존재: ✓
+                                    </li>
+                                    <li class="">
+                                        페이지 로딩: ✓
+                                    </li>
+                                    
+                                        <li class="">
+                                            Pretendard 폰트: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            한글 텍스트 처리: ✓
+                                        </li>
+                                    
+                                    
+                                        <li class="">
+                                            CSS 변수 시스템: ✓
+                                        </li>
+                                    
+                                    
+                                        <li>
+                                            JavaScript 로딩: 6개 스크립트
+                                        </li>
+                                        <li>
+                                            인터랙티브 요소: 21개
+                                        </li>
+                                    
+                                </ul>
+                                
+                                
+                                
+                                
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            
+        </div>
+        
+        <div class="timestamp">
+            검사 완료 시간: 2025. 8. 13. 오전 12:27:11 | 
+            총 29개 페이지 검사 | 
+            성공률: 31%
+        </div>
+    </div>
+</body>
+</html>
+    
