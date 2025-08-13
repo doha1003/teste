@@ -111,14 +111,19 @@ export class BMICalculatorService extends ToolService {
    * 도구별 추가 초기화
    */
   initToolSpecific() {
-    // 폼 이벤트 바인딩
+    // DOM 요소 안전성 검사
     const form = document.querySelector(this.ui.form);
-    if (form) {
-      // 폼 제출 이벤트
-      form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        this.calculate();
-      });
+    if (!form) {
+      console.warn('⚠️ BMI 폼을 찾을 수 없습니다:', this.ui.form);
+      return;
+    }
+
+    // 폼 이벤트 바인딩
+    // 폼 제출 이벤트
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      this.calculate();
+    });
 
       // 계산 버튼 클릭 이벤트
       const calculateBtn = form.querySelector('.btn-calculate');

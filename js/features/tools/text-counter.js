@@ -43,12 +43,16 @@ export class TextCounterService extends ToolService {
    * 도구별 추가 초기화
    */
   initToolSpecific() {
-    // 텍스트 입력 이벤트 바인딩
+    // DOM 요소 안전성 검사
     const textInput = document.querySelector(this.ui.textInput);
-    if (textInput) {
-      textInput.addEventListener('input', () => this.handleTextInput());
-      textInput.setAttribute('maxlength', this.maxLength);
+    if (!textInput) {
+      console.warn('⚠️ 텍스트 입력창을 찾을 수 없습니다:', this.ui.textInput);
+      return;
     }
+
+    // 텍스트 입력 이벤트 바인딩
+    textInput.addEventListener('input', () => this.handleTextInput());
+    textInput.setAttribute('maxlength', this.maxLength);
 
     // 버튼 이벤트 바인딩
     this.bindButtonEvents();
