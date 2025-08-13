@@ -433,36 +433,36 @@ height: -webkit-fill-available;
     const prompt = document.createElement('div');
     prompt.id = 'ios-install-prompt';
     prompt.innerHTML = `
-<div class=\"ios-install-content\">
-<div class=\"ios-install-header\">
-<div class=\"ios-install-icon\">📱</div>
+<div class="ios-install-content">
+<div class="ios-install-header">
+<div class="ios-install-icon">📱</div>
 <h3>홈 화면에 추가하기</h3>
-<button class=\"ios-install-close\">&times;</button>
+<button class="ios-install-close">&times;</button>
 </div>
 
-<div class=\"ios-install-body\">
+<div class="ios-install-body">
 <p>더 편리하게 이용하려면 홈 화면에 추가하세요!</p>
 
-<div class=\"ios-install-steps\">
-<div class=\"step\">
-<div class=\"step-icon\">📤</div>
-<div class=\"step-text\">하단의 공유 버튼을 누르세요</div>
+<div class="ios-install-steps">
+<div class="step">
+<div class="step-icon">📤</div>
+<div class="step-text">하단의 공유 버튼을 누르세요</div>
 </div>
 
-<div class=\"step\">
-<div class=\"step-icon\">➕</div>
-<div class=\"step-text\">\"홈 화면에 추가\"를 선택하세요</div>
+<div class="step">
+<div class="step-icon">➕</div>
+<div class="step-text">"홈 화면에 추가"를 선택하세요</div>
 </div>
 
-<div class=\"step\">
-<div class=\"step-icon\">✅</div>
-<div class=\"step-text\">\"추가\"를 눌러 완료하세요</div>
+<div class="step">
+<div class="step-icon">✅</div>
+<div class="step-text">"추가"를 눌러 완료하세요</div>
 </div>
 </div>
 </div>
 
-<div class=\"ios-install-footer\">
-<button class=\"ios-install-dismiss\">나중에 하기</button>
+<div class="ios-install-footer">
+<button class="ios-install-dismiss">나중에 하기</button>
 </div>
 </div>
 `;

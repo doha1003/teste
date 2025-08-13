@@ -152,7 +152,7 @@ class KoreanOptimizer {
       },
     ];
 
-    metaTags.forEach(({ name, dh-l-content }) => {
+    metaTags.forEach(({ name, content }) => {
       if (!document.querySelector(`meta[name="${name}"]`)) {
         const meta = document.createElement('meta');
         meta.name = name;

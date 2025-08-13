@@ -31,7 +31,7 @@ class LegalPage {
    */
   initTableOfContents() {
     this.toc = document.querySelector('.legal-toc');
-    if (!this.toc) return;
+    if (!this.toc) {return;}
 
     // 목차 링크들 가져오기
     const tocLinks = this.toc.querySelectorAll('a[href^="#"]');
@@ -55,7 +55,7 @@ class LegalPage {
   initScrollSpy() {
     // 모든 섹션 가져오기
     this.sections = document.querySelectorAll('.legal-section[id]');
-    if (this.sections.length === 0) return;
+    if (this.sections.length === 0) {return;}
 
     // Intersection Observer 설정
     const observerOptions = {
@@ -81,7 +81,7 @@ class LegalPage {
    * 활성 섹션 설정
    */
   setActiveSection(sectionId) {
-    if (!this.toc) return;
+    if (!this.toc) {return;}
 
     // 이전 활성 링크 제거
     const previousActive = this.toc.querySelector('.active');

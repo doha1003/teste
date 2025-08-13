@@ -222,7 +222,9 @@ function validateNumber(value, min = 0, max = Number.MAX_SAFE_INTEGER) {
 
       // Track event
       if (typeof Analytics !== 'undefined') {
-        Analytics.trackEvent('Fortune', 'daily_fortune_viewed', 'success');
+        if (typeof window !== 'undefined' && window.Analytics && typeof window.Analytics.trackEvent === 'function') {
+          window.Analytics.trackEvent('Fortune', 'daily_fortune_viewed', 'success');
+        }
       }
     },
 
@@ -299,40 +301,40 @@ function validateNumber(value, min = 0, max = Number.MAX_SAFE_INTEGER) {
                         <div class="pillars-grid">
                             <div class="pillar">
                                 <span class="pillar-label">년주</span>
-                                <span class="pillar-value">${Security.sanitizeHTML(saju.year_pillar || '')}</span>
+                                <span class="pillar-value">${(window.Security ? window.Security.sanitizeHTML(saju.year_pillar || '') : (saju.year_pillar || ''))}</span>
                             </div>
                             <div class="pillar">
                                 <span class="pillar-label">월주</span>
-                                <span class="pillar-value">${Security.sanitizeHTML(saju.month_pillar || '')}</span>
+                                <span class="pillar-value">${(window.Security ? window.Security.sanitizeHTML(saju.month_pillar || '') : (saju.month_pillar || ''))}</span>
                             </div>
                             <div class="pillar">
                                 <span class="pillar-label">일주</span>
-                                <span class="pillar-value">${Security.sanitizeHTML(saju.day_pillar || '')}</span>
+                                <span class="pillar-value">${(window.Security ? window.Security.sanitizeHTML(saju.day_pillar || '') : (saju.day_pillar || ''))}</span>
                             </div>
                             <div class="pillar">
                                 <span class="pillar-label">시주</span>
-                                <span class="pillar-value">${Security.sanitizeHTML(saju.hour_pillar || '')}</span>
+                                <span class="pillar-value">${(window.Security ? window.Security.sanitizeHTML(saju.hour_pillar || '') : (saju.hour_pillar || ''))}</span>
                             </div>
                         </div>
                     </div>
                     <div class="saju-analysis">
                         <h4>성격 분석</h4>
-                        <p>${Security.sanitizeHTML(saju.personality || '')}</p>
+                        <p>${(window.Security ? window.Security.sanitizeHTML(saju.personality || '') : (saju.personality || ''))}</p>
                         
                         <h4>운명 해석</h4>
-                        <p>${Security.sanitizeHTML(saju.destiny || '')}</p>
+                        <p>${(window.Security ? window.Security.sanitizeHTML(saju.destiny || '') : (saju.destiny || ''))}</p>
                         
                         <h4>조언</h4>
-                        <p>${Security.sanitizeHTML(saju.advice || '')}</p>
+                        <p>${(window.Security ? window.Security.sanitizeHTML(saju.advice || '') : (saju.advice || ''))}</p>
                     </div>
                 </div>
             `;
 
       SecureDOM.setInnerHTML(resultDiv, html);
 
-      // Track event
-      if (typeof Analytics !== 'undefined') {
-        Analytics.trackEvent('Fortune', 'saju_analysis_completed', 'success');
+      // Track event - safe check for Analytics
+      if (typeof window !== 'undefined' && window.Analytics && typeof window.Analytics.trackEvent === 'function') {
+        window.Analytics.trackEvent('Fortune', 'saju_analysis_completed', 'success');
       }
     },
 
@@ -416,7 +418,9 @@ function validateNumber(value, min = 0, max = Number.MAX_SAFE_INTEGER) {
 
       // Track event
       if (typeof Analytics !== 'undefined') {
-        Analytics.trackEvent('Fortune', 'tarot_reading_completed', 'success');
+        if (typeof window !== 'undefined' && window.Analytics && typeof window.Analytics.trackEvent === 'function') {
+          window.Analytics.trackEvent('Fortune', 'tarot_reading_completed', 'success');
+        }
       }
     },
 

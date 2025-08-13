@@ -86,11 +86,10 @@
 
       // Calculate bot score (0-100)
       let botScore = 0;
-      let totalChecks = 0;
+      // Removed totalChecks variable (was unused)
 
       Object.keys(indicators).forEach((key) => {
         if (indicators[key] !== null) {
-          totalChecks++;
           botScore += indicators[key] ? 15 : 0;
         }
       });

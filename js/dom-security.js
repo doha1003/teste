@@ -81,9 +81,8 @@
           throw new Error('SecureDOM: Invalid element parameter');
         }
 
-        if (typeof dh-l-content !== 'string') {
-          
-          dh-l-content = String(content);
+        if (typeof content !== 'string') {
+          content = String(content);
         }
 
         // 2차 검증: 길이 제한 확인

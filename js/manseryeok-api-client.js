@@ -269,6 +269,7 @@ class ManseryeokAPIClient {
    */
   logError(method, error) {
     if (this.isDevelopmentEnvironment()) {
+      console.error(`ManseryeokAPI ${method} error:`, error);
     }
     if (typeof window.Analytics !== 'undefined') {
       window.Analytics.trackEvent('ManseryeokAPI', 'error', {

@@ -275,7 +275,7 @@ export class TextCounterService extends ToolService {
           updated = true;
         }
       });
-      if (updated) break;
+      if (updated) {break;}
     }
     
     // 추가적으로 일반적인 카운트 ID 업데이트
